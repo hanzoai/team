@@ -4,9 +4,9 @@ import (
 	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
-// LogService exposes methods to log to the Mattermost server log.
+// LogService exposes methods to log to the Hanzo Team server log.
 //
-// Note that standard error is automatically sent to the Mattermost server log, and standard
+// Note that standard error is automatically sent to the Hanzo Team server log, and standard
 // output is redirected to standard error. This service enables optional structured logging.
 type LogService struct {
 	api plugin.API

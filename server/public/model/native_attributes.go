@@ -32,7 +32,7 @@ const NativeAttributeIDPrefix = "native_user_attribute_"
 
 // PropertyField Attrs keys describing a synthetic native user attribute.
 const (
-	// NativeAttributeAttrMarker marks a field as a Mattermost-native user
+	// NativeAttributeAttrMarker marks a field as a Hanzo Team-native user
 	// attribute (referenced as user.<name>), distinguishing it from custom
 	// profile attributes (user.attributes.<name>).
 	NativeAttributeAttrMarker = "native"

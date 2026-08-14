@@ -12,7 +12,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/platform/shared/templates"
 )
 
-// MattermostApp describes downloads for the Mattermost App
+// MattermostApp describes downloads for the Hanzo Team App
 type MattermostApp struct {
 	LogoSrc                string
 	Title                  string
@@ -67,7 +67,7 @@ func renderUnsupportedBrowser(rctx request.CTX, r *http.Request, subpath string)
 		data.Props["NoLongerSupportString"] = rctx.T("web.error.unsupported_browser.no_longer_support")
 	}
 
-	// Mattermost app version
+	// Hanzo Team app version
 	if isWindows {
 		data.Props["App"] = renderMattermostAppWindows(rctx)
 	} else if isMacOSX {
@@ -97,9 +97,9 @@ func renderMattermostAppMac(rctx request.CTX) MattermostApp {
 		rctx.T("web.error.unsupported_browser.download_the_app"),
 		rctx.T("web.error.unsupported_browser.min_os_version.mac"),
 		rctx.T("web.error.unsupported_browser.download"),
-		"https://mattermost.com/pl/download-apps",
+		"https://docs.hanzo.team/download-apps",
 		rctx.T("web.error.unsupported_browser.install_guide.mac"),
-		"https://docs.mattermost.com/install/desktop.html#mac-os-x-10-9",
+		"https://docs.hanzo.team/install/desktop.html#mac-os-x-10-9",
 	}
 }
 
@@ -109,9 +109,9 @@ func renderMattermostAppWindows(rctx request.CTX) MattermostApp {
 		rctx.T("web.error.unsupported_browser.download_the_app"),
 		rctx.T("web.error.unsupported_browser.min_os_version.windows"),
 		rctx.T("web.error.unsupported_browser.download"),
-		"https://mattermost.com/pl/download-apps",
+		"https://docs.hanzo.team/download-apps",
 		rctx.T("web.error.unsupported_browser.install_guide.windows"),
-		"https://docs.mattermost.com/install/desktop.html#windows-10-windows-8-1-windows-7",
+		"https://docs.hanzo.team/install/desktop.html#windows-10-windows-8-1-windows-7",
 	}
 }
 

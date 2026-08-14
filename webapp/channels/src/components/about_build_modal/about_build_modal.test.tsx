@@ -63,7 +63,7 @@ describe('components/AboutBuildModal', () => {
         };
         license = {
             IsLicensed: 'true',
-            Company: 'Mattermost Inc',
+            Company: 'Hanzo Team Inc',
             SkuShortName: 'entry',
         };
         socketStatus = {
@@ -77,9 +77,9 @@ describe('components/AboutBuildModal', () => {
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Server Version: 3.6.0');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Database Schema Version: 77');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Build Number: 123456');
-        expect(screen.getByText('Mattermost Entry')).toBeInTheDocument();
+        expect(screen.getByText('Hanzo Team Entry')).toBeInTheDocument();
         expect(screen.getByText('Modern communication from behind your firewall.')).toBeInTheDocument();
-        expect(screen.getByRole('link', {name: 'mattermost.com'})).toHaveAttribute('href', 'https://mattermost.com/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=enterprise&server_version=3.6.0');
+        expect(screen.getByRole('link', {name: 'mattermost.com'})).toHaveAttribute('href', 'https://hanzo.ai/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=enterprise&server_version=3.6.0');
         expect(screen.getByText('EE Build Hash: 0123456789abcdef', {exact: false})).toBeInTheDocument();
         expect(screen.queryByText('Hostname: mock.localhost', {exact: false})).toBeInTheDocument();
 
@@ -99,9 +99,9 @@ describe('components/AboutBuildModal', () => {
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Server Version: 3.6.0');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Database Schema Version: 77');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Build Number: 123456');
-        expect(screen.getByText('Mattermost Team Edition')).toBeInTheDocument();
+        expect(screen.getByText('Hanzo Team')).toBeInTheDocument();
         expect(screen.getByText('All your team communication in one place, instantly searchable and accessible anywhere.')).toBeInTheDocument();
-        expect(screen.getByRole('link', {name: 'mattermost.com/community/'})).toHaveAttribute('href', 'https://mattermost.com/community/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=team&server_version=3.6.0');
+        expect(screen.getByRole('link', {name: 'mattermost.com/community/'})).toHaveAttribute('href', 'https://hanzo.ai/community/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=team&server_version=3.6.0');
         expect(screen.queryByText('EE Build Hash: 0123456789abcdef')).not.toBeInTheDocument();
         expect(screen.queryByText('Hostname: disconnected', {exact: false})).toBeInTheDocument();
 
@@ -125,9 +125,9 @@ describe('components/AboutBuildModal', () => {
             />,
         );
 
-        expect(screen.getByText('Mattermost Cloud')).toBeInTheDocument();
+        expect(screen.getByText('Hanzo Team')).toBeInTheDocument();
         expect(screen.getByText('High-trust messaging for the enterprise')).toBeInTheDocument();
-        expect(screen.getByTestId('aboutModalVersion')).toHaveTextContent('Mattermost Version: 3.6.0');
+        expect(screen.getByTestId('aboutModalVersion')).toHaveTextContent('Hanzo Team Version: 3.6.0');
         expect(screen.getByText('0123456789abcdef', {exact: false})).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'server'})).toHaveAttribute('href', 'https://github.com/mattermost/mattermost-server/blob/master/NOTICE.txt');
         expect(screen.getByRole('link', {name: 'desktop'})).toHaveAttribute('href', 'https://github.com/mattermost/desktop/blob/master/NOTICE.txt');
@@ -149,9 +149,9 @@ describe('components/AboutBuildModal', () => {
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Server Version: dev');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Database Schema Version: 77');
         expect(screen.getByTestId('aboutModalVersionInfo')).toHaveTextContent('Build Number: n/a');
-        expect(screen.getByText('Mattermost Team Edition')).toBeInTheDocument();
+        expect(screen.getByText('Hanzo Team')).toBeInTheDocument();
         expect(screen.getByText('All your team communication in one place, instantly searchable and accessible anywhere.')).toBeInTheDocument();
-        expect(screen.getByRole('link', {name: 'mattermost.com/community/'})).toHaveAttribute('href', 'https://mattermost.com/community/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=team&server_version=dev');
+        expect(screen.getByRole('link', {name: 'mattermost.com/community/'})).toHaveAttribute('href', 'https://hanzo.ai/community/?utm_source=mattermost&utm_medium=in-product&utm_content=about_build_modal&uid=&sid=&edition=team&server_version=dev');
         expect(screen.queryByText('EE Build Hash: 0123456789abcdef')).not.toBeInTheDocument();
         expect(screen.queryByText('Hostname: server did not provide hostname', {exact: false})).toBeInTheDocument();
 
@@ -229,7 +229,7 @@ describe('components/AboutBuildModal', () => {
         renderAboutBuildModal({
             license: {
                 IsLicensed: 'true',
-                Company: 'Mattermost Inc',
+                Company: 'Hanzo Team Inc',
             },
         });
 

@@ -45,7 +45,7 @@ describe('integration utils', () => {
 
         it('should return null on good url element', () => {
             expect(checkDialogElementForError(TestHelper.getDialogElementMock({type: 'text', subtype: 'url'}), 'http://mattermost.com')).toBe(null);
-            expect(checkDialogElementForError(TestHelper.getDialogElementMock({type: 'text', subtype: 'url'}), 'https://mattermost.com')).toBe(null);
+            expect(checkDialogElementForError(TestHelper.getDialogElementMock({type: 'text', subtype: 'url'}), 'https://hanzo.ai')).toBe(null);
         });
 
         it('should return error on bad url element', () => {

@@ -266,7 +266,7 @@ func (ch *Channels) doPluginRequest(rctx request.CTX, method, rawURL string, val
 	if err != nil {
 		return nil, model.NewAppError("doPluginRequest", "api.post.do_action.action_integration.app_error", nil, "", http.StatusBadRequest).Wrap(err)
 	}
-	r.Header.Set("Mattermost-User-Id", rctx.Session().UserId)
+	r.Header.Set("Hanzo Team-User-Id", rctx.Session().UserId)
 	r.Header.Set(model.HeaderAuth, "Bearer "+rctx.Session().Token)
 	params := make(map[string]string)
 	params["plugin_id"] = pluginID

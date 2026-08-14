@@ -91,7 +91,7 @@ describe('Actions.Admin', () => {
             get('/config').
             reply(200, {
                 TeamSettings: {
-                    SiteName: 'Mattermost',
+                    SiteName: 'Hanzo Team',
                 },
             });
 
@@ -111,7 +111,7 @@ describe('Actions.Admin', () => {
         const config = state.entities.admin.config;
         expect(config).toBeTruthy();
         expect(config.TeamSettings).toBeTruthy();
-        expect(config.TeamSettings.SiteName === 'Mattermost').toBeTruthy();
+        expect(config.TeamSettings.SiteName === 'Hanzo Team').toBeTruthy();
     });
 
     it('patchConfig', async () => {
@@ -119,7 +119,7 @@ describe('Actions.Admin', () => {
             get('/config').
             reply(200, {
                 TeamSettings: {
-                    SiteName: 'Mattermost',
+                    SiteName: 'Hanzo Team',
                     TeammateNameDisplay: 'username',
                 },
             });

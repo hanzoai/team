@@ -3258,7 +3258,7 @@ func (a *App) UserIsFirstAdmin(rctx request.CTX, user *model.User) bool {
 
 	systemAdminUsers, errServer := a.Srv().Store().User().GetSystemAdminProfiles()
 	if errServer != nil {
-		rctx.Logger().Warn("Failed to get system admins to check for first admin from Mattermost.")
+		rctx.Logger().Warn("Failed to get system admins to check for first admin from Hanzo Team.")
 		return false
 	}
 

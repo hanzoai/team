@@ -24,7 +24,7 @@ import (
 )
 
 // TestSharedChannelGlobalUserSyncSelfReferential is a comprehensive test suite for MM-62751
-// that tests global user synchronization between connected Mattermost instances.
+// that tests global user synchronization between connected Hanzo Team instances.
 // It uses a self-referential approach where a server syncs with itself, providing real HTTP communication
 // without mocks or invalid URLs. We test calling SyncAllUsersForRemoteCluster directly.
 func TestSharedChannelGlobalUserSyncSelfReferential(t *testing.T) {

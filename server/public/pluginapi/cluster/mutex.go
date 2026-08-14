@@ -31,7 +31,7 @@ type MutexPluginAPI interface {
 
 // Mutex is similar to sync.Mutex, except usable by multiple plugin instances across a cluster.
 //
-// Internally, a mutex relies on an atomic key-value set operation as exposed by the Mattermost
+// Internally, a mutex relies on an atomic key-value set operation as exposed by the Hanzo Team
 // plugin API.
 //
 // Mutexes with different names are unrelated. Mutexes with the same name from different plugins

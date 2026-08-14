@@ -59,9 +59,9 @@ type NoticeMessageInternal struct {
 	Action      *NoticeAction `json:"action,omitempty"`      // Optional action to perform on action button click. (defaults to closing the notice)
 	ActionParam *string       `json:"actionParam,omitempty"` // Optional action parameter.; Example: {"action": "url", actionParam: "/console/some-page"}
 	ActionText  *string       `json:"actionText,omitempty"`  // Optional override for the action button text (defaults to OK)
-	Description string        `json:"description"`           // Notice content. Use {{Mattermost}} instead of plain text to support white-labeling. Text; supports Markdown.
+	Description string        `json:"description"`           // Notice content. Use {{Hanzo Team}} instead of plain text to support white-labeling. Text; supports Markdown.
 	Image       *string       `json:"image,omitempty"`
-	Title       string        `json:"title"` // Notice title. Use {{Mattermost}} instead of plain text to support white-labeling. Text; supports Markdown.
+	Title       string        `json:"title"` // Notice title. Use {{Hanzo Team}} instead of plain text to support white-labeling. Text; supports Markdown.
 }
 type NoticeMessages []NoticeMessage
 

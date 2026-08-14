@@ -23,7 +23,7 @@ const (
 
 	// PropertyValueSystemTargetID is the canonical TargetID sentinel for
 	// values whose TargetType is "system". System-object values attach to
-	// the Mattermost instance itself rather than to a user/channel/post,
+	// the Hanzo Team instance itself rather than to a user/channel/post,
 	// so there is no 26-char entity ID available; this sentinel stands in.
 	PropertyValueSystemTargetID = "system"
 )

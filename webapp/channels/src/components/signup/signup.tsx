@@ -342,7 +342,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
                 id: 'signup.title',
                 defaultMessage: 'Create Account | {siteName}',
             },
-            {siteName: SiteName || 'Mattermost'},
+            {siteName: SiteName || 'Hanzo Team'},
         );
     }, [formatMessage, SiteName]);
 
@@ -410,7 +410,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
             <p className='signup-body-message-subtitle'>
                 {formatMessage({
                     id: 'signup_user_completed.subtitle',
-                    defaultMessage: 'Create your Mattermost account to start collaborating with your team',
+                    defaultMessage: 'Create your Hanzo Team account to start collaborating with your team',
                 })}
             </p>
         );

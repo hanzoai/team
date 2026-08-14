@@ -951,7 +951,7 @@ func TestEstimateTokens(t *testing.T) {
 
 func TestEstimatePostTokens(t *testing.T) {
 	t.Run("estimates tokens from post message", func(t *testing.T) {
-		post := &model.Post{Message: "Hello world from Mattermost"} // 27 chars
+		post := &model.Post{Message: "Hello world from Hanzo Team"} // 27 chars
 		tokens := estimatePostTokens(post)
 		// (27+3)/4 = 7 tokens
 		assert.Equal(t, 7, tokens)

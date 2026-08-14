@@ -1223,33 +1223,33 @@ func TestMarkdownConversion(t *testing.T) {
 		},
 		{
 			name: "markdown: strong",
-			args: "This is **Mattermost**",
-			want: "This is <strong>Mattermost</strong>",
+			args: "This is **Hanzo Team**",
+			want: "This is <strong>Hanzo Team</strong>",
 		},
 		{
 			name: "markdown: blockquote",
 			args: "Below is blockquote\n" +
-				"> This is Mattermost blockquote\n" +
+				"> This is Hanzo Team blockquote\n" +
 				"> on multiple lines!",
 			want: "<blockquote>\n" +
-				"<p>This is Mattermost blockquote\n" +
+				"<p>This is Hanzo Team blockquote\n" +
 				"on multiple lines!</p>\n" +
 				"</blockquote>",
 		},
 		{
 			name: "markdown: emphasis",
-			args: "This is *Mattermost*",
-			want: "This is <em>Mattermost</em>",
+			args: "This is *Hanzo Team*",
+			want: "This is <em>Hanzo Team</em>",
 		},
 		{
 			name: "markdown: links",
-			args: "This is [Mattermost](https://mattermost.com)",
-			want: "This is <a href=\"https://mattermost.com\">Mattermost</a>",
+			args: "This is [Hanzo Team](https://hanzo.ai)",
+			want: "This is <a href=\"https://hanzo.ai\">Hanzo Team</a>",
 		},
 		{
 			name: "markdown: strikethrough",
-			args: "This is ~~Mattermost~~",
-			want: "This is <del>Mattermost</del>",
+			args: "This is ~~Hanzo Team~~",
+			want: "This is <del>Hanzo Team</del>",
 		},
 		{
 			name: "markdown: table",
@@ -1287,9 +1287,9 @@ func TestMarkdownConversion(t *testing.T) {
 		},
 		{
 			name: "markdown: multiline with header and links",
-			args: "###### H6 header\n[link 1](https://mattermost.com) - [link 2](https://mattermost.com)",
+			args: "###### H6 header\n[link 1](https://hanzo.ai) - [link 2](https://hanzo.ai)",
 			want: "<h6>H6 header</h6>\n" +
-				"<p><a href=\"https://mattermost.com\">link 1</a> - <a href=\"https://mattermost.com\">link 2</a></p>",
+				"<p><a href=\"https://hanzo.ai\">link 1</a> - <a href=\"https://hanzo.ai\">link 2</a></p>",
 		},
 	}
 

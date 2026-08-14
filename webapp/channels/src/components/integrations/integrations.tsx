@@ -147,7 +147,7 @@ export default class Integrations extends React.PureComponent <Props> {
                         description={
                             <FormattedMessage
                                 id='integrations.oauthApps.description'
-                                defaultMessage='OAuth 2.0 allows external applications to make authorized requests to the Mattermost API'
+                                defaultMessage='OAuth 2.0 allows external applications to make authorized requests to the Hanzo Team API'
                             />
                         }
                         link={'/' + this.props.team.name + '/integrations/oauth2-apps'}
@@ -200,7 +200,7 @@ export default class Integrations extends React.PureComponent <Props> {
                     description={
                         <FormattedMessage
                             id='bots.manage.description'
-                            defaultMessage='Use bot accounts to integrate with Mattermost through plugins or the API'
+                            defaultMessage='Use bot accounts to integrate with Hanzo Team through plugins or the API'
                         />
                     }
                     link={'/' + this.props.team.name + '/integrations/bots'}
@@ -221,11 +221,11 @@ export default class Integrations extends React.PureComponent <Props> {
                 <div className='backstage-list__help'>
                     <FormattedMessage
                         id='integrations.help'
-                        defaultMessage='Visit the {appDirectory} to find self-hosted, third-party apps and integrations for Mattermost.'
+                        defaultMessage='Visit the {appDirectory} to find self-hosted, third-party apps and integrations for Hanzo Team.'
                         values={{
                             appDirectory: (
                                 <ExternalLink
-                                    href='https://mattermost.com/marketplace'
+                                    href='https://hanzo.ai/marketplace'
                                     location='integrations'
                                 >
                                     <FormattedMessage

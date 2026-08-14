@@ -17,13 +17,13 @@ const ClassificationMarkingsFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.EnterpriseAdvanced}
             title={defineMessage({
                 id: 'admin.classification_markings_feature_discovery.title',
-                defaultMessage: 'Apply classification markings with Mattermost Enterprise Advanced',
+                defaultMessage: 'Apply classification markings with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.classification_markings_feature_discovery.desc',
                 defaultMessage: 'Set up global and channel-specific classification banners with built-in presets or custom levels, ensuring that users consistently view the appropriate classification level for their workspace.',
             })}
-            learnMoreURL='https://docs.mattermost.com/end-user-guide/collaborate/display-channel-banners.html#classification-markings'
+            learnMoreURL='https://docs.hanzo.team/end-user-guide/collaborate/display-channel-banners.html#classification-markings'
             featureDiscoveryImage={
                 <ClassificationMarkingsSVG
                     width={294}

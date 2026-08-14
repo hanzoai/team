@@ -592,7 +592,7 @@ class UserAccessTokenSection extends React.PureComponent<Props, State> {
                     <p>
                         <FormattedMessage
                             id='user.settings.tokens.confirmDelete.description'
-                            defaultMessage={'Any integrations using this token will no longer be able to access the Mattermost API. You cannot undo this action.'}
+                            defaultMessage={'Any integrations using this token will no longer be able to access the Hanzo Team API. You cannot undo this action.'}
                         />
                     </p>
                     <p>

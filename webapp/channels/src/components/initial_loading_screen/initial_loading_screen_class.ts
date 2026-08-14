@@ -38,7 +38,7 @@ export class InitialLoadingScreenClass {
 
     private init() {
         if (isDesktopApp()) {
-            // Let Mattermost desktop handle the loading screen
+            // Let Hanzo Team desktop handle the loading screen
             this.destroy();
             return;
         }

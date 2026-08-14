@@ -20,7 +20,7 @@ describe('components/marketplace/marketplace_list', () => {
         manifest: {
             id: 'com.mattermost.nps',
             name: 'User Satisfaction Surveys',
-            description: 'This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Mattermost',
+            description: 'This plugin sends quarterly user satisfaction surveys to gather feedback and help improve Hanzo Team',
             version: '1.0.3',
             min_server_version: '5.14.0',
         },

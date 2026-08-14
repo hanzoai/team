@@ -2466,7 +2466,7 @@ func (a *App) BuildAccessControlSubject(rctx request.CTX, userID string, roles s
 		}
 	}
 
-	// Populate Mattermost-native user attributes (user.email / user.verified /
+	// Populate Hanzo Team-native user attributes (user.email / user.verified /
 	// user.isbot / user.createat) for runtime PDP evaluation. a.GetUser is the
 	// cached user read and already resolves IsBot via the Bots join, so this is
 	// a single (usually cache-hit) lookup per subject build.

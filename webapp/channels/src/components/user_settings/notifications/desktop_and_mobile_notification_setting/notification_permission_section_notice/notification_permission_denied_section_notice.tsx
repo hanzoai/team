@@ -10,7 +10,7 @@ export default function NotificationPermissionDeniedSectionNotice() {
     const intl = useIntl();
 
     const handleClick = useCallback(() => {
-        window.open('https://mattermost.com/pl/manage-notifications', '_blank', 'noopener,noreferrer');
+        window.open('https://docs.hanzo.team/manage-notifications', '_blank', 'noopener,noreferrer');
     }, []);
 
     return (
@@ -23,7 +23,7 @@ export default function NotificationPermissionDeniedSectionNotice() {
                 })}
                 text={intl.formatMessage({
                     id: 'user.settings.notifications.desktopAndMobile.notificationSection.permissionDenied.message',
-                    defaultMessage: 'You\'re missing important message and call notifications from Mattermost. To start receiving notifications, please enable notifications for Mattermost in your browser settings.',
+                    defaultMessage: 'You\'re missing important message and call notifications from Hanzo Team. To start receiving notifications, please enable notifications for Hanzo Team in your browser settings.',
                 })}
                 tertiaryButton={{
                     text: intl.formatMessage({

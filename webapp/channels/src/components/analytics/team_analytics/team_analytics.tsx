@@ -225,7 +225,7 @@ export default class TeamAnalytics extends React.PureComponent<Props, State> {
                             values={{
                                 link: (msg: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://docs.mattermost.com/administration/statistics.html'
+                                        href='https://docs.hanzo.team/administration/statistics.html'
                                         location='team_analytics'
                                     >
                                         {msg}

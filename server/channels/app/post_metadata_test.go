@@ -1559,7 +1559,7 @@ func TestGetImagesForPost(t *testing.T) {
 		assert.Equal(t, images, map[string]*model.PostImage{})
 	})
 
-	t.Run("should not process OpenGraph image that's a Mattermost permalink", func(t *testing.T) {
+	t.Run("should not process OpenGraph image that's a Hanzo Team permalink", func(t *testing.T) {
 		th := SetupWithStoreMock(t)
 
 		ogURL := "https://example.com/index.html"
@@ -1586,7 +1586,7 @@ func TestGetImagesForPost(t *testing.T) {
 
 		mockPostStore := mocks.PostStore{}
 		mockPostStore.On("GetSingle", "qwertyuiopasdfghjklzxcvbnm", false).RunFn = func(args mock.Arguments) {
-			assert.Fail(t, "should not have tried to process Mattermost permalink in OG image URL")
+			assert.Fail(t, "should not have tried to process Hanzo Team permalink in OG image URL")
 		}
 
 		mockLinkMetadataStore := mocks.LinkMetadataStore{}
@@ -2761,7 +2761,7 @@ func TestGetLinkMetadata(t *testing.T) {
 
 		th.App.UpdateConfig(func(cfg *model.Config) {
 			*cfg.ServiceSettings.AllowedUntrustedInternalConnections = ""
-			*cfg.ServiceSettings.SiteURL = "http://mattermost.example.com"
+			*cfg.ServiceSettings.SiteURL = "http://team.example.com"
 			*cfg.ImageProxySettings.Enable = true
 			*cfg.ImageProxySettings.ImageProxyType = "local"
 		})
@@ -2941,14 +2941,14 @@ func TestResolveMetadataURL(t *testing.T) {
 		{
 			Name:       "relative to root",
 			RequestURL: "/file?param=1",
-			SiteURL:    "https://mattermost.example.com:123",
-			Expected:   "https://mattermost.example.com:123/file?param=1",
+			SiteURL:    "https://team.example.com:123",
+			Expected:   "https://team.example.com:123/file?param=1",
 		},
 		{
 			Name:       "relative to root with subpath",
 			RequestURL: "/file?param=1",
-			SiteURL:    "https://mattermost.example.com:123/subpath",
-			Expected:   "https://mattermost.example.com:123/file?param=1",
+			SiteURL:    "https://team.example.com:123/subpath",
+			Expected:   "https://team.example.com:123/file?param=1",
 		},
 	} {
 		t.Run(test.Name, func(t *testing.T) {
@@ -3354,7 +3354,7 @@ func TestSanitizePostMetadataForUser(t *testing.T) {
 					},
 					{
 						Type: model.PostEmbedLink,
-						URL:  "https://mattermost.com",
+						URL:  "https://hanzo.ai",
 					},
 				},
 			},
@@ -3406,7 +3406,7 @@ func TestSanitizePostMetadataForUser(t *testing.T) {
 					},
 					{
 						Type: model.PostEmbedLink,
-						URL:  "https://mattermost.com",
+						URL:  "https://hanzo.ai",
 					},
 				},
 			},

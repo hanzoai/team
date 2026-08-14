@@ -61,8 +61,8 @@ func TestGetIssuerFromURL(t *testing.T) {
 		{"http://somewebsite.com/chat", url.QueryEscape("somewebsite.com/chat")},
 		{"somewebsite.com ", url.QueryEscape("somewebsite.com")},
 		{"http://localhost:8065", url.QueryEscape("localhost:8065")},
-		{"", "Mattermost"},
-		{"  ", "Mattermost"},
+		{"", "Hanzo Team"},
+		{"  ", "Hanzo Team"},
 	}
 
 	for _, c := range cases {

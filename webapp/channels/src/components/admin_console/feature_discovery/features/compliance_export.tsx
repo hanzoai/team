@@ -17,7 +17,7 @@ const ComplianceExportFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.compliance_export_feature_discovery.title',
-                defaultMessage: 'Run compliance exports with Mattermost Enterprise',
+                defaultMessage: 'Run compliance exports with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.compliance_export_feature_discovery.copy',

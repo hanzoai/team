@@ -74,7 +74,7 @@ describe('AdminDefinition - Mobile Ephemeral Mode Settings', () => {
         expect(section?.componentProps?.featureDiscoveryConfig).toBeDefined();
         expect(section?.componentProps?.featureDiscoveryConfig?.featureName).toBe('mobile_ephemeral_mode');
         expect(section?.componentProps?.featureDiscoveryConfig?.learnMoreURL).toBe(
-            'https://docs.mattermost.com/configure/environment-configuration-settings.html#mobile-security',
+            'https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security',
         );
     });
 

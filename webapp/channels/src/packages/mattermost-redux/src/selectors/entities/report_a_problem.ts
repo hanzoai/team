@@ -28,7 +28,7 @@ export function getReportAProblemLink(state: GlobalState): string {
         if (!isFreeEdition(state)) {
             return getDefaultReportAProblemMailtoLink(state);
         }
-        return 'https://mattermost.com/pl/report_a_problem_unlicensed';
+        return 'https://docs.hanzo.team/report_a_problem_unlicensed';
     }
     }
     return '';
@@ -54,7 +54,7 @@ export const getDefaultReportAProblemMailtoLink = createSelector(
             logsInstructions = 'browser console logs (https://support.mattermost.com/hc/en-us/articles/35971622382484)';
         }
 
-        const subject = 'Problem with Mattermost app';
+        const subject = 'Problem with Hanzo Team app';
         const body =
             `Please share a description of the problem with reproduction steps:
 
@@ -84,7 +84,7 @@ export const getSystemInfoMailtoLink = createSelector(
         const {browser, browserVersion} = getBrowserInfo();
         const platformName = getPlatformInfo();
 
-        const subject = `Problem with ${siteName || 'Mattermost'} app`;
+        const subject = `Problem with ${siteName || 'Hanzo Team'} app`;
         const body = `
 System Information:
 - User ID: ${currentUserId}

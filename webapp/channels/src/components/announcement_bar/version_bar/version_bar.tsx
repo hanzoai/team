@@ -39,7 +39,7 @@ const VersionBar = ({
                     <>
                         <FormattedMessage
                             id='version_bar.new'
-                            defaultMessage='A new version of Mattermost is available.'
+                            defaultMessage='A new version of Hanzo Team is available.'
                         />
                         <a
                             onClick={reloadPage}

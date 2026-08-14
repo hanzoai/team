@@ -89,7 +89,7 @@ func TestAtmosCamoBackend_GetImageDirect(t *testing.T) {
 }
 
 func TestGetAtmosCamoImageURL(t *testing.T) {
-	imageURL := "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png"
+	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
 	proxiedURL := "http://images.example.com/03b122734ae088d10cb46ea05512ec7dc852299e/68747470733a2f2f6d61747465726d6f73742e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032322f30322f6c6f676f486f72697a6f6e74616c2e706e67"
 
 	defaultSiteURL := "https://mattermost.example.com"
@@ -132,13 +132,13 @@ func TestGetAtmosCamoImageURL(t *testing.T) {
 			Expected: defaultSiteURL,
 		},
 		{
-			Name:     "should not proxy an image on the Mattermost server",
+			Name:     "should not proxy an image on the Hanzo Team server",
 			Input:    "https://mattermost.example.com/static/logo.png",
 			SiteURL:  defaultSiteURL,
 			Expected: "https://mattermost.example.com/static/logo.png",
 		},
 		{
-			Name:     "should not proxy an image on the Mattermost server when a subpath is set",
+			Name:     "should not proxy an image on the Hanzo Team server when a subpath is set",
 			Input:    "https://mattermost.example.com/static/logo.png",
 			SiteURL:  defaultSiteURL + "/static",
 			Expected: "https://mattermost.example.com/static/logo.png",
@@ -151,19 +151,19 @@ func TestGetAtmosCamoImageURL(t *testing.T) {
 		},
 		{
 			Name:     "should not bypass protocol relative URLs",
-			Input:    "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png",
+			Input:    "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png",
 			SiteURL:  "http://mattermost.example.com",
 			Expected: proxiedURL,
 		},
 		{
 			Name:     "should not bypass if the host prefix is same",
-			Input:    "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png",
+			Input:    "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png",
 			SiteURL:  defaultSiteURL,
 			Expected: "http://images.example.com/03b122734ae088d10cb46ea05512ec7dc852299e/68747470733a2f2f6d61747465726d6f73742e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032322f30322f6c6f676f486f72697a6f6e74616c2e706e67",
 		},
 		{
 			Name:     "should not bypass for user auth URLs",
-			Input:    "https://mattermost.com/wp-content/uploads/2022/02/logoHorizontal.png",
+			Input:    "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png",
 			SiteURL:  defaultSiteURL,
 			Expected: "http://images.example.com/03b122734ae088d10cb46ea05512ec7dc852299e/68747470733a2f2f6d61747465726d6f73742e636f6d2f77702d636f6e74656e742f75706c6f6164732f323032322f30322f6c6f676f486f72697a6f6e74616c2e706e67",
 		},

@@ -26,7 +26,7 @@ const (
 var reservedIPRanges []*net.IPNet
 
 // IsReservedIP checks whether the target IP belongs to reserved IP address ranges to avoid SSRF attacks to the internal
-// network of the Mattermost server
+// network of the Hanzo Team server
 func IsReservedIP(ip net.IP) bool {
 	// Canonicalize IPv4-mapped IPv6 addresses (e.g., ::ffff:127.0.0.1) to their
 	// native IPv4 form so that IPv4 CIDR ranges match correctly.
@@ -116,7 +116,7 @@ func init() {
 		}
 		reservedIPRanges = append(reservedIPRanges, parsed)
 	}
-	defaultUserAgent = "Mattermost-Bot/1.1"
+	defaultUserAgent = "Hanzo Team-Bot/1.1"
 }
 
 type DialContextFunction func(ctx context.Context, network, addr string) (net.Conn, error)

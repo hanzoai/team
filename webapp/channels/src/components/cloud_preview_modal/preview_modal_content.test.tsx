@@ -53,7 +53,7 @@ describe('PreviewModalContent', () => {
         expect(screen.getByText('ENTERPRISE')).toBeInTheDocument();
         const skuLabelContainer = screen.getByText('ENTERPRISE').closest('.preview-modal-content__sku-label');
         expect(skuLabelContainer).toBeInTheDocument();
-        expect(screen.getByLabelText('Mattermost Logo')).toBeInTheDocument();
+        expect(screen.getByLabelText('Hanzo Team Logo')).toBeInTheDocument();
     });
 
     it('should not render SKU label when not provided', () => {
@@ -182,7 +182,7 @@ describe('PreviewModalContent', () => {
         const images = screen.getAllByRole('img');
         const contentImages = images.filter((img) => {
             const ariaLabel = img.getAttribute('aria-label');
-            return !ariaLabel || !ariaLabel.includes('Mattermost Logo');
+            return !ariaLabel || !ariaLabel.includes('Hanzo Team Logo');
         });
         expect(contentImages).toHaveLength(0);
     });

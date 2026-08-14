@@ -118,7 +118,7 @@ const getEntryTransitionBanner = (newSkuShortName: string | undefined): BannerCo
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.entry_to_professional.description',
-                defaultMessage: 'Mattermost Professional adds paid-tier capabilities such as unlimited message history. Some features in Mattermost Entry are not included in Professional (see plan differences).',
+                defaultMessage: 'Hanzo Team adds paid-tier capabilities such as unlimited message history. Some features in Hanzo Team Entry are not included in Professional (see plan differences).',
             }),
             showPlanDiffLink: true,
         };
@@ -131,7 +131,7 @@ const getEntryTransitionBanner = (newSkuShortName: string | undefined): BannerCo
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.entry_to_enterprise.description',
-                defaultMessage: 'Mattermost Enterprise includes unlimited message history and adds enterprise-grade scale, compliance, and administration capabilities. Some features in Mattermost Entry are not included in Enterprise.',
+                defaultMessage: 'Hanzo Team includes unlimited message history and adds enterprise-grade scale, compliance, and administration capabilities. Some features in Hanzo Team Entry are not included in Enterprise.',
             }),
             showPlanDiffLink: true,
         };
@@ -144,7 +144,7 @@ const getEntryTransitionBanner = (newSkuShortName: string | undefined): BannerCo
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.entry_to_advanced.description',
-                defaultMessage: 'Mattermost Enterprise Advanced includes all Enterprise features, unlocks unlimited message history, and adds exclusive capabilities like Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations',
+                defaultMessage: 'Hanzo Team includes all Enterprise features, unlocks unlimited message history, and adds exclusive capabilities like Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations',
             }),
             showPlanDiffLink: false,
         };
@@ -169,7 +169,7 @@ const getUpgradeBanner = (currentSkuShortName: string | undefined, newSkuShortNa
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.upgrade_professional_to_enterprise.description',
-                defaultMessage: 'Mattermost Enterprise includes all features available in Mattermost Professional, plus enterprise scale and high availability, advanced compliance and administration features, and enterprise support options.',
+                defaultMessage: 'Hanzo Team includes all features available in Hanzo Team, plus enterprise scale and high availability, advanced compliance and administration features, and enterprise support options.',
             }),
             showPlanDiffLink: false,
         };
@@ -184,7 +184,7 @@ const getUpgradeBanner = (currentSkuShortName: string | undefined, newSkuShortNa
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.upgrade_professional_to_advanced.description',
-                defaultMessage: 'Mattermost Enterprise Advanced includes all Professional and Enterprise features — enterprise scale, advanced compliance and administration — plus Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations.',
+                defaultMessage: 'Hanzo Team includes all Professional and Enterprise features — enterprise scale, advanced compliance and administration — plus Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations.',
             }),
             showPlanDiffLink: false,
         };
@@ -199,7 +199,7 @@ const getUpgradeBanner = (currentSkuShortName: string | undefined, newSkuShortNa
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.upgrade_enterprise_to_advanced.description',
-                defaultMessage: 'Mattermost Enterprise Advanced includes all Enterprise features, plus Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations.',
+                defaultMessage: 'Hanzo Team includes all Enterprise features, plus Zero Trust security, sensitive information controls, and mobile security hardening for mission-critical operations.',
             }),
             showPlanDiffLink: false,
         };
@@ -237,7 +237,7 @@ const getDowngradeBanner = (currentSkuShortName: string | undefined, newSkuShort
             }),
             description: defineMessage({
                 id: 'admin.license.diff.banner.downgrade_advanced_to_enterprise.description',
-                defaultMessage: 'You will lose access to Mattermost Enterprise Advanced features, including Zero Trust security, sensitive information controls, and mobile security hardening.',
+                defaultMessage: 'You will lose access to Hanzo Team features, including Zero Trust security, sensitive information controls, and mobile security hardening.',
             }),
             showPlanDiffLink: true,
         };

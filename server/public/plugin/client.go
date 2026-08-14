@@ -28,7 +28,7 @@ func WithTestContext(ctx context.Context) func(*plugin.ServeConfig) error {
 }
 
 // WithTestReattachConfigCh configures the channel to receive the ReattachConfig used to reattach
-// an externally launched plugin instance with the Mattermost server.
+// an externally launched plugin instance with the Hanzo Team server.
 func WithTestReattachConfigCh(reattachConfigCh chan<- *plugin.ReattachConfig) func(*plugin.ServeConfig) error {
 	return func(config *plugin.ServeConfig) error {
 		if config.Test == nil {
@@ -54,7 +54,7 @@ func WithTestCloseCh(closeCh chan<- struct{}) func(*plugin.ServeConfig) error {
 	}
 }
 
-// Starts the serving of a Mattermost plugin over net/rpc. gRPC is not supported.
+// Starts the serving of a Hanzo Team plugin over net/rpc. gRPC is not supported.
 //
 // Call this when your plugin is ready to start. Options allow configuring plugins for testing
 // scenarios.

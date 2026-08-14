@@ -31,7 +31,7 @@ const HelpCommands = (): JSX.Element => {
                 <p>
                     <FormattedMessage
                         id='help.commands.intro'
-                        defaultMessage='You can execute commands, called slash commands, by typing into the text input box to perform operations in Mattermost. To run a slash command, type <code>/</code> followed by a command and some arguments to perform actions.'
+                        defaultMessage='You can execute commands, called slash commands, by typing into the text input box to perform operations in Hanzo Team. To run a slash command, type <code>/</code> followed by a command and some arguments to perform actions.'
                         values={{
                             code: (chunks: React.ReactNode) => <code>{chunks}</code>,
                         }}
@@ -48,11 +48,11 @@ const HelpCommands = (): JSX.Element => {
                     <p>
                         <FormattedMessage
                             id='help.commands.builtin.description'
-                            defaultMessage='Built-in slash commands come with all Mattermost installations. See the <link>product documentation</link> for a list of available built-in slash commands.'
+                            defaultMessage='Built-in slash commands come with all Hanzo Team installations. See the <link>product documentation</link> for a list of available built-in slash commands.'
                             values={{
                                 link: (chunks: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://docs.mattermost.com/integrations-guide/built-in-slash-commands.html'
+                                        href='https://docs.hanzo.team/integrations-guide/built-in-slash-commands.html'
                                         location='help_commands'
                                     >
                                         {chunks}
@@ -173,7 +173,7 @@ const HelpCommands = (): JSX.Element => {
                                 b: (chunks: React.ReactNode) => <b>{chunks}</b>,
                                 link: (chunks: React.ReactNode) => (
                                     <ExternalLink
-                                        href='https://developers.mattermost.com/integrate/slash-commands/custom/'
+                                        href='https://docs.hanzo.team/integrate/slash-commands/custom/'
                                         location='help_commands'
                                     >
                                         {chunks}

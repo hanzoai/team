@@ -38,7 +38,7 @@ describe('components/admin_console/feature_discovery/features/DataSpillageFeatur
     it('renders the Data Spillage discovery card', () => {
         renderWithContext(<DataSpillageFeatureDiscovery/>);
 
-        expect(screen.getByText('Handle data spillage with Mattermost Enterprise Advanced')).toBeInTheDocument();
+        expect(screen.getByText('Handle data spillage with Hanzo Team')).toBeInTheDocument();
         expect(screen.getByText(
             'Set up the ability for users to quarantine messages so designated Content Reviewers can decide whether to keep or remove them.',
         )).toBeInTheDocument();
@@ -46,7 +46,7 @@ describe('components/admin_console/feature_discovery/features/DataSpillageFeatur
         expect(screen.getByRole('button', {name: 'Contact sales'})).toBeInTheDocument();
         expect(screen.getByRole('link', {name: 'Learn more'})).toHaveAttribute(
             'href',
-            expect.stringContaining('https://docs.mattermost.com/administration-guide/manage/admin/content-flagging.html'),
+            expect.stringContaining('https://docs.hanzo.team/administration-guide/manage/admin/content-flagging.html'),
         );
         expect(document.querySelector('.FeatureDiscovery_imageWrapper svg')).toBeInTheDocument();
     });

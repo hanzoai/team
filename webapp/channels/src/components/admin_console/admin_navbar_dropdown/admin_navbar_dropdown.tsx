@@ -78,7 +78,7 @@ class AdminNavbarDropdown extends React.PureComponent<Props> {
 
         let commercialSupport = (
             <Menu.ItemExternalLink
-                url='https://mattermost.com/support/'
+                url='https://hanzo.ai/support/'
                 text={formatMessage({id: 'admin.nav.commercialSupport', defaultMessage: 'Commercial Support'})}
             />
         );
@@ -93,9 +93,9 @@ class AdminNavbarDropdown extends React.PureComponent<Props> {
             );
         }
 
-        let adminGuideLink = 'https://docs.mattermost.com/guides/administration.html';
+        let adminGuideLink = 'https://docs.hanzo.team/guides/administration.html';
         if (isCloud) {
-            adminGuideLink = 'https://docs.mattermost.com/guides/administration.html#cloud-workspace-management';
+            adminGuideLink = 'https://docs.hanzo.team/guides/administration.html#cloud-workspace-management';
         }
 
         return (
@@ -110,14 +110,14 @@ class AdminNavbarDropdown extends React.PureComponent<Props> {
                         text={formatMessage({id: 'admin.nav.administratorsGuide', defaultMessage: "Administrator's Guide"})}
                     />
                     <Menu.ItemExternalLink
-                        url={'https://forum.mattermost.com/t/how-to-use-the-troubleshooting-forum/150'}
+                        url={'https://docs.hanzo.team/t/how-to-use-the-troubleshooting-forum/150'}
                         text={formatMessage({id: 'admin.nav.troubleshootingForum', defaultMessage: 'Troubleshooting Forum'})}
                     />
                     {commercialSupport}
                     <Menu.ItemToggleModalRedux
                         modalId={ModalIdentifiers.ABOUT}
                         dialogType={AboutBuildModal}
-                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName || 'Mattermost'})}
+                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName || 'Hanzo Team'})}
                     />
                 </Menu.Group>
                 <Menu.Group>

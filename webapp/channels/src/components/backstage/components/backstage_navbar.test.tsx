@@ -20,13 +20,13 @@ describe('components/backstage/components/BackstageNavbar', () => {
         renderWithContext(
             <BackstageNavbar
                 team={activeTeam}
-                siteName='Mattermost'
+                siteName='Hanzo Team'
             />,
         );
 
         const link = screen.getByRole('link');
         expect(link).toHaveAttribute('href', '/my-team');
-        expect(screen.getByText('Back to Mattermost')).toBeInTheDocument();
+        expect(screen.getByText('Back to Hanzo Team')).toBeInTheDocument();
     });
 
     test('should use team display_name when siteName is not provided', () => {
@@ -56,7 +56,7 @@ describe('components/backstage/components/BackstageNavbar', () => {
         renderWithContext(
             <BackstageNavbar
                 team={deletedTeam}
-                siteName='Mattermost'
+                siteName='Hanzo Team'
             />,
         );
 

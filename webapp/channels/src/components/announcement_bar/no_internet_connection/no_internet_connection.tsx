@@ -34,7 +34,7 @@ const NoInternetConnection: React.FC<NoInternetConnectionProps> = (props: NoInte
                 <span className='noInternetConnection__contactSupport'>
                     <FormattedMessage
                         id='announcement_bar.warn.contact_support_text'
-                        defaultMessage='To renew your license, contact support at support@mattermost.com.'
+                        defaultMessage='To renew your license, contact support at support@hanzo.ai.'
                     />
                 </span>
                 <span className='noInternetConnection__emailUs'>
@@ -44,7 +44,7 @@ const NoInternetConnection: React.FC<NoInternetConnectionProps> = (props: NoInte
                         values={{
                             a: (chunks) => (
                                 <ExternalLink
-                                    href='mailto:support@mattermost.com'
+                                    href='mailto:support@hanzo.ai'
                                     location='announcement_bar'
                                 >
                                     {chunks}

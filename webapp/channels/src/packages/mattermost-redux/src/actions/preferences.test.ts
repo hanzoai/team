@@ -199,7 +199,7 @@ describe('Actions.Preferences', () => {
                 category: 'theme',
                 name: team.id,
                 value: JSON.stringify({
-                    type: 'Mattermost',
+                    type: 'Hanzo Team',
                 }),
             },
         ];
@@ -215,7 +215,7 @@ describe('Actions.Preferences', () => {
         await store.dispatch(Actions.getMyPreferences());
 
         const newTheme = {
-            type: 'Mattermost Dark',
+            type: 'Hanzo Team Dark',
         } as unknown as Theme;
         nock(Client4.getUsersRoute()).
             put(`/${TestHelper.basicUser!.id}/preferences`).
@@ -239,7 +239,7 @@ describe('Actions.Preferences', () => {
         await store.dispatch(loadMe());
 
         const theme = {
-            type: 'Mattermost Dark',
+            type: 'Hanzo Team Dark',
         };
         const existingPreferences = [
             {
@@ -253,7 +253,7 @@ describe('Actions.Preferences', () => {
                 category: 'theme',
                 name: TestHelper.generateId(),
                 value: JSON.stringify({
-                    type: 'Mattermost',
+                    type: 'Hanzo Team',
                 }),
             },
             {
@@ -261,7 +261,7 @@ describe('Actions.Preferences', () => {
                 category: 'theme',
                 name: TestHelper.generateId(),
                 value: JSON.stringify({
-                    type: 'Mattermost',
+                    type: 'Hanzo Team',
                 }),
             },
         ];

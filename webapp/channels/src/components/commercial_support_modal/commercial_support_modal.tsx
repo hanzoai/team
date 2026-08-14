@@ -136,7 +136,7 @@ export default class CommercialSupportModal extends React.PureComponent<Props, S
         const {showBannerWarning} = this.state;
         const {isCloud, currentUser} = this.props;
 
-        const supportLink = isCloud ? `https://customers.mattermost.com/cloud/contact-us?name=${currentUser.first_name} ${currentUser.last_name}&email=${currentUser.email}&inquiry=technical` : 'https://support.mattermost.com/hc/en-us/requests/new';
+        const supportLink = isCloud ? `https://hanzo.ai/cloud/contact-us?name=${currentUser.first_name} ${currentUser.last_name}&email=${currentUser.email}&inquiry=technical` : 'https://support.mattermost.com/hc/en-us/requests/new';
         return (
             <Modal
                 id='commercialSupportModal'
@@ -157,7 +157,7 @@ export default class CommercialSupportModal extends React.PureComponent<Props, S
                     <div className='CommercialSupportModal'>
                         <FormattedMessage
                             id='commercial_support_modal.description'
-                            defaultMessage={'If you\'re experiencing issues, <supportLink>submit a support ticket</supportLink>. To help with troubleshooting, it\'s recommended to download the Support Packet below that includes more details about your Mattermost environment.'}
+                            defaultMessage={'If you\'re experiencing issues, <supportLink>submit a support ticket</supportLink>. To help with troubleshooting, it\'s recommended to download the Support Packet below that includes more details about your Hanzo Team environment.'}
                             values={{
                                 supportLink: (chunks) => (
                                     <ExternalLink

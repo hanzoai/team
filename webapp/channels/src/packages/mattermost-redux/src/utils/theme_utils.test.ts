@@ -158,16 +158,16 @@ describe('getContrastingSimpleColor', () => {
 
     // Test for more realistic use cases
     it('should return appropriate contrast colors for common UI colors', () => {
-        // Mattermost denim blue
+        // Hanzo Team denim blue
         expect(getContrastingSimpleColor('#1e325c')).toBe('#FFFFFF');
 
-        // Mattermost Onyx grey
+        // Hanzo Team Onyx grey
         expect(getContrastingSimpleColor('#202228')).toBe('#FFFFFF');
 
-        // Mattermost Indigo blue
+        // Hanzo Team Indigo blue
         expect(getContrastingSimpleColor('#151e32')).toBe('#FFFFFF');
 
-        // Mattermost quartz white
+        // Hanzo Team quartz white
         expect(getContrastingSimpleColor('#f4f4f6')).toBe('#000000');
     });
 });

@@ -14,7 +14,7 @@ describe('components/FormattedMarkdownMessage', () => {
     test('should render message', () => {
         const props = {
             id: 'test.foo',
-            defaultMessage: '**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)',
+            defaultMessage: '**bold** *italic* [link](https://hanzo.ai/) <br/> [link target blank](!https://hanzo.ai/)',
         };
         const {container} = render(wrapProvider(<FormattedMarkdownMessage {...props}/>));
         expect(container).toMatchSnapshot();
@@ -70,7 +70,7 @@ describe('components/FormattedMarkdownMessage', () => {
 
 function wrapProvider(el: JSX.Element) {
     const enTranslationData = {
-        'test.foo': '**bold** *italic* [link](https://mattermost.com/) <br/> [link target blank](!https://mattermost.com/)',
+        'test.foo': '**bold** *italic* [link](https://hanzo.ai/) <br/> [link target blank](!https://hanzo.ai/)',
         'test.bar': '<b>hello</b> <script>var malicious = true;</script> world!',
         'test.vals': '*Hi* {petName}!',
     };

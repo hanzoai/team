@@ -17,13 +17,13 @@ const AttributeBasedAccessControlFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.EnterpriseAdvanced}
             title={defineMessage({
                 id: 'admin.attribute_based_access_control_feature_discovery.title',
-                defaultMessage: 'Use attribute based access policies to control channel access with Mattermost Enterprise Advanced',
+                defaultMessage: 'Use attribute based access policies to control channel access with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.attribute_based_access_control_feature_discovery.desc',
-                defaultMessage: 'Create policies containing access rules based on user attributes and apply them to channels and other resources within Mattermost.',
+                defaultMessage: 'Create policies containing access rules based on user attributes and apply them to channels and other resources within Hanzo Team.',
             })}
-            learnMoreURL='https://docs.mattermost.com/administration-guide/manage/admin/attribute-based-access-control.html'
+            learnMoreURL='https://docs.hanzo.team/administration-guide/manage/admin/attribute-based-access-control.html'
             featureDiscoveryImage={
                 <SystemRolesSVG
                     width={294}

@@ -45,7 +45,7 @@ const (
 	// service endpoints so admins do not have to spell out the suffix
 	// for the well-known clouds. AzureCloudCustom hands control to the
 	// admin: FileSettings.AzureEndpoint becomes the full service URL,
-	// scheme and storage account included, and Mattermost passes it to
+	// scheme and storage account included, and Hanzo Team passes it to
 	// the SDK unchanged. Use this for Azurite, reverse proxies, or any
 	// other non-default deployment topology.
 	AzureCloudCommercial = "commercial"
@@ -3614,7 +3614,7 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 	}
 
 	if s.PluginStates[PluginIdNPS] == nil {
-		// NPS surveys report to Mattermost. Off.
+		// NPS surveys report to Hanzo Team. Off.
 		s.PluginStates[PluginIdNPS] = &PluginState{Enable: false}
 	}
 

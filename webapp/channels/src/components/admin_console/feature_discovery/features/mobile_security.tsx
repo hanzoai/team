@@ -17,13 +17,13 @@ const MobileSecurityFeatureDiscovery = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.mobile_security_feature_discovery.title',
-                defaultMessage: 'Enhance mobile app security with Mattermost Enterprise',
+                defaultMessage: 'Enhance mobile app security with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.mobile_security_feature_discovery.copy',
                 defaultMessage: 'Enable advanced security features like biometric authentication, screen capture prevention, and jailbreak/root detection for your mobile users.',
             })}
-            learnMoreURL='https://docs.mattermost.com/configure/environment-configuration-settings.html#mobile-security'
+            learnMoreURL='https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security'
             featureDiscoveryImage={
                 <MobileSecuritySVG
                     width={294}

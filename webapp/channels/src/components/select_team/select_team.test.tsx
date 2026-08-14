@@ -29,7 +29,7 @@ describe('components/select_team/SelectTeam', () => {
             {id: 'team_id_1', delete_at: 0, name: 'team-a', display_name: 'Team A', allow_open_invite: true} as Team,
             {id: 'team_id_2', delete_at: 0, name: 'b-team', display_name: 'B Team', allow_open_invite: true} as Team,
         ],
-        siteName: 'Mattermost',
+        siteName: 'Hanzo Team',
         canCreateTeams: false,
         canManageSystem: true,
         canJoinPublicTeams: true,

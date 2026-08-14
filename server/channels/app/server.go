@@ -412,7 +412,7 @@ func NewServer(options ...Option) (*Server, error) {
 	s.outgoingWebhookClient = s.httpService.MakeClient(false)
 
 	if err2 := utils.TranslationsPreInit(); err2 != nil {
-		return nil, errors.Wrapf(err2, "unable to load Mattermost translation files")
+		return nil, errors.Wrapf(err2, "unable to load Hanzo Team translation files")
 	}
 	model.AppErrorInit(i18n.T)
 
@@ -432,7 +432,7 @@ func NewServer(options ...Option) (*Server, error) {
 	s.createPushNotificationsHub(request.EmptyContext(s.Log()))
 
 	if err = i18n.InitTranslations(*s.platform.Config().LocalizationSettings.DefaultServerLocale, *s.platform.Config().LocalizationSettings.DefaultClientLocale); err != nil {
-		return nil, errors.Wrapf(err, "unable to load Mattermost translation files")
+		return nil, errors.Wrapf(err, "unable to load Hanzo Team translation files")
 	}
 
 	templatesDir, ok := templates.GetTemplateDirectory()
@@ -492,7 +492,7 @@ func NewServer(options ...Option) (*Server, error) {
 	if _, err = url.ParseRequestURI(*s.platform.Config().ServiceSettings.SiteURL); err != nil {
 		// Don't spam the logs when in CI or local testing mode
 		if !(os.Getenv("IS_CI") == "true" || os.Getenv("IS_LOCAL_TESTING") == "true") {
-			mlog.Error("SiteURL must be set. Some features will operate incorrectly if the SiteURL is not set. See documentation for details: https://mattermost.com/pl/configure-site-url")
+			mlog.Error("SiteURL must be set. Some features will operate incorrectly if the SiteURL is not set. See documentation for details: https://docs.hanzo.team/configure-site-url")
 		}
 	}
 
@@ -1482,7 +1482,7 @@ func (s *Server) doLicenseExpirationCheck() {
 
 	users, err := s.Store().User().GetSystemAdminProfiles()
 	if err != nil {
-		mlog.Error("Failed to get system admins for license expired message from Mattermost.")
+		mlog.Error("Failed to get system admins for license expired message from Hanzo Team.")
 		return
 	}
 
@@ -1740,7 +1740,7 @@ func (s *Server) initJobs() {
 	s.platform.Jobs = s.Jobs
 }
 
-// ServerId returns the unique identifier for an installation of Mattermost servers.
+// ServerId returns the unique identifier for an installation of Hanzo Team servers.
 //
 // It is also known as the "telemetry id" or the "diagnostic id". Once generated
 // on first start, the value is persisted to the database and should remain static

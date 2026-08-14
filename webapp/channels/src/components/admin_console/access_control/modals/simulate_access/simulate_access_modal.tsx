@@ -187,7 +187,7 @@ function SimulateAccessModal({
     // table is non-empty immediately. Strategy:
     //
     //   - Typed search → `searchProfiles` (top-N by relevance, no
-    //     pagination — Mattermost's search API doesn't cursor); the
+    //     pagination — Hanzo Team's search API doesn't cursor); the
     //     paginator hides while a search term is active.
     //   - Channel scope (no term) → `getProfilesInChannel` with the
     //     current page / page size. The channel roster can omit a
@@ -502,7 +502,7 @@ function SimulateAccessModal({
             // whole audience.
             //
             // Pagination disappears whole-cloth during typed search
-            // (Mattermost's search API returns top-N matches, not a
+            // (Hanzo Team's search API returns top-N matches, not a
             // paginated cursor) and when a single page exhausts the
             // result set — the footer then collapses to an empty band.
             footerContent={
@@ -579,7 +579,7 @@ function SimulateAccessModal({
                   * collapses every per-row chip and the footer summary
                   * down to that one action's verdicts. Hidden when the
                   * rule has only one action (nothing to filter).
-                  * Mattermost-styled dropdown using Menu.Container so
+                  * Hanzo Team-styled dropdown using Menu.Container so
                   * the look matches the rest of the access-control
                   * editors. */}
                 {actions.length > 1 ? (

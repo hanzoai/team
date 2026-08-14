@@ -301,7 +301,7 @@ func runAudienceTests(t *testing.T, ss store.Store, connection *model.OutgoingOA
 	})
 
 	t.Run("non-existent", func(t *testing.T) {
-		conn, err := ss.OutgoingOAuthConnection().GetConnections(c, model.OutgoingOAuthConnectionGetConnectionsFilter{Audience: "https://mattermost.com"})
+		conn, err := ss.OutgoingOAuthConnection().GetConnections(c, model.OutgoingOAuthConnectionGetConnectionsFilter{Audience: "https://hanzo.ai"})
 		require.NoError(t, err)
 		require.Empty(t, conn)
 	})

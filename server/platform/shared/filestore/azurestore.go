@@ -188,7 +188,7 @@ func buildAzureClientOptions(settings FileBackendSettings) *azblob.ClientOptions
 //     e.g. https://{account}.blob.core.usgovcloudapi.net/.
 //   - custom -> the admin-provided endpoint is the full service URL,
 //     including scheme and storage account (vhost-style for production
-//     Azure, path-style for Azurite or reverse proxies). Mattermost
+//     Azure, path-style for Azurite or reverse proxies). Hanzo Team
 //     does not modify the URL.
 //
 // Empty cloud is treated as commercial so existing configs that pre-date

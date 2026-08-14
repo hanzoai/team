@@ -185,7 +185,7 @@ type SupportPacketPermissionInfo struct {
 	Schemes []*Scheme `yaml:"schemes"`
 }
 
-// SupportPacketConfig contains the Mattermost configuration. In contrast to [Config], it also contains the list of Feature Flags.
+// SupportPacketConfig contains the Hanzo Team configuration. In contrast to [Config], it also contains the list of Feature Flags.
 // It is included in the Support Packet.
 type SupportPacketConfig struct {
 	*Config

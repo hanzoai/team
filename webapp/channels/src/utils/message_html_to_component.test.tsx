@@ -80,7 +80,7 @@ const myFunction = () => {
 
     test('Inline markdown image', () => {
         const options = {markdown: true};
-        const html = TextFormatting.formatText('![Mattermost](/images/icon.png) and a [link](link)', options, emptyEmojiMap);
+        const html = TextFormatting.formatText('![Hanzo Team](/images/icon.png) and a [link](link)', options, emptyEmojiMap);
 
         const component = messageHtmlToComponent(html, {
             hasPluginTooltips: false,
@@ -97,7 +97,7 @@ const myFunction = () => {
 
     test('Inline markdown image where image is link', () => {
         const options = {markdown: true};
-        const html = TextFormatting.formatText('[![Mattermost](images/icon.png)](images/icon.png)', options, emptyEmojiMap);
+        const html = TextFormatting.formatText('[![Hanzo Team](images/icon.png)](images/icon.png)', options, emptyEmojiMap);
 
         const component = messageHtmlToComponent(html, {
             hasPluginTooltips: false,

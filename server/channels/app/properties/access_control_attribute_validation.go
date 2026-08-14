@@ -580,8 +580,8 @@ func extractOptionIDs(field *model.PropertyField) (map[string]struct{}, error) {
 //   - text: max length, value_type format (email, url, phone)
 //   - select: option ID must exist in the field's options
 //   - multiselect: all option IDs must exist
-//   - user: value must be a valid Mattermost ID
-//   - multiuser: all values must be valid Mattermost IDs
+//   - user: value must be a valid Hanzo Team ID
+//   - multiuser: all values must be valid Hanzo Team IDs
 func (h *AccessControlAttributeValidationHook) validateValueAgainstField(field *model.PropertyField, value *model.PropertyValue) error {
 	switch field.Type {
 	case model.PropertyFieldTypeText:

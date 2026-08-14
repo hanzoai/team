@@ -317,11 +317,11 @@ function StartTrialFormModal(props: Props): JSX.Element | null {
                 <div className='disclaimer'>
                     <FormattedMessage
                         id='start_trial_form.disclaimer'
-                        defaultMessage='By selecting Start trial, I agree to the <agreement>Mattermost Software Evaluation Agreement</agreement>, <privacypolicy>Privacy Policy</privacypolicy>, and receiving product emails.'
+                        defaultMessage='By selecting Start trial, I agree to the <agreement>Hanzo Team Software Evaluation Agreement</agreement>, <privacypolicy>Privacy Policy</privacypolicy>, and receiving product emails.'
                         values={{
                             agreement: (msg: React.ReactNode) => (
                                 <ExternalLink
-                                    href='https://mattermost.com/software-evaluation-agreement/'
+                                    href='https://hanzo.ai/software-evaluation-agreement/'
                                     location='start_trial_form_modal'
                                 >
                                     {msg}

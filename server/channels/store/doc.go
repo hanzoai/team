@@ -2,7 +2,7 @@
 // See LICENSE.txt for license information.
 
 /*
-Package store provides the data persistence layer for Mattermost channels.
+Package store provides the data persistence layer for Hanzo Team channels.
 
 The store package implements a layered architecture that abstracts database operations
 and provides a clean interface for data access. It follows the repository pattern with advanced features

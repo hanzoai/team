@@ -18,7 +18,7 @@ const TeamEdition: React.FC<TeamEditionProps> = ({openEELicenseModal}: TeamEditi
             <div className='TeamEditionLeftPanel__LicenseNotices'>
                 <p>{'When using Mattermost Team Edition, the software is offered under a Mattermost MIT Compiled License. See MIT-COMPILED-LICENSE.md in your root install directory for details.'}</p>
                 <p>
-                    {'When using Mattermost Enterprise Edition, the software is offered under a commercial license. See '}
+                    {'When using Hanzo Team, the software is offered under a commercial license. See '}
                     <a
                         role='button'
                         onClick={openEELicenseModal}

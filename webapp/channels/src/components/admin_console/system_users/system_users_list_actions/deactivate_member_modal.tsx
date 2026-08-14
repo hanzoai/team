@@ -116,7 +116,7 @@ export default function DeactivateMemberModal({user, onExited, onSuccess, onErro
                                         ),
                                         linkDocumentation: (msg: React.ReactNode) => (
                                             <ExternalLink
-                                                href='https://mattermost.com/pl/default-bot-accounts'
+                                                href='https://docs.hanzo.team/default-bot-accounts'
                                                 location='system_users_dropdown'
                                             >
                                                 {msg}

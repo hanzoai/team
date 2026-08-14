@@ -90,15 +90,15 @@ func (a *App) ServeInternalPluginRequest(userID string, w http.ResponseWriter, r
 
 	// Set authentication headers - these are trusted because this function is internal
 	// and not exposed to external HTTP routes
-	r.Header.Set("Mattermost-User-Id", userID)
+	r.Header.Set("Hanzo Team-User-Id", userID)
 
 	// Set plugin ID header to identify the caller
 	// Use a special ID for core server calls to distinguish them from plugin-to-plugin calls
 	if sourcePluginID != "" {
-		r.Header.Set("Mattermost-Plugin-ID", sourcePluginID)
+		r.Header.Set("Hanzo Team-Plugin-ID", sourcePluginID)
 	} else {
 		// Core server call - use special identifier
-		r.Header.Set("Mattermost-Plugin-ID", "com.mattermost.server")
+		r.Header.Set("Hanzo Team-Plugin-ID", "com.mattermost.server")
 	}
 
 	hooks.ServeHTTP(context, w, r)
@@ -186,11 +186,11 @@ func (ch *Channels) servePluginRequest(w http.ResponseWriter, r *http.Request, h
 		token = r.URL.Query().Get("access_token")
 	}
 
-	// Mattermost-Plugin-ID can only be set by inter-plugin requests
-	r.Header.Del("Mattermost-Plugin-ID")
+	// Hanzo Team-Plugin-ID can only be set by inter-plugin requests
+	r.Header.Del("Hanzo Team-Plugin-ID")
 
-	// Clean Mattermost-User-Id header. The server sets this header for authenticated requests
-	r.Header.Del("Mattermost-User-Id")
+	// Clean Hanzo Team-User-Id header. The server sets this header for authenticated requests
+	r.Header.Del("Hanzo Team-User-Id")
 
 	cookies := r.Cookies()
 	r.Header.Del("Cookie")
@@ -268,7 +268,7 @@ func (ch *Channels) servePluginRequest(w http.ResponseWriter, r *http.Request, h
 	}
 
 	if validateCSRFForPluginRequest(rctx, r, session, cookieAuth, *ch.cfgSvc.Config().ServiceSettings.ExperimentalStrictCSRFEnforcement) {
-		r.Header.Set("Mattermost-User-Id", session.UserId)
+		r.Header.Set("Hanzo Team-User-Id", session.UserId)
 		context.SessionId = session.Id
 	} else {
 		rctx.Logger().Debug("CSRF request failed. Treating the request as unauthenticated.")

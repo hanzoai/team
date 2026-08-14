@@ -17,13 +17,13 @@ const SystemRolesFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Enterprise}
             title={defineMessage({
                 id: 'admin.system_roles_feature_discovery.title',
-                defaultMessage: 'Provide controlled access to the System Console with Mattermost Enterprise',
+                defaultMessage: 'Provide controlled access to the System Console with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.system_roles_feature_discovery.copy',
                 defaultMessage: 'Assign customizable admin roles to give designated users read and/or write access to select sections of System Console.',
             })}
-            learnMoreURL='https://docs.mattermost.com/deployment/admin-roles.html'
+            learnMoreURL='https://docs.hanzo.team/deployment/admin-roles.html'
             featureDiscoveryImage={
                 <SystemRolesSVG
                     width={294}

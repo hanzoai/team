@@ -10,7 +10,7 @@ import (
 // DefaultPropertyFieldPermissionLevel returns the permission level that
 // nil-fill / non-admin-pin should use for this field. Templates and system
 // fields default to sysadmin (templates define the schema linked fields
-// inherit; system fields attach to the Mattermost instance and only an
+// inherit; system fields attach to the Hanzo Team instance and only an
 // administrator should write them). Other object types default to member.
 func DefaultPropertyFieldPermissionLevel(field *model.PropertyField) model.PermissionLevel {
 	if field.ObjectType == model.PropertyFieldObjectTypeTemplate ||

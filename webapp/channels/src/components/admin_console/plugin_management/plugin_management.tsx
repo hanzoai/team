@@ -196,11 +196,11 @@ type PluginItemProps = {
 const messages = defineMessages({
     title: {id: 'admin.plugin.management.title', defaultMessage: 'Plugin Management'},
     enable: {id: 'admin.plugins.settings.enable', defaultMessage: 'Enable Plugins: '},
-    enableDesc: {id: 'admin.plugins.settings.enableDesc', defaultMessage: 'When true, enables plugins on your Mattermost server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Mattermost server. See <link>documentation</link> to learn more.'},
+    enableDesc: {id: 'admin.plugins.settings.enableDesc', defaultMessage: 'When true, enables plugins on your Hanzo Team server. Use plugins to integrate with third-party systems, extend functionality, or customize the user interface of your Hanzo Team server. See <link>documentation</link> to learn more.'},
     uploadTitle: {id: 'admin.plugin.uploadTitle', defaultMessage: 'Upload Plugin: '},
     installedTitle: {id: 'admin.plugin.installedTitle', defaultMessage: 'Installed Plugins: '},
-    installedDesc: {id: 'admin.plugin.installedDesc', defaultMessage: 'Installed plugins on your Mattermost server.'},
-    uploadDesc: {id: 'admin.plugin.uploadDesc', defaultMessage: 'Upload a plugin for your Mattermost server. See <link>documentation</link> to learn more.'},
+    installedDesc: {id: 'admin.plugin.installedDesc', defaultMessage: 'Installed plugins on your Hanzo Team server.'},
+    uploadDesc: {id: 'admin.plugin.uploadDesc', defaultMessage: 'Upload a plugin for your Hanzo Team server. See <link>documentation</link> to learn more.'},
     uploadDisabledDesc: {id: 'admin.plugin.uploadDisabledDesc', defaultMessage: 'Enable plugin uploads in config.json. See <link>documentation</link> to learn more.'},
     enableMarketplace: {id: 'admin.plugins.settings.enableMarketplace', defaultMessage: 'Enable Marketplace:'},
     enableMarketplaceDesc: {id: 'admin.plugins.settings.enableMarketplaceDesc', defaultMessage: 'When true, enables System Administrators to install plugins from the <link>marketplace</link>.'},
@@ -1124,7 +1124,7 @@ export class PluginManagement extends OLDAdminSettings<Props, State> {
                                     helpText={
                                         <FormattedMessage
                                             id='admin.plugins.settings.requirePluginSignatureDesc'
-                                            defaultMessage='When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Mattermost server startup and initialization. See <link>documentation</link> to learn more.'
+                                            defaultMessage='When true, uploading plugins is disabled and may only be installed through the Marketplace. Plugins are always verified during Hanzo Team server startup and initialization. See <link>documentation</link> to learn more.'
                                             values={{
                                                 link: (msg: React.ReactNode) => (
                                                     <ExternalLink
@@ -1198,7 +1198,7 @@ export class PluginManagement extends OLDAdminSettings<Props, State> {
                                             values={{
                                                 link: (msg: React.ReactNode) => (
                                                     <ExternalLink
-                                                        href='https://mattermost.com/pl/default-mattermost-marketplace.html'
+                                                        href='https://docs.hanzo.team/default-mattermost-marketplace.html'
                                                         location='plugin_management'
                                                     >
                                                         {msg}

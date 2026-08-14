@@ -53,7 +53,7 @@ func NewFlow(name Name, api *pluginapi.Client, pluginID, botUserID string) (*Flo
 	}
 
 	if config.ServiceSettings.SiteURL == nil {
-		return nil, errors.New("please configure the Mattermost Server's SiteURL, then restart the plugin.")
+		return nil, errors.New("please configure the Hanzo Team Server's SiteURL, then restart the plugin.")
 	}
 
 	return &Flow{

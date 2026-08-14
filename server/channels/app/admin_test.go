@@ -24,7 +24,7 @@ func TestGetLatestVersion(t *testing.T) {
 		Name:        "v6.3.0",
 		CreatedAt:   "2022-01-13T14:19:44Z",
 		PublishedAt: "2022-01-14T13:45:09Z",
-		Body:        "Mattermost Platform Release v6.3.0",
+		Body:        "Hanzo Team Platform Release v6.3.0",
 		Url:         "https://github.com/mattermost/mattermost-server/releases/tag/v6.3.0",
 	}
 
@@ -56,7 +56,7 @@ func TestGetLatestVersion(t *testing.T) {
 			Name:        "v6.3.1",
 			CreatedAt:   "2022-01-13T14:19:44Z",
 			PublishedAt: "2022-01-14T13:45:09Z",
-			Body:        "Mattermost Platform Release v6.3.0",
+			Body:        "Hanzo Team Platform Release v6.3.0",
 			Url:         "https://github.com/mattermost/mattermost-server/releases/tag/v6.3.0",
 		}
 

@@ -781,8 +781,8 @@ func TestCreateWebhookPostLinks(t *testing.T) {
 			expectedOutput: "`if(status_int < QUERY_UNKNOWN || status_int >= QUERY_STATUS_MAX)`",
 		},
 		"angle bracket link": {
-			input:          "<https://mattermost.com|Mattermost>",
-			expectedOutput: "[Mattermost](https://mattermost.com)",
+			input:          "<https://hanzo.ai|Hanzo Team>",
+			expectedOutput: "[Hanzo Team](https://hanzo.ai)",
 		},
 	} {
 		t.Run(name, func(t *testing.T) {

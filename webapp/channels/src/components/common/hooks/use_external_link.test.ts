@@ -158,7 +158,7 @@ describe('useExternalLink', () => {
     });
 
     it('do not modify mailto links on mattermost.com', () => {
-        const mailtoUrl = 'mailto:support@mattermost.com';
+        const mailtoUrl = 'mailto:support@hanzo.ai';
         const {result: {current: [href, queryParams]}} = renderHookWithContext(() => useExternalLink(mailtoUrl), getBaseState());
         expect(href).toBe(mailtoUrl);
         expect(queryParams).toEqual({});

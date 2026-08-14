@@ -15,11 +15,11 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.missionops.welcome.title',
-            defaultMessage: 'Welcome to your Mattermost preview',
+            defaultMessage: 'Welcome to your Hanzo Team preview',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.missionops.welcome.subtitle',
-            defaultMessage: 'This hands-on, 1-hour preview of Mattermost Enterprise Advanced lets your team explore secure, mission-critical collaboration. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
+            defaultMessage: 'This hands-on, 1-hour preview of Hanzo Team lets your team explore secure, mission-critical collaboration. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
         }),
         videoUrl: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/missionops/Mattermost_TMM_Demo_Mission+Ops_20250307.mp4',
         videoPoster: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/missionops/modal-assets/Mattermost_TMM_Demo_MissionOps_Poster.jpg',
@@ -48,7 +48,7 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.missionops.ai.title',
-            defaultMessage: 'Bring your own AI model with Mattermost Agents',
+            defaultMessage: 'Bring your own AI model with Hanzo Team Agents',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.missionops.ai.subtitle',
@@ -129,11 +129,11 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.devsecops.welcome.title',
-            defaultMessage: 'Welcome to your Mattermost preview',
+            defaultMessage: 'Welcome to your Hanzo Team preview',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.devsecops.welcome.subtitle',
-            defaultMessage: 'This hands-on, 1-hour preview of Mattermost Enterprise Advanced lets your DevSecOps team explore secure, collaborative development. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
+            defaultMessage: 'This hands-on, 1-hour preview of Hanzo Team lets your DevSecOps team explore secure, collaborative development. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
         }),
         videoUrl: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/devsecops/Mattermost_TMM_Demo_DevSecOps_20260610.mp4',
         videoPoster: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/devsecops/modal-assets/Mattermost_TMM_Demo_DevSecOps_Poster.jpg',
@@ -162,7 +162,7 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.devsecops.ai.title',
-            defaultMessage: 'Bring your own AI model with Mattermost Agents',
+            defaultMessage: 'Bring your own AI model with Hanzo Team Agents',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.devsecops.ai.subtitle',
@@ -243,11 +243,11 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.cyberdefense.welcome.title',
-            defaultMessage: 'Welcome to your Mattermost preview',
+            defaultMessage: 'Welcome to your Hanzo Team preview',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.cyberdefense.welcome.subtitle',
-            defaultMessage: 'This hands-on, 1-hour preview of Mattermost Enterprise Advanced lets your cyber defense team explore secure, threat-aware collaboration. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
+            defaultMessage: 'This hands-on, 1-hour preview of Hanzo Team lets your cyber defense team explore secure, threat-aware collaboration. The workspace is preloaded with data to show the platform in action. Watch the 4-minute video to get started.',
         }),
         videoUrl: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/cyberdefense/modal-assets/Mattermost_TMM_Demo_Cyber_Defense_20250417.mp4',
         videoPoster: 'https://mattermost-cloud-preview-assets.s3.us-east-2.amazonaws.com/cyberdefense/modal-assets/Mattermost_TMM_Demo_Cyber_Defense_Poster.jpg',
@@ -276,7 +276,7 @@ export const modalContent: PreviewModalContentData[] = [
         }),
         title: defineMessage({
             id: 'cloud_preview_modal.cyberdefense.ai.title',
-            defaultMessage: 'Bring your own AI model with Mattermost Agents',
+            defaultMessage: 'Bring your own AI model with Hanzo Team Agents',
         }),
         subtitle: defineMessage({
             id: 'cloud_preview_modal.cyberdefense.ai.subtitle',

@@ -407,7 +407,7 @@ func (h Handler) handleContextError(c *Context, w http.ResponseWriter, r *http.R
 	// check if error is a MaxBytesError error, which occurs when you read more bytes from buffer than configured
 	if ok := errors.As(c.Err, &maxBytesErr); ok {
 		// replace the context error with this error if so,
-		newErr := model.NewAppError(c.Err.Where, "api.context.request_body_too_large.app_error", nil, "Use the setting `MaximumPayloadSizeBytes` in Mattermost config to configure allowed payload limit. Learn more about this setting in Mattermost docs at https://docs.mattermost.com/configure/environment-configuration-settings.html#maximum-payload-size", http.StatusRequestEntityTooLarge)
+		newErr := model.NewAppError(c.Err.Where, "api.context.request_body_too_large.app_error", nil, "Use the setting `MaximumPayloadSizeBytes` in Hanzo Team config to configure allowed payload limit. Learn more about this setting in Hanzo Team docs at https://docs.hanzo.team/configure/environment-configuration-settings.html#maximum-payload-size", http.StatusRequestEntityTooLarge)
 		c.Err = newErr
 	}
 
@@ -472,8 +472,8 @@ const (
 
 // GetOriginClient returns the device from which the provided request was issued. The algorithm roughly looks like:
 // - If the URL contains the query mobilev2=true, then it's mobile
-// - If the first field of the user agent starts with either "rnbeta" or "Mattermost", then it's mobile
-// - If the last field of the user agent starts with "Mattermost", then it's desktop
+// - If the first field of the user agent starts with either "rnbeta" or "Hanzo Team", then it's mobile
+// - If the last field of the user agent starts with "Hanzo Team", then it's desktop
 // - Otherwise, it's web
 func GetOriginClient(r *http.Request) OriginClient {
 	userAgent := r.Header.Get("User-Agent")
@@ -490,12 +490,12 @@ func GetOriginClient(r *http.Request) OriginClient {
 
 	// Is mobile pre v2?
 	clientAgent := fields[0]
-	if strings.HasPrefix(clientAgent, "rnbeta") || strings.HasPrefix(clientAgent, "Mattermost") {
+	if strings.HasPrefix(clientAgent, "rnbeta") || strings.HasPrefix(clientAgent, "Hanzo Team") {
 		return OriginClientMobile
 	}
 
 	// Is desktop?
-	if strings.HasPrefix(fields[len(fields)-1], "Mattermost") {
+	if strings.HasPrefix(fields[len(fields)-1], "Hanzo Team") {
 		return OriginClientDesktop
 	}
 

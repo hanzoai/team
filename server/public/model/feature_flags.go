@@ -96,11 +96,11 @@ type FeatureFlags struct {
 	EnableAIRecaps bool
 
 	// FEATURE_FLAG_REMOVAL: IntegratedBoards - Remove this when GA is released
-	// Enable the Integrated Boards feature within Mattermost channels
+	// Enable the Integrated Boards feature within Hanzo Team channels
 	IntegratedBoards bool
 
 	// FEATURE_FLAG_REMOVAL: EnableDocs - Remove this when GA is released
-	// Enable the Docs (spaces and pages) feature within Mattermost channels
+	// Enable the Docs (spaces and pages) feature within Hanzo Team channels
 	EnableDocs bool
 
 	// Enable LIKE-based CJK (Chinese, Japanese, Korean) search for PostgreSQL
@@ -149,7 +149,7 @@ type FeatureFlags struct {
 	EnableConcurrentReact bool
 
 	// Enable verifying plugin signatures against the MFI public key, in addition to the
-	// existing hard-coded Mattermost public key and any admin-configured public keys.
+	// existing hard-coded Hanzo Team public key and any admin-configured public keys.
 	EnableMFIPluginSignaturePublicKey bool
 
 	// FEATURE_FLAG_REMOVAL: RecurringScheduledPosts - Remove this when the feature is GA.

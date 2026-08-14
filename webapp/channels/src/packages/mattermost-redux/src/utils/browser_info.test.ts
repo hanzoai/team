@@ -28,9 +28,9 @@ describe('utils/browser_info', () => {
     describe('getBrowserInfo', () => {
         const browserTestCases = [
             {
-                name: 'Mattermost Desktop App',
-                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.83 Electron/34.0.1 Safari/537.36 Mattermost/34.0.1',
-                expectedBrowser: 'Mattermost Desktop App',
+                name: 'Hanzo Team Desktop App',
+                userAgent: 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.6834.83 Electron/34.0.1 Safari/537.36 Hanzo Team/34.0.1',
+                expectedBrowser: 'Hanzo Team Desktop App',
                 expectedVersion: '34.0.1',
             },
             {

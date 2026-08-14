@@ -21,9 +21,9 @@ function AirGappedModal({onClose}: Props) {
     const airGappedLink = (
         <ExternalLink
             location='start_trial_air_gapped_modal'
-            href='https://mattermost.com/trial/'
+            href='https://hanzo.ai/trial/'
         >
-            {'https://mattermost.com/trial/'}
+            {'https://hanzo.ai/trial/'}
         </ExternalLink>
     );
     return (

@@ -184,32 +184,32 @@ type ServiceInterface interface {
 }
 
 // getLicenseSkuName returns the license tier descriptor (e.g. "Professional",
-// "Entry", "E20"), stripping the "Mattermost " prefix if the license server
-// included it. Falls back to "Mattermost" when the SKU name is absent so
+// "Entry", "E20"), stripping the "Hanzo Team " prefix if the license server
+// included it. Falls back to "Hanzo Team" when the SKU name is absent so
 // that body text like "Your {{.SkuName}} license..." still reads naturally.
 func (es *Service) getLicenseSkuName() string {
 	if license := es.license(); license != nil && license.SkuName != "" {
-		return strings.TrimPrefix(license.SkuName, "Mattermost ")
+		return strings.TrimPrefix(license.SkuName, "Hanzo Team ")
 	}
-	return "Mattermost"
+	return "Hanzo Team"
 }
 
-// getPrefixedLicenseSkuName returns the full product name including "Mattermost"
-// (e.g. "Mattermost Professional"), suitable for email subjects. Falls back
-// to "Mattermost" when no license exists or the SKU name is empty.
+// getPrefixedLicenseSkuName returns the full product name including "Hanzo Team"
+// (e.g. "Hanzo Team"), suitable for email subjects. Falls back
+// to "Hanzo Team" when no license exists or the SKU name is empty.
 func (es *Service) getPrefixedLicenseSkuName() string {
 	skuName := es.getLicenseSkuName()
-	if skuName == "Mattermost" {
-		return "Mattermost"
+	if skuName == "Hanzo Team" {
+		return "Hanzo Team"
 	}
-	return "Mattermost " + skuName
+	return "Hanzo Team " + skuName
 }
 
 func (es *Service) getConfigSiteName() string {
 	if siteName := *es.config().TeamSettings.SiteName; siteName != "" {
 		return siteName
 	}
-	return "Mattermost"
+	return "Hanzo Team"
 }
 
 func (es *Service) Store() store.Store {

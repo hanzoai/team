@@ -371,7 +371,7 @@ func TestStaticFilesCaching(t *testing.T) {
 	fakeMainBundleName := "main.1234ab.js"
 	fakeRootHTML := `<html>
 <head>
-	<title>Mattermost</title>
+	<title>Hanzo Team</title>
 </head>
 </html>`
 	fakeMainBundle := `module.exports = 'main';`
@@ -443,7 +443,7 @@ func TestCheckClientCompatability(t *testing.T) {
 		{"Chrome 60", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.90 Safari/537.36", true},
 		{"Chrome Mobile", "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.113 Mobile Safari/537.36", true},
 		{"MM Classic App", "Mozilla/5.0 (Linux; Android 8.0.0; Nexus 5X Build/OPR6.170623.013; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/61.0.3163.81 Mobile Safari/537.36 Web-Atoms-Mobile-WebView", true},
-		{"MM App 3.7.1", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36", true},
+		{"MM App 3.7.1", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36", true},
 		{"Franz 4.0.4", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Franz/4.0.4 Chrome/52.0.2743.82 Electron/1.3.1 Safari/537.36", true},
 		{"Edge 14", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.79 Safari/537.36 Edge/14.14393", true},
 		{"Internet Explorer 9", "Mozilla/5.0 (compatible; MSIE 9.0; Windows NT 7.1; Trident/5.0", false},
@@ -474,14 +474,14 @@ func TestCheckDesktopAppCompatibility(t *testing.T) {
 		minVersion string
 		want       bool
 	}{
-		{"blank min version allows all", "Mattermost/5.0.0", "", true},
-		{"desktop app at min version", "Mattermost/5.0.0", "5.0.0", true},
-		{"desktop app above min version", "Mattermost/5.1.0", "5.0.0", true},
-		{"desktop app below min version", "Mattermost/4.9.0", "5.0.0", false},
+		{"blank min version allows all", "Hanzo Team/5.0.0", "", true},
+		{"desktop app at min version", "Hanzo Team/5.0.0", "5.0.0", true},
+		{"desktop app above min version", "Hanzo Team/5.1.0", "5.0.0", true},
+		{"desktop app below min version", "Hanzo Team/4.9.0", "5.0.0", false},
 		{"browser user agent not checked", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) Chrome/120.0.0", "5.0.0", true},
-		{"desktop app version at start of UA", "Mattermost/5.3.1 Chrome/110.0.5481.177", "5.0.0", true},
-		{"desktop app version at end of UA", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126.0.6478.127 Electron/31.2.1 Safari/537.36 Mattermost/5.9.0", "5.0.0", true},
-		{"desktop app old version rejected", "Mattermost/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36", "5.0.0", false},
+		{"desktop app version at start of UA", "Hanzo Team/5.3.1 Chrome/110.0.5481.177", "5.0.0", true},
+		{"desktop app version at end of UA", "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 Chrome/126.0.6478.127 Electron/31.2.1 Safari/537.36 Hanzo Team/5.9.0", "5.0.0", true},
+		{"desktop app old version rejected", "Hanzo Team/3.7.1 Chrome/56.0.2924.87 Electron/1.6.11 Safari/537.36", "5.0.0", false},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

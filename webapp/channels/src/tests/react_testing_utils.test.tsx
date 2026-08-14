@@ -138,10 +138,10 @@ describe('renderWithContext', () => {
         };
 
         const {rerender} = renderWithContext(
-            <TestComponent appTitle='Mattermost'/>,
+            <TestComponent appTitle='Hanzo Team'/>,
         );
 
-        expect(screen.getByText('About Mattermost')).toBeInTheDocument();
+        expect(screen.getByText('About Hanzo Team')).toBeInTheDocument();
 
         rerender(
             <TestComponent appTitle='Mattermots'/>,

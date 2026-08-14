@@ -68,7 +68,7 @@ describe('components/announcement_bar/CloudPreviewAnnouncementBar', () => {
         );
 
         expect(container.querySelector('.announcement-bar')).not.toBeNull();
-        expect(container.textContent).toContain('This is your Mattermost preview environment');
+        expect(container.textContent).toContain('This is your Hanzo Team preview environment');
     });
 
     it('should not show banner when is_cloud_preview is false', () => {

@@ -30,7 +30,7 @@ func createBookmark(name string, bookmarkType model.ChannelBookmarkType, channel
 		Emoji:       ":smile:",
 	}
 	if bookmarkType == model.ChannelBookmarkLink {
-		bookmark.LinkUrl = "https://mattermost.com"
+		bookmark.LinkUrl = "https://hanzo.ai"
 	}
 	if bookmarkType == model.ChannelBookmarkFile {
 		bookmark.FileId = fileId
@@ -250,7 +250,7 @@ func TestUpdateBookmark(t *testing.T) {
 		bookmark1 := &model.ChannelBookmark{
 			ChannelId:   th.BasicChannel.Id,
 			DisplayName: "Link bookmark test",
-			LinkUrl:     "https://mattermost.com",
+			LinkUrl:     "https://hanzo.ai",
 			Type:        model.ChannelBookmarkLink,
 			Emoji:       ":smile:",
 		}
@@ -293,7 +293,7 @@ func TestUpdateBookmark(t *testing.T) {
 		bookmark1 := &model.ChannelBookmark{
 			ChannelId:   th.BasicChannel.Id,
 			DisplayName: "Link bookmark test",
-			LinkUrl:     "https://mattermost.com",
+			LinkUrl:     "https://hanzo.ai",
 			Type:        model.ChannelBookmarkLink,
 			Emoji:       ":smile:",
 		}
@@ -317,7 +317,7 @@ func TestUpdateBookmark(t *testing.T) {
 			Id:          model.NewId(),
 			ChannelId:   th.BasicChannel.Id,
 			DisplayName: "Link bookmark test",
-			LinkUrl:     "https://mattermost.com",
+			LinkUrl:     "https://hanzo.ai",
 			Type:        model.ChannelBookmarkLink,
 			Emoji:       ":smile:",
 		}
@@ -335,7 +335,7 @@ func TestDeleteBookmark(t *testing.T) {
 		bookmark1 := &model.ChannelBookmark{
 			ChannelId:   th.BasicChannel.Id,
 			DisplayName: "Link bookmark test",
-			LinkUrl:     "https://mattermost.com",
+			LinkUrl:     "https://hanzo.ai",
 			Type:        model.ChannelBookmarkLink,
 			Emoji:       ":smile:",
 		}
@@ -361,7 +361,7 @@ func TestGetChannelBookmarks(t *testing.T) {
 	bookmark1 := &model.ChannelBookmark{
 		ChannelId:   th.BasicChannel.Id,
 		DisplayName: "Bookmark 1",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}
@@ -446,7 +446,7 @@ func TestUpdateChannelBookmarkSortOrder(t *testing.T) {
 	bookmark0 := &model.ChannelBookmark{
 		ChannelId:   channelId,
 		DisplayName: "Bookmark 0",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 		Emoji:       ":smile:",
 	}
@@ -485,21 +485,21 @@ func TestUpdateChannelBookmarkSortOrder(t *testing.T) {
 	bookmark2 := &model.ChannelBookmark{
 		ChannelId:   channelId,
 		DisplayName: "Bookmark 2",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
 	bookmark3 := &model.ChannelBookmark{
 		ChannelId:   channelId,
 		DisplayName: "Bookmark 3",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 
 	bookmark4 := &model.ChannelBookmark{
 		ChannelId:   channelId,
 		DisplayName: "Bookmark 4",
-		LinkUrl:     "https://mattermost.com",
+		LinkUrl:     "https://hanzo.ai",
 		Type:        model.ChannelBookmarkLink,
 	}
 

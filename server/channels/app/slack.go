@@ -87,7 +87,7 @@ func (a *App) ProcessSlackText(rctx request.CTX, text string) string {
 // Expand announcements in incoming webhooks from Slack. Those announcements
 // can be found in the text attribute, or in the pretext, text, title and value
 // attributes of the attachment structure. The message attachment structure is
-// documented here: https://developers.mattermost.com/integrate/reference/message-attachments/.
+// documented here: https://docs.hanzo.team/integrate/reference/message-attachments/.
 // It's based on the spec from slack: https://api.slack.com/docs/attachments.
 func (a *App) ProcessMessageAttachments(rctx request.CTX, attachments []*model.MessageAttachment) []*model.MessageAttachment {
 	var nonNilAttachments = model.StringifyMessageAttachmentFieldValue(attachments)
@@ -120,7 +120,7 @@ func expandAnnouncement(text string) string {
 }
 
 // Replaces user IDs mentioned like this <@userID> to a normal username (eg. @bob)
-// This is required so that Mattermost maintains Slack compatibility
+// This is required so that Hanzo Team maintains Slack compatibility
 // Refer to: https://api.slack.com/changelog/2017-09-the-one-about-usernames
 func replaceUserIds(rctx request.CTX, userStore store.UserStore, text string) string {
 	rgx, err := regexp.Compile("<@([a-zA-Z0-9]+)>")

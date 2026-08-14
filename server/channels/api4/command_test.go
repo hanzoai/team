@@ -1963,7 +1963,7 @@ func TestExecuteCommandResponseURLUsesSiteURL(t *testing.T) {
 	// Set a SiteURL that differs from the test client's Host header (localhost).
 	// This verifies that response_url uses the configured SiteURL, not the Host header.
 	// Before the fix (MM-67142), response_url would contain "localhost" and fail this check.
-	expectedSiteURL := "http://mattermost.example.com"
+	expectedSiteURL := "http://team.example.com"
 	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.ServiceSettings.SiteURL = expectedSiteURL })
 
 	var receivedResponseURL string

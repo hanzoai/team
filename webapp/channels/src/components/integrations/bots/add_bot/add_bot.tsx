@@ -670,7 +670,7 @@ export default class AddBot extends React.PureComponent<Props, State> {
                                 <div className='form__help'>
                                     <FormattedMessage
                                         id='bot.add.post_all.help'
-                                        defaultMessage='Bot will have access to post to all Mattermost channels including direct messages.'
+                                        defaultMessage='Bot will have access to post to all Hanzo Team channels including direct messages.'
                                     />
                                 </div>
                             </div>
@@ -704,7 +704,7 @@ export default class AddBot extends React.PureComponent<Props, State> {
                                 <div className='form__help'>
                                     <FormattedMessage
                                         id='bot.add.post_channels.help'
-                                        defaultMessage='Bot will have access to post to all Mattermost public channels.'
+                                        defaultMessage='Bot will have access to post to all Hanzo Team public channels.'
                                     />
                                 </div>
                             </div>

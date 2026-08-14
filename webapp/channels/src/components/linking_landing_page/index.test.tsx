@@ -24,8 +24,8 @@ describe('components/LinkingLandingPage (connected)', () => {
                 general: {
                     config: {
                         SiteURL: siteUrl,
-                        SiteName: 'Mattermost',
-                        AppDownloadLink: 'https://mattermost.com/download/',
+                        SiteName: 'Hanzo Team',
+                        AppDownloadLink: 'https://hanzo.ai/download/',
                         EnableDesktopLandingPage: enableDesktopLandingPage,
                     },
                 },

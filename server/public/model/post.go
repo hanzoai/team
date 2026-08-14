@@ -148,7 +148,7 @@ type Post struct {
 
 	Message string `json:"message" xml:"Message"`
 	// MessageSource will contain the message as submitted by the user if Message has been modified
-	// by Mattermost for presentation (e.g if an image proxy is being used). It should be used to
+	// by Hanzo Team for presentation (e.g if an image proxy is being used). It should be used to
 	// populate edit boxes if present.
 	MessageSource string `json:"message_source,omitempty" xml:"MessageSource,omitempty"`
 

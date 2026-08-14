@@ -17,13 +17,13 @@ const AnnouncementBannerFeatureDiscovery: React.FC = () => {
             minimumSKURequiredForFeature={LicenseSkus.Professional}
             title={defineMessage({
                 id: 'admin.announcement_banner_feature_discovery.title',
-                defaultMessage: 'Create custom announcement banners with Mattermost Professional',
+                defaultMessage: 'Create custom announcement banners with Hanzo Team',
             })}
             copy={defineMessage({
                 id: 'admin.announcement_banner_feature_discovery.copy',
                 defaultMessage: 'Create announcement banners to notify all members of important information.',
             })}
-            learnMoreURL='https://docs.mattermost.com/administration/announcement-banner.html'
+            learnMoreURL='https://docs.hanzo.team/administration/announcement-banner.html'
             featureDiscoveryImage={
                 <AnnouncementBannerSVG
                     width={294}
