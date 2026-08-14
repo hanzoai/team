@@ -36,7 +36,7 @@ func TestGetProxiedImageURL(t *testing.T) {
 		{
 			Name:     "should not proxy a relative image",
 			Input:    "/static/logo.png",
-			Expected: "https://mattermost.example.com/static/logo.png",
+			Expected: "https://team.example.com/static/logo.png",
 		},
 		{
 			Name:     "should bypass opaque URLs",
@@ -45,8 +45,8 @@ func TestGetProxiedImageURL(t *testing.T) {
 		},
 		{
 			Name:     "should not proxy an image on the Hanzo Team server",
-			Input:    "https://mattermost.example.com/static/logo.png",
-			Expected: "https://mattermost.example.com/static/logo.png",
+			Input:    "https://team.example.com/static/logo.png",
+			Expected: "https://team.example.com/static/logo.png",
 		},
 		{
 			Name:     "should not proxy an image that has already been proxied",
@@ -81,10 +81,12 @@ func TestGetProxiedImageURL(t *testing.T) {
 }
 
 func TestGetUnproxiedImageURL(t *testing.T) {
-	siteURL := "https://mattermost.example.com"
+	siteURL := "https://team.example.com"
 
+	// The proxied form embeds the image URL, so the two have to name the same
+	// host or the round-trip this exercises is not being exercised at all.
 	imageURL := "https://hanzo.ai/wp-content/uploads/2022/02/logoHorizontal.png"
-	proxiedURL := "https://mattermost.example.com/v1/team/image?url=https%3A%2F%2Fmattermost.com%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
+	proxiedURL := "https://team.example.com/v1/team/image?url=https%3A%2F%2Fhanzo.ai%2Fwp-content%2Fuploads%2F2022%2F02%2FlogoHorizontal.png"
 
 	for _, test := range []struct {
 		Name     string
@@ -103,8 +105,8 @@ func TestGetUnproxiedImageURL(t *testing.T) {
 		},
 		{
 			Name:     "should not remove proxy from an image on the Hanzo Team server",
-			Input:    "https://mattermost.example.com/static/logo.png",
-			Expected: "https://mattermost.example.com/static/logo.png",
+			Input:    "https://team.example.com/static/logo.png",
+			Expected: "https://team.example.com/static/logo.png",
 		},
 		{
 			Name:     "should not remove proxy from a non-proxied image",

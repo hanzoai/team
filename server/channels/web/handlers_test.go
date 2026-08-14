@@ -71,7 +71,7 @@ func TestHandlerServeDefaultSecurityHeaders(t *testing.T) {
 	handler := web.NewHandler(handlerForServeDefaultSecurityHeaders)
 
 	paths := []string{
-		"/v1/team/test",          // API
+		"/v1/team/test",         // API
 		"/static/manifest.json", // this should always exist. Static files have their own handler
 		// Note that the plugin handler isn't tested, also plugins may support arbitrary functionality
 	}
