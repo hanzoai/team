@@ -8,7 +8,7 @@ import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
 import ExternalLink from 'components/external_link';
-import MattermostLogo from 'components/widgets/icons/mattermost_logo';
+import BrandMark from 'components/widgets/icons/brand_mark';
 
 import type {GlobalState} from 'types/store';
 
@@ -81,7 +81,7 @@ export default function AboutBuildModalCloud(props: Props) {
             <Modal.Body>
                 <div className='about-modal__content'>
                     <div className='about-modal__logo'>
-                        <MattermostLogo/>
+                        <BrandMark/>
                     </div>
                     <div>
                         <h3 className='about-modal__title'>

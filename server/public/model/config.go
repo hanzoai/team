@@ -72,8 +72,8 @@ const (
 
 	GenericNoChannelNotification = "generic_no_channel"
 	GenericNotification          = "generic"
-	GenericNotificationServer    = "https://push-test.mattermost.com"
-	MmSupportAdvisorAddress      = "support-advisor@mattermost.com"
+	GenericNotificationServer    = "https://push.hanzo.team"
+	MmSupportAdvisorAddress      = "support@hanzo.ai"
 	FullNotification             = "full"
 	IdLoadedNotification         = "id_loaded"
 
@@ -140,7 +140,7 @@ const (
 	ServiceSettingsDefaultMaxURLLength           = 2048
 	ServiceSettingsMaxUniqueReactionsPerPost     = 500
 
-	TeamSettingsDefaultSiteName              = "Mattermost"
+	TeamSettingsDefaultSiteName              = "Hanzo Team"
 	TeamSettingsDefaultMaxUsersPerTeam       = 50
 	TeamSettingsDefaultCustomBrandText       = ""
 	TeamSettingsDefaultCustomDescriptionText = ""
@@ -170,11 +170,11 @@ const (
 
 	EmailSettingsDefaultFeedbackOrganization = ""
 
-	SupportSettingsDefaultTermsOfServiceLink = "https://mattermost.com/pl/terms-of-use/"
-	SupportSettingsDefaultPrivacyPolicyLink  = "https://mattermost.com/pl/privacy-policy/"
-	SupportSettingsDefaultAboutLink          = "https://mattermost.com/pl/about-mattermost"
-	SupportSettingsDefaultHelpLink           = "https://mattermost.com/pl/help/"
-	SupportSettingsDefaultReportAProblemLink = "https://mattermost.com/pl/report-a-bug"
+	SupportSettingsDefaultTermsOfServiceLink = "https://hanzo.ai/terms"
+	SupportSettingsDefaultPrivacyPolicyLink  = "https://hanzo.ai/privacy"
+	SupportSettingsDefaultAboutLink          = "https://hanzo.ai"
+	SupportSettingsDefaultHelpLink           = "https://docs.hanzo.team"
+	SupportSettingsDefaultReportAProblemLink = "https://github.com/hanzoteam/server/issues"
 	SupportSettingsDefaultSupportEmail       = ""
 	SupportSettingsDefaultReAcceptancePeriod = 365
 
@@ -217,9 +217,9 @@ const (
 	SamlSettingsCanonicalAlgorithmC14n11  = "Canonical1.1"
 	SamlSettingsDefaultCanonicalAlgorithm = SamlSettingsCanonicalAlgorithmC14n
 
-	NativeappSettingsDefaultAppDownloadLink        = "https://mattermost.com/pl/download-apps"
-	NativeappSettingsDefaultAndroidAppDownloadLink = "https://mattermost.com/pl/android-app/"
-	NativeappSettingsDefaultIosAppDownloadLink     = "https://mattermost.com/pl/ios-app/"
+	NativeappSettingsDefaultAppDownloadLink        = "https://hanzo.team/download"
+	NativeappSettingsDefaultAndroidAppDownloadLink = "https://hanzo.team/download"
+	NativeappSettingsDefaultIosAppDownloadLink     = "https://hanzo.team/download"
 
 	ExperimentalSettingsDefaultLinkMetadataTimeoutMilliseconds                       = 5000
 	ExperimentalSettingsDefaultUsersStatusAndProfileFetchingPollIntervalMilliseconds = 3000
@@ -228,7 +228,7 @@ const (
 
 	AnnouncementSettingsDefaultBannerColor                  = "#f2a93b"
 	AnnouncementSettingsDefaultBannerTextColor              = "#333333"
-	AnnouncementSettingsDefaultNoticesJsonURL               = "https://notices.mattermost.com/"
+	AnnouncementSettingsDefaultNoticesJsonURL               = ""
 	AnnouncementSettingsDefaultNoticesFetchFrequencySeconds = 3600
 
 	AutoTranslationDefaultWorkers = 6
@@ -1668,7 +1668,7 @@ func (s *LogSettings) SetDefaults() {
 	}
 
 	if s.EnableDiagnostics == nil {
-		s.EnableDiagnostics = new(true)
+		s.EnableDiagnostics = new(false)
 	}
 
 	if s.EnableSentry == nil {
@@ -2491,11 +2491,11 @@ func (s *AnnouncementSettings) SetDefaults() {
 	}
 
 	if s.AdminNoticesEnabled == nil {
-		s.AdminNoticesEnabled = new(true)
+		s.AdminNoticesEnabled = new(false)
 	}
 
 	if s.UserNoticesEnabled == nil {
-		s.UserNoticesEnabled = new(true)
+		s.UserNoticesEnabled = new(false)
 	}
 	if s.NoticesURL == nil {
 		s.NoticesURL = new(AnnouncementSettingsDefaultNoticesJsonURL)

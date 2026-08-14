@@ -13,7 +13,7 @@ import {Client4} from 'mattermost-redux/client';
 import CopyButton from 'components/copy_button';
 import ExternalLink from 'components/external_link';
 import Nbsp from 'components/html_entities/nbsp';
-import MattermostLogo from 'components/widgets/icons/mattermost_logo';
+import BrandMark from 'components/widgets/icons/brand_mark';
 
 import {AboutLinks} from 'utils/constants';
 import {getSkuDisplayName} from 'utils/subscription';
@@ -327,7 +327,7 @@ export default function AboutBuildModal(props: Props) {
             <Modal.Body>
                 <div className='about-modal__content'>
                     <div className='about-modal__logo'>
-                        <MattermostLogo/>
+                        <BrandMark/>
                     </div>
                     <div>
                         <h3 className='about-modal__title'>
