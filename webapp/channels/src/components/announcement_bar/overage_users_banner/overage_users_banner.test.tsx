@@ -221,7 +221,7 @@ describe('components/overage_users_banner', () => {
         expect(windowSpy).toHaveBeenCalledTimes(1);
 
         // only the email is encoded and other params are empty. See logic for useOpenSalesLink hook
-        const salesLinkWithEncodedParams = 'https://hanzo.ai/contact-sales/?qk=&qp=&qw=&qx=dGVzdEBtYXR0ZXJtb3N0LmNvbQ==&utm_source=mattermost&utm_medium=in-product';
+        const salesLinkWithEncodedParams = 'https://hanzo.ai/contact-sales/?qk=&qp=&qw=&qx=dGVzdEBtYXR0ZXJtb3N0LmNvbQ==&utm_source=hanzoteam&utm_medium=in-product';
         expect(windowSpy).toHaveBeenCalledWith(salesLinkWithEncodedParams, '_blank');
     });
 
@@ -318,7 +318,7 @@ describe('components/overage_users_banner', () => {
         expect(windowSpy).toHaveBeenCalledTimes(1);
 
         // only the email is encoded and other params are empty. See logic for useOpenSalesLink hook
-        const salesLinkWithEncodedParams = 'https://hanzo.ai/contact-sales/?qk=&qp=&qw=&qx=dGVzdEBtYXR0ZXJtb3N0LmNvbQ==&utm_source=mattermost&utm_medium=in-product';
+        const salesLinkWithEncodedParams = 'https://hanzo.ai/contact-sales/?qk=&qp=&qw=&qx=dGVzdEBtYXR0ZXJtb3N0LmNvbQ==&utm_source=hanzoteam&utm_medium=in-product';
         expect(windowSpy).toHaveBeenCalledWith(salesLinkWithEncodedParams, '_blank');
     });
 });
