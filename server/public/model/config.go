@@ -140,6 +140,10 @@ const (
 	ServiceSettingsDefaultMaxURLLength           = 2048
 	ServiceSettingsMaxUniqueReactionsPerPost     = 500
 
+	HanzoAIServiceID    = "hanzo"
+	HanzoAIURL          = "https://api.hanzo.ai/v1"
+	HanzoAIDefaultModel = "best"
+
 	HanzoSettingsDefaultScope           = "openid email profile"
 	HanzoSettingsDefaultAuthEndpoint    = "https://hanzo.id/v1/iam/oauth/authorize"
 	HanzoSettingsDefaultTokenEndpoint   = "https://hanzo.id/v1/iam/oauth/token"
@@ -3610,8 +3614,8 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 	}
 
 	if s.PluginStates[PluginIdNPS] == nil {
-		// Enable the NPS plugin by default if diagnostics are enabled
-		s.PluginStates[PluginIdNPS] = &PluginState{Enable: ls.EnableDiagnostics == nil || *ls.EnableDiagnostics}
+		// NPS surveys report to Mattermost. Off.
+		s.PluginStates[PluginIdNPS] = &PluginState{Enable: false}
 	}
 
 	if s.PluginStates[PluginIdCalls] == nil {
@@ -3627,6 +3631,34 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 	if s.PluginStates[PluginIdAI] == nil {
 		// Enable the AI plugin by default
 		s.PluginStates[PluginIdAI] = &PluginState{Enable: true}
+	}
+
+	// Agents talks to Hanzo AI out of the box. The model is "best", the
+	// gateway's routing alias, so this default does not go stale as models
+	// come and go. The key is left empty and delivered from KMS.
+	if s.Plugins[PluginIdAI] == nil {
+		s.Plugins[PluginIdAI] = map[string]any{
+			"config": map[string]any{
+				"services": []any{
+					map[string]any{
+						"id":           HanzoAIServiceID,
+						"name":         "Hanzo AI",
+						"type":         "openaicompatible",
+						"apiURL":       HanzoAIURL,
+						"defaultModel": HanzoAIDefaultModel,
+					},
+				},
+				"bots": []any{
+					map[string]any{
+						"id":          HanzoAIServiceID,
+						"name":        HanzoAIServiceID,
+						"displayName": "Hanzo",
+						"serviceID":   HanzoAIServiceID,
+					},
+				},
+				"defaultBotName": HanzoAIServiceID,
+			},
+		}
 	}
 
 	if s.EnableMarketplace == nil {
