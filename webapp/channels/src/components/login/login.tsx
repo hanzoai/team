@@ -38,9 +38,9 @@ import type {CustomizeHeaderType} from 'components/header_footer_route/header_fo
 import LoadingScreen from 'components/loading_screen';
 import Markdown from 'components/markdown';
 import SaveButton from 'components/save_button';
+import BrandMark from 'components/widgets/icons/brand_mark';
 import EntraIdIcon from 'components/widgets/icons/entra_id_icon';
 import LockIcon from 'components/widgets/icons/lock_icon';
-import BrandMark from 'components/widgets/icons/brand_mark';
 import LoginGoogleIcon from 'components/widgets/icons/login_google_icon';
 import LoginOpenIDIcon from 'components/widgets/icons/login_openid_icon';
 import Input, {SIZE} from 'components/widgets/inputs/input/input';
