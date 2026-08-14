@@ -824,14 +824,18 @@ func TestConfigDefaultServiceSettingsExperimentalGroupUnreadChannels(t *testing.
 }
 
 func TestConfigDefaultNPSPluginState(t *testing.T) {
-	t.Run("should enable NPS plugin by default", func(t *testing.T) {
+	// NPS surveys report to Mattermost, so this server does not enable it --
+	// and unlike upstream that does not depend on the diagnostics setting.
+	// The two used to be coupled, which made the survey look like a
+	// consequence of telemetry rather than a decision of its own.
+	t.Run("should not enable NPS plugin by default", func(t *testing.T) {
 		c1 := Config{}
 		c1.SetDefaults()
 
-		assert.True(t, c1.PluginSettings.PluginStates["com.mattermost.nps"].Enable)
+		assert.False(t, c1.PluginSettings.PluginStates["com.mattermost.nps"].Enable)
 	})
 
-	t.Run("should enable NPS plugin if diagnostics are enabled", func(t *testing.T) {
+	t.Run("should not enable NPS plugin even if diagnostics are enabled", func(t *testing.T) {
 		c1 := Config{
 			LogSettings: LogSettings{
 				EnableDiagnostics: new(true),
@@ -840,7 +844,7 @@ func TestConfigDefaultNPSPluginState(t *testing.T) {
 
 		c1.SetDefaults()
 
-		assert.True(t, c1.PluginSettings.PluginStates["com.mattermost.nps"].Enable)
+		assert.False(t, c1.PluginSettings.PluginStates["com.mattermost.nps"].Enable)
 	})
 
 	t.Run("should not enable NPS plugin if diagnostics are disabled", func(t *testing.T) {
