@@ -1,0 +1,28 @@
+# Canonical CI/CD config for hanzoteam/server — read by the hanzoai/ci reusable
+# workflow (.hanzo/workflows/cicd.yml) and by platform.hanzo.ai. One image: the
+# root Dockerfile builds the web app and the server from this tree and assembles
+# the runtime layout. app.hanzo.team runs it from a values file in hanzoai/universe.
+#
+# app.hanzo.team, not the hanzo.team apex: the apex serves the product's landing
+# page, and the workspace paths beside it (/v1, /collaborator, /_love) belong to
+# a different live service. The app gets a host of its own rather than a carve-out
+# of somebody else's.
+#
+# No deploy: here. cd.hanzo.ai runs with selfHeal, so a tag written anywhere but
+# the universe pin is restored away on the next poll; recording it there is the
+# only durable path.
+images:
+  - name: server
+    context: .
+    dockerfile: Dockerfile
+    repo: ghcr.io/hanzoteam/server
+
+# The Go and web app compiles both happen inside the Dockerfile, so a broken
+# tree already fails the image build. This gate covers the two things the image
+# build cannot catch, because both are behaviour rather than compilation: the
+# claim mapping that decides who a signing-in user is, and the tenant boundary
+# that decides which team they land in. Getting either wrong puts a user in
+# another org's channels.
+test:
+  - name: iam-provider
+    run: cd server && go test ./channels/app/oauthproviders/hanzo/...

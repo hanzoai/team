@@ -1,0 +1,16 @@
+# The build context is the source and nothing else.
+#
+# .git alone is 1.2 GiB here, and every byte of it is uploaded to the builder
+# before the first instruction runs.
+.git
+
+# Build output and installed dependencies are REPRODUCED by the build. Sending a
+# working tree's copies makes the image depend on the machine that built it —
+# and `npm ci` and `go build` would then be layering onto someone else's results.
+**/node_modules
+webapp/channels/dist
+
+# A local go.work is the same file the server stage writes for itself. Present in
+# the context, `go work init` meets one it did not create and fails.
+server/go.work
+server/go.work.sum
