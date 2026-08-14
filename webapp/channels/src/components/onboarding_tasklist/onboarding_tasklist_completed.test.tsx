@@ -15,76 +15,51 @@ jest.mock('@mattermost/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
 }));
 
-jest.mock('mattermost-redux/actions/admin', () => ({
-    ...jest.requireActual('mattermost-redux/actions/admin'),
-    getPrevTrialLicense: () => ({type: 'MOCK_GET_PREV_TRIAL_LICENSE'}),
-}));
-
-jest.mock('components/common/hooks/useOpenStartTrialFormModal', () => ({
-    __esModule: true,
-    default: () => jest.fn(),
-}));
-
 const dismissMockFn = jest.fn();
 
 describe('components/onboarding_tasklist/onboarding_tasklist_completed.tsx', () => {
     const props = {
         dismissAction: dismissMockFn,
-        isCurrentUserSystemAdmin: true,
-        isFirstAdmin: true,
     };
 
-    const initialState = {
-        entities: {
-            admin: {
-                prevTrialLicense: {
-                    IsLicensed: 'false',
-                },
-            },
-            general: {
-                license: {
-                    IsLicensed: 'false',
-                },
-            },
-            cloud: {
-                subscription: {
-                    product_id: 'prod_professional',
-                    is_free_trial: 'false',
-                    trial_end_at: 1,
-                },
-            },
-        },
-    };
+    beforeEach(() => {
+        dismissMockFn.mockClear();
+    });
 
     test('should match snapshot', () => {
-        const {container} = renderWithContext(<Completed {...props}/>, initialState);
+        const {container} = renderWithContext(<Completed {...props}/>);
         expect(container).toMatchSnapshot();
     });
 
     test('finds the completed subtitle', () => {
-        const {container} = renderWithContext(<Completed {...props}/>, initialState);
+        const {container} = renderWithContext(<Completed {...props}/>);
         expect(container.querySelectorAll('.completed-subtitle')).toHaveLength(1);
     });
 
-    test('displays the no thanks option to close the onboarding list', async () => {
-        const {container} = renderWithContext(<Completed {...props}/>, initialState);
-        const noThanksLink = container.querySelectorAll('.no-thanks-link');
-        expect(noThanksLink).toHaveLength(1);
+    test('congratulates without selling anything', () => {
+        const {container} = renderWithContext(<Completed {...props}/>);
+        expect(container.textContent).not.toMatch(/trial/i);
+        expect(container.textContent).not.toMatch(/enterprise/i);
+    });
 
-        // calls the dissmiss function on click
-        await userEvent.click(noThanksLink[0]);
+    test('dismisses the checklist from the only button it offers', async () => {
+        const {container} = renderWithContext(<Completed {...props}/>);
+        const buttons = container.querySelectorAll('button');
+        expect(buttons).toHaveLength(1);
+
+        await userEvent.click(buttons[0]);
         expect(dismissMockFn).toHaveBeenCalledTimes(1);
     });
 
     test('displays download apps link when not in desktop app', () => {
         isDesktopAppMock.mockReturnValue(false);
-        const {container} = renderWithContext(<Completed {...props}/>, initialState);
+        const {container} = renderWithContext(<Completed {...props}/>);
         expect(container.querySelectorAll('.download-apps')).toHaveLength(1);
     });
 
     test('hides download apps link when in desktop app', () => {
         isDesktopAppMock.mockReturnValue(true);
-        const {container} = renderWithContext(<Completed {...props}/>, initialState);
+        const {container} = renderWithContext(<Completed {...props}/>);
         expect(container.querySelectorAll('.download-apps')).toHaveLength(0);
         isDesktopAppMock.mockReturnValue(false);
     });

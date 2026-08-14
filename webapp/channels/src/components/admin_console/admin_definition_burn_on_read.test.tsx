@@ -105,7 +105,7 @@ describe('AdminDefinition - Burn-on-Read Settings', () => {
         });
     });
 
-    test('Burn-on-Read section should use LicensedSectionContainer with proper feature discovery', () => {
+    test('Burn-on-Read section renders its settings and only badges the SKU', () => {
         const postsSection = AdminDefinition.site.subsections.posts;
         const sections = 'sections' in postsSection.schema! ? postsSection.schema.sections : undefined;
 
@@ -113,17 +113,12 @@ describe('AdminDefinition - Burn-on-Read Settings', () => {
         const burnOnReadSection = sections?.find((section: AdminDefinitionConfigSchemaSection) => section.key === 'PostSettings.BurnOnRead');
         expect(burnOnReadSection).toBeDefined();
 
-        // Check that the section uses LicensedSectionContainer
-        expect(burnOnReadSection?.component).toBeDefined();
-
-        // Check that it has proper license SKU requirement
+        // The SKU is a badge on the panel, not a wall in front of it.
         expect(burnOnReadSection?.license_sku).toBe(LicenseSkus.EnterpriseAdvanced);
 
-        // Check that component props include feature discovery config
-        expect(burnOnReadSection?.componentProps).toBeDefined();
-        expect(burnOnReadSection?.componentProps?.requiredSku).toBe(LicenseSkus.EnterpriseAdvanced);
-        expect(burnOnReadSection?.componentProps?.featureDiscoveryConfig).toBeDefined();
-        expect(burnOnReadSection?.componentProps?.featureDiscoveryConfig?.featureName).toBe('burn_on_read');
+        // No wrapper stands between the admin and the settings.
+        expect(burnOnReadSection?.component).toBeUndefined();
+        expect(burnOnReadSection?.componentProps).toBeUndefined();
     });
 
     test('Burn-on-Read section isHidden should return true when feature flag is disabled', () => {

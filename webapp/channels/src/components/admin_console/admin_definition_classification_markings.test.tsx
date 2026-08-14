@@ -1,7 +1,6 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {CloudState} from '@mattermost/types/cloud';
 import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
 
 import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
@@ -9,8 +8,7 @@ import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
 import {LicenseSkus} from 'utils/constants';
 
 import AdminDefinition from './admin_definition';
-import ClassificationMarkingsFeatureDiscovery from './feature_discovery/features/classification_markings';
-import type {AdminDefinitionSetting, AdminDefinitionSubSection, Check, ConsoleAccess} from './types';
+import type {AdminDefinitionSubSection, Check, ConsoleAccess} from './types';
 
 const classificationConfigEnabled = {
     FeatureFlags: {
@@ -28,14 +26,6 @@ const consoleAccess = {
     read: {},
     write: {
         [RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE]: true,
-    },
-} as ConsoleAccess;
-
-const consoleAccessWithoutLicenseWrite = {
-    ...consoleAccess,
-    write: {
-        ...consoleAccess.write,
-        [RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE]: false,
     },
 } as ConsoleAccess;
 
@@ -63,64 +53,25 @@ const unlicensed = {
     IsLicensed: 'false',
 } as ClientLicense;
 
-type CustomAdminDefinitionSetting = Extract<AdminDefinitionSetting, {type: 'custom'}>;
-
 function isHidden(subsection: AdminDefinitionSubSection, config: Partial<AdminConfig>, license: ClientLicense) {
     const check = subsection.isHidden as Extract<Check, (...args: any[]) => boolean>;
     return check(config, {}, license, true, consoleAccess);
 }
 
-function isDisabled(check: Check | undefined, access: ConsoleAccess) {
-    const disabledCheck = check as Extract<Check, (...args: any[]) => boolean>;
-    return disabledCheck(classificationConfigEnabled, {}, professionalLicense, true, access);
-}
-
-describe('AdminDefinition - Classification Markings discovery', () => {
+describe('AdminDefinition - Classification Markings', () => {
     const settingsSubsection = AdminDefinition.site.subsections.classification_markings;
-    const discoverySubsection = AdminDefinition.site.subsections.classification_markings_feature_discovery;
 
-    test('includes a discovery route at the Classification Markings URL', () => {
-        expect(discoverySubsection).toBeDefined();
-        expect(discoverySubsection.url).toBe(settingsSubsection.url);
-        expect(discoverySubsection.isDiscovery).toBe(true);
-        expect(discoverySubsection.title).toEqual(settingsSubsection.title);
-        expect(discoverySubsection.restrictedIndicator).toBeDefined();
-
-        const schema = discoverySubsection.schema;
-        expect('name' in schema ? schema.name : undefined).toEqual(settingsSubsection.title);
-    });
-
-    test('advertises Enterprise Advanced as the required tier in the restricted indicator', () => {
-        const restrictedIndicator = discoverySubsection.restrictedIndicator;
-        expect(restrictedIndicator).toBeDefined();
-
-        const indicator = restrictedIndicator!.value({} as CloudState);
-        expect(indicator.props.minimumPlanRequiredForFeature).toBe(LicenseSkus.EnterpriseAdvanced);
-    });
-
-    test('shows discovery instead of settings for Professional licenses', () => {
-        expect(isHidden(settingsSubsection, classificationConfigEnabled, professionalLicense)).toBe(true);
-        expect(isHidden(discoverySubsection, classificationConfigEnabled, professionalLicense)).toBe(false);
-    });
-
-    test('shows discovery instead of settings when unlicensed', () => {
+    test('hides the settings page below Enterprise Advanced, with nothing offered in its place', () => {
         expect(isHidden(settingsSubsection, classificationConfigEnabled, unlicensed)).toBe(true);
-        expect(isHidden(discoverySubsection, classificationConfigEnabled, unlicensed)).toBe(false);
-    });
-
-    test('shows discovery instead of settings for Enterprise licenses', () => {
+        expect(isHidden(settingsSubsection, classificationConfigEnabled, professionalLicense)).toBe(true);
         expect(isHidden(settingsSubsection, classificationConfigEnabled, enterpriseLicense)).toBe(true);
-        expect(isHidden(discoverySubsection, classificationConfigEnabled, enterpriseLicense)).toBe(false);
+
+        expect(AdminDefinition.site.subsections).not.toHaveProperty('classification_markings_feature_discovery');
     });
 
-    test('shows settings instead of discovery for Enterprise Advanced licenses', () => {
+    test('shows the settings page for Enterprise Advanced and Entry licenses', () => {
         expect(isHidden(settingsSubsection, classificationConfigEnabled, enterpriseAdvancedLicense)).toBe(false);
-        expect(isHidden(discoverySubsection, classificationConfigEnabled, enterpriseAdvancedLicense)).toBe(true);
-    });
-
-    test('shows settings instead of discovery for Entry licenses', () => {
         expect(isHidden(settingsSubsection, classificationConfigEnabled, entryLicense)).toBe(false);
-        expect(isHidden(discoverySubsection, classificationConfigEnabled, entryLicense)).toBe(true);
     });
 
     test('disables the settings page for non system admins', () => {
@@ -133,28 +84,10 @@ describe('AdminDefinition - Classification Markings discovery', () => {
         expect(asNonSystemAdmin).toBe(true);
     });
 
-    test('hides both settings and discovery when the Classification Markings feature flag is disabled', () => {
+    test('hides the settings page when the Classification Markings feature flag is disabled', () => {
         expect(isHidden(settingsSubsection, classificationConfigDisabled, professionalLicense)).toBe(true);
-        expect(isHidden(discoverySubsection, classificationConfigDisabled, professionalLicense)).toBe(true);
 
         // The disabled flag must override an otherwise-unlocking license.
         expect(isHidden(settingsSubsection, classificationConfigDisabled, enterpriseAdvancedLicense)).toBe(true);
-        expect(isHidden(discoverySubsection, classificationConfigDisabled, enterpriseAdvancedLicense)).toBe(true);
-    });
-
-    test('renders the Classification Markings feature discovery component through a custom setting', () => {
-        const schema = discoverySubsection.schema;
-        expect('settings' in schema).toBe(true);
-
-        const settings = 'settings' in schema ? schema.settings ?? [] : [];
-        const discoverySetting = settings.find((setting): setting is CustomAdminDefinitionSetting => (
-            setting.type === 'custom' && setting.key === 'ClassificationMarkingsFeatureDiscovery'
-        ));
-
-        expect(discoverySetting).toBeDefined();
-        expect(discoverySetting?.type).toBe('custom');
-        expect(discoverySetting?.component).toBe(ClassificationMarkingsFeatureDiscovery);
-        expect(isDisabled(discoverySetting?.isDisabled, consoleAccess)).toBe(false);
-        expect(isDisabled(discoverySetting?.isDisabled, consoleAccessWithoutLicenseWrite)).toBe(true);
     });
 });

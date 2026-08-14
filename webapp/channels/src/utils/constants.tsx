@@ -140,7 +140,6 @@ export const Preferences = {
     ONE_CLICK_REACTIONS_ENABLED_DEFAULT: 'true',
     CLOUD_TRIAL_END_BANNER: 'cloud_trial_end_banner',
     CLOUD_USER_EPHEMERAL_INFO: 'cloud_user_ephemeral_info',
-    CATEGORY_CLOUD_LIMITS: 'cloud_limits',
     THREE_DAYS_LEFT_TRIAL_MODAL: 'three_days_left_trial_modal',
 
     // For one off things that have a special, attention-grabbing UI until you interact with them
@@ -158,7 +157,6 @@ export const Preferences = {
 
     FORWARD_POST_VIEWED: 'forward_post_viewed',
     HIDE_POST_FILE_UPGRADE_WARNING: 'hide_post_file_upgrade_warning',
-    SHOWN_LIMITS_REACHED_ON_LOGIN: 'shown_limits_reached_on_login',
     USE_CASE: 'use_case',
     DELINQUENCY_MODAL_CONFIRMED: 'delinquency_modal_confirmed',
     CONFIGURATION_BANNERS: 'configuration_banners',
@@ -339,7 +337,6 @@ export const ActionTypes = keyMirror({
     UNSUPPRESS_RHS: null,
 
     SET_EDIT_CHANNEL_MEMBERS: null,
-    NEEDS_LOGGED_IN_LIMIT_REACHED_CHECK: null,
 
     SET_DRAFT_SOURCE: null,
 
@@ -403,10 +400,7 @@ export const ModalIdentifiers = {
     SIDEBAR_WHATS_NEW_MODAL: 'sidebar_whats_new_modal',
     UPGRADE_CLOUD_ACCOUNT: 'upgrade_cloud_account',
     START_TRIAL_MODAL: 'start_trial_modal',
-    TRIAL_BENEFITS_MODAL: 'trial_benefits_modal',
     PRICING_MODAL: 'pricing_modal',
-    LEARN_MORE_TRIAL_MODAL: 'learn_more_trial_modal',
-    ENTERPRISE_EDITION_LICENSE: 'enterprise_edition_license',
     CONFIRM_NOTIFY_ADMIN: 'confirm_notify_admin',
     REMOVE_NEXT_STEPS_MODAL: 'remove_next_steps_modal',
     MORE_CHANNELS: 'more_channels',
@@ -414,8 +408,6 @@ export const ModalIdentifiers = {
     CLOUD_PURCHASE: 'cloud_purchase',
     SELF_HOSTED_PURCHASE: 'self_hosted_purchase',
     CLOUD_DOWNGRADE_CHOOSE_TEAM: 'cloud_downgrade_choose_team',
-    SUCCESS_MODAL: 'success_modal',
-    ERROR_MODAL: 'error_modal',
     DND_CUSTOM_TIME_PICKER: 'dnd_custom_time_picker',
     POST_REMINDER_CUSTOM_TIME_PICKER: 'post_reminder_custom_time_picker',
     CUSTOM_STATUS: 'custom_status',
@@ -424,7 +416,6 @@ export const ModalIdentifiers = {
     JOIN_CHANNEL_PROMPT: 'join_channel_prompt',
     COLLAPSED_REPLY_THREADS_MODAL: 'collapsed_reply_threads_modal',
     NOTIFY_CONFIRM_MODAL: 'notify_confirm_modal',
-    CONFIRM_LICENSE_REMOVAL: 'confirm_license_removal',
     CONFIRM: 'confirm',
     USER_GROUPS: 'user_groups',
     USER_GROUPS_CREATE: 'user_groups_create',
@@ -440,41 +431,26 @@ export const ModalIdentifiers = {
     USERS_TO_BE_REMOVED: 'users_to_be_removed',
     DELETE_DRAFT: 'delete_draft_modal',
     SEND_DRAFT: 'send_draft_modal',
-    UPLOAD_LICENSE: 'upload_license',
-    CLOUD_LIMITS: 'cloud_limits',
-    THREE_DAYS_LEFT_TRIAL_MODAL: 'three_days_left_trial_modal',
     REQUEST_BUSINESS_EMAIL_MODAL: 'request_business_email_modal',
-    FEATURE_RESTRICTED_MODAL: 'feature_restricted_modal',
     FORWARD_POST_MODAL: 'forward_post_modal',
     JOIN_PUBLIC_CHANNEL_MODAL: 'join_public_channel_modal',
-    CLOUD_INVOICE_PREVIEW: 'cloud_invoice_preview',
-    BILLING_HISTORY: 'billing_history',
     RESTORE_POST_MODAL: 'restore_post',
     INFO_TOAST: 'info_toast',
     MARK_ALL_THREADS_AS_READ: 'mark_all_threads_as_read_modal',
     DELINQUENCY_MODAL_DOWNGRADE: 'delinquency_modal_downgrade',
     CLOUD_LIMITS_DOWNGRADE: 'cloud_limits_downgrade',
     PERSIST_NOTIFICATION_CONFIRM_MODAL: 'persist_notification_confirm_modal',
-    AIR_GAPPED_SELF_HOSTED_PURCHASE: 'air_gapped_self_hosted_purchase',
-    DOWNGRADE_MODAL: 'downgrade_modal',
-    PURCHASE_IN_PROGRESS: 'purchase_in_progress',
     DELETE_WORKSPACE: 'delete_workspace',
     FEEDBACK: 'feedback',
-    DELETE_WORKSPACE_PROGRESS: 'delete_workspace_progress',
-    DELETE_WORKSPACE_RESULT: 'delete_workspace_result',
-    SCREENING_IN_PROGRESS: 'screening_in_progress',
     CONFIRM_SWITCH_TO_YEARLY: 'confirm_switch_to_yearly',
     EXPANSION_IN_PROGRESS: 'expansion_in_progress',
     SELF_HOSTED_EXPANSION: 'self_hosted_expansion',
-    START_TRIAL_FORM_MODAL: 'start_trial_form_modal',
-    START_TRIAL_FORM_MODAL_RESULT: 'start_trial_form_modal_result',
     MOVE_THREAD_MODAL: 'move_thread_modal',
     CONVERT_GM_TO_CHANNEL: 'convert_gm_to_channel',
     IP_FILTERING_ADD_EDIT_MODAL: 'ip_filtering_add_edit_modal',
     IP_FILTERING_DELETE_CONFIRMATION_MODAL: 'ip_filtering_delete_confirmation_modal',
     IP_FILTERING_SAVE_CONFIRMATION_MODAL: 'ip_filtering_save_confirmation_modal',
     REACTION_LIMIT_REACHED: 'reaction_limit_reached',
-    AIR_GAPPED_CONTACT_SALES: 'air_gapped_contact_sales',
     MANAGE_ROLES_MODAL: 'manage_roles_modal',
     MANAGE_TEAMS_MODAL: 'manage_teams_modal',
     MANAGE_TOKENS_MODAL: 'manage_teams_modal',
@@ -898,7 +874,6 @@ export const AnnouncementBarMessages = {
     LICENSE_PAST_GRACE: 'announcement_bar.error.past_grace',
     PREVIEW_MODE: 'announcement_bar.error.preview_mode',
     WEBSOCKET_PORT_ERROR: 'channel_loader.socketError',
-    TRIAL_LICENSE_EXPIRING: 'announcement_bar.error.trial_license_expiring',
 };
 
 // These messages correspond to AnnouncementBarMessages above
@@ -930,10 +905,6 @@ defineMessages({
     socketError: {
         id: 'channel_loader.socketError',
         defaultMessage: 'Please check connection, Hanzo Team unreachable. If issue persists, ask administrator to [check WebSocket port](!https://docs.hanzo.team/install/troubleshooting.html#please-check-connection-mattermost-unreachable-if-issue-persists-ask-administrator-to-check-websocket-port).',
-    },
-    trialLicenseExpiring: {
-        id: 'announcement_bar.error.trial_license_expiring',
-        defaultMessage: 'There are {days} days left on your free trial.',
     },
 });
 

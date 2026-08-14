@@ -1060,17 +1060,14 @@ Object {
               <span
                 class="RestrictedIndicator__icon-tooltip-container"
               >
-                <span>
-                  <button
-                    class="style--none RestrictedIndicator__button"
-                    id="mattermost_feature_highlight_without_notification-restricted-indicator"
-                  >
-                    <i
-                      class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                    />
-                    Professional
-                  </button>
-                </span>
+                <div
+                  class="RestrictedIndicator__content"
+                >
+                  <i
+                    class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                  />
+                  Professional
+                </div>
               </span>
             </div>
             <div
@@ -1415,17 +1412,14 @@ Object {
             <span
               class="RestrictedIndicator__icon-tooltip-container"
             >
-              <span>
-                <button
-                  class="style--none RestrictedIndicator__button"
-                  id="mattermost_feature_highlight_without_notification-restricted-indicator"
-                >
-                  <i
-                    class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
-                  />
-                  Professional
-                </button>
-              </span>
+              <div
+                class="RestrictedIndicator__content"
+              >
+                <i
+                  class="RestrictedIndicator__icon-tooltip icon icon-key-variant"
+                />
+                Professional
+              </div>
             </span>
           </div>
           <div

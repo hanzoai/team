@@ -21,7 +21,6 @@ import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
 
 import {getShowTaskListBool} from 'selectors/onboarding';
 
-import {useFirstAdminUser, useIsCurrentUserSystemAdmin} from 'components/global_header/hooks';
 import {
     useTasksListWithStatus,
     OnboardingTaskCategory,
@@ -153,8 +152,6 @@ const OnBoardingTaskList = (): JSX.Element | null => {
     const [completedCount, setCompletedCount] = useState(tasksList.filter((task) => task.status).length);
     const [showAnimation, setShowAnimation] = useState(false);
     const itemsLeft = tasksList.length - completedCount;
-    const isCurrentUserSystemAdmin = useIsCurrentUserSystemAdmin();
-    const isFirstAdmin = useFirstAdminUser();
     const isEnableOnboardingFlow = useSelector((state: GlobalState) => getConfig(state).EnableOnboardingFlow === 'true');
     const [showTaskList, firstTimeOnboarding] = useSelector(
         getShowTaskListBool,
@@ -267,11 +264,7 @@ const OnBoardingTaskList = (): JSX.Element | null => {
             >
                 <TaskItems className={open ? 'open' : ''}>
                     {completedCount === tasksList.length ? (
-                        <Completed
-                            dismissAction={dismissChecklist}
-                            isFirstAdmin={isFirstAdmin}
-                            isCurrentUserSystemAdmin={isCurrentUserSystemAdmin}
-                        />
+                        <Completed dismissAction={dismissChecklist}/>
                     ) : (
                         <>
                             <h1>

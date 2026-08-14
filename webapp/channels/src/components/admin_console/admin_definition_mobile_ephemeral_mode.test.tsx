@@ -64,18 +64,15 @@ describe('AdminDefinition - Mobile Ephemeral Mode Settings', () => {
         });
     });
 
-    test('should use LicensedSectionContainer with Enterprise Advanced', () => {
+    test('renders its settings and only badges the SKU', () => {
         const section = getEphemeralModeSection();
 
-        expect(section?.component).toBeDefined();
+        // The SKU is a badge on the panel, not a wall in front of it.
         expect(section?.license_sku).toBe(LicenseSkus.EnterpriseAdvanced);
-        expect(section?.componentProps).toBeDefined();
-        expect(section?.componentProps?.requiredSku).toBe(LicenseSkus.EnterpriseAdvanced);
-        expect(section?.componentProps?.featureDiscoveryConfig).toBeDefined();
-        expect(section?.componentProps?.featureDiscoveryConfig?.featureName).toBe('mobile_ephemeral_mode');
-        expect(section?.componentProps?.featureDiscoveryConfig?.learnMoreURL).toBe(
-            'https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security',
-        );
+
+        // No wrapper stands between the admin and the settings.
+        expect(section?.component).toBeUndefined();
+        expect(section?.componentProps).toBeUndefined();
     });
 
     test('isHidden should return true when feature flag is disabled', () => {

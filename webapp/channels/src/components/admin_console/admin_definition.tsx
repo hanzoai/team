@@ -8,7 +8,7 @@ import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 import {Link} from 'react-router-dom';
 import semver from 'semver';
 
-import {AccountMultipleOutlineIcon, ChartBarIcon, CogOutlineIcon, CreditCardOutlineIcon, FlaskOutlineIcon, FormatListBulletedIcon, InformationOutlineIcon, PowerPlugOutlineIcon, ServerVariantIcon, ShieldOutlineIcon, SitemapIcon, TableLargeIcon} from '@mattermost/compass-icons/components';
+import {AccountMultipleOutlineIcon, ChartBarIcon, CogOutlineIcon, FlaskOutlineIcon, FormatListBulletedIcon, PowerPlugOutlineIcon, ServerVariantIcon, ShieldOutlineIcon, SitemapIcon, TableLargeIcon} from '@mattermost/compass-icons/components';
 
 import {Posts} from 'mattermost-redux/constants';
 import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
@@ -52,10 +52,6 @@ import {getRestrictedIndicator, it, usesLegacyOauth, validators} from './admin_d
 import AuditLoggingCertificateUploadSetting from './audit_logging';
 import Audits from './audits';
 import {searchableStrings as auditSearchableStrings} from './audits/audits';
-import BillingHistory, {searchableStrings as billingHistorySearchableStrings} from './billing/billing_history';
-import BillingSubscriptions, {searchableStrings as billingSubscriptionSearchableStrings} from './billing/billing_subscriptions';
-import CompanyInfo, {searchableStrings as billingCompanyInfoSearchableStrings} from './billing/company_info';
-import CompanyInfoEdit from './billing/company_info_edit';
 import BoardAttributes, {searchableStrings as boardAttributesSearchableStrings} from './board_attributes';
 import BrandImageSetting from './brand_image_setting/brand_image_setting';
 import ClassificationMarkings, {searchableStrings as classificationMarkingsSearchableStrings} from './classification_markings';
@@ -64,7 +60,7 @@ import ClusterSettings, {searchableStrings as clusterSearchableStrings} from './
 import CustomEnableDisableGuestAccountsMagicLinkSetting, {searchableStrings as magicLinkSearchableStrings} from './custom_enable_disable_guest_accounts_magic_link_setting';
 import CustomEnableDisableGuestAccountsSetting from './custom_enable_disable_guest_accounts_setting';
 import CustomTermsOfServiceSettings from './custom_terms_of_service_settings';
-import {messages as customTermsOfServiceMessages, searchableStrings as customTermsOfServiceSearchableStrings} from './custom_terms_of_service_settings/custom_terms_of_service_settings';
+import {searchableStrings as customTermsOfServiceSearchableStrings} from './custom_terms_of_service_settings/custom_terms_of_service_settings';
 import CustomURLSchemesSetting from './custom_url_schemes_setting';
 import DataRetentionSettings from './data_retention_settings';
 import CustomDataRetentionForm from './data_retention_settings/custom_policy_form';
@@ -72,28 +68,6 @@ import {searchableStrings as dataRetentionSearchableStrings} from './data_retent
 import GlobalDataRetentionForm from './data_retention_settings/global_policy_form';
 import DatabaseSettings, {searchableStrings as databaseSearchableStrings} from './database_settings';
 import ElasticSearchSettings, {searchableStrings as elasticSearchSearchableStrings} from './elasticsearch_settings';
-import {
-    AnnouncementBannerFeatureDiscovery,
-    ClassificationMarkingsFeatureDiscovery,
-    ComplianceExportFeatureDiscovery,
-    CustomTermsOfServiceFeatureDiscovery,
-    DataSpillageFeatureDiscovery,
-    DataRetentionFeatureDiscovery,
-    GroupsFeatureDiscovery,
-    GuestAccessFeatureDiscovery,
-    LDAPFeatureDiscovery,
-    MobileSecurityFeatureDiscovery,
-    OpenIDCustomFeatureDiscovery,
-    OpenIDFeatureDiscovery,
-    SAMLFeatureDiscovery,
-    SystemRolesFeatureDiscovery,
-} from './feature_discovery/features';
-import AttributeBasedAccessControlFeatureDiscovery from './feature_discovery/features/attribute_based_access_control';
-import AutoTranslationFeatureDiscovery from './feature_discovery/features/auto_translation';
-import BurnOnReadSVG from './feature_discovery/features/images/burn_on_read_svg';
-import IntuneMAMSvg from './feature_discovery/features/images/intune_mam_svg';
-import SessionAttributesFeatureDiscovery from './feature_discovery/features/session_attributes';
-import UserAttributesFeatureDiscovery from './feature_discovery/features/user_attributes';
 import FeatureFlags, {messages as featureFlagsMessages} from './feature_flags';
 import GlobalAttributes, {searchableStrings as globalAttributesSearchableStrings} from './global_attributes';
 import AttributeDetails from './global_attributes/attribute_details';
@@ -101,9 +75,6 @@ import GroupDetails from './group_settings/group_details';
 import GroupSettings from './group_settings/group_settings';
 import IPFiltering from './ip_filtering';
 import LDAPWizard from './ldap_wizard';
-import LicenseSettings from './license_settings';
-import {searchableStrings as licenseSettingsSearchableStrings} from './license_settings/license_settings';
-import LicensedSectionContainer from './licensed_section_container';
 import AutoTranslation, {searchableStrings as autoTranslationSearchableStrings} from './localization/auto_translation';
 import Localization, {searchableStrings as localizationSearchableStrings} from './localization/localization';
 import MessageExportSettings, {searchableStrings as messageExportSearchableStrings} from './message_export_settings';
@@ -276,92 +247,6 @@ const adminDefinitionMessages = defineMessages({
 });
 
 const AdminDefinition: AdminDefinitionType = {
-    about: {
-        icon: (
-            <InformationOutlineIcon
-                size={16}
-                color={'currentColor'}
-            />
-        ),
-        sectionTitle: defineMessage({id: 'admin.sidebar.about', defaultMessage: 'About'}),
-        isHidden: it.any(
-            it.configIsTrue('ExperimentalSettings', 'RestrictSystemAdmin'),
-            it.not(it.userHasReadPermissionOnSomeResources(RESOURCE_KEYS.ABOUT)),
-        ),
-        subsections: {
-            license: {
-                url: 'about/license',
-                title: defineMessage({id: 'admin.sidebar.license', defaultMessage: 'Edition and License'}),
-                searchableStrings: licenseSettingsSearchableStrings,
-                isHidden: it.not(it.userHasReadPermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                schema: {
-                    id: 'LicenseSettings',
-                    component: LicenseSettings,
-                },
-            },
-        },
-    },
-    billing: {
-        icon: (
-            <CreditCardOutlineIcon
-                size={16}
-                color={'currentColor'}
-            />
-        ),
-        sectionTitle: defineMessage({id: 'admin.sidebar.billing', defaultMessage: 'Billing & Account'}),
-        isHidden: it.not(it.licensedForFeature('Cloud')),
-        subsections: {
-            subscription: {
-                url: 'billing/subscription',
-                title: defineMessage({id: 'admin.sidebar.subscription', defaultMessage: 'Subscription'}),
-                searchableStrings: billingSubscriptionSearchableStrings,
-                schema: {
-                    id: 'BillingSubscriptions',
-                    component: BillingSubscriptions,
-                },
-
-                // cloud only view
-                isHidden: it.not(it.licensedForFeature('Cloud')),
-                isDisabled: it.not(it.userHasWritePermissionOnResource('billing')),
-            },
-            billing_history: {
-                url: 'billing/billing_history',
-                title: defineMessage({id: 'admin.sidebar.billing_history', defaultMessage: 'Billing History'}),
-                searchableStrings: billingHistorySearchableStrings,
-                schema: {
-                    id: 'BillingHistory',
-                    component: BillingHistory,
-                },
-                isHidden: it.not(it.licensedForFeature('Cloud')),
-                isDisabled: it.not(it.userHasWritePermissionOnResource('billing')),
-            },
-            company_info: {
-                url: 'billing/company_info',
-                title: defineMessage({id: 'admin.sidebar.company_info', defaultMessage: 'Company Information'}),
-                searchableStrings: billingCompanyInfoSearchableStrings,
-                schema: {
-                    id: 'CompanyInfo',
-                    component: CompanyInfo,
-                },
-
-                // cloud only view
-                isHidden: it.not(it.licensedForFeature('Cloud')),
-                isDisabled: it.not(it.userHasWritePermissionOnResource('billing')),
-            },
-            company_info_edit: {
-                url: 'billing/company_info_edit',
-                schema: {
-                    id: 'CompanyInfoEdit',
-                    component: CompanyInfoEdit,
-                },
-
-                // cloud only view
-                isHidden: it.not(it.licensedForFeature('Cloud')),
-                isDisabled: it.not(it.userHasWritePermissionOnResource('billing')),
-            },
-        },
-    },
     reporting: {
         icon: (
             <ChartBarIcon
@@ -474,27 +359,6 @@ const AdminDefinition: AdminDefinitionType = {
                 },
                 restrictedIndicator: getRestrictedIndicator(),
             },
-            groups_feature_discovery: {
-                url: 'user_management/groups',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.groups', defaultMessage: 'Groups'}),
-                isHidden: it.any(
-                    it.licensedForFeature('LDAPGroups'),
-                ),
-                schema: {
-                    id: 'Groups',
-                    name: defineMessage({id: 'admin.group_settings.groupsPageTitle', defaultMessage: 'Groups'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: GroupsFeatureDiscovery,
-                            key: 'GroupsFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.Enterprise),
-            },
             team_detail: {
                 url: `user_management/teams/:team_id(${ID_PATH_PATTERN})`,
                 isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.USER_MANAGEMENT.TEAMS)),
@@ -602,27 +466,6 @@ const AdminDefinition: AdminDefinitionType = {
                 },
                 restrictedIndicator: getRestrictedIndicator(),
             },
-            system_roles_feature_discovery: {
-                url: 'user_management/system_roles',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.systemRoles', defaultMessage: 'Delegated Granular Administration'}),
-                isHidden: it.any(
-                    it.licensedForFeature('LDAPGroups'),
-                ),
-                schema: {
-                    id: 'SystemRoles',
-                    name: defineMessage({id: 'admin.permissions.systemRoles', defaultMessage: 'Delegated Granular Administration'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: SystemRolesFeatureDiscovery,
-                            key: 'SystemRolesFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.Enterprise),
-            },
         },
     },
     system_attributes: {
@@ -645,25 +488,6 @@ const AdminDefinition: AdminDefinitionType = {
                     component: SystemProperties,
                 },
             },
-            user_attributes_feature_discovery: {
-                url: 'system_attributes/user_attributes',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.user_attributes', defaultMessage: 'User Attributes'}),
-                isHidden: it.minLicenseTier(LicenseSkus.Enterprise),
-                schema: {
-                    id: 'SystemProperties',
-                    name: defineMessage({id: 'admin.sidebar.user_attributes', defaultMessage: 'User Attributes'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: UserAttributesFeatureDiscovery,
-                            key: 'UserAttributesFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.EnterpriseAdvanced),
-            },
             session_attributes: {
                 url: 'system_attributes/session_attributes',
                 title: defineMessage({id: 'admin.sidebar.sessionAttributes', defaultMessage: 'Session Attributes'}),
@@ -679,28 +503,6 @@ const AdminDefinition: AdminDefinitionType = {
                     component: SessionAttributesPage,
                 },
                 restrictedIndicator: getRestrictedIndicator(false, LicenseSkus.EnterpriseAdvanced),
-            },
-            session_attributes_feature_discovery: {
-                url: 'system_attributes/session_attributes',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.sessionAttributes', defaultMessage: 'Session Attributes'}),
-                isHidden: it.any(
-                    it.minLicenseTier(LicenseSkus.EnterpriseAdvanced),
-                    it.configIsFalse('FeatureFlags', 'SessionAttributes'),
-                ),
-                schema: {
-                    id: 'SessionAttributes',
-                    name: defineMessage({id: 'admin.session_attributes.title', defaultMessage: 'Session Attributes'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: SessionAttributesFeatureDiscovery,
-                            key: 'SessionAttributesFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.EnterpriseAdvanced),
             },
             board_attributes: {
                 url: 'system_attributes/board_attributes',
@@ -795,25 +597,6 @@ const AdminDefinition: AdminDefinitionType = {
                     ],
                 },
                 restrictedIndicator: getRestrictedIndicator(false, LicenseSkus.EnterpriseAdvanced),
-            },
-            attribute_based_access_control_feature_discovery: {
-                url: 'system_attributes/attribute_based_access_control',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.attributeBasedAccessControl', defaultMessage: 'Attribute-Based Access'}),
-                isHidden: it.minLicenseTier(LicenseSkus.EnterpriseAdvanced),
-                schema: {
-                    id: 'AttributeBasedAccessControl',
-                    name: defineMessage({id: 'admin.accesscontrol.title', defaultMessage: 'Attribute-Based Access'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: AttributeBasedAccessControlFeatureDiscovery,
-                            key: 'AttributeBasedAccessControlFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.EnterpriseAdvanced),
             },
             membership_policy_details_edit: {
                 url: `system_attributes/membership_policies/edit_policy/:policy_id(${ID_PATH_PATTERN})`,
@@ -2378,17 +2161,6 @@ const AdminDefinition: AdminDefinitionType = {
                             title: 'Microsoft Intune',
                             description: defineMessage({id: 'admin.mobileSecurity.sections.intune.description', defaultMessage: 'Configure Microsoft Intune Mobile Application Management (MAM) for App Protection Policies.'}),
                             license_sku: LicenseSkus.EnterpriseAdvanced,
-                            component: LicensedSectionContainer,
-                            componentProps: {
-                                requiredSku: LicenseSkus.EnterpriseAdvanced,
-                                featureDiscoveryConfig: {
-                                    featureName: 'intune_mam',
-                                    title: defineMessage({id: 'admin.intune_feature_discovery.title', defaultMessage: 'Protect mobile data with Microsoft Intune App Protection Policies (MAM) and Entra ID authentication'}),
-                                    description: defineMessage({id: 'admin.intune_feature_discovery.description', defaultMessage: 'With Hanzo Team, you can enable Microsoft Intune Mobile Application Management (MAM) to enforce App Protection Policies (APP) on Hanzo Team Mobile. Users sign in with Microsoft Entra ID (Azure AD), and Intune MAM applies data protection, selective wipe, and compliance policies on supported iOS devices.'}),
-                                    learnMoreURL: 'https://docs.hanzo.team/deployment-guide/mobile/configure-microsoft-intune-mam.html',
-                                    svgImage: IntuneMAMSvg,
-                                },
-                            },
                             settings: [
                                 {
                                     type: 'bool',
@@ -2459,16 +2231,6 @@ const AdminDefinition: AdminDefinitionType = {
                             title: 'Mobile Ephemeral Mode',
                             description: defineMessage({id: 'admin.mobileSecurity.sections.ephemeralMode.description', defaultMessage: 'Configure data persistence and cache management policies for mobile devices.'}),
                             license_sku: LicenseSkus.EnterpriseAdvanced,
-                            component: LicensedSectionContainer,
-                            componentProps: {
-                                requiredSku: LicenseSkus.EnterpriseAdvanced,
-                                featureDiscoveryConfig: {
-                                    featureName: 'mobile_ephemeral_mode',
-                                    title: defineMessage({id: 'admin.mobileSecurity.ephemeralMode_feature_discovery.title', defaultMessage: 'Control mobile data persistence with Mobile Ephemeral Mode'}),
-                                    description: defineMessage({id: 'admin.mobileSecurity.ephemeralMode_feature_discovery.description', defaultMessage: 'With Hanzo Team, you can enable Mobile Ephemeral Mode to enforce data persistence policies on mobile devices. Configure disconnection timeouts, offline data retention, and automatic cache cleanup.'}),
-                                    learnMoreURL: 'https://docs.hanzo.team/configure/environment-configuration-settings.html#mobile-security',
-                                },
-                            },
                             isHidden: it.configIsFalse('FeatureFlags', 'MobileEphemeralMode'),
                             settings: [
                                 {
@@ -2526,28 +2288,6 @@ const AdminDefinition: AdminDefinitionType = {
                         },
                     ],
                 },
-            },
-            mobile_security_feature_discovery: {
-                url: 'environment/mobile_security_feature_discovery',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.mobileSecurity', defaultMessage: 'Mobile Security'}),
-                isHidden: it.any(
-                    it.not(it.userHasReadPermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.MOBILE_SECURITY)),
-                    it.minLicenseTier(LicenseSkus.Enterprise),
-                ),
-                schema: {
-                    id: 'MobileSecurityFeatureDiscoverySettings',
-                    name: defineMessage({id: 'admin.mobileSecurity.title', defaultMessage: 'Mobile Security'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: MobileSecurityFeatureDiscovery,
-                            key: 'MobileSecurityFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
         },
     },
@@ -2809,19 +2549,6 @@ const AdminDefinition: AdminDefinitionType = {
                             isHidden: it.any(
                                 it.configIsFalse('FeatureFlags', 'AutoTranslation'),
                                 it.not(it.minLicenseTier(LicenseSkus.EnterpriseAdvanced)),
-                            ),
-                        },
-                        {
-                            type: 'custom',
-                            key: 'auto-translation-discovery',
-                            component: AutoTranslationFeatureDiscovery,
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                            isHidden: it.any(
-                                it.all(
-                                    it.configIsTrue('FeatureFlags', 'AutoTranslation'),
-                                    it.minLicenseTier(LicenseSkus.EnterpriseAdvanced),
-                                ),
-                                it.configIsFalse('FeatureFlags', 'AutoTranslation'),
                             ),
                         },
                     ],
@@ -3200,28 +2927,6 @@ const AdminDefinition: AdminDefinitionType = {
                     component: ClassificationMarkings,
                 },
             },
-            classification_markings_feature_discovery: {
-                url: 'site_config/classification_markings',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.classificationMarkings', defaultMessage: 'Classification Markings'}),
-                isHidden: it.any(
-                    it.minLicenseTier(LicenseSkus.EnterpriseAdvanced),
-                    it.not(it.configIsTrue('FeatureFlags', 'ClassificationMarkings')),
-                ),
-                schema: {
-                    id: 'ClassificationMarkings',
-                    name: defineMessage({id: 'admin.sidebar.classificationMarkings', defaultMessage: 'Classification Markings'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: ClassificationMarkingsFeatureDiscovery,
-                            key: 'ClassificationMarkingsFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.EnterpriseAdvanced),
-            },
             announcement_banner: {
                 url: 'site_config/announcement_banner',
                 title: defineMessage({id: 'admin.sidebar.announcement', defaultMessage: 'System-wide Notifications'}),
@@ -3281,27 +2986,6 @@ const AdminDefinition: AdminDefinitionType = {
                     ],
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            announcement_banner_feature_discovery: {
-                url: 'site_config/announcement_banner',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.announcement', defaultMessage: 'System-wide Notifications'}),
-                isHidden: it.any(
-                    it.licensedForFeature('Announcement'),
-                ),
-                schema: {
-                    id: 'AnnouncementSettings',
-                    name: defineMessage({id: 'admin.site.announcementBanner', defaultMessage: 'System-wide Notifications'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: AnnouncementBannerFeatureDiscovery,
-                            key: 'AnnouncementBannerFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
             emoji: {
                 url: 'site_config/emoji',
@@ -3558,17 +3242,6 @@ const AdminDefinition: AdminDefinitionType = {
                             title: defineMessage({id: 'admin.posts.sections.burnOnRead.title', defaultMessage: 'Burn-on-Read Messages'}),
                             description: defineMessage({id: 'admin.posts.sections.burnOnRead.description', defaultMessage: 'Controls for messages that delete automatically a certain time after being read.'}),
                             license_sku: LicenseSkus.EnterpriseAdvanced,
-                            component: LicensedSectionContainer,
-                            componentProps: {
-                                requiredSku: LicenseSkus.EnterpriseAdvanced,
-                                featureDiscoveryConfig: {
-                                    featureName: 'burn_on_read',
-                                    title: defineMessage({id: 'admin.burn_on_read_feature_discovery.title', defaultMessage: 'Send burn-on-read messages that are automatically deleted after being read'}),
-                                    description: defineMessage({id: 'admin.burn_on_read_feature_discovery.description', defaultMessage: 'With Hanzo Team, users can send transient messages that are automatically deleted a fixed time after they are read by a recipient.'}),
-                                    learnMoreURL: 'https://docs.hanzo.team/end-user-guide/collaborate/send-messages.html#send-burn-on-read-messages',
-                                    svgImage: BurnOnReadSVG,
-                                },
-                            },
                             settings: [
                                 {
                                     type: 'bool',
@@ -3948,28 +3621,6 @@ const AdminDefinition: AdminDefinitionType = {
                     id: 'ContentFlaggingSettings',
                     component: ContentFlaggingSettings,
                 },
-            },
-            content_flagging_feature_discovery: {
-                url: 'site_config/data_spillage',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.dataSpillage', defaultMessage: 'Data Spillage Handling'}),
-                isHidden: it.any(
-                    it.minLicenseTier(LicenseSkus.EnterpriseAdvanced),
-                    it.configIsFalse('FeatureFlags', 'ContentFlagging'),
-                ),
-                schema: {
-                    id: 'ContentFlaggingSettings',
-                    name: defineMessage({id: 'admin.sidebar.dataSpillage', defaultMessage: 'Data Spillage Handling'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: DataSpillageFeatureDiscovery,
-                            key: 'DataSpillageFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.EnterpriseAdvanced),
             },
             wrangler: {
                 url: 'site_config/wrangler',
@@ -4372,27 +4023,6 @@ const AdminDefinition: AdminDefinitionType = {
                     id: 'LdapWizard',
                     component: LDAPWizard,
                 },
-            },
-            ldap_feature_discovery: {
-                url: 'authentication/ldap',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.ldap', defaultMessage: 'AD/LDAP'}),
-                isHidden: it.any(
-                    it.licensedForFeature('LDAP'),
-                ),
-                schema: {
-                    id: 'LdapSettings',
-                    name: defineMessage({id: 'admin.authentication.ldap', defaultMessage: 'AD/LDAP'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: LDAPFeatureDiscovery,
-                            key: 'LDAPFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
             saml: {
                 url: 'authentication/saml',
@@ -4861,27 +4491,6 @@ const AdminDefinition: AdminDefinitionType = {
                     ],
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            saml_feature_discovery: {
-                url: 'authentication/saml',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.saml', defaultMessage: 'SAML 2.0'}),
-                isHidden: it.any(
-                    it.licensedForFeature('SAML'),
-                ),
-                schema: {
-                    id: 'SamlSettings',
-                    name: defineMessage({id: 'admin.authentication.saml', defaultMessage: 'SAML 2.0'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: SAMLFeatureDiscovery,
-                            key: 'SAMLFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
             oauth: {
                 url: 'authentication/oauth',
@@ -5571,37 +5180,9 @@ const AdminDefinition: AdminDefinitionType = {
                             isHidden: it.not(it.stateEquals('openidType', Constants.OPENID_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
-                        {
-                            type: 'custom',
-                            key: 'OpenIDCustomFeatureDiscovery',
-                            component: OpenIDCustomFeatureDiscovery,
-                            isHidden: it.not(it.all(it.stateEquals('openidType', Constants.OPENID_SERVICE), it.licensedForCloudStarter)),
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
-                        },
                     ],
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            openid_feature_discovery: {
-                url: 'authentication/openid',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.openid', defaultMessage: 'OpenID Connect'}),
-                isHidden: it.any(
-                    it.any(it.licensedForFeature('OpenId'), it.cloudLicensed),
-                ),
-                schema: {
-                    id: 'OpenIdSettings',
-                    name: defineMessage({id: 'admin.authentication.openid', defaultMessage: 'OpenID Connect'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: OpenIDFeatureDiscovery,
-                            key: 'OpenIDFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
             guest_access: {
                 url: 'authentication/guest_access',
@@ -5690,27 +5271,6 @@ const AdminDefinition: AdminDefinitionType = {
                     ],
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            guest_access_feature_discovery: {
-                isDiscovery: true,
-                url: 'authentication/guest_access',
-                title: defineMessage({id: 'admin.sidebar.guest_access', defaultMessage: 'Guest Access'}),
-                isHidden: it.any(
-                    it.licensedForFeature('GuestAccounts'),
-                ),
-                schema: {
-                    id: 'GuestAccountsSettings',
-                    name: defineMessage({id: 'admin.authentication.guest_access', defaultMessage: 'Guest Access'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: GuestAccessFeatureDiscovery,
-                            key: 'GuestAccessFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true),
             },
         },
     },
@@ -6184,27 +5744,6 @@ const AdminDefinition: AdminDefinitionType = {
                 },
                 restrictedIndicator: getRestrictedIndicator(),
             },
-            data_retention_feature_discovery: {
-                url: 'compliance/data_retention',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.dataRetentionPolicy', defaultMessage: 'Data Retention Policy'}),
-                isHidden: it.any(
-                    it.licensedForFeature('DataRetention'),
-                ),
-                schema: {
-                    id: 'DataRetentionSettings',
-                    name: adminDefinitionMessages.data_retention_title,
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: DataRetentionFeatureDiscovery,
-                            key: 'DataRetentionFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.Enterprise),
-            },
             message_export: {
                 url: 'compliance/export',
                 title: defineMessage({id: 'admin.sidebar.complianceExport', defaultMessage: 'Compliance Export'}),
@@ -6219,27 +5758,6 @@ const AdminDefinition: AdminDefinitionType = {
                     component: MessageExportSettings,
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            compliance_export_feature_discovery: {
-                isDiscovery: true,
-                url: 'compliance/export',
-                title: defineMessage({id: 'admin.sidebar.complianceExport', defaultMessage: 'Compliance Export'}),
-                isHidden: it.any(
-                    it.licensedForFeature('MessageExport'),
-                ),
-                schema: {
-                    id: 'MessageExportSettings',
-                    name: defineMessage({id: 'admin.complianceExport.title', defaultMessage: 'Compliance Export'}),
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: ComplianceExportFeatureDiscovery,
-                            key: 'ComplianceExportFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.Enterprise),
             },
             audits: {
                 url: 'compliance/monitoring',
@@ -6417,27 +5935,6 @@ const AdminDefinition: AdminDefinitionType = {
                     component: CustomTermsOfServiceSettings,
                 },
                 restrictedIndicator: getRestrictedIndicator(),
-            },
-            custom_terms_of_service_feature_discovery: {
-                url: 'compliance/custom_terms_of_service',
-                isDiscovery: true,
-                title: defineMessage({id: 'admin.sidebar.customTermsOfService', defaultMessage: 'Custom Terms of Service'}),
-                isHidden: it.any(
-                    it.licensedForFeature('CustomTermsOfService'),
-                ),
-                schema: {
-                    id: 'TermsOfServiceSettings',
-                    name: customTermsOfServiceMessages.termsOfServiceTitle,
-                    settings: [
-                        {
-                            type: 'custom',
-                            component: CustomTermsOfServiceFeatureDiscovery,
-                            key: 'CustomTermsOfServiceFeatureDiscovery',
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ABOUT.EDITION_AND_LICENSE)),
-                        },
-                    ],
-                },
-                restrictedIndicator: getRestrictedIndicator(true, LicenseSkus.Enterprise),
             },
         },
     },

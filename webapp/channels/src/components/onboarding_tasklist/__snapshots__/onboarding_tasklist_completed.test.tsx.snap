@@ -3,7 +3,7 @@
 exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should match snapshot 1`] = `
 <div>
   <div
-    class="CompletedWrapper-byXeYZ caqIuy"
+    class="CompletedWrapper-byXeYZ bfcdpu"
   >
     <img
       alt="completed tasks image"
@@ -17,24 +17,10 @@ exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should
     >
       We hope Hanzo Team is more familiar now.
     </span>
-    <span
-      class="start-trial-text"
-    >
-      Interested in our higher-security features?
-       
-      <br />
-      Start your free Enterprise trial now!
-    </span>
-    <a
-      class="btn btn-secondary"
-      id="start_trial_btn"
-    >
-      Start trial
-    </a>
     <button
-      class="no-thanks-link style-link"
+      class="got-it-button"
     >
-      No, thanks
+      Got it
     </button>
     <div
       class="download-apps"
@@ -49,31 +35,6 @@ exports[`components/onboarding_tasklist/onboarding_tasklist_completed.tsx should
         >
           download our apps.
         </a>
-      </span>
-    </div>
-    <div
-      class="disclaimer"
-    >
-      <span>
-        By clicking “Start trial”, I agree to the 
-        <a
-          href="https://mattermost.com/pl/software-and-services-license-agreement"
-          location="onboarding_tasklist_completed"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          Hanzo Team Software Evaluation Agreement
-        </a>
-        , 
-        <a
-          href="https://docs.hanzo.team/privacy-policy/?utm_source=hanzoteam&utm_medium=in-product&utm_content=onboarding_tasklist_completed&uid=&sid=&edition=team&server_version="
-          location="onboarding_tasklist_completed"
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          privacy policy
-        </a>
-         and receiving product emails.
       </span>
     </div>
   </div>

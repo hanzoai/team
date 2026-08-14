@@ -20,8 +20,6 @@ const isDesktopAppMock = jest.mocked(UserAgent.isDesktopApp);
 jest.mock('@mattermost/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
 }));
-jest.mock('components/widgets/menu/menu_items/menu_cloud_trial', () => () => null);
-jest.mock('components/widgets/menu/menu_items/menu_item_cloud_limit', () => () => null);
 jest.mock('components/permissions_gates/system_permission_gate', () => ({children}: {children: React.ReactNode}) => <>{children}</>);
 jest.mock('components/permissions_gates/team_permission_gate', () => ({children}: {children: React.ReactNode}) => <>{children}</>);
 jest.mock('components/onboarding_tasks', () => ({

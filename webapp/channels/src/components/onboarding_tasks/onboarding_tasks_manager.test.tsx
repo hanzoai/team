@@ -54,20 +54,20 @@ describe('onboarding tasks manager', () => {
         },
     };
 
-    it('Places all the elements (6 ignoring plugins) when user is first admin or admin', () => {
+    it('Places all the elements (5 ignoring plugins) when user is first admin or admin', () => {
         renderWithContext(
             <WrapperComponent/>,
             initialState,
         );
 
-        expect(screen.getAllByRole('listitem')).toHaveLength(6);
+        expect(screen.getAllByRole('listitem')).toHaveLength(5);
 
-        // find the visit system console and start_trial
+        // find the visit system console; nothing invites the admin to start a trial
         expect(screen.getByText('visit_system_console')).toBeInTheDocument();
-        expect(screen.getByText('start_trial')).toBeInTheDocument();
+        expect(screen.queryByText('start_trial')).not.toBeInTheDocument();
     });
 
-    it('Removes start_trial and visit_system_console when user is end user', () => {
+    it('Removes visit_system_console when user is end user', () => {
         const endUserState = {...initialState, entities: {...initialState.entities, users: {...initialState.entities.users, currentUserId: user2}}};
 
         renderWithContext(
@@ -77,9 +77,8 @@ describe('onboarding tasks manager', () => {
 
         expect(screen.getAllByRole('listitem')).toHaveLength(4);
 
-        // verify visit_system_console and start_trial were removed
+        // verify visit_system_console was removed
         expect(screen.queryByText('visit_system_console')).not.toBeInTheDocument();
-        expect(screen.queryByText('start_trial')).not.toBeInTheDocument();
     });
 
     it('Removes invite people task item when user is GUEST user', () => {
@@ -92,7 +91,7 @@ describe('onboarding tasks manager', () => {
 
         expect(screen.getAllByRole('listitem')).toHaveLength(3);
 
-        // verify visit_system_console and start_trial were removed
+        // verify invite_people was removed
         expect(screen.queryByText('invite_people')).not.toBeInTheDocument();
     });
 
@@ -103,7 +102,7 @@ describe('onboarding tasks manager', () => {
             initialState,
         );
 
-        expect(screen.getAllByRole('listitem')).toHaveLength(5);
+        expect(screen.getAllByRole('listitem')).toHaveLength(4);
         expect(screen.queryByText('download_app')).not.toBeInTheDocument();
         isDesktopAppMock.mockReturnValue(false);
     });

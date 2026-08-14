@@ -116,7 +116,6 @@ export const usesLegacyOauth = (config: Partial<AdminConfig>, state: any, licens
 export const getRestrictedIndicator = (displayBlocked = false, minimumPlanRequiredForFeature = LicenseSkus.Professional) => ({
     value: (cloud: CloudState) => (
         <RestrictedIndicator
-            useModal={false}
             blocked={displayBlocked || !(cloud?.subscription?.is_free_trial === 'true')}
             minimumPlanRequiredForFeature={minimumPlanRequiredForFeature}
             tooltipMessageBlocked={defineMessage({
