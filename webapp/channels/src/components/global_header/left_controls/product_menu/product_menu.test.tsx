@@ -16,12 +16,6 @@ jest.mock('./product_branding', () => {
     };
 });
 
-jest.mock('./product_branding_team_edition', () => {
-    return function MockProductBrandingFreeEdition() {
-        return <div data-testid='product-branding-free-edition'/>;
-    };
-});
-
 jest.mock('./product_menu_list', () => {
     return function MockProductMenuList() {
         return <div data-testid='product-menu-list'/>;
@@ -226,51 +220,24 @@ describe('components/global/product_switcher', () => {
         expect(container).toMatchSnapshot();
     });
 
-    it('should render ProductBrandingFreeEdition for Entry license', () => {
-        const state = {
-            ...baseState,
-            entities: {
-                ...baseState.entities,
-                general: {
-                    ...baseState.entities.general,
-                    license: {
-                        IsLicensed: 'true',
-                        SkuShortName: 'entry',
-                    },
-                },
-            },
-        };
-
+    it.each([
+        ['unlicensed', {IsLicensed: 'false'}],
+        ['an entry licence', {IsLicensed: 'true', SkuShortName: 'entry'}],
+        ['a full licence', {IsLicensed: 'true', SkuShortName: 'enterprise'}],
+    ])('renders the same branding with %s, because there are no editions', (_label, license) => {
         renderWithContext(
             <ProductMenu/>,
-            state,
-        );
-
-        expect(screen.getByTestId('product-branding-free-edition')).toBeInTheDocument();
-        expect(screen.queryByTestId('product-branding')).not.toBeInTheDocument();
-    });
-
-    it('should render ProductBrandingFreeEdition for unlicensed', () => {
-        const state = {
-            ...baseState,
-            entities: {
-                ...baseState.entities,
-                general: {
-                    ...baseState.entities.general,
-                    license: {
-                        IsLicensed: 'false',
-                    },
+            {
+                ...baseState,
+                entities: {
+                    ...baseState.entities,
+                    general: {...baseState.entities.general, license},
                 },
             },
-        };
-
-        renderWithContext(
-            <ProductMenu/>,
-            state,
         );
 
-        expect(screen.getByTestId('product-branding-free-edition')).toBeInTheDocument();
-        expect(screen.queryByTestId('product-branding')).not.toBeInTheDocument();
+        expect(screen.getByTestId('product-branding')).toBeInTheDocument();
+        expect(screen.queryByTestId('product-branding-free-edition')).not.toBeInTheDocument();
     });
 
     it('should render ProductBranding for Professional license', () => {
