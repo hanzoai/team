@@ -1,4 +1,4 @@
-  /api/v4/oauth/apps:
+  /v1/team/oauth/apps:
     post:
       tags:
         - OAuth
@@ -103,7 +103,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/oauth/apps/{app_id}":
+  "/v1/team/oauth/apps/{app_id}":
     get:
       tags:
         - OAuth
@@ -247,7 +247,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/oauth/apps/{app_id}/regen_secret":
+  "/v1/team/oauth/apps/{app_id}/regen_secret":
     post:
       tags:
         - OAuth
@@ -284,7 +284,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/oauth/apps/{app_id}/info":
+  "/v1/team/oauth/apps/{app_id}/info":
     get:
       tags:
         - OAuth
@@ -354,7 +354,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  /api/v4/oauth/apps/register:
+  /v1/team/oauth/apps/register:
     post:
       tags:
         - OAuth
@@ -394,7 +394,7 @@
           $ref: "#/components/responses/BadRequest"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/users/{user_id}/oauth/apps/authorized":
+  "/v1/team/users/{user_id}/oauth/apps/authorized":
     get:
       tags:
         - OAuth

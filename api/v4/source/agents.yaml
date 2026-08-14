@@ -1,4 +1,4 @@
-  /api/v4/agents:
+  /v1/team/agents:
     get:
       tags:
         - agents
@@ -24,7 +24,7 @@
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/agents/status:
+  /v1/team/agents/status:
     get:
       tags:
         - agents
@@ -50,7 +50,7 @@
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/llmservices:
+  /v1/team/llmservices:
     get:
       tags:
         - agents

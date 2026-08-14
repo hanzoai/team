@@ -1,4 +1,4 @@
-  /api/v4/files:
+  /v1/team/files:
     post:
       tags:
         - files
@@ -89,7 +89,7 @@
           $ref: "#/components/responses/TooLarge"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/files/{file_id}":
+  "/v1/team/files/{file_id}":
     get:
       tags:
         - files
@@ -151,7 +151,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/files/{file_id}/thumbnail":
+  "/v1/team/files/{file_id}/thumbnail":
     get:
       tags:
         - files
@@ -213,7 +213,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/files/{file_id}/preview":
+  "/v1/team/files/{file_id}/preview":
     get:
       tags:
         - files
@@ -275,7 +275,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/files/{file_id}/link":
+  "/v1/team/files/{file_id}/link":
     get:
       tags:
         - files
@@ -324,7 +324,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/files/{file_id}/info":
+  "/v1/team/files/{file_id}/info":
     get:
       tags:
         - files
@@ -441,7 +441,7 @@
         "501":
           $ref: "#/components/responses/NotImplemented"
 
-  "/api/v4/teams/{team_id}/files/search":
+  "/v1/team/teams/{team_id}/files/search":
     post:
       tags:
         - teams
@@ -517,7 +517,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/files/search":
+  "/v1/team/files/search":
     post:
       tags:
         - files

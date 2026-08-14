@@ -1,4 +1,4 @@
-  /api/v4/schemes:
+  /v1/team/schemes:
     get:
       tags:
         - schemes
@@ -100,7 +100,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/schemes/{scheme_id}":
+  "/v1/team/schemes/{scheme_id}":
     get:
       tags:
         - schemes
@@ -167,7 +167,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/schemes/{scheme_id}/patch":
+  "/v1/team/schemes/{scheme_id}/patch":
     put:
       tags:
         - schemes
@@ -224,7 +224,7 @@
           $ref: "#/components/responses/NotFound"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/schemes/{scheme_id}/teams":
+  "/v1/team/schemes/{scheme_id}/teams":
     get:
       tags:
         - schemes
@@ -279,7 +279,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/schemes/{scheme_id}/channels":
+  "/v1/team/schemes/{scheme_id}/channels":
     get:
       tags:
         - schemes

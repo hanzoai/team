@@ -1,4 +1,4 @@
-  /api/v4/commands:
+  /v1/team/commands:
     post:
       tags:
         - commands
@@ -89,7 +89,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/teams/{team_id}/commands/autocomplete":
+  "/v1/team/teams/{team_id}/commands/autocomplete":
     get:
       tags:
         - commands
@@ -121,7 +121,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/commands/autocomplete_suggestions":
+  "/v1/team/teams/{team_id}/commands/autocomplete_suggestions":
     get:
       tags:
         - commands
@@ -160,7 +160,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/commands/{command_id}":
+  "/v1/team/commands/{command_id}":
     get:
       tags:
         - commands
@@ -265,7 +265,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/commands/{command_id}/move":
+  "/v1/team/commands/{command_id}/move":
     put:
       tags:
         - commands
@@ -312,7 +312,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/commands/{command_id}/regen_token":
+  "/v1/team/commands/{command_id}/regen_token":
     put:
       tags:
         - commands
@@ -348,7 +348,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/commands/execute:
+  /v1/team/commands/execute:
     post:
       tags:
         - commands

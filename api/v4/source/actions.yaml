@@ -1,4 +1,4 @@
-  /api/v4/actions/dialogs/open:
+  /v1/team/actions/dialogs/open:
     post:
       tags:
         - integration_actions
@@ -60,7 +60,7 @@
                         `name`, `display_name`, `type` set to "action_button", and an
                         `action_button` object with a required `url` (must be a valid lookup
                         URL) and optional `context` (string map). Clicking it calls
-                        `POST /api/v4/actions/dialogs/execute`. `action_button` elements are
+                        `POST /v1/team/actions/dialogs/execute`. `action_button` elements are
                         not included in the dialog submission payload.
                       items:
                         type: object
@@ -85,7 +85,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "400":
           $ref: "#/components/responses/BadRequest"
-  /api/v4/actions/dialogs/submit:
+  /v1/team/actions/dialogs/submit:
     post:
       tags:
         - integration_actions
@@ -177,7 +177,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  /api/v4/actions/dialogs/lookup:
+  /v1/team/actions/dialogs/lookup:
     post:
       tags:
         - integration_actions
@@ -271,7 +271,7 @@
             application/json:
               schema:
                 $ref: "#/components/schemas/AppError"
-  /api/v4/actions/dialogs/execute:
+  /v1/team/actions/dialogs/execute:
     post:
       tags:
         - integration_actions

@@ -1,4 +1,4 @@
-  /api/v4/system/timezones:
+  /v1/team/system/timezones:
     get:
       tags:
         - system
@@ -21,7 +21,7 @@
                   type: string
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/system/ping:
+  /v1/team/system/ping:
     get:
       tags:
         - system
@@ -102,7 +102,7 @@
                 $ref: "#/components/schemas/SystemStatusResponse"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/websocket:
+  /v1/team/websocket:
     get:
       tags:
         - system
@@ -194,7 +194,7 @@
           $ref: "#/components/responses/BadRequest"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/system/notices/{team_id}":
+  "/v1/team/system/notices/{team_id}":
     get:
       tags:
         - system
@@ -245,7 +245,7 @@
 
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/system/notices/view:
+  /v1/team/system/notices/view:
     put:
       tags:
         - system
@@ -277,7 +277,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/system/onboarding/complete:
+  /v1/team/system/onboarding/complete:
     get:
       tags:
         - system
@@ -339,7 +339,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/system/e2e/ai_bridge:
+  /v1/team/system/e2e/ai_bridge:
     put:
       tags:
         - system
@@ -429,7 +429,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/database/recycle:
+  /v1/team/database/recycle:
     post:
       tags:
         - system
@@ -451,7 +451,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/email/test:
+  /v1/team/email/test:
     post:
       tags:
         - system
@@ -484,7 +484,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/notifications/test:
+  /v1/team/notifications/test:
     post:
       tags:
         - system
@@ -508,7 +508,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/site_url/test:
+  /v1/team/site_url/test:
     post:
       tags:
         - system
@@ -550,7 +550,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/file/test:
+  /v1/team/file/test:
     post:
       tags:
         - system
@@ -588,14 +588,14 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/file/s3_test:
+  /v1/team/file/s3_test:
     post:
       tags:
         - system
       summary: Test AWS S3 connection
       description: >
-        Deprecated alias for `/api/v4/file/test` kept for backwards
-        compatibility. New callers should use `/api/v4/file/test`, which is
+        Deprecated alias for `/v1/team/file/test` kept for backwards
+        compatibility. New callers should use `/v1/team/file/test`, which is
         backend-agnostic.
 
         ##### Permissions
@@ -625,7 +625,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/config:
+  /v1/team/config:
     get:
       tags:
         - system
@@ -704,7 +704,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/config/reload:
+  /v1/team/config/reload:
     post:
       tags:
         - system
@@ -725,7 +725,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/config/migrate:
+  /v1/team/config/migrate:
     post:
       tags:
         - system
@@ -761,7 +761,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/config/client:
+  /v1/team/config/client:
     get:
       tags:
         - system
@@ -774,7 +774,7 @@
       responses:
         "200":
           description: Configuration retrieval successful
-  /api/v4/config/environment:
+  /v1/team/config/environment:
     get:
       tags:
         - system
@@ -808,7 +808,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/config/patch:
+  /v1/team/config/patch:
     put:
       tags:
         - system
@@ -828,7 +828,7 @@
 
         The Plugins are stored as a map, and since a map may recursively go 
         down to any depth, individual fields of a map are not changed. 
-        Consider using the `update config` (PUT api/v4/config) endpoint
+        Consider using the `update config` (PUT /v1/team/config) endpoint
         to update a plugins configurations.
       operationId: PatchConfig
       requestBody:
@@ -849,7 +849,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/license:
+  /v1/team/license:
     post:
       tags:
         - system
@@ -912,7 +912,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/license/preview:
+  /v1/team/license/preview:
     post:
       tags:
         - system
@@ -1001,7 +1001,7 @@
           $ref: "#/components/responses/Forbidden"
         "413":
           $ref: "#/components/responses/TooLarge"
-  /api/v4/license/client:
+  /v1/team/license/client:
     get:
       tags:
         - system
@@ -1027,7 +1027,7 @@
           $ref: "#/components/responses/BadRequest"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  /api/v4/license/load_metric:
+  /v1/team/license/load_metric:
     get:
       tags:
         - system
@@ -1058,7 +1058,7 @@
           $ref: "#/components/responses/Unauthorized"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/trial-license:
+  /v1/team/trial-license:
     post:
       tags:
         - system
@@ -1094,7 +1094,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/trial-license/prev:
+  /v1/team/trial-license/prev:
     get:
       tags:
         - system
@@ -1117,7 +1117,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/audits:
+  /v1/team/audits:
     get:
       tags:
         - system
@@ -1154,7 +1154,7 @@
                   $ref: "#/components/schemas/Audit"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/caches/invalidate:
+  /v1/team/caches/invalidate:
     post:
       tags:
         - system
@@ -1177,7 +1177,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/logs:
+  /v1/team/logs:
     get:
       tags:
         - system
@@ -1257,7 +1257,7 @@
                   type: string
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/logs/query:
+  /v1/team/logs/query:
     post:
       tags:
         - system
@@ -1328,7 +1328,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/analytics/old:
+  /v1/team/analytics/old:
     get:
       tags:
         - system
@@ -1373,7 +1373,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/latest_version:
+  /v1/team/latest_version:
     get:
       tags:
         - system
@@ -1412,7 +1412,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/system/schema/version:
+  /v1/team/system/schema/version:
     get:
       tags:
         - system
@@ -1443,7 +1443,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  /api/v4/server_busy:
+  /v1/team/server_busy:
     post:
       tags:
         - system
@@ -1529,7 +1529,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/notifications/ack:
+  /v1/team/notifications/ack:
     post:
       tags:
         - root
@@ -1550,7 +1550,7 @@
                 $ref: "#/components/schemas/PushNotification"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/redirect_location:
+  /v1/team/redirect_location:
     get:
       tags:
         - system
@@ -1581,7 +1581,7 @@
                     type: string
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/image:
+  /v1/team/image:
     get:
       tags:
         - system
@@ -1606,7 +1606,7 @@
         "404":
           $ref: "#/components/responses/NotFound"
 
-  /api/v4/upgrade_to_enterprise:
+  /v1/team/upgrade_to_enterprise:
     post:
       tags:
         - system
@@ -1634,7 +1634,7 @@
         "429":
           $ref: "#/components/responses/TooManyRequests"
 
-  /api/v4/upgrade_to_enterprise/status:
+  /v1/team/upgrade_to_enterprise/status:
     get:
       tags:
         - system
@@ -1666,7 +1666,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  /api/v4/upgrade_to_enterprise/allowed:
+  /v1/team/upgrade_to_enterprise/allowed:
     get:
       tags:
         - system
@@ -1680,7 +1680,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  /api/v4/restart:
+  /v1/team/restart:
     post:
       tags:
         - system
@@ -1704,7 +1704,7 @@
                 $ref: "#/components/schemas/StatusOK"
         "403":
           $ref: "#/components/responses/Forbidden"
-  /api/v4/integrity:
+  /v1/team/integrity:
     post:
       tags:
         - system
@@ -1730,7 +1730,7 @@
                 type: array
                 items:
                   $ref: "#/components/schemas/IntegrityCheckResult"
-  /api/v4/system/support_packet:
+  /v1/team/system/support_packet:
     get:
       tags:
         - system

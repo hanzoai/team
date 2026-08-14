@@ -1,4 +1,4 @@
-  "/api/v4/custom_profile_attributes/fields":
+  "/v1/team/custom_profile_attributes/fields":
     get:
       tags:
         - custom profile attributes
@@ -125,7 +125,7 @@
               schema:
                 $ref: "#/components/schemas/AppError"
 
-  "/api/v4/custom_profile_attributes/fields/{field_id}":
+  "/v1/team/custom_profile_attributes/fields/{field_id}":
     patch:
       tags:
         - custom profile attributes
@@ -274,7 +274,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/custom_profile_attributes/values":
+  "/v1/team/custom_profile_attributes/values":
     patch:
       tags:
         - custom profile attributes
@@ -336,7 +336,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/custom_profile_attributes/group":
+  "/v1/team/custom_profile_attributes/group":
     get:
       tags:
         - custom profile attributes
@@ -365,7 +365,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/users/{user_id}/custom_profile_attributes":
+  "/v1/team/users/{user_id}/custom_profile_attributes":
     get:
       tags:
         - custom profile attributes

@@ -1,4 +1,4 @@
-  /api/v4/teams:
+  /v1/team/teams:
     post:
       tags:
         - teams
@@ -98,7 +98,7 @@
           $ref: "#/components/responses/BadRequest"
         "401":
           $ref: "#/components/responses/Unauthorized"
-  "/api/v4/teams/{team_id}":
+  "/v1/team/teams/{team_id}":
     get:
       tags:
         - teams
@@ -241,7 +241,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/patch":
+  "/v1/team/teams/{team_id}/patch":
     put:
       tags:
         - teams
@@ -293,7 +293,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/privacy":
+  "/v1/team/teams/{team_id}/privacy":
     put:
       tags:
         - teams
@@ -345,7 +345,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/restore":
+  "/v1/team/teams/{team_id}/restore":
     post:
       tags:
         - teams
@@ -378,7 +378,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/name/{team_name}":
+  "/v1/team/teams/name/{team_name}":
     get:
       tags:
         - teams
@@ -412,7 +412,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/teams/search:
+  /v1/team/teams/search:
     post:
       tags:
         - teams
@@ -499,7 +499,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/name/{team_name}/exists":
+  "/v1/team/teams/name/{team_name}/exists":
     get:
       tags:
         - teams
@@ -529,7 +529,7 @@
           $ref: "#/components/responses/Unauthorized"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams":
+  "/v1/team/users/{user_id}/teams":
     get:
       tags:
         - teams
@@ -563,7 +563,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/members":
+  "/v1/team/teams/{team_id}/members":
     get:
       tags:
         - teams
@@ -668,7 +668,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  /api/v4/teams/members/invite:
+  /v1/team/teams/members/invite:
     post:
       tags:
         - teams
@@ -703,7 +703,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/members/batch":
+  "/v1/team/teams/{team_id}/members/batch":
     post:
       tags:
         - teams
@@ -756,7 +756,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/members":
+  "/v1/team/users/{user_id}/teams/members":
     get:
       tags:
         - teams
@@ -793,7 +793,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/members/{user_id}":
+  "/v1/team/teams/{team_id}/members/{user_id}":
     get:
       tags:
         - teams
@@ -871,7 +871,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/members/ids":
+  "/v1/team/teams/{team_id}/members/ids":
     post:
       tags:
         - teams
@@ -912,7 +912,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/stats":
+  "/v1/team/teams/{team_id}/stats":
     get:
       tags:
         - teams
@@ -944,7 +944,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/access_control/policy":
+  "/v1/team/teams/{team_id}/access_control/policy":
     get:
       tags:
         - teams
@@ -988,7 +988,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/teams/{team_id}/access_control/attributes":
+  "/v1/team/teams/{team_id}/access_control/attributes":
     get:
       tags:
         - teams
@@ -1029,7 +1029,7 @@
           $ref: "#/components/responses/Forbidden"
         "500":
           $ref: "#/components/responses/InternalServerError"
-  "/api/v4/teams/{team_id}/regenerate_invite_id":
+  "/v1/team/teams/{team_id}/regenerate_invite_id":
     post:
       tags:
         - teams
@@ -1061,7 +1061,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/image":
+  "/v1/team/teams/{team_id}/image":
     get:
       tags:
         - teams
@@ -1181,7 +1181,7 @@
           $ref: "#/components/responses/InternalServerError"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/teams/{team_id}/members/{user_id}/roles":
+  "/v1/team/teams/{team_id}/members/{user_id}/roles":
     put:
       tags:
         - teams
@@ -1235,7 +1235,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/members/{user_id}/schemeRoles":
+  "/v1/team/teams/{team_id}/members/{user_id}/schemeRoles":
     put:
       tags:
         - teams
@@ -1297,7 +1297,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/teams/unread":
+  "/v1/team/users/{user_id}/teams/unread":
     get:
       tags:
         - teams
@@ -1345,7 +1345,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/teams/{team_id}/unread":
+  "/v1/team/users/{user_id}/teams/{team_id}/unread":
     get:
       tags:
         - teams
@@ -1386,7 +1386,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/teams/{team_id}/invite/email":
+  "/v1/team/teams/{team_id}/invite/email":
     post:
       tags:
         - teams
@@ -1473,7 +1473,7 @@
           $ref: "#/components/responses/Forbidden"
         "413":
           $ref: "#/components/responses/TooLarge"
-  "/api/v4/teams/{team_id}/invite-guests/email":
+  "/v1/team/teams/{team_id}/invite-guests/email":
     post:
       tags:
         - teams
@@ -1546,7 +1546,7 @@
           $ref: "#/components/responses/Forbidden"
         "413":
           $ref: "#/components/responses/TooLarge"
-  /api/v4/teams/invites/email:
+  /v1/team/teams/invites/email:
     delete:
       tags:
         - teams
@@ -1572,7 +1572,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/{team_id}/import":
+  "/v1/team/teams/{team_id}/import":
     post:
       tags:
         - teams
@@ -1628,7 +1628,7 @@
           $ref: "#/components/responses/BadRequest"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/teams/invite/{invite_id}":
+  "/v1/team/teams/invite/{invite_id}":
     get:
       tags:
         - teams
@@ -1670,7 +1670,7 @@
                     type: string
         "400":
           $ref: "#/components/responses/BadRequest"
-  "/api/v4/teams/{team_id}/scheme":
+  "/v1/team/teams/{team_id}/scheme":
     put:
       tags:
         - teams
@@ -1722,7 +1722,7 @@
           $ref: "#/components/responses/Forbidden"
         "501":
           $ref: "#/components/responses/NotImplemented"
-  "/api/v4/teams/{team_id}/members_minus_group_members":
+  "/v1/team/teams/{team_id}/members_minus_group_members":
     get:
       tags:
         - teams

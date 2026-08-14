@@ -49,7 +49,7 @@ info:
 
     ## Schema & Conventions
 
-    - All API access is through HTTP(S) requests at `your-mattermost-url/api/v4`.
+    - All API access is through HTTP(S) requests at `your-mattermost-url/v1/team`.
 
     - All request and response bodies are `application/json`.
 
@@ -70,20 +70,20 @@ info:
 
       ### Session Token
 
-      Make an HTTP POST to `your-mattermost-url/api/v4/users/login` with a JSON
+      Make an HTTP POST to `your-mattermost-url/v1/team/users/login` with a JSON
       body indicating the user's `login_id`, `password` and optionally the MFA
       `token`. The `login_id` can be an email, username or an AD/LDAP ID
       depending on the system's configuration.
 
       ```bash
-      curl -i -d '{"login_id":"someone@nowhere.com","password":"thisisabadpassword"}' http://localhost:8065/api/v4/users/login
+      curl -i -d '{"login_id":"someone@nowhere.com","password":"thisisabadpassword"}' http://localhost:8065/v1/team/users/login
       ```
 
       NOTE: If you're running cURL on windows, you will have to change the single quotes to double quotes, and escape the inner double quotes with backslash, like below:
 
 
       ```bash
-      curl -i -d "{\"login_id\":\"someone@nowhere.com\",\"password\":\"thisisabadpassword\"}" http://localhost:8065/api/v4/users/login
+      curl -i -d "{\"login_id\":\"someone@nowhere.com\",\"password\":\"thisisabadpassword\"}" http://localhost:8065/v1/team/users/login
       ```
 
       If successful, the response will contain a `Token` header and a user object in the body.
@@ -108,12 +108,12 @@ info:
       Include the `Token` as part of the `Authorization` header on your future API requests with the `Bearer` method.
 
       ```bash
-      curl -i -H 'Authorization: Bearer ckh3t4knu3fzujt76o57f5jo4w' http://localhost:8065/api/v4/users/me
+      curl -i -H 'Authorization: Bearer ckh3t4knu3fzujt76o57f5jo4w' http://localhost:8065/v1/team/users/me
       ```
       Alternatively, include the `Token` as your `MMAUTHTOKEN` cookie value on your future API requests:
 
       ```bash
-      curl -i -H 'Cookie: MMAUTHTOKEN=ckh3t4knu3fzujt76o57f5jo4w' http://localhost:8065/api/v4/users/me
+      curl -i -H 'Cookie: MMAUTHTOKEN=ckh3t4knu3fzujt76o57f5jo4w' http://localhost:8065/v1/team/users/me
       ```
 
 
@@ -127,7 +127,7 @@ info:
       Just like session tokens, include the personal access token as part of the `Authorization` header in your requests using the `Bearer` method. Assuming our personal access token is `9xuqwrwgstrb3mzrxb83nb357a`, we could use it as shown below.
 
       ```bash
-      curl -i -H 'Authorization: Bearer 9xuqwrwgstrb3mzrxb83nb357a' http://localhost:8065/api/v4/users/me
+      curl -i -H 'Authorization: Bearer 9xuqwrwgstrb3mzrxb83nb357a' http://localhost:8065/v1/team/users/me
       ```
 
     ## Rate Limiting
@@ -181,7 +181,7 @@ info:
     ## WebSocket
      In addition to the HTTP RESTful web service, Mattermost also offers a WebSocket event delivery system and some API functionality.
 
-     To connect to the WebSocket follow the standard opening handshake as [defined by the RFC specification](https://tools.ietf.org/html/rfc6455#section-1.3) to the `/api/v4/websocket` endpoint of Mattermost.
+     To connect to the WebSocket follow the standard opening handshake as [defined by the RFC specification](https://tools.ietf.org/html/rfc6455#section-1.3) to the `/v1/team/websocket` endpoint of Mattermost.
 
 
     ### Authentication

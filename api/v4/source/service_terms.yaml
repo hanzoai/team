@@ -1,4 +1,4 @@
-  /api/v4/terms_of_service:
+  /v1/team/terms_of_service:
     get:
       tags:
         - terms of service

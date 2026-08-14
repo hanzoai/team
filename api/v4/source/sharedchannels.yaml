@@ -1,4 +1,4 @@
-  "/api/v4/sharedchannels/{team_id}":
+  "/v1/team/sharedchannels/{team_id}":
     get:
       tags:
         - shared channels
@@ -48,7 +48,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/remotecluster/{remote_id}/sharedchannelremotes":
+  "/v1/team/remotecluster/{remote_id}/sharedchannelremotes":
     get:
       tags:
         - shared channels
@@ -117,7 +117,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/sharedchannels/remote_info/{remote_id}":
+  "/v1/team/sharedchannels/remote_info/{remote_id}":
     get:
       tags:
         - shared channels
@@ -159,7 +159,7 @@
         "404":
           $ref: "#/components/responses/NotFound"
 
-  "/api/v4/remotecluster/{remote_id}/channels/{channel_id}/invite":
+  "/v1/team/remotecluster/{remote_id}/channels/{channel_id}/invite":
     post:
       tags:
         - shared channels
@@ -197,7 +197,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/remotecluster/{remote_id}/channels/{channel_id}/uninvite":
+  "/v1/team/remotecluster/{remote_id}/channels/{channel_id}/uninvite":
     post:
       tags:
         - shared channels
@@ -237,7 +237,7 @@
         "403":
           $ref: "#/components/responses/Forbidden"
 
-  "/api/v4/sharedchannels/{channel_id}/remotes":
+  "/v1/team/sharedchannels/{channel_id}/remotes":
     get:
       tags:
         - shared channels
@@ -275,7 +275,7 @@
         "404":
           $ref: "#/components/responses/NotFound"
 
-  "/api/v4/sharedchannels/users/{user_id}/can_dm/{other_user_id}":
+  "/v1/team/sharedchannels/users/{user_id}/can_dm/{other_user_id}":
     get:
       tags:
         - shared channels

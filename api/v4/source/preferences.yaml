@@ -1,4 +1,4 @@
-  "/api/v4/users/{user_id}/preferences":
+  "/v1/team/users/{user_id}/preferences":
     get:
       tags:
         - preferences
@@ -76,7 +76,7 @@
           $ref: "#/components/responses/Forbidden"
         "404":
           $ref: "#/components/responses/NotFound"
-  "/api/v4/users/{user_id}/preferences/delete":
+  "/v1/team/users/{user_id}/preferences/delete":
     post:
       tags:
         - preferences
@@ -119,7 +119,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/preferences/{category}":
+  "/v1/team/users/{user_id}/preferences/{category}":
     get:
       tags:
         - preferences
@@ -159,7 +159,7 @@
           $ref: "#/components/responses/Unauthorized"
         "403":
           $ref: "#/components/responses/Forbidden"
-  "/api/v4/users/{user_id}/preferences/{category}/name/{preference_name}":
+  "/v1/team/users/{user_id}/preferences/{category}/name/{preference_name}":
     get:
       tags:
         - preferences

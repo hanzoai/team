@@ -1,4 +1,4 @@
-  "/api/v4/boards":
+  "/v1/team/boards":
     post:
       tags:
         - boards
@@ -9,7 +9,7 @@
         Create a new board channel. Boards are channels with a kanban view backed
         by linked properties (status and assignee by default), and live alongside
         regular channels but cannot be created or modified through the
-        `/api/v4/channels` endpoints.
+        `/v1/team/channels` endpoints.
 
         The request body is a `Channel` object whose `type` must be `BO`
         (open board) or `BP` (private board). `team_id` and `display_name` are

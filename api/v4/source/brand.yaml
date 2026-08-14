@@ -1,4 +1,4 @@
-  /api/v4/brand/image:
+  /v1/team/brand/image:
     get:
       tags:
         - brand

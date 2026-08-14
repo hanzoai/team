@@ -1,4 +1,4 @@
-  /api/v4/cluster/status:
+  /v1/team/cluster/status:
     get:
       tags:
         - cluster
