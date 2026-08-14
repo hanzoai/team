@@ -19,7 +19,7 @@ const mockGetDocument = pdfjsLib.getDocument as jest.Mock;
 describe('component/PDFPreview', () => {
     const requiredProps: Props = {
         fileInfo: TestHelper.getFileInfoMock({extension: 'pdf'}),
-        fileUrl: 'https://pre-release.mattermost.com/api/v4/files/ips59w4w9jnfbrs3o94m1dbdie',
+        fileUrl: 'https://pre-release.mattermost.com/v1/team/files/ips59w4w9jnfbrs3o94m1dbdie',
         scale: 1,
         handleBgClose: jest.fn(),
     };

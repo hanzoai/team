@@ -350,14 +350,14 @@ test.describe('Attribute-Value Masking - API Redaction and Delete', {tag: ['@aba
 
             // Server: direct DELETE must return HTTP 403
             const status = await page.evaluate(async (id: string) => {
-                const resp = await fetch(`/api/v4/access_control_policies/${id}`, {
+                const resp = await fetch(`/v1/team/access_control_policies/${id}`, {
                     method: 'DELETE',
                     headers: {'X-Requested-With': 'XMLHttpRequest'},
                 });
                 return resp.status;
             }, policyId);
 
-            expect(status, `DELETE /api/v4/access_control_policies/${policyId} returned ${status}`).toBe(403);
+            expect(status, `DELETE /v1/team/access_control_policies/${policyId} returned ${status}`).toBe(403);
 
             // Verify policy still exists via DB
             const expression = (await getStoredPolicyRuleExpressions(policyId))[0] ?? '';
@@ -458,7 +458,7 @@ test.describe('Attribute-Value Masking - API Redaction and Delete', {tag: ['@aba
             // Server blocks a direct API attempt to remove a masked condition
             const status = await page.evaluate(
                 async ({policyId: id, fn}: {policyId: string; fn: string}) => {
-                    const resp = await fetch('/api/v4/access_control_policies', {
+                    const resp = await fetch('/v1/team/access_control_policies', {
                         method: 'PUT',
                         headers: {'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest'},
                         body: JSON.stringify({
@@ -473,7 +473,7 @@ test.describe('Attribute-Value Masking - API Redaction and Delete', {tag: ['@aba
                 {policyId, fn: programFieldName},
             );
 
-            expect(status, `PUT /api/v4/access_control_policies (id=${policyId}) returned ${status}`).toBe(403);
+            expect(status, `PUT /v1/team/access_control_policies (id=${policyId}) returned ${status}`).toBe(403);
         } finally {
             for (const id of policyIds) {
                 try {

@@ -17,23 +17,23 @@ describe('FileUtils', () => {
     });
 
     it('getFileUrl', () => {
-        expect(FileUtils.getFileUrl('id1')).toEqual('localhost/api/v4/files/id1');
-        expect(FileUtils.getFileUrl('id2')).toEqual('localhost/api/v4/files/id2');
+        expect(FileUtils.getFileUrl('id1')).toEqual('localhost/v1/team/files/id1');
+        expect(FileUtils.getFileUrl('id2')).toEqual('localhost/v1/team/files/id2');
     });
 
     it('getFileDownloadUrl', () => {
-        expect(FileUtils.getFileDownloadUrl('id1')).toEqual('localhost/api/v4/files/id1?download=1');
-        expect(FileUtils.getFileDownloadUrl('id2')).toEqual('localhost/api/v4/files/id2?download=1');
+        expect(FileUtils.getFileDownloadUrl('id1')).toEqual('localhost/v1/team/files/id1?download=1');
+        expect(FileUtils.getFileDownloadUrl('id2')).toEqual('localhost/v1/team/files/id2?download=1');
     });
 
     it('getFileThumbnailUrl', () => {
-        expect(FileUtils.getFileThumbnailUrl('id1')).toEqual('localhost/api/v4/files/id1/thumbnail');
-        expect(FileUtils.getFileThumbnailUrl('id2')).toEqual('localhost/api/v4/files/id2/thumbnail');
+        expect(FileUtils.getFileThumbnailUrl('id1')).toEqual('localhost/v1/team/files/id1/thumbnail');
+        expect(FileUtils.getFileThumbnailUrl('id2')).toEqual('localhost/v1/team/files/id2/thumbnail');
     });
 
     it('getFilePreviewUrl', () => {
-        expect(FileUtils.getFilePreviewUrl('id1')).toEqual('localhost/api/v4/files/id1/preview');
-        expect(FileUtils.getFilePreviewUrl('id2')).toEqual('localhost/api/v4/files/id2/preview');
+        expect(FileUtils.getFilePreviewUrl('id1')).toEqual('localhost/v1/team/files/id1/preview');
+        expect(FileUtils.getFilePreviewUrl('id2')).toEqual('localhost/v1/team/files/id2/preview');
     });
 
     it('getFileMiniPreviewUrl', () => {

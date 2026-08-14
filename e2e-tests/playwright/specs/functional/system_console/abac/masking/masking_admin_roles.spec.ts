@@ -113,14 +113,14 @@ test.describe('Attribute-Value Masking - Admin Roles', {tag: ['@abac', '@abac_ma
 
             // Server: direct DELETE must return HTTP 403 regardless of UI state
             const status = await page.evaluate(async (id: string) => {
-                const resp = await fetch(`/api/v4/access_control_policies/${id}`, {
+                const resp = await fetch(`/v1/team/access_control_policies/${id}`, {
                     method: 'DELETE',
                     headers: {'X-Requested-With': 'XMLHttpRequest'},
                 });
                 return resp.status;
             }, policyId);
 
-            expect(status, `DELETE /api/v4/access_control_policies/${policyId} returned ${status}`).toBe(403);
+            expect(status, `DELETE /v1/team/access_control_policies/${policyId} returned ${status}`).toBe(403);
         } finally {
             for (const id of policyIds) {
                 try {
@@ -247,7 +247,7 @@ test.describe('Attribute-Value Masking - Admin Roles', {tag: ['@abac', '@abac_ma
             expect(policyId).toMatch(/^[A-Za-z0-9]{26}$/);
             const status = await page.evaluate(
                 async ({id, teamId}: {id: string; teamId: string}) => {
-                    const resp = await fetch(`/api/v4/access_control_policies/${id}?team_id=${teamId}`, {
+                    const resp = await fetch(`/v1/team/access_control_policies/${id}?team_id=${teamId}`, {
                         method: 'DELETE',
                         headers: {'X-Requested-With': 'XMLHttpRequest'},
                     });
@@ -350,7 +350,7 @@ test.describe('Attribute-Value Masking - Admin Roles', {tag: ['@abac', '@abac_ma
             // Server-side guard: direct DELETE by the channel admin must 403
             expect(policyId).toMatch(/^[A-Za-z0-9]{26}$/);
             const status = await page.evaluate(async (id: string) => {
-                const resp = await fetch(`/api/v4/access_control_policies/${id}`, {
+                const resp = await fetch(`/v1/team/access_control_policies/${id}`, {
                     method: 'DELETE',
                     headers: {'X-Requested-With': 'XMLHttpRequest'},
                 });

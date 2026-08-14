@@ -7,7 +7,7 @@ import {ItemStatus} from '../dashboard.type';
 
 jest.mock('mattermost-redux/client', () => ({
     Client4: {
-        getBaseRoute: jest.fn(() => 'http://localhost/api/v4'),
+        getBaseRoute: jest.fn(() => 'http://localhost/v1/team'),
     },
 }));
 

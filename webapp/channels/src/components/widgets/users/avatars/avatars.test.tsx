@@ -99,9 +99,9 @@ describe('components/widgets/users/Avatars', () => {
             state,
         );
         expect(container).toMatchSnapshot();
-        expect(container.querySelector('img[src="/api/v4/users/1/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/2/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/3/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/1/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/2/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/3/image?_=1620680333191"]')).toBeInTheDocument();
         expect(container.querySelectorAll('img.Avatar')).toHaveLength(3);
     });
 
@@ -121,11 +121,11 @@ describe('components/widgets/users/Avatars', () => {
         );
 
         expect(container).toMatchSnapshot();
-        expect(container.querySelector('img[src="/api/v4/users/1/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/2/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/3/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/4/image?_=1620680333191"]')).not.toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/5/image?_=1620680333191"]')).not.toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/1/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/2/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/3/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/4/image?_=1620680333191"]')).not.toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/5/image?_=1620680333191"]')).not.toBeInTheDocument();
 
         // Check for +2 overflow avatar (text is rendered via data-content attribute)
         expect(container.querySelector('[data-content="+2"]')).toBeInTheDocument();
@@ -169,8 +169,8 @@ describe('components/widgets/users/Avatars', () => {
         expect(container).toMatchSnapshot();
         expect(getMissingProfilesByIds).toHaveBeenCalledWith(['1', '6', '7', '2', '8', '9']);
 
-        expect(container.querySelector('img[src="/api/v4/users/1/image?_=1620680333191"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/6/image?_=0"]')).toBeInTheDocument();
-        expect(container.querySelector('img[src="/api/v4/users/7/image?_=0"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/1/image?_=1620680333191"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/6/image?_=0"]')).toBeInTheDocument();
+        expect(container.querySelector('img[src="/v1/team/users/7/image?_=0"]')).toBeInTheDocument();
     });
 });

@@ -55,7 +55,7 @@ If no release notes are required write NONE. Use past-tense. Newlines are stripp
 Examples:
 
 ```
-Added new API endpoints POST /api/v4/foo, GET api/v4/foo, and GET api/v4/foo/:foo_id.
+Added new API endpoints POST /v1/team/foo, GET v1/team/foo, and GET v1/team/foo/:foo_id.
 ```
 
 ```

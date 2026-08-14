@@ -96,7 +96,7 @@ describe('Actions.Posts', () => {
             message: 'Invalid RootId parameter',
             server_error_id: 'api.post.create_post.root_id.app_error',
             status_code: 400,
-            url: 'http://localhost:8065/api/v4/posts',
+            url: 'http://localhost:8065/v1/team/posts',
         };
 
         nock(Client4.getBaseRoute()).

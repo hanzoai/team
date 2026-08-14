@@ -9,7 +9,7 @@ exports[`AudioVideoPreview should match snapshot without children 1`] = `
     width="640"
   >
     <source
-      src="/api/v4/files/file_id"
+      src="/v1/team/files/file_id"
     />
   </video>
 </div>
@@ -22,7 +22,7 @@ exports[`AudioVideoPreview should match snapshot, cannot play 1`] = `
   >
     <a
       class="file-details__preview"
-      href="/api/v4/files/file_id"
+      href="/v1/team/files/file_id"
     >
       <span
         class="file-details__preview-helper"

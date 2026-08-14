@@ -9,14 +9,14 @@ import {UserActionMenu} from './user_action_menu';
 const USERS_REPORT_RESPONSE_TIMEOUT_MS = 10_000;
 
 /**
- * Resolves when GET /api/v4/reports/users completes. Start this promise before the
+ * Resolves when GET /v1/team/reports/users completes. Start this promise before the
  * action that triggers the fetch (click, search, etc.) so Playwright does not sit
  * on the timeout when the response already finished.
  */
 export function waitForUsersReportResponse(page: Page) {
     return page.waitForResponse(
         (response) =>
-            response.url().includes('/api/v4/reports/users') &&
+            response.url().includes('/v1/team/reports/users') &&
             !response.url().includes('/count') &&
             response.request().method() === 'GET' &&
             response.ok(),

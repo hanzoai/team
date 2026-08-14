@@ -5,7 +5,7 @@ const axios = require('axios');
 
 module.exports = async ({sender, message, channelId, rootId, createAt = 0, baseUrl}) => {
     const loginResponse = await axios({
-        url: `${baseUrl}/api/v4/users/login`,
+        url: `${baseUrl}/v1/team/users/login`,
         headers: {'X-Requested-With': 'XMLHttpRequest'},
         method: 'post',
         data: {login_id: sender.username, password: sender.password},
@@ -21,7 +21,7 @@ module.exports = async ({sender, message, channelId, rootId, createAt = 0, baseU
     let response;
     try {
         response = await axios({
-            url: `${baseUrl}/api/v4/posts`,
+            url: `${baseUrl}/v1/team/posts`,
             headers: {
                 'Content-Type': 'application/json',
                 'X-Requested-With': 'XMLHttpRequest',

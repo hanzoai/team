@@ -35,7 +35,7 @@ exports[`components/UserList should match default snapshot when there are users 
             alt="some-user profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/api/v4/users/id1/image"
+            src="/v1/team/users/id1/image"
           />
         </span>
       </button>
@@ -89,7 +89,7 @@ exports[`components/UserList should match default snapshot when there are users 
             alt="some-user profile image"
             class="Avatar Avatar-md"
             loading="lazy"
-            src="/api/v4/users/id2/image"
+            src="/v1/team/users/id2/image"
           />
         </span>
       </button>
