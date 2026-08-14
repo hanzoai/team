@@ -13,13 +13,6 @@ import {ActionTypes} from 'utils/constants';
 import type {ActionFuncAsync} from 'types/store';
 import type {AdminConsoleUserManagementTableProperties} from 'types/store/views';
 
-export function setNeedsLoggedInLimitReachedCheck(data: boolean) {
-    return {
-        type: ActionTypes.NEEDS_LOGGED_IN_LIMIT_REACHED_CHECK,
-        data,
-    };
-}
-
 /**
  * Action to set the properties of the admin console user management table. Only pass the properties you want to set/modify. If you pass no properties, the table properties will be cleared.
  */

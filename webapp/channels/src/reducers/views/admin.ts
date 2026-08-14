@@ -49,15 +49,6 @@ function navigationBlock(state = navigationBlockInitialState, action: MMAction) 
     }
 }
 
-export function needsLoggedInLimitReachedCheck(state = false, action: MMAction) {
-    switch (action.type) {
-    case ActionTypes.NEEDS_LOGGED_IN_LIMIT_REACHED_CHECK:
-        return action.data;
-    default:
-        return state;
-    }
-}
-
 export const adminConsoleUserManagementTablePropertiesInitialState: AdminConsoleUserManagementTableProperties = {
     sortColumn: '',
     sortIsDescending: false,
@@ -90,6 +81,5 @@ export function adminConsoleUserManagementTableProperties(state = adminConsoleUs
 
 export default combineReducers({
     navigationBlock,
-    needsLoggedInLimitReachedCheck,
     adminConsoleUserManagementTableProperties,
 });

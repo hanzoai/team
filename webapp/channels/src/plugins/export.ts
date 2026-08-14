@@ -22,7 +22,6 @@ import EditChannelHeaderModal from 'components/edit_channel_header_modal';
 import * as Menu from 'components/menu';
 import {useNotifyAdmin} from 'components/notify_admin_cta/notify_admin_cta';
 import PostMessagePreview from 'components/post_view/post_message_preview';
-import StartTrialFormModal from 'components/start_trial_form_modal';
 import ThreadViewer from 'components/threading/thread_viewer';
 import Timestamp from 'components/timestamp';
 import BotTag from 'components/widgets/tag/bot_tag';
@@ -105,7 +104,6 @@ interface WindowWithLibraries {
         Avatar: typeof Avatar;
         imageURLForUser: typeof imageURLForUser;
         BotBadge: typeof BotTag;
-        StartTrialFormModal: typeof StartTrialFormModal;
         ThreadViewer: typeof ThreadViewer;
         PostMessagePreview: typeof PostMessagePreview;
         AdvancedTextEditor: typeof AdvancedTextEditor;
@@ -201,7 +199,6 @@ window.Components = {
     Avatar,
     imageURLForUser,
     BotBadge: BotTag,
-    StartTrialFormModal,
     ThreadViewer,
     PostMessagePreview,
     AdvancedTextEditor,

@@ -13,7 +13,6 @@ import {getFormattedFileSize} from 'mattermost-redux/utils/file_utils';
 
 import * as AdminActions from 'actions/admin_actions';
 
-import UserSeatAlertBanner from 'components/admin_console/license_settings/user_seat_alert_banner';
 import ActivatedUserCard from 'components/analytics/activated_users_card';
 import SingleChannelGuestsCard from 'components/analytics/single_channel_guests_card';
 import ExternalLink from 'components/external_link';
@@ -535,11 +534,6 @@ export default class SystemAnalytics extends React.PureComponent<Props, State> {
                 </AdminHeader>
                 <div className='admin-console__wrapper'>
                     <div className='admin-console__content'>
-                        <UserSeatAlertBanner
-                            license={this.props.license}
-                            totalUsers={this.props.serverLimits?.activeUserCount ?? this.getStatValue(stats[StatTypes.TOTAL_USERS]) ?? 0}
-                            location='system_statistics'
-                        />
                         {banner}
                         <div className='grid-statistics'>
                             {systemCards}

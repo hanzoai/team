@@ -40,8 +40,7 @@ import TeamMembersModal from 'components/team_members_modal';
 import TeamSettingsModal from 'components/team_settings_modal';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
-import {FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS} from 'utils/cloud_utils';
-import {LicenseSkus, ModalIdentifiers, MattermostFeatures, CloudProducts} from 'utils/constants';
+import {LicenseSkus, ModalIdentifiers, CloudProducts} from 'utils/constants';
 import {isCloudLicense} from 'utils/license_utils';
 
 import type {GlobalState} from 'types/store';
@@ -420,40 +419,11 @@ function RestrictedIndicatorForCreateTeam({isFreeTrial}: {isFreeTrial: boolean})
 
     return (
         <RestrictedIndicator
-            feature={MattermostFeatures.CREATE_MULTIPLE_TEAMS}
             minimumPlanRequiredForFeature={LicenseSkus.Professional}
             blocked={!isFreeTrial}
             tooltipMessage={formatMessage({
                 id: 'navbar_dropdown.create.tooltip.cloudFreeTrial',
                 defaultMessage: 'During your trial you are able to create multiple teams. These teams will be archived after your trial.',
-            })}
-            titleAdminPreTrial={formatMessage({
-                id: 'navbar_dropdown.create.modal.titleAdminPreTrial',
-                defaultMessage: 'Try unlimited teams with a free trial',
-            })}
-            messageAdminPreTrial={formatMessage({
-                id: 'navbar_dropdown.create.modal.messageAdminPreTrial',
-                defaultMessage: 'Create unlimited teams with one of our paid plans. Get the full experience of Enterprise when you start a free, {trialLength} day trial.',
-            },
-            {
-                trialLength: FREEMIUM_TO_ENTERPRISE_TRIAL_LENGTH_DAYS,
-            },
-            )}
-            titleAdminPostTrial={formatMessage({
-                id: 'navbar_dropdown.create.modal.titleAdminPostTrial',
-                defaultMessage: 'Upgrade to create unlimited teams',
-            })}
-            messageAdminPostTrial={formatMessage({
-                id: 'navbar_dropdown.create.modal.messageAdminPostTrial',
-                defaultMessage: 'Multiple teams allow for context-specific spaces that are more attuned to your and your teams’ needs. Upgrade to the Professional plan to create unlimited teams.',
-            })}
-            titleEndUser={formatMessage({
-                id: 'navbar_dropdown.create.modal.titleEndUser',
-                defaultMessage: 'Multiple teams available in paid plans',
-            })}
-            messageEndUser={formatMessage({
-                id: 'navbar_dropdown.create.modal.messageEndUser',
-                defaultMessage: 'Multiple teams allow for context-specific spaces that are more attuned to your teams’ needs.',
             })}
         />
     );

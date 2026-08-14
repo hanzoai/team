@@ -221,7 +221,6 @@ export type AdminDefinitionSubSection = {
     title?: string | MessageDescriptor;
     searchableStrings?: SearchableStrings;
     isHidden?: Check;
-    isDiscovery?: boolean;
     isDisabled?: Check;
     schema: AdminDefinitionSubSectionSchema;
     restrictedIndicator?: RestrictedIndicatorType;

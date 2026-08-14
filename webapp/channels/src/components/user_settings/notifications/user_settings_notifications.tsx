@@ -19,7 +19,7 @@ import SettingItem from 'components/setting_item';
 import SettingItemMax from 'components/setting_item_max';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
-import Constants, {NotificationLevels, MattermostFeatures, LicenseSkus, UserSettingsNotificationSections} from 'utils/constants';
+import Constants, {NotificationLevels, LicenseSkus, UserSettingsNotificationSections} from 'utils/constants';
 import {notificationSoundKeys, stopTryNotificationRing} from 'utils/notification_sounds';
 import {a11yFocus} from 'utils/utils';
 
@@ -492,10 +492,6 @@ class NotificationsTab extends React.PureComponent<Props, State> {
         }
     };
 
-    handleCloseSettingsModal = () => {
-        this.props.closeModal();
-    };
-
     createChannelMentionAutoFollowSection = () => {
         const serverError = this.state.serverError;
         const isSectionExpanded = this.props.activeSection === UserSettingsNotificationSections.CHANNEL_MENTION_AUTO_FOLLOW;
@@ -833,7 +829,6 @@ class NotificationsTab extends React.PureComponent<Props, State> {
         const collapsedEditButtonWhenDisabled = (
             <RestrictedIndicator
                 blocked={this.props.isEnterpriseOrCloudOrSKUStarterFree && this.props.isEnterpriseReady}
-                feature={MattermostFeatures.HIGHLIGHT_WITHOUT_NOTIFICATION}
                 minimumPlanRequiredForFeature={LicenseSkus.Professional}
                 tooltipTitle={this.props.intl.formatMessage({
                     id: 'user.settings.notifications.keywordsWithHighlight.disabledTooltipTitle',
@@ -844,43 +839,12 @@ class NotificationsTab extends React.PureComponent<Props, State> {
                     defaultMessage:
                     'This feature is available on the Professional plan',
                 })}
-                titleAdminPreTrial={this.props.intl.formatMessage({
-                    id: 'user.settings.notifications.keywordsWithHighlight.userModal.titleAdminPreTrial',
-                    defaultMessage: 'Highlight keywords without notifications with Hanzo Team',
-                })}
-                messageAdminPreTrial={this.props.intl.formatMessage({
-                    id: 'user.settings.notifications.keywordsWithHighlight.userModal.messageAdminPreTrial',
-                    defaultMessage: 'Get the ability to passively highlight keywords that you care about. Upgrade to Professional plan to unlock this feature.',
-                })}
-                titleAdminPostTrial={this.props.intl.formatMessage({
-                    id: 'user.settings.notifications.keywordsWithHighlight.userModal.titleAdminPostTrial',
-                    defaultMessage: 'Highlight keywords without notifications with Hanzo Team',
-                })}
-                messageAdminPostTrial={this.props.intl.formatMessage({
-                    id: 'user.settings.notifications.keywordsWithHighlight.userModal.messageAdminPostTrial',
-                    defaultMessage: 'Get the ability to passively highlight keywords that you care about. Upgrade to Professional plan to unlock this feature.',
-                },
-                )}
-                titleEndUser={this.props.intl.formatMessage({
-                    id: 'user.settings.notifications.keywordsWithHighlight.userModal.titleEndUser',
-                    defaultMessage: 'Highlight keywords without notifications with Hanzo Team',
-                })}
-                messageEndUser={this.props.intl.formatMessage(
-                    {
-                        id: 'user.settings.notifications.keywordsWithHighlight.userModal.messageEndUser',
-                        defaultMessage: 'Get the ability to passively highlight keywords that you care about.{br}{br}Request your admin to upgrade to Hanzo Team to access this feature.',
-                    },
-                    {
-                        br: <br/>,
-                    },
-                )}
                 ctaExtraContent={
                     <FormattedMessage
                         id='user.settings.notifications.keywordsWithHighlight.professional'
                         defaultMessage='Professional'
                     />
                 }
-                clickCallback={this.handleCloseSettingsModal}
             />
         );
 
