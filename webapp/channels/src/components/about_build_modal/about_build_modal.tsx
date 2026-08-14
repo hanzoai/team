@@ -18,8 +18,6 @@ import BrandMark from 'components/widgets/icons/brand_mark';
 import {AboutLinks} from 'utils/constants';
 import {getSkuDisplayName} from 'utils/subscription';
 
-import AboutBuildModalCloud from './about_build_modal_cloud/about_build_modal_cloud';
-
 type SocketStatus = {
     connected: boolean;
     serverHostname: string | undefined;
@@ -74,22 +72,8 @@ export default function AboutBuildModal(props: Props) {
     const config = props.config;
     const license = props.license;
 
-    if (license.Cloud === 'true') {
-        return (
-            <AboutBuildModalCloud
-                {...props}
-                show={show}
-                doHide={doHide}
-            />
-        );
-    }
-
-    let title = (
-        <FormattedMessage
-            id='about.teamEditiont0'
-            defaultMessage='Team Edition'
-        />
-    );
+    // The product name, plus the plan name when a licence carries one.
+    let heading = 'Hanzo Team';
 
     let subTitle = (
         <FormattedMessage
@@ -115,13 +99,6 @@ export default function AboutBuildModal(props: Props) {
 
     let licensee;
     if (config.BuildEnterpriseReady === 'true') {
-        title = (
-            <FormattedMessage
-                id='about.teamEditiont1'
-                defaultMessage='Enterprise Edition'
-            />
-        );
-
         subTitle = (
             <FormattedMessage
                 id='about.enterpriseEditionSt'
@@ -132,7 +109,7 @@ export default function AboutBuildModal(props: Props) {
         if (license.IsLicensed === 'true') {
             // Show the plan name instead of generic "Enterprise Edition"
             const skuName = getSkuDisplayName(license.SkuShortName || '', license.IsGovSku === 'true');
-            title = <>{skuName}</>;
+            heading = `Hanzo Team ${skuName}`;
             learnMore = (
                 <div>
                     <FormattedMessage
@@ -332,7 +309,7 @@ export default function AboutBuildModal(props: Props) {
                     <div>
                         <h3 className='about-modal__title'>
                             <strong>
-                                {'Hanzo Team'} {title}
+                                {heading}
                             </strong>
                         </h3>
                         <p className='about-modal__subtitle pb-2'>
