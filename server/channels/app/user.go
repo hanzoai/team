@@ -478,6 +478,10 @@ func (a *App) CreateOAuthUser(rctx request.CTX, service string, userData io.Read
 		rctx.Logger().Warn("Failed to add user to team", mlog.Err(appErr))
 	}
 
+	if appErr = a.EnterOrgTeam(rctx, ruser); appErr != nil {
+		rctx.Logger().Warn("Failed to place user in their org team", mlog.Err(appErr))
+	}
+
 	return ruser, nil
 }
 

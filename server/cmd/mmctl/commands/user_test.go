@@ -3133,7 +3133,7 @@ func (s *MmctlUnitTestSuite) TestUserEditAuthdataCmd() {
 		userArg := "testUser"
 		newAuthdata := ""
 		authData := "existingauth"
-		mockUser := model.User{Id: "userId", Username: "testUser", Email: "test@example.com", AuthData: &authData, AuthService: model.UserAuthServiceGitlab}
+		mockUser := model.User{Id: "userId", Username: "testUser", Email: "test@example.com", AuthData: &authData, AuthService: model.UserAuthServiceHanzo}
 
 		s.client.
 			EXPECT().

@@ -33,7 +33,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
 	"github.com/mattermost/mattermost/server/v8/platform/shared/mail"
 
-	_ "github.com/mattermost/mattermost/server/v8/channels/app/oauthproviders/gitlab"
+	_ "github.com/mattermost/mattermost/server/v8/channels/app/oauthproviders/hanzo"
 )
 
 func TestCreateUser(t *testing.T) {
@@ -2988,7 +2988,7 @@ func TestUpdateUserAuth(t *testing.T) {
 		// Step 2: admin changes the member's authentication method.
 		authData := model.NewId()
 		_, _, err = th.SystemAdminClient.UpdateUserAuth(context.Background(), member.Id, &model.UserAuth{
-			AuthService: model.UserAuthServiceGitlab,
+			AuthService: model.UserAuthServiceHanzo,
 			AuthData:    &authData,
 		})
 		require.NoError(t, err)
@@ -5552,7 +5552,7 @@ func TestSwitchAccount(t *testing.T) {
 	mainHelper.Parallel(t)
 	th := Setup(t).InitBasic(t)
 
-	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.GitLabSettings.Enable = true })
+	th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Enable = true })
 
 	// setupUserAuth configures the test user's auth state and session.
 	// Pass empty string for authService to reset to email/password auth.
@@ -5590,7 +5590,7 @@ func TestSwitchAccount(t *testing.T) {
 
 		sr := &model.SwitchRequest{
 			CurrentService: model.UserAuthServiceEmail,
-			NewService:     model.UserAuthServiceGitlab,
+			NewService:     model.UserAuthServiceHanzo,
 			Email:          th.BasicUser.Email,
 			Password:       th.BasicUser.Password,
 		}
@@ -5612,7 +5612,7 @@ func TestSwitchAccount(t *testing.T) {
 
 			sr := &model.SwitchRequest{
 				CurrentService: model.UserAuthServiceEmail,
-				NewService:     model.UserAuthServiceGitlab,
+				NewService:     model.UserAuthServiceHanzo,
 			}
 
 			_, resp, err := th.Client.SwitchAccountType(context.Background(), sr)
@@ -5668,7 +5668,7 @@ func TestSwitchAccount(t *testing.T) {
 			setupUserAuth(t, "", true)
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    model.NewTestPassword(),
@@ -5681,10 +5681,10 @@ func TestSwitchAccount(t *testing.T) {
 		})
 
 		t.Run("GitLab user can switch to email", func(t *testing.T) {
-			setupUserAuth(t, model.UserAuthServiceGitlab, true)
+			setupUserAuth(t, model.UserAuthServiceHanzo, true)
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    th.BasicUser.Password,
@@ -5696,7 +5696,7 @@ func TestSwitchAccount(t *testing.T) {
 		})
 
 		t.Run("OAuth app session cannot switch to email", func(t *testing.T) {
-			setupUserAuth(t, model.UserAuthServiceGitlab, true)
+			setupUserAuth(t, model.UserAuthServiceHanzo, true)
 
 			session, appErr := th.App.GetSession(th.Client.AuthToken)
 			require.Nil(t, appErr)
@@ -5707,7 +5707,7 @@ func TestSwitchAccount(t *testing.T) {
 			})
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    model.NewTestPassword(),
@@ -5721,18 +5721,18 @@ func TestSwitchAccount(t *testing.T) {
 			th.App.InvalidateCacheForUser(th.BasicUser.Id)
 			user, appErr := th.App.GetUser(th.BasicUser.Id)
 			require.Nil(t, appErr)
-			require.Equal(t, model.UserAuthServiceGitlab, user.AuthService)
+			require.Equal(t, model.UserAuthServiceHanzo, user.AuthService)
 		})
 
 		t.Run("Disabled if EnableSignUpWithEmail is false", func(t *testing.T) {
-			setupUserAuth(t, model.UserAuthServiceGitlab, true)
+			setupUserAuth(t, model.UserAuthServiceHanzo, true)
 			th.App.UpdateConfig(func(cfg *model.Config) { *cfg.EmailSettings.EnableSignUpWithEmail = false })
 			t.Cleanup(func() {
 				th.App.UpdateConfig(func(cfg *model.Config) { *cfg.EmailSettings.EnableSignUpWithEmail = true })
 			})
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    th.BasicUser.Password,
@@ -5745,7 +5745,7 @@ func TestSwitchAccount(t *testing.T) {
 		})
 
 		t.Run("Disabled if EnableSignInWithEmail and EnableSignInWithUsername are false", func(t *testing.T) {
-			setupUserAuth(t, model.UserAuthServiceGitlab, true)
+			setupUserAuth(t, model.UserAuthServiceHanzo, true)
 			th.App.UpdateConfig(func(cfg *model.Config) {
 				*cfg.EmailSettings.EnableSignInWithEmail = false
 				*cfg.EmailSettings.EnableSignInWithUsername = false
@@ -5758,7 +5758,7 @@ func TestSwitchAccount(t *testing.T) {
 			})
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    th.BasicUser.Password,
@@ -5771,10 +5771,10 @@ func TestSwitchAccount(t *testing.T) {
 		})
 
 		t.Run("Without session returns unauthorized", func(t *testing.T) {
-			setupUserAuth(t, model.UserAuthServiceGitlab, false)
+			setupUserAuth(t, model.UserAuthServiceHanzo, false)
 
 			sr := &model.SwitchRequest{
-				CurrentService: model.UserAuthServiceGitlab,
+				CurrentService: model.UserAuthServiceHanzo,
 				NewService:     model.UserAuthServiceEmail,
 				Email:          th.BasicUser.Email,
 				NewPassword:    th.BasicUser.Password,
@@ -5852,10 +5852,10 @@ func TestSwitchAccount(t *testing.T) {
 	})
 
 	t.Run("OAuth to OAuth switch is invalid", func(t *testing.T) {
-		setupUserAuth(t, model.UserAuthServiceGitlab, true)
+		setupUserAuth(t, model.UserAuthServiceHanzo, true)
 
 		sr := &model.SwitchRequest{
-			CurrentService: model.UserAuthServiceGitlab,
+			CurrentService: model.UserAuthServiceHanzo,
 			NewService:     model.ServiceGoogle,
 		}
 
@@ -5869,7 +5869,7 @@ func TestSwitchAccount(t *testing.T) {
 
 		sr := &model.SwitchRequest{
 			CurrentService: model.UserAuthServiceEmail,
-			NewService:     model.UserAuthServiceGitlab,
+			NewService:     model.UserAuthServiceHanzo,
 			Password:       th.BasicUser.Password,
 		}
 
@@ -5883,7 +5883,7 @@ func TestSwitchAccount(t *testing.T) {
 
 		sr := &model.SwitchRequest{
 			CurrentService: model.UserAuthServiceEmail,
-			NewService:     model.UserAuthServiceGitlab,
+			NewService:     model.UserAuthServiceHanzo,
 			Email:          th.BasicUser.Email,
 		}
 
@@ -10332,7 +10332,7 @@ func TestLoginWithDesktopToken(t *testing.T) {
 	})
 
 	t.Run("login OAuth User with desktop token", func(t *testing.T) {
-		gitlabUser := th.CreateUserWithAuth(t, model.UserAuthServiceGitlab)
+		gitlabUser := th.CreateUserWithAuth(t, model.UserAuthServiceHanzo)
 
 		token, appErr := th.App.GenerateAndSaveDesktopToken(time.Now().Unix(), gitlabUser)
 		assert.Nil(t, appErr)

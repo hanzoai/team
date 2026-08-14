@@ -316,20 +316,20 @@ func TestDiffSanitized(t *testing.T) {
 			"",
 		},
 		{
-			"sensitive GitLabSettings.Secret",
+			"sensitive HanzoSettings.Secret",
 			func() *model.Config {
 				cfg := defaultConfigGen()
-				cfg.GitLabSettings.Secret = new("base")
+				cfg.HanzoSettings.Secret = new("base")
 				return cfg
 			}(),
 			func() *model.Config {
 				cfg := defaultConfigGen()
-				cfg.GitLabSettings.Secret = new("actual")
+				cfg.HanzoSettings.Secret = new("actual")
 				return cfg
 			}(),
 			ConfigDiffs{
 				{
-					Path:      "GitLabSettings.Secret",
+					Path:      "HanzoSettings.Secret",
 					BaseVal:   model.FakeSetting,
 					ActualVal: model.FakeSetting,
 				},

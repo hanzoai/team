@@ -117,8 +117,6 @@ func (api *API) InitUser() {
 	api.BaseRoutes.UserThread.Handle("/read/{timestamp:[0-9]+}", api.APISessionRequired(updateReadStateThreadByUser)).Methods(http.MethodPut)
 	api.BaseRoutes.UserThread.Handle("/set_unread/{post_id:[A-Za-z0-9]+}", api.APISessionRequired(setUnreadThreadByPostId)).Methods(http.MethodPost)
 
-	api.BaseRoutes.Users.Handle("/notify-admin", api.APISessionRequired(handleNotifyAdmin)).Methods(http.MethodPost)
-	api.BaseRoutes.Users.Handle("/trigger-notify-admin-posts", api.APISessionRequired(handleTriggerNotifyAdminPosts)).Methods(http.MethodPost)
 }
 
 // loginSSOCodeExchange exchanges a short-lived login_code for session tokens.
@@ -2160,12 +2158,12 @@ func login(c *Context, w http.ResponseWriter, r *http.Request) {
 		enableUsername := *config.EmailSettings.EnableSignInWithUsername
 		enableEmail := *config.EmailSettings.EnableSignInWithEmail
 		samlEnabled := *config.SamlSettings.Enable
-		gitlabEnabled := *config.GitLabSettings.Enable
+		hanzoEnabled := *config.HanzoSettings.Enable
 		openidEnabled := *config.OpenIdSettings.Enable
 		googleEnabled := *config.GoogleSettings.Enable
 		office365Enabled := *config.Office365Settings.Enable
 
-		if samlEnabled || gitlabEnabled || googleEnabled || office365Enabled || openidEnabled {
+		if samlEnabled || hanzoEnabled || googleEnabled || office365Enabled || openidEnabled {
 			c.Err = model.NewAppError("login", "api.user.login.invalid_credentials_sso", nil, "", http.StatusUnauthorized)
 			return
 		}

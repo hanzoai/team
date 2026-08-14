@@ -49,8 +49,8 @@ func Desanitize(actual, target *model.Config) {
 		target.EmailSettings.SMTPPassword = actual.EmailSettings.SMTPPassword
 	}
 
-	if target.GitLabSettings.Secret != nil && *target.GitLabSettings.Secret == model.FakeSetting {
-		target.GitLabSettings.Secret = actual.GitLabSettings.Secret
+	if target.HanzoSettings.Secret != nil && *target.HanzoSettings.Secret == model.FakeSetting {
+		target.HanzoSettings.Secret = actual.HanzoSettings.Secret
 	}
 
 	if target.GoogleSettings.Secret != nil && *target.GoogleSettings.Secret == model.FakeSetting {

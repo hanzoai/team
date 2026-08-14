@@ -1979,7 +1979,7 @@ func TestConfigSanitize(t *testing.T) {
 	*c.FileSettings.AmazonS3SecretAccessKey = "bar"
 	*c.FileSettings.ExportAmazonS3SecretAccessKey = "export-secret"
 	*c.EmailSettings.SMTPPassword = "baz"
-	*c.GitLabSettings.Secret = "bingo"
+	*c.HanzoSettings.Secret = "bingo"
 	*c.OpenIdSettings.Secret = "secret"
 	*c.ServiceSettings.GoogleDeveloperKey = "google-api-key"
 	*c.ServiceSettings.GiphySdkKey = "giphy-sdk-key"
@@ -1999,7 +1999,7 @@ func TestConfigSanitize(t *testing.T) {
 	assert.Equal(t, FakeSetting, *c.FileSettings.AmazonS3SecretAccessKey)
 	assert.Equal(t, FakeSetting, *c.FileSettings.ExportAmazonS3SecretAccessKey)
 	assert.Equal(t, FakeSetting, *c.EmailSettings.SMTPPassword)
-	assert.Equal(t, FakeSetting, *c.GitLabSettings.Secret)
+	assert.Equal(t, FakeSetting, *c.HanzoSettings.Secret)
 	assert.Equal(t, FakeSetting, *c.OpenIdSettings.Secret)
 	assert.Equal(t, FakeSetting, *c.AutoTranslationSettings.LibreTranslate.APIKey)
 	assert.Equal(t, FakeSetting, *c.SqlSettings.DataSource)

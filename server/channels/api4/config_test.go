@@ -46,7 +46,7 @@ func TestGetConfig(t *testing.T) {
 		if *cfg.EmailSettings.SMTPPassword != model.FakeSetting && *cfg.EmailSettings.SMTPPassword != "" {
 			require.FailNow(t, "did not sanitize properly")
 		}
-		if *cfg.GitLabSettings.Secret != model.FakeSetting && *cfg.GitLabSettings.Secret != "" {
+		if *cfg.HanzoSettings.Secret != model.FakeSetting && *cfg.HanzoSettings.Secret != "" {
 			require.FailNow(t, "did not sanitize properly")
 		}
 		require.Equal(t, model.FakeSetting, *cfg.SqlSettings.DataSource, "did not sanitize properly")

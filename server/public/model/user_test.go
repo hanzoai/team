@@ -649,7 +649,7 @@ func TestSanitizeProfile(t *testing.T) {
 func TestIsValidUserAuthService(t *testing.T) {
 	valid := []string{
 		UserAuthServiceEmail,
-		UserAuthServiceGitlab,
+		UserAuthServiceHanzo,
 		UserAuthServiceLdap,
 		UserAuthServiceSaml,
 		ServiceGoogle,
