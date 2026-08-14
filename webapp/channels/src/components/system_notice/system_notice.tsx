@@ -11,7 +11,7 @@ import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
 import type {PreferenceType} from '@mattermost/types/preferences';
 
 import type {Notice} from 'components/system_notice/types';
-import MattermostLogo from 'components/widgets/icons/mattermost_logo';
+import BrandMark from 'components/widgets/icons/brand_mark';
 
 import {Preferences} from 'utils/constants';
 
@@ -125,7 +125,7 @@ export class SystemNotice extends React.PureComponent<Props> {
             );
         }
 
-        const icon = notice.icon || <MattermostLogo/>;
+        const icon = notice.icon || <BrandMark/>;
 
         return (
             <div
