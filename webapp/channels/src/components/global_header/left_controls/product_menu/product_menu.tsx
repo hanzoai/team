@@ -8,7 +8,6 @@ import styled from 'styled-components';
 
 import {ProductsIcon} from '@mattermost/compass-icons/components';
 
-import {isFreeEdition as isFreeEditionSelector} from 'mattermost-redux/selectors/entities/general';
 import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
 
 import {setProductMenuSwitcherOpen} from 'actions/views/product_menu';
@@ -28,7 +27,6 @@ import {getProductSwitcherLinkURL, useCurrentProductId, useProducts, isChannels}
 import type {GlobalState} from 'types/store';
 
 import ProductBranding from './product_branding';
-import ProductBrandingFreeEdition from './product_branding_team_edition';
 import ProductMenuItem from './product_menu_item';
 import ProductMenuList from './product_menu_list';
 import ProductSwitcherMenuItem from './product_switcher_menu_item';
@@ -79,7 +77,6 @@ const ProductMenu = (): JSX.Element => {
     const menuRef = useRef<HTMLDivElement>(null);
     const currentProductID = useCurrentProductId();
     const currentTeam = useSelector(getCurrentTeam);
-    const isFreeEdition = useSelector(isFreeEditionSelector);
     const visibleSwitcherItems = useSelector(
         (state: GlobalState) => {
             if (!isSwitcherOpen(state)) {
@@ -163,11 +160,7 @@ const ProductMenu = (): JSX.Element => {
                             size={20}
                             color='rgba(var(--sidebar-text-rgb), 0.56)'
                         />
-                        {isFreeEdition ? (
-                            <ProductBrandingFreeEdition/>
-                        ) : (
-                            <ProductBranding/>
-                        )}
+                        <ProductBranding/>
                     </ProductMenuButton>
                 </ProductMenuContainer>
                 <Menu
