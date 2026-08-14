@@ -6,13 +6,12 @@ import {expect} from '@playwright/test';
 
 /**
  * System Console -> Site Configuration -> Localization
- * Covers Languages section and Auto-translation block (or feature discovery when no EA license).
+ * Covers the Languages section and the Auto-translation block.
  */
 export default class Localization {
     readonly container: Locator;
 
     readonly header: Locator;
-    readonly featureDiscoveryBlock: Locator;
     readonly autoTranslationSection: Locator;
     readonly autoTranslationToggle: Locator;
     readonly providerDropdown: Locator;
@@ -27,7 +26,6 @@ export default class Localization {
         this.container = container;
 
         this.header = container.getByText('Localization', {exact: true});
-        this.featureDiscoveryBlock = container.getByText('Remove language barriers with auto-translation');
         this.autoTranslationSection = container.getByTestId('autotranslation-section-header');
         this.autoTranslationToggle = container.getByTestId('autotranslation-section-toggle').locator('button');
         this.providerDropdown = container.getByTestId('Providerdropdown');

@@ -11,7 +11,6 @@ export default class SystemConsoleSidebar {
     readonly header: SystemConsoleSidebarHeader;
     readonly searchInput: Locator;
 
-    readonly about: AboutCategory;
     readonly reporting: ReportingCategory;
     readonly userManagement: UserManagementCategory;
     readonly systemAttributes: SystemAttributesCategory;
@@ -28,7 +27,6 @@ export default class SystemConsoleSidebar {
         this.header = new SystemConsoleSidebarHeader(container.locator('#admin-sidebar-header'));
         this.searchInput = container.getByPlaceholder('Find settings');
 
-        this.about = new AboutCategory(container.getByTestId('about'));
         this.reporting = new ReportingCategory(container.getByTestId('reporting'));
         this.userManagement = new UserManagementCategory(container.getByTestId('user_management'));
         this.systemAttributes = new SystemAttributesCategory(container.getByTestId('system_attributes'));
@@ -56,9 +54,6 @@ export default class SystemConsoleSidebar {
     }
 
     // Convenience shortcuts
-    get editionAndLicense() {
-        return this.about.editionAndLicense;
-    }
     get users() {
         return this.userManagement.users;
     }
@@ -131,15 +126,6 @@ class SidebarCategory {
 
     async toBeVisible() {
         await expect(this.container).toBeVisible();
-    }
-}
-
-class AboutCategory extends SidebarCategory {
-    readonly editionAndLicense: SidebarSection;
-
-    constructor(container: Locator) {
-        super(container);
-        this.editionAndLicense = this.section('Edition and License');
     }
 }
 

@@ -76,11 +76,9 @@ import {
 } from './system_console/base_components';
 import DelegatedGranularAdministration from './system_console/sections/user_management/delegated_granular_administration';
 import UserDetail from './system_console/sections/user_management/user_detail';
-import EditionAndLicense from './system_console/sections/about/edition_and_license';
 import MobileSecurity from './system_console/sections/environment/mobile_security';
 import Notifications from './system_console/sections/site_configuration/notifications';
 import UsersAndTeams from './system_console/sections/site_configuration/users_and_teams';
-import SystemConsoleFeatureDiscovery from './system_console/sections/system_users/feature_discovery';
 import SystemConsoleHeader from './system_console/header';
 import SystemConsoleNavbar from './system_console/navbar';
 import SystemConsoleSidebar from './system_console/sidebar';
@@ -161,13 +159,11 @@ const components = {
     AdminSectionPanel,
     DelegatedGranularAdministration,
     DropdownSetting,
-    EditionAndLicense,
     MobileSecurity,
     Notifications,
     NumberInputSetting,
     RadioSetting,
     UsersAndTeams,
-    SystemConsoleFeatureDiscovery,
     SystemConsoleHeader,
     SystemConsoleNavbar,
     SystemConsoleSidebar,
@@ -253,13 +249,11 @@ export {
     AdminSectionPanel,
     DelegatedGranularAdministration,
     DropdownSetting,
-    EditionAndLicense,
     MobileSecurity,
     Notifications,
     NumberInputSetting,
     RadioSetting,
     UsersAndTeams,
-    SystemConsoleFeatureDiscovery,
     SystemConsoleHeader,
     SystemConsoleNavbar,
     SystemConsoleSidebar,

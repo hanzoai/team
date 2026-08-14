@@ -14,32 +14,6 @@ import {expect, test, hasAutotranslationLicense} from '@mattermost/playwright-li
 
 test.describe('System Console - Autotranslation (Localization)', () => {
     test(
-        'without EA license, auto-translation shows feature discovery block',
-        {
-            tag: ['@autotranslation', '@system_console'],
-        },
-        async ({pw}) => {
-            const {adminUser, adminClient} = await pw.initSetup();
-
-            const license = await adminClient.getClientLicenseOld();
-            test.skip(
-                hasAutotranslationLicense(license.SkuShortName),
-                'Skipping test - this test requires non-Entry/Advanced license to see feature discovery',
-            );
-
-            const {systemConsolePage} = await pw.testBrowser.login(adminUser);
-            await systemConsolePage.goto();
-            await systemConsolePage.toBeVisible();
-
-            await systemConsolePage.sidebar.siteConfiguration.localization.click();
-            await systemConsolePage.page.waitForURL(/\/admin_console\/site_config\/localization/);
-
-            await expect(systemConsolePage.localization.featureDiscoveryBlock).toBeVisible();
-            await expect(systemConsolePage.localization.autoTranslationSection).not.toBeVisible();
-        },
-    );
-
-    test(
         'with EA license, Auto-translation toggle is visible and off by default',
         {
             tag: ['@autotranslation', '@system_console'],
