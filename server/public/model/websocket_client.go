@@ -43,8 +43,8 @@ const avgReadMsgSizeBytes = 1024
 // deadlocks from occurring in the program.
 type WebSocketClient struct {
 	URL                string                  // The location of the server like "ws://localhost:8065"
-	APIURL             string                  // The API location of the server like "ws://localhost:8065/api/v3"
-	ConnectURL         string                  // The WebSocket URL to connect to like "ws://localhost:8065/api/v3/path/to/websocket"
+	APIURL             string                  // The API location of the server like "ws://localhost:8065/v1/team"
+	ConnectURL         string                  // The WebSocket URL to connect to like "ws://localhost:8065/v1/team/websocket"
 	Conn               *websocket.Conn         // The WebSocket connection
 	AuthToken          string                  // The token used to open the WebSocket connection
 	Sequence           int64                   // The ever-incrementing sequence attached to each WebSocket action

@@ -1439,7 +1439,7 @@ type testPushNotificationHandler struct {
 // it alternates between an OK and a REMOVE response.
 func (h *testPushNotificationHandler) handleReq(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/api/v1/send_push", "/api/v1/ack":
+	case model.PushURLSuffix + "/send_push", model.PushURLSuffix + "/ack":
 		h.t.Helper()
 
 		// Don't do any checking if it's a benchmark
@@ -1451,7 +1451,7 @@ func (h *testPushNotificationHandler) handleReq(w http.ResponseWriter, r *http.R
 		var notification model.PushNotification
 		var notificationAck model.PushNotificationAck
 		var err error
-		if r.URL.Path == "/api/v1/send_push" {
+		if r.URL.Path == model.PushURLSuffix+"/send_push" {
 			if err = json.NewDecoder(r.Body).Decode(&notification); err != nil {
 				h.printResponse(w, model.NewErrorPushResponse("fail"))
 				return
@@ -1476,7 +1476,7 @@ func (h *testPushNotificationHandler) handleReq(w http.ResponseWriter, r *http.R
 		h._numReqs++
 		// Little bit of duplicate condition check so that we can check the in-order property
 		// first.
-		if r.URL.Path == "/api/v1/send_push" {
+		if r.URL.Path == model.PushURLSuffix+"/send_push" {
 			h._notifications = append(h._notifications, &notification)
 		} else {
 			h._notificationAcks = append(h._notificationAcks, &notificationAck)

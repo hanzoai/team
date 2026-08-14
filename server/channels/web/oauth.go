@@ -47,8 +47,8 @@ func (w *Web) InitOAuth() {
 	// Intune MAM authentication endpoint
 	w.MainRouter.Handle("/oauth/intune", w.APIHandler(loginByIntune)).Methods(http.MethodPost)
 
-	// Old endpoints for backwards compatibility, needed to not break SSO for any old setups
-	w.MainRouter.Handle("/api/v3/oauth/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
+	// The redirect URIs an operator registers with the identity provider. The
+	// provider sends the browser back to one of these once sign-in is approved.
 	w.MainRouter.Handle("/signup/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
 	w.MainRouter.Handle("/login/{service:[A-Za-z0-9]+}/complete", w.APIHandler(completeOAuth)).Methods(http.MethodGet)
 	w.MainRouter.Handle(model.APIURLSuffix+"/oauth_test", w.APISessionRequired(testHandler)).Methods(http.MethodGet)
