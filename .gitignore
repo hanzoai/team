@@ -51,9 +51,18 @@ server/tests/temp.load
 # Enterprise & products imports files
 imports/imports.go
 
-# go.work file
-go.work
-go.work.sum
+# go.work is TRACKED here, and that is the difference between a fork and the
+# project it forks. Upstream publishes server/public as a module and pins a
+# released version of it, so a workspace is a developer's local convenience and
+# belongs in this file. We changed server/public — the Hanzo model lives there —
+# so for this tree the workspace is not a convenience, it is the build
+# definition: without it every consumer compiles against the published v0.4.0 and
+# cannot see our own types.
+#
+# Tracking it puts that fact in ONE place. `go build`, `go test`, CI's gate and
+# the image build each used to arrange the workspace for themselves, and the one
+# that did not — the CI gate — failed with "build failed" on symbols that are
+# right here on disk.
 
 #license files
 *.license

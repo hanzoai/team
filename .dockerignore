@@ -10,7 +10,3 @@
 **/node_modules
 webapp/channels/dist
 
-# A local go.work is the same file the server stage writes for itself. Present in
-# the context, `go work init` meets one it did not create and fails.
-server/go.work
-server/go.work.sum

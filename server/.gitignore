@@ -22,9 +22,8 @@ config/active.dat
 config/logging.json
 /plugins
 
-# go.work file
-go.work
-go.work.sum
+# go.work is tracked in this fork — see the root .gitignore, which is where the
+# repo-wide rule and the reason for it live.
 
 #license files
 *.license
