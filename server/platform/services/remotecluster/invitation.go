@@ -43,7 +43,7 @@ func (rcs *Service) AcceptInvitation(invite *model.RemoteClusterInvite, name str
 		return nil, err
 	}
 
-	url := fmt.Sprintf("%s/%s", rcSaved.SiteURL, ConfirmInviteURL)
+	url := fmt.Sprintf("%s%s", rcSaved.SiteURL, ConfirmInviteURL)
 
 	// for the invite confirm message, we need to use the token that
 	// the originating server sent in the invite instead of the one

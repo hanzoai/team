@@ -183,7 +183,7 @@ func (s *MmctlE2ETestSuite) TestArchiveCommandCmdF() {
 
 		err := archiveCommandCmdF(c, &cobra.Command{}, []string{nonexistentCommandID})
 		s.Require().NotNil(err)
-		s.Require().Equal(fmt.Sprintf("Unable to archive command '%s' error: Sorry, we could not find the page., There doesn't appear to be an api call for the url='/api/v4/commands/nonexistent-command-id'.  Typo? are you missing a team_id or user_id as part of the url?", nonexistentCommandID), err.Error())
+		s.Require().Equal(fmt.Sprintf("Unable to archive command '%s' error: Sorry, we could not find the page., There doesn't appear to be an api call for the url='/v1/team/commands/nonexistent-command-id'.  Typo? are you missing a team_id or user_id as part of the url?", nonexistentCommandID), err.Error())
 		s.Require().Len(printer.GetLines(), 0)
 		s.Require().Len(printer.GetErrorLines(), 0)
 	})

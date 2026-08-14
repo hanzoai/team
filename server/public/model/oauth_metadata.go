@@ -33,7 +33,7 @@ const (
 	OAuthAuthorizeEndpoint    = "/oauth/authorize"
 	OAuthAccessTokenEndpoint  = "/oauth/access_token"
 	OAuthDeauthorizeEndpoint  = "/oauth/deauthorize"
-	OAuthAppsRegisterEndpoint = "/api/v4/oauth/apps/register"
+	OAuthAppsRegisterEndpoint = APIURLSuffix + "/oauth/apps/register"
 	OAuthMetadataEndpoint     = "/.well-known/oauth-authorization-server"
 )
 

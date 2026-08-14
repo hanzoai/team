@@ -37,7 +37,7 @@ func newResponseWithHijack(original *httptest.ResponseRecorder) *responseRecorde
 
 func TestStatusCodeIsAccessible(t *testing.T) {
 	resp := newWrappedWriter(httptest.NewRecorder())
-	req := httptest.NewRequest("GET", "/api/v4/test", nil)
+	req := httptest.NewRequest("GET", "/v1/team/test", nil)
 	handler := TestHandler{func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusBadRequest)
 	}}
@@ -47,7 +47,7 @@ func TestStatusCodeIsAccessible(t *testing.T) {
 
 func TestStatusCodeShouldBe200IfNotHeaderWritten(t *testing.T) {
 	resp := newWrappedWriter(httptest.NewRecorder())
-	req := httptest.NewRequest("GET", "/api/v4/test", nil)
+	req := httptest.NewRequest("GET", "/v1/team/test", nil)
 	handler := TestHandler{func(w http.ResponseWriter, r *http.Request) {
 		n, err := w.Write([]byte{})
 		require.NoError(t, err, "Failed to write response")
@@ -59,7 +59,7 @@ func TestStatusCodeShouldBe200IfNotHeaderWritten(t *testing.T) {
 
 func TestForUnsupportedHijack(t *testing.T) {
 	resp := newWrappedWriter(httptest.NewRecorder())
-	req := httptest.NewRequest("GET", "/api/v4/test", nil)
+	req := httptest.NewRequest("GET", "/v1/team/test", nil)
 	handler := TestHandler{func(w http.ResponseWriter, r *http.Request) {
 		conn, rw, err := w.(*responseWriterWrapper).Hijack()
 		assert.Error(t, err)
@@ -72,7 +72,7 @@ func TestForUnsupportedHijack(t *testing.T) {
 
 func TestForSupportedHijack(t *testing.T) {
 	resp := newWrappedWriter(newResponseWithHijack(httptest.NewRecorder()))
-	req := httptest.NewRequest("GET", "/api/v4/test", nil)
+	req := httptest.NewRequest("GET", "/v1/team/test", nil)
 	handler := TestHandler{func(w http.ResponseWriter, r *http.Request) {
 		conn, rw, err := w.(*responseWriterWrapper).Hijack()
 		require.NoError(t, err, "Hijack should succeed with supporting ResponseWriter")
@@ -84,7 +84,7 @@ func TestForSupportedHijack(t *testing.T) {
 
 func TestForSupportedFlush(t *testing.T) {
 	resp := newWrappedWriter(httptest.NewRecorder())
-	req := httptest.NewRequest("GET", "/api/v4/test", nil)
+	req := httptest.NewRequest("GET", "/v1/team/test", nil)
 	handler := TestHandler{func(w http.ResponseWriter, r *http.Request) {
 		n, err := w.Write([]byte{})
 		require.NoError(t, err, "Failed to write response")

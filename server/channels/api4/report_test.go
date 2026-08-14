@@ -329,7 +329,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
@@ -351,7 +351,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
@@ -364,7 +364,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.Client, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.Client, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusForbidden, resp.StatusCode)
 	})
 
@@ -377,7 +377,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 
 		var result model.ReportPostListResponse
@@ -395,7 +395,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page": 10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode)
 	})
 
@@ -411,7 +411,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusNotFound, resp.StatusCode, "should return 404 for non-existent channel")
 	})
 
@@ -426,7 +426,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode, "empty cursor should be accepted")
 
 		var result model.ReportPostListResponse
@@ -447,7 +447,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			// cursor omitted
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode, "omitted cursor should be accepted")
 
 		var result model.ReportPostListResponse
@@ -466,7 +466,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "invalid cursor format should be rejected")
 	})
 
@@ -480,7 +480,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   5,
 		}
 
-		resp1, body1 := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody1)
+		resp1, body1 := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody1)
 		require.Equal(t, http.StatusOK, resp1.StatusCode)
 
 		var result1 model.ReportPostListResponse
@@ -496,7 +496,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   5,
 		}
 
-		resp2, body2 := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody2)
+		resp2, body2 := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody2)
 		require.Equal(t, http.StatusOK, resp2.StatusCode)
 
 		var result2 model.ReportPostListResponse
@@ -524,7 +524,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":       5,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 
 		var result model.ReportPostListResponse
@@ -567,7 +567,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":       100,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode, "cursor parameters should take precedence (self-contained cursor)")
 
 		var result model.ReportPostListResponse
@@ -609,7 +609,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 
 		var result model.ReportPostListResponse
@@ -634,7 +634,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":        100,
 		}
 
-		resp1, body1 := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody1)
+		resp1, body1 := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody1)
 		require.Equal(t, http.StatusOK, resp1.StatusCode)
 
 		var result1 model.ReportPostListResponse
@@ -659,7 +659,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":        100,
 		}
 
-		resp2, body2 := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody2)
+		resp2, body2 := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody2)
 		require.Equal(t, http.StatusOK, resp2.StatusCode)
 
 		var result2 model.ReportPostListResponse
@@ -710,7 +710,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":             100,
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode)
 
 		var result model.ReportPostListResponse
@@ -732,7 +732,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   5000, // More than max
 		}
 
-		resp, body := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, body := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusOK, resp.StatusCode, "should cap per_page to MaxReportingPerPage instead of rejecting")
 
 		// Verify it was capped to max (we can't directly check the query but the request succeeds)
@@ -752,7 +752,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "should reject invalid ID format")
 	})
 
@@ -768,7 +768,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "should reject cursor with invalid time_field")
 	})
 
@@ -784,7 +784,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "should reject cursor with invalid sort_direction")
 	})
 
@@ -800,7 +800,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "should reject cursor with invalid channel_id")
 	})
 
@@ -816,7 +816,7 @@ func TestGetPostsForReporting(t *testing.T) {
 			"per_page":   10,
 		}
 
-		resp, _ := doPostJSON(t, th.SystemAdminClient, "/api/v4/reports/posts", requestBody)
+		resp, _ := doPostJSON(t, th.SystemAdminClient, "/v1/team/reports/posts", requestBody)
 		require.Equal(t, http.StatusBadRequest, resp.StatusCode, "should reject cursor with invalid cursor_id")
 	})
 }

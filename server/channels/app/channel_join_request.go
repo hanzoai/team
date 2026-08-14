@@ -14,7 +14,7 @@ import (
 	"github.com/mattermost/mattermost/server/v8/channels/store"
 )
 
-// channelJoinRequestPaginationDefaultPerPage matches the public /api/v4 default
+// channelJoinRequestPaginationDefaultPerPage matches the public /v1/team default
 // for paginated endpoints.
 const channelJoinRequestPaginationDefaultPerPage = 60
 

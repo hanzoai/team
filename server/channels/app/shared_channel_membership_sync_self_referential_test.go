@@ -534,7 +534,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 		var syncHandler *SelfReferentialSyncHandler
 
 		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				syncAttempts.Add(1)
 
 				if failureMode.Load() {
@@ -668,7 +668,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 
 		// Create test HTTP server
 		testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				bodyBytes, _ := io.ReadAll(r.Body)
 
 				// Count add and remove operations
@@ -866,7 +866,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 			// Create test server for this cluster
 			idx := i // Capture index for closure
 			testServers[i] = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-				if r.URL.Path == "/api/v4/remotecluster/msg" {
+				if r.URL.Path == "/v1/team/remotecluster/msg" {
 					clusterName := fmt.Sprintf("cluster-%d", idx+1)
 					atomic.AddInt32(syncMessagesPerCluster[clusterName], 1)
 
@@ -1202,7 +1202,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 				return
 			}
 
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				currentAttempt := syncAttempts.Add(1)
 				// On second sync cycle, go offline (allow first full sync to complete)
 				if currentAttempt > 2 {
@@ -1387,7 +1387,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 		// Create a wrapper handler to intercept sync messages
 		testServer = httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 			// Intercept and track channel syncs
-			if r.URL.Path == "/api/v4/remotecluster/msg" {
+			if r.URL.Path == "/v1/team/remotecluster/msg" {
 				bodyBytes, pErr := io.ReadAll(r.Body)
 				if pErr == nil {
 					// Restore body for actual handler
@@ -1584,7 +1584,7 @@ func TestSharedChannelMembershipSyncSelfReferential(t *testing.T) {
 
 	// 	// Create test HTTP server that tracks sync messages
 	// 	testServer := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-	// 		if r.URL.Path == "/api/v4/remotecluster/msg" {
+	// 		if r.URL.Path == "/v1/team/remotecluster/msg" {
 	// 			syncMessageCount.Add(1)
 
 	// 			// Read body once

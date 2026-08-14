@@ -135,7 +135,7 @@ func (rcs *Service) pingRemote(rc *model.RemoteCluster) error {
 		if err != nil {
 			return err
 		}
-		url := fmt.Sprintf("%s/%s", rc.SiteURL, PingURL)
+		url := fmt.Sprintf("%s%s", rc.SiteURL, PingURL)
 
 		resp, err := rcs.sendFrameToRemote(PingTimeout, rc, frame, url)
 		if err != nil {

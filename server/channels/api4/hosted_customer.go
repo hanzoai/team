@@ -12,7 +12,7 @@ import (
 // APIs for self-hosted workspaces to communicate with the backing customer & payments system.
 // Endpoints for cloud installations should not go in this file.
 func (api *API) InitHostedCustomer() {
-	// POST /api/v4/hosted_customer/available
+	// POST /v1/team/hosted_customer/available
 	api.BaseRoutes.HostedCustomer.Handle("/signup_available", api.APISessionRequired(handleSignupAvailable)).Methods(http.MethodGet)
 }
 

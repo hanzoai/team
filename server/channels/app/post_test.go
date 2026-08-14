@@ -910,7 +910,7 @@ func TestImageProxy(t *testing.T) {
 			ProxyOptions:           testHMACKey,
 			ImageURL:               "http://mydomain.com/myimage",
 			ProxiedRemovedImageURL: "http://mydomain.com/myimage",
-			ProxiedImageURL:        "http://mymattermost.com/api/v4/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage",
+			ProxiedImageURL:        "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage",
 		},
 		"atmos/camo_SameSite": {
 			ProxyType:              model.ImageProxyTypeAtmosCamo,
@@ -940,7 +940,7 @@ func TestImageProxy(t *testing.T) {
 			ProxyType:              model.ImageProxyTypeLocal,
 			ImageURL:               "http://mydomain.com/myimage",
 			ProxiedRemovedImageURL: "http://mydomain.com/myimage",
-			ProxiedImageURL:        "http://mymattermost.com/api/v4/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage",
+			ProxiedImageURL:        "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage",
 		},
 		"local_SameSite": {
 			ProxyType:              model.ImageProxyTypeLocal,
@@ -1172,7 +1172,7 @@ func TestCreatePost(t *testing.T) {
 		th.App.ch.imageProxy = imageproxy.MakeImageProxy(th.Server.platform, th.Server.HTTPService(), th.Server.Log())
 
 		imageURL := "http://mydomain.com/myimage"
-		proxiedImageURL := "http://mymattermost.com/api/v4/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
+		proxiedImageURL := "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
 
 		post := &model.Post{
 			ChannelId: th.BasicChannel.Id,
@@ -2037,7 +2037,7 @@ func TestPatchPost(t *testing.T) {
 		th.App.ch.imageProxy = imageproxy.MakeImageProxy(th.Server.platform, th.Server.HTTPService(), th.Server.Log())
 
 		imageURL := "http://mydomain.com/myimage"
-		proxiedImageURL := "http://mymattermost.com/api/v4/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
+		proxiedImageURL := "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
 
 		post := &model.Post{
 			ChannelId: th.BasicChannel.Id,
@@ -2498,7 +2498,7 @@ func TestUpdatePost(t *testing.T) {
 		th.App.ch.imageProxy = imageproxy.MakeImageProxy(th.Server.platform, th.Server.HTTPService(), th.Server.Log())
 
 		imageURL := "http://mydomain.com/myimage"
-		proxiedImageURL := "http://mymattermost.com/api/v4/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
+		proxiedImageURL := "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
 
 		post := &model.Post{
 			ChannelId: th.BasicChannel.Id,

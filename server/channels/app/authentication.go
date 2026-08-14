@@ -408,7 +408,7 @@ func (a *App) MFARequired(rctx request.CTX) *model.AppError {
 
 	// Special case to let user get themself
 	subpath, _ := utils.GetSubpathFromConfig(a.Config())
-	if rctx.Path() == path.Join(subpath, "/api/v4/users/me") {
+	if rctx.Path() == path.Join(subpath, model.APIURLSuffix, "users/me") {
 		return nil
 	}
 
