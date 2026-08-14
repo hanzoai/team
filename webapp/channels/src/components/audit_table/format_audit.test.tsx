@@ -54,6 +54,23 @@ describe('components/audit_table/audit_row/AuditRow', () => {
             state,
         );
     };
+    test('should describe a row recorded under the current API base', () => {
+        const audit: Audit = {
+            action: '/v1/team/channels',
+            create_at: 50778112674,
+            extra_info: `name=${channelName}`,
+            id: 'id_2',
+            ip_address: '::1',
+            session_id: 'hb8febm9ytdiz8zqaxj18efqhy',
+            user_id: userId,
+        };
+
+        const {container} = renderComponent({...baseProps, audit});
+        expect(container.textContent).toContain(channelName);
+    });
+
+    // Rows written before the API moved off /api/vN are still in the database,
+    // so the formatter has to keep describing them.
     test('should match snapshot with channel audit', () => {
         const audit: Audit = {
             action: '/api/v4/channels',
