@@ -6,6 +6,8 @@ import {useIntl} from 'react-intl';
 
 import type {Audit} from '@mattermost/types/audits';
 
+import {Client4} from 'mattermost-redux/client';
+
 import {toTitleCase} from 'utils/utils';
 
 import AuditRow from './audit_row/audit_row';
@@ -27,7 +29,9 @@ export default function FormatAudit({
     showSession,
 }: Props) {
     const intl = useIntl();
-    const actionURL = audit.action.replace(/\/api\/v[1-9]/, '');
+    // An audit row stores the request path as it stood when the row was written,
+    // so rows predating the move to /v1/team still carry an /api/vN base.
+    const actionURL = audit.action.replace(Client4.getUrlVersion(), '').replace(/^\/api\/v[1-9]/, '');
 
     if (actionURL.indexOf('/channels') === 0) {
         return (
