@@ -7,7 +7,7 @@ import {expect, test} from '@mattermost/playwright-lib';
 
 // Helper function to intercept API request and modify the response
 async function interceptConfigWithLandingPage(page: Page, enabled: boolean) {
-    const apiUrl = '**/api/v4/config/client?format=old**';
+    const apiUrl = '**/v1/team/config/client?format=old**';
     await page.route(apiUrl, (route) => {
         route.fulfill({
             status: 200,

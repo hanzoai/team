@@ -71,7 +71,7 @@ test('Profile popover should show correct fields after at-mention autocomplete @
     // Reload the page so the browser fetches the new config synchronously.
     // waitUntil above only confirms the server-side state; the browser updates its
     // Redux store via WebSocket (CONFIG_CHANGED event) which can lag significantly.
-    // A full page reload forces a fresh /api/v4/config/client fetch, so the privacy
+    // A full page reload forces a fresh /v1/team/config/client fetch, so the privacy
     // settings are guaranteed to be in effect before we render any popover.
     await channelsPage.page.reload();
     await channelsPage.toBeVisible();

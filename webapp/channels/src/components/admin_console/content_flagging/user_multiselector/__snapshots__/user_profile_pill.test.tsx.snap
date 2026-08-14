@@ -9,7 +9,7 @@ exports[`components/admin_console/content_flagging/user_multiselector/UserProfil
       alt="testuser profile image"
       class="Avatar Avatar-xxs"
       loading="lazy"
-      src="/api/v4/users/user-id-1/image?_=0"
+      src="/v1/team/users/user-id-1/image?_=0"
     />
     Test User
     <div

@@ -45,7 +45,7 @@ describe('MobileSidebarRightItems', () => {
         isStarterFree: false,
         isFreeTrial: false,
         userId: 'test-user-id',
-        profilePicture: 'http://localhost/api/v4/users/test-user-id/image',
+        profilePicture: 'http://localhost/v1/team/users/test-user-id/image',
         autoResetPref: '',
         status: 'online',
         customStatus: undefined,

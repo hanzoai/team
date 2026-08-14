@@ -10,7 +10,7 @@ import PostEmoji from './post_emoji';
 describe('PostEmoji', () => {
     const baseProps = {
         children: ':emoji:',
-        imageUrl: '/api/v4/emoji/1234/image',
+        imageUrl: '/v1/team/emoji/1234/image',
         name: 'emoji',
     };
 

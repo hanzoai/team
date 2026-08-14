@@ -21,7 +21,7 @@ exports[`at mention suggestion should display nick name of non signed in user 1`
           alt=""
           class="Avatar Avatar-sm"
           loading="lazy"
-          src="/api/v4/users/userid2/image?_=0"
+          src="/v1/team/users/userid2/image?_=0"
         />
       </span>
     </span>
@@ -69,7 +69,7 @@ exports[`at mention suggestion should not display nick name of the signed in use
           alt=""
           class="Avatar Avatar-sm"
           loading="lazy"
-          src="/api/v4/users/userid1/image?_=0"
+          src="/v1/team/users/userid1/image?_=0"
         />
       </span>
     </span>

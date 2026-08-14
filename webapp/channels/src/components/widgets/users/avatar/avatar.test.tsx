@@ -75,7 +75,7 @@ describe('components/widgets/users/Avatar', () => {
     });
 
     test('should handle image load error with user avatar fallback', () => {
-        // Client4.getUsersRoute() returns the API route for user avatars (e.g., /api/v4/users)
+        // Client4.getUsersRoute() returns the API route for user avatars (e.g., /v1/team/users)
         // This is used to distinguish user avatars from bot/plugin avatars for proper fallback handling
         const userAvatarUrl = `${Client4.getUsersRoute()}/userid123/image?_=123456`;
 

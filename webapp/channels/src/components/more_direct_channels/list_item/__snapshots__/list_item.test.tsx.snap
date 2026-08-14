@@ -55,7 +55,7 @@ exports[`ListItem should match snapshot when rendering user 1`] = `
           alt="user profile image"
           class="Avatar Avatar-md"
           loading="lazy"
-          src="/api/v4/users/user_id_1/image"
+          src="/v1/team/users/user_id_1/image"
         />
       </span>
       <span

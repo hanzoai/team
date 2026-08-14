@@ -71,7 +71,7 @@ exports[`components/admin_console/server_logs/Logs should display the logs corre
             </button>
             <a
               class="btn btn-primary"
-              href="/api/v4/logs/download"
+              href="/v1/team/logs/download"
               location="download_logs"
               rel="noopener noreferrer"
               target="_blank"

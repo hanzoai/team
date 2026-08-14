@@ -113,7 +113,7 @@ export default class ChannelsPostCreate {
             files && files.length > 0
                 ? page.waitForResponse(
                       (r) =>
-                          r.url().includes('/api/v4/files') &&
+                          r.url().includes('/v1/team/files') &&
                           r.request().method() === 'POST' &&
                           r.status() >= 200 &&
                           r.status() < 300,

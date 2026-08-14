@@ -188,7 +188,7 @@ export const useSharedChannelRemoteRows = (remoteId: string, opts: {filter: 'hom
 
                 // fetch missing channels individually
                 if (missing.length) {
-                    // TODO: performance; consider adding sharedchannelremotes search param to api/v4/channels
+                    // TODO: performance; consider adding sharedchannelremotes search param to v1/team/channels
                     await Promise.allSettled(missing.map((remote) => dispatch(fetchChannel(remote.channel_id))));
                     state = getState();
 

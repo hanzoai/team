@@ -983,7 +983,7 @@ describe('Actions.Users', () => {
         nock(Client4.getBaseRoute()).
             get(`/users/${TestHelper.basicUser!.id}/audits`).
             query(true).
-            reply(200, [{id: TestHelper.generateId(), create_at: 1497285546645, user_id: TestHelper.basicUser!.id, action: '/api/v4/users/login', extra_info: 'success', ip_address: '::1', session_id: ''}]);
+            reply(200, [{id: TestHelper.generateId(), create_at: 1497285546645, user_id: TestHelper.basicUser!.id, action: '/v1/team/users/login', extra_info: 'success', ip_address: '::1', session_id: ''}]);
 
         await store.dispatch(Actions.getUserAudits(TestHelper.basicUser!.id));
 

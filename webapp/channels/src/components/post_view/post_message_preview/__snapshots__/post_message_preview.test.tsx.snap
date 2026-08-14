@@ -34,7 +34,7 @@ exports[`PostMessagePreview nested previews should render file preview 1`] = `
                       alt="username1 profile image"
                       class="Avatar Avatar-sm avatar-post-preview"
                       loading="lazy"
-                      src="/api/v4/users/user_1/image?_=0"
+                      src="/v1/team/users/user_1/image?_=0"
                     />
                   </span>
                 </div>
@@ -127,7 +127,7 @@ exports[`PostMessagePreview nested previews should render opengraph preview 1`] 
                       alt="username1 profile image"
                       class="Avatar Avatar-sm avatar-post-preview"
                       loading="lazy"
-                      src="/api/v4/users/user_1/image?_=0"
+                      src="/v1/team/users/user_1/image?_=0"
                     />
                   </span>
                 </div>
@@ -220,7 +220,7 @@ exports[`PostMessagePreview should not render bot icon 1`] = `
                       alt="username1 profile image"
                       class="Avatar Avatar-sm avatar-post-preview"
                       loading="lazy"
-                      src="/api/v4/users/user_1/image?_=0"
+                      src="/v1/team/users/user_1/image?_=0"
                     />
                   </span>
                 </div>
@@ -406,7 +406,7 @@ exports[`PostMessagePreview should render correctly 1`] = `
                       alt="username1 profile image"
                       class="Avatar Avatar-sm avatar-post-preview"
                       loading="lazy"
-                      src="/api/v4/users/user_1/image?_=0"
+                      src="/v1/team/users/user_1/image?_=0"
                     />
                   </span>
                 </div>
@@ -501,7 +501,7 @@ exports[`PostMessagePreview show render without preview when preview posts becom
                       alt="username1 profile image"
                       class="Avatar Avatar-sm avatar-post-preview"
                       loading="lazy"
-                      src="/api/v4/users/user_1/image?_=0"
+                      src="/v1/team/users/user_1/image?_=0"
                     />
                   </span>
                 </div>

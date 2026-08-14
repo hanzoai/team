@@ -26,7 +26,7 @@ exports[`component/PDFPreview should match snapshot, not successful 1`] = `
   >
     <a
       class="file-details__preview"
-      href="https://pre-release.mattermost.com/api/v4/files/ips59w4w9jnfbrs3o94m1dbdie"
+      href="https://pre-release.mattermost.com/v1/team/files/ips59w4w9jnfbrs3o94m1dbdie"
     >
       <span
         class="file-details__preview-helper"

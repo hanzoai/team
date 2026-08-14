@@ -172,7 +172,7 @@ export default class SystemProperties {
     /**
      * Click Save and wait for the server round-trip to complete.
      *
-     * Monitors the actual /api/v4/custom_profile_attributes/fields network
+     * Monitors the actual /v1/team/custom_profile_attributes/fields network
      * requests rather than relying on the coarse `networkidle` heuristic,
      * then asserts the button returns to disabled (no pending changes).
      */
@@ -181,7 +181,7 @@ export default class SystemProperties {
 
         const saveResponsePromise = this.page.waitForResponse(
             (resp) =>
-                resp.url().includes('/api/v4/custom_profile_attributes/fields') && resp.request().method() !== 'GET',
+                resp.url().includes('/v1/team/custom_profile_attributes/fields') && resp.request().method() !== 'GET',
         );
 
         await this.saveButton.click();

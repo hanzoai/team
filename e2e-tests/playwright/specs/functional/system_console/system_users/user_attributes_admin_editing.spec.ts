@@ -233,7 +233,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
         // Freeze the fields API so concurrent shard activity (field creates/deletes) cannot
         // trigger a WebSocket-driven re-fetch that wipes the CPA section from Redux mid-test.
         const frozenFields = Object.values(attributeFieldsMap);
-        await systemConsolePage.page.route('**/api/v4/custom_profile_attributes/fields', async (route) => {
+        await systemConsolePage.page.route('**/v1/team/custom_profile_attributes/fields', async (route) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -264,7 +264,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
         // Keeping it active through the test body would intercept the save API call
         // (which also hits the /fields endpoint during submit), causing "Failed to update user".
         // Validation tests restore their own intercept via try/finally.
-        await systemConsolePage.page.unroute('**/api/v4/custom_profile_attributes/fields').catch(() => {});
+        await systemConsolePage.page.unroute('**/v1/team/custom_profile_attributes/fields').catch(() => {});
     });
 
     test.afterEach(async ({pw}) => {
@@ -275,7 +275,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
         }
         // Safety-net unroute in case a validation test's try/finally was skipped by an
         // earlier error, or the beforeEach unroute was never reached.
-        await systemConsolePage?.page.unroute('**/api/v4/custom_profile_attributes/fields').catch(() => {});
+        await systemConsolePage?.page.unroute('**/v1/team/custom_profile_attributes/fields').catch(() => {});
         // Clean up custom user attribute fields
         const {adminClient: cleanupClient} = await pw.getAdminClient();
         await deleteCustomProfileAttributes(cleanupClient, attributeFieldsMap);
@@ -412,7 +412,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
         // handleCpaValueChange finds field===undefined and skips setting the error state,
         // so the field-error element never renders and the assertion times out.
         const frozenFields = Object.values(attributeFieldsMap);
-        await systemConsolePage!.page.route('**/api/v4/custom_profile_attributes/fields', async (route) => {
+        await systemConsolePage!.page.route('**/v1/team/custom_profile_attributes/fields', async (route) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -456,7 +456,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
             // * Verify Save button remains disabled (no unsaved changes)
             await expect(userDetail.saveButton).toBeDisabled();
         } finally {
-            await systemConsolePage!.page.unroute('**/api/v4/custom_profile_attributes/fields').catch(() => {});
+            await systemConsolePage!.page.unroute('**/v1/team/custom_profile_attributes/fields').catch(() => {});
         }
     });
 
@@ -466,7 +466,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
 
         // Re-apply the fields intercept — same race-condition guard as the email validation test.
         const frozenFields = Object.values(attributeFieldsMap);
-        await systemConsolePage!.page.route('**/api/v4/custom_profile_attributes/fields', async (route) => {
+        await systemConsolePage!.page.route('**/v1/team/custom_profile_attributes/fields', async (route) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -506,7 +506,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
             // * Verify Cancel button disappears
             await expect(userDetail.cancelButton).not.toBeVisible();
         } finally {
-            await systemConsolePage!.page.unroute('**/api/v4/custom_profile_attributes/fields').catch(() => {});
+            await systemConsolePage!.page.unroute('**/v1/team/custom_profile_attributes/fields').catch(() => {});
         }
     });
 
@@ -516,7 +516,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
 
         // Re-apply the fields intercept — same race-condition guard as the other validation tests.
         const frozenFields = Object.values(attributeFieldsMap);
-        await systemConsolePage!.page.route('**/api/v4/custom_profile_attributes/fields', async (route) => {
+        await systemConsolePage!.page.route('**/v1/team/custom_profile_attributes/fields', async (route) => {
             await route.fulfill({
                 status: 200,
                 contentType: 'application/json',
@@ -542,7 +542,7 @@ test.describe('System Console - Admin User Profile Editing', () => {
             // * Verify Cancel button is available
             await expect(userDetail.cancelButton).toBeVisible();
         } finally {
-            await systemConsolePage!.page.unroute('**/api/v4/custom_profile_attributes/fields').catch(() => {});
+            await systemConsolePage!.page.unroute('**/v1/team/custom_profile_attributes/fields').catch(() => {});
         }
     });
 

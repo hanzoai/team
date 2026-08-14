@@ -165,7 +165,7 @@ test.describe('System Console - User Attributes display names', () => {
         const validIdentifier = `my_field_${Date.now()}`;
 
         page.on('request', (request) => {
-            if (request.method() === 'POST' && request.url().includes('/api/v4/custom_profile_attributes/fields')) {
+            if (request.method() === 'POST' && request.url().includes('/v1/team/custom_profile_attributes/fields')) {
                 apiPosts.push(request.url());
             }
         });

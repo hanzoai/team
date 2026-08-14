@@ -14,7 +14,7 @@ describe('AudioVideoPreview', () => {
             extension: 'mov',
             id: 'file_id',
         }),
-        fileUrl: '/api/v4/files/file_id',
+        fileUrl: '/v1/team/files/file_id',
         isMobileView: false,
     };
 
