@@ -342,7 +342,7 @@ test.describe('Attribute-Value Masking - Table Editor', {tag: ['@abac', '@abac_m
             // Try to create a policy containing a non-held value ("Delta") via direct API
             const statusWithDelta = await page.evaluate(
                 async ({fieldName: fn}: {fieldName: string}) => {
-                    const resp = await fetch('/v1/team/access_control_policies', {
+                    const resp = await fetch('/v1/workspace/access_control_policies', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',
@@ -365,7 +365,7 @@ test.describe('Attribute-Value Masking - Table Editor', {tag: ['@abac', '@abac_m
             // Also verify that the masked placeholder literal is rejected
             const statusWithMasked = await page.evaluate(
                 async ({fieldName: fn}: {fieldName: string}) => {
-                    const resp = await fetch('/v1/team/access_control_policies', {
+                    const resp = await fetch('/v1/workspace/access_control_policies', {
                         method: 'PUT',
                         headers: {
                             'Content-Type': 'application/json',

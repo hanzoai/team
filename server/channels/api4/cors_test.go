@@ -133,7 +133,7 @@ func TestCORSRequestHandling(t *testing.T) {
 
 			port := th.App.Srv().ListenAddr.Port
 			host := fmt.Sprintf("http://localhost:%v", port)
-			url := fmt.Sprintf("%v/v1/team/system/ping", host)
+			url := fmt.Sprintf("%v/v1/workspace/system/ping", host)
 
 			req, err := http.NewRequest("GET", url, nil)
 			require.NoError(t, err)

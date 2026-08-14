@@ -254,7 +254,7 @@ test('MM-T5791 Editing policy to add attribute with auto-add enabled', async ({p
     // Intercept the sync-job POST triggered by "Apply policy" so we can poll the
     // exact job ID instead of using the racy UI-table path.
     const editSyncJobIdPromise = page
-        .waitForResponse((r) => r.url().includes('/v1/team/jobs') && r.request().method() === 'POST', {timeout: 15_000})
+        .waitForResponse((r) => r.url().includes('/v1/workspace/jobs') && r.request().method() === 'POST', {timeout: 15_000})
         .then(async (r) => (r.ok() ? (((await r.json()) as {id?: string}).id ?? null) : null))
         .catch(() => null);
 
@@ -492,7 +492,7 @@ test('MM-T5792 Editing policy to remove attribute rule with auto-add enabled', a
     // Intercept the sync-job POST triggered by "Apply policy" so we can poll the
     // exact job ID instead of using the racy UI-table path.
     const editSyncJobIdPromiseT5792 = page
-        .waitForResponse((r) => r.url().includes('/v1/team/jobs') && r.request().method() === 'POST', {timeout: 15_000})
+        .waitForResponse((r) => r.url().includes('/v1/workspace/jobs') && r.request().method() === 'POST', {timeout: 15_000})
         .then(async (r) => (r.ok() ? (((await r.json()) as {id?: string}).id ?? null) : null))
         .catch(() => null);
 

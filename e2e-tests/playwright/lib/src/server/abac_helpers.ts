@@ -290,7 +290,7 @@ export async function deletePolicy(page: Page, policyName: string): Promise<void
 /**
  * Click the "Run Sync Job" button and return the new job ID immediately.
  *
- * Intercepts the POST /v1/team/jobs response so the caller gets the exact job ID
+ * Intercepts the POST /v1/workspace/jobs response so the caller gets the exact job ID
  * without a polling round-trip. Pass the returned ID to waitForLatestSyncJob as
  * the `jobId` argument to skip Phase 1 and poll the specific job directly.
  *
@@ -302,7 +302,7 @@ export async function runSyncJob(page: Page): Promise<string | null> {
     // Do NOT filter by resp.ok() here — capture the response regardless of status
     // so we can surface API errors explicitly instead of silently swallowing them.
     const jobResponsePromise = page.waitForResponse(
-        (resp) => resp.url().includes('/v1/team/jobs') && resp.request().method() === 'POST',
+        (resp) => resp.url().includes('/v1/workspace/jobs') && resp.request().method() === 'POST',
         {timeout: 10000},
     );
     // "Run Channel Sync" when team ABAC is on, else "Run Sync Job".
@@ -310,15 +310,15 @@ export async function runSyncJob(page: Page): Promise<string | null> {
     try {
         const response = await jobResponsePromise;
         if (!response.ok()) {
-            throw new Error(`POST /v1/team/jobs failed with status ${response.status()}`);
+            throw new Error(`POST /v1/workspace/jobs failed with status ${response.status()}`);
         }
         const job = await response.json();
         if (!job.id) {
-            throw new Error('POST /v1/team/jobs response missing id field');
+            throw new Error('POST /v1/workspace/jobs response missing id field');
         }
         return job.id as string;
     } catch (err) {
-        if (err instanceof Error && err.message.startsWith('POST /v1/team/jobs')) {
+        if (err instanceof Error && err.message.startsWith('POST /v1/workspace/jobs')) {
             throw err;
         }
         // Interception timed out — callers fall back to list-based polling in Phase 1.

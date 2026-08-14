@@ -60,7 +60,7 @@ export function useMockSharedContext({
                     return `/static/emoji/${emoji.unified}.png`;
                 }
 
-                return `/v1/team/emojis/${emoji.id}`;
+                return `/v1/workspace/emojis/${emoji.id}`;
             }),
         };
     }, [useEmojiByName, useEmojiUrl]);

@@ -27,13 +27,13 @@ func (api *API) InitLdap() {
 
 	api.BaseRoutes.LDAP.Handle("/migrateid", api.APISessionRequired(migrateIDLdap)).Methods(http.MethodPost)
 
-	// GET /v1/team/ldap/groups?page=0&per_page=1000
+	// GET /v1/workspace/ldap/groups?page=0&per_page=1000
 	api.BaseRoutes.LDAP.Handle("/groups", api.APISessionRequired(getLdapGroups)).Methods(http.MethodGet)
 
-	// POST /v1/team/ldap/groups/:remote_id/link
+	// POST /v1/workspace/ldap/groups/:remote_id/link
 	api.BaseRoutes.LDAP.Handle(`/groups/{remote_id}/link`, api.APISessionRequired(linkLdapGroup)).Methods(http.MethodPost)
 
-	// DELETE /v1/team/ldap/groups/:remote_id/link
+	// DELETE /v1/workspace/ldap/groups/:remote_id/link
 	api.BaseRoutes.LDAP.Handle(`/groups/{remote_id}/link`, api.APISessionRequired(unlinkLdapGroup)).Methods(http.MethodDelete)
 
 	api.BaseRoutes.LDAP.Handle("/certificate/public", api.APISessionRequired(addLdapPublicCertificate, handlerParamFileAPI)).Methods(http.MethodPost)

@@ -1061,7 +1061,7 @@ func TestPreparePostForClientWithImageProxy(t *testing.T) {
 func testProxyLinkedImage(t *testing.T, th *TestHelper, shouldProxy bool) {
 	postTemplate := "![foo](%v)"
 	imageURL := "http://mydomain.com/myimage"
-	proxiedImageURL := "http://mymattermost.com/v1/team/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
+	proxiedImageURL := "http://mymattermost.com/v1/workspace/image?url=http%3A%2F%2Fmydomain.com%2Fmyimage"
 
 	post := &model.Post{
 		UserId:    th.BasicUser.Id,
@@ -1136,7 +1136,7 @@ func testProxyOpenGraphImage(t *testing.T, th *TestHelper, shouldProxy bool) {
 	image := og.Images[0]
 	if shouldProxy {
 		assert.Equal(t, "", image.URL, "image URL should not be set with proxy")
-		assert.Equal(t, "http://mymattermost.com/v1/team/image?url="+url.QueryEscape(server.URL+"/test-image3.png"), image.SecureURL, "secure image URL should be sent through proxy")
+		assert.Equal(t, "http://mymattermost.com/v1/workspace/image?url="+url.QueryEscape(server.URL+"/test-image3.png"), image.SecureURL, "secure image URL should be sent through proxy")
 	} else {
 		assert.Equal(t, server.URL+"/test-image3.png", image.URL, "image URL should be set")
 		assert.Equal(t, "", image.SecureURL, "secure image URL should not be set")
@@ -2776,7 +2776,7 @@ func TestGetLinkMetadata(t *testing.T) {
 		assert.IsType(t, &url.Error{}, err)
 		assert.ErrorContains(t, err, httpservice.ErrAddressForbidden.Error())
 
-		requestURL = th.App.GetSiteURL() + "/v1/team/image?url=" + url.QueryEscape(requestURL)
+		requestURL = th.App.GetSiteURL() + "/v1/workspace/image?url=" + url.QueryEscape(requestURL)
 
 		// Note that this request still fails while testing because the request made by the image proxy is blocked
 		og, img, _, err = th.App.getLinkMetadata(th.Context, requestURL, timestamp, false, "")

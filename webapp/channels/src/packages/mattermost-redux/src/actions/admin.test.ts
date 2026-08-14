@@ -70,7 +70,7 @@ describe('Actions.Admin', () => {
                     id: 'z6ghakhm5brsub66cjhz9yb9za',
                     create_at: 1491331476323,
                     user_id: 'ua7yqgjiq3dabc46ianp3yfgty',
-                    action: '/v1/team/teams/o5pjxhkq8br8fj6xnidt7hm3ja',
+                    action: '/v1/workspace/teams/o5pjxhkq8br8fj6xnidt7hm3ja',
                     extra_info: '',
                     ip_address: '127.0.0.1',
                     session_id: 'u3yb6bqe6fg15bu4stzyto8rgh',

@@ -62,7 +62,7 @@ func NewSelfReferentialSyncHandler(t *testing.T, service *sharedchannel.Service,
 // HandleRequest processes incoming HTTP requests for the test server.
 func (h *SelfReferentialSyncHandler) HandleRequest(w http.ResponseWriter, r *http.Request) {
 	switch r.URL.Path {
-	case "/v1/team/remotecluster/msg":
+	case "/v1/workspace/remotecluster/msg":
 		atomic.AddInt32(h.syncMessageCount, 1)
 
 		// Read and process the sync message
@@ -117,10 +117,10 @@ func (h *SelfReferentialSyncHandler) HandleRequest(w http.ResponseWriter, r *htt
 
 		writeOKResponse(w)
 
-	case "/v1/team/remotecluster/ping":
+	case "/v1/workspace/remotecluster/ping":
 		writeOKResponse(w)
 
-	case "/v1/team/remotecluster/confirm_invite":
+	case "/v1/workspace/remotecluster/confirm_invite":
 		writeOKResponse(w)
 
 	default:

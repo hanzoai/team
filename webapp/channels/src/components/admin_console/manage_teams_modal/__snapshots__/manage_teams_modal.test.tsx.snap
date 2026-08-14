@@ -66,7 +66,7 @@ exports[`ManageTeamsModal should match snapshot init 1`] = `
                   alt="currentUsername profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/currentUserId/image?_=1234"
+                  src="/v1/workspace/users/currentUserId/image?_=1234"
                 />
                 <div
                   class="manage-teams__info"

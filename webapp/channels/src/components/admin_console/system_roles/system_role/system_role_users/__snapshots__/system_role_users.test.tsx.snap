@@ -247,7 +247,7 @@ exports[`admin_console/system_role_users should match snapshot with readOnly tru
                     alt="user profile image"
                     class="Avatar Avatar-md"
                     loading="lazy"
-                    src="/v1/team/users/user_id/image"
+                    src="/v1/workspace/users/user_id/image"
                   />
                 </span>
               </span>
@@ -313,7 +313,7 @@ exports[`admin_console/system_role_users should match snapshot with readOnly tru
                     alt="user profile image"
                     class="Avatar Avatar-md"
                     loading="lazy"
-                    src="/v1/team/users/user_id/image"
+                    src="/v1/workspace/users/user_id/image"
                   />
                 </span>
               </span>

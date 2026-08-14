@@ -32,7 +32,7 @@ function makeClientError(serverErrorId: string, message = 'error'): ClientError 
         message,
         server_error_id: serverErrorId,
         status_code: 422,
-        url: 'https://example.com/v1/team/properties/groups/access_control/template/fields',
+        url: 'https://example.com/v1/workspace/properties/groups/access_control/template/fields',
     });
 }
 

@@ -186,7 +186,7 @@ export async function openExistingPolicy(page: Page, policyName: string): Promis
 
 export async function getRawPolicyExpression(page: Page, policyId: string): Promise<string> {
     const data = await page.evaluate(async (id: string) => {
-        const resp = await fetch(`/v1/team/access_control_policies/${id}`, {
+        const resp = await fetch(`/v1/workspace/access_control_policies/${id}`, {
             headers: {'X-Requested-With': 'XMLHttpRequest'},
         });
         return resp.json();
@@ -209,14 +209,14 @@ export async function resubmitPolicyExpression(
 ): Promise<{status: number; body: any}> {
     return page.evaluate(
         async ({id, expr}: {id: string; expr: string}) => {
-            const getResp = await fetch(`/v1/team/access_control_policies/${id}`, {
+            const getResp = await fetch(`/v1/workspace/access_control_policies/${id}`, {
                 headers: {'X-Requested-With': 'XMLHttpRequest'},
             });
             const policy = await getResp.json();
             if (Array.isArray(policy?.rules) && policy.rules.length > 0) {
                 policy.rules[0].expression = expr;
             }
-            const putResp = await fetch('/v1/team/access_control_policies', {
+            const putResp = await fetch('/v1/workspace/access_control_policies', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -233,7 +233,7 @@ export async function resubmitPolicyExpression(
 
 export async function searchPoliciesExpression(page: Page, term: string): Promise<string> {
     const data = await page.evaluate(async (t: string) => {
-        const resp = await fetch('/v1/team/access_control_policies/search', {
+        const resp = await fetch('/v1/workspace/access_control_policies/search', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

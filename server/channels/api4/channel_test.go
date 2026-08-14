@@ -8192,7 +8192,7 @@ func TestChannelEndpointsExcludeSpaces(t *testing.T) {
 }
 
 // TestLocalChannelEndpoints404Spaces verifies the local (admin socket) channel endpoints 404 a
-// space, the same as /v1/team: space channels are excluded from the generic GetChannel these
+// space, the same as /v1/workspace: space channels are excluded from the generic GetChannel these
 // handlers resolve through, so they never reach the mutation.
 func TestLocalChannelEndpoints404Spaces(t *testing.T) {
 	mainHelper.Parallel(t)

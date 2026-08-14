@@ -31,13 +31,13 @@ describe('ExternalIImage isSVGImage', () => {
         },
         {
             name: 'no metadata, proxied image',
-            src: 'https://team.example.com/v1/team/image?url=' + encodeURIComponent('https://example.com/image.png'),
+            src: 'https://team.example.com/v1/workspace/image?url=' + encodeURIComponent('https://example.com/image.png'),
             imageMetadata: undefined,
             expected: false,
         },
         {
             name: 'no metadata, proxied svg image',
-            src: 'https://team.example.com/v1/team/image?url=' + encodeURIComponent('https://example.com/image.svg'),
+            src: 'https://team.example.com/v1/workspace/image?url=' + encodeURIComponent('https://example.com/image.svg'),
             imageMetadata: undefined,
             expected: true,
         },

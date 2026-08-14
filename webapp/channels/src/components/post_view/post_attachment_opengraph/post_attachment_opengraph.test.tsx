@@ -27,7 +27,7 @@ const openGraphData = {
     description: 'Hanzo Team is a secure, open source platform for communication, collaboration, and workflow orchestration across tools and teams.',
     images: [{
         height: 1256,
-        secure_url: 'http://localhost:8065/v1/team/image?url=http%3A%2F%2Fmattermo…t.com%2Fwp-content%2Fuploads%2F2021%2F09%2FHomepage%402x.png',
+        secure_url: 'http://localhost:8065/v1/workspace/image?url=http%3A%2F%2Fmattermo…t.com%2Fwp-content%2Fuploads%2F2021%2F09%2FHomepage%402x.png',
         type: 'image/png',
         url: '',
         width: 2400}],

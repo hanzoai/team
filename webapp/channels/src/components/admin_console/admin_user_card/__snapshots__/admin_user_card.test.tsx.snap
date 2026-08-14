@@ -24,7 +24,7 @@ exports[`components/admin_console/admin_user_card/admin_user_card should match d
             alt="user profile image"
             class="Avatar Avatar-xxl"
             loading="lazy"
-            src="/v1/team/users/1234/image"
+            src="/v1/workspace/users/1234/image"
           />
         </span>
       </button>
@@ -90,7 +90,7 @@ exports[`components/admin_console/admin_user_card/admin_user_card should match s
             alt="user profile image"
             class="Avatar Avatar-xxl"
             loading="lazy"
-            src="/v1/team/users/1234/image"
+            src="/v1/workspace/users/1234/image"
           />
         </span>
       </button>
@@ -151,7 +151,7 @@ exports[`components/admin_console/admin_user_card/admin_user_card should match s
             alt="user profile image"
             class="Avatar Avatar-xxl"
             loading="lazy"
-            src="/v1/team/users/1234/image"
+            src="/v1/workspace/users/1234/image"
           />
         </span>
       </button>
@@ -210,7 +210,7 @@ exports[`components/admin_console/admin_user_card/admin_user_card should match s
             alt="user profile image"
             class="Avatar Avatar-xxl"
             loading="lazy"
-            src="/v1/team/users/1234/image"
+            src="/v1/workspace/users/1234/image"
           />
         </span>
       </button>

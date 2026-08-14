@@ -65,7 +65,7 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx in
                   alt="some-user profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/defaultuser/image"
+                  src="/v1/workspace/users/defaultuser/image"
                 />
                 <div
                   class="manage-teams__info"
@@ -203,7 +203,7 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx sh
                   alt="some-user profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/defaultuser/image"
+                  src="/v1/workspace/users/defaultuser/image"
                 />
                 <div
                   class="manage-teams__info"
@@ -403,7 +403,7 @@ exports[`components/admin_console/manage_tokens_modal/manage_tokens_modal.tsx sh
                   alt="some-user profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/defaultuser/image"
+                  src="/v1/workspace/users/defaultuser/image"
                 />
                 <div
                   class="manage-teams__info"

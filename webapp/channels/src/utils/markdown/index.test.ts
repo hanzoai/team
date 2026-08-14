@@ -169,7 +169,7 @@ this is long text this is long text this is long text this is long text this is 
             {input: '[link text](http://markdownlink.com)', expected: '<p>link text : http://markdownlink.com</p>'},
             {input: '[link text](//markdownlink.com/test)', expected: '<p>link text : //markdownlink.com/test</p>'},
             {input: '[link text](http://my.site.com/whatever)', expected: '<p>link text : http://my.site.com/whatever</p>'},
-            {input: '[link text](http://my.site.com/v1/team/image?url=ohno)', expected: '<p>link text : http://my.site.com/v1/team/image?url=ohno</p>'},
+            {input: '[link text](http://my.site.com/v1/workspace/image?url=ohno)', expected: '<p>link text : http://my.site.com/v1/workspace/image?url=ohno</p>'},
             {input: '[link text](http://my.site.com/_redirect/pl/c18xpcpusjd88en1g4j7us31ur)', expected: '<p><a class="theme markdown__link" href="http://my.site.com/_redirect/pl/c18xpcpusjd88en1g4j7us31ur" rel="noreferrer" data-link="/_redirect/pl/c18xpcpusjd88en1g4j7us31ur">link text</a></p>'},
             {input: '[link text](http://my.site.com/someteam/pl/c18xpcpusjd88en1g4j7us31ur)', expected: '<p><a class="theme markdown__link" href="http://my.site.com/someteam/pl/c18xpcpusjd88en1g4j7us31ur" rel="noreferrer" data-link="/someteam/pl/c18xpcpusjd88en1g4j7us31ur">link text</a></p>'},
             {input: '[link text](http://my.site.com/_redirect/pl/c18xpcpusjd88en1g4j7us31ur/ohno)', expected: '<p>link text : http://my.site.com/_redirect/pl/c18xpcpusjd88en1g4j7us31ur/ohno</p>'},

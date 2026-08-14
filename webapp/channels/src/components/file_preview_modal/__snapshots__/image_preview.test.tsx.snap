@@ -12,7 +12,7 @@ exports[`components/view_image/ImagePreview should match snapshot, with preview 
       data-testid="imagePreview"
       draggable="false"
       loading="lazy"
-      src="/v1/team/files/file_id_1/preview"
+      src="/v1/workspace/files/file_id_1/preview"
     />
   </a>
 </div>
@@ -26,7 +26,7 @@ exports[`components/view_image/ImagePreview should match snapshot, with preview,
     <img
       class="image_preview__image"
       draggable="false"
-      src="/v1/team/files/file_id_1/preview"
+      src="/v1/workspace/files/file_id_1/preview"
     />
   </span>
 </div>
@@ -44,7 +44,7 @@ exports[`components/view_image/ImagePreview should match snapshot, without previ
       data-testid="imagePreview"
       draggable="false"
       loading="lazy"
-      src="/v1/team/files/file_id?download=1"
+      src="/v1/workspace/files/file_id?download=1"
     />
   </a>
 </div>
@@ -58,7 +58,7 @@ exports[`components/view_image/ImagePreview should match snapshot, without previ
     <img
       class="image_preview__image"
       draggable="false"
-      src="/v1/team/files/file_id?download=1"
+      src="/v1/workspace/files/file_id?download=1"
     />
   </span>
 </div>

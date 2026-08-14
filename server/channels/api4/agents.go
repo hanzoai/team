@@ -12,11 +12,11 @@ import (
 )
 
 func (api *API) InitAgents() {
-	// GET /v1/team/agents
+	// GET /v1/workspace/agents
 	api.BaseRoutes.Agents.Handle("", api.APISessionRequired(getAgents)).Methods(http.MethodGet)
-	// GET /v1/team/agents/status
+	// GET /v1/workspace/agents/status
 	api.BaseRoutes.Agents.Handle("/status", api.APISessionRequired(getAgentsStatus)).Methods(http.MethodGet)
-	// GET /v1/team/llmservices
+	// GET /v1/workspace/llmservices
 	api.BaseRoutes.LLMServices.Handle("", api.APISessionRequired(getLLMServices)).Methods(http.MethodGet)
 }
 

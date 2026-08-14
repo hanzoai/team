@@ -31,7 +31,7 @@ jest.mock('components/widgets/loading/loading_spinner', () => () => <div>{'Loadi
 describe('components/CommercialSupportModal', () => {
     beforeAll(() => {
         // Mock getSystemRoute to return a valid URL
-        jest.spyOn(Client4, 'getSystemRoute').mockImplementation(() => 'http://localhost:8065/v1/team/system');
+        jest.spyOn(Client4, 'getSystemRoute').mockImplementation(() => 'http://localhost:8065/v1/workspace/system');
 
         // Mock createObjectURL
         window.URL.createObjectURL = jest.fn().mockReturnValue('mock-url');

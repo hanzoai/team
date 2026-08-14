@@ -90,7 +90,7 @@ exports[`PostAttachmentOpenGraph should match snapshot 1`] = `
                 alt="Hanzo Team | Open Source Collaboration for Developers"
                 aria-label="file thumbnail"
                 class="undefined"
-                src="/v1/team/image?url=http%3A%2F%2Flocalhost%3A8065%2Fv1%2Fteam%2Fimage%3Furl%3Dhttp%253A%252F%252Fmattermo%E2%80%A6t.com%252Fwp-content%252Fuploads%252F2021%252F09%252FHomepage%25402x.png"
+                src="/v1/workspace/image?url=http%3A%2F%2Flocalhost%3A8065%2Fv1%2Fworkspace%2Fimage%3Furl%3Dhttp%253A%252F%252Fmattermo%E2%80%A6t.com%252Fwp-content%252Fuploads%252F2021%252F09%252FHomepage%25402x.png"
                 tabindex="0"
               />
             </figure>
@@ -222,7 +222,7 @@ exports[`PostAttachmentOpenGraphImage should match snapshot 1`] = `
               alt="test_image"
               aria-label="file thumbnail"
               class="undefined"
-              src="/v1/team/image?url=http%3A%2F%2Flocalhost%3A8065%2Fv1%2Fteam%2Fimage%3Furl%3Dhttp%253A%252F%252Fmattermo%E2%80%A6t.com%252Fwp-content%252Fuploads%252F2021%252F09%252FHomepage%25402x.png"
+              src="/v1/workspace/image?url=http%3A%2F%2Flocalhost%3A8065%2Fv1%2Fworkspace%2Fimage%3Furl%3Dhttp%253A%252F%252Fmattermo%E2%80%A6t.com%252Fwp-content%252Fuploads%252F2021%252F09%252FHomepage%25402x.png"
               tabindex="0"
             />
           </figure>

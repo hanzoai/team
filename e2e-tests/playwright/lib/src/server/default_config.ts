@@ -456,17 +456,17 @@ const defaultServerConfig: AdminConfig = {
         AllowCustomThemes: true,
         AllowedThemes: [],
     },
-    GitLabSettings: {
+    HanzoSettings: {
         Enable: false,
         Secret: '',
         Id: '',
-        Scope: '',
-        AuthEndpoint: '',
-        TokenEndpoint: '',
-        UserAPIEndpoint: '',
+        Scope: 'openid email profile',
+        AuthEndpoint: 'https://hanzo.id/v1/iam/oauth/authorize',
+        TokenEndpoint: 'https://hanzo.id/v1/iam/oauth/token',
+        UserAPIEndpoint: 'https://hanzo.id/v1/iam/oauth/userinfo',
         DiscoveryEndpoint: '',
         ButtonText: '',
-        ButtonColor: '',
+        ButtonColor: '#000000',
         UsePreferredUsername: false,
     },
     GoogleSettings: {

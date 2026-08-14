@@ -361,7 +361,7 @@ test('should configure new IntuneSettings with SAML auth provider', async ({pw})
         new Blob([idpCert], {type: 'application/x-x509-ca-cert'}),
         'Intune SAML Test.cer',
     );
-    await fetch(`${serverUrl}/v1/team/saml/certificate/idp`, {
+    await fetch(`${serverUrl}/v1/workspace/saml/certificate/idp`, {
         method: 'POST',
         body: idpFormData,
         credentials: 'include',
@@ -372,7 +372,7 @@ test('should configure new IntuneSettings with SAML auth provider', async ({pw})
         '-----BEGIN CERTIFICATE-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArv1Qw4v7OMC2r7Qw4v7OMC2r7Qw4v7OMC2r7QwIDAQAB\n-----END CERTIFICATE-----\n';
     const spFormData = new FormData();
     spFormData.append('certificate', new Blob([spCert], {type: 'application/x-x509-ca-cert'}), 'saml-public-cert.pem');
-    await fetch(`${serverUrl}/v1/team/saml/certificate/public`, {
+    await fetch(`${serverUrl}/v1/workspace/saml/certificate/public`, {
         method: 'POST',
         body: spFormData,
         credentials: 'include',

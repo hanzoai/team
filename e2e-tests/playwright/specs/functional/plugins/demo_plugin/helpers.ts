@@ -46,7 +46,7 @@ export async function closeRootModal(page: Page): Promise<void> {
 
 /**
  * Run `send` (typically fill slash command + click Send) while waiting for
- * POST /v1/team/commands/execute so the server finishes the slash handler before assertions.
+ * POST /v1/workspace/commands/execute so the server finishes the slash handler before assertions.
  */
 /**
  * Upload a file via the UI attachment menu when the demo plugin is active.
@@ -61,7 +61,7 @@ export async function uploadFileViaYourComputer(
     const filePath = path.join(assetPath, filename);
     const uploadResponsePromise = page.waitForResponse(
         (r) =>
-            r.url().includes('/v1/team/files') &&
+            r.url().includes('/v1/workspace/files') &&
             r.request().method() === 'POST' &&
             r.status() >= 200 &&
             r.status() < 300,
@@ -80,7 +80,7 @@ export async function sendDemoSlashCommand(page: Page, send: () => Promise<void>
     // plugin is transiently inactive and the server returns HTTP 500.  The caller is responsible
     // for detecting a failed command (e.g. via a retry loop or explicit status check).
     const responsePromise = page.waitForResponse(
-        (r) => r.url().includes('/v1/team/commands/execute') && r.request().method() === 'POST',
+        (r) => r.url().includes('/v1/workspace/commands/execute') && r.request().method() === 'POST',
         {timeout: 45_000},
     );
     await Promise.all([send(), responsePromise]);

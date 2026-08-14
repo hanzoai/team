@@ -160,7 +160,7 @@ func fillUserReportOptions(values url.Values) (*model.UserReportOptions, *model.
 
 // getPostsForReporting retrieves posts for reporting purposes with cursor-based pagination.
 //
-// API Endpoint: POST /v1/team/reports/posts
+// API Endpoint: POST /v1/workspace/reports/posts
 //
 // Cursor Behavior:
 //   - The cursor is opaque and self-contained (base64-encoded)

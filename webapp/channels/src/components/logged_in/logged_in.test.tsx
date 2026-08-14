@@ -197,7 +197,7 @@ describe('components/logged_in/LoggedIn', () => {
         expect(screen.getByText('Test')).toBeInTheDocument();
 
         fireEvent(window, new Event('beforeunload'));
-        expect(fetch).not.toHaveBeenCalledWith('/v1/team/channels/members/me/view');
+        expect(fetch).not.toHaveBeenCalledWith('/v1/workspace/channels/members/me/view');
     });
 
     describe('custom profile attributes', () => {

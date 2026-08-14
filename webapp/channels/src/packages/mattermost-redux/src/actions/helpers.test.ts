@@ -29,7 +29,7 @@ describe('Actions.Helpers', () => {
 
             const error = new ClientError(Client4.getUrl(), {
                 message: 'no internet connection',
-                url: '/v1/team/foo/bar',
+                url: '/v1/workspace/foo/bar',
             });
 
             forceLogoutIfNecessary(error, dispatch as any, store.getState);
@@ -51,7 +51,7 @@ describe('Actions.Helpers', () => {
             const error = new ClientError(Client4.getUrl(), {
                 message: 'Failed to do something',
                 status_code: 403,
-                url: '/v1/team/foo/bar',
+                url: '/v1/workspace/foo/bar',
             });
 
             forceLogoutIfNecessary(error, dispatch as any, store.getState);
@@ -73,7 +73,7 @@ describe('Actions.Helpers', () => {
             const error = new ClientError(Client4.getUrl(), {
                 message: 'Failed to do something',
                 status_code: 401,
-                url: '/v1/team/foo/bar',
+                url: '/v1/workspace/foo/bar',
             });
 
             forceLogoutIfNecessary(error, dispatch as any, store.getState);
@@ -95,7 +95,7 @@ describe('Actions.Helpers', () => {
             const error = new ClientError(Client4.getUrl(), {
                 message: 'Failed to do something',
                 status_code: 401,
-                url: '/v1/team/login',
+                url: '/v1/workspace/login',
             });
 
             forceLogoutIfNecessary(error, dispatch as any, store.getState);
@@ -117,7 +117,7 @@ describe('Actions.Helpers', () => {
             const error = new ClientError(Client4.getUrl(), {
                 message: 'Failed to do something',
                 status_code: 401,
-                url: '/v1/team/foo/bar',
+                url: '/v1/workspace/foo/bar',
             });
 
             forceLogoutIfNecessary(error, dispatch as any, store.getState);

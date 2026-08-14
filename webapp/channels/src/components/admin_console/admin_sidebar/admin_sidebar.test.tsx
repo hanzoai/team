@@ -322,9 +322,9 @@ describe('components/AdminSidebar', () => {
                     Secret: 'googleSecret',
                     Scope: 'scope',
                 } as SSOSettings,
-                GitLabSettings: {
-                    Id: 'gitlabID',
-                    Secret: 'gitlabSecret',
+                HanzoSettings: {
+                    Id: 'hanzoID',
+                    Secret: 'hanzoSecret',
                     Scope: 'scope',
                 } as SSOSettings,
                 Office365Settings: {
@@ -387,9 +387,9 @@ describe('components/AdminSidebar', () => {
                     Secret: 'googleSecret',
                     Scope: 'scope',
                 } as SSOSettings,
-                GitLabSettings: {
-                    Id: 'gitlabID',
-                    Secret: 'gitlabSecret',
+                HanzoSettings: {
+                    Id: 'hanzoID',
+                    Secret: 'hanzoSecret',
                     Scope: 'scope',
                 } as SSOSettings,
                 Office365Settings: {
@@ -452,9 +452,9 @@ describe('components/AdminSidebar', () => {
                     Secret: 'googleSecret',
                     Scope: 'scope',
                 } as SSOSettings,
-                GitLabSettings: {
-                    Id: 'gitlabID',
-                    Secret: 'gitlabSecret',
+                HanzoSettings: {
+                    Id: 'hanzoID',
+                    Secret: 'hanzoSecret',
                     Scope: 'scope',
                 } as SSOSettings,
                 Office365Settings: {
@@ -517,9 +517,9 @@ describe('components/AdminSidebar', () => {
                     Secret: 'googleSecret',
                     Scope: 'scope',
                 } as SSOSettings,
-                GitLabSettings: {
-                    Id: 'gitlabID',
-                    Secret: 'gitlabSecret',
+                HanzoSettings: {
+                    Id: 'hanzoID',
+                    Secret: 'hanzoSecret',
                     Scope: 'scope',
                 } as SSOSettings,
                 Office365Settings: {

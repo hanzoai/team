@@ -1560,7 +1560,7 @@ func TestCreatePostCheckOnlineStatus(t *testing.T) {
 
 	postJSON, jsonErr := json.Marshal(post)
 	require.NoError(t, jsonErr)
-	req := httptest.NewRequest("POST", "/v1/team/posts?set_online=false", bytes.NewReader(postJSON))
+	req := httptest.NewRequest("POST", "/v1/workspace/posts?set_online=false", bytes.NewReader(postJSON))
 	req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 	handler.ServeHTTP(resp, req)
@@ -1573,7 +1573,7 @@ func TestCreatePostCheckOnlineStatus(t *testing.T) {
 
 	postJSON, jsonErr = json.Marshal(post)
 	require.NoError(t, jsonErr)
-	req = httptest.NewRequest("POST", "/v1/team/posts", bytes.NewReader(postJSON))
+	req = httptest.NewRequest("POST", "/v1/workspace/posts", bytes.NewReader(postJSON))
 	req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 	handler.ServeHTTP(resp, req)
@@ -1603,7 +1603,7 @@ func TestCreatePostSilentRejectedForHumanUser(t *testing.T) {
 
 	postJSON, jsonErr := json.Marshal(post)
 	require.NoError(t, jsonErr)
-	req := httptest.NewRequest("POST", "/v1/team/posts?silent=true", bytes.NewReader(postJSON))
+	req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=true", bytes.NewReader(postJSON))
 	req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 	handler.ServeHTTP(resp, req)
@@ -1629,7 +1629,7 @@ func TestCreatePostSilentQueryParam(t *testing.T) {
 	t.Run("invalid silent value returns 400", func(t *testing.T) {
 		session, _ := th.App.GetSession(th.Client.AuthToken)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/posts?silent=invalid", bytes.NewReader(postJSON))
+		req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=invalid", bytes.NewReader(postJSON))
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 		handler.ServeHTTP(resp, req)
@@ -1639,7 +1639,7 @@ func TestCreatePostSilentQueryParam(t *testing.T) {
 	t.Run("silent=false does not set prop", func(t *testing.T) {
 		session, _ := th.App.GetSession(th.Client.AuthToken)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/posts?silent=false", bytes.NewReader(postJSON))
+		req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=false", bytes.NewReader(postJSON))
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 		handler.ServeHTTP(resp, req)
@@ -1653,7 +1653,7 @@ func TestCreatePostSilentQueryParam(t *testing.T) {
 	t.Run("silent=0 does not set prop", func(t *testing.T) {
 		session, _ := th.App.GetSession(th.Client.AuthToken)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/posts?silent=0", bytes.NewReader(postJSON))
+		req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=0", bytes.NewReader(postJSON))
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 		handler.ServeHTTP(resp, req)
@@ -1667,7 +1667,7 @@ func TestCreatePostSilentQueryParam(t *testing.T) {
 	t.Run("empty silent param is ignored", func(t *testing.T) {
 		session, _ := th.App.GetSession(th.Client.AuthToken)
 		resp := httptest.NewRecorder()
-		req := httptest.NewRequest("POST", "/v1/team/posts?silent=", bytes.NewReader(postJSON))
+		req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=", bytes.NewReader(postJSON))
 		req.Header.Set(model.HeaderAuth, "Bearer "+session.Token)
 
 		handler.ServeHTTP(resp, req)
@@ -1705,7 +1705,7 @@ func TestCreatePostSilentQueryParam(t *testing.T) {
 		}
 		botPostJSON, err := json.Marshal(botPost)
 		require.NoError(t, err)
-		req := httptest.NewRequest("POST", "/v1/team/posts?silent=true", bytes.NewReader(botPostJSON))
+		req := httptest.NewRequest("POST", "/v1/workspace/posts?silent=true", bytes.NewReader(botPostJSON))
 		req.Header.Set(model.HeaderAuth, "Bearer "+rtoken.Token)
 
 		handler.ServeHTTP(resp, req)

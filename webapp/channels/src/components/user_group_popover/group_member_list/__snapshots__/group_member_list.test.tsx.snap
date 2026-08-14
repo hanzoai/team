@@ -33,7 +33,7 @@ exports[`component/user_group_popover/group_member_list should match snapshot 1`
                     alt="username0 profile image"
                     class="Avatar Avatar-sm avatar-post-preview"
                     loading="lazy"
-                    src="/v1/team/users/id0/image?_=0"
+                    src="/v1/workspace/users/id0/image?_=0"
                     tabindex="-1"
                   />
                   <span
@@ -96,7 +96,7 @@ exports[`component/user_group_popover/group_member_list should match snapshot 1`
                     alt="username1 profile image"
                     class="Avatar Avatar-sm avatar-post-preview"
                     loading="lazy"
-                    src="/v1/team/users/id1/image?_=0"
+                    src="/v1/workspace/users/id1/image?_=0"
                     tabindex="-1"
                   />
                   <span
@@ -159,7 +159,7 @@ exports[`component/user_group_popover/group_member_list should match snapshot 1`
                     alt="username2 profile image"
                     class="Avatar Avatar-sm avatar-post-preview"
                     loading="lazy"
-                    src="/v1/team/users/id2/image?_=0"
+                    src="/v1/workspace/users/id2/image?_=0"
                     tabindex="-1"
                   />
                   <span
@@ -222,7 +222,7 @@ exports[`component/user_group_popover/group_member_list should match snapshot 1`
                     alt="username3 profile image"
                     class="Avatar Avatar-sm avatar-post-preview"
                     loading="lazy"
-                    src="/v1/team/users/id3/image?_=0"
+                    src="/v1/workspace/users/id3/image?_=0"
                     tabindex="-1"
                   />
                   <span
@@ -285,7 +285,7 @@ exports[`component/user_group_popover/group_member_list should match snapshot 1`
                     alt="username4 profile image"
                     class="Avatar Avatar-sm avatar-post-preview"
                     loading="lazy"
-                    src="/v1/team/users/id4/image?_=0"
+                    src="/v1/workspace/users/id4/image?_=0"
                     tabindex="-1"
                   />
                   <span

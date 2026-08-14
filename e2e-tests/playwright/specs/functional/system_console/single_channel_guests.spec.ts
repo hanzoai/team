@@ -335,10 +335,10 @@ test.describe('Single-channel guests', () => {
             // # Log in as admin (new browser context + page).
             const {context, systemConsolePage} = await pw.testBrowser.login(adminUser);
 
-            // # Mock GET /v1/team/limits/server on the *context* before any navigation so the first
+            // # Mock GET /v1/workspace/limits/server on the *context* before any navigation so the first
             // getServerLimits() populates Redux with a low limit. Also fulfill with an explicit
             // JSON body — route.fulfill({response, json}) does not reliably merge bodies in Playwright.
-            await context.route('**/v1/team/limits/server', async (route) => {
+            await context.route('**/v1/workspace/limits/server', async (route) => {
                 const response = await route.fetch();
                 let json: Record<string, unknown> = {};
                 try {

@@ -231,7 +231,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user1 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/77777777777777777777777777/image"
+                  src="/v1/workspace/users/77777777777777777777777777/image"
                 />
                 <div
                   class="user-data"
@@ -272,7 +272,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user2 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/88888888888888888888888888/image"
+                  src="/v1/workspace/users/88888888888888888888888888/image"
                 />
                 <div
                   class="user-data"
@@ -313,7 +313,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user3 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/99999999999999999999999999/image"
+                  src="/v1/workspace/users/99999999999999999999999999/image"
                 />
                 <div
                   class="user-data"
@@ -642,7 +642,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user1 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/77777777777777777777777777/image"
+                  src="/v1/workspace/users/77777777777777777777777777/image"
                 />
                 <div
                   class="user-data"
@@ -683,7 +683,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user2 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/88888888888888888888888888/image"
+                  src="/v1/workspace/users/88888888888888888888888888/image"
                 />
                 <div
                   class="user-data"
@@ -724,7 +724,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user3 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/99999999999999999999999999/image"
+                  src="/v1/workspace/users/99999999999999999999999999/image"
                 />
                 <div
                   class="user-data"
@@ -1051,7 +1051,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user1 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/77777777777777777777777777/image"
+                  src="/v1/workspace/users/77777777777777777777777777/image"
                 />
                 <div
                   class="user-data"
@@ -1092,7 +1092,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user2 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/88888888888888888888888888/image"
+                  src="/v1/workspace/users/88888888888888888888888888/image"
                 />
                 <div
                   class="user-data"
@@ -1133,7 +1133,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user3 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/99999999999999999999999999/image"
+                  src="/v1/workspace/users/99999999999999999999999999/image"
                 />
                 <div
                   class="user-data"
@@ -1458,7 +1458,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user1 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/77777777777777777777777777/image"
+                  src="/v1/workspace/users/77777777777777777777777777/image"
                 />
                 <div
                   class="user-data"
@@ -1499,7 +1499,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user2 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/88888888888888888888888888/image"
+                  src="/v1/workspace/users/88888888888888888888888888/image"
                 />
                 <div
                   class="user-data"
@@ -1540,7 +1540,7 @@ exports[`components/admin_console/group_settings/group_details/GroupDetails shou
                   alt="user3 profile image"
                   class="Avatar Avatar-lg"
                   loading="lazy"
-                  src="/v1/team/users/99999999999999999999999999/image"
+                  src="/v1/workspace/users/99999999999999999999999999/image"
                 />
                 <div
                   class="user-data"

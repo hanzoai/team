@@ -4510,8 +4510,8 @@ const AdminDefinition: AdminDefinitionType = {
                     id: 'OAuthSettings',
                     name: defineMessage({id: 'admin.authentication.oauth', defaultMessage: 'OAuth 2.0'}),
                     onConfigLoad: (config) => {
-                        const newState: {oauthType?: string; 'GitLabSettings.Url'?: string} = {};
-                        if (config.GitLabSettings?.Enable) {
+                        const newState: {oauthType?: string} = {};
+                        if (config.HanzoSettings?.Enable) {
                             newState.oauthType = Constants.HANZO_SERVICE;
                         }
                         if (config.Office365Settings?.Enable) {
@@ -4521,25 +4521,22 @@ const AdminDefinition: AdminDefinitionType = {
                             newState.oauthType = Constants.GOOGLE_SERVICE;
                         }
 
-                        newState['GitLabSettings.Url'] = config.GitLabSettings?.UserAPIEndpoint?.replace('/api/v4/user', '');
-
                         return newState;
                     },
                     onConfigSave: (config) => {
                         const newConfig = {...config};
-                        newConfig.GitLabSettings = config.GitLabSettings || {};
+                        newConfig.HanzoSettings = config.HanzoSettings || {};
                         newConfig.Office365Settings = config.Office365Settings || {};
                         newConfig.GoogleSettings = config.GoogleSettings || {};
                         newConfig.OpenIdSettings = config.OpenIdSettings || {};
 
-                        newConfig.GitLabSettings.Enable = false;
+                        newConfig.HanzoSettings.Enable = false;
                         newConfig.Office365Settings.Enable = false;
                         newConfig.GoogleSettings.Enable = false;
                         newConfig.OpenIdSettings.Enable = false;
-                        newConfig.GitLabSettings.UserAPIEndpoint = config.GitLabSettings.Url.replace(/\/$/, '') + '/api/v4/user';
 
                         if (config.oauthType === Constants.HANZO_SERVICE) {
-                            newConfig.GitLabSettings.Enable = true;
+                            newConfig.HanzoSettings.Enable = true;
                         }
                         if (config.oauthType === Constants.OFFICE365_SERVICE) {
                             newConfig.Office365Settings.Enable = true;
@@ -4572,11 +4569,11 @@ const AdminDefinition: AdminDefinitionType = {
                                 },
                                 {
                                     value: Constants.HANZO_SERVICE,
-                                    display_name: defineMessage({id: 'admin.oauth.gitlab', defaultMessage: 'GitLab'}),
-                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    display_name: defineMessage({id: 'admin.oauth.hanzo', defaultMessage: 'Hanzo IAM'}),
+                                    help_text: defineMessage({id: 'admin.hanzo.EnableMarkdownDesc', defaultMessage: '1. Sign in to Hanzo IAM and open the application registered for this server.\n2. Add "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/hanzo/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>" to its redirect URIs.\n3. Copy the application Client ID and Client Secret into the fields below.\n4. The endpoints below already address hanzo.id. Change them only if you run your own IAM.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_values: {
-                                        loginUrlChunk: (chunk: string) => `<${chunk}>/login/gitlab/complete`,
-                                        signupUrlChunk: (chunk: string) => `<${chunk}>/signup/gitlab/complete`,
+                                        loginUrlChunk: (chunk: string) => `<${chunk}>/login/hanzo/complete`,
+                                        signupUrlChunk: (chunk: string) => `<${chunk}>/signup/hanzo/complete`,
                                     },
                                     help_text_markdown: true,
                                 },
@@ -4653,69 +4650,45 @@ const AdminDefinition: AdminDefinitionType = {
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.Id',
-                            label: defineMessage({id: 'admin.gitlab.clientIdTitle', defaultMessage: 'Application ID:'}),
-                            help_text: defineMessage({id: 'admin.gitlab.clientIdDescription', defaultMessage: 'Obtain this value via the instructions above for logging into GitLab.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.clientIdExample', defaultMessage: 'E.g.: "jcuS8PuvcpGhpgHhlcpT1Mx42pnqMxQY"'}),
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
+                            key: 'HanzoSettings.Id',
+                            label: defineMessage({id: 'admin.hanzo.clientIdTitle', defaultMessage: 'Application ID:'}),
+                            help_text: defineMessage({id: 'admin.hanzo.clientIdDescription', defaultMessage: 'The Client ID of the application you registered in Hanzo IAM.'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.clientIdExample', defaultMessage: 'E.g.: "294b09fbc17f95daf2fe"'}),
+                            isHidden: it.not(it.stateEquals('oauthType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.Secret',
-                            label: defineMessage({id: 'admin.gitlab.clientSecretTitle', defaultMessage: 'Application Secret Key:'}),
-                            help_text: defineMessage({id: 'admin.gitlab.clientSecretDescription', defaultMessage: 'Obtain this value via the instructions above for logging into GitLab.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.clientSecretExample', defaultMessage: 'E.g.: "jcuS8PuvcpGhpgHhlcpT1Mx42pnqMxQY"'}),
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
+                            key: 'HanzoSettings.Secret',
+                            label: defineMessage({id: 'admin.hanzo.clientSecretTitle', defaultMessage: 'Application Secret Key:'}),
+                            help_text: defineMessage({id: 'admin.hanzo.clientSecretDescription', defaultMessage: 'The Client Secret of the application you registered in Hanzo IAM.'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.clientSecretExample', defaultMessage: 'E.g.: "6a41a0c3b1f1e6d05d1c94e1a8b1f5d0e4a2c3b7"'}),
+                            isHidden: it.not(it.stateEquals('oauthType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.Url',
-                            label: defineMessage({id: 'admin.gitlab.siteUrl', defaultMessage: 'GitLab Site URL:'}),
-                            help_text: defineMessage({id: 'admin.gitlab.siteUrlDescription', defaultMessage: 'Enter the URL of your GitLab instance, e.g. https://example.com:3000. If your GitLab instance is not set up with SSL, start the URL with http:// instead of https://.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.siteUrlExample', defaultMessage: 'E.g.: https://'}),
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
+                            key: 'HanzoSettings.UserAPIEndpoint',
+                            label: defineMessage({id: 'admin.hanzo.userTitle', defaultMessage: 'User API Endpoint:'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.userExample', defaultMessage: 'E.g.: https://hanzo.id/v1/iam/oauth/userinfo'}),
+                            isHidden: it.not(it.stateEquals('oauthType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.UserAPIEndpoint',
-                            label: defineMessage({id: 'admin.gitlab.userTitle', defaultMessage: 'User API Endpoint:'}),
-                            dynamic_value: (value, config, state) => {
-                                if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/api/v4/user';
-                                }
-                                return '';
-                            },
-                            isDisabled: true,
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
+                            key: 'HanzoSettings.AuthEndpoint',
+                            label: defineMessage({id: 'admin.hanzo.authTitle', defaultMessage: 'Auth Endpoint:'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.authExample', defaultMessage: 'E.g.: https://hanzo.id/v1/iam/oauth/authorize'}),
+                            isHidden: it.not(it.stateEquals('oauthType', Constants.HANZO_SERVICE)),
+                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.AuthEndpoint',
-                            label: defineMessage({id: 'admin.gitlab.authTitle', defaultMessage: 'Auth Endpoint:'}),
-                            dynamic_value: (value, config, state) => {
-                                if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/oauth/authorize';
-                                }
-                                return '';
-                            },
-                            isDisabled: true,
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
-                        },
-                        {
-                            type: 'text',
-                            key: 'GitLabSettings.TokenEndpoint',
-                            label: defineMessage({id: 'admin.gitlab.tokenTitle', defaultMessage: 'Token Endpoint:'}),
-                            dynamic_value: (value, config, state) => {
-                                if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/oauth/token';
-                                }
-                                return '';
-                            },
-                            isDisabled: true,
-                            isHidden: it.not(it.stateEquals('oauthType', 'hanzo')),
+                            key: 'HanzoSettings.TokenEndpoint',
+                            label: defineMessage({id: 'admin.hanzo.tokenTitle', defaultMessage: 'Token Endpoint:'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.tokenExample', defaultMessage: 'E.g.: https://hanzo.id/v1/iam/oauth/token'}),
+                            isHidden: it.not(it.stateEquals('oauthType', Constants.HANZO_SERVICE)),
+                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
@@ -4834,23 +4807,18 @@ const AdminDefinition: AdminDefinitionType = {
                     id: 'OpenIdSettings',
                     name: defineMessage({id: 'admin.authentication.openid', defaultMessage: 'OpenID Connect'}),
                     onConfigLoad: (config) => {
-                        const newState: {openidType?: string; 'GitLabSettings.Url'?: string} = {};
+                        const newState: {openidType?: string} = {};
                         if (config.Office365Settings?.Enable) {
                             newState.openidType = Constants.OFFICE365_SERVICE;
                         }
                         if (config.GoogleSettings?.Enable) {
                             newState.openidType = Constants.GOOGLE_SERVICE;
                         }
-                        if (config.GitLabSettings?.Enable) {
+                        if (config.HanzoSettings?.Enable) {
                             newState.openidType = Constants.HANZO_SERVICE;
                         }
                         if (config.OpenIdSettings?.Enable) {
                             newState.openidType = Constants.OPENID_SERVICE;
-                        }
-                        if (config.GitLabSettings?.UserAPIEndpoint) {
-                            newState['GitLabSettings.Url'] = config.GitLabSettings.UserAPIEndpoint.replace('/api/v4/user', '');
-                        } else if (config.GitLabSettings?.DiscoveryEndpoint) {
-                            newState['GitLabSettings.Url'] = config.GitLabSettings.DiscoveryEndpoint.replace('/.well-known/openid-configuration', '');
                         }
 
                         return newState;
@@ -4859,12 +4827,12 @@ const AdminDefinition: AdminDefinitionType = {
                         const newConfig = {...config};
                         newConfig.Office365Settings = config.Office365Settings || {};
                         newConfig.GoogleSettings = config.GoogleSettings || {};
-                        newConfig.GitLabSettings = config.GitLabSettings || {};
+                        newConfig.HanzoSettings = config.HanzoSettings || {};
                         newConfig.OpenIdSettings = config.OpenIdSettings || {};
 
                         newConfig.Office365Settings.Enable = false;
                         newConfig.GoogleSettings.Enable = false;
-                        newConfig.GitLabSettings.Enable = false;
+                        newConfig.HanzoSettings.Enable = false;
                         newConfig.OpenIdSettings.Enable = false;
 
                         let configSetting = '';
@@ -4873,7 +4841,7 @@ const AdminDefinition: AdminDefinitionType = {
                         } else if (config.openidType === Constants.GOOGLE_SERVICE) {
                             configSetting = 'GoogleSettings';
                         } else if (config.openidType === Constants.HANZO_SERVICE) {
-                            configSetting = 'GitLabSettings';
+                            configSetting = 'HanzoSettings';
                         } else if (config.openidType === Constants.OPENID_SERVICE) {
                             configSetting = 'OpenIdSettings';
                         }
@@ -4911,11 +4879,11 @@ const AdminDefinition: AdminDefinitionType = {
                                 },
                                 {
                                     value: Constants.HANZO_SERVICE,
-                                    display_name: defineMessage({id: 'admin.openid.gitlab', defaultMessage: 'GitLab'}),
-                                    help_text: defineMessage({id: 'admin.gitlab.EnableMarkdownDesc', defaultMessage: '1. Log in to your GitLab account and go to Profile Settings -> Applications.\n2. Enter Redirect URIs "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/gitlab/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>".\n3. Then use "Application Secret Key" and "Application ID" fields from GitLab to complete the options below.\n4. Complete the Endpoint URLs below.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
+                                    display_name: defineMessage({id: 'admin.openid.hanzo', defaultMessage: 'Hanzo IAM'}),
+                                    help_text: defineMessage({id: 'admin.hanzo.EnableMarkdownDesc', defaultMessage: '1. Sign in to Hanzo IAM and open the application registered for this server.\n2. Add "<loginUrlChunk>your-hanzo-team-url</loginUrlChunk>" (example: http://localhost:8065/login/hanzo/complete) and "<signupUrlChunk>your-hanzo-team-url</signupUrlChunk>" to its redirect URIs.\n3. Copy the application Client ID and Client Secret into the fields below.\n4. The endpoints below already address hanzo.id. Change them only if you run your own IAM.'}), // eslint-disable-line formatjs/enforce-placeholders -- placeholders provided
                                     help_text_values: {
-                                        loginUrlChunk: (chunk: string) => `<${chunk}>/login/gitlab/complete`,
-                                        signupUrlChunk: (chunk: string) => `<${chunk}>/signup/gitlab/complete`,
+                                        loginUrlChunk: (chunk: string) => `<${chunk}>/login/hanzo/complete`,
+                                        signupUrlChunk: (chunk: string) => `<${chunk}>/signup/hanzo/complete`,
                                     },
                                     help_text_markdown: false,
                                 },
@@ -4996,43 +4964,29 @@ const AdminDefinition: AdminDefinitionType = {
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.Url',
-                            label: defineMessage({id: 'admin.gitlab.siteUrl', defaultMessage: 'GitLab Site URL:'}),
-                            help_text: defineMessage({id: 'admin.gitlab.siteUrlDescription', defaultMessage: 'Enter the URL of your GitLab instance, e.g. https://example.com:3000. If your GitLab instance is not set up with SSL, start the URL with http:// instead of https://.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.siteUrlExample', defaultMessage: 'E.g.: https://'}),
-                            isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
-                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
-                        },
-                        {
-                            type: 'text',
-                            key: 'GitLabSettings.DiscoveryEndpoint',
+                            key: 'HanzoSettings.DiscoveryEndpoint',
                             label: defineMessage({id: 'admin.openid.discoveryEndpointTitle', defaultMessage: 'Discovery Endpoint:'}),
-                            help_text: defineMessage({id: 'admin.gitlab.discoveryEndpointDesc', defaultMessage: 'The URL of the discovery document for OpenID Connect with GitLab.'}),
+                            help_text: defineMessage({id: 'admin.hanzo.discoveryEndpointDesc', defaultMessage: 'The URL of the discovery document for OpenID Connect with Hanzo IAM.'}),
                             help_text_markdown: false,
-                            dynamic_value: (value, config, state) => {
-                                if (state['GitLabSettings.Url']) {
-                                    return state['GitLabSettings.Url'].replace(/\/$/, '') + '/.well-known/openid-configuration';
-                                }
-                                return '';
-                            },
-                            isDisabled: true,
-                            isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
-                        },
-                        {
-                            type: 'text',
-                            key: 'GitLabSettings.Id',
-                            label: defineMessage({id: 'admin.openid.clientIdTitle', defaultMessage: 'Client ID:'}),
-                            help_text: defineMessage({id: 'admin.openid.clientIdDescription', defaultMessage: 'Obtaining the Client ID differs across providers. Please check you provider\'s documentation.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.clientIdExample', defaultMessage: 'E.g.: "jcuS8PuvcpGhpgHhlcpT1Mx42pnqMxQY"'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.discoveryEndpointExample', defaultMessage: 'E.g.: https://hanzo.id/.well-known/openid-configuration'}),
                             isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
                         {
                             type: 'text',
-                            key: 'GitLabSettings.Secret',
+                            key: 'HanzoSettings.Id',
+                            label: defineMessage({id: 'admin.openid.clientIdTitle', defaultMessage: 'Client ID:'}),
+                            help_text: defineMessage({id: 'admin.hanzo.clientIdDescription', defaultMessage: 'The Client ID of the application you registered in Hanzo IAM.'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.clientIdExample', defaultMessage: 'E.g.: "294b09fbc17f95daf2fe"'}),
+                            isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
+                            isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
+                        },
+                        {
+                            type: 'text',
+                            key: 'HanzoSettings.Secret',
                             label: defineMessage({id: 'admin.openid.clientSecretTitle', defaultMessage: 'Client Secret:'}),
-                            help_text: defineMessage({id: 'admin.openid.clientSecretDescription', defaultMessage: 'Obtaining the Client Secret differs across providers. Please check you provider\'s documentation.'}),
-                            placeholder: defineMessage({id: 'admin.gitlab.clientSecretExample', defaultMessage: 'E.g.: "jcuS8PuvcpGhpgHhlcpT1Mx42pnqMxQY"'}),
+                            help_text: defineMessage({id: 'admin.hanzo.clientSecretDescription', defaultMessage: 'The Client Secret of the application you registered in Hanzo IAM.'}),
+                            placeholder: defineMessage({id: 'admin.hanzo.clientSecretExample', defaultMessage: 'E.g.: "6a41a0c3b1f1e6d05d1c94e1a8b1f5d0e4a2c3b7"'}),
                             isHidden: it.not(it.stateEquals('openidType', Constants.HANZO_SERVICE)),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.AUTHENTICATION.OPENID)),
                         },
@@ -5155,7 +5109,7 @@ const AdminDefinition: AdminDefinitionType = {
                         },
                         {
                             type: 'bool',
-                            key: 'GitLabSettings.UsePreferredUsername',
+                            key: 'HanzoSettings.UsePreferredUsername',
                             label: defineMessage({id: 'admin.openid.usePreferredUsernameTitle', defaultMessage: 'Use Preferred Username:'}),
                             help_text: defineMessage({id: 'admin.openid.usePreferredUsernameDescription', defaultMessage: 'When true, use the `preferred_username` claim as the Hanzo Team username for the user. The scope must include `profile` and `openid` to use this feature.'}),
                             help_text_markdown: true,

@@ -50,7 +50,7 @@ function structuralEnv(): Record<string, string> {
     };
 }
 
-// Readiness requires both the /v1/team/system/ping health check AND the permissions-migration job
+// Readiness requires both the /v1/workspace/system/ping health check AND the permissions-migration job
 // scheduler's "All migrations are complete." log line (scheduler.go, jobs/migrations package).
 // Ping alone isn't enough: MigrationKeyAdvancedPermissionsPhase2 runs as an async job whose
 // scheduler deliberately delays its first tick 60s after startup — a real window a spec's very
@@ -86,7 +86,7 @@ export async function startMattermostContainer(
             .withStartupTimeout(5 * 60_000)
             .withWaitStrategy(
                 Wait.forAll([
-                    Wait.forHttp('/v1/team/system/ping', MATTERMOST_PORT).forStatusCode(200),
+                    Wait.forHttp('/v1/workspace/system/ping', MATTERMOST_PORT).forStatusCode(200),
                     Wait.forLogMessage(/All migrations are complete\./, 1),
                 ]),
             );

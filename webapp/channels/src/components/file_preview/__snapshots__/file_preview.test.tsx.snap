@@ -17,7 +17,7 @@ exports[`FilePreview should match snapshot 1`] = `
       >
         <div
           class="post-image normal"
-          style="background-image: url(\\"/v1/team/files/file_id_1/thumbnail\\"); background-size: cover;"
+          style="background-image: url(\\"/v1/workspace/files/file_id_1/thumbnail\\"); background-size: cover;"
         />
       </a>
       <div
@@ -138,7 +138,7 @@ exports[`FilePreview should match snapshot when props are changed 1`] = `
       >
         <div
           class="post-image normal"
-          style="background-image: url(\\"/v1/team/files/file_id_1/thumbnail\\"); background-size: cover;"
+          style="background-image: url(\\"/v1/workspace/files/file_id_1/thumbnail\\"); background-size: cover;"
         />
       </a>
       <div
@@ -259,7 +259,7 @@ exports[`FilePreview should match snapshot when props are changed 2`] = `
       >
         <div
           class="post-image normal"
-          style="background-image: url(\\"/v1/team/files/file_id_1/thumbnail\\"); background-size: cover;"
+          style="background-image: url(\\"/v1/workspace/files/file_id_1/thumbnail\\"); background-size: cover;"
         />
       </a>
       <div
@@ -312,7 +312,7 @@ exports[`FilePreview should match snapshot when props are changed 2`] = `
       >
         <div
           class="post-image normal"
-          style="background-image: url(\\"/v1/team/files/file_id_2/thumbnail\\"); background-size: cover;"
+          style="background-image: url(\\"/v1/workspace/files/file_id_2/thumbnail\\"); background-size: cover;"
         />
       </a>
       <div

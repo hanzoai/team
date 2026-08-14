@@ -89,7 +89,7 @@ export async function loginByAPI(loginId: string, password: string, token = '', 
     }
 
     // Log in via API
-    await requestContext.post(`${testConfig.baseURL}/v1/team/users/login`, {
+    await requestContext.post(`${testConfig.baseURL}/v1/workspace/users/login`, {
         data,
         headers: {'X-Requested-With': 'XMLHttpRequest'},
     });

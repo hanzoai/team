@@ -59,11 +59,11 @@ jest.mock('mattermost-redux/client', () => ({
         getProfilesMatchingChannelPolicy: jest.fn().mockResolvedValue([]),
         searchUsers: jest.fn().mockResolvedValue([]),
         getProfilePictureUrl: jest.fn(() => 'mock-url'),
-        getUsersRoute: jest.fn(() => '/v1/team/users'),
-        getTeamsRoute: jest.fn(() => '/v1/team/teams'),
-        getChannelsRoute: jest.fn(() => '/v1/team/channels'),
+        getUsersRoute: jest.fn(() => '/v1/workspace/users'),
+        getTeamsRoute: jest.fn(() => '/v1/workspace/teams'),
+        getChannelsRoute: jest.fn(() => '/v1/workspace/channels'),
         getUrl: jest.fn(() => 'http://localhost:8065'),
-        getBaseRoute: jest.fn(() => '/v1/team'),
+        getBaseRoute: jest.fn(() => '/v1/workspace'),
     },
 }));
 
@@ -162,11 +162,11 @@ describe('components/channel_invite_modal', () => {
         Client4.getProfilesMatchingChannelPolicy.mockResolvedValue([]);
         Client4.searchUsers.mockResolvedValue([]);
         Client4.getProfilePictureUrl.mockReturnValue('mock-url');
-        Client4.getUsersRoute.mockReturnValue('/v1/team/users');
-        Client4.getTeamsRoute.mockReturnValue('/v1/team/teams');
-        Client4.getChannelsRoute.mockReturnValue('/v1/team/channels');
+        Client4.getUsersRoute.mockReturnValue('/v1/workspace/users');
+        Client4.getTeamsRoute.mockReturnValue('/v1/workspace/teams');
+        Client4.getChannelsRoute.mockReturnValue('/v1/workspace/channels');
         Client4.getUrl.mockReturnValue('http://localhost:8065');
-        Client4.getBaseRoute.mockReturnValue('/v1/team');
+        Client4.getBaseRoute.mockReturnValue('/v1/workspace');
     });
 
     test('should match snapshot for channel_invite_modal with profiles', () => {

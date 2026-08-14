@@ -11,7 +11,7 @@ channels, posts, and other Hanzo Team resources.
 
 # Architecture
 
-The API is structured around resource-based endpoints under the /v1/team/ path.
+The API is structured around resource-based endpoints under the /v1/workspace/ path.
 Each endpoint is handled by specific handler functions that provide different
 levels of authentication and authorization:
 

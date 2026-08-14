@@ -143,7 +143,7 @@ function getCompleteOauth(req, res) {
 
 async function postOAuthMessage(req, res) {
     const {channelId, message, rootId, createAt} = req.body;
-    const apiUrl = `${baseUrl}/v1/team/posts`;
+    const apiUrl = `${baseUrl}/v1/workspace/posts`;
     authedUser.sign({
         method: 'post',
         url: apiUrl,
@@ -280,7 +280,7 @@ async function openDialog(dialog) {
     try {
         await axios({
             method: 'post',
-            url: `${baseUrl}/v1/team/actions/dialogs/open`,
+            url: `${baseUrl}/v1/workspace/actions/dialogs/open`,
             data: dialog,
         });
     } catch (err) {
