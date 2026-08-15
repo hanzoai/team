@@ -32,19 +32,19 @@ const (
 //
 // By default the list will be (not necessarily in this order):
 //
-//	['town-square', 'off-topic']
+//	['general', 'random']
 //
 // However, if TeamSettings.ExperimentalDefaultChannels contains a list of channels then that list will replace
-// 'off-topic' and be included in the return results in addition to 'town-square'. For example:
+// 'random' and be included in the return results in addition to 'general'. For example:
 //
-//	['town-square', 'game-of-thrones', 'wow']
+//	['general', 'game-of-thrones', 'wow']
 func (a *App) DefaultChannelNames(rctx request.CTX) []string {
-	names := []string{"town-square"}
+	names := []string{model.DefaultChannelName}
 
 	if len(a.Config().TeamSettings.ExperimentalDefaultChannels) == 0 {
-		names = append(names, "off-topic")
+		names = append(names, model.RandomChannelName)
 	} else {
-		seenChannels := map[string]bool{"town-square": true}
+		seenChannels := map[string]bool{model.DefaultChannelName: true}
 		for _, channelName := range a.Config().TeamSettings.ExperimentalDefaultChannels {
 			if !seenChannels[channelName] {
 				names = append(names, channelName)

@@ -1928,7 +1928,7 @@ func TestDefaultChannelNames(t *testing.T) {
 	th := Setup(t)
 
 	actual := th.App.DefaultChannelNames(th.Context)
-	expect := []string{"town-square", "off-topic"}
+	expect := []string{"general", "random"}
 	require.ElementsMatch(t, expect, actual)
 
 	th.App.UpdateConfig(func(cfg *model.Config) {
@@ -1936,7 +1936,7 @@ func TestDefaultChannelNames(t *testing.T) {
 	})
 
 	actual = th.App.DefaultChannelNames(th.Context)
-	expect = []string{"town-square", "foo", "bar"}
+	expect = []string{"general", "foo", "bar"}
 	require.ElementsMatch(t, expect, actual)
 }
 
