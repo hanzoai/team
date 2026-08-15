@@ -42,6 +42,33 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 RUN mkdir -p /hanzo/data /hanzo/logs /hanzo/config /hanzo/plugins /hanzo/client/plugins \
   && chown -R 2000:2000 /hanzo
 
+# Agents, the plugin that makes this an AI workspace rather than a chat server.
+#
+# The config enables it (PluginStates["mattermost-ai"] in server/public/model/
+# config.go) and points it at api.hanzo.ai. Without the bundle beside that
+# config the server enables a plugin it does not have: /v1/workspace/plugins/
+# webapp answers [] and there is no AI at all. Upstream fills this directory
+# from `make prepackaged-plugins`; this image builds the binaries directly and
+# never ran make, so the directory shipped empty.
+#
+# The server finds it by walking . .. ../.. from the working directory
+# (utils.CommonBaseSearchPaths), and WORKDIR is /hanzo.
+#
+# Pinned by digest, not just by version: the URL is a third party's host, and a
+# checksum is what makes fetching from one tamper-evident. It is still their
+# availability we depend on at build time — mirroring the artifact to our own
+# store is the follow-up, and this comment is here so that is a decision rather
+# than something nobody noticed.
+ARG AGENTS_VERSION=v2.5.1
+ARG AGENTS_SHA256=d6431e17350d001a715220f038fa7e587d993bda621c2ad9385c9466455f880e
+ADD --checksum=sha256:${AGENTS_SHA256} \
+    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
+    /tmp/agents.tar.gz
+RUN mkdir -p /hanzo/prepackaged_plugins \
+  && cp /tmp/agents.tar.gz /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
+  && rm /tmp/agents.tar.gz \
+  && chown -R 2000:2000 /hanzo/prepackaged_plugins
+
 # Upstream also lifts pdftotext, wvText, wvWare, unrtf and tidy in here for
 # attachment text extraction. They are NOT carried, because on this base they
 # cannot run and shipping a binary that cannot run is not a feature:
