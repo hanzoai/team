@@ -319,6 +319,30 @@ describe('components/login/Login', () => {
         expect(button.style.borderColor).toBe('rgb(0, 255, 0)');
     });
 
+    it('should offer hanzo.id alone when it is the only way in', () => {
+        const state = mergeObjects(baseState, {
+            entities: {
+                general: {
+                    config: {
+                        EnableSignUpWithHanzo: 'true',
+                    },
+                },
+            },
+        });
+
+        renderWithContext(
+            <Login/>,
+            state,
+        );
+
+        expect(screen.getByRole('link', {name: 'Hanzo Team logo Continue with hanzo.id'})).toBeInTheDocument();
+        expect(screen.getAllByRole('link')).toHaveLength(1);
+        expect(screen.queryByPlaceholderText('Email or Username')).not.toBeInTheDocument();
+        expect(screen.queryByPlaceholderText('Password')).not.toBeInTheDocument();
+        expect(screen.queryByText('Forgot your password?')).not.toBeInTheDocument();
+        expect(screen.queryByText('Log in with one of the following:')).not.toBeInTheDocument();
+    });
+
     it('should focus username field when there is an error', async () => {
         const state = mergeObjects(baseState, {
             entities: {
