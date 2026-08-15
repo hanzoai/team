@@ -70,33 +70,16 @@ COPY --chown=2000:2000 server/i18n /hanzo/i18n
 COPY --chown=2000:2000 server/templates /hanzo/templates
 COPY --chown=2000:2000 server/fonts /hanzo/fonts
 
-# Agents, the plugin that makes this an AI workspace rather than a chat server.
-# The config enables it (PluginStates["mattermost-ai"]) and points it at
-# api.hanzo.ai; without the bundle the server enables a plugin it does not have
-# and /v1/workspace/plugins/webapp answers []. Upstream fills this directory from
-# `make prepackaged-plugins`; this image builds the binaries directly.
+# The Agents plugin is NOT in this image. It arrives through the file store,
+# which app.hanzo.team seeds from an init container running
+# ghcr.io/hanzoteam/agents, and the server installs it from there on boot.
 #
-# Fetched HERE, in the final stage, rather than staged and copied across. Twice a
-# cross-stage COPY published an image without the file: the instruction's text
-# names a path and not its contents, so a registry cache entry recorded before
-# the contents existed still matched it, and the layer shipped as it had been.
-# The URL and the checksum are IN these instructions, so changing either changes
-# the key. ADD needs no shell, which distroless does not have.
-#
-# The signature is not optional. buildPrepackagedPlugin refuses a prepackaged
-# plugin without one before reading it, independently of RequirePluginSignature,
-# which governs what an admin uploads. Both are pinned by sha256 because the
-# host is somebody else's, and a checksum is what makes fetching from one
-# tamper-evident; mirroring the artifacts to our own store is the follow-up.
-ARG AGENTS_VERSION=v2.5.1
-ADD --chown=2000:2000 \
-    --checksum=sha256:d6431e17350d001a715220f038fa7e587d993bda621c2ad9385c9466455f880e \
-    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
-    /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz
-ADD --chown=2000:2000 \
-    --checksum=sha256:6ffdbb734f92a26522e62ec3cd7b58f431342935e74dd3c9e3b121cbdde44a18 \
-    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
-    /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig
+# It cannot be carried here. A prepackaged bundle must be signed against
+# Mattermost's key, which a fork cannot produce; and a bundle placed directly in
+# the plugins directory does not survive startup, because initPlugins runs
+# syncPlugins first and that removes every locally available plugin before
+# installing from the file store. The file store is the one path that takes a
+# plugin we built ourselves.
 # NOT chowned: this is the account database, and the account it names must not be
 # able to rewrite it.
 COPY server/build/passwd /etc/passwd
