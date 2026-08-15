@@ -92,7 +92,7 @@ export default function AboutBuildModal(props: Props) {
                 location='about_build_modal'
                 href='https://hanzo.ai/community/'
             >
-                {'mattermost.com/community/'}
+                {'hanzo.ai/community/'}
             </ExternalLink>
         </div>
     );
@@ -122,7 +122,7 @@ export default function AboutBuildModal(props: Props) {
                                     location='about_build_modal'
                                     href='https://hanzo.ai/'
                                 >
-                                    {'mattermost.com'}
+                                    {'hanzo.ai'}
                                 </ExternalLink>
                             ),
                         }}
@@ -150,7 +150,7 @@ export default function AboutBuildModal(props: Props) {
                                     location='about_build_modal'
                                     href='https://hanzo.ai/'
                                 >
-                                    {'mattermost.com'}
+                                    {'hanzo.ai'}
                                 </ExternalLink>
                             ),
                         }}
