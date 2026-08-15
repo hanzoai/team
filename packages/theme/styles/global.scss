@@ -35,8 +35,31 @@
 @use "./mono.scss" as *;
 @use "./noto-color.scss" as *;
 
-// Geist Font (via Google Fonts CDN)
-@import url('https://fonts.googleapis.com/css2?family=Geist:wght@100;200;300;400;500;600;700;800;900&family=Geist+Mono:wght@100;200;300;400;500;600;700;800;900&display=swap');
+// Geist, self-hosted. It is the FIRST family in --font-family below, so what
+// this file loads decides what the whole product is typeset in — and it was
+// loading from the Google Fonts CDN, which prod blocks. The rule resolved, the
+// family never arrived, and every surface silently rendered in the IBM Plex
+// fallback underneath it: a stack that names our typeface first and paints
+// someone else's, with nothing in the page saying so.
+//
+// Both files were already vendored beside this stylesheet and unreferenced.
+// They are VARIABLE, so one file covers 100-900 and `font-weight` is a range
+// rather than a face per weight — which is why the four IBM Plex @font-face
+// blocks below need no Geist counterpart.
+@font-face {
+  font-family: 'Geist';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/geist/Geist-Variable.woff2') format('woff2');
+}
+@font-face {
+  font-family: 'Geist Mono';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url('../fonts/geist/GeistMono-Variable.woff2') format('woff2');
+}
 
 // Fallback for IBM Plex Sans (keep for backwards compatibility)
 @font-face {

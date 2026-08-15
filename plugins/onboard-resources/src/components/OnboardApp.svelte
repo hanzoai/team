@@ -35,15 +35,6 @@
   import LoginIcon from './icons/OnboardIcon.svelte'
   import OnboardForm from './OnboardForm.svelte'
 
-  import loginBack from '../../img/login_back.png'
-  import loginBack2x from '../../img/login_back_2x.png'
-
-  import loginBackAvif from '../../img/login_back.avif'
-  import loginBack2xAvif from '../../img/login_back_2x.avif'
-
-  import loginBackWebp from '../../img/login_back.webp'
-  import loginBack2xWebp from '../../img/login_back_2x.webp'
-
   import { Pages, pages } from '..'
 
   export let page: Pages = 'onboard'
@@ -88,19 +79,7 @@
 
 <div class="theme-dark w-full h-full backd" class:paneld={$deviceInfo.docWidth <= 768} class:white={!$themeStore.dark}>
   <div class="bg-image clear-mins" class:back={$deviceInfo.docWidth > 768} class:p-4={$deviceInfo.docWidth > 768}>
-    <picture>
-      <source srcset={`${loginBackAvif}, ${loginBack2xAvif} 2x`} type="image/avif" />
-      <source srcset={`${loginBackWebp}, ${loginBack2xWebp} 2x`} type="image/webp" />
-
-      <img
-        class="back-image"
-        src={loginBack}
-        style:display={$deviceInfo.docWidth <= 768 ? 'none' : 'block'}
-        srcset={`${loginBack} 1x, ${loginBack2x} 2x`}
-        alt=""
-      />
-    </picture>
-
+    <!-- Flat ground, same as the login half. See LoginApp.svelte. -->
     <div
       style:position="fixed"
       style:left={$deviceInfo.docWidth <= 480 ? '.75rem' : '1.75rem'}
@@ -127,15 +106,6 @@
 </div>
 
 <style lang="scss">
-  .back-image {
-    position: fixed;
-    top: 32px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-  }
   .backd {
     position: relative;
     background-color: var(--theme-bg-color);

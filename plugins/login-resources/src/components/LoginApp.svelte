@@ -44,12 +44,6 @@
   import SelectWorkspace from './SelectWorkspace.svelte'
   import SignupForm from './SignupForm.svelte'
 
-  import loginBackAvif from '../../img/login_back.avif'
-  import loginBack from '../../img/login_back.png'
-  import loginBackWebp from '../../img/login_back.webp'
-  import loginBack2xAvif from '../../img/login_back_2x.avif'
-  import loginBack2x from '../../img/login_back_2x.png'
-  import loginBack2xWebp from "../../img/login_back_2x.webp"
   import loginLogo from "../../img/logo-dark.svg"
   import AdminWorkspaces from './AdminWorkspaces.svelte'
   import ChangePassword from './ChangePassword.svelte'
@@ -128,20 +122,14 @@
     class:paneld={$deviceInfo.docWidth <= 768}
     class:white={!$themeStore.dark}
   >
+    <!-- The ground is flat black, and nothing is painted on it. The halftone
+         field that used to sit here (six upstream files, avif/webp/png at 1x and
+         2x) is the one decorative element on the one screen where a person is
+         reading a form and typing a password, and it is not ours: every other
+         Hanzo surface — console, chat, app, id — signs you in on plain
+         `--background`. A texture here is what made this door look like a
+         different company's. -->
     <div class="bg-image clear-mins" class:back={$deviceInfo.docWidth > 768} class:p-4={$deviceInfo.docWidth > 768}>
-      <picture>
-        <source srcset={`${loginBackAvif}, ${loginBack2xAvif} 2x`} type="image/avif" />
-        <source srcset={`${loginBackWebp}, ${loginBack2xWebp} 2x`} type="image/webp" />
-
-        <img
-          class="back-image"
-          src={loginBack}
-          style:display={$deviceInfo.docWidth <= 768 ? 'none' : 'block'}
-          srcset={`${loginBack} 1x, ${loginBack2x} 2x`}
-          alt=""
-        />
-      </picture>
-
       <div
         style:position="fixed"
         style:left={$deviceInfo.docWidth <= 480 ? '.75rem' : '1.75rem'}
@@ -155,7 +143,11 @@
             style="width: 30px; height: 30px"
 
     />
-    <span class="fs-title ml-2" style="color: #fff;">Team</span>
+    <!-- The lockup names the product in full. The mark alone is the Hanzo H,
+         which every Hanzo surface wears, so "Team" beside it read as the whole
+         name of the thing — and a visitor who arrives from hanzo.ai cannot tell
+         whose door this is. Mark plus full name, the way console and id do it. -->
+    <span class="fs-title ml-2" style="color: #fff;">Hanzo Team</span>
       </div>
 
       <div class="panel-base" class:panel={$deviceInfo.docWidth > 768} class:white={!$themeStore.dark}>
@@ -202,16 +194,6 @@
 {/if}
 
 <style lang="scss">
-  .back-image {
-    position: fixed;
-    top: 32px;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: left top;
-    filter: grayscale(100%) brightness(0.3) contrast(1.2);
-  }
   .backd {
     position: relative;
     background-color: #000000;
