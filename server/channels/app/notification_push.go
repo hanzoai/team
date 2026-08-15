@@ -551,8 +551,8 @@ func (a *App) rawSendToPushProxy(msg *model.PushNotification) (model.PushRespons
 	// Add auth token and server ID headers if available
 	if a.Srv().PushProxy != nil {
 		if authToken := a.Srv().PushProxy.GetAuthToken(); authToken != "" {
-			request.Header.Set("X-Hanzo Team-Auth", authToken)
-			request.Header.Set("X-Hanzo Team-ServerID", a.ServerId())
+			request.Header.Set("X-Mattermost-Auth", authToken)
+			request.Header.Set("X-Mattermost-ServerID", a.ServerId())
 		}
 	}
 
@@ -637,8 +637,8 @@ func (a *App) SendAckToPushProxy(rctx request.CTX, ack *model.PushNotificationAc
 	// Add auth token and server ID headers if available
 	if a.Srv().PushProxy != nil {
 		if authToken := a.Srv().PushProxy.GetAuthToken(); authToken != "" {
-			request.Header.Set("X-Hanzo Team-Auth", authToken)
-			request.Header.Set("X-Hanzo Team-ServerID", a.ServerId())
+			request.Header.Set("X-Mattermost-Auth", authToken)
+			request.Header.Set("X-Mattermost-ServerID", a.ServerId())
 		}
 	}
 

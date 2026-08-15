@@ -116,7 +116,7 @@ func init() {
 		}
 		reservedIPRanges = append(reservedIPRanges, parsed)
 	}
-	defaultUserAgent = "Hanzo Team-Bot/1.1"
+	defaultUserAgent = "HanzoTeam-Bot/1.1"
 }
 
 type DialContextFunction func(ctx context.Context, network, addr string) (net.Conn, error)

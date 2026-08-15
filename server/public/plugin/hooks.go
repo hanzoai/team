@@ -118,7 +118,7 @@ type Hooks interface {
 	// ServeHTTP allows the plugin to implement the http.Handler interface. Requests destined for
 	// the /plugins/{id} path will be routed to the plugin.
 	//
-	// The Hanzo Team-User-Id header will be present if (and only if) the request is by an
+	// The Mattermost-User-Id header will be present if (and only if) the request is by an
 	// authenticated user.
 	//
 	// Minimum server version: 5.2

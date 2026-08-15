@@ -80,6 +80,7 @@ COPY --chown=2000:2000 server/fonts /hanzo/fonts
 # syncPlugins first and that removes every locally available plugin before
 # installing from the file store. The file store is the one path that takes a
 # plugin we built ourselves.
+
 # NOT chowned: this is the account database, and the account it names must not be
 # able to rewrite it.
 COPY server/build/passwd /etc/passwd
