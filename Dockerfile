@@ -64,9 +64,19 @@ ARG AGENTS_SHA256=d6431e17350d001a715220f038fa7e587d993bda621c2ad9385c9466455f88
 ADD --checksum=sha256:${AGENTS_SHA256} \
     https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
     /tmp/agents.tar.gz
+# The signature travels with the bundle. buildPrepackagedPlugin refuses a
+# prepackaged plugin without one -- "Always require signature for prepackaged
+# plugins" -- independently of RequirePluginSignature, which governs plugins an
+# admin uploads. The server verifies it against the publisher key it already
+# carries.
+ARG AGENTS_SIG_SHA256=6ffdbb734f92a26522e62ec3cd7b58f431342935e74dd3c9e3b121cbdde44a18
+ADD --checksum=sha256:${AGENTS_SIG_SHA256} \
+    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
+    /tmp/agents.tar.gz.sig
 RUN mkdir -p /hanzo/prepackaged_plugins \
   && cp /tmp/agents.tar.gz /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
-  && rm /tmp/agents.tar.gz \
+  && cp /tmp/agents.tar.gz.sig /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
+  && rm /tmp/agents.tar.gz /tmp/agents.tar.gz.sig \
   && chown -R 2000:2000 /hanzo/prepackaged_plugins
 
 # Upstream also lifts pdftotext, wvText, wvWare, unrtf and tidy in here for
