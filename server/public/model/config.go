@@ -4274,6 +4274,13 @@ func (o *Config) GetSSOService(service string) *SSOSettings {
 	return nil
 }
 
+// AcceptsPassword reports whether a password is a way in. hanzo.id issues every
+// identity this server recognises, so running it retires the password: no login
+// id resolves to one and the client is never offered the form.
+func (o *Config) AcceptsPassword() bool {
+	return !*o.HanzoSettings.Enable
+}
+
 func ConfigFromJSON(data io.Reader) *Config {
 	var o *Config
 	json.NewDecoder(data).Decode(&o)

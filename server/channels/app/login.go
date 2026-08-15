@@ -95,8 +95,8 @@ func (a *App) AuthenticateUserForLogin(rctx request.CTX, id, loginId, password, 
 }
 
 func (a *App) GetUserForLogin(rctx request.CTX, id, loginId string) (*model.User, *model.AppError) {
-	enableUsername := *a.Config().EmailSettings.EnableSignInWithUsername
-	enableEmail := *a.Config().EmailSettings.EnableSignInWithEmail
+	enableUsername := a.Config().AcceptsPassword() && *a.Config().EmailSettings.EnableSignInWithUsername
+	enableEmail := a.Config().AcceptsPassword() && *a.Config().EmailSettings.EnableSignInWithEmail
 
 	if enableEmail || enableUsername {
 		// If we are given a userID then fail if we can't find a user with that ID

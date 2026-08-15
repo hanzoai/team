@@ -5570,9 +5570,12 @@ func TestSwitchAccount(t *testing.T) {
 		require.Nil(t, appErr)
 
 		if loggedIn {
-			// Login while user is still email auth
+			// A password is a way in only while hanzo.id is off, and this test
+			// drives the switch machinery, which starts from a password session.
+			th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Enable = false })
 			_, _, err = th.Client.Login(context.Background(), th.BasicUser.Email, th.BasicUser.Password)
 			require.NoError(t, err)
+			th.App.UpdateConfig(func(cfg *model.Config) { *cfg.HanzoSettings.Enable = true })
 		} else {
 			_, _ = th.Client.Logout(context.Background())
 		}
