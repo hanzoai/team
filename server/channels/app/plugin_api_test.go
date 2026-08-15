@@ -1842,7 +1842,7 @@ func TestInterpluginPluginHTTP(t *testing.T) {
 					return
 				}
 
-				if r.Header.Get("Hanzo Team-Plugin-ID") != "testplugininterclient" {
+				if r.Header.Get("Mattermost-Plugin-ID") != "testplugininterclient" {
 					return
 				}
 
@@ -1885,7 +1885,7 @@ func TestInterpluginPluginHTTP(t *testing.T) {
 			if err != nil {
 				return nil, err.Error()
 			}
-			req.Header.Add("Hanzo Team-User-Id", "userid")
+			req.Header.Add("Mattermost-User-Id", "userid")
 			resp := p.API.PluginHTTP(req)
 			if resp == nil {
 				return nil, "Nil resp"
@@ -1971,7 +1971,7 @@ func TestInterpluginPluginHTTPWithBodyAfterWriteHeader(t *testing.T) {
 					return
 				}
 
-				if r.Header.Get("Hanzo Team-Plugin-ID") != "testpluginbodyafter" {
+				if r.Header.Get("Mattermost-Plugin-ID") != "testpluginbodyafter" {
 					return
 				}
 
@@ -2009,7 +2009,7 @@ func TestInterpluginPluginHTTPWithBodyAfterWriteHeader(t *testing.T) {
 			if err != nil {
 				return nil, err.Error()
 			}
-			req.Header.Add("Hanzo Team-User-Id", "userid")
+			req.Header.Add("Mattermost-User-Id", "userid")
 			resp := p.API.PluginHTTP(req)
 			if resp == nil {
 				return nil, "Nil resp"
@@ -2521,8 +2521,8 @@ func TestPluginMFAEnforcement(t *testing.T) {
 	}
 
 	func (p *MyPlugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
-		// Simply return the value of Hanzo Team-User-Id header
-		userID := r.Header.Get("Hanzo Team-User-Id")
+		// Simply return the value of Mattermost-User-Id header
+		userID := r.Header.Get("Mattermost-User-Id")
 		w.Write([]byte(userID))
 	}
 

@@ -1482,8 +1482,8 @@ func TestPluginOwnsAccessControlPolicyType(t *testing.T) {
 		// The stored type is matched byte-for-byte on delete and during
 		// evaluation, so a case variant that could Get but never Delete would
 		// be a trap.
-		{"caller ID case mismatch", "Hanzo Team-AI", "mattermost-ai:agent", false},
-		{"stored prefix case mismatch", "mattermost-ai", "Hanzo Team-AI:agent", false},
+		{"caller ID case mismatch", "Mattermost-AI", "mattermost-ai:agent", false},
+		{"stored prefix case mismatch", "mattermost-ai", "Mattermost-AI:agent", false},
 	}
 
 	for _, tc := range tests {

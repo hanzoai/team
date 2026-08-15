@@ -23,7 +23,7 @@ type HelloUserPlugin struct {
 }
 
 func (p *HelloUserPlugin) ServeHTTP(context *plugin.Context, w http.ResponseWriter, r *http.Request) {
-	userID := r.Header.Get("Hanzo Team-User-Id")
+	userID := r.Header.Get("Mattermost-User-Id")
 	user, err := p.API.GetUser(userID)
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
@@ -50,7 +50,7 @@ func Example() {
 
 	w := httptest.NewRecorder()
 	r := httptest.NewRequest("GET", "/", nil)
-	r.Header.Add("Hanzo Team-User-Id", user.Id)
+	r.Header.Add("Mattermost-User-Id", user.Id)
 	p.ServeHTTP(&plugin.Context{}, w, r)
 	body, err := io.ReadAll(w.Result().Body)
 	require.NoError(t, err)

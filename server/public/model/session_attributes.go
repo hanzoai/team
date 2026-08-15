@@ -84,7 +84,7 @@ const (
 
 const (
 	SessionAttributeHeaderClientAttributes = "X-MM-Session-Attributes"
-	SessionAttributeHeaderProxyDeviceID    = "X-Hanzo Team-Session-Attribute-Device-Id"
+	SessionAttributeHeaderProxyDeviceID    = "X-Mattermost-Session-Attribute-Device-Id"
 )
 
 const (
