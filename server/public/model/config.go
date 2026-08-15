@@ -77,10 +77,10 @@ const (
 	// because the server then retries a dead host and the operator reads the
 	// failures as a push bug rather than as push being unconfigured. Set it when a
 	// relay exists.
-	GenericNotificationServer    = ""
-	MmSupportAdvisorAddress      = "support@hanzo.ai"
-	FullNotification             = "full"
-	IdLoadedNotification         = "id_loaded"
+	GenericNotificationServer = ""
+	MmSupportAdvisorAddress   = "support@hanzo.ai"
+	FullNotification          = "full"
+	IdLoadedNotification      = "id_loaded"
 
 	DirectMessageAny  = "any"
 	DirectMessageTeam = "team"
