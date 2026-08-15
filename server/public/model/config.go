@@ -72,7 +72,12 @@ const (
 
 	GenericNoChannelNotification = "generic_no_channel"
 	GenericNotification          = "generic"
-	GenericNotificationServer    = "https://push.hanzo.team"
+	// Empty on purpose. Upstream defaults this to their hosted relay; pointing it
+	// at a Hanzo hostname that does not resolve is worse than pointing at nothing,
+	// because the server then retries a dead host and the operator reads the
+	// failures as a push bug rather than as push being unconfigured. Set it when a
+	// relay exists.
+	GenericNotificationServer    = ""
 	MmSupportAdvisorAddress      = "support@hanzo.ai"
 	FullNotification             = "full"
 	IdLoadedNotification         = "id_loaded"
