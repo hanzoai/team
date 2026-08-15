@@ -91,6 +91,13 @@ COPY --from=tools /etc/mime.types /etc/
 COPY --from=tools --chown=2000:2000 /etc/ssl/certs /etc/ssl/certs
 # The writable tree first, then the read-only content into it.
 COPY --from=tools --chown=2000:2000 /hanzo /hanzo
+# Its own layer, and its own instruction, deliberately. Carried inside the copy
+# above it was invisible to the cache: that instruction's text does not mention
+# the bundle, so a registry cache entry recorded before the bundle existed still
+# matched, and three builds in a row published an image whose /hanzo layer was
+# 32kB of empty directories. Naming the path here means the key changes when the
+# path does.
+COPY --from=tools --chown=2000:2000 /hanzo/prepackaged_plugins /hanzo/prepackaged_plugins
 COPY --from=server --chown=2000:2000 /out/ /hanzo/bin/
 COPY --from=webapp --chown=2000:2000 /src/webapp/channels/dist /hanzo/client
 COPY --chown=2000:2000 server/i18n /hanzo/i18n
