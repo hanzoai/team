@@ -5504,7 +5504,7 @@
   "login.forgot": "Forgot your password?",
   "login.get_terms_error": "Unable to load terms of use. If this issue persists, contact your System Administrator.",
   "login.google": "Google",
-  "login.hanzo": "Hanzo",
+  "login.hanzo": "Continue with hanzo.id",
   "login.invalidCredentials": "The email/username or password is invalid.",
   "login.invalidPassword": "Your password is incorrect.",
   "login.ldapCreate": "Enter your AD/LDAP username and password to create an account.",

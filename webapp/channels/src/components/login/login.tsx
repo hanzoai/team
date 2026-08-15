@@ -165,7 +165,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                 id: 'hanzo',
                 url,
                 icon: <BrandMark/>,
-                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Hanzo'}),
+                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Continue with hanzo.id'}),
                 style: {color: HanzoButtonColor, borderColor: HanzoButtonColor},
                 onClick: handleExternalAuth(url, 'hanzo'),
             });
@@ -846,7 +846,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
             return CustomDescriptionText;
         }
 
-        if (!enableBaseLogin && enableExternalSignup) {
+        if (!enableBaseLogin && getExternalLoginOptions().length > 1) {
             return formatMessage({id: 'login.cardtitle.external', defaultMessage: 'Log in with one of the following:'});
         }
 

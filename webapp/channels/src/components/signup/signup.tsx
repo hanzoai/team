@@ -162,7 +162,7 @@ const Signup = ({onCustomizeHeader}: SignupProps) => {
                 id: 'hanzo',
                 url,
                 icon: <BrandMark/>,
-                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Hanzo'}),
+                label: HanzoButtonText || formatMessage({id: 'login.hanzo', defaultMessage: 'Continue with hanzo.id'}),
                 style: {color: HanzoButtonColor, borderColor: HanzoButtonColor},
                 onClick: desktopExternalAuth(url),
             });
