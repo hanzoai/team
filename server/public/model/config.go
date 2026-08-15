@@ -3638,7 +3638,8 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 		s.PluginStates[PluginIdAI] = &PluginState{Enable: true}
 	}
 
-	// Agents talks to Hanzo AI out of the box. The model is "best", the
+	// Agents talks to Hanzo AI out of the box, staffed with the core team. The
+	// model is "best", the
 	// gateway's routing alias, so this default does not go stale as models
 	// come and go. The key is left empty and delivered from KMS.
 	if s.Plugins[PluginIdAI] == nil {
@@ -3653,15 +3654,13 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 						"defaultModel": HanzoAIDefaultModel,
 					},
 				},
-				"bots": []any{
-					map[string]any{
-						"id":          HanzoAIServiceID,
-						"name":        HanzoAIServiceID,
-						"displayName": "Hanzo",
-						"serviceID":   HanzoAIServiceID,
-					},
-				},
-				"defaultBotName": HanzoAIServiceID,
+				// The core team, not a single assistant. A workspace that
+				// starts with one bot named after the vendor is a chat server
+				// with a helper in it; this one starts with colleagues who have
+				// jobs. They are definitions until addressed, so an unused
+				// coworker costs a row.
+				"bots":           coreTeamBots(HanzoAIServiceID),
+				"defaultBotName": CoreTeam[0].Name,
 			},
 		}
 	}
