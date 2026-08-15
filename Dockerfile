@@ -42,43 +42,6 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-instal
 RUN mkdir -p /hanzo/data /hanzo/logs /hanzo/config /hanzo/plugins /hanzo/client/plugins \
   && chown -R 2000:2000 /hanzo
 
-# Agents, the plugin that makes this an AI workspace rather than a chat server.
-#
-# The config enables it (PluginStates["mattermost-ai"] in server/public/model/
-# config.go) and points it at api.hanzo.ai. Without the bundle beside that
-# config the server enables a plugin it does not have: /v1/workspace/plugins/
-# webapp answers [] and there is no AI at all. Upstream fills this directory
-# from `make prepackaged-plugins`; this image builds the binaries directly and
-# never ran make, so the directory shipped empty.
-#
-# The server finds it by walking . .. ../.. from the working directory
-# (utils.CommonBaseSearchPaths), and WORKDIR is /hanzo.
-#
-# Pinned by digest, not just by version: the URL is a third party's host, and a
-# checksum is what makes fetching from one tamper-evident. It is still their
-# availability we depend on at build time — mirroring the artifact to our own
-# store is the follow-up, and this comment is here so that is a decision rather
-# than something nobody noticed.
-ARG AGENTS_VERSION=v2.5.1
-ARG AGENTS_SHA256=d6431e17350d001a715220f038fa7e587d993bda621c2ad9385c9466455f880e
-ADD --checksum=sha256:${AGENTS_SHA256} \
-    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
-    /tmp/agents.tar.gz
-# The signature travels with the bundle. buildPrepackagedPlugin refuses a
-# prepackaged plugin without one -- "Always require signature for prepackaged
-# plugins" -- independently of RequirePluginSignature, which governs plugins an
-# admin uploads. The server verifies it against the publisher key it already
-# carries.
-ARG AGENTS_SIG_SHA256=6ffdbb734f92a26522e62ec3cd7b58f431342935e74dd3c9e3b121cbdde44a18
-ADD --checksum=sha256:${AGENTS_SIG_SHA256} \
-    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
-    /tmp/agents.tar.gz.sig
-RUN mkdir -p /hanzo/prepackaged_plugins \
-  && cp /tmp/agents.tar.gz /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
-  && cp /tmp/agents.tar.gz.sig /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
-  && rm /tmp/agents.tar.gz /tmp/agents.tar.gz.sig \
-  && chown -R 2000:2000 /hanzo/prepackaged_plugins
-
 # Upstream also lifts pdftotext, wvText, wvWare, unrtf and tidy in here for
 # attachment text extraction. They are NOT carried, because on this base they
 # cannot run and shipping a binary that cannot run is not a feature:
@@ -101,18 +64,39 @@ COPY --from=tools /etc/mime.types /etc/
 COPY --from=tools --chown=2000:2000 /etc/ssl/certs /etc/ssl/certs
 # The writable tree first, then the read-only content into it.
 COPY --from=tools --chown=2000:2000 /hanzo /hanzo
-# Its own layer, and its own instruction, deliberately. Carried inside the copy
-# above it was invisible to the cache: that instruction's text does not mention
-# the bundle, so a registry cache entry recorded before the bundle existed still
-# matched, and three builds in a row published an image whose /hanzo layer was
-# 32kB of empty directories. Naming the path here means the key changes when the
-# path does.
-COPY --from=tools --chown=2000:2000 /hanzo/prepackaged_plugins /hanzo/prepackaged_plugins
 COPY --from=server --chown=2000:2000 /out/ /hanzo/bin/
 COPY --from=webapp --chown=2000:2000 /src/webapp/channels/dist /hanzo/client
 COPY --chown=2000:2000 server/i18n /hanzo/i18n
 COPY --chown=2000:2000 server/templates /hanzo/templates
 COPY --chown=2000:2000 server/fonts /hanzo/fonts
+
+# Agents, the plugin that makes this an AI workspace rather than a chat server.
+# The config enables it (PluginStates["mattermost-ai"]) and points it at
+# api.hanzo.ai; without the bundle the server enables a plugin it does not have
+# and /v1/workspace/plugins/webapp answers []. Upstream fills this directory from
+# `make prepackaged-plugins`; this image builds the binaries directly.
+#
+# Fetched HERE, in the final stage, rather than staged and copied across. Twice a
+# cross-stage COPY published an image without the file: the instruction's text
+# names a path and not its contents, so a registry cache entry recorded before
+# the contents existed still matched it, and the layer shipped as it had been.
+# The URL and the checksum are IN these instructions, so changing either changes
+# the key. ADD needs no shell, which distroless does not have.
+#
+# The signature is not optional. buildPrepackagedPlugin refuses a prepackaged
+# plugin without one before reading it, independently of RequirePluginSignature,
+# which governs what an admin uploads. Both are pinned by sha256 because the
+# host is somebody else's, and a checksum is what makes fetching from one
+# tamper-evident; mirroring the artifacts to our own store is the follow-up.
+ARG AGENTS_VERSION=v2.5.1
+ADD --chown=2000:2000 \
+    --checksum=sha256:d6431e17350d001a715220f038fa7e587d993bda621c2ad9385c9466455f880e \
+    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz \
+    /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz
+ADD --chown=2000:2000 \
+    --checksum=sha256:6ffdbb734f92a26522e62ec3cd7b58f431342935e74dd3c9e3b121cbdde44a18 \
+    https://plugins.releases.mattermost.com/release/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig \
+    /hanzo/prepackaged_plugins/mattermost-plugin-agents-${AGENTS_VERSION}.tar.gz.sig
 # NOT chowned: this is the account database, and the account it names must not be
 # able to rewrite it.
 COPY server/build/passwd /etc/passwd
