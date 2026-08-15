@@ -2580,20 +2580,20 @@ func TestConfigServiceSettingsIsValid(t *testing.T) {
 }
 
 func TestConfigDefaultCallsPluginState(t *testing.T) {
-	t.Run("should enable Calls plugin by default on self-hosted", func(t *testing.T) {
+	t.Run("should leave Calls off by default on self-hosted, the bundle is not shipped", func(t *testing.T) {
 		c1 := Config{}
 		c1.SetDefaults()
 
-		assert.True(t, c1.PluginSettings.PluginStates["com.mattermost.calls"].Enable)
+		assert.False(t, c1.PluginSettings.PluginStates["com.mattermost.calls"].Enable)
 	})
 
-	t.Run("should enable Calls plugin by default on Cloud", func(t *testing.T) {
+	t.Run("should leave Calls off by default on Cloud, the bundle is not shipped", func(t *testing.T) {
 		// t.Setenv prevents t.Parallel — env var has no config equivalent
 		t.Setenv("MM_CLOUD_INSTALLATION_ID", "test")
 		c1 := Config{}
 		c1.SetDefaults()
 
-		assert.True(t, c1.PluginSettings.PluginStates["com.mattermost.calls"].Enable)
+		assert.False(t, c1.PluginSettings.PluginStates["com.mattermost.calls"].Enable)
 	})
 
 	t.Run("should not re-enable Calls plugin after it has been disabled", func(t *testing.T) {

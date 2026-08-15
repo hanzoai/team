@@ -3624,13 +3624,14 @@ func (s *PluginSettings) SetDefaults(ls LogSettings) {
 	}
 
 	if s.PluginStates[PluginIdCalls] == nil {
-		// Enable the calls plugin by default
-		s.PluginStates[PluginIdCalls] = &PluginState{Enable: true}
+		// The image carries no calls bundle, and enabling a plugin that is not
+		// there lists it as on in the System Console while it can never start.
+		s.PluginStates[PluginIdCalls] = &PluginState{Enable: false}
 	}
 
 	if s.PluginStates[PluginIdPlaybooks] == nil {
-		// Enable the playbooks plugin by default
-		s.PluginStates[PluginIdPlaybooks] = &PluginState{Enable: true}
+		// No playbooks bundle either. Same reason.
+		s.PluginStates[PluginIdPlaybooks] = &PluginState{Enable: false}
 	}
 
 	if s.PluginStates[PluginIdAI] == nil {
