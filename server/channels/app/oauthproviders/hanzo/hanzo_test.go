@@ -136,6 +136,20 @@ func TestProviderIsSameUser(t *testing.T) {
 	require.True(t, p.IsSameUser(rctx, id("u-1"), id("u-1")))
 	require.False(t, p.IsSameUser(rctx, id("u-1"), id("u-2")))
 	require.False(t, p.IsSameUser(rctx, &model.User{}, id("u-1")), "a nil auth data must never match")
+
+	sub := func(s string) *string { return &s }
+	signingIn := &model.User{AuthService: model.UserAuthServiceHanzo, AuthData: sub("u-9"), Email: "z@hanzo.ai"}
+
+	password := &model.User{Email: "z@hanzo.ai"}
+	require.True(t, p.IsSameUser(rctx, password, signingIn), "an account with a password is the person hanzo.id vouches for")
+
+	strangerAddress := &model.User{Email: "someone@hanzo.ai"}
+	require.False(t, p.IsSameUser(rctx, strangerAddress, signingIn))
+
+	require.False(t, p.IsSameUser(rctx, &model.User{}, &model.User{}), "two blank users are not each other")
+
+	otherSubject := &model.User{AuthService: model.UserAuthServiceHanzo, AuthData: sub("u-8"), Email: "z@hanzo.ai"}
+	require.False(t, p.IsSameUser(rctx, otherSubject, signingIn), "an identity never moves from one subject to another")
 }
 
 func TestProviderReadsTheHanzoSlot(t *testing.T) {

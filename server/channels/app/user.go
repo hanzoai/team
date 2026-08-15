@@ -454,17 +454,24 @@ func (a *App) CreateOAuthUser(rctx request.CTX, service string, userData io.Read
 
 	userByEmail, _ := a.ch.srv.userService.GetUserByEmail(user.Email)
 	if userByEmail != nil {
-		if userByEmail.AuthService == "" {
-			return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": model.UserAuthServiceEmail}, "email="+user.Email, http.StatusBadRequest)
-		}
+		// The provider decides whether the account already holding this address
+		// is the person signing in. When it is, the account takes on the new
+		// identity: writing auth data drops the password with it, so the
+		// account is left with the one way in it just proved.
 		if provider.IsSameUser(rctx, userByEmail, user) {
 			if _, err = a.Srv().Store().User().UpdateAuthData(userByEmail.Id, user.AuthService, user.AuthData, "", false); err != nil {
 				// if the user is not updated, write a warning to the log, but don't prevent user login
 				rctx.Logger().Warn("Error attempting to update user AuthData", mlog.Err(err))
 			}
+			userByEmail.AuthService = user.AuthService
+			userByEmail.AuthData = user.AuthData
 			return userByEmail, nil
 		}
-		return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": userByEmail.AuthService}, "email="+user.Email+" authData="+*user.AuthData, http.StatusBadRequest)
+		auth := userByEmail.AuthService
+		if auth == "" {
+			auth = model.UserAuthServiceEmail
+		}
+		return nil, model.NewAppError("CreateOAuthUser", "api.user.create_oauth_user.already_attached.app_error", map[string]any{"Service": service, "Auth": auth}, "email="+user.Email, http.StatusBadRequest)
 	}
 
 	user.EmailVerified = true
