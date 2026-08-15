@@ -178,7 +178,7 @@ const getDefaultTheme = createSelector('getDefaultTheme', getConfig, (config): T
     }
 
     // If no config.DefaultTheme or value doesn't refer to a valid theme name...
-    return Preferences.THEMES.hanzo;
+    return Preferences.THEMES.hanzoDark;
 });
 
 export const getTheme: (state: GlobalState) => Theme = createShallowSelector(

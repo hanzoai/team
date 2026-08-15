@@ -180,7 +180,7 @@ describe('Selectors.Preferences', () => {
                         },
                     },
                 },
-            } as unknown as GlobalState)).toEqual(Preferences.THEMES.hanzo);
+            } as unknown as GlobalState)).toEqual(Preferences.THEMES.hanzoDark);
         });
 
         it('custom theme', () => {
@@ -544,7 +544,7 @@ describe('Selectors.Preferences', () => {
                         },
                     },
                 },
-            } as unknown as GlobalState).codeTheme).toEqual(Preferences.THEMES.hanzo.codeTheme);
+            } as unknown as GlobalState).codeTheme).toEqual(Preferences.THEMES.hanzoDark.codeTheme);
         });
     });
 
