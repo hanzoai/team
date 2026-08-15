@@ -104,5 +104,15 @@ func (p *Provider) GetUserFromIdToken(_ request.CTX, idToken string) (*model.Use
 }
 
 func (p *Provider) IsSameUser(_ request.CTX, dbUser, oauthUser *model.User) bool {
-	return dbUser.AuthData != nil && oauthUser.AuthData != nil && *dbUser.AuthData == *oauthUser.AuthData
+	if dbUser.AuthData != nil && oauthUser.AuthData != nil && *dbUser.AuthData == *oauthUser.AuthData {
+		return true
+	}
+	// An account already carrying a different subject stays with it: an
+	// identity is never moved from one subject to another.
+	if dbUser.AuthService == model.UserAuthServiceHanzo {
+		return false
+	}
+	// hanzo.id issues every identity here and vouches for the address, so the
+	// account holding it is this user, whatever it signed in with before.
+	return oauthUser.Email != "" && dbUser.Email == oauthUser.Email
 }

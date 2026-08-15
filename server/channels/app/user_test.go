@@ -96,6 +96,24 @@ func TestCreateOAuthUser(t *testing.T) {
 		assert.Equal(t, "e7110007-64be-43d8-9840-4a7e9c26b710", *u.AuthData)
 	})
 
+	t.Run("an account with a password takes on the identity", func(t *testing.T) {
+		existing := th.CreateUser(t)
+
+		iamUser := oauthhanzo.IAMUser{Sub: model.NewId(), PreferredUsername: "o" + model.NewId(), Email: existing.Email, Owner: "acme"}
+		js, jsonErr := json.Marshal(iamUser)
+		require.NoError(t, jsonErr)
+
+		user, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceHanzo, bytes.NewReader(js), "", "", nil)
+		require.Nil(t, err, "hanzo.id vouches for the address, so the account holding it signs in")
+		require.Equal(t, existing.Id, user.Id, "the account keeps its history")
+
+		stored, appErr := th.App.GetUser(existing.Id)
+		require.Nil(t, appErr)
+		require.Equal(t, model.UserAuthServiceHanzo, stored.AuthService)
+		require.Equal(t, iamUser.Sub, *stored.AuthData)
+		require.Empty(t, stored.Password, "the password goes with the identity it replaced")
+	})
+
 	t.Run("user creation disabled", func(t *testing.T) {
 		*th.App.Config().TeamSettings.EnableUserCreation = false
 		_, err := th.App.CreateOAuthUser(th.Context, model.UserAuthServiceHanzo, strings.NewReader("{}"), "", "", nil)
