@@ -11,11 +11,16 @@
 # No deploy: here. cd.hanzo.ai runs with selfHeal, so a tag written anywhere but
 # the universe pin is restored away on the next poll; recording it there is the
 # only durable path.
+# oci.hanzo.ai, not ghcr.io: the fleet registry is the native CI/CD home and
+# authenticates through Hanzo IAM, which mints a token scoped to ONE repository
+# per request instead of a long-lived org-wide credential. Publishing here takes
+# GitHub out of the build path -- the source mirror needs no packages scope, so
+# the org package grant and the org-scoped PATs stop being things anyone holds.
 images:
   - name: server
     context: .
     dockerfile: Dockerfile
-    repo: ghcr.io/hanzoteam/server
+    repo: oci.hanzo.ai/hanzoteam/server
 
 # The Go and web app compiles both happen inside the Dockerfile, so a broken
 # tree already fails the image build. This gate covers the two things the image
