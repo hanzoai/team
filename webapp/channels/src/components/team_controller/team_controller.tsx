@@ -65,14 +65,32 @@ function TeamController(props: Props) {
     useEffect(() => {
         InitialLoadingScreen.stop('team_controller');
         DesktopApp.reactAppInitialized();
-        async function fetchAllChannels() {
-            await props.fetchAllMyTeamsChannels();
-            setInitialChannelsLoaded(true);
+
+        // Every team's channels and memberships, so switching teams is instant.
+        // The view being rendered does not need them, so nothing waits here.
+        props.fetchAllMyChannelMembers();
+        props.fetchAllMyTeamsChannels();
+    }, []);
+
+    // What the centre channel needs is the channels of the team it is showing.
+    // Waiting on every team instead made the wait a function of how many teams
+    // you belong to, for data none of which is on screen.
+    useEffect(() => {
+        if (!props.currentTeamId) {
+            return undefined;
         }
 
-        props.fetchAllMyChannelMembers();
-        fetchAllChannels();
-    }, []);
+        let current = true;
+        props.fetchChannelsAndMembers(props.currentTeamId).then(() => {
+            if (current) {
+                setInitialChannelsLoaded(true);
+            }
+        });
+
+        return () => {
+            current = false;
+        };
+    }, [props.currentTeamId]);
 
     useEffect(() => {
         if (props.disableWakeUpReconnectHandler) {

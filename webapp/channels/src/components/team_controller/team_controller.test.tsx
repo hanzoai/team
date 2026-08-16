@@ -10,6 +10,13 @@ import {TestHelper} from 'utils/test_helper';
 
 import TeamController from './team_controller';
 
+jest.mock('components/channel_layout/channel_controller', () => ({
+    __esModule: true,
+    default: ({shouldRenderCenterChannel}: {shouldRenderCenterChannel: boolean}) => (
+        <div data-testid={shouldRenderCenterChannel ? 'centre-channel' : 'centre-channel-waiting'}/>
+    ),
+}));
+
 jest.mock('components/async_load', () => ({
     makeAsyncComponent: () => () => null,
     makeAsyncPluggableComponent: () => ({pluggableName}: {pluggableName: string}) => (
@@ -58,7 +65,7 @@ function baseProps(currentTeamId: string): ComponentProps<typeof TeamController>
         mfaRequired: false,
         disableRefetchingOnBrowserFocus: false,
         disableWakeUpReconnectHandler: true,
-        fetchChannelsAndMembers: jest.fn(),
+        fetchChannelsAndMembers: jest.fn().mockResolvedValue({data: []}),
         fetchAllMyTeamsChannels: jest.fn().mockResolvedValue({data: []}),
         fetchAllMyChannelMembers: jest.fn(),
         markAsReadOnFocus: jest.fn(),
@@ -110,5 +117,38 @@ describe('TeamController — team-scoped products', () => {
         await act(async () => {});
 
         expect(screen.getByTestId('pluggable-Product')).toBeInTheDocument();
+    });
+});
+
+describe('TeamController — what the centre channel waits for', () => {
+    function renderWith(props: ComponentProps<typeof TeamController>) {
+        return renderWithContext(
+            <MemoryRouter initialEntries={['/myteam/channels/town-square']}>
+                <Route path='/:team'>
+                    <TeamController {...props}/>
+                </Route>
+            </MemoryRouter>,
+        );
+    }
+
+    it('shows the centre channel once the current team is in, even while other teams are still loading', async () => {
+        const props = baseProps('team_id_1');
+        props.fetchAllMyTeamsChannels = jest.fn().mockReturnValue(new Promise(() => {}));
+
+        renderWith(props);
+        await act(async () => {});
+
+        expect(props.fetchChannelsAndMembers).toHaveBeenCalledWith('team_id_1');
+        expect(screen.getByTestId('centre-channel')).toBeInTheDocument();
+    });
+
+    it('withholds the centre channel until the current team is in', async () => {
+        const props = baseProps('team_id_1');
+        props.fetchChannelsAndMembers = jest.fn().mockReturnValue(new Promise(() => {}));
+
+        renderWith(props);
+        await act(async () => {});
+
+        expect(screen.getByTestId('centre-channel-waiting')).toBeInTheDocument();
     });
 });
