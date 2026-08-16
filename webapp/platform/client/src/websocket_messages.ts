@@ -1,26 +1,26 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ChannelBookmarkWithFileInfo, UpdateChannelBookmarkResponse} from '@mattermost/types/channel_bookmarks';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import type {Channel, ChannelJoinRequest, ChannelMembership, ChannelType} from '@mattermost/types/channels';
-import type {Limits, Subscription} from '@mattermost/types/cloud';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {Draft} from '@mattermost/types/drafts';
-import type {CustomEmoji} from '@mattermost/types/emojis';
-import type {Group, GroupMember as GroupMemberType} from '@mattermost/types/groups';
-import type {OpenDialogRequest} from '@mattermost/types/integrations';
-import type {Job} from '@mattermost/types/jobs';
-import type {PluginManifest} from '@mattermost/types/plugins';
-import type {Post, PostAcknowledgement as PostAcknowledgementType} from '@mattermost/types/posts';
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {PropertyField, PropertyValue} from '@mattermost/types/properties';
-import type {Reaction} from '@mattermost/types/reactions';
-import type {Role} from '@mattermost/types/roles';
-import type {ScheduledPost as ScheduledPostType} from '@mattermost/types/schedule_post';
-import type {Team as TeamType, TeamMembership} from '@mattermost/types/teams';
-import type {UserThread} from '@mattermost/types/threads';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ChannelBookmarkWithFileInfo, UpdateChannelBookmarkResponse} from '@hanzoteam/types/channel_bookmarks';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import type {Channel, ChannelJoinRequest, ChannelMembership, ChannelType} from '@hanzoteam/types/channels';
+import type {Limits, Subscription} from '@hanzoteam/types/cloud';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {Draft} from '@hanzoteam/types/drafts';
+import type {CustomEmoji} from '@hanzoteam/types/emojis';
+import type {Group, GroupMember as GroupMemberType} from '@hanzoteam/types/groups';
+import type {OpenDialogRequest} from '@hanzoteam/types/integrations';
+import type {Job} from '@hanzoteam/types/jobs';
+import type {PluginManifest} from '@hanzoteam/types/plugins';
+import type {Post, PostAcknowledgement as PostAcknowledgementType} from '@hanzoteam/types/posts';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {PropertyField, PropertyValue} from '@hanzoteam/types/properties';
+import type {Reaction} from '@hanzoteam/types/reactions';
+import type {Role} from '@hanzoteam/types/roles';
+import type {ScheduledPost as ScheduledPostType} from '@hanzoteam/types/schedule_post';
+import type {Team as TeamType, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserThread} from '@hanzoteam/types/threads';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import type {WebSocketEvents} from './websocket_events';
 import type {BaseWebSocketMessage, JsonEncodedValue} from './websocket_message';
