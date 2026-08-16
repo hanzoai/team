@@ -1,6 +1,6 @@
 {
   "name": "@mattermost/shared",
-  "version": "11.11.0",
+  "version": "11.11.1",
   "description": "Shared components and utilities for use by the Mattermost web app and its plugins",
   "keywords": [
     "mattermost"
@@ -84,7 +84,7 @@
     "@testing-library/react": "^16",
     "react": ">=17",
     "react-intl": ">=7",
-    "typescript": "^4.3.0 || ^5.0.0"
+    "typescript": ">=4.3"
   },
   "peerDependenciesMeta": {
     "@testing-library/react": {
