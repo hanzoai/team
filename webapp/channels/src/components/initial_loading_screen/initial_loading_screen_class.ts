@@ -5,8 +5,7 @@ import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
 
 import {Measure, measureAndReport} from 'utils/performance_telemetry';
 
-const ANIMATION_CLASS_FOR_MATTERMOST_LOGO_HIDE = 'LoadingAnimation__compass-shrink';
-const ANIMATION_CLASS_FOR_COMPLETE_LOADER_HIDE = 'LoadingAnimation__shrink';
+const HIDE_ANIMATION = 'LoadingAnimation__shrink';
 
 const DESTROY_DELAY_AFTER_ANIMATION_END = 1000;
 const MINIMUM_LOADING_TIME = 1000; // Minimum time to show the loading screen (in ms)
@@ -55,7 +54,7 @@ export class InitialLoadingScreenClass {
             return;
         }
 
-        if (event.animationName === ANIMATION_CLASS_FOR_MATTERMOST_LOGO_HIDE || event.animationName === ANIMATION_CLASS_FOR_COMPLETE_LOADER_HIDE) {
+        if (event.animationName === HIDE_ANIMATION) {
             if (!this.isLoading) {
                 this.loadingAnimationElement.className = STATIC_CLASS_FOR_ANIMATION;
 
