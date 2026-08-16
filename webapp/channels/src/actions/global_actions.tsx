@@ -286,10 +286,34 @@ export function emitUserLoggedOutEvent(redirectTo = '/', shouldSignalLogout = tr
 
         clearUserCookie();
 
-        getHistory().push(redirectTo);
+        leave(redirectTo);
     }).catch(() => {
-        getHistory().push(redirectTo);
+        leave(redirectTo);
     });
+}
+
+/**
+ * Finish signing out — here, and at whoever issued the identity.
+ *
+ * Everything above forgets the session on this machine. That is half of it: the
+ * issuer's own session is untouched, and while it stands the next visit is
+ * admitted with no prompt, so the person appears never to have left. Ending it
+ * has to be a NAVIGATION — the issuer keeps its session in a `SameSite=Lax`
+ * cookie, which a browser presents on a top-level navigation and withholds from
+ * anything a script sends, so a request would arrive with no session attached,
+ * find nothing to end, and answer 200 all the same.
+ *
+ * A route push cannot do it either, and a route push is what this used to do:
+ * the document never leaves, so the issuer is never reached. When this server
+ * owns the session there is nobody to tell, and the push is the whole story.
+ */
+function leave(redirectTo: string) {
+    const endsSessionAt = getConfig(getState()).EndsSessionAt;
+    if (endsSessionAt) {
+        window.location.href = endsSessionAt;
+        return;
+    }
+    getHistory().push(redirectTo);
 }
 
 export function toggleSideBarRightMenuAction(): ThunkActionFunc<void> {

@@ -320,6 +320,9 @@ func GenerateLimitedClientConfig(c *model.Config, telemetryID string, license *m
 	props["EnableSignUpWithHanzo"] = strconv.FormatBool(*c.HanzoSettings.Enable)
 	props["HanzoButtonColor"] = *c.HanzoSettings.ButtonColor
 	props["HanzoButtonText"] = *c.HanzoSettings.ButtonText
+	// Where signing out has to finish. Empty when this server owns the session,
+	// so the client reads one string and needs no second condition.
+	props["EndsSessionAt"] = c.EndsSessionAt()
 	props["EnableSignInWithUsername"] = strconv.FormatBool(c.AcceptsPassword() && *c.EmailSettings.EnableSignInWithUsername)
 
 	props["EmailLoginButtonColor"] = *c.EmailSettings.LoginButtonColor

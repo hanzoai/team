@@ -119,6 +119,12 @@ export type ClientConfig = {
     EnableUserCreation: string;
     EnableUserDeactivation: string;
     EnableUserTypingMessages: string;
+
+    /**
+     * Where signing out has to finish — the issuer's end-session address, or ""
+     * when this server owns the session and there is nobody else to tell.
+     */
+    EndsSessionAt: string;
     EnforceMultifactorAuthentication: string;
     ExperimentalEnableAuthenticationTransfer: string;
     ExperimentalEnableAutomaticReplies: string;

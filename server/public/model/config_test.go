@@ -3518,3 +3518,29 @@ func TestElasticsearchSettingsSetDefaults(t *testing.T) {
 		require.False(t, *s.EnableSearchPublicChannelsWithoutMembership)
 	})
 }
+
+func TestEndsSessionAt(t *testing.T) {
+	t.Run("nowhere to go when this server owns the session", func(t *testing.T) {
+		cfg := Config{}
+		cfg.SetDefaults()
+		cfg.HanzoSettings.Enable = NewPointer(false)
+		require.Empty(t, cfg.EndsSessionAt(), "no issuer means nobody to tell")
+	})
+
+	t.Run("the issuer's logout sits beside its authorize", func(t *testing.T) {
+		cfg := Config{}
+		cfg.SetDefaults()
+		cfg.HanzoSettings.Enable = NewPointer(true)
+		require.Equal(t, HanzoSettingsDefaultLogoutEndpoint, cfg.EndsSessionAt())
+	})
+
+	t.Run("a brand's own issuer is followed, not the default", func(t *testing.T) {
+		// The address is derived, so pointing this server at another hanzo.id
+		// carries the logout with it and the two cannot be set to disagree.
+		cfg := Config{}
+		cfg.SetDefaults()
+		cfg.HanzoSettings.Enable = NewPointer(true)
+		cfg.HanzoSettings.AuthEndpoint = NewPointer("https://lux.id/v1/iam/oauth/authorize")
+		require.Equal(t, "https://lux.id/v1/iam/oauth/logout", cfg.EndsSessionAt())
+	})
+}
