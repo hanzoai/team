@@ -14,6 +14,9 @@
         "outDir": "./lib",
         "rootDir": "./src",
         "composite": true,
+        // See tsconfig.json: the emitted .d.ts must name @hanzoteam/types,
+        // because that is what a consumer of the published package installs.
+        "paths": {"@hanzoteam/types/*": ["../types/src/*"]},
     },
     "include": [
         "./src/**/*"
