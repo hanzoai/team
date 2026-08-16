@@ -153,6 +153,7 @@ const (
 	HanzoSettingsDefaultAuthEndpoint    = "https://hanzo.id/v1/iam/oauth/authorize"
 	HanzoSettingsDefaultTokenEndpoint   = "https://hanzo.id/v1/iam/oauth/token"
 	HanzoSettingsDefaultUserAPIEndpoint = "https://hanzo.id/v1/iam/oauth/userinfo"
+	HanzoSettingsDefaultLogoutEndpoint  = "https://hanzo.id/v1/iam/oauth/logout"
 
 	TeamSettingsDefaultSiteName              = "Hanzo Team"
 	TeamSettingsDefaultMaxUsersPerTeam       = 50
@@ -4279,6 +4280,31 @@ func (o *Config) GetSSOService(service string) *SSOSettings {
 // id resolves to one and the client is never offered the form.
 func (o *Config) AcceptsPassword() bool {
 	return !*o.HanzoSettings.Enable
+}
+
+// EndsSessionAt is where signing out has to FINISH, and "" when this server owns
+// the session itself.
+//
+// Signing out is two things: forget the session here, and end it at whoever
+// issued the identity. Doing only the first is what makes sign-out look broken —
+// the cookie goes, the issuer's session does not, and the next visit is admitted
+// with no prompt at all, so the person appears never to have left.
+//
+// The address is DERIVED from the authorize endpoint rather than configured
+// beside it, for the same reason AcceptsPassword derives from one switch: the
+// issuer's authorize and logout live side by side, so a brand pointing this
+// server at its own hanzo.id gets the matching logout for free and the two
+// cannot be set to disagree. A second knob here would only be a way to get it
+// wrong.
+func (o *Config) EndsSessionAt() string {
+	if !*o.HanzoSettings.Enable {
+		return ""
+	}
+	auth := *o.HanzoSettings.AuthEndpoint
+	if i := strings.LastIndex(auth, "/"); i > 0 {
+		return auth[:i+1] + "logout"
+	}
+	return HanzoSettingsDefaultLogoutEndpoint
 }
 
 func ConfigFromJSON(data io.Reader) *Config {
