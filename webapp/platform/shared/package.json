@@ -80,7 +80,7 @@
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
-    "@mattermost/types": "11.11.0",
+    "@mattermost/types": "^11.11.0",
     "@testing-library/react": "^16",
     "react": ">=17",
     "react-intl": ">=7",
