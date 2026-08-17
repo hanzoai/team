@@ -835,6 +835,25 @@ func (a *App) LoginByOAuth(rctx request.CTX, service string, userData io.Reader,
 		}
 	}
 
+	// Authority is read fresh on every sign-in, for the same reason the org claim
+	// above is: a stored role is a copy, and a copy of an answer someone else owns
+	// drifts the moment they change it. Without this an operator demoted in IAM
+	// keeps administering this server forever, which is the failure that matters --
+	// the grant is revocable at the issuer and nowhere else.
+	//
+	// A provider that says nothing about roles leaves the stored value alone, so
+	// this is inert for every provider but ours.
+	if authUser.Roles != "" && authUser.Roles != user.Roles {
+		if updated, err := a.UpdateUserRolesWithUser(rctx, user, authUser.Roles, true); err != nil {
+			// Refusing to demote the last admin is the store protecting the server
+			// from being left with none; it is not a reason to fail the sign-in.
+			rctx.Logger().Warn("Failed to apply the roles IAM states for this user",
+				mlog.String("user_id", user.Id), mlog.String("roles", authUser.Roles), mlog.Err(err))
+		} else {
+			user = updated
+		}
+	}
+
 	return user, nil
 }
 
