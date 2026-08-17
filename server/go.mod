@@ -1,6 +1,6 @@
 module github.com/mattermost/mattermost/server/v8
 
-go 1.26.4
+go 1.26.5
 
 require (
 	code.sajari.com/docconv/v2 v2.0.0-pre.4
@@ -35,6 +35,7 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hako/durafmt v0.0.0-20210608085754-5c1018a4e16b
+	github.com/hanzoai/authz v1.10.30
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/hashicorp/memberlist v0.5.4
 	github.com/icrowley/fake v0.0.0-20240710202011-f797eb4a99c0

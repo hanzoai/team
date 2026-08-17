@@ -9,6 +9,8 @@ import (
 	"io"
 	"strings"
 
+	"github.com/hanzoai/authz"
+
 	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/mattermost/mattermost/server/public/shared/request"
@@ -32,6 +34,12 @@ type IAMUser struct {
 	// display name, which is presentational only -- never key on it.
 	Owner        string `json:"owner"`
 	Organization string `json:"organization"`
+
+	// Orgs is the set of orgs this person is a member of, home org first. Owner
+	// says where they are ANCHORED; this says what they may act in, and the two
+	// are different questions -- an operator is anchored in an ordinary brand org
+	// and holds the reserved org alongside it.
+	Orgs []authz.Membership `json:"orgs"`
 }
 
 func init() {
@@ -80,6 +88,19 @@ func userFromIAMUser(logger mlog.LoggerIFace, iu *IAMUser, settings *model.SSOSe
 	user.AuthService = model.UserAuthServiceHanzo
 
 	user.SetProp(model.UserPropOrg, iu.Owner)
+
+	// Who administers this server is IAM's answer, and it is asked through IAM's
+	// own predicate rather than restated here: platform authority is membership of
+	// the reserved org, held at any position, which is not the same question as
+	// which org someone is anchored in. Re-deriving it locally is how a check that
+	// reads correctly comes to disagree with the issuer.
+	//
+	// An identity carrying no membership set -- a machine token, or an IAM that
+	// does not send `orgs` -- is not an operator, so this fails closed.
+	user.Roles = model.SystemUserRoleId
+	if (&authz.Claims{Orgs: iu.Orgs}).PlatformSudo() {
+		user.Roles = model.SystemAdminRoleId + " " + model.SystemUserRoleId
+	}
 
 	return user
 }
