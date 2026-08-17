@@ -3,15 +3,15 @@
 
 /* eslint-disable max-lines */
 
-import type {AccessControlPolicy, CELExpressionError, AccessControlTestResult, AccessControlPoliciesResult, AccessControlPolicyChannelsResult, AccessControlVisualAST, AccessControlAttributes, AccessControlPolicyActiveUpdate, PolicySimulationResponse, PolicySimulationByUsersParams} from '@hanzoteam/types/access_control';
-import type {ClusterInfo, AnalyticsRow, SchemaMigration, LogFilterQuery} from '@hanzoteam/types/admin';
-import type {Agent, LLMService} from '@hanzoteam/types/agents';
-import type {AppBinding, AppCallRequest, AppCallResponse} from '@hanzoteam/types/apps';
-import type {Audit} from '@hanzoteam/types/audits';
-import type {UserAutocomplete, AutocompleteSuggestion} from '@hanzoteam/types/autocomplete';
-import type {Bot, BotPatch} from '@hanzoteam/types/bots';
-import type {ChannelBookmark, ChannelBookmarkCreate, ChannelBookmarkPatch, UpdateChannelBookmarkResponse} from '@hanzoteam/types/channel_bookmarks';
-import type {ChannelCategory, OrderedChannelCategories} from '@hanzoteam/types/channel_categories';
+import type {AccessControlPolicy, CELExpressionError, AccessControlTestResult, AccessControlPoliciesResult, AccessControlPolicyChannelsResult, AccessControlVisualAST, AccessControlAttributes, AccessControlPolicyActiveUpdate, PolicySimulationResponse, PolicySimulationByUsersParams} from '@mattermost/types/access_control';
+import type {ClusterInfo, AnalyticsRow, SchemaMigration, LogFilterQuery} from '@mattermost/types/admin';
+import type {Agent, LLMService} from '@mattermost/types/agents';
+import type {AppBinding, AppCallRequest, AppCallResponse} from '@mattermost/types/apps';
+import type {Audit} from '@mattermost/types/audits';
+import type {UserAutocomplete, AutocompleteSuggestion} from '@mattermost/types/autocomplete';
+import type {Bot, BotPatch} from '@mattermost/types/bots';
+import type {ChannelBookmark, ChannelBookmarkCreate, ChannelBookmarkPatch, UpdateChannelBookmarkResponse} from '@mattermost/types/channel_bookmarks';
+import type {ChannelCategory, OrderedChannelCategories} from '@mattermost/types/channel_categories';
 import type {
     Channel,
     ChannelJoinRequest,
@@ -30,9 +30,9 @@ import type {
     ChannelSearchOpts,
     GetChannelJoinRequestsOptions,
     ServerChannel,
-} from '@hanzoteam/types/channels';
-import type {Options, StatusOK, ClientResponse, FetchPaginatedThreadOptions, OptsSignalExt} from '@hanzoteam/types/client4';
-import {LogLevel} from '@hanzoteam/types/client4';
+} from '@mattermost/types/channels';
+import type {Options, StatusOK, ClientResponse, FetchPaginatedThreadOptions, OptsSignalExt} from '@mattermost/types/client4';
+import {LogLevel} from '@mattermost/types/client4';
 import type {
     Address,
     Product,
@@ -45,8 +45,8 @@ import type {
     ValidBusinessEmail,
     Installation,
     PreviewModalContentData,
-} from '@hanzoteam/types/cloud';
-import type {Compliance} from '@hanzoteam/types/compliance';
+} from '@mattermost/types/cloud';
+import type {Compliance} from '@mattermost/types/compliance';
 import type {
     ClientConfig,
     ClientLicense,
@@ -59,19 +59,19 @@ import type {
     AllowedIPRange,
     FetchIPResponse,
     LdapSettings, ContentFlaggingSettings,
-} from '@hanzoteam/types/config';
-import type {ContentFlaggingConfig} from '@hanzoteam/types/content_flagging';
+} from '@mattermost/types/config';
+import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
 import type {
     DataRetentionCustomPolicies,
     CreateDataRetentionCustomPolicy,
     PatchDataRetentionCustomPolicy,
     GetDataRetentionCustomPoliciesRequest,
-} from '@hanzoteam/types/data_retention';
-import type {Draft} from '@hanzoteam/types/drafts';
-import type {CustomEmoji} from '@hanzoteam/types/emojis';
-import type {ServerError} from '@hanzoteam/types/errors';
-import type {FileInfo, FileUploadResponse, FileSearchResults} from '@hanzoteam/types/files';
-import type {SystemSetting} from '@hanzoteam/types/general';
+} from '@mattermost/types/data_retention';
+import type {Draft} from '@mattermost/types/drafts';
+import type {CustomEmoji} from '@mattermost/types/emojis';
+import type {ServerError} from '@mattermost/types/errors';
+import type {FileInfo, FileUploadResponse, FileSearchResults} from '@mattermost/types/files';
+import type {SystemSetting} from '@mattermost/types/general';
 import type {
     Group,
     GroupPatch,
@@ -87,8 +87,8 @@ import type {
     GetGroupsForUserParams,
     GroupStats,
     GroupMember,
-} from '@hanzoteam/types/groups';
-import type {PostActionResponse} from '@hanzoteam/types/integration_actions';
+} from '@mattermost/types/groups';
+import type {PostActionResponse} from '@mattermost/types/integration_actions';
 import type {
     Command,
     CommandArgs,
@@ -100,36 +100,36 @@ import type {
     OutgoingOAuthConnection,
     OutgoingWebhook,
     SubmitDialogResponse,
-} from '@hanzoteam/types/integrations';
-import type {Job, JobType, JobTypeBase} from '@hanzoteam/types/jobs';
-import type {ServerLimits} from '@hanzoteam/types/limits';
+} from '@mattermost/types/integrations';
+import type {Job, JobType, JobTypeBase} from '@mattermost/types/jobs';
+import type {ServerLimits} from '@mattermost/types/limits';
 import type {
     MarketplaceApp,
     MarketplacePlugin,
-} from '@hanzoteam/types/marketplace';
-import type {MfaSecret} from '@hanzoteam/types/mfa';
+} from '@mattermost/types/marketplace';
+import type {MfaSecret} from '@mattermost/types/mfa';
 import type {
     ClientPluginManifest,
     PluginManifest,
     PluginsResponse,
     PluginStatus,
-} from '@hanzoteam/types/plugins';
-import type {Post, PostList, PostSearchResults, PostsUsageResponse, TeamsUsageResponse, PaginatedPostList, FilesUsageResponse, PostAcknowledgement, PostAnalytics, PostInfo} from '@hanzoteam/types/posts';
-import type {PreferenceType} from '@hanzoteam/types/preferences';
-import type {ProductNotices} from '@hanzoteam/types/product_notices';
-import type {NameMappedPropertyFields, PropertyField, PropertyValue} from '@hanzoteam/types/properties';
-import type {UserPropertyField, UserPropertyFieldPatch} from '@hanzoteam/types/properties_user';
-import type {Reaction} from '@hanzoteam/types/reactions';
-import type {Recap, CreateRecapRequest, ScheduledRecap, ScheduledRecapInput, RecapLimitStatus} from '@hanzoteam/types/recaps';
-import type {RemoteCluster, RemoteClusterAcceptInvite, RemoteClusterPatch, RemoteClusterWithPassword} from '@hanzoteam/types/remote_clusters';
-import type {UserReport, UserReportFilter, UserReportOptions} from '@hanzoteam/types/reports';
-import type {Role} from '@hanzoteam/types/roles';
-import type {SamlCertificateStatus, SamlMetadataResponse} from '@hanzoteam/types/saml';
-import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
-import type {Scheme} from '@hanzoteam/types/schemes';
-import type {Session} from '@hanzoteam/types/sessions';
-import type {CompleteOnboardingRequest} from '@hanzoteam/types/setup';
-import type {RemoteClusterInfo, SharedChannelRemote} from '@hanzoteam/types/shared_channels';
+} from '@mattermost/types/plugins';
+import type {Post, PostList, PostSearchResults, PostsUsageResponse, TeamsUsageResponse, PaginatedPostList, FilesUsageResponse, PostAcknowledgement, PostAnalytics, PostInfo} from '@mattermost/types/posts';
+import type {PreferenceType} from '@mattermost/types/preferences';
+import type {ProductNotices} from '@mattermost/types/product_notices';
+import type {NameMappedPropertyFields, PropertyField, PropertyValue} from '@mattermost/types/properties';
+import type {UserPropertyField, UserPropertyFieldPatch} from '@mattermost/types/properties_user';
+import type {Reaction} from '@mattermost/types/reactions';
+import type {Recap, CreateRecapRequest, ScheduledRecap, ScheduledRecapInput, RecapLimitStatus} from '@mattermost/types/recaps';
+import type {RemoteCluster, RemoteClusterAcceptInvite, RemoteClusterPatch, RemoteClusterWithPassword} from '@mattermost/types/remote_clusters';
+import type {UserReport, UserReportFilter, UserReportOptions} from '@mattermost/types/reports';
+import type {Role} from '@mattermost/types/roles';
+import type {SamlCertificateStatus, SamlMetadataResponse} from '@mattermost/types/saml';
+import type {ScheduledPost} from '@mattermost/types/schedule_post';
+import type {Scheme} from '@mattermost/types/schemes';
+import type {Session} from '@mattermost/types/sessions';
+import type {CompleteOnboardingRequest} from '@mattermost/types/setup';
+import type {RemoteClusterInfo, SharedChannelRemote} from '@mattermost/types/shared_channels';
 import type {
     GetTeamMembersOpts,
     MemberInviteProfile,
@@ -143,9 +143,9 @@ import type {
     TeamSearchOpts,
     PagedTeamSearchOpts,
     NotPagedTeamSearchOpts,
-} from '@hanzoteam/types/teams';
-import type {TermsOfService} from '@hanzoteam/types/terms_of_service';
-import type {UserThreadList, UserThread, UserThreadWithPost} from '@hanzoteam/types/threads';
+} from '@mattermost/types/teams';
+import type {TermsOfService} from '@mattermost/types/terms_of_service';
+import type {UserThreadList, UserThread, UserThreadWithPost} from '@mattermost/types/threads';
 import type {
     AuthChangeResponse,
     UserAccessToken,
@@ -155,8 +155,8 @@ import type {
     UserStatus,
     GetFilteredUsersStatsOpts,
     UserCustomStatus,
-} from '@hanzoteam/types/users';
-import type {DeepPartial, PartialExcept, RelationOneToOne} from '@hanzoteam/types/utilities';
+} from '@mattermost/types/users';
+import type {DeepPartial, PartialExcept, RelationOneToOne} from '@mattermost/types/utilities';
 
 import {cleanUrlForLogging} from './errors';
 import {buildQueryString} from './helpers';

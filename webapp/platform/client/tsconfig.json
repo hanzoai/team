@@ -15,15 +15,6 @@
         "outDir": "./lib",
         "rootDir": "./src",
         "composite": true,
-        // This package is published as @hanzoteam/client, so its source
-        // imports @hanzoteam/types and its emitted .d.ts say the same —
-        // TypeScript writes a module specifier exactly as authored, and a
-        // declaration naming a package the consumer has not installed makes
-        // every type it carries resolve to `any` on the far side. The sibling
-        // package is still named @mattermost/types in this monorepo, so the
-        // BUILD is pointed at it here; this mapping retires itself when the
-        // monorepo rename lands.
-        "paths": {"@hanzoteam/types/*": ["../types/src/*"]},
     },
     "include": [
         "./src/**/*"
