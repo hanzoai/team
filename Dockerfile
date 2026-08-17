@@ -16,7 +16,7 @@ COPY webapp .
 # then channels. Naming the channels workspace directly would skip the first half.
 RUN npm ci --no-audit --no-fund && npm run build
 
-FROM golang:1.26.4-bookworm AS server
+FROM golang:1.26.6-bookworm AS server
 # Declared, or the expansion below is unset on every build and the server reports
 # its version as the fallback for the life of the image.
 ARG BUILD_NUMBER=dev

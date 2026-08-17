@@ -87,6 +87,36 @@ for (const src of targets) {
     for (const entry of manifest.files ?? []) {
         fs.cpSync(path.join(dir, entry), path.join(stage, entry), {recursive: true});
     }
+    // The same map, read a third time — over the BUILT output. TypeScript writes a
+    // module specifier exactly as authored, so `lib/*.d.ts` names the sibling by the
+    // name it has in this monorepo, and a declaration naming a package the consumer
+    // never installed makes every type it carries resolve to `any` on the far side.
+    //
+    // It is done HERE, to the staged copy, and not in the source: the name a package
+    // is published under does not exist inside this repo, so putting it in source
+    // makes the emitted JS require a module no workspace provides — which type
+    // checking does not catch (paths satisfy tsc and change nothing it emits) and
+    // which fails at bundle time in whatever consumes the workspace. One name in the
+    // tree, one rename at the boundary.
+    for (const [from, to] of Object.entries(OURS)) {
+        const specifier = new RegExp(`(['"])${from.replace('/', '\\/')}(/[^'"]*)?\\1`, 'g');
+        const walk = (p) => {
+            for (const e of fs.readdirSync(p, {withFileTypes: true})) {
+                const full = path.join(p, e.name);
+                if (e.isDirectory()) {
+                    walk(full);
+                } else if (/\.(js|mjs|cjs|d\.ts|ts|map)$/.test(e.name)) {
+                    const before = fs.readFileSync(full, 'utf8');
+                    const after = before.replace(specifier, (_, q, sub) => `${q}${to}${sub ?? ''}${q}`);
+                    if (after !== before) {
+                        fs.writeFileSync(full, after);
+                    }
+                }
+            }
+        };
+        walk(stage);
+    }
+
     // The credential lives in the staging directory and dies with it, so it is
     // never written into the repository or into a shared npm config.
     fs.writeFileSync(
