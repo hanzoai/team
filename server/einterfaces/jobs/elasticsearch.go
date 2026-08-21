@@ -4,7 +4,7 @@
 package jobs
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type ElasticsearchIndexerInterface interface {

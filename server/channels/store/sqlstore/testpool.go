@@ -9,9 +9,9 @@ import (
 
 	"golang.org/x/sync/errgroup"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest"
 )
 
 // TestPool is used to facilitate the efficient (and safe) use of test stores in parallel tests (e.g. in api4, app, sqlstore).

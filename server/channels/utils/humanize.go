@@ -6,7 +6,7 @@ package utils
 import (
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
+	"github.com/hanzoai/team/server/public/shared/i18n"
 )
 
 func JoinList(items []string) string {

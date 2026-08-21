@@ -6,8 +6,8 @@ package utils
 import (
 	"fmt"
 
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	"github.com/mattermost/mattermost/server/v8/channels/utils/fileutils"
+	"github.com/hanzoai/team/server/public/shared/i18n"
+	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
 )
 
 // TranslationsPreInit loads translations from filesystem if they are not

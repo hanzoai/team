@@ -6,8 +6,8 @@ package delete_expired_posts
 import (
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/jobs"
 )
 
 func MakeScheduler(jobServer *jobs.JobServer) *jobs.PeriodicScheduler {

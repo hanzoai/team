@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
 )
 
 // TeamService exposes methods to manipulate teams and their members.

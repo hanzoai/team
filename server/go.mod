@@ -1,4 +1,4 @@
-module github.com/mattermost/mattermost/server/v8
+module github.com/hanzoai/team/server/v8
 
 go 1.26.5
 
@@ -49,7 +49,7 @@ require (
 	github.com/mattermost/ldap v0.0.0-20231116144001-0f480c025956
 	github.com/mattermost/logr/v2 v2.0.22
 	github.com/mattermost/mattermost-plugin-ai v1.14.0
-	github.com/mattermost/mattermost/server/public v0.4.0
+	github.com/hanzoai/team/server/public v0.4.0
 	github.com/mattermost/morph v1.1.0
 	github.com/mattermost/pdf v0.0.0-20260728101013-cd8a834041c4
 	github.com/mattermost/rsc v0.0.0-20160330161541-bbaefb05eaa0
@@ -236,4 +236,6 @@ require (
 )
 
 // See MM-66167, MM-68222 for more details.
+replace github.com/hanzoai/team/server/public => ./public
+
 replace github.com/vmihailenco/msgpack/v5 => github.com/mattermost/msgpack/v5 v5.0.0-20260408165622-cadfad56a815

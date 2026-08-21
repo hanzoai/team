@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/utils/timeutils"
+	"github.com/hanzoai/team/server/public/utils/timeutils"
 )
 
 // SysconsoleAncillaryPermissions maps the non-sysconsole permissions required by each sysconsole view.

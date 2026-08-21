@@ -16,9 +16,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/app"
-	"github.com/mattermost/mattermost/server/v8/config"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/app"
+	"github.com/hanzoai/team/server/v8/config"
 )
 
 func TestGetConfig(t *testing.T) {

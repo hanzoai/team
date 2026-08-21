@@ -21,10 +21,10 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	platform_mocks "github.com/mattermost/mattermost/server/v8/channels/app/platform/mocks"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/i18n"
+	platform_mocks "github.com/hanzoai/team/server/v8/channels/app/platform/mocks"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
 )
 
 func dummyWebsocketHandler(t *testing.T) http.HandlerFunc {

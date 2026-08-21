@@ -28,9 +28,9 @@ import (
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/sas"
 	"github.com/Azure/azure-sdk-for-go/sdk/storage/azblob/service"
 	"github.com/google/uuid"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/httpservice"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/httpservice"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 // azureBlockSize is the chunk size used when staging block blob uploads.

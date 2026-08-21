@@ -11,10 +11,10 @@ import (
 )
 
 const (
-	ServerModulePath = "github.com/mattermost/mattermost/server/v8"
+	ServerModulePath = "github.com/hanzoai/team/server/v8"
 	API4PkgPath      = ServerModulePath + "/channels/api4"
 
-	PublicModulePath = "github.com/mattermost/mattermost/server/public"
+	PublicModulePath = "github.com/hanzoai/team/server/public"
 	ModelPkgPath     = PublicModulePath + "/model"
 
 	AppErrType = "*" + ModelPkgPath + ".AppError"

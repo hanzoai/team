@@ -11,8 +11,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/utils/imgutils"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/utils/imgutils"
 )
 
 func getInfoForBytes(name string, data io.ReadSeeker, size int) (*model.FileInfo, *model.AppError) {

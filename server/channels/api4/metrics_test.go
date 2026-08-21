@@ -8,12 +8,12 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
-	"github.com/mattermost/mattermost/server/v8/channels/app"
-	"github.com/mattermost/mattermost/server/v8/channels/app/platform"
-	"github.com/mattermost/mattermost/server/v8/einterfaces"
-	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin/plugintest/mock"
+	"github.com/hanzoai/team/server/v8/channels/app"
+	"github.com/hanzoai/team/server/v8/channels/app/platform"
+	"github.com/hanzoai/team/server/v8/einterfaces"
+	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 	"github.com/stretchr/testify/require"
 )
 

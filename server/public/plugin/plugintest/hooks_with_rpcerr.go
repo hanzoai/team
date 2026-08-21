@@ -10,8 +10,8 @@
 package plugintest
 
 import (
-	model "github.com/mattermost/mattermost/server/public/model"
-	plugin "github.com/mattermost/mattermost/server/public/plugin"
+	model "github.com/hanzoai/team/server/public/model"
+	plugin "github.com/hanzoai/team/server/public/plugin"
 )
 
 // MessageWillBePostedWithRPCErr provides a mock function with given fields: c, post

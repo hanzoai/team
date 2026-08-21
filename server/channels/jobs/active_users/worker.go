@@ -4,11 +4,11 @@
 package active_users
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/jobs"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	"github.com/mattermost/mattermost/server/v8/einterfaces"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/jobs"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/einterfaces"
 )
 
 func MakeWorker(jobServer *jobs.JobServer, store store.Store, getMetrics func() einterfaces.MetricsInterface) *jobs.SimpleWorker {

@@ -15,9 +15,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin/plugintest/mock"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
 )
 
 func TestGenerateSecret(t *testing.T) {

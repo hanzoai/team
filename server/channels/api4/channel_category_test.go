@@ -14,7 +14,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 func TestCreateCategoryForTeamForUser(t *testing.T) {

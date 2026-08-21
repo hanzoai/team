@@ -7,7 +7,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 func TestClusterDiscoveryService(t *testing.T) {

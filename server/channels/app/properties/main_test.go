@@ -6,7 +6,7 @@ package properties
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
 )
 
 var mainHelper *testlib.MainHelper

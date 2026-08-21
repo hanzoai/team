@@ -7,12 +7,12 @@ package mocks
 import (
 	io "io"
 
-	model "github.com/mattermost/mattermost/server/public/model"
-	i18n "github.com/mattermost/mattermost/server/public/shared/i18n"
-	request "github.com/mattermost/mattermost/server/public/shared/request"
-	email "github.com/mattermost/mattermost/server/v8/channels/app/email"
-	store "github.com/mattermost/mattermost/server/v8/channels/store"
-	templates "github.com/mattermost/mattermost/server/v8/platform/shared/templates"
+	model "github.com/hanzoai/team/server/public/model"
+	i18n "github.com/hanzoai/team/server/public/shared/i18n"
+	request "github.com/hanzoai/team/server/public/shared/request"
+	email "github.com/hanzoai/team/server/v8/channels/app/email"
+	store "github.com/hanzoai/team/server/v8/channels/store"
+	templates "github.com/hanzoai/team/server/v8/platform/shared/templates"
 	mock "github.com/stretchr/testify/mock"
 )
 

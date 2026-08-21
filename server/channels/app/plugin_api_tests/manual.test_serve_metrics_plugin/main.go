@@ -6,8 +6,8 @@ package main
 import (
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 type Plugin struct {

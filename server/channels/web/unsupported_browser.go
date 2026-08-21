@@ -8,8 +8,8 @@ import (
 
 	"github.com/avct/uasurfer"
 
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/platform/shared/templates"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/platform/shared/templates"
 )
 
 // MattermostApp describes downloads for the Hanzo Team App

@@ -4,7 +4,7 @@
 package sqlstore
 
 import (
-	"github.com/mattermost/mattermost/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/channels/store"
 )
 
 // SqlSessionAttributeStore is a no-op SessionAttributeStore: session

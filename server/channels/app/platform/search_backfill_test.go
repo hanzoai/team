@@ -8,9 +8,9 @@ import (
 
 	"github.com/stretchr/testify/mock"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest/mocks"
-	searchenginemocks "github.com/mattermost/mattermost/server/v8/platform/services/searchengine/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
+	searchenginemocks "github.com/hanzoai/team/server/v8/platform/services/searchengine/mocks"
 )
 
 func TestBackfillPostsChannelType(t *testing.T) {

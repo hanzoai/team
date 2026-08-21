@@ -12,7 +12,7 @@ import (
 
 	"code.sajari.com/docconv/v2"
 
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/v8/channels/utils"
 )
 
 type documentExtractor struct{}

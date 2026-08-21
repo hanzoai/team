@@ -11,8 +11,8 @@ import (
 	"strconv"
 
 	"github.com/mattermost/logr/v2"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/einterfaces"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/einterfaces"
 )
 
 const (

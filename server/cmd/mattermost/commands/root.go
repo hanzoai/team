@@ -6,7 +6,7 @@ package commands
 import (
 	"os"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 	"github.com/spf13/cobra"
 )
 

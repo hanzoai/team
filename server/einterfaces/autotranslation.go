@@ -6,8 +6,8 @@ package einterfaces
 import (
 	"context"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	ejobs "github.com/mattermost/mattermost/server/v8/einterfaces/jobs"
+	"github.com/hanzoai/team/server/public/model"
+	ejobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
 )
 
 // AutoTranslationInterface defines the enterprise advanced auto-translation functionality.

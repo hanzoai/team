@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/utils"
+	"github.com/hanzoai/team/server/public/utils"
 )
 
 const (

@@ -9,10 +9,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 	"github.com/spf13/viper"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 )
 
 func (s *MmctlUnitTestSuite) TestRolesListPlain() {

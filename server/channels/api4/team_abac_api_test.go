@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 )
 
 // enableTeamABAC turns on the license + config the team ABAC paths require and

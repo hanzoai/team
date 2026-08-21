@@ -4,7 +4,7 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/pluginapi"
+	"github.com/hanzoai/team/server/public/pluginapi"
 )
 
 // GetPluginURL returns a url like siteURL/plugins/pluginID based on the information from the client.

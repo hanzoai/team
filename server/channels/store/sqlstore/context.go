@@ -6,8 +6,8 @@ package sqlstore
 import (
 	"context"
 
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/channels/store"
 )
 
 // WithMaster adds the context value that master DB should be selected for this request.

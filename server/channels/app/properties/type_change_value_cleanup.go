@@ -4,9 +4,9 @@
 package properties
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/request"
 )
 
 // TypeChangeValueCleanupHook deletes a field's dependent property values when

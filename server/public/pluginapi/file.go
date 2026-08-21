@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"io"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
 )
 
 // FileService exposes methods to manipulate files, most often as post attachments.

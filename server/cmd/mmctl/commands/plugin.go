@@ -8,8 +8,8 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/client"
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/pkg/errors"

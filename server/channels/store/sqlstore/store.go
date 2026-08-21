@@ -14,7 +14,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	sqlUtils "github.com/mattermost/mattermost/server/public/utils/sql"
+	sqlUtils "github.com/hanzoai/team/server/public/utils/sql"
 
 	sq "github.com/mattermost/squirrel"
 
@@ -24,11 +24,11 @@ import (
 	"github.com/mattermost/morph/models"
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/db"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	"github.com/mattermost/mattermost/server/v8/einterfaces"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/db"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/einterfaces"
 )
 
 type migrationDirection string
@@ -125,7 +125,7 @@ type SqlStoreStores struct {
 
 type SqlStore struct {
 	// rrCounter and srCounter should be kept first.
-	// See https://github.com/mattermost/mattermost/server/v8/channels/pull/7281
+	// See https://github.com/hanzoai/team/server/v8/channels/pull/7281
 	rrCounter int64
 	srCounter int64
 

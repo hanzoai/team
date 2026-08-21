@@ -7,7 +7,7 @@ import (
 	"archive/zip"
 	"encoding/json"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // Import Data Models

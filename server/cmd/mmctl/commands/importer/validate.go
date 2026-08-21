@@ -25,12 +25,12 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/app/imports"
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/app/imports"
+	"github.com/hanzoai/team/server/v8/channels/utils"
 	_ "golang.org/x/image/webp" // image decoder
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 )
 
 const (

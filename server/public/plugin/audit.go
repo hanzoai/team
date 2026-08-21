@@ -6,7 +6,7 @@ package plugin
 import (
 	"encoding/json"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // MakeAuditRecord creates a new audit record with basic information for plugin use.

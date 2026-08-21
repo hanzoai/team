@@ -5,7 +5,7 @@ package commands
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 )
 
 func (s *MmctlUnitTestSuite) TestVersionCmd() {

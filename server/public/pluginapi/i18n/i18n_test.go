@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/require"
 	"golang.org/x/text/language"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
-	"github.com/mattermost/mattermost/server/public/pluginapi/i18n"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/plugin/plugintest"
+	"github.com/hanzoai/team/server/public/pluginapi/i18n"
 )
 
 //nolint:govet

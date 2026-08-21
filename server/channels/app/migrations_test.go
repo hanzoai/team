@@ -10,7 +10,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 	"github.com/stretchr/testify/require"
 )
 

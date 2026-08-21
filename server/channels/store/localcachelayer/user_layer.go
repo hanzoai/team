@@ -8,12 +8,12 @@ import (
 	"sort"
 	"sync"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	"github.com/mattermost/mattermost/server/v8/channels/store/sqlstore"
-	"github.com/mattermost/mattermost/server/v8/platform/services/cache"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
+	"github.com/hanzoai/team/server/v8/platform/services/cache"
 )
 
 type LocalCacheUserStore struct {

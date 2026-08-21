@@ -6,9 +6,9 @@ package app
 import (
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/platform/services/searchengine"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/platform/services/searchengine"
 )
 
 func (a *App) TestElasticsearch(rctx request.CTX, cfg *model.Config) *model.AppError {

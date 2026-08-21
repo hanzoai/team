@@ -25,13 +25,13 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
-	"github.com/mattermost/mattermost/server/public/plugin/utils"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/channels/utils/testutils"
-	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/plugin/plugintest"
+	"github.com/hanzoai/team/server/public/plugin/utils"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/channels/utils/testutils"
+	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 )
 
 func SetAppEnvironmentWithPlugins(t *testing.T, pluginCode []string, app *App, apiFunc func(*model.Manifest) plugin.API) (func(), []string, []error) {
@@ -89,8 +89,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -129,8 +129,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -170,8 +170,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -213,8 +213,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -257,8 +257,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -279,8 +279,8 @@ func TestHookMessageWillBePosted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -325,8 +325,8 @@ func TestHookMessageHasBeenPosted(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -364,8 +364,8 @@ func TestHookMessageWillBeUpdated(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -413,8 +413,8 @@ func TestHookMessageHasBeenUpdated(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -461,8 +461,8 @@ func TestHookMessageHasBeenDeleted(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -508,8 +508,8 @@ func TestHookFileWillBeUploaded(t *testing.T) {
 
 			import (
 				"io"
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -553,8 +553,8 @@ func TestHookFileWillBeUploaded(t *testing.T) {
 			import (
 				"fmt"
 				"io"
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -602,8 +602,8 @@ func TestHookFileWillBeUploaded(t *testing.T) {
 
 			import (
 				"io"
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -660,8 +660,8 @@ func TestHookFileWillBeUploaded(t *testing.T) {
 				"io"
 				"fmt"
 				"bytes"
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -733,8 +733,8 @@ func TestHookFileWillBeUploaded(t *testing.T) {
 
 			import (
 				"io"
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -778,8 +778,8 @@ func TestUserWillLogIn_Blocked(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -819,8 +819,8 @@ func TestUserWillLogInIn_Passed(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -861,8 +861,8 @@ func TestUserHasLoggedIn(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -904,8 +904,8 @@ func TestUserHasBeenDeactivated(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -953,8 +953,8 @@ func TestUserHasBeenCreated(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1001,7 +1001,7 @@ func TestErrorString(t *testing.T) {
 			import (
 				"errors"
 
-				"github.com/mattermost/mattermost/server/public/plugin"
+				"github.com/hanzoai/team/server/public/plugin"
 			)
 
 			type MyPlugin struct {
@@ -1031,8 +1031,8 @@ func TestErrorString(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -1084,8 +1084,8 @@ func TestHookContext(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1128,8 +1128,8 @@ func TestActiveHooks(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/model"
-				"github.com/mattermost/mattermost/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
 			)
 
 			type MyPlugin struct {
@@ -1213,8 +1213,8 @@ func TestHookMetrics(t *testing.T) {
 	package main
 
 	import (
-		"github.com/mattermost/mattermost/server/public/model"
-		"github.com/mattermost/mattermost/server/public/plugin"
+		"github.com/hanzoai/team/server/public/model"
+		"github.com/hanzoai/team/server/public/plugin"
 	)
 
 	type MyPlugin struct {
@@ -1300,8 +1300,8 @@ func TestHookReactionHasBeenAdded(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1346,8 +1346,8 @@ func TestHookReactionHasBeenRemoved(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1391,7 +1391,7 @@ func TestHookRunDataRetention(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -1436,7 +1436,7 @@ func TestHookOnSendDailyTelemetry(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -1480,8 +1480,8 @@ func TestHookOnCloudLimitsUpdated(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/model"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -1861,8 +1861,8 @@ func TestHookMessagesWillBeConsumed(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1909,8 +1909,8 @@ func TestApplyPostWillBeConsumedHook(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -1977,8 +1977,8 @@ func TestApplyPostWillBeConsumedHookIgnoresReplacementWithDifferentID(t *testing
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2017,8 +2017,8 @@ func TestHookMessagesWillBeConsumedWithContext(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -2080,8 +2080,8 @@ func TestUpdatePostFiresConsumeHook(t *testing.T) {
 		import (
 			"strings"
 
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2214,8 +2214,8 @@ func TestUpdatePostConsumeHooksWithOpenGraphMetadata(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2262,8 +2262,8 @@ func TestUpdatePostConsumeHooksWithOpenGraphMetadata(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2288,8 +2288,8 @@ func TestUpdatePostConsumeHooksWithOpenGraphMetadata(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2345,8 +2345,8 @@ func TestApplyPostsWillBeConsumedHookPreservesMetadataAndChainsReplacements(t *t
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2375,8 +2375,8 @@ func TestApplyPostsWillBeConsumedHookPreservesMetadataAndChainsReplacements(t *t
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -2463,8 +2463,8 @@ func TestHookPreferencesHaveChanged(t *testing.T) {
 			import (
 				"fmt"
 
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -2527,8 +2527,8 @@ func TestHookPreferencesHaveChanged(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			const (
@@ -2610,8 +2610,8 @@ func TestChannelHasBeenCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			const (
@@ -2751,7 +2751,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -2836,7 +2836,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -2859,7 +2859,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -2938,7 +2938,7 @@ func TestHookServeMetrics(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -3006,7 +3006,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -3072,7 +3072,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -3136,7 +3136,7 @@ func TestHookServeMetrics(t *testing.T) {
 
 		import (
 			"net/http"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -3202,8 +3202,8 @@ func TestUserHasJoinedChannel(t *testing.T) {
 			import (
 				"fmt"
 
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3393,8 +3393,8 @@ func TestHookChannelMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3430,8 +3430,8 @@ func TestHookChannelMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3469,8 +3469,8 @@ func TestHookChannelMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3510,8 +3510,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3546,8 +3546,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3583,8 +3583,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3620,8 +3620,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3654,8 +3654,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3700,8 +3700,8 @@ func TestHookTeamMemberWillBeAdded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3741,8 +3741,8 @@ func TestHookChannelWillBeArchived(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3779,8 +3779,8 @@ func TestHookChannelWillBeArchived(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3820,8 +3820,8 @@ func TestHookRPCChannelWillBeUpdated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3859,8 +3859,8 @@ func TestHookRPCChannelWillBeUpdated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3901,8 +3901,8 @@ func TestHookRPCChannelWillBeRestored(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -3941,8 +3941,8 @@ func TestHookRPCScheduledPostWillBeCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -3987,8 +3987,8 @@ func TestHookRPCScheduledPostWillBeCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4039,8 +4039,8 @@ func TestHookRPCDraftWillBeUpserted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4081,8 +4081,8 @@ func TestHookRPCDraftWillBeUpserted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4128,7 +4128,7 @@ func TestRegisterChannelGuardIdempotent(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -4174,7 +4174,7 @@ func TestRegisterChannelGuardMultiClaim(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -4237,7 +4237,7 @@ func TestChannelGuardSurvivesArchive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -4283,8 +4283,8 @@ func TestHookChannelWillBeUpdated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4326,8 +4326,8 @@ func TestHookChannelWillBeUpdated(t *testing.T) {
 			import (
 				"strings"
 
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4368,8 +4368,8 @@ func TestHookChannelWillBeUpdated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4415,8 +4415,8 @@ func TestHookChannelWillBeUpdated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4465,8 +4465,8 @@ func TestHookChannelWillBeRestored(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4507,8 +4507,8 @@ func TestHookChannelWillBeRestored(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4550,8 +4550,8 @@ func TestHookScheduledPostWillBeCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4591,8 +4591,8 @@ func TestHookScheduledPostWillBeCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4647,8 +4647,8 @@ func TestHookScheduledPostWillBeCreated(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4689,8 +4689,8 @@ func TestHookDraftWillBeUpserted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4735,8 +4735,8 @@ func TestHookDraftWillBeUpserted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4780,8 +4780,8 @@ func TestHookDraftWillBeUpserted(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -4853,8 +4853,8 @@ func TestChannelGuardBlocksPostWhenPluginInactive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -4934,8 +4934,8 @@ func TestChannelGuardBlocksPostUpdateWhenPluginInactive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5016,8 +5016,8 @@ func TestChannelGuardPostUpdateRejectionReasonPreserved(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5070,8 +5070,8 @@ func TestChannelGuardBlocksMemberAddWhenPluginInactive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5141,8 +5141,8 @@ func TestChannelGuardBlocksChannelUpdateWhenPluginInactive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5210,8 +5210,8 @@ func TestChannelGuardRejectsTypeMutationFromPlugin(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5274,8 +5274,8 @@ func TestChannelGuardAllowsNonTypeMutationFromPlugin(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5328,8 +5328,8 @@ func TestChannelGuardBlocksRestoreWhenPluginInactive(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -5418,8 +5418,8 @@ func TestChannelGuardWrapperRejectsOnHookRPCError(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type PanicPlugin struct {
@@ -5643,8 +5643,8 @@ func TestChannelGuardAllowsAllOpsWhenPluginActiveNoRejection(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type AllowPlugin struct {
@@ -5760,8 +5760,8 @@ func TestChannelGuardFiresHookWhenPluginActive(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type RejectPlugin struct {
@@ -5926,8 +5926,8 @@ package main
 
 import (
 	"os"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type GuardPlugin struct {
@@ -5951,8 +5951,8 @@ package main
 
 import (
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type NPlugin struct {
@@ -5975,8 +5975,8 @@ func main() {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type NRejectPlugin struct {
@@ -6075,8 +6075,8 @@ func TestChannelGuardMultiClaimAllMustBeActive(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type AllowPlugin struct {
@@ -6193,8 +6193,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type G1Plugin struct {
@@ -6231,8 +6231,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type G1RejectPlugin struct {
@@ -6266,8 +6266,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type G2Plugin struct {
@@ -6304,8 +6304,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type G3Plugin struct {
@@ -6339,8 +6339,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type NPlugin struct {
@@ -6604,8 +6604,8 @@ func TestChannelGuardFailsClosedWhenPluginsDisabled(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -6660,8 +6660,8 @@ func TestChannelGuardAllowByDefaultForUnimplementedHook(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type PartialPlugin struct {
@@ -6745,8 +6745,8 @@ func TestChannelGuardRejectsTypeMutationFromPhaseAPlugin(t *testing.T) {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type GuardPlugin struct {
@@ -6768,8 +6768,8 @@ func main() {
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type MutatorPlugin struct {

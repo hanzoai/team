@@ -15,9 +15,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/utils"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin/utils"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 func TestRunMultiPluginHookWithRPCErr(t *testing.T) {
@@ -39,8 +39,8 @@ func TestRunMultiPluginHookWithRPCErr(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/model"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type MyPlugin struct {
@@ -162,8 +162,8 @@ func TestShutdownNoRPCErrorsDuringConcurrentHookDispatch(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/model"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type FastPlugin struct{ plugin.MattermostPlugin }
@@ -181,8 +181,8 @@ func TestShutdownNoRPCErrorsDuringConcurrentHookDispatch(t *testing.T) {
 		import (
 			"sync"
 
-			"github.com/mattermost/mattermost/server/public/model"
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoai/team/server/public/model"
+			"github.com/hanzoai/team/server/public/plugin"
 		)
 
 		type SlowPlugin struct {

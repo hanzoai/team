@@ -6,7 +6,7 @@ package app
 import (
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 func (a *App) SetAIBridgeTestHelperConfig(config *model.AIBridgeTestHelperConfig) *model.AppError {

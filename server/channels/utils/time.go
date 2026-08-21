@@ -8,8 +8,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/i18n"
 )
 
 func MillisFromTime(t time.Time) int64 {

@@ -6,7 +6,7 @@ package hashers
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/v8/channels/app/password/phcparser"
+	"github.com/hanzoai/team/server/v8/channels/app/password/phcparser"
 	"github.com/stretchr/testify/require"
 )
 

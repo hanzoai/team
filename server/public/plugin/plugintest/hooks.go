@@ -9,8 +9,8 @@ import (
 	http "net/http"
 
 	saml2 "github.com/mattermost/gosaml2"
-	model "github.com/mattermost/mattermost/server/public/model"
-	plugin "github.com/mattermost/mattermost/server/public/plugin"
+	model "github.com/hanzoai/team/server/public/model"
+	plugin "github.com/hanzoai/team/server/public/plugin"
 	mock "github.com/stretchr/testify/mock"
 )
 

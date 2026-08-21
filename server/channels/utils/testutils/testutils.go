@@ -14,10 +14,10 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/v8/channels/utils"
 	"github.com/stretchr/testify/assert"
 
-	"github.com/mattermost/mattermost/server/v8/channels/utils/fileutils"
+	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
 )
 
 // CollectTWithLogf adds Logf to assert.CollectT to make this pattern possible:

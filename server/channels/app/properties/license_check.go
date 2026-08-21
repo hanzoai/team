@@ -6,8 +6,8 @@ package properties
 import (
 	"errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/request"
 )
 
 var ErrLicenseRequired = errors.New("license_error: an Enterprise license is required")

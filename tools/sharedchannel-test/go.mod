@@ -2,7 +2,7 @@ module github.com/mattermost/mattermost/tools/sharedchannel-test
 
 go 1.26.4
 
-require github.com/mattermost/mattermost/server/public v0.4.0
+require github.com/hanzoai/team/server/public v0.4.0
 
 require (
 	github.com/Masterminds/semver/v3 v3.5.0 // indirect
@@ -50,4 +50,4 @@ require (
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
 
-replace github.com/mattermost/mattermost/server/public => ../../server/public
+replace github.com/hanzoai/team/server/public => ../../server/public

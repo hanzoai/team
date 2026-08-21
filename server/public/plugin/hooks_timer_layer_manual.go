@@ -10,7 +10,7 @@ package plugin
 import (
 	timePkg "time"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // MessageWillBePostedWithRPCErr wraps the underlying implementation's MessageWillBePostedWithRPCErr

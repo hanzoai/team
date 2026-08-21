@@ -13,8 +13,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/platform/services/sharedchannel"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/platform/services/sharedchannel"
 )
 
 // setupTestEnvironment sets up a common test environment for shared channel metadata tests

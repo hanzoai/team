@@ -17,11 +17,11 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/markdown"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
-	"github.com/mattermost/mattermost/server/v8/config"
-	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/markdown"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest"
+	"github.com/hanzoai/team/server/v8/config"
+	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 )
 
 // A copy of validTestLicense from channels/utils/license_test.go

@@ -3,7 +3,7 @@ package poster
 import (
 	"fmt"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 type defaultPoster struct {

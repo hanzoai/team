@@ -9,8 +9,8 @@ import (
 
 	"golang.org/x/oauth2"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/pluginapi"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/pluginapi"
 )
 
 func (o *oAuther) oauth2Connect(w http.ResponseWriter, r *http.Request) {

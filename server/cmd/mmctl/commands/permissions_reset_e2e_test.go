@@ -6,10 +6,10 @@ package commands
 import (
 	"github.com/spf13/cobra"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/client"
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 func (s *MmctlE2ETestSuite) TestResetPermissionsCmd() {

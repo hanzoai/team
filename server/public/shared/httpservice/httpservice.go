@@ -12,8 +12,8 @@ import (
 	"time"
 	"unicode"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
 )
 
 // HTTPService wraps the functionality for making http requests to provide some improvements to the default client

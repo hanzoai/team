@@ -11,9 +11,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/v8/channels/utils"
 )
 
 const maxSAMLResponseSize = 2 * 1024 * 1024 // 2MB

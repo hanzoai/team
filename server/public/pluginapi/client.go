@@ -2,7 +2,7 @@ package pluginapi
 
 import (
 	"github.com/Masterminds/semver/v3"
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoai/team/server/public/plugin"
 	"github.com/pkg/errors"
 )
 

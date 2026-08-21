@@ -10,7 +10,7 @@ import (
 	"path/filepath"
 	"sync"
 
-	"github.com/mattermost/mattermost/server/v8/channels/utils/fileutils"
+	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
 )
 
 // Container represents a set of templates that can be render

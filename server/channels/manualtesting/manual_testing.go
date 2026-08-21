@@ -13,13 +13,13 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/app"
-	"github.com/mattermost/mattermost/server/v8/channels/app/slashcommands"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
-	"github.com/mattermost/mattermost/server/v8/channels/web"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/app"
+	"github.com/hanzoai/team/server/v8/channels/app/slashcommands"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/v8/channels/web"
 )
 
 // TestEnvironment is a helper struct used for tests in manualtesting.

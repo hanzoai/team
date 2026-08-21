@@ -17,7 +17,7 @@ import (
 	"github.com/mattermost/go-i18n/i18n"
 	"github.com/mattermost/go-i18n/i18n/bundle"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 // mut is used to protect other global variables from concurrent access.

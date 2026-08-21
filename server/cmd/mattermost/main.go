@@ -6,11 +6,11 @@ package main
 import (
 	"os"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mattermost/commands"
+	"github.com/hanzoai/team/server/v8/cmd/mattermost/commands"
 	// Import and register app layer slash commands
-	_ "github.com/mattermost/mattermost/server/v8/channels/app/slashcommands"
+	_ "github.com/hanzoai/team/server/v8/channels/app/slashcommands"
 	// Plugins
-	_ "github.com/mattermost/mattermost/server/v8/channels/app/oauthproviders/hanzo"
+	_ "github.com/hanzoai/team/server/v8/channels/app/oauthproviders/hanzo"
 )
 
 func main() {

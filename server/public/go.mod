@@ -1,4 +1,4 @@
-module github.com/mattermost/mattermost/server/public
+module github.com/hanzoai/team/server/public
 
 go 1.26.4
 

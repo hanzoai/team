@@ -1,7 +1,7 @@
 package pluginapi
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // IsEnterpriseLicensedOrDevelopment returns true when the server is licensed with any Hanzo Team

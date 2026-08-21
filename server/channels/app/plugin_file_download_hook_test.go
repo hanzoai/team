@@ -10,9 +10,9 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/plugin/plugintest"
 )
 
 func TestHookFileWillBeDownloaded(t *testing.T) {
@@ -37,8 +37,8 @@ func TestHookFileWillBeDownloaded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -91,8 +91,8 @@ func TestHookFileWillBeDownloaded(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -154,8 +154,8 @@ func TestHookFileWillBeDownloaded(t *testing.T) {
 			`
 			package main
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 			type MyPlugin struct {
 				plugin.MattermostPlugin
@@ -172,8 +172,8 @@ func TestHookFileWillBeDownloaded(t *testing.T) {
 			`
 			package main
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 			type MyPlugin struct {
 				plugin.MattermostPlugin
@@ -250,8 +250,8 @@ func TestHookFileWillBeDownloadedHeadRequests(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -305,8 +305,8 @@ func TestHookFileWillBeDownloadedHeadRequests(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -364,8 +364,8 @@ func TestHookFileWillBeDownloadedHeadRequests(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -422,8 +422,8 @@ func TestHookFileWillBeDownloadedHeadRequests(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -482,8 +482,8 @@ func TestHookFileWillBeDownloadedHeadRequests(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {

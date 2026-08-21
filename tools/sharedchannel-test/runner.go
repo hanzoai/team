@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 // TestResult tracks the outcome of a single test case.

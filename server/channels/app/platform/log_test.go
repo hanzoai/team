@@ -10,10 +10,10 @@ import (
 	"path"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
-	"github.com/mattermost/mattermost/server/v8/config"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/config"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

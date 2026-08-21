@@ -6,7 +6,7 @@ package properties
 import (
 	"fmt"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // RegisterBuiltinGroups registers a set of property groups at startup

@@ -9,8 +9,8 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
 )
 
 var (

@@ -7,7 +7,7 @@ package plugintest
 import (
 	driver "database/sql/driver"
 
-	plugin "github.com/mattermost/mattermost/server/public/plugin"
+	plugin "github.com/hanzoai/team/server/public/plugin"
 	mock "github.com/stretchr/testify/mock"
 )
 

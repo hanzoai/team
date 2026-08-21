@@ -7,7 +7,7 @@ import (
 	"os"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 	"github.com/stretchr/testify/assert"
 )
 

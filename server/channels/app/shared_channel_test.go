@@ -21,13 +21,13 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/utils"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	"github.com/mattermost/mattermost/server/v8/channels/utils/fileutils"
-	"github.com/mattermost/mattermost/server/v8/platform/services/remotecluster"
-	"github.com/mattermost/mattermost/server/v8/platform/services/sharedchannel"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/plugin/utils"
+	"github.com/hanzoai/team/server/public/shared/i18n"
+	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoai/team/server/v8/platform/services/remotecluster"
+	"github.com/hanzoai/team/server/v8/platform/services/sharedchannel"
 )
 
 func setupSharedChannels(tb testing.TB) *TestHelper {

@@ -15,7 +15,7 @@ import (
 
 	"github.com/mattermost/pdf"
 
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/v8/channels/utils"
 )
 
 type pdfExtractor struct{}

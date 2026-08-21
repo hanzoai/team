@@ -7,13 +7,13 @@ import (
 	"database/sql"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/shared/driver"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/mattermost/mattermost/server/v8/channels/app/plugin_api_tests"
-	"github.com/mattermost/mattermost/server/v8/channels/store/sqlstore"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/shared/driver"
+	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/hanzoai/team/server/v8/channels/app/plugin_api_tests"
+	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest"
 )
 
 type MyPlugin struct {

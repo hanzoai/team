@@ -3,9 +3,9 @@ package admincclogger
 import (
 	"fmt"
 
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/bot/logger"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/bot/poster"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/common"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/bot/logger"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/bot/poster"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/common"
 )
 
 type adminCCLogger struct {

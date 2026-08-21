@@ -9,8 +9,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 // ServerManager handles building, starting, and stopping Mattermost server instances.
@@ -76,7 +76,7 @@ func (sm *ServerManager) build(ctx context.Context) error {
 
 	cmd := exec.CommandContext(ctx, "go", "build",
 		"-tags", "enterprise",
-		"-ldflags", `-X "github.com/mattermost/mattermost/server/public/model.BuildEnterpriseReady=true"`,
+		"-ldflags", `-X "github.com/hanzoai/team/server/public/model.BuildEnterpriseReady=true"`,
 		"-o", sm.binary,
 		"./cmd/mattermost",
 	)

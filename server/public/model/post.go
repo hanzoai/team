@@ -19,8 +19,8 @@ import (
 	"unicode/utf8"
 
 	"github.com/hashicorp/go-multierror"
-	"github.com/mattermost/mattermost/server/public/shared/markdown"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/markdown"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 type PostContextKey string

@@ -8,7 +8,7 @@ import (
 	"maps"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/shared/markdown"
+	"github.com/hanzoai/team/server/public/shared/markdown"
 )
 
 func appendHumanReadableInteractiveStrings(o *Post, out []string) []string {

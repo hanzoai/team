@@ -5,11 +5,11 @@
 package sharedchannel
 
 import (
-	model "github.com/mattermost/mattermost/server/public/model"
-	mlog "github.com/mattermost/mattermost/server/public/shared/mlog"
-	store "github.com/mattermost/mattermost/server/v8/channels/store"
-	einterfaces "github.com/mattermost/mattermost/server/v8/einterfaces"
-	remotecluster "github.com/mattermost/mattermost/server/v8/platform/services/remotecluster"
+	model "github.com/hanzoai/team/server/public/model"
+	mlog "github.com/hanzoai/team/server/public/shared/mlog"
+	store "github.com/hanzoai/team/server/v8/channels/store"
+	einterfaces "github.com/hanzoai/team/server/v8/einterfaces"
+	remotecluster "github.com/hanzoai/team/server/v8/platform/services/remotecluster"
 	mock "github.com/stretchr/testify/mock"
 )
 

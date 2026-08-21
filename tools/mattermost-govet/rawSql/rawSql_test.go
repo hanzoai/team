@@ -12,5 +12,5 @@ import (
 func TestAll(t *testing.T) {
 	// The analyzer only runs on the sqlstore package with full path
 	testdata := analysistest.TestData()
-	analysistest.Run(t, testdata, Analyzer, "github.com/mattermost/mattermost/server/v8/channels/store/sqlstore")
+	analysistest.Run(t, testdata, Analyzer, "github.com/hanzoai/team/server/v8/channels/store/sqlstore")
 }

@@ -8,8 +8,8 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/request"
 )
 
 func (a *App) GetPriorityForPost(postId string) (*model.PostPriority, *model.AppError) {

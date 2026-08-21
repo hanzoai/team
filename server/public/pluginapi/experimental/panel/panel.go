@@ -3,11 +3,11 @@ package panel
 import (
 	"errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/bot/logger"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/bot/poster"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/common"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/panel/settings"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/bot/logger"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/bot/poster"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/common"
+	"github.com/hanzoai/team/server/public/pluginapi/experimental/panel/settings"
 )
 
 type Panel interface {

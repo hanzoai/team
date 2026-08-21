@@ -8,8 +8,8 @@ package commands
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/v8/channels/api4"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/channels/api4"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
 )
 
 func TestMain(m *testing.M) {

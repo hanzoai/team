@@ -7,8 +7,8 @@ import (
 	"context"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	app "github.com/mattermost/mattermost/server/v8/channels/app"
+	"github.com/hanzoai/team/server/public/model"
+	app "github.com/hanzoai/team/server/v8/channels/app"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )

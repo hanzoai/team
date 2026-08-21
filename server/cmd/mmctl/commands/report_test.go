@@ -8,11 +8,11 @@ package commands
 import (
 	"context"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 )
 
 func (s *MmctlUnitTestSuite) TestReportPostsCmdF() {

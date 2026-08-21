@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/channels/store"
 )
 
 const (

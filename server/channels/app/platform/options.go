@@ -8,14 +8,14 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	"github.com/mattermost/mattermost/server/v8/channels/store/localcachelayer"
-	"github.com/mattermost/mattermost/server/v8/channels/store/sqlstore"
-	"github.com/mattermost/mattermost/server/v8/config"
-	"github.com/mattermost/mattermost/server/v8/einterfaces"
-	"github.com/mattermost/mattermost/server/v8/platform/shared/filestore"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoai/team/server/v8/channels/store/localcachelayer"
+	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
+	"github.com/hanzoai/team/server/v8/config"
+	"github.com/hanzoai/team/server/v8/einterfaces"
+	"github.com/hanzoai/team/server/v8/platform/shared/filestore"
 )
 
 type Option func(ps *PlatformService) error

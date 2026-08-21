@@ -6,7 +6,7 @@ package commands
 import (
 	"os"
 
-	"github.com/mattermost/mattermost/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 
 	"github.com/spf13/cobra"
 )

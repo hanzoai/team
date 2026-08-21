@@ -6,7 +6,7 @@ package platform
 import (
 	"time"
 
-	"github.com/mattermost/mattermost/server/v8/platform/services/cache"
+	"github.com/hanzoai/team/server/v8/platform/services/cache"
 )
 
 const LinkCacheSize = 10000

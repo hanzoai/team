@@ -6,12 +6,12 @@ package app
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/v8/einterfaces/mocks"
+	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 )
 
 // createTestPolicyHierarchy creates a parent policy and child channel policies in the real store,

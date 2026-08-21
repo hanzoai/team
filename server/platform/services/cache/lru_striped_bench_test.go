@@ -12,7 +12,7 @@ import (
 	"github.com/cespare/xxhash/v2"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/v8/platform/services/cache"
+	"github.com/hanzoai/team/server/v8/platform/services/cache"
 )
 
 const (

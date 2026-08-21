@@ -11,9 +11,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	_ "github.com/mattermost/mattermost/server/v8/channels/app/slashcommands"
+	_ "github.com/hanzoai/team/server/v8/channels/app/slashcommands"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 func TestEchoCommand(t *testing.T) {

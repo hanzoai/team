@@ -14,17 +14,17 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/v8/channels/app/imports"
-	"github.com/mattermost/mattermost/server/v8/channels/utils"
-	"github.com/mattermost/mattermost/server/v8/channels/utils/fileutils"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/v8/channels/app/imports"
+	"github.com/hanzoai/team/server/v8/channels/utils"
+	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
 )
 
 func TestReactionsOfPost(t *testing.T) {

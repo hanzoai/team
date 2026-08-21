@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/mattermost/mattermost/server/public/utils/timeutils"
+	"github.com/hanzoai/team/server/public/utils/timeutils"
 )
 
 const (

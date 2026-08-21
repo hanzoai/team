@@ -4,7 +4,7 @@
 package poster
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // Poster defines an entity that can post DMs and Ephemerals and update and delete those posts

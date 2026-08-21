@@ -4,7 +4,7 @@
 package a
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // Valid: err variable with error type

@@ -7,7 +7,7 @@ import (
 	"errors"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 )
 
 // ErrKeyNotFound is the error when the given key is not found

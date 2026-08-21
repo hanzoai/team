@@ -4,7 +4,7 @@
 package sqlstore
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoai/team/server/public/model"
 	"github.com/pkg/errors"
 )
 

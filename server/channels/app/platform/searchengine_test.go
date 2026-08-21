@@ -15,13 +15,13 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	storemocks "github.com/mattermost/mattermost/server/v8/channels/store/storetest/mocks"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
-	"github.com/mattermost/mattermost/server/v8/platform/services/searchengine"
-	searchenginemocks "github.com/mattermost/mattermost/server/v8/platform/services/searchengine/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/shared/request"
+	storemocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/platform/services/searchengine"
+	searchenginemocks "github.com/hanzoai/team/server/v8/platform/services/searchengine/mocks"
 )
 
 // overrideWatcherTimings sets all watcher durations to fast values for testing

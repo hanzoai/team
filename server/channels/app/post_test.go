@@ -18,14 +18,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/store"
-	storemocks "github.com/mattermost/mattermost/server/v8/channels/store/storetest/mocks"
-	"github.com/mattermost/mattermost/server/v8/channels/testlib"
-	"github.com/mattermost/mattermost/server/v8/platform/services/imageproxy"
-	"github.com/mattermost/mattermost/server/v8/platform/services/searchengine/mocks"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin/plugintest/mock"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/store"
+	storemocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoai/team/server/v8/channels/testlib"
+	"github.com/hanzoai/team/server/v8/platform/services/imageproxy"
+	"github.com/hanzoai/team/server/v8/platform/services/searchengine/mocks"
 )
 
 func enableBoRFeature(th *TestHelper) {
@@ -76,8 +76,8 @@ func TestCreatePostDeduplicate(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 			)
 
 			type MyPlugin struct {
@@ -132,8 +132,8 @@ func TestCreatePostDeduplicate(t *testing.T) {
 			package main
 
 			import (
-				"github.com/mattermost/mattermost/server/public/plugin"
-				"github.com/mattermost/mattermost/server/public/model"
+				"github.com/hanzoai/team/server/public/plugin"
+				"github.com/hanzoai/team/server/public/model"
 				"time"
 			)
 
@@ -512,8 +512,8 @@ func TestUpdatePostPluginHooks(t *testing.T) {
 				package main
 
 				import (
-					"github.com/mattermost/mattermost/server/public/plugin"
-					"github.com/mattermost/mattermost/server/public/model"
+					"github.com/hanzoai/team/server/public/plugin"
+					"github.com/hanzoai/team/server/public/model"
 				)
 
 				type MyPlugin struct {
@@ -532,8 +532,8 @@ func TestUpdatePostPluginHooks(t *testing.T) {
 				package main
 
 				import (
-					"github.com/mattermost/mattermost/server/public/plugin"
-					"github.com/mattermost/mattermost/server/public/model"
+					"github.com/hanzoai/team/server/public/plugin"
+					"github.com/hanzoai/team/server/public/model"
 				)
 
 				type MyPlugin struct {
@@ -581,8 +581,8 @@ func TestUpdatePostPluginHooks(t *testing.T) {
 				package main
 
 				import (
-					"github.com/mattermost/mattermost/server/public/plugin"
-					"github.com/mattermost/mattermost/server/public/model"
+					"github.com/hanzoai/team/server/public/plugin"
+					"github.com/hanzoai/team/server/public/model"
 				)
 
 				type MyPlugin struct {
@@ -602,8 +602,8 @@ func TestUpdatePostPluginHooks(t *testing.T) {
 				package main
 
 				import (
-					"github.com/mattermost/mattermost/server/public/plugin"
-					"github.com/mattermost/mattermost/server/public/model"
+					"github.com/hanzoai/team/server/public/plugin"
+					"github.com/hanzoai/team/server/public/model"
 				)
 
 				type MyPlugin struct {

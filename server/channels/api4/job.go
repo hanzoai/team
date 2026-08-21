@@ -12,11 +12,11 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/mattermost/mattermost/server/v8/platform/shared/filestore"
+	"github.com/hanzoai/team/server/v8/platform/shared/filestore"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/platform/shared/web"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/platform/shared/web"
 )
 
 func (api *API) InitJob() {

@@ -17,8 +17,8 @@ import (
 
 	"github.com/jmoiron/sqlx"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/v8/channels/store/storetest"
+	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/v8/channels/store/storetest"
 	sq "github.com/mattermost/squirrel"
 )
 

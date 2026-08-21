@@ -16,8 +16,8 @@ import (
 
 	"github.com/wiggin77/merror"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/shared/mlog"
 )
 
 // defaultMaxInsertParams is a conservative threshold (76% of PostgreSQL's

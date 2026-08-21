@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/mattermost/mattermost/server/v8/channels/app/imaging"
+	"github.com/hanzoai/team/server/v8/channels/app/imaging"
 )
 
 func checkImageResolutionLimit(w, h int, maxRes int64) error {

@@ -1,8 +1,8 @@
 package cluster_test
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/pluginapi/cluster"
+	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/hanzoai/team/server/public/pluginapi/cluster"
 )
 
 //nolint:staticcheck

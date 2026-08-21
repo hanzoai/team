@@ -11,8 +11,8 @@ import (
 	"github.com/goccy/go-yaml"
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoai/team/server/public/model"
+	"github.com/hanzoai/team/server/public/plugin"
 )
 
 // SystemService exposes methods to query system properties.

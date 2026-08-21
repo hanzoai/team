@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-const pluginPackagePath = "github.com/mattermost/mattermost/server/public/plugin"
+const pluginPackagePath = "github.com/hanzoai/team/server/public/plugin"
 
 type result struct {
 	Warnings []string

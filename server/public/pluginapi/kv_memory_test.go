@@ -12,7 +12,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/pluginapi"
+	"github.com/hanzoai/team/server/public/pluginapi"
 )
 
 // kvStore is used to check that KVService and MemoryStore implement the same interface.
