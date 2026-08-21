@@ -77,3 +77,16 @@ exclude (
 	github.com/dyatlov/go-opengraph v0.0.0-20210112100619-dae8665a5b09
 	github.com/willf/bitset v1.2.0
 )
+
+// The decoder's allocation limit is dead code upstream. decode_slice.go:104 reads
+// `d.flags&disableAllocLimitFlag != 1`, and that flag is the 4th bit of a `1 << iota`
+// block — value 8 — so the test is never true and the 1e6-element clamp below it can
+// never fire. Line 52 of the same file gets it right with `!= 0`, which is how you can
+// tell it is a typo rather than a decision. The fork corrects it and adds the matching
+// clamps to decode_map.go, on exactly the `map[string]any` path.
+//
+// This module needs the replace in its OWN right: the server module has one, but a
+// replace only governs the module that declares it, and this one is imported directly
+// by other code (tools/sharedchannel-test pins it by version). Without this line those
+// callers decode attacker-shaped maps with no ceiling.
+replace github.com/vmihailenco/msgpack/v5 => github.com/mattermost/msgpack/v5 v5.0.0-20260408165622-cadfad56a815
