@@ -85,6 +85,42 @@ exports[`components/global/product_switcher should have an active button state w
               />
             </svg>
           </a>
+          <li
+            class="MenuItem MenuItem--with-icon"
+            id="directMessages"
+            role="menuitem"
+          >
+            <button
+              aria-label="Direct messages"
+              class="style--none "
+            >
+              <span
+                class="MenuItem__primary-text"
+              >
+                <span
+                  class="icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    version="1.1"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="text"
+                >
+                  Direct messages
+                </div>
+              </span>
+            </button>
+          </li>
           <a
             class="MenuItem-fJA-dRx CkdyB"
             href="/"
@@ -185,11 +221,6 @@ exports[`components/global/product_switcher should have an active button state w
           </a>
           <div
             data-testid="product-menu-list"
-          />
-          <li
-            class="MenuGroup menu-divider"
-            role="separator"
-            style="display: none;"
           />
         </ul>
       </div>
@@ -361,6 +392,42 @@ exports[`components/global/product_switcher should match snapshot with a registe
               />
             </svg>
           </a>
+          <li
+            class="MenuItem MenuItem--with-icon"
+            id="directMessages"
+            role="menuitem"
+          >
+            <button
+              aria-label="Direct messages"
+              class="style--none "
+            >
+              <span
+                class="MenuItem__primary-text"
+              >
+                <span
+                  class="icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    version="1.1"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="text"
+                >
+                  Direct messages
+                </div>
+              </span>
+            </button>
+          </li>
           <a
             class="MenuItem-fJA-dRx CkdyB"
             href="/"
@@ -494,11 +561,6 @@ exports[`components/global/product_switcher should match snapshot with a registe
           <div
             data-testid="product-menu-list"
           />
-          <li
-            class="MenuGroup menu-divider"
-            role="separator"
-            style="display: none;"
-          />
         </ul>
       </div>
     </div>
@@ -591,6 +653,42 @@ exports[`components/global/product_switcher should match snapshot with product s
               />
             </svg>
           </a>
+          <li
+            class="MenuItem MenuItem--with-icon"
+            id="directMessages"
+            role="menuitem"
+          >
+            <button
+              aria-label="Direct messages"
+              class="style--none "
+            >
+              <span
+                class="MenuItem__primary-text"
+              >
+                <span
+                  class="icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    version="1.1"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="text"
+                >
+                  Direct messages
+                </div>
+              </span>
+            </button>
+          </li>
           <a
             class="MenuItem-fJA-dRx CkdyB"
             href="/"
@@ -691,11 +789,6 @@ exports[`components/global/product_switcher should match snapshot with product s
           </a>
           <div
             data-testid="product-menu-list"
-          />
-          <li
-            class="MenuGroup menu-divider"
-            role="separator"
-            style="display: none;"
           />
         </ul>
       </div>
@@ -828,6 +921,42 @@ exports[`components/global/product_switcher should render once when there are no
               />
             </svg>
           </a>
+          <li
+            class="MenuItem MenuItem--with-icon"
+            id="directMessages"
+            role="menuitem"
+          >
+            <button
+              aria-label="Direct messages"
+              class="style--none "
+            >
+              <span
+                class="MenuItem__primary-text"
+              >
+                <span
+                  class="icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    version="1.1"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="text"
+                >
+                  Direct messages
+                </div>
+              </span>
+            </button>
+          </li>
           <a
             class="MenuItem-fJA-dRx CkdyB"
             href="/"
@@ -928,11 +1057,6 @@ exports[`components/global/product_switcher should render once when there are no
           </a>
           <div
             data-testid="product-menu-list"
-          />
-          <li
-            class="MenuGroup menu-divider"
-            role="separator"
-            style="display: none;"
           />
         </ul>
       </div>
@@ -1026,6 +1150,42 @@ exports[`components/global/product_switcher should render the correct amount of 
               />
             </svg>
           </a>
+          <li
+            class="MenuItem MenuItem--with-icon"
+            id="directMessages"
+            role="menuitem"
+          >
+            <button
+              aria-label="Direct messages"
+              class="style--none "
+            >
+              <span
+                class="MenuItem__primary-text"
+              >
+                <span
+                  class="icon"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    version="1.1"
+                    viewBox="0 0 24 24"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M20,2A2,2 0 0,1 22,4V16A2,2 0 0,1 20,18H6L2,22V4C2,2.89 2.9,2 4,2H20M4,4V17.17L5.17,16H20V4H4M6,7H18V9H6V7M6,11H15V13H6V11Z"
+                    />
+                  </svg>
+                </span>
+                <div
+                  class="text"
+                >
+                  Direct messages
+                </div>
+              </span>
+            </button>
+          </li>
           <a
             class="MenuItem-fJA-dRx CkdyB"
             href="/"
@@ -1126,11 +1286,6 @@ exports[`components/global/product_switcher should render the correct amount of 
           </a>
           <div
             data-testid="product-menu-list"
-          />
-          <li
-            class="MenuGroup menu-divider"
-            role="separator"
-            style="display: none;"
           />
         </ul>
       </div>

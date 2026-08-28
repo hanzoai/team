@@ -137,8 +137,11 @@ describe('components/global/product_switcher', () => {
             state,
         );
 
-        // Channels + 2 products
-        expect(screen.getAllByRole('menuitem')).toHaveLength(3);
+        // The PRODUCTS, counted by the id ProductMenuItem gives each one. Counting
+        // every menuitem counted the fixed rows beside them too — Channels, and
+        // then Direct messages — so the number moved whenever the menu grew a row
+        // that was never a product.
+        expect(container.querySelectorAll('[id^="product-menu-item-"]')).toHaveLength(2);
         expect(container).toMatchSnapshot();
     });
 
@@ -152,11 +155,11 @@ describe('components/global/product_switcher', () => {
         const teamScopedProduct = {...TestHelper.makeProduct('Spaces'), switcherLinkURL: '/spaces', isTeamScoped: true};
         jest.spyOn(productUtils, 'useProducts').mockReturnValue([globalProduct, teamScopedProduct]);
 
-        renderWithContext(<ProductMenu/>, state);
+        const {container} = renderWithContext(<ProductMenu/>, state);
 
         expect(screen.getByText('Boards')).toBeInTheDocument();
         expect(screen.queryByText('Spaces')).not.toBeInTheDocument();
-        expect(screen.getAllByRole('menuitem')).toHaveLength(2);
+        expect(container.querySelectorAll('[id^="product-menu-item-"]')).toHaveLength(1);
     });
 
     it('shows a team-scoped product with a team-prefixed destination when there is a current team', () => {

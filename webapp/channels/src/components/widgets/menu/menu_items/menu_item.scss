@@ -315,41 +315,6 @@
         }
     }
 
-    .MenuStartTrial {
-        display: flex;
-        flex-direction: column;
-        align-items: flex-start;
-        padding: 8px 20px;
-        border-radius: 4px;
-        margin-top: 0;
-        font-size: 12px;
-        line-height: 16px;
-
-        button {
-            padding: 3px 0;
-            border: none;
-            background-color: transparent;
-            color: var(--link-color);
-            font-style: normal;
-            font-weight: 600;
-
-            &:hover {
-                background: transparent;
-                text-decoration: underline;
-            }
-        }
-
-        .editionText {
-            position: relative;
-            width: 100%;
-            a {
-                color: var(--link-color);
-                &:hover {
-                    background: none;
-                }
-            }
-        }
-    }
 }
 
 .SubMenu {

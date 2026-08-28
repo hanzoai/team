@@ -6,13 +6,14 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import styled from 'styled-components';
 
-import {ProductsIcon} from '@mattermost/compass-icons/components';
+import {MessageTextOutlineIcon, ProductsIcon} from '@mattermost/compass-icons/components';
 
 import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
 
 import {setProductMenuSwitcherOpen} from 'actions/views/product_menu';
 import {isSwitcherOpen} from 'selectors/views/product_menu';
 
+import {makeAsyncComponent} from 'components/async_load';
 import {
     OnboardingTaskCategory,
     OnboardingTasksName,
@@ -22,6 +23,7 @@ import {
 import Menu from 'components/widgets/menu/menu';
 import MenuWrapper from 'components/widgets/menu/menu_wrapper';
 
+import {ModalIdentifiers} from 'utils/constants';
 import {getProductSwitcherLinkURL, useCurrentProductId, useProducts, isChannels} from 'utils/products';
 
 import type {GlobalState} from 'types/store';
@@ -32,6 +34,8 @@ import ProductMenuList from './product_menu_list';
 import ProductSwitcherMenuItem from './product_switcher_menu_item';
 
 import {useClickOutsideRef} from '../../hooks';
+
+const MoreDirectChannels = makeAsyncComponent('MoreDirectChannels', React.lazy(() => import('components/more_direct_channels')));
 
 export const ProductMenuContainer = styled.nav`
     display: flex;
@@ -176,6 +180,13 @@ const ProductMenu = (): JSX.Element => {
                         active={isChannels(currentProductID)}
                         onClick={handleClick}
                     />
+                    <Menu.ItemToggleModalRedux
+                        id='directMessages'
+                        modalId={ModalIdentifiers.CREATE_DM_CHANNEL}
+                        dialogType={MoreDirectChannels}
+                        text={formatMessage({id: 'product_menu.directMessages', defaultMessage: 'Direct messages'})}
+                        icon={<MessageTextOutlineIcon size={18}/>}
+                    />
                     {productItems}
                     {visibleSwitcherItems.length > 0 && (
                         <Menu.Group>
@@ -193,11 +204,6 @@ const ProductMenu = (): JSX.Element => {
                         onClick={handleClick}
                         handleVisitConsoleClick={handleVisitConsoleClick}
                     />
-                    <Menu.Group>
-                        <Menu.StartTrial
-                            id='startTrial'
-                        />
-                    </Menu.Group>
                 </Menu>
             </MenuWrapper>
         </div>

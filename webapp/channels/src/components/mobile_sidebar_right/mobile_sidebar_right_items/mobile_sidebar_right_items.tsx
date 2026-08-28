@@ -100,15 +100,6 @@ export class MobileSidebarRightItems extends React.PureComponent<Props> {
                 ariaLabel={formatMessage({id: 'navbar_dropdown.menuAriaLabel', defaultMessage: 'main menu'})}
             >
                 <Menu.Group>
-                    <SystemPermissionGate
-                        permissions={[Permissions.SYSCONSOLE_WRITE_ABOUT_EDITION_AND_LICENSE]}
-                    >
-                        <Menu.StartTrial
-                            id='startTrial'
-                        />
-                    </SystemPermissionGate>
-                </Menu.Group>
-                <Menu.Group>
                     <UserAccountOnlineMenuItem
                         userId={this.props.userId}
                         shouldConfirmBeforeStatusChange={shouldConfirmBeforeStatusChange}

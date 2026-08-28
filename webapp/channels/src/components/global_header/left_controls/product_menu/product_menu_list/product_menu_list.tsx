@@ -28,7 +28,7 @@ import UserGroupsModal from 'components/user_groups_modal';
 import Menu from 'components/widgets/menu/menu';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';
 
-import {LicenseSkus, ModalIdentifiers} from 'utils/constants';
+import {Console, LicenseSkus, ModalIdentifiers} from 'utils/constants';
 import {makeUrlSafe} from 'utils/url';
 
 import type {ModalData} from 'types/actions';
@@ -113,10 +113,10 @@ const ProductMenuList = (props: Props): JSX.Element | null => {
         <Menu.Group>
             <div onClick={onClick}>
                 <SystemPermissionGate permissions={Permissions.SYSCONSOLE_READ_PERMISSIONS}>
-                    <Menu.ItemLink
+                    <Menu.ItemExternalLink
                         id='systemConsole'
                         show={!isMobile}
-                        to='/admin_console'
+                        url={Console.URL}
                         text={(
                             <>
                                 {formatMessage({id: 'navbar_dropdown.console', defaultMessage: 'System Console'})}

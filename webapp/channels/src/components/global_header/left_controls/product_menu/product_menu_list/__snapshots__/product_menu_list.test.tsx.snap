@@ -13,8 +13,10 @@ exports[`components/global/product_switcher_menu should match snapshot with id 1
       role="menuitem"
     >
       <a
-        class=""
-        href="/admin_console"
+        href="https://console.hanzo.ai/?utm_source=hanzoteam&utm_medium=in-product&utm_content=menu_item_external_link&uid=test-user-id&sid=&edition=team&server_version="
+        location="menu_item_external_link"
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <span
           class="MenuItem__primary-text"
@@ -134,8 +136,10 @@ exports[`components/global/product_switcher_menu should match snapshot with most
       role="menuitem"
     >
       <a
-        class=""
-        href="/admin_console"
+        href="https://console.hanzo.ai/?utm_source=hanzoteam&utm_medium=in-product&utm_content=menu_item_external_link&uid=test-user-id&sid=&edition=team&server_version="
+        location="menu_item_external_link"
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <span
           class="MenuItem__primary-text"
@@ -474,8 +478,10 @@ exports[`components/global/product_switcher_menu should show integrations should
       role="menuitem"
     >
       <a
-        class=""
-        href="/admin_console"
+        href="https://console.hanzo.ai/?utm_source=hanzoteam&utm_medium=in-product&utm_content=menu_item_external_link&uid=test-user-id&sid=&edition=team&server_version="
+        location="menu_item_external_link"
+        rel="noopener noreferrer"
+        target="_blank"
       >
         <span
           class="MenuItem__primary-text"

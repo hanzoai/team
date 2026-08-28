@@ -1108,6 +1108,14 @@ export const LicenseLinks = {
     UNSUPPORTED_UPGRADE_LINK: 'https://docs.hanzo.team/administration-guide/upgrade/enterprise-install-upgrade.html#upgrading-to-enterprise-edition-from-mattermost-team-edition',
 };
 
+// Where an administrator goes. One console runs the estate, so the menu's
+// System Console leaves this app rather than opening the one Mattermost ships:
+// two admin surfaces for one deployment is two places to look and two places to
+// disagree.
+export const Console = {
+    URL: 'https://console.hanzo.ai',
+};
+
 export const MattermostLink = 'https://hanzo.ai/';
 
 export const BillingSchemes = {
