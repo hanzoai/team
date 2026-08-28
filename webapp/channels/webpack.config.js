@@ -321,11 +321,40 @@ function generateCSP() {
 }
 
 async function initializeModuleFederation() {
+    // What the web app actually bundles, which is not what package.json asks for.
+    //
+    // `version` is a VERSION and `requiredVersion` is a RANGE, and this read the
+    // range for both. A scope that advertises `^11.11.0` satisfies nothing: semver
+    // asks whether a version falls in a range, and a range is not a version, so a
+    // plugin requiring `^11.11.0` was told
+    //
+    //   No satisfying version (^11.11.0) of shared module @mattermost/client
+    //   found in shared scope default. Available versions: ^11.11.0
+    //
+    // — the same string on both sides of a comparison that still fails. For the
+    // nine singletons below it is worse than a warning: `strictVersion` is on, so
+    // react and react-dom do not share at all, the plugin loads a second React,
+    // and the page answers "A JavaScript error has occurred".
+    function installed(packageName, range) {
+        try {
+            // The name is a variable, so this cannot be a static import.
+            // eslint-disable-next-line global-require, @typescript-eslint/no-require-imports
+            return require(`${packageName}/package.json`).version;
+        } catch {
+            // A package whose `exports` map does not publish ./package.json —
+            // @mattermost/types is one. The range is what this used to offer for
+            // everything, so that package keeps the old behaviour instead of
+            // failing the build for the other eleven. It is types-only and not a
+            // singleton, so nothing is loaded from it at run time to mismatch.
+            return range;
+        }
+    }
+
     function makeSharedModules(packageNames, singleton) {
         const sharedObject = {};
 
         for (const packageName of packageNames) {
-            const version = packageJson.dependencies[packageName];
+            const range = packageJson.dependencies[packageName];
 
             sharedObject[packageName] = {
 
@@ -335,9 +364,9 @@ async function initializeModuleFederation() {
                 // Setting this to true causes the app to error out if the required version is not satisfied
                 strictVersion: singleton,
 
-                // Set these to match the specific version that the web app includes
-                requiredVersion: singleton ? version : undefined,
-                version,
+                // The range we accept from a container, and the version we offer it.
+                requiredVersion: singleton ? range : undefined,
+                version: installed(packageName, range),
             };
         }
 
