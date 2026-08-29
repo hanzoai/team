@@ -19,7 +19,7 @@ import (
 	"github.com/spf13/viper"
 	"golang.org/x/term"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 
 	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
 )

@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 // HelloWorldPlugin implements the interface expected by the Hanzo Team server to communicate

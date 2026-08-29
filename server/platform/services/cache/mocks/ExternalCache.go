@@ -7,7 +7,7 @@ package mocks
 import (
 	time "time"
 
-	model "github.com/hanzoai/team/server/public/model"
+	model "github.com/mattermost/mattermost/server/public/model"
 	mock "github.com/stretchr/testify/mock"
 )
 

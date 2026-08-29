@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	model "github.com/hanzoai/team/server/public/model"
+	model "github.com/mattermost/mattermost/server/public/model"
 	jobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
 	mock "github.com/stretchr/testify/mock"
 )

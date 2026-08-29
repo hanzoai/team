@@ -5,7 +5,7 @@
 package mocks
 
 import (
-	request "github.com/hanzoai/team/server/public/shared/request"
+	request "github.com/mattermost/mattermost/server/public/shared/request"
 	store "github.com/hanzoai/team/server/v8/channels/store"
 	mock "github.com/stretchr/testify/mock"
 )

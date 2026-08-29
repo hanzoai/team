@@ -10,7 +10,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/hanzoai/team/server/v8/channels/utils"
 	mocks2 "github.com/hanzoai/team/server/v8/channels/utils/mocks"
 	"github.com/hanzoai/team/server/v8/channels/utils/testutils"

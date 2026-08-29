@@ -7,7 +7,7 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 const (

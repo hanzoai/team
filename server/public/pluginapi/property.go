@@ -1,8 +1,8 @@
 package pluginapi
 
 import (
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 // PropertyService exposes methods to manipulate property fields and values.

@@ -8,7 +8,7 @@ import (
 
 	"github.com/avct/uasurfer"
 
-	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/hanzoai/team/server/v8/platform/shared/templates"
 )
 

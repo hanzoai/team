@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/hanzoai/team/server/v8/channels/store"
 	smocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
 	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
@@ -180,8 +180,8 @@ func TestGenerateSupportPacket(t *testing.T) {
 	pluginCode := `
 		package main
 		import (
-			"github.com/hanzoai/team/server/public/plugin"
-			"github.com/hanzoai/team/server/public/model"
+			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/mattermost/mattermost/server/public/model"
 		)
 
 		type TestPlugin struct {

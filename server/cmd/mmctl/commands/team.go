@@ -10,7 +10,7 @@ import (
 	"sort"
 
 	"github.com/hashicorp/go-multierror"
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 
 	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
 	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"

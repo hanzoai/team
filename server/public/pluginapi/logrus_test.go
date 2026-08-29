@@ -4,12 +4,12 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/hanzoai/team/server/public/plugin/plugintest"
+	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
 	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/hanzoai/team/server/public/pluginapi"
+	"github.com/mattermost/mattermost/server/public/pluginapi"
 )
 
 func TestLogrus(t *testing.T) {

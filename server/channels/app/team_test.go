@@ -18,8 +18,8 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/hanzoai/team/server/v8/channels/app/email"
 	emailmocks "github.com/hanzoai/team/server/v8/channels/app/email/mocks"
 	"github.com/hanzoai/team/server/v8/channels/app/teams"

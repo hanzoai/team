@@ -14,7 +14,7 @@ const (
 	ServerModulePath = "github.com/hanzoai/team/server/v8"
 	API4PkgPath      = ServerModulePath + "/channels/api4"
 
-	PublicModulePath = "github.com/hanzoai/team/server/public"
+	PublicModulePath = "github.com/mattermost/mattermost/server/public"
 	ModelPkgPath     = PublicModulePath + "/model"
 
 	AppErrType = "*" + ModelPkgPath + ".AppError"

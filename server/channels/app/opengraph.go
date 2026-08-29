@@ -14,8 +14,8 @@ import (
 	"github.com/pkg/errors"
 	"golang.org/x/net/html/charset"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/hanzoai/team/server/v8/channels/app/oembed"
 )
 

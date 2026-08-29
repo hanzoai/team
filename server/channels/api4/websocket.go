@@ -9,8 +9,8 @@ import (
 
 	"github.com/gorilla/websocket"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/hanzoai/team/server/v8/channels/app/platform"
 	"github.com/hanzoai/team/server/v8/channels/web"
 )

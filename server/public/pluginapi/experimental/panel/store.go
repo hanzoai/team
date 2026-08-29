@@ -3,7 +3,7 @@ package panel
 import (
 	"errors"
 
-	"github.com/hanzoai/team/server/public/pluginapi"
+	"github.com/mattermost/mattermost/server/public/pluginapi"
 )
 
 type Store interface {

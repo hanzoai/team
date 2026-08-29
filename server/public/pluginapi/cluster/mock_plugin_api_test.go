@@ -7,7 +7,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 type mockPluginAPI struct {

@@ -17,7 +17,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/spf13/cobra"
 
 	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"

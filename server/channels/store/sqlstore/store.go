@@ -14,7 +14,7 @@ import (
 	"sync/atomic"
 	"time"
 
-	sqlUtils "github.com/hanzoai/team/server/public/utils/sql"
+	sqlUtils "github.com/mattermost/mattermost/server/public/utils/sql"
 
 	sq "github.com/mattermost/squirrel"
 
@@ -24,8 +24,8 @@ import (
 	"github.com/mattermost/morph/models"
 	"github.com/pkg/errors"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/hanzoai/team/server/v8/channels/db"
 	"github.com/hanzoai/team/server/v8/channels/store"
 	"github.com/hanzoai/team/server/v8/einterfaces"

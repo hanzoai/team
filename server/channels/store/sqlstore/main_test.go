@@ -9,7 +9,7 @@ import (
 	"strconv"
 	"testing"
 
-	"github.com/hanzoai/team/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
 	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
 	"github.com/hanzoai/team/server/v8/channels/testlib"
 )

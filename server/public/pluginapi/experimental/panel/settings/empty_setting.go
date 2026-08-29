@@ -3,7 +3,7 @@ package settings
 import (
 	"fmt"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 type emptySetting struct {

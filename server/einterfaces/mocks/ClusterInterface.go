@@ -5,8 +5,8 @@
 package mocks
 
 import (
-	model "github.com/hanzoai/team/server/public/model"
-	request "github.com/hanzoai/team/server/public/shared/request"
+	model "github.com/mattermost/mattermost/server/public/model"
+	request "github.com/mattermost/mattermost/server/public/shared/request"
 	einterfaces "github.com/hanzoai/team/server/v8/einterfaces"
 	mock "github.com/stretchr/testify/mock"
 )

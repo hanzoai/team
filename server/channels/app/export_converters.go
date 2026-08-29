@@ -6,7 +6,7 @@ package app
 import (
 	"strings"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/hanzoai/team/server/v8/channels/app/imports"
 )
 

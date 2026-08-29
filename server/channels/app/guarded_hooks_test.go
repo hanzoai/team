@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/request"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/request"
 	"github.com/hanzoai/team/server/v8/channels/store"
 )
 
@@ -26,8 +26,8 @@ func guardPluginRejectsAll(rejectReason string) string {
 	package main
 
 	import (
-		"github.com/hanzoai/team/server/public/plugin"
-		"github.com/hanzoai/team/server/public/model"
+		"github.com/mattermost/mattermost/server/public/plugin"
+		"github.com/mattermost/mattermost/server/public/model"
 	)
 
 	type MyPlugin struct {
@@ -56,7 +56,7 @@ func guardPluginRegistersOnly(channelID string) string {
 	package main
 
 	import (
-		"github.com/hanzoai/team/server/public/plugin"
+		"github.com/mattermost/mattermost/server/public/plugin"
 	)
 
 	type MyPlugin struct {

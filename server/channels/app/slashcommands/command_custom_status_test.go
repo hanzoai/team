@@ -6,7 +6,7 @@ package slashcommands
 import (
 	"testing"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 func TestGetCustomStatus(t *testing.T) {

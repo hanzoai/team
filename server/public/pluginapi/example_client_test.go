@@ -1,9 +1,9 @@
 package pluginapi_test
 
 import (
-	"github.com/hanzoai/team/server/public/pluginapi"
+	"github.com/mattermost/mattermost/server/public/pluginapi"
 
-	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 type Plugin struct {

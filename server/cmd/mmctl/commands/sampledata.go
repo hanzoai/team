@@ -20,8 +20,8 @@ import (
 
 	"github.com/hanzoai/team/server/v8/channels/app/imports"
 
-	"github.com/hanzoai/team/server/public/model"
-	pUtils "github.com/hanzoai/team/server/public/utils"
+	"github.com/mattermost/mattermost/server/public/model"
+	pUtils "github.com/mattermost/mattermost/server/public/utils"
 
 	"github.com/icrowley/fake"
 	"github.com/spf13/cobra"

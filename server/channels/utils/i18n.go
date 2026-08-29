@@ -6,7 +6,7 @@ package utils
 import (
 	"fmt"
 
-	"github.com/hanzoai/team/server/public/shared/i18n"
+	"github.com/mattermost/mattermost/server/public/shared/i18n"
 	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
 )
 

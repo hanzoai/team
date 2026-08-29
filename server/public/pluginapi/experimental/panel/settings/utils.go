@@ -1,7 +1,7 @@
 package settings
 
 import (
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 func stringsToOptions(in []string) []*model.PostActionOptions {

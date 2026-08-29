@@ -5,7 +5,7 @@ package app
 import (
 	"net/http"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 // ReattachPlugin allows the server to bind to an existing plugin instance launched elsewhere.

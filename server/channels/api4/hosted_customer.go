@@ -6,7 +6,7 @@ package api4
 import (
 	"net/http"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 // APIs for self-hosted workspaces to communicate with the backing customer & payments system.

@@ -6,7 +6,7 @@ package cleanup_desktop_tokens
 import (
 	"time"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/hanzoai/team/server/v8/channels/jobs"
 )
 

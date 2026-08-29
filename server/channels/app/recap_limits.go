@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 func (a *App) getStartOfUserDay(userID string) (time.Time, *model.AppError) {

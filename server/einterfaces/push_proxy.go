@@ -4,7 +4,7 @@
 package einterfaces
 
 import (
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	ejobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
 )
 

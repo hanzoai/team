@@ -13,7 +13,7 @@ import (
 
 	_ "github.com/hanzoai/team/server/v8/channels/app/slashcommands"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 func TestEchoCommand(t *testing.T) {

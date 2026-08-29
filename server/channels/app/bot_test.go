@@ -11,7 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 )
 
 func TestCreateBot(t *testing.T) {
@@ -1101,7 +1101,7 @@ func TestIsBotExemptFromDMRestrictions(t *testing.T) {
 		package main
 
 		import (
-			"github.com/hanzoai/team/server/public/plugin"
+			"github.com/mattermost/mattermost/server/public/plugin"
 		)
 
 		type MyPlugin struct {

@@ -14,10 +14,10 @@ import (
 	"os/user"
 	"strings"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/public/shared/request"
-	"github.com/hanzoai/team/server/public/utils"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/mattermost/mattermost/server/public/utils"
 	"github.com/hanzoai/team/server/v8/channels/audit"
 	"github.com/hanzoai/team/server/v8/channels/store"
 	"github.com/hanzoai/team/server/v8/config"
@@ -26,10 +26,10 @@ import (
 // Audit level aliases for convenient access within the app package.
 // These map directly to the audit levels defined in mlog.
 //
-// See [github.com/hanzoai/team/server/public/shared/mlog.LvlAuditAPI],
-// [github.com/hanzoai/team/server/public/shared/mlog.LvlAuditContent],
-// [github.com/hanzoai/team/server/public/shared/mlog.LvlAuditPerms],
-// [github.com/hanzoai/team/server/public/shared/mlog.LvlAuditCLI]
+// See [github.com/mattermost/mattermost/server/public/shared/mlog.LvlAuditAPI],
+// [github.com/mattermost/mattermost/server/public/shared/mlog.LvlAuditContent],
+// [github.com/mattermost/mattermost/server/public/shared/mlog.LvlAuditPerms],
+// [github.com/mattermost/mattermost/server/public/shared/mlog.LvlAuditCLI]
 // for detailed documentation on when to use each level.
 var (
 	LevelAPI     = mlog.LvlAuditAPI

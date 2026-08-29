@@ -4,7 +4,7 @@
 package model
 
 import (
-	"github.com/hanzoai/team/server/public/shared/i18n"
+	"github.com/mattermost/mattermost/server/public/shared/i18n"
 
 	"github.com/vmihailenco/msgpack/v5"
 )

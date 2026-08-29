@@ -25,7 +25,7 @@ import (
 	"text/template"
 	"time"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/hanzoai/team/server/v8/channels/app/imports"
 	"github.com/hanzoai/team/server/v8/channels/utils"
 	_ "golang.org/x/image/webp" // image decoder

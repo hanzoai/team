@@ -15,7 +15,7 @@ import (
 	reflect "reflect"
 
 	gomock "github.com/golang/mock/gomock"
-	model "github.com/hanzoai/team/server/public/model"
+	model "github.com/mattermost/mattermost/server/public/model"
 )
 
 // MockClient is a mock of Client interface.

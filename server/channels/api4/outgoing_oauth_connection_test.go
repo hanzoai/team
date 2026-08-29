@@ -11,8 +11,8 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hanzoai/team/server/public/model"
-	"github.com/hanzoai/team/server/public/plugin/plugintest/mock"
+	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
 	"github.com/hanzoai/team/server/v8/channels/web"
 	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
 	"github.com/stretchr/testify/require"

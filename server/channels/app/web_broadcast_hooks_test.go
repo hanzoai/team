@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/hanzoai/team/server/public/model"
+	"github.com/mattermost/mattermost/server/public/model"
 	"github.com/hanzoai/team/server/v8/channels/app/platform"
 	platform_mocks "github.com/hanzoai/team/server/v8/channels/app/platform/mocks"
 	"github.com/stretchr/testify/assert"

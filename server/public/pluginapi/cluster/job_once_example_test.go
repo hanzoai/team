@@ -4,7 +4,7 @@ import (
 	"log"
 	"time"
 
-	"github.com/hanzoai/team/server/public/plugin"
+	"github.com/mattermost/mattermost/server/public/plugin"
 )
 
 func HandleJobOnceCalls(key string, props any) {

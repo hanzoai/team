@@ -3,7 +3,7 @@ package common
 import (
 	"errors"
 
-	"github.com/hanzoai/team/server/public/pluginapi"
+	"github.com/mattermost/mattermost/server/public/pluginapi"
 )
 
 var ErrNotFound = errors.New("not found")
