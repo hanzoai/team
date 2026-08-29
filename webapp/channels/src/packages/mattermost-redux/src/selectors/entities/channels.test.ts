@@ -1443,6 +1443,18 @@ describe('Selectors.Channels.getRedirectChannelNameForTeam', () => {
             ...testState,
             entities: {
                 ...testState.entities,
+                channels: {
+                    ...testState.entities.channels,
+                    channels: {
+                        ...testState.entities.channels.channels,
+                        [channel1.id]: {
+                            id: channel1.id,
+                            display_name: 'Town Square',
+                            name: 'town-square',
+                            team_id: team1.id,
+                        },
+                    },
+                },
                 roles: {
                     roles: {
                         system_user: {permissions: ['join_public_channels']},
@@ -1455,6 +1467,30 @@ describe('Selectors.Channels.getRedirectChannelNameForTeam', () => {
             },
         };
         expect(Selectors.getRedirectChannelNameForTeam(modifiedState, team1.id)).toEqual(General.DEFAULT_CHANNEL);
+    });
+
+    // Permission to join public channels is not evidence that there is anything
+    // to join. This used to answer 'town-square' for a team that has none, and
+    // the caller asking is the one recovering from a failed join — so it routed
+    // back to a channel that fails to join and raised the same error again, a
+    // loop with a Back button on it.
+    it('getRedirectChannelNameForTeam with JOIN_PUBLIC_CHANNELS but no default channel in the team', () => {
+        const modifiedState = {
+            ...testState,
+            entities: {
+                ...testState.entities,
+                roles: {
+                    roles: {
+                        system_user: {permissions: ['join_public_channels']},
+                    },
+                },
+                general: {
+                    ...testState.entities.general,
+                    serverVersion: '5.12.0',
+                },
+            },
+        };
+        expect(Selectors.getRedirectChannelNameForTeam(modifiedState, team1.id)).not.toEqual(General.DEFAULT_CHANNEL);
     });
 
     it('getRedirectChannelNameForTeam with advanced permissions but without JOIN_PUBLIC_CHANNELS permission but being member of town-square', () => {

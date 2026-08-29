@@ -1320,7 +1320,13 @@ export const getRedirectChannelNameForTeam = (state: GlobalState, teamId: string
     const myChannelMemberships = getMyChannelMemberships(state);
     const iAmMemberOfTheTeamDefaultChannel = Boolean(defaultChannelForTeam && myChannelMemberships[defaultChannelForTeam.id]);
 
-    if (iAmMemberOfTheTeamDefaultChannel || canIJoinPublicChannelsInTeam) {
+    // The default channel has to EXIST to be somewhere to send anyone. Permission
+    // to join public channels was treated as enough on its own, so a team whose
+    // default channel is missing or archived still answered with its name — and
+    // the caller that asks this is the one recovering from a failed join, which
+    // then routes back to a channel that fails to join, and answers "Channel Not
+    // Found" again. That is a loop with a Back button on it.
+    if (iAmMemberOfTheTeamDefaultChannel || (defaultChannelForTeam && canIJoinPublicChannelsInTeam)) {
         return General.DEFAULT_CHANNEL;
     }
 

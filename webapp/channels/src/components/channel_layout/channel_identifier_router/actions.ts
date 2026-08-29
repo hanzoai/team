@@ -141,7 +141,11 @@ export function goToChannelByChannelId(match: Match, history: History): ActionFu
             const dispatchResult = await dispatch(joinChannel(getCurrentUserId(state), teamObj!.id, channelId, ''));
             if ('error' in dispatchResult) {
                 await dispatch(fetchChannelsAndMembers(teamObj!.id));
-                handleChannelJoinError(match, history, getRedirectChannelNameForTeam(state, teamObj!.id));
+
+                // getState() again: `state` was read at the top of this thunk,
+                // before the refetch above, so asking it where to send someone
+                // answers from the memberships we just refreshed to find out.
+                handleChannelJoinError(match, history, getRedirectChannelNameForTeam(getState(), teamObj!.id));
                 return {data: undefined};
             }
             channel = dispatchResult.data!.channel;
@@ -220,7 +224,7 @@ export function goToChannelByChannelName(match: Match, history: History): Action
                     const getChannelDispatchResult = await dispatch(getChannelByNameAndTeamName(team, channelName, true));
                     if ('error' in getChannelDispatchResult || getChannelDispatchResult.data!.delete_at === 0) {
                         await dispatch(fetchChannelsAndMembers(teamObj!.id));
-                        handleChannelJoinError(match, history, getRedirectChannelNameForTeam(state, teamObj!.id));
+                        handleChannelJoinError(match, history, getRedirectChannelNameForTeam(getState(), teamObj!.id));
                         return {data: undefined};
                     }
                     channel = getChannelDispatchResult.data!;

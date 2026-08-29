@@ -97,8 +97,13 @@ export default class ErrorPage extends React.PureComponent<Props> {
                 </Link>
             );
         } else if (type === ErrorPageTypes.CHANNEL_NOT_FOUND) {
+            // `returnTo` is only trusted when it is present; `<Link to=''>` renders
+            // a link to the current address, so an absent one turned Back into a
+            // button that reloads the error page it is on. The team root is the
+            // fallback because it is the one destination that resolves to whatever
+            // this reader can actually see.
             backButton = (
-                <Link to={returnTo}>
+                <Link to={returnTo || '/'}>
                     <FormattedMessage
                         id='error.channelNotFound.link'
                         defaultMessage='Back to {defaultChannelName}'
