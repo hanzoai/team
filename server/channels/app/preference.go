@@ -8,9 +8,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/shared/request"
 )
 
 func (a *App) GetPreferencesForUser(rctx request.CTX, userID string) (model.Preferences, *model.AppError) {

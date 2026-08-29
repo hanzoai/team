@@ -10,7 +10,7 @@ import (
 	"io"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 // ExtractSettings defines the features enabled/disable during the document text extraction.

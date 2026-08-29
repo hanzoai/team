@@ -7,9 +7,9 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
-	"github.com/mattermost/mattermost/server/public/pluginapi"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin/plugintest"
+	"github.com/hanzoteam/server/server/public/pluginapi"
 )
 
 func TestGetFile(t *testing.T) {

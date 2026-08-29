@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 // ErrEntityNotFound is thrown when an entity (user, team, etc.)

@@ -11,11 +11,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest"
-	"github.com/hanzoai/team/server/v8/channels/utils/testutils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin/plugintest/mock"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest"
+	"github.com/hanzoteam/server/server/v8/channels/utils/testutils"
 )
 
 type MockScheduler struct {

@@ -12,7 +12,7 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
 
 	"github.com/stretchr/testify/require"
 )

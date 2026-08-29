@@ -6,7 +6,7 @@ package hashers
 import (
 	"errors"
 
-	"github.com/hanzoai/team/server/v8/channels/app/password/phcparser"
+	"github.com/hanzoteam/server/server/v8/channels/app/password/phcparser"
 	"golang.org/x/crypto/bcrypt"
 )
 

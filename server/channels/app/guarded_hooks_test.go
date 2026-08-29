@@ -12,9 +12,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store"
 )
 
 // guardPluginRejectsAll generates a plugin that implements ScheduledPostWillBeCreated and
@@ -26,8 +26,8 @@ func guardPluginRejectsAll(rejectReason string) string {
 	package main
 
 	import (
-		"github.com/mattermost/mattermost/server/public/plugin"
-		"github.com/mattermost/mattermost/server/public/model"
+		"github.com/hanzoteam/server/server/public/plugin"
+		"github.com/hanzoteam/server/server/public/model"
 	)
 
 	type MyPlugin struct {
@@ -56,7 +56,7 @@ func guardPluginRegistersOnly(channelID string) string {
 	package main
 
 	import (
-		"github.com/mattermost/mattermost/server/public/plugin"
+		"github.com/hanzoteam/server/server/public/plugin"
 	)
 
 	type MyPlugin struct {

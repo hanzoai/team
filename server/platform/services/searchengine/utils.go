@@ -7,7 +7,7 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/hanzoai/team/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
 )
 
 var EmailRegex = regexp.MustCompile(`^[^\s"]+@[^\s"]+$`)

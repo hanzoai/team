@@ -4,7 +4,7 @@
 package a
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 // Valid: Assigning AppError to AppError variable

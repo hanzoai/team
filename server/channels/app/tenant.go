@@ -8,9 +8,9 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
 )
 
 // A team name is lowercase alphanumerics and dashes. IAM org slugs are already

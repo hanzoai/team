@@ -23,12 +23,12 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/utils"
-	"github.com/hanzoai/team/server/v8"
-	"github.com/hanzoai/team/server/v8/channels/testlib"
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/plugin/utils"
+	"github.com/hanzoteam/server/server/v8"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
 )
 
 func TestPlugin(t *testing.T) {

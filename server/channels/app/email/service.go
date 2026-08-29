@@ -13,13 +13,13 @@ import (
 	"github.com/throttled/throttled/v2"
 	"github.com/throttled/throttled/v2/store/memstore"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/app/users"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/platform/shared/templates"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/i18n"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/app/users"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/platform/shared/templates"
 )
 
 const (

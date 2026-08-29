@@ -1,7 +1,7 @@
 package pluginapi
 
 import (
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/plugin"
 )
 
 // LogService exposes methods to log to the Hanzo Team server log.

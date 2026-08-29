@@ -11,7 +11,7 @@ import (
 	"strings"
 
 	"github.com/dgryski/dgoogauth"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 	"github.com/mattermost/rsc/qr"
 	"github.com/pkg/errors"
 )

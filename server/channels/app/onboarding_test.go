@@ -8,7 +8,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	mm_model "github.com/mattermost/mattermost/server/public/model"
+	mm_model "github.com/hanzoteam/server/server/public/model"
 )
 
 func TestOnboardingSavesOrganizationName(t *testing.T) {

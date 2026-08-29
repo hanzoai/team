@@ -4,8 +4,8 @@
 package properties
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
 )
 
 // Value audit actions, recorded as the "action" meta on the audit record

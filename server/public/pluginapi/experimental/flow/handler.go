@@ -11,8 +11,8 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/common"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/pluginapi/experimental/common"
 )
 
 func (f *Flow) handleButtonHTTP(w http.ResponseWriter, r *http.Request) {

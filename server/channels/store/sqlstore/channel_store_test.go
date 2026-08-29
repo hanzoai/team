@@ -10,10 +10,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/channels/store/searchtest"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/store/searchtest"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest"
 )
 
 func TestChannelStore(t *testing.T) {

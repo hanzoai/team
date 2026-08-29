@@ -7,8 +7,8 @@ package mocks
 import (
 	context "context"
 
-	model "github.com/mattermost/mattermost/server/public/model"
-	jobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
+	model "github.com/hanzoteam/server/server/public/model"
+	jobs "github.com/hanzoteam/server/server/v8/einterfaces/jobs"
 	mock "github.com/stretchr/testify/mock"
 )
 

@@ -7,7 +7,7 @@ import (
 	"context"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoteam/server/server/public/shared/request"
 	"github.com/stretchr/testify/assert"
 )
 

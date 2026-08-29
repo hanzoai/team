@@ -4,8 +4,8 @@
 package app
 
 import (
-	"github.com/hanzoai/team/server/v8/einterfaces"
-	ejobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
+	"github.com/hanzoteam/server/server/v8/einterfaces"
+	ejobs "github.com/hanzoteam/server/server/v8/einterfaces/jobs"
 )
 
 var accountMigrationInterface func(*App) einterfaces.AccountMigrationInterface

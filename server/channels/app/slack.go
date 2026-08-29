@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/platform/services/slackimport"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/platform/services/slackimport"
 )
 
 func (a *App) SlackImport(rctx request.CTX, fileData multipart.File, fileSize int64, teamID string) (*model.AppError, *bytes.Buffer) {

@@ -6,8 +6,8 @@ package searchengine
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/platform/services/searchengine/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/platform/services/searchengine/mocks"
 	"github.com/stretchr/testify/assert"
 )
 

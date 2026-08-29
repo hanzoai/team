@@ -7,7 +7,7 @@ import (
 	"slices"
 	"strings"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 // By default the list will be (not necessarily in this order):

@@ -4,8 +4,8 @@
 package einterfaces
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
-	ejobs "github.com/hanzoai/team/server/v8/einterfaces/jobs"
+	"github.com/hanzoteam/server/server/public/model"
+	ejobs "github.com/hanzoteam/server/server/v8/einterfaces/jobs"
 )
 
 type PushProxyInterface interface {

@@ -23,8 +23,8 @@ import (
 
 	"github.com/mattermost/morph"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 	"github.com/mattermost/morph/drivers"
 	ps "github.com/mattermost/morph/drivers/postgres"
 	mbindata "github.com/mattermost/morph/sources/embedded"

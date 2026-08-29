@@ -12,10 +12,10 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/configservice"
-	"github.com/mattermost/mattermost/server/public/shared/httpservice"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/configservice"
+	"github.com/hanzoteam/server/server/public/shared/httpservice"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 var ErrNotEnabled = Error{errors.New("imageproxy.ImageProxy: image proxy not enabled")}

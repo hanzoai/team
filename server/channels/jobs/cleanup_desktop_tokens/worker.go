@@ -6,9 +6,9 @@ package cleanup_desktop_tokens
 import (
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/jobs"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/jobs"
 )
 
 const jobName = "CleanupDesktopTokens"

@@ -6,7 +6,7 @@ package teams
 import (
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
 )
 
 var mainHelper *testlib.MainHelper

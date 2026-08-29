@@ -17,14 +17,14 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/app/platform"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/channels/utils"
-	"github.com/hanzoai/team/server/v8/einterfaces"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/i18n"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/app/platform"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/v8/einterfaces"
 )
 
 const (

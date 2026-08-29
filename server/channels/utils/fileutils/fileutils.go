@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/hanzoai/team/server/v8"
+	"github.com/hanzoteam/server/server/v8"
 )
 
 func CommonBaseSearchPaths() []string {

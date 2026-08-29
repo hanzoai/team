@@ -10,8 +10,8 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/client"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/printer"
 
 	"github.com/spf13/cobra"
 )

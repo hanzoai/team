@@ -5,9 +5,9 @@
 package sharedchannel
 
 import (
-	model "github.com/mattermost/mattermost/server/public/model"
-	request "github.com/mattermost/mattermost/server/public/shared/request"
-	filestore "github.com/hanzoai/team/server/v8/platform/shared/filestore"
+	model "github.com/hanzoteam/server/server/public/model"
+	request "github.com/hanzoteam/server/server/public/shared/request"
+	filestore "github.com/hanzoteam/server/server/v8/platform/shared/filestore"
 	mock "github.com/stretchr/testify/mock"
 )
 

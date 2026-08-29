@@ -6,9 +6,9 @@ package web
 import (
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/platform/shared/templates"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/platform/shared/templates"
 )
 
 func renderUnsupportedDesktopApp(rctx request.CTX, cfg *model.Config, currentVersion, subpath string) templates.Data {

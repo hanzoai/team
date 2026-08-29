@@ -5,8 +5,8 @@ package einterfaces
 
 import (
 	saml2 "github.com/mattermost/gosaml2"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
 )
 
 type SamlInterface interface {

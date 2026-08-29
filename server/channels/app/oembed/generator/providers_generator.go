@@ -13,7 +13,7 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/hanzoai/team/server/v8/channels/app/oembed"
+	"github.com/hanzoteam/server/server/v8/channels/app/oembed"
 	"github.com/pkg/errors"
 )
 

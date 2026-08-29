@@ -4,7 +4,7 @@
 package sqlstore
 
 import (
-	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/store"
 )
 
 // SqlSessionAttributeStore is a no-op SessionAttributeStore: session

@@ -6,8 +6,8 @@ package api4
 import (
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/channels/app"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/channels/app"
 )
 
 func (api *API) InitPostLocal() {

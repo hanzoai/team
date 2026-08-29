@@ -6,7 +6,7 @@ package sqlstore
 import (
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/store/storetest"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest"
 )
 
 func TestJobStore(t *testing.T) {

@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 func (tr *TestRunner) runReactionTests(ctx context.Context) error {

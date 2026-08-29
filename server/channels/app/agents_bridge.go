@@ -6,10 +6,10 @@ package app
 import (
 	"github.com/blang/semver/v4"
 
-	agentclient "github.com/mattermost/mattermost-plugin-ai/public/bridgeclient"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
+	agentclient "github.com/hanzoteam/agents/v2/public/bridgeclient"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
 )
 
 const (

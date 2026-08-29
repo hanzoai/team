@@ -6,7 +6,7 @@ package api4
 import (
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
 	"github.com/stretchr/testify/assert"
 )
 

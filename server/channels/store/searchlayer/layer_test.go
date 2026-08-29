@@ -8,13 +8,13 @@ import (
 	"sync"
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/store/searchlayer"
-	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest"
-	"github.com/hanzoai/team/server/v8/channels/testlib"
-	"github.com/hanzoai/team/server/v8/platform/services/searchengine"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/store/searchlayer"
+	"github.com/hanzoteam/server/server/v8/channels/store/sqlstore"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/platform/services/searchengine"
 	"github.com/stretchr/testify/require"
 )
 

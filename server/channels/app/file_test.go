@@ -19,13 +19,13 @@ import (
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	storemocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
-	eMocks "github.com/hanzoai/team/server/v8/einterfaces/mocks"
-	"github.com/hanzoai/team/server/v8/platform/services/searchengine/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	storemocks "github.com/hanzoteam/server/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
+	eMocks "github.com/hanzoteam/server/server/v8/einterfaces/mocks"
+	"github.com/hanzoteam/server/server/v8/platform/services/searchengine/mocks"
 )
 
 func TestGeneratePublicLinkHash(t *testing.T) {

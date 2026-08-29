@@ -18,9 +18,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/platform/services/remotecluster"
-	"github.com/hanzoai/team/server/v8/platform/services/sharedchannel"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/platform/services/remotecluster"
+	"github.com/hanzoteam/server/server/v8/platform/services/sharedchannel"
 )
 
 // TestSharedChannelGlobalUserSyncSelfReferential is a comprehensive test suite for MM-62751

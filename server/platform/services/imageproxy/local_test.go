@@ -14,9 +14,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/httpservice"
-	"github.com/hanzoai/team/server/v8/channels/utils/testutils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/httpservice"
+	"github.com/hanzoteam/server/server/v8/channels/utils/testutils"
 )
 
 func makeTestLocalProxy() *ImageProxy {

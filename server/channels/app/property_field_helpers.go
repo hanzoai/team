@@ -4,7 +4,7 @@
 package app
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 // DefaultPropertyFieldPermissionLevel returns the permission level that

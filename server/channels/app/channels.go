@@ -16,15 +16,15 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/app/imaging"
-	"github.com/hanzoai/team/server/v8/config"
-	"github.com/hanzoai/team/server/v8/einterfaces"
-	"github.com/hanzoai/team/server/v8/platform/services/imageproxy"
-	"github.com/hanzoai/team/server/v8/platform/shared/filestore"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/app/imaging"
+	"github.com/hanzoteam/server/server/v8/config"
+	"github.com/hanzoteam/server/server/v8/einterfaces"
+	"github.com/hanzoteam/server/server/v8/platform/services/imageproxy"
+	"github.com/hanzoteam/server/server/v8/platform/shared/filestore"
 )
 
 type configService interface {

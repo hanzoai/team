@@ -18,9 +18,9 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"golang.org/x/sync/errgroup"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/channels/app/password/hashers"
-	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/channels/app/password/hashers"
+	"github.com/hanzoteam/server/server/v8/einterfaces/mocks"
 )
 
 func TestParseAuthTokenFromRequest(t *testing.T) {

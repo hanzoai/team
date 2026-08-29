@@ -7,7 +7,7 @@ import (
 	"context"
 	"database/sql/driver"
 
-	"github.com/mattermost/mattermost/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/plugin"
 )
 
 type wrapperTx struct {

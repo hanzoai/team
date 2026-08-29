@@ -6,8 +6,8 @@ package app
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	storemocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	storemocks "github.com/hanzoteam/server/server/v8/channels/store/storetest/mocks"
 	"github.com/stretchr/testify/mock"
 	"github.com/stretchr/testify/require"
 )

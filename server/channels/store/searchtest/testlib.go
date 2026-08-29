@@ -7,7 +7,7 @@ import (
 	"slices"
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/store"
 )
 
 const (

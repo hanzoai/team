@@ -9,11 +9,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	storemocks "github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
-	"github.com/hanzoai/team/server/v8/einterfaces"
-	"github.com/hanzoai/team/server/v8/einterfaces/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	storemocks "github.com/hanzoteam/server/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoteam/server/server/v8/einterfaces"
+	"github.com/hanzoteam/server/server/v8/einterfaces/mocks"
 )
 
 func TestSAMLSettings(t *testing.T) {

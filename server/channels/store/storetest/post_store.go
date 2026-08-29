@@ -16,10 +16,10 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
 )
 
 func TestPostStore(t *testing.T, rctx request.CTX, ss store.Store, s SqlStore) {

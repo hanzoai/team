@@ -12,7 +12,7 @@ import (
 	timePkg "time"
 
 	saml2 "github.com/mattermost/gosaml2"
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 type hooksTimerLayer struct {

@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
+	"github.com/hanzoteam/server/server/public/shared/i18n"
 )
 
 type DeletionStepStatus int

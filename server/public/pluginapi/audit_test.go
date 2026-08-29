@@ -3,11 +3,11 @@ package pluginapi_test
 import (
 	"testing"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest"
-	"github.com/mattermost/mattermost/server/public/pluginapi"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/plugin/plugintest"
+	"github.com/hanzoteam/server/server/public/pluginapi"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 func TestAuditService(t *testing.T) {

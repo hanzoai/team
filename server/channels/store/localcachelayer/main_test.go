@@ -10,14 +10,14 @@ import (
 
 	"github.com/stretchr/testify/mock"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/store"
-	"github.com/hanzoai/team/server/v8/channels/store/sqlstore"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
-	"github.com/hanzoai/team/server/v8/channels/testlib"
-	"github.com/hanzoai/team/server/v8/platform/services/cache"
-	cachemocks "github.com/hanzoai/team/server/v8/platform/services/cache/mocks"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/v8/channels/store/sqlstore"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/platform/services/cache"
+	cachemocks "github.com/hanzoteam/server/server/v8/platform/services/cache/mocks"
 )
 
 var mainHelper *testlib.MainHelper

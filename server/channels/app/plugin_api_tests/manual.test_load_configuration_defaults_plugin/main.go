@@ -4,9 +4,9 @@
 package main
 
 import (
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/hanzoai/team/server/v8/channels/app/plugin_api_tests"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/v8/channels/app/plugin_api_tests"
 )
 
 type configuration struct {

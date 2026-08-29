@@ -9,8 +9,8 @@ import (
 
 	plugin "github.com/hashicorp/go-plugin"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 // The API can be used to retrieve data or perform actions on behalf of the plugin. Most methods

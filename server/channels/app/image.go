@@ -7,7 +7,7 @@ import (
 	"fmt"
 	"io"
 
-	"github.com/hanzoai/team/server/v8/channels/app/imaging"
+	"github.com/hanzoteam/server/server/v8/channels/app/imaging"
 )
 
 func checkImageResolutionLimit(w, h int, maxRes int64) error {

@@ -12,8 +12,8 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
 )
 
 func TestBuildPrepackagedPlugin(t *testing.T) {

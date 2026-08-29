@@ -12,11 +12,11 @@ import (
 
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/utils"
-	"github.com/hanzoai/team/server/v8"
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
-	"github.com/hanzoai/team/server/v8/platform/shared/filestore"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/utils"
+	"github.com/hanzoteam/server/server/v8"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/v8/platform/shared/filestore"
 )
 
 const (

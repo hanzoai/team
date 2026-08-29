@@ -5,8 +5,8 @@
 package mocks
 
 import (
-	einterfaces "github.com/hanzoai/team/server/v8/einterfaces"
-	cache "github.com/hanzoai/team/server/v8/platform/services/cache"
+	einterfaces "github.com/hanzoteam/server/server/v8/einterfaces"
+	cache "github.com/hanzoteam/server/server/v8/platform/services/cache"
 	mock "github.com/stretchr/testify/mock"
 )
 

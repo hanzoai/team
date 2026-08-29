@@ -8,10 +8,10 @@ import (
 	sql "database/sql"
 	time "time"
 
-	model "github.com/mattermost/mattermost/server/public/model"
-	mlog "github.com/mattermost/mattermost/server/public/shared/mlog"
-	request "github.com/mattermost/mattermost/server/public/shared/request"
-	store "github.com/hanzoai/team/server/v8/channels/store"
+	model "github.com/hanzoteam/server/server/public/model"
+	mlog "github.com/hanzoteam/server/server/public/shared/mlog"
+	request "github.com/hanzoteam/server/server/public/shared/request"
+	store "github.com/hanzoteam/server/server/v8/channels/store"
 	mock "github.com/stretchr/testify/mock"
 )
 

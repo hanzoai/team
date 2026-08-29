@@ -10,10 +10,10 @@ import (
 	"strings"
 	"text/tabwriter"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/client"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/printer"
 
 	"github.com/hashicorp/go-multierror"
 	"github.com/spf13/cobra"

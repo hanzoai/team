@@ -6,8 +6,8 @@ package audit
 import (
 	"fmt"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 const DefMaxQueueSize = 1000

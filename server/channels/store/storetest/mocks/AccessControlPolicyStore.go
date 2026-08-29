@@ -5,8 +5,8 @@
 package mocks
 
 import (
-	model "github.com/mattermost/mattermost/server/public/model"
-	request "github.com/mattermost/mattermost/server/public/shared/request"
+	model "github.com/hanzoteam/server/server/public/model"
+	request "github.com/hanzoteam/server/server/public/shared/request"
 	mock "github.com/stretchr/testify/mock"
 )
 

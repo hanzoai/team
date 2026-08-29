@@ -14,9 +14,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer/human"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/client"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/printer/human"
 )
 
 var LogsCmd = &cobra.Command{

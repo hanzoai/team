@@ -11,8 +11,8 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/v8/channels/jobs"
-	"github.com/hanzoai/team/server/v8/config"
+	"github.com/hanzoteam/server/server/v8/channels/jobs"
+	"github.com/hanzoteam/server/server/v8/config"
 )
 
 const (

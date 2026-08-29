@@ -12,7 +12,7 @@ import (
 
 	"github.com/stretchr/testify/require"
 
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
 )
 
 func TestSanitizePath(t *testing.T) {

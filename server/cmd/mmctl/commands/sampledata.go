@@ -15,13 +15,13 @@ import (
 	"sort"
 	"time"
 
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/client"
-	"github.com/hanzoai/team/server/v8/cmd/mmctl/printer"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/client"
+	"github.com/hanzoteam/server/server/v8/cmd/mmctl/printer"
 
-	"github.com/hanzoai/team/server/v8/channels/app/imports"
+	"github.com/hanzoteam/server/server/v8/channels/app/imports"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	pUtils "github.com/mattermost/mattermost/server/public/utils"
+	"github.com/hanzoteam/server/server/public/model"
+	pUtils "github.com/hanzoteam/server/server/public/utils"
 
 	"github.com/icrowley/fake"
 	"github.com/spf13/cobra"

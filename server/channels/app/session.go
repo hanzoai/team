@@ -12,12 +12,12 @@ import (
 	"os"
 
 	"github.com/golang-jwt/jwt/v5"
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/channels/app/platform"
-	"github.com/hanzoai/team/server/v8/channels/app/users"
-	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/channels/app/platform"
+	"github.com/hanzoteam/server/server/v8/channels/app/users"
+	"github.com/hanzoteam/server/server/v8/channels/store"
 )
 
 // maxSessionsLimit prevents a potential DOS caused by creating an unbounded number of sessions; MM-55320

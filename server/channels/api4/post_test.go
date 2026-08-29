@@ -24,14 +24,14 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin/plugintest/mock"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/app"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest/mocks"
-	"github.com/hanzoai/team/server/v8/channels/testlib"
-	"github.com/hanzoai/team/server/v8/channels/utils"
-	"github.com/hanzoai/team/server/v8/channels/utils/testutils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin/plugintest/mock"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/app"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest/mocks"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/v8/channels/utils/testutils"
 )
 
 // Helper to enable feature with license

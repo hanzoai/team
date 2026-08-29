@@ -20,11 +20,11 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/plugin"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/testlib"
-	"github.com/hanzoai/team/server/v8/channels/utils/fileutils"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/plugin"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/testlib"
+	"github.com/hanzoteam/server/server/v8/channels/utils/fileutils"
 )
 
 func getHashedKey(key string) string {
@@ -614,8 +614,8 @@ func TestPluginPanicLogs(t *testing.T) {
 		package main
 
 		import (
-			"github.com/mattermost/mattermost/server/public/plugin"
-			"github.com/mattermost/mattermost/server/public/model"
+			"github.com/hanzoteam/server/server/public/plugin"
+			"github.com/hanzoteam/server/server/public/model"
 		)
 
 		type MyPlugin struct {
@@ -663,7 +663,7 @@ func TestPluginStatusActivateError(t *testing.T) {
 		import (
 			"errors"
 
-			"github.com/mattermost/mattermost/server/public/plugin"
+			"github.com/hanzoteam/server/server/public/plugin"
 		)
 
 		type MyPlugin struct {

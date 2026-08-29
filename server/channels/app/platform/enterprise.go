@@ -4,8 +4,8 @@
 package platform
 
 import (
-	"github.com/hanzoai/team/server/v8/einterfaces"
-	"github.com/hanzoai/team/server/v8/platform/services/searchengine"
+	"github.com/hanzoteam/server/server/v8/einterfaces"
+	"github.com/hanzoteam/server/server/v8/platform/services/searchengine"
 )
 
 var clusterInterface func(*PlatformService) einterfaces.ClusterInterface

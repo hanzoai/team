@@ -11,11 +11,11 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/i18n"
-	"github.com/mattermost/mattermost/server/public/shared/request"
-	"github.com/hanzoai/team/server/v8/platform/services/cache"
-	"github.com/hanzoai/team/server/v8/platform/shared/mail"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/i18n"
+	"github.com/hanzoteam/server/server/public/shared/request"
+	"github.com/hanzoteam/server/server/v8/platform/services/cache"
+	"github.com/hanzoteam/server/server/v8/platform/shared/mail"
 )
 
 var latestVersionCache = cache.NewLRU(&cache.CacheOptions{

@@ -6,7 +6,7 @@ package platform
 import (
 	"time"
 
-	"github.com/hanzoai/team/server/v8/platform/services/cache"
+	"github.com/hanzoteam/server/server/v8/platform/services/cache"
 )
 
 const LinkCacheSize = 10000

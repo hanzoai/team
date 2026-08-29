@@ -8,7 +8,7 @@ import (
 	"maps"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/pluginapi/experimental/common"
+	"github.com/hanzoteam/server/server/public/pluginapi/experimental/common"
 )
 
 type defaultLogger struct {

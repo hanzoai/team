@@ -8,7 +8,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/app/password/phcparser"
+	"github.com/hanzoteam/server/server/v8/channels/app/password/phcparser"
 	"github.com/stretchr/testify/require"
 )
 

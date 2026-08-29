@@ -18,8 +18,8 @@ import (
 	"github.com/pkg/errors"
 	gomail "github.com/wneessen/go-mail"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
 )
 
 const (

@@ -15,7 +15,7 @@ import (
 	"testing"
 	"time"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -33,7 +33,7 @@ func TestClient4TrimTrailingSlash(t *testing.T) {
 	}
 }
 
-// https://github.com/hanzoai/team/server/v8/channels/issues/8205
+// https://github.com/hanzoteam/server/server/v8/channels/issues/8205
 func TestClient4CreatePost(t *testing.T) {
 	post := &model.Post{
 		Props: map[string]any{

@@ -8,7 +8,7 @@ import (
 	io "io"
 	time "time"
 
-	filestore "github.com/hanzoai/team/server/v8/platform/shared/filestore"
+	filestore "github.com/hanzoteam/server/server/v8/platform/shared/filestore"
 	mock "github.com/stretchr/testify/mock"
 )
 

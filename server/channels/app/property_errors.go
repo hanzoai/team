@@ -7,9 +7,9 @@ import (
 	"errors"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
-	"github.com/hanzoai/team/server/v8/channels/app/properties"
-	"github.com/hanzoai/team/server/v8/channels/store"
+	"github.com/hanzoteam/server/server/public/model"
+	"github.com/hanzoteam/server/server/v8/channels/app/properties"
+	"github.com/hanzoteam/server/server/v8/channels/store"
 )
 
 // mapPropertyServiceError translates known errors from the property service /

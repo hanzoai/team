@@ -15,13 +15,13 @@ import (
 	"github.com/pkg/errors"
 	"github.com/spf13/cobra"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/hanzoai/team/server/v8/channels/api4"
-	"github.com/hanzoai/team/server/v8/channels/app"
-	"github.com/hanzoai/team/server/v8/channels/utils"
-	"github.com/hanzoai/team/server/v8/channels/web"
-	"github.com/hanzoai/team/server/v8/channels/wsapi"
-	"github.com/hanzoai/team/server/v8/config"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/v8/channels/api4"
+	"github.com/hanzoteam/server/server/v8/channels/app"
+	"github.com/hanzoteam/server/server/v8/channels/utils"
+	"github.com/hanzoteam/server/server/v8/channels/web"
+	"github.com/hanzoteam/server/server/v8/channels/wsapi"
+	"github.com/hanzoteam/server/server/v8/config"
 )
 
 var serverCmd = &cobra.Command{

@@ -24,8 +24,8 @@ import (
 	"github.com/mattermost/ldap"
 	"github.com/pkg/errors"
 
-	"github.com/mattermost/mattermost/server/public/shared/mlog"
-	"github.com/mattermost/mattermost/server/public/utils"
+	"github.com/hanzoteam/server/server/public/shared/mlog"
+	"github.com/hanzoteam/server/server/public/utils"
 )
 
 const (

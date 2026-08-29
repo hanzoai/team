@@ -9,7 +9,7 @@ import (
 	"io"
 	"net/http"
 
-	"github.com/mattermost/mattermost/server/public/model"
+	"github.com/hanzoteam/server/server/public/model"
 )
 
 type Client interface {

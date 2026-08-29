@@ -6,8 +6,8 @@ package sqlstore
 import (
 	"testing"
 
-	"github.com/hanzoai/team/server/v8/channels/store/searchtest"
-	"github.com/hanzoai/team/server/v8/channels/store/storetest"
+	"github.com/hanzoteam/server/server/v8/channels/store/searchtest"
+	"github.com/hanzoteam/server/server/v8/channels/store/storetest"
 )
 
 func TestFileInfoStore(t *testing.T) {
