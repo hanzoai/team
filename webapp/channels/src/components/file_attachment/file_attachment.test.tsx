@@ -4,8 +4,8 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -24,8 +24,8 @@ jest.mock('utils/utils', () => {
     };
 });
 
-jest.mock('mattermost-redux/utils/file_utils', () => {
-    const original = jest.requireActual('mattermost-redux/utils/file_utils');
+jest.mock('@hanzoteam/redux/utils/file_utils', () => {
+    const original = jest.requireActual('@hanzoteam/redux/utils/file_utils');
     return {
         ...original,
         getFileThumbnailUrl: (fileId: string) => fileId,

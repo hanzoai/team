@@ -4,10 +4,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {SharedProvider} from '@mattermost/shared/context';
-import type {Emoji} from '@mattermost/types/emojis';
+import {SharedProvider} from '@hanzoteam/shared/context';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
-import {getEmojiImageUrl} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiImageUrl} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {getEmojiMap} from 'selectors/emojis';
 

@@ -1,11 +1,11 @@
 {
-  "name": "mattermost-redux",
+  "name": "@hanzoteam/redux",
   "version": "11.11.1",
   "description": "Common code (API client, Redux stores, logic, utility functions) for building a Mattermost client",
   "keywords": [
     "mattermost"
   ],
-  "homepage": "https://github.com/mattermost/mattermost/tree/master/webapp/platform/mattermost-redux#readme",
+  "homepage": "https://github.com/mattermost/mattermost/tree/master/webapp/platform/@hanzoteam/redux#readme",
   "license": "MIT",
   "type": "commonjs",
   "files": [
@@ -36,11 +36,11 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mattermost/mattermost.git",
-    "directory": "webapp/platform/mattermost-redux"
+    "directory": "webapp/platform/@hanzoteam/redux"
   },
   "dependencies": {
-    "@mattermost/client": "^11.11.0",
-    "@mattermost/types": "^11.11.0",
+    "@hanzoteam/client": "^11.11.0",
+    "@hanzoteam/types": "^11.11.0",
     "@redux-devtools/extension": "3.3.0",
     "lodash": "^4.17.21",
     "moment-timezone": "^0.5.38",

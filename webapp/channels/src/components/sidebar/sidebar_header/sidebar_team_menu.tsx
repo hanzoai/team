@@ -16,16 +16,16 @@ import {
     MessagePlusOutlineIcon,
     PlusIcon,
     MonitorAccountIcon,
-} from '@mattermost/compass-icons/components';
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {Team} from '@mattermost/types/teams';
+} from '@hanzoteam/compass-icons/components';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getCloudSubscription, getSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles_helpers';
-import {getJoinableTeamIds} from 'mattermost-redux/selectors/entities/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCloudSubscription, getSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles_helpers';
+import {getJoinableTeamIds} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {openModal} from 'actions/views/modals';
 import {getMainMenuPluginComponents} from 'selectors/plugins';

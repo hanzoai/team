@@ -6,15 +6,15 @@ import type {ChangeEvent, FormEvent} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Bot, BotPatch} from '@mattermost/types/bots';
-import type {Team} from '@mattermost/types/teams';
-import type {UserAccessToken, UserProfile} from '@mattermost/types/users';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Bot, BotPatch} from '@hanzoteam/types/bots';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserAccessToken, UserProfile} from '@hanzoteam/types/users';
 
-import {General} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import {General} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import ExternalLink from 'components/external_link';

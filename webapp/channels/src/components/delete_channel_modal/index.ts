@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {deleteChannel} from 'actions/views/channel';
 

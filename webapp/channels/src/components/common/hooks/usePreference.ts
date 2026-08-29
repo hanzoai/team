@@ -4,12 +4,12 @@
 import {useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {GlobalState} from 'types/store';
 

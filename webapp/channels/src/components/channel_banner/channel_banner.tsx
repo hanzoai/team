@@ -5,13 +5,13 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelBanner} from '@mattermost/types/channels';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelBanner} from '@hanzoteam/types/channels';
 
-import {selectShowChannelBanner} from 'mattermost-redux/selectors/entities/channel_banner';
-import {getChannelBanner} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getContrastingSimpleColor} from 'mattermost-redux/utils/theme_utils';
+import {selectShowChannelBanner} from '@hanzoteam/redux/selectors/entities/channel_banner';
+import {getChannelBanner} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getContrastingSimpleColor} from '@hanzoteam/redux/utils/theme_utils';
 
 import useChannelClassificationBanner from 'components/common/hooks/useChannelClassificationBanner';
 import Markdown from 'components/markdown';

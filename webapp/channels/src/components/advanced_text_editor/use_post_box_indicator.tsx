@@ -5,17 +5,17 @@ import {DateTime} from 'luxon';
 import {useState, useEffect, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getDirectChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getTimezoneForUserProfile, getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getDirectChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getTimezoneForUserProfile, getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 import {
     getCurrentUserId,
     getStatusForUserId,
     getUser,
     makeGetDisplayName,
-} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/users';
 
 import Constants, {UserStatuses} from 'utils/constants';
 

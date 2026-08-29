@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import SystemPermissionGate from 'components/permissions_gates/system_permission_gate';
 import TeamPermissionGate from 'components/permissions_gates/team_permission_gate';

@@ -6,9 +6,9 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import usePrefixedIds, {joinIds} from 'components/common/hooks/usePrefixedIds';
 import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';

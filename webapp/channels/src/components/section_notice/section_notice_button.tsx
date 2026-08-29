@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {Button, type ButtonEmphasis} from '@mattermost/shared/components/button';
+import {Button, type ButtonEmphasis} from '@hanzoteam/shared/components/button';
 
 import type {SectionNoticeButtonProp} from './types';
 

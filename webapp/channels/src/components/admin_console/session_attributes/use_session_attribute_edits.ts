@@ -4,9 +4,9 @@
 import {useCallback, useMemo, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
+import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
 
-import {patchPropertyField} from 'mattermost-redux/actions/properties';
+import {patchPropertyField} from '@hanzoteam/redux/actions/properties';
 
 import {getSessionAttrs} from './utils';
 import type {SessionAttributeField} from './utils';

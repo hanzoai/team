@@ -5,11 +5,11 @@ import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {getRemoteDisplayName} from 'mattermost-redux/selectors/entities/shared_channels';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {getRemoteDisplayName} from '@hanzoteam/redux/selectors/entities/shared_channels';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';
 import ProfilePicture from 'components/profile_picture';

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {getThreadsForCurrentTeam} from 'mattermost-redux/actions/threads';
+import {getThreadsForCurrentTeam} from '@hanzoteam/redux/actions/threads';
 
 import {openModal} from 'actions/views/modals';
 
@@ -14,7 +14,7 @@ import {TestHelper} from 'utils/test_helper';
 
 import ThreadList, {ThreadFilter} from './thread_list';
 
-jest.mock('mattermost-redux/actions/threads');
+jest.mock('@hanzoteam/redux/actions/threads');
 jest.mock('actions/views/modals');
 
 const mockRouting = {

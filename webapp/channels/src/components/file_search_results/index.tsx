@@ -6,9 +6,9 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {openModal} from 'actions/views/modals';
 

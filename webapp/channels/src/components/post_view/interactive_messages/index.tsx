@@ -11,9 +11,9 @@ import React, {useCallback, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {doPostActionWithCookie} from 'mattermost-redux/actions/posts';
+import {doPostActionWithCookie} from '@hanzoteam/redux/actions/posts';
 
 import {BlockRenderer} from 'components/block_renderer';
 import {getPostInteractiveIntegrationFormat, translatePostProps} from 'components/block_renderer/translation';

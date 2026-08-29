@@ -5,12 +5,12 @@ import React, {useEffect, useState} from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {editOutgoingOAuthConnection, getOutgoingOAuthConnection} from 'mattermost-redux/actions/integrations';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOutgoingOAuthConnections} from 'mattermost-redux/selectors/entities/integrations';
+import {editOutgoingOAuthConnection, getOutgoingOAuthConnection} from '@hanzoteam/redux/actions/integrations';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOutgoingOAuthConnections} from '@hanzoteam/redux/selectors/entities/integrations';
 
 import ConfirmModal from 'components/confirm_modal';
 import LoadingScreen from 'components/loading_screen';

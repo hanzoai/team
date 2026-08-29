@@ -55,7 +55,7 @@ const HeavyComponent = makeAsyncComponent(
 
 - **Semantic HTML**: Use `<button>`, `<input>`, etc. over `<div>` with roles.
 - **Keyboard Support**: All interactive elements must be keyboard accessible.
-- **Helpers**: Reuse primitives like `GenericModal` (from `@mattermost/components`), `Menu`, `Button` and `WithTooltip` (from `@mattermost/shared`), and `A11yController` helpers. Don't hand-roll buttons or tooltips when these primitives fit.
+- **Helpers**: Reuse primitives like `GenericModal` (from `@hanzoteam/components`), `Menu`, `Button` and `WithTooltip` (from `@hanzoteam/shared`), and `A11yController` helpers. Don't hand-roll buttons or tooltips when these primitives fit.
 - **Focus**: Use `a11y--focused` class for keyboard focus indicators.
 - **Images**: Alt text required for information images. Empty `alt=""` for decorative.
 
@@ -81,7 +81,7 @@ const intl = useIntl();
 - **Import Rule**: Never import directly from `@testing-library/react` or `react-dom/test-utils`. All testing utilities (`act`, `screen`, `fireEvent`, `waitFor`, `waitForElementToBeRemoved`, `userEvent`, `renderWithContext`, etc.) must be imported from `tests/react_testing_utils`, which re-exports everything from `@testing-library/react` alongside project-specific helpers.
 
 ## Icons
-- **Menu items and components should use Compass icon components** from `@mattermost/compass-icons/components` (e.g., `<DockWindowIcon size={18}/>`), not raw `<i className="icon icon-..."/>` elements.
+- **Menu items and components should use Compass icon components** from `@hanzoteam/compass-icons/components` (e.g., `<DockWindowIcon size={18}/>`), not raw `<i className="icon icon-..."/>` elements.
 
 ## Useful Examples
 - `channel_view/channel_view.tsx` – full-page component structure with co-located SCSS.

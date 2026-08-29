@@ -5,10 +5,10 @@ import type React from 'react';
 import {useCallback, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {emitShortcutReactToLastPostFrom, unsetEditingPost} from 'actions/post_actions';
 import {editLatestPost} from 'actions/views/create_comment';

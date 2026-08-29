@@ -6,10 +6,10 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {isCurrentLicenseCloud, getSubscriptionProduct as selectSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
-import {get as selectPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {isCurrentLicenseCloud, getSubscriptionProduct as selectSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
+import {get as selectPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import AlertBanner from 'components/alert_banner';
 import useGetLimits from 'components/common/hooks/useGetLimits';

@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getGroupsNotAssociatedToTeam, linkGroupSyncable, getAllGroupsAssociatedToTeam} from 'mattermost-redux/actions/groups';
-import {getGroupsNotAssociatedToTeam as selectGroupsNotAssociatedToTeam} from 'mattermost-redux/selectors/entities/groups';
-import {getCurrentTeam, getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {getGroupsNotAssociatedToTeam, linkGroupSyncable, getAllGroupsAssociatedToTeam} from '@hanzoteam/redux/actions/groups';
+import {getGroupsNotAssociatedToTeam as selectGroupsNotAssociatedToTeam} from '@hanzoteam/redux/selectors/entities/groups';
+import {getCurrentTeam, getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setModalSearchTerm} from 'actions/views/search';
 

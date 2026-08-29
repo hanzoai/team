@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import ProfilePicture from 'components/profile_picture';
 import BrandMark from 'components/widgets/icons/brand_mark';

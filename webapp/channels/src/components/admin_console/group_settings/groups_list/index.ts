@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {linkLdapGroup, unlinkLdapGroup, getLdapGroups as fetchLdapGroups} from 'mattermost-redux/actions/admin';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getLdapGroups, getLdapGroupsCount} from 'mattermost-redux/selectors/entities/admin';
+import {linkLdapGroup, unlinkLdapGroup, getLdapGroups as fetchLdapGroups} from '@hanzoteam/redux/actions/admin';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getLdapGroups, getLdapGroupsCount} from '@hanzoteam/redux/selectors/entities/admin';
 
 import GroupsList from './groups_list';
 

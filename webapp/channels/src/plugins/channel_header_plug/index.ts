@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {appBarEnabled, appsEnabled, getChannelHeaderAppBindings} from 'mattermost-redux/selectors/entities/apps';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {appBarEnabled, appsEnabled, getChannelHeaderAppBindings} from '@hanzoteam/redux/selectors/entities/apps';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {handleBindingClick, openAppsModal, postEphemeralCallResponseForChannel} from 'actions/apps';
 import {getChannelHeaderPluginComponents, shouldShowAppBar} from 'selectors/plugins';

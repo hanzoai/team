@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
 import GroupMembersModal from 'components/admin_console/team_channel_settings/group/group_members_modal';
 import ToggleModalButton from 'components/toggle_modal_button';

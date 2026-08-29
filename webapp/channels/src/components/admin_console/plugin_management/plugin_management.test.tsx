@@ -4,7 +4,7 @@
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import PluginState from 'mattermost-redux/constants/plugins';
+import PluginState from '@hanzoteam/redux/constants/plugins';
 
 import {PluginManagement} from 'components/admin_console/plugin_management/plugin_management';
 

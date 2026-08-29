@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -14,7 +14,7 @@ import type {GlobalState} from 'types/store';
 
 import FlagPostModal from './flag_post_modal';
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 const mockedClient4 = jest.mocked(Client4);
 
 describe('components/FlagPostModal', () => {

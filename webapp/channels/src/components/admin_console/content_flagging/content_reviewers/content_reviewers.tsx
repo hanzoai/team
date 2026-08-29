@@ -4,7 +4,7 @@
 import React, {useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ContentFlaggingReviewerSetting, TeamReviewerSetting} from '@mattermost/types/config';
+import type {ContentFlaggingReviewerSetting, TeamReviewerSetting} from '@hanzoteam/types/config';
 
 import {Label} from 'components/admin_console/boolean_setting';
 import CheckboxSetting from 'components/admin_console/checkbox_setting';

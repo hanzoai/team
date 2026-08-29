@@ -1,13 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
-import {Client4} from 'mattermost-redux/client';
-import {Permissions} from 'mattermost-redux/constants';
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import * as Channels from 'mattermost-redux/selectors/entities/channels';
-import * as Teams from 'mattermost-redux/selectors/entities/teams';
+import {Client4} from '@hanzoteam/redux/client';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import * as Channels from '@hanzoteam/redux/selectors/entities/channels';
+import * as Teams from '@hanzoteam/redux/selectors/entities/teams';
 
 import * as GlobalActions from 'actions/global_actions';
 
@@ -134,7 +134,7 @@ const initialState = {
 };
 
 const isMobileMock = jest.mocked(UserAgent.isMobile);
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(),
     isMobile: jest.fn(),
 }));

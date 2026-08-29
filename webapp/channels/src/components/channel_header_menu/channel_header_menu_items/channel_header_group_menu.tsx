@@ -9,12 +9,12 @@ import {useSelector} from 'react-redux';
 import {
     ChevronRightIcon,
     CogOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {canAccessChannelSettings} from 'selectors/views/channel_settings';
 

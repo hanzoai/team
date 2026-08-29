@@ -4,7 +4,7 @@
 import React, {useCallback, useState} from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import type {AutoTranslationSettings} from '@mattermost/types/config';
+import type {AutoTranslationSettings} from '@hanzoteam/types/config';
 
 import TextSetting from 'components/admin_console/text_setting';
 import ExternalLink from 'components/external_link';

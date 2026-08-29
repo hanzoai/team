@@ -4,7 +4,7 @@
 import type {ReactNode} from 'react';
 import React, {memo} from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import * as Menu from 'components/menu';
 

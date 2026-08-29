@@ -9,9 +9,9 @@ import {injectIntl, FormattedMessage} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import Scrollbars from 'components/common/scrollbars';
 import SystemPermissionGate from 'components/permissions_gates/system_permission_gate';

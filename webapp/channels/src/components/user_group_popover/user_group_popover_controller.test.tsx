@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import * as userActions from 'mattermost-redux/actions/users';
+import * as userActions from '@hanzoteam/redux/actions/users';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 
 import {UserGroupPopoverController} from './user_group_popover_controller';
 
-jest.mock('mattermost-redux/actions/users', () => ({
-    ...jest.requireActual('mattermost-redux/actions/users'),
+jest.mock('@hanzoteam/redux/actions/users', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/users'),
     getProfilesInGroup: jest.fn(() => () => ({type: 'MOCK_GET_PROFILES_IN_GROUP'})),
 }));
 

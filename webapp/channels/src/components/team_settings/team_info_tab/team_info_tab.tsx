@@ -5,7 +5,7 @@ import React, {useCallback, useState} from 'react';
 import type {ChangeEvent} from 'react';
 import {defineMessages} from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import type {BaseSettingItemProps} from 'components/widgets/modals/components/base_setting_item';
 import SaveChangesPanel, {type SaveChangesPanelState} from 'components/widgets/modals/components/save_changes_panel';

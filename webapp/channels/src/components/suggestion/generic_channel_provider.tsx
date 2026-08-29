@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ChannelTypeIcon from 'components/channel_type_icon';
 

@@ -4,9 +4,9 @@
 import {useCallback} from 'react';
 import {useSelector, useDispatch, shallowEqual} from 'react-redux';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setGlobalItem} from 'actions/storage';
 import {makeGetGlobalItem} from 'selectors/storage';

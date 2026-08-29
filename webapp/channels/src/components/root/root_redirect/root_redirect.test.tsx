@@ -6,7 +6,7 @@ import React from 'react';
 import type {RouteComponentProps} from 'react-router-dom';
 import {Redirect} from 'react-router-dom';
 
-import {getFirstAdminSetupComplete as getFirstAdminSetupCompleteAction} from 'mattermost-redux/actions/general';
+import {getFirstAdminSetupComplete as getFirstAdminSetupCompleteAction} from '@hanzoteam/redux/actions/general';
 
 import * as GlobalActions from 'actions/global_actions';
 
@@ -19,7 +19,7 @@ jest.mock('actions/global_actions', () => ({
     redirectUserToDefaultTeam: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/general', () => ({
+jest.mock('@hanzoteam/redux/actions/general', () => ({
     getFirstAdminSetupComplete: jest.fn(() =>
         Promise.resolve({
             data: true,

@@ -19,9 +19,9 @@ import {
 import React, {useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {supportsOptions} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {Button} from '@hanzoteam/shared/components/button';
+import {supportsOptions} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import './session_attribute_editor.scss';
 

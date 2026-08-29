@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {ExitToAppIcon} from '@mattermost/compass-icons/components';
+import {ExitToAppIcon} from '@hanzoteam/compass-icons/components';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

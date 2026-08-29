@@ -4,9 +4,9 @@
 import React, {useCallback} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import * as Menu from 'components/menu';
 import UpdateUserGroupModal from 'components/update_user_group_modal';

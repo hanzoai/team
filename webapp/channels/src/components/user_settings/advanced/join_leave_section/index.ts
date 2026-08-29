@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {PreferencesType} from '@mattermost/types/preferences';
+import type {PreferencesType} from '@hanzoteam/types/preferences';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Preferences} from 'mattermost-redux/constants';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

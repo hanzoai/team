@@ -1,5 +1,5 @@
 {
-  "name": "@mattermost/eslint-plugin",
+  "name": "@hanzoteam/eslint-plugin",
   "version": "2.0.0",
   "description": "ESLint configuration and custom rules used by Mattermost",
   "repository": {

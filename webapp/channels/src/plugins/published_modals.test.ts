@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {PublishedModalId} from '@mattermost/shared/types/global';
+import type {PublishedModalId} from '@hanzoteam/shared/types/global';
 
 import {ActionTypes, ModalIdentifiers} from 'utils/constants';
 

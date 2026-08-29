@@ -5,10 +5,10 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import type {AppForm, AppCallRequest} from '@mattermost/types/apps';
-import type {DialogElement, DialogSubmission, SubmitDialogResponse} from '@mattermost/types/integrations';
+import type {AppForm, AppCallRequest} from '@hanzoteam/types/apps';
+import type {DialogElement, DialogSubmission, SubmitDialogResponse} from '@hanzoteam/types/integrations';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {makeAsyncComponent} from 'components/async_load';
 

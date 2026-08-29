@@ -12,12 +12,12 @@ import {
     InformationOutlineIcon,
     ViewGridPlusOutlineIcon,
     WebhookIncomingIcon,
-} from '@mattermost/compass-icons/components';
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
-import type {UserProfile} from '@mattermost/types/users';
+} from '@hanzoteam/compass-icons/components';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import AboutBuildModal from 'components/about_build_modal';
 import {VisitSystemConsoleTour} from 'components/onboarding_tasks';

@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import ActionButton from './action_button';
 

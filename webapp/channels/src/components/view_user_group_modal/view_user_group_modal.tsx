@@ -5,13 +5,13 @@ import React, {useRef, useState, useEffect, useCallback, useMemo} from 'react';
 import {Modal} from 'react-bootstrap';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import {useFocusTrap} from '@mattermost/components';
-import type {Group} from '@mattermost/types/groups';
-import {GroupSource, PluginGroupSourcePrefix} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import {useFocusTrap} from '@hanzoteam/components';
+import type {Group} from '@hanzoteam/types/groups';
+import {GroupSource, PluginGroupSourcePrefix} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {debounce} from 'mattermost-redux/actions/helpers';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LoadingScreen from 'components/loading_screen';
 import NoResultsIndicator from 'components/no_results_indicator';

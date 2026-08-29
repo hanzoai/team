@@ -15,15 +15,15 @@ import {
     DotsVerticalIcon,
     ChevronRightIcon,
     CheckIcon,
-} from '@mattermost/compass-icons/components';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import {CategorySorting} from '@mattermost/types/channel_categories';
+} from '@hanzoteam/compass-icons/components';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
 
-import {setCategorySorting} from 'mattermost-redux/actions/channel_categories';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Preferences} from 'mattermost-redux/constants';
-import {getVisibleDmGmLimit} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {setCategorySorting} from '@hanzoteam/redux/actions/channel_categories';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getVisibleDmGmLimit} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import * as Menu from 'components/menu';
 

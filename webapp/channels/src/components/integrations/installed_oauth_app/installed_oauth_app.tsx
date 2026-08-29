@@ -5,8 +5,8 @@ import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
 import CopyText from 'components/copy_text';
 import FormError from 'components/form_error';

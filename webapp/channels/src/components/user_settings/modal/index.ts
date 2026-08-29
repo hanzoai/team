@@ -6,11 +6,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getUserPreferences} from 'mattermost-redux/actions/preferences';
-import {getUser, sendVerificationEmail} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getUserPreferences as getUserPreferencesSelector} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser, getUser as getUserSelector} from 'mattermost-redux/selectors/entities/users';
+import {getUserPreferences} from '@hanzoteam/redux/actions/preferences';
+import {getUser, sendVerificationEmail} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getUserPreferences as getUserPreferencesSelector} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser, getUser as getUserSelector} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getBasePath} from 'selectors/general';
 import {getPluginUserSettings} from 'selectors/plugins';

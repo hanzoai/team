@@ -6,9 +6,9 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {makeGetCommentCountForPost} from 'mattermost-redux/selectors/entities/posts';
+import {makeGetCommentCountForPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {deleteAndRemovePost} from 'actions/post_actions';
 

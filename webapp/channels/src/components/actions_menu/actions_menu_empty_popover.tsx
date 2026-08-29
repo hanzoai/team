@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import SystemPermissionGate from 'components/permissions_gates/system_permission_gate';
 

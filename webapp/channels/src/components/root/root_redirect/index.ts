@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getFirstAdminSetupComplete} from 'mattermost-redux/actions/general';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getActiveTeamsList} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, isCurrentUserSystemAdmin, isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getFirstAdminSetupComplete} from '@hanzoteam/redux/actions/general';
+import {getIsOnboardingFlowEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getActiveTeamsList} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, isCurrentUserSystemAdmin, isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

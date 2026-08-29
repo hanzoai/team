@@ -5,8 +5,8 @@ import mockStore from 'tests/test_store';
 
 import {loadConfigAndMe} from './index';
 
-jest.mock('mattermost-redux/actions/general', () => {
-    const original = jest.requireActual('mattermost-redux/actions/general');
+jest.mock('@hanzoteam/redux/actions/general', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/general');
     return {
         ...original,
         getClientConfig: () => ({type: 'MOCK_GET_CLIENT_CONFIG'}),
@@ -14,24 +14,24 @@ jest.mock('mattermost-redux/actions/general', () => {
     };
 });
 
-jest.mock('mattermost-redux/actions/users', () => {
-    const original = jest.requireActual('mattermost-redux/actions/users');
+jest.mock('@hanzoteam/redux/actions/users', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/users');
     return {
         ...original,
         getMe: () => ({type: 'MOCK_LOAD_ME'}),
     };
 });
 
-jest.mock('mattermost-redux/actions/preferences', () => {
-    const original = jest.requireActual('mattermost-redux/actions/preferences');
+jest.mock('@hanzoteam/redux/actions/preferences', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/preferences');
     return {
         ...original,
         getMyPreferences: () => ({type: 'MOCK_LOAD_PREFERENCES'}),
     };
 });
 
-jest.mock('mattermost-redux/actions/teams', () => {
-    const original = jest.requireActual('mattermost-redux/actions/teams');
+jest.mock('@hanzoteam/redux/actions/teams', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/teams');
     return {
         ...original,
         getMyTeamMembers: () => ({type: 'MOCK_GET_MY_TEAM_MEMBERS'}),
@@ -40,16 +40,16 @@ jest.mock('mattermost-redux/actions/teams', () => {
     };
 });
 
-jest.mock('mattermost-redux/selectors/entities/preferences', () => {
-    const original = jest.requireActual('mattermost-redux/selectors/entities/preferences');
+jest.mock('@hanzoteam/redux/selectors/entities/preferences', () => {
+    const original = jest.requireActual('@hanzoteam/redux/selectors/entities/preferences');
     return {
         ...original,
         isCollapsedThreadsEnabled: () => false,
     };
 });
 
-jest.mock('mattermost-redux/actions/limits', () => ({
-    ...jest.requireActual('mattermost-redux/actions/limits'),
+jest.mock('@hanzoteam/redux/actions/limits', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/limits'),
     getServerLimits: () => ({type: 'MOCK_GET_SERVER_LIMITS'}),
 }));
 

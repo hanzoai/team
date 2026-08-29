@@ -4,11 +4,11 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

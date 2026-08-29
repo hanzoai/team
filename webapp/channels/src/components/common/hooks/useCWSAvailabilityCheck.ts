@@ -4,8 +4,8 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {checkCWSAvailability} from 'mattermost-redux/actions/general';
-import {getCWSAvailability} from 'mattermost-redux/selectors/entities/general';
+import {checkCWSAvailability} from '@hanzoteam/redux/actions/general';
+import {getCWSAvailability} from '@hanzoteam/redux/selectors/entities/general';
 
 export enum CSWAvailabilityCheckTypes {
     Available = 'available',

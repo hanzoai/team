@@ -4,7 +4,7 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
 import * as Utils from 'utils/utils';
 

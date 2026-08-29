@@ -4,7 +4,7 @@
 import React, {memo, useCallback} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
 import AbstractList from 'components/admin_console/team_channel_settings/abstract_list';
 

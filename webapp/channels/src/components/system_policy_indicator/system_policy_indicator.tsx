@@ -4,7 +4,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
 import AlertBanner from 'components/alert_banner';
 

@@ -3,7 +3,7 @@
 
 import * as ReactRedux from 'react-redux';
 
-import type {PropertyField} from '@mattermost/types/properties';
+import type {PropertyField} from '@hanzoteam/types/properties';
 
 import {
     CLASSIFICATIONS_CHANNEL_FIELD_NAME,

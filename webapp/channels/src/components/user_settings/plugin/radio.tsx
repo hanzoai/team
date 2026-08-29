@@ -4,7 +4,7 @@
 import React, {useCallback, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
+import {get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import Radio from 'plugins/settings_schema/controls/radio';
 import {getPluginPreferenceKey} from 'utils/plugins/preferences';

@@ -124,8 +124,8 @@ var config = {
             './src',
         ],
         alias: {
-            'mattermost-redux/test': 'packages/mattermost-redux/test',
-            'mattermost-redux': 'packages/mattermost-redux/src',
+            '@hanzoteam/redux/test': 'packages/@hanzoteam/redux/test',
+            '@hanzoteam/redux': 'packages/@hanzoteam/redux/src',
             '@mui/styled-engine': '@mui/styled-engine-sc',
 
             // This alias restricts single version of styled components across all packages
@@ -328,7 +328,7 @@ async function initializeModuleFederation() {
     // asks whether a version falls in a range, and a range is not a version, so a
     // plugin requiring `^11.11.0` was told
     //
-    //   No satisfying version (^11.11.0) of shared module @mattermost/client
+    //   No satisfying version (^11.11.0) of shared module @hanzoteam/client
     //   found in shared scope default. Available versions: ^11.11.0
     //
     // — the same string on both sides of a comparison that still fails. For the
@@ -342,7 +342,7 @@ async function initializeModuleFederation() {
             return require(`${packageName}/package.json`).version;
         } catch {
             // A package whose `exports` map does not publish ./package.json —
-            // @mattermost/types is one. The range is what this used to offer for
+            // @hanzoteam/types is one. The range is what this used to offer for
             // everything, so that package keeps the old behaviour instead of
             // failing the build for the other eleven. It is types-only and not a
             // singleton, so nothing is loaded from it at run time to mismatch.
@@ -397,8 +397,8 @@ async function initializeModuleFederation() {
             // Other containers will use these shared modules if their required versions match. If they don't match, the
             // version packaged with the container will be used.
             makeSharedModules([
-                '@mattermost/client',
-                '@mattermost/types',
+                '@hanzoteam/client',
+                '@hanzoteam/types',
                 'luxon',
             ], false),
 

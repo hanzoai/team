@@ -98,7 +98,7 @@ export type AutocompleteSuggestion = {
     type?: string;
 };
 
-export type CommandAutocompleteSuggestion = AutocompleteSuggestion; // TODO remove this alias after the mattermost-redux migration
+export type CommandAutocompleteSuggestion = AutocompleteSuggestion; // TODO remove this alias after the @hanzoteam/redux migration
 
 export type OAuthApp = {
     id: string;

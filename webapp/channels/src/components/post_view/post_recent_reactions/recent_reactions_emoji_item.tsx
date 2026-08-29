@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
-import {getEmojiImageUrl, getEmojiName} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiImageUrl, getEmojiName} from '@hanzoteam/redux/utils/emoji_utils';
 
 type Props = {
     emoji: Emoji;

@@ -5,9 +5,9 @@ import type {SortingState} from '@tanstack/react-table';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {UserReportSortColumns, ReportSortDirection, GuestFilter} from '@mattermost/types/reports';
-import type {UserReportOptions, UserReport} from '@mattermost/types/reports';
-import type {Team} from '@mattermost/types/teams';
+import {UserReportSortColumns, ReportSortDirection, GuestFilter} from '@hanzoteam/types/reports';
+import type {UserReportOptions, UserReport} from '@hanzoteam/types/reports';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {PAGE_SIZES} from 'components/admin_console/list_table';
 

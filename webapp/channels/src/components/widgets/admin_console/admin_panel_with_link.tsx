@@ -6,7 +6,7 @@ import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
 
 import AdminPanel from './admin_panel';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

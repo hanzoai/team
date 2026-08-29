@@ -5,9 +5,9 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
-import type {PreferencesType, PreferenceType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
+import type {PreferencesType, PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

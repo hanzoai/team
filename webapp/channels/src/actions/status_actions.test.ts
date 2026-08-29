@@ -3,23 +3,23 @@
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {addUserIdsForStatusFetchingPoll} from 'mattermost-redux/actions/status_profile_polling';
-import {getStatusesByIds} from 'mattermost-redux/actions/users';
-import {Preferences} from 'mattermost-redux/constants';
+import {addUserIdsForStatusFetchingPoll} from '@hanzoteam/redux/actions/status_profile_polling';
+import {getStatusesByIds} from '@hanzoteam/redux/actions/users';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import * as Actions from 'actions/status_actions';
 
 import mockStore from 'tests/test_store';
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getStatusesByIds: jest.fn(() => {
         return {type: ''};
     }),
 }));
 
-jest.mock('mattermost-redux/actions/status_profile_polling', () => ({
+jest.mock('@hanzoteam/redux/actions/status_profile_polling', () => ({
     addUserIdsForStatusFetchingPoll: jest.fn(() => {
         return {type: ''};
     }),

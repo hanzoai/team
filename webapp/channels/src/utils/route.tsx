@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ClientLicense} from '@mattermost/types/config';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {ErrorPageTypes} from 'utils/constants';
 

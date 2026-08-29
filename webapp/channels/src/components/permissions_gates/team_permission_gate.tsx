@@ -4,7 +4,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import type {GlobalState} from 'types/store';
 

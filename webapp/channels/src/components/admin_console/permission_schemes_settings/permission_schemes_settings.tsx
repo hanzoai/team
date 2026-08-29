@@ -8,9 +8,9 @@ import {type MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {Scheme, SchemeScope, SchemesState} from '@mattermost/types/schemes';
+import type {Scheme, SchemeScope, SchemesState} from '@hanzoteam/types/schemes';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ExternalLink from 'components/external_link';
 import LoadingScreen from 'components/loading_screen';

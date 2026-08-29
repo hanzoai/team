@@ -1,19 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
-import type {NameMappedPropertyFields, PropertyValue} from '@mattermost/types/properties';
+import type {ContentFlaggingConfig} from '@hanzoteam/types/content_flagging';
+import type {NameMappedPropertyFields, PropertyValue} from '@hanzoteam/types/properties';
 
 import {
     getContentFlaggingConfig,
     getPostContentFlaggingValues,
     loadPostContentFlaggingFields,
-} from 'mattermost-redux/actions/content_flagging';
+} from '@hanzoteam/redux/actions/content_flagging';
 import {
     contentFlaggingConfig,
     contentFlaggingFields,
     postContentFlaggingValues,
-} from 'mattermost-redux/selectors/entities/content_flagging';
+} from '@hanzoteam/redux/selectors/entities/content_flagging';
 
 import {makeUseEntity} from 'components/common/hooks/useEntity';
 

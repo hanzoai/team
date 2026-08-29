@@ -10,11 +10,11 @@ import {components} from 'react-select';
 import type {FormatOptionLabelMeta, InputActionMeta, InputProps, Options, StylesConfig, SelectInstance, MultiValue, SingleValue, OptionsOrGroups, GroupBase, MultiValueRemoveProps} from 'react-select';
 import AsyncCreatable from 'react-select/async-creatable';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {isEmail} from 'mattermost-redux/utils/helpers';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
 import CloseCircleSolidIcon from 'components/widgets/icons/close_circle_solid_icon';

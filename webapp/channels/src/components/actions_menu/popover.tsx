@@ -7,7 +7,7 @@ import classNames from 'classnames';
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import CompassDesignProvider from 'components/compass_design_provider';
 

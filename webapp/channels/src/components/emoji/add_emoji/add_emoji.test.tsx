@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {CustomEmoji} from '@mattermost/types/emojis';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {CustomEmoji} from '@hanzoteam/types/emojis';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import EmojiMap from 'utils/emoji_map';

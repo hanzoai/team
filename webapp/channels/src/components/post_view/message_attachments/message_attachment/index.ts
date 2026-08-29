@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {doPostActionWithCookie} from 'mattermost-redux/actions/posts';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
+import {doPostActionWithCookie} from '@hanzoteam/redux/actions/posts';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {openModal} from 'actions/views/modals';
 

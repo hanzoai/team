@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PropertyField, PropertyValue} from '@mattermost/types/properties';
+import type {PropertyField, PropertyValue} from '@hanzoteam/types/properties';
 
 import type {
     ChannelFieldMetadata,

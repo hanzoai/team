@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {Props} from 'components/browse_channels/browse_channels';
 import BrowseChannels from 'components/browse_channels/browse_channels';

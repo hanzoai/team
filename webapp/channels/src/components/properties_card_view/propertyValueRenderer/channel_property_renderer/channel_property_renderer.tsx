@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import type {ChannelFieldMetadata} from 'components/properties_card_view/properties_card_view';
 import SidebarBaseChannelIcon from 'components/sidebar/sidebar_channel/sidebar_base_channel/sidebar_base_channel_icon';

@@ -5,9 +5,9 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {setMyChannelAutotranslation} from 'mattermost-redux/actions/channels';
+import {setMyChannelAutotranslation} from '@hanzoteam/redux/actions/channels';
 
 import {sendEphemeralPost} from 'actions/global_actions';
 import {closeModal} from 'actions/views/modals';

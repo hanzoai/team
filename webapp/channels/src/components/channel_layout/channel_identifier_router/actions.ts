@@ -3,16 +3,16 @@
 
 import type {History} from 'history';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {GlobalState} from '@mattermost/types/store';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {joinChannel, getChannelByNameAndTeamName, getChannelMember, markGroupChannelOpen, fetchChannelsAndMembers} from 'mattermost-redux/actions/channels';
-import {getUser, getUserByUsername, getUserByEmail} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getChannelByName, getOtherChannels, getChannel, getChannelsNameMapInTeam, getRedirectChannelNameForTeam} from 'mattermost-redux/selectors/entities/channels';
-import {isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getTeamByName} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getUserByUsername as selectUserByUsername, getUser as selectUser, getUserByEmail as selectUserByEmail} from 'mattermost-redux/selectors/entities/users';
+import {joinChannel, getChannelByNameAndTeamName, getChannelMember, markGroupChannelOpen, fetchChannelsAndMembers} from '@hanzoteam/redux/actions/channels';
+import {getUser, getUserByUsername, getUserByEmail} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannelByName, getOtherChannels, getChannel, getChannelsNameMapInTeam, getRedirectChannelNameForTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {isDiscoverableChannelsEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getTeamByName} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getUserByUsername as selectUserByUsername, getUser as selectUser, getUserByEmail as selectUserByEmail} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import * as GlobalActions from 'actions/global_actions';

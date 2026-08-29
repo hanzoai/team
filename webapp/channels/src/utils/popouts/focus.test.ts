@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
 import {getBasePath} from 'utils/url';
 
@@ -17,7 +17,7 @@ jest.mock('utils/desktop_api', () => ({
     },
 }));
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(),
 }));
 

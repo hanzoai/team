@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {MarkUnread} from 'mattermost-redux/constants/channels';
+import {MarkUnread} from '@hanzoteam/redux/constants/channels';
 
 import testConfigureStore from 'tests/test_store';
 import {getHistory} from 'utils/browser_history';

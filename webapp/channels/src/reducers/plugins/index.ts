@@ -5,10 +5,10 @@ import remove from 'lodash/remove';
 import type {AnyAction} from 'redux';
 import {combineReducers} from 'redux';
 
-import type {ClientPluginManifest} from '@mattermost/types/plugins';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {ClientPluginManifest} from '@hanzoteam/types/plugins';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import {UserTypes} from 'mattermost-redux/action_types';
+import {UserTypes} from '@hanzoteam/redux/action_types';
 
 import {ActionTypes} from 'utils/constants';
 import {extractChannelSettingsTab} from 'utils/plugins/channel_settings_extraction';

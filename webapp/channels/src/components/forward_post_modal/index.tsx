@@ -7,14 +7,14 @@ import {FormattedList, FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import type {OnChangeValue} from 'react-select';
 
-import {GenericModal} from '@mattermost/components';
-import type {Post, PostPreviewMetadata} from '@mattermost/types/posts';
+import {GenericModal} from '@hanzoteam/components';
+import type {Post, PostPreviewMetadata} from '@hanzoteam/types/posts';
 
-import {General, Permissions} from 'mattermost-redux/constants';
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {General, Permissions} from '@hanzoteam/redux/constants';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import {joinChannelById, switchToChannel} from 'actions/views/channel';

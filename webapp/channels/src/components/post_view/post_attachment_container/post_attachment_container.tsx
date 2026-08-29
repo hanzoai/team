@@ -5,10 +5,10 @@ import React, {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {matchPath, useHistory} from 'react-router-dom';
 
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {isTeamSameWithCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {isTeamSameWithCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {focusPost} from 'components/permalink_view/actions';
 

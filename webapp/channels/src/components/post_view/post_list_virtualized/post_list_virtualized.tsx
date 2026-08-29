@@ -4,8 +4,8 @@
 import React from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-import EventEmitter from 'mattermost-redux/utils/event_emitter';
-import {getNewMessagesIndex, isDateLine, isStartOfNewMessages} from 'mattermost-redux/utils/post_list';
+import EventEmitter from '@hanzoteam/redux/utils/event_emitter';
+import {getNewMessagesIndex, isDateLine, isStartOfNewMessages} from '@hanzoteam/redux/utils/post_list';
 
 import type {updateNewMessagesAtInChannel} from 'actions/global_actions';
 import type {CanLoadMorePosts} from 'actions/views/channel';

@@ -7,11 +7,11 @@ import {FormattedMessage} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import FormError from 'components/form_error';

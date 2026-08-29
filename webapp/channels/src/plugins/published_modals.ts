@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PublishedModalId, PublishedModalIdCandidate, PublishedModalProps} from '@mattermost/shared/types/global';
+import type {PublishedModalId, PublishedModalIdCandidate, PublishedModalProps} from '@hanzoteam/shared/types/global';
 
 import {openModal} from 'actions/views/modals';
 

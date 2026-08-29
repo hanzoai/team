@@ -1,19 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {IncomingWebhook, IncomingWebhooksWithCount, OutgoingWebhook, Command, OAuthApp, OutgoingOAuthConnection, DialogSubmission, SubmitDialogResponse} from '@mattermost/types/integrations';
+import type {IncomingWebhook, IncomingWebhooksWithCount, OutgoingWebhook, Command, OAuthApp, OutgoingOAuthConnection, DialogSubmission, SubmitDialogResponse} from '@hanzoteam/types/integrations';
 
-import {IntegrationTypes} from 'mattermost-redux/action_types';
-import {logError} from 'mattermost-redux/actions/errors';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import * as IntegrationActions from 'mattermost-redux/actions/integrations';
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getDialogArguments} from 'mattermost-redux/selectors/entities/integrations';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
+import {IntegrationTypes} from '@hanzoteam/redux/action_types';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import * as IntegrationActions from '@hanzoteam/redux/actions/integrations';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getDialogArguments} from '@hanzoteam/redux/selectors/entities/integrations';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {ActionFuncAsync} from 'types/store';
 

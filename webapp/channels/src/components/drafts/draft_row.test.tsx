@@ -4,9 +4,9 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {PostType} from '@mattermost/types/posts';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {PostType} from '@hanzoteam/types/posts';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 
@@ -26,18 +26,18 @@ jest.mock('components/edit_scheduled_post', () => () => <div>{'Edit Scheduled Po
 jest.mock('components/drafts/placeholder_scheduled_post_title/placeholder_scheduled_posts_title', () => () => (
     <div>{'Placeholder Scheduled Post Title'}</div>
 ));
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     getPost: () => jest.fn(),
 }));
-jest.mock('mattermost-redux/actions/scheduled_posts', () => ({
+jest.mock('@hanzoteam/redux/actions/scheduled_posts', () => ({
     deleteScheduledPost: () => jest.fn(),
     updateScheduledPost: () => jest.fn(),
 }));
-jest.mock('mattermost-redux/selectors/entities/roles', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/roles', () => ({
     haveIChannelPermission: () => true,
 }));
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/channels'),
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/channels'),
     isDeactivatedDirectChannel: () => false,
 }));
 

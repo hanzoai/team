@@ -6,13 +6,13 @@ import React, {memo, useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {SendIcon} from '@mattermost/compass-icons/components';
-import {ShortcutKeys} from '@mattermost/shared/components/shortcut_key';
-import type {ShortcutDefinition} from '@mattermost/shared/components/tooltip';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import {SendIcon} from '@hanzoteam/compass-icons/components';
+import {ShortcutKeys} from '@hanzoteam/shared/components/shortcut_key';
+import type {ShortcutDefinition} from '@hanzoteam/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
+import {isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
 
 import {isSendOnCtrlEnter} from 'selectors/preferences';
 

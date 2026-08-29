@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getDataRetentionCustomPolicies as fetchDataRetentionCustomPolicies, deleteDataRetentionCustomPolicy, patchConfig} from 'mattermost-redux/actions/admin';
-import {createJob, getJobsByType} from 'mattermost-redux/actions/jobs';
-import {getDataRetentionCustomPolicies, getDataRetentionCustomPoliciesCount} from 'mattermost-redux/selectors/entities/admin';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getDataRetentionCustomPolicies as fetchDataRetentionCustomPolicies, deleteDataRetentionCustomPolicy, patchConfig} from '@hanzoteam/redux/actions/admin';
+import {createJob, getJobsByType} from '@hanzoteam/redux/actions/jobs';
+import {getDataRetentionCustomPolicies, getDataRetentionCustomPoliciesCount} from '@hanzoteam/redux/selectors/entities/admin';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

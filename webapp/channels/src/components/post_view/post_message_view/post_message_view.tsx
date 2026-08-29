@@ -4,11 +4,11 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants';
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
-import {isPostEphemeral} from 'mattermost-redux/utils/post_utils';
+import {Posts} from '@hanzoteam/redux/constants';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {isPostEphemeral} from '@hanzoteam/redux/utils/post_utils';
 
 import PostMarkdown from 'components/post_markdown';
 import ShowMore from 'components/post_view/show_more';

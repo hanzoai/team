@@ -11,10 +11,10 @@ import {
     LinkVariantIcon,
     PaperclipIcon,
     BookmarkOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
+} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getChannelBookmarks} from 'mattermost-redux/selectors/entities/channel_bookmarks';
+import {getChannelBookmarks} from '@hanzoteam/redux/selectors/entities/channel_bookmarks';
 
 import {useBookmarkAddActions} from 'components/channel_bookmarks/channel_bookmarks_menu';
 import {MAX_BOOKMARKS_PER_CHANNEL, useCanUploadFiles, useChannelBookmarkPermission} from 'components/channel_bookmarks/utils';

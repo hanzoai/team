@@ -17,11 +17,11 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 import styled from 'styled-components';
 
-import {isDesktopApp, getDesktopVersion, isMacApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp, getDesktopVersion, isMacApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {getCurrentChannelNameForSearchShortcut} from 'mattermost-redux/selectors/entities/channels';
-import {getIsCrossTeamSearchEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeamId, getMyTeams} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentChannelNameForSearchShortcut} from '@hanzoteam/redux/selectors/entities/channels';
+import {getIsCrossTeamSearchEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeamId, getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {updateSearchTerms, showSearchResults, updateSearchType, updateSearchTeam} from 'actions/views/rhs';
 import {getSearchButtons} from 'selectors/plugins';

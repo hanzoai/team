@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {addOAuthApp} from 'mattermost-redux/actions/integrations';
+import {addOAuthApp} from '@hanzoteam/redux/actions/integrations';
 
 import AddOAuthApp from './add_oauth_app';
 

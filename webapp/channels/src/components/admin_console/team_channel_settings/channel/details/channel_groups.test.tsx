@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Group} from '@mattermost/types/groups';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Group} from '@hanzoteam/types/groups';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

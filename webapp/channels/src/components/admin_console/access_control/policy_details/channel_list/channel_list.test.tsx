@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

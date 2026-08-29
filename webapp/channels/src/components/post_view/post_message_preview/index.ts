@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {PostPreviewMetadata} from '@mattermost/types/posts';
+import type {PostPreviewMetadata} from '@hanzoteam/types/posts';
 
-import {General} from 'mattermost-redux/constants';
-import {getDirectTeammate, isMyChannelAutotranslated} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getFeatureFlagValue, isPermissionPoliciesEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getPost, isPostPriorityEnabled} from 'mattermost-redux/selectors/entities/posts';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {getUser, makeGetDisplayName} from 'mattermost-redux/selectors/entities/users';
+import {General} from '@hanzoteam/redux/constants';
+import {getDirectTeammate, isMyChannelAutotranslated} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getFeatureFlagValue, isPermissionPoliciesEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost, isPostPriorityEnabled} from '@hanzoteam/redux/selectors/entities/posts';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {getUser, makeGetDisplayName} from '@hanzoteam/redux/selectors/entities/users';
 
 import {toggleEmbedVisibility} from 'actions/post_actions';
 import {isEmbedVisible} from 'selectors/posts';

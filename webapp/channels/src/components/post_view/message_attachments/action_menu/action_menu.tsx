@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import AutocompleteSelector from 'components/autocomplete_selector';
 import type {Option, Selected} from 'components/autocomplete_selector';

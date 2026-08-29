@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {LockProfileFieldsSetting} from '@mattermost/types/config';
-import type {MemberInviteProfile} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {LockProfileFieldsSetting} from '@hanzoteam/types/config';
+import type {MemberInviteProfile} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import {Constants} from 'utils/constants';
 

@@ -3,17 +3,17 @@
 
 import React from 'react';
 
-import type {TeamReviewerSetting} from '@mattermost/types/config';
-import type {Team} from '@mattermost/types/teams';
+import type {TeamReviewerSetting} from '@hanzoteam/types/config';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {searchTeams} from 'mattermost-redux/actions/teams';
+import {searchTeams} from '@hanzoteam/redux/actions/teams';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 
 import TeamReviewersSection from './team_reviewers_section';
 
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     searchTeams: jest.fn(),
 }));
 

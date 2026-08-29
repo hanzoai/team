@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Emoji} from '@mattermost/types/emojis';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getEmojiName} from 'mattermost-redux/utils/emoji_utils';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getEmojiName} from '@hanzoteam/redux/utils/emoji_utils';
 
 import ChannelPermissionGate from 'components/permissions_gates/channel_permission_gate';
 

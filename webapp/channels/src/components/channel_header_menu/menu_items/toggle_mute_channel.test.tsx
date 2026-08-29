@@ -4,7 +4,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import * as channelActions from 'mattermost-redux/actions/channels';
+import * as channelActions from '@hanzoteam/redux/actions/channels';
 
 import {WithTestMenuContext} from 'components/menu/menu_context_test';
 

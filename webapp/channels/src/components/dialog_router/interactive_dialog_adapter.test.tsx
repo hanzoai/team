@@ -4,9 +4,9 @@
 import {waitFor} from '@testing-library/react';
 import React from 'react';
 
-import type {DialogElement} from '@mattermost/types/integrations';
+import type {DialogElement} from '@hanzoteam/types/integrations';
 
-import {AppFieldTypes} from 'mattermost-redux/constants/apps';
+import {AppFieldTypes} from '@hanzoteam/redux/constants/apps';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import EmojiMap from 'utils/emoji_map';

@@ -6,8 +6,8 @@ import type {ColumnDef} from '@tanstack/react-table';
 import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import LevelColorCell from './level_color_cell';
 import LevelNameCell from './level_name_cell';

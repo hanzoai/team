@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {haveIChannelPermission, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {haveIChannelPermission, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {getChannelSettingsTabs} from 'selectors/plugins';
 

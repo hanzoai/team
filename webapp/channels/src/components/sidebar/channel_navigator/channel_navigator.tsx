@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import QuickSwitchModal from 'components/quick_switch_modal';
 

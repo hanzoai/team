@@ -5,8 +5,8 @@ import React, {useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {AlertOutlineIcon} from '@mattermost/compass-icons/components';
-import type {AllowedIPRange, FetchIPResponse} from '@mattermost/types/config';
+import {AlertOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {AllowedIPRange, FetchIPResponse} from '@hanzoteam/types/config';
 
 import {applyIPFilters, getCurrentIP, getIPFilters} from 'actions/admin_actions';
 import {getInstallation} from 'actions/cloud';

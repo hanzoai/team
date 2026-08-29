@@ -6,12 +6,12 @@ import React, {memo, useCallback, useMemo, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Post} from '@mattermost/types/posts';
+import {CheckIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getPostEditHistory, restorePostVersion} from 'mattermost-redux/actions/posts';
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {getPostEditHistory, restorePostVersion} from '@hanzoteam/redux/actions/posts';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {removeDraft} from 'actions/views/drafts';
 import {getConnectionId} from 'selectors/general';

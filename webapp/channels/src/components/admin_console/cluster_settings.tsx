@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 
-import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
+import type {AdminConfig, ClientLicense} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import ExternalLink from 'components/external_link';
 import WarningIcon from 'components/widgets/icons/fa_warning_icon';

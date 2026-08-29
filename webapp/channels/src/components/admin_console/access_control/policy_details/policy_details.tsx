@@ -5,17 +5,17 @@ import cloneDeep from 'lodash/cloneDeep';
 import React, {useState, useEffect, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import {getMembershipRule, buildRulesWithMembership} from '@mattermost/types/access_control';
-import type {ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
-import type {AccessControlSettings} from '@mattermost/types/config';
-import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {Team} from '@mattermost/types/teams';
+import {GenericModal} from '@hanzoteam/components';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import {getMembershipRule, buildRulesWithMembership} from '@hanzoteam/types/access_control';
+import type {ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {AccessControlSettings} from '@hanzoteam/types/config';
+import type {JobTypeBase} from '@hanzoteam/types/jobs';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import Card from 'components/card/card';

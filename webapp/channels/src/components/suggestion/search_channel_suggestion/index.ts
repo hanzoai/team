@@ -3,10 +3,10 @@
 
 import {connect} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getDirectTeammate} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getDirectTeammate} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

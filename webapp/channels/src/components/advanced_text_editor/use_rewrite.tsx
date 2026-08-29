@@ -5,11 +5,11 @@ import type React from 'react';
 import {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {getAgents as getAgentsAction} from 'mattermost-redux/actions/agents';
-import {Client4} from 'mattermost-redux/client';
-import {getAgents} from 'mattermost-redux/selectors/entities/agents';
+import {getAgents as getAgentsAction} from '@hanzoteam/redux/actions/agents';
+import {Client4} from '@hanzoteam/redux/client';
+import {getAgents} from '@hanzoteam/redux/selectors/entities/agents';
 
 import {useSelectedAgent} from 'components/common/agents';
 import type TextboxClass from 'components/textbox/textbox';

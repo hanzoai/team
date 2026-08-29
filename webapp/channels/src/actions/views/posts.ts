@@ -1,18 +1,18 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post, PostMetadata} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post, PostMetadata} from '@hanzoteam/types/posts';
 
-import {logError} from 'mattermost-redux/actions/errors';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import {Permissions} from 'mattermost-redux/constants';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAssociatedGroupsForReferenceByMention} from 'mattermost-redux/selectors/entities/groups';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission, haveICurrentChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAssociatedGroupsForReferenceByMention} from '@hanzoteam/redux/selectors/entities/groups';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission, haveICurrentChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getPermalinkURL} from 'selectors/urls';
 

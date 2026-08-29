@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, injectIntl, type IntlShape} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import KeyboardShortcutSequence, {
     KEYBOARD_SHORTCUTS,

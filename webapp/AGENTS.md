@@ -8,18 +8,18 @@ Follow `webapp/STYLE_GUIDE.md` for canonical style, accessibility, and testing s
 
 ## Shared Components
 
-Prefer the shared components from `@mattermost/shared` over hand-rolled equivalents:
+Prefer the shared components from `@hanzoteam/shared` over hand-rolled equivalents:
 
 - **`Button`** — use for text-based button UI instead of building bespoke `<button>` elements or styling.
   ```typescript
-  import {Button} from '@mattermost/shared/components/button';
+  import {Button} from '@hanzoteam/shared/components/button';
   ```
 - **`WithTooltip`** — use for tooltips instead of wiring up Floating UI or other tooltip primitives directly.
   ```typescript
-  import {WithTooltip} from '@mattermost/shared/components/tooltip';
+  import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
   ```
 
-Always import via the full package name (`@mattermost/shared/...`), never via relative paths into `platform/shared/`.
+Always import via the full package name (`@hanzoteam/shared/...`), never via relative paths into `platform/shared/`.
 
 ## Plugin-facing surface on `window.WebappUtils`
 
@@ -32,7 +32,7 @@ Two existing top-level globals are frozen legacy — do not extend them and do n
 
 **Published sub-namespaces**
 
-Each has a contract type in `@mattermost/shared/types/global/` and a build-time drift check in `webapp/channels/src/plugins/published_*.ts`. Third-party plugins pin against these via `min_server_version` — treat every entry like a public API.
+Each has a contract type in `@hanzoteam/shared/types/global/` and a build-time drift check in `webapp/channels/src/plugins/published_*.ts`. Third-party plugins pin against these via `min_server_version` — treat every entry like a public API.
 
 - `window.WebappUtils.modals` — contract `PublishedModalUtils`; allowlist in `published_modals.ts`.
 - `window.WebappUtils.editor` — contract `PublishedEditorUtils`; allowlist in `published_editor.ts`.
@@ -41,7 +41,7 @@ Each has a contract type in `@mattermost/shared/types/global/` and a build-time 
 
 Follow all four steps in the same PR:
 
-1. Add the type to `platform/shared/src/types/global/<file>.ts`. Do not import from `webapp/channels`; if you need a webapp-internal type, move its type portion to `@mattermost/types` or `platform/shared/src/types/global/` first.
+1. Add the type to `platform/shared/src/types/global/<file>.ts`. Do not import from `webapp/channels`; if you need a webapp-internal type, move its type portion to `@hanzoteam/types` or `platform/shared/src/types/global/` first.
 2. Add the implementation to the corresponding `channels/src/plugins/published_<file>.ts` allowlist.
 3. Add a unit test to `published_<file>.test.tsx`.
 4. Wire it onto `window.WebappUtils.<sub-namespace>` in `channels/src/plugins/export.ts`.

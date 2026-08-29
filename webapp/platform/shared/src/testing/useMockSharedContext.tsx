@@ -3,7 +3,7 @@
 
 import React, {useCallback, useMemo} from 'react';
 
-import {isSystemEmoji, type CustomEmoji, type Emoji, type SystemEmoji} from '@mattermost/types/emojis';
+import {isSystemEmoji, type CustomEmoji, type Emoji, type SystemEmoji} from '@hanzoteam/types/emojis';
 
 import {SharedProvider, type SharedProviderProps} from '../context/context';
 

@@ -1,18 +1,18 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
+import type {AdminConfig, ClientLicense} from '@hanzoteam/types/config';
 
-import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {RESOURCE_KEYS} from '@hanzoteam/redux/constants/permissions_sysconsole';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {LicenseSkus} from 'utils/constants';
 
 import AdminDefinition from './admin_definition';
 import type {AdminDefinitionSettingInput, Check, ConsoleAccess} from './types';
 
-jest.mock('mattermost-redux/selectors/entities/general', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/general'),
+jest.mock('@hanzoteam/redux/selectors/entities/general', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/general'),
     getConfig: jest.fn(),
 }));
 

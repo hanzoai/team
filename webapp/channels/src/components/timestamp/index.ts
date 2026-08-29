@@ -3,11 +3,11 @@
 
 import {connect} from 'react-redux';
 
-import type {UserTimezone} from '@mattermost/types/users';
+import type {UserTimezone} from '@hanzoteam/types/users';
 
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTimezoneFull} from 'mattermost-redux/selectors/entities/timezone';
-import {getUserCurrentTimezone} from 'mattermost-redux/utils/timezone_utils';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTimezoneFull} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getUserCurrentTimezone} from '@hanzoteam/redux/utils/timezone_utils';
 
 import {Preferences} from 'utils/constants';
 

@@ -4,12 +4,12 @@
 import React from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile, GetFilteredUsersStatsOpts} from '@mattermost/types/users';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile, GetFilteredUsersStatsOpts} from '@hanzoteam/types/users';
 
-import GeneralConstants from 'mattermost-redux/constants/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import GeneralConstants from '@hanzoteam/redux/constants/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {FilterOptions} from 'components/admin_console/filter/filter';
 import UserGrid from 'components/admin_console/user_grid/user_grid';

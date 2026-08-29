@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
 
-import {sendVerificationEmail} from 'mattermost-redux/actions/users';
+import {sendVerificationEmail} from '@hanzoteam/redux/actions/users';
 
 import EmailInboxSVG from 'components/common/svg_images_components/email_inbox_svg';
 import ColumnLayout from 'components/header_footer_route/content_layouts/column';

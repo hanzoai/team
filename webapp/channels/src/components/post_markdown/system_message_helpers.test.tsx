@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

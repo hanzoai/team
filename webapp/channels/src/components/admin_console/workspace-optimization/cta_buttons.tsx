@@ -4,7 +4,7 @@
 import React from 'react';
 import {useHistory} from 'react-router-dom';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import './dashboard.scss';
 

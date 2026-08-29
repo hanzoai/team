@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Recap} from '@mattermost/types/recaps';
-import {RecapStatus} from '@mattermost/types/recaps';
+import type {Recap} from '@hanzoteam/types/recaps';
+import {RecapStatus} from '@hanzoteam/types/recaps';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
@@ -18,17 +18,17 @@ jest.mock('react-redux', () => ({
     useDispatch: () => mockDispatch,
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     readMultipleChannels: jest.fn((channelIds) => ({type: 'READ_MULTIPLE_CHANNELS', channelIds})),
 }));
 
-jest.mock('mattermost-redux/actions/recaps', () => ({
+jest.mock('@hanzoteam/redux/actions/recaps', () => ({
     markRecapAsRead: jest.fn((recapId) => ({type: 'MARK_RECAP_AS_READ', recapId})),
     deleteRecap: jest.fn((recapId) => ({type: 'DELETE_RECAP', recapId})),
     regenerateRecap: jest.fn((recapId) => ({type: 'REGENERATE_RECAP', recapId})),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/agents', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/agents', () => ({
     getAgents: () => mockAgents,
 }));
 
@@ -124,7 +124,7 @@ describe('RecapItem', () => {
     });
 
     test('keeps mark all channels action available after the recap is read', async () => {
-        const {readMultipleChannels} = require('mattermost-redux/actions/channels');
+        const {readMultipleChannels} = require('@hanzoteam/redux/actions/channels');
         const user = userEvent.setup();
 
         renderWithContext(

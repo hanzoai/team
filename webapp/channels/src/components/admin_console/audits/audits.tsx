@@ -5,10 +5,10 @@ import React, {useEffect, useState, memo, useCallback} from 'react';
 import type {CSSProperties} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Audit} from '@mattermost/types/audits';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Audit} from '@hanzoteam/types/audits';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ComplianceReports from 'components/admin_console/compliance_reports';
 import AuditTable from 'components/audit_table';

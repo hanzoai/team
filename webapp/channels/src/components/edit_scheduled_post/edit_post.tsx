@@ -6,15 +6,15 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {EmoticonPlusOutlineIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Emoji, SystemEmoji} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
-import {scheduledPostToPost} from '@mattermost/types/schedule_post';
+import {EmoticonPlusOutlineIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
+import {scheduledPostToPost} from '@hanzoteam/types/schedule_post';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getEmojiName, isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getEmojiName, isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {openModal} from 'actions/views/modals';
 import {getConnectionId} from 'selectors/general';

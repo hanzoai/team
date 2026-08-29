@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 type ProfileWithGroups = Partial<UserProfile & {
     groups: Array<Partial<Group>>;

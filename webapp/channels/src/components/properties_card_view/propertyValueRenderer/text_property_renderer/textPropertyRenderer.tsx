@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import type {TextFieldMetadata} from 'components/properties_card_view/properties_card_view';
 

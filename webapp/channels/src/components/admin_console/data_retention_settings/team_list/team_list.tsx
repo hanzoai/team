@@ -5,9 +5,9 @@ import debounce from 'lodash/debounce';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Team, TeamSearchOpts} from '@mattermost/types/teams';
+import type {Team, TeamSearchOpts} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import type {Column, Row} from 'components/admin_console/data_grid/data_grid';

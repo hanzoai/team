@@ -8,7 +8,7 @@ import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing
 import type {WorkspaceWithStatus} from './share_channel_with_workspaces';
 import ShareChannelWithWorkspaces from './share_channel_with_workspaces';
 
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         getRemoteClusters: jest.fn().mockResolvedValue([
             {remote_id: 'remote1', name: 'nebula', display_name: 'Nebula Networks'},
@@ -58,7 +58,7 @@ function renderShareChannelWithWorkspaces(remotes: WorkspaceWithStatus[], initia
 describe('ShareChannelWithWorkspaces', () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        (require('mattermost-redux/client').Client4.getRemoteClusters as jest.Mock).mockResolvedValue([
+        (require('@hanzoteam/redux/client').Client4.getRemoteClusters as jest.Mock).mockResolvedValue([
             {remote_id: 'remote1', name: 'nebula', display_name: 'Nebula Networks'},
             {remote_id: 'remote2', name: 'cascade', display_name: 'Cascade Collaborative'},
         ]);

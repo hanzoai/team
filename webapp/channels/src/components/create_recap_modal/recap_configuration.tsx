@@ -4,9 +4,9 @@
 import React, {useCallback, useState} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 
-import {ProductChannelsIcon, LightningBoltOutlineIcon, CheckCircleIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel} from '@mattermost/types/channels';
+import {ProductChannelsIcon, LightningBoltOutlineIcon, CheckCircleIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import Toggle from 'components/toggle';
 const RECAP_NAME_MAX_LENGTH = 100;

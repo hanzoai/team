@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {isDesktopApp, getDesktopVersion} from '@mattermost/shared/utils/user_agent';
-import type {ProductNotices, ProductNotice} from '@mattermost/types/product_notices';
+import {GenericModal} from '@hanzoteam/components';
+import {isDesktopApp, getDesktopVersion} from '@hanzoteam/shared/utils/user_agent';
+import type {ProductNotices, ProductNotice} from '@hanzoteam/types/product_notices';
 
 import ExternalLink from 'components/external_link';
 import Markdown from 'components/markdown';

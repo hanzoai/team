@@ -8,7 +8,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {
     AppsIcon,
     ChevronRightIcon,
-} from '@mattermost/compass-icons/components';
+} from '@hanzoteam/compass-icons/components';
 
 import * as Menu from 'components/menu';
 

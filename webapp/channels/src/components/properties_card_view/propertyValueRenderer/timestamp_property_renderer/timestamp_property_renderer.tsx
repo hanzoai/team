@@ -3,7 +3,7 @@
 
 import React, {type ComponentProps} from 'react';
 
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import Timestamp from 'components/timestamp';
 

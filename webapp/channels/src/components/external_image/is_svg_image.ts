@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {PostImage} from '@mattermost/types/posts';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 export const isSVGImage = (imageMetadata: PostImage | undefined, src: string) => {
     if (!imageMetadata) {

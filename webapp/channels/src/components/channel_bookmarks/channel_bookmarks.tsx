@@ -4,7 +4,7 @@
 import React, {useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 
 import BookmarksBarItem from './bookmarks_bar_item';
 import BookmarksBarMenu from './bookmarks_bar_menu';

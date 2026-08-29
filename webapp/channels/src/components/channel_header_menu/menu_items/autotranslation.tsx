@@ -5,11 +5,11 @@ import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {TranslateIcon} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
+import {TranslateIcon} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {setMyChannelAutotranslation} from 'mattermost-redux/actions/channels';
-import {isMyChannelAutotranslated, isUserLanguageSupportedForAutotranslation} from 'mattermost-redux/selectors/entities/channels';
+import {setMyChannelAutotranslation} from '@hanzoteam/redux/actions/channels';
+import {isMyChannelAutotranslated, isUserLanguageSupportedForAutotranslation} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {openModal} from 'actions/views/modals';
 

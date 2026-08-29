@@ -6,9 +6,9 @@ import type {Moment} from 'moment-timezone';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import DateTimeInput, {getRoundedTime} from 'components/datetime_input/datetime_input';
 

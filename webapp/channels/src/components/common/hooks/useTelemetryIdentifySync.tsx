@@ -4,8 +4,8 @@
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
-import {Client4} from 'mattermost-redux/client';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 /**
  * The purpose of this hook is to sync the user's id and role with client4's user id and role,

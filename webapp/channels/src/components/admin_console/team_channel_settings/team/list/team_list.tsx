@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {Team, TeamSearchOpts, TeamsWithCount} from '@mattermost/types/teams';
+import type {Team, TeamSearchOpts, TeamsWithCount} from '@hanzoteam/types/teams';
 
-import {debounce} from 'mattermost-redux/actions/helpers';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import type {Column} from 'components/admin_console/data_grid/data_grid';

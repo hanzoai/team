@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
 
 import {fakeDate} from 'tests/helpers/date';
 import {renderWithContext, waitFor} from 'tests/react_testing_utils';

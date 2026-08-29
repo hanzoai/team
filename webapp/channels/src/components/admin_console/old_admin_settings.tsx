@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {AdminConfig, EnvironmentConfig} from '@mattermost/types/config';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {AdminConfig, EnvironmentConfig} from '@hanzoteam/types/config';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import FormError from 'components/form_error';
 import SaveButton from 'components/save_button';

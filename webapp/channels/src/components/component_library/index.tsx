@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import {applyTheme} from 'utils/utils';
 

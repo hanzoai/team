@@ -3,12 +3,12 @@
 
 import {createIntl} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import enMessages from 'i18n/en.json';
-import {makeInitialState} from 'packages/mattermost-redux/test/test_store';
+import {makeInitialState} from 'packages/@hanzoteam/redux/test/test_store';
 import {PostListRowListIds, Constants} from 'utils/constants';
 import EmojiMap from 'utils/emoji_map';
 import * as PostUtils from 'utils/post_utils';

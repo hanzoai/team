@@ -4,9 +4,9 @@
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
 import type {GlobalState} from 'types/store';
 

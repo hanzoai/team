@@ -7,7 +7,7 @@ import {bindActionCreators} from 'redux';
 
 import * as GlobalActions from 'actions/global_actions';
 
-import testConfigureStore from 'packages/mattermost-redux/test/test_store';
+import testConfigureStore from 'packages/@hanzoteam/redux/test/test_store';
 import {renderWithContext, waitFor} from 'tests/react_testing_utils';
 import * as BrowserUtils from 'utils/browser_utils';
 import {StoragePrefixes} from 'utils/constants';
@@ -36,8 +36,8 @@ jest.mock('actions/global_actions', () => ({
     redirectUserToDefaultTeam: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/general', () => ({
-    ...jest.requireActual('mattermost-redux/actions/general'),
+jest.mock('@hanzoteam/redux/actions/general', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/general'),
     setUrl: () => {},
 }));
 

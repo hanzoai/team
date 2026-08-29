@@ -7,12 +7,12 @@ import React, {useCallback, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {EmoticonHappyOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Emoji, SystemEmoji} from '@mattermost/types/emojis';
+import {EmoticonHappyOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getEmojiName, isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getEmojiName, isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import useEmojiPicker, {useEmojiPickerOffset} from 'components/emoji_picker/use_emoji_picker';
 import KeyboardShortcutSequence, {KEYBOARD_SHORTCUTS} from 'components/keyboard_shortcuts/keyboard_shortcuts_sequence';

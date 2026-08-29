@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import React, {lazy, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {cleanUpStatusAndProfileFetchingPoll} from 'mattermost-redux/actions/status_profile_polling';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
+import {cleanUpStatusAndProfileFetchingPoll} from '@hanzoteam/redux/actions/status_profile_polling';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
 
 import {addVisibleUsersInCurrentChannelAndSelfToStatusPoll} from 'actions/status_actions';
 import {getIsMobileView} from 'selectors/views/browser';

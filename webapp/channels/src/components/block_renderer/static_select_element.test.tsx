@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {MmStaticSelectBlock} from '@mattermost/types/mm_blocks';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {MmStaticSelectBlock} from '@hanzoteam/types/mm_blocks';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

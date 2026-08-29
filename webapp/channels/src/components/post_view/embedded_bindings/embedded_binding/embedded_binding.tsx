@@ -4,11 +4,11 @@
 import React from 'react';
 import type {CSSProperties} from 'react';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {AppBindingLocations} from 'mattermost-redux/constants/apps';
-import {cleanBinding} from 'mattermost-redux/utils/apps';
+import {AppBindingLocations} from '@hanzoteam/redux/constants/apps';
+import {cleanBinding} from '@hanzoteam/redux/utils/apps';
 
 import Markdown from 'components/markdown';
 import ShowMore from 'components/post_view/show_more';

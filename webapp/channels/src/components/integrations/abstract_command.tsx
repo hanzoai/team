@@ -6,9 +6,9 @@ import type {ChangeEvent} from 'react';
 import {defineMessage, FormattedMessage, type MessageDescriptor} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {Command} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {Command} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import ExternalLink from 'components/external_link';

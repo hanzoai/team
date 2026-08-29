@@ -4,8 +4,8 @@
 import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
 import * as Menu from 'components/menu';
 

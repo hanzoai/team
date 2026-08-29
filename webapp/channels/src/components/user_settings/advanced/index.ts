@@ -6,16 +6,16 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {updateUserActive, revokeAllSessionsForUser} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {updateUserActive, revokeAllSessionsForUser} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 import {
     get,
     getUnreadScrollPositionPreference,
     makeGetCategory, makeGetUserCategory,
     syncedDraftsAreAllowed,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {Preferences} from 'utils/constants';
 

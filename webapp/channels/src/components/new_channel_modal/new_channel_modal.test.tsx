@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {createChannel} from 'mattermost-redux/actions/channels';
-import Permissions from 'mattermost-redux/constants/permissions';
+import {createChannel} from '@hanzoteam/redux/actions/channels';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import useClassificationMarkings from 'components/common/hooks/useClassificationMarkings';
 
@@ -40,7 +40,7 @@ jest.mock('plugins/pluggable', () => ({
     default: ({pluggableName}: {pluggableName: string}) => <div data-testid={`pluggable-${pluggableName}`}/>,
 }));
 
-jest.mock('mattermost-redux/actions/channels');
+jest.mock('@hanzoteam/redux/actions/channels');
 jest.mock('components/common/hooks/useClassificationMarkings', () => ({
     __esModule: true,
     default: jest.fn(() => ({available: false, loading: false, channelField: null, levels: []})),

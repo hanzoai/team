@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {PostTypes} from 'mattermost-redux/action_types';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {PostTypes} from '@hanzoteam/redux/action_types';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import type {DispatchFunc, GetStateFunc, ActionFuncAsync} from 'types/store';
 

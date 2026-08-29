@@ -4,9 +4,9 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Audit} from '@mattermost/types/audits';
+import type {Audit} from '@hanzoteam/types/audits';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {toTitleCase} from 'utils/utils';
 

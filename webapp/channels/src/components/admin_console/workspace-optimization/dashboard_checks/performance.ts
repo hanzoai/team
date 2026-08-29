@@ -3,7 +3,7 @@
 
 import type {useIntl} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import {elasticsearchTest} from 'actions/admin_actions';
 

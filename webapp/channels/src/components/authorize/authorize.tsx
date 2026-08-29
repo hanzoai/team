@@ -5,10 +5,10 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {OAuthApp} from '@mattermost/types/integrations';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {allowOAuth2} from 'actions/admin_actions';
 

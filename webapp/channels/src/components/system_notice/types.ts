@@ -3,8 +3,8 @@
 
 import type React from 'react';
 
-import type {AnalyticsState} from '@mattermost/types/admin';
-import type {Channel} from '@mattermost/types/channels';
+import type {AnalyticsState} from '@hanzoteam/types/admin';
+import type {Channel} from '@hanzoteam/types/channels';
 
 export type Notice = {
     name: string;

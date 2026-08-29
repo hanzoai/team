@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
-import type {DataRetentionCustomPolicy} from '@mattermost/types/data_retention';
+import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {DataRetentionCustomPolicy} from '@hanzoteam/types/data_retention';
 
-import {getDataRetentionCustomPolicyChannels, searchDataRetentionCustomPolicyChannels as searchChannels} from 'mattermost-redux/actions/admin';
-import {getDataRetentionCustomPolicy} from 'mattermost-redux/selectors/entities/admin';
-import {filterChannelList, getChannelsInPolicy, searchChannelsInPolicy} from 'mattermost-redux/selectors/entities/channels';
-import {filterChannelsMatchingTerm, channelListToMap} from 'mattermost-redux/utils/channel_utils';
+import {getDataRetentionCustomPolicyChannels, searchDataRetentionCustomPolicyChannels as searchChannels} from '@hanzoteam/redux/actions/admin';
+import {getDataRetentionCustomPolicy} from '@hanzoteam/redux/selectors/entities/admin';
+import {filterChannelList, getChannelsInPolicy, searchChannelsInPolicy} from '@hanzoteam/redux/selectors/entities/channels';
+import {filterChannelsMatchingTerm, channelListToMap} from '@hanzoteam/redux/utils/channel_utils';
 
 import {setChannelListSearch, setChannelListFilters} from 'actions/views/search';
 

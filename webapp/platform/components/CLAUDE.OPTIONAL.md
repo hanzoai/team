@@ -1,4 +1,4 @@
-# CLAUDE: `platform/components/` (`@mattermost/components`)
+# CLAUDE: `platform/components/` (`@hanzoteam/components`)
 
 ## Purpose
 - Cross-product React components (GenericModal, tour tips, loaders, hooks) shared by Channels, Boards, Playbooks, and plugins.

@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General} from 'mattermost-redux/constants';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {General} from '@hanzoteam/redux/constants';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

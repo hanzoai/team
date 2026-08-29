@@ -6,34 +6,34 @@ import {useIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {isMobile} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {ServerError} from '@mattermost/types/errors';
-import type {Group} from '@mattermost/types/groups';
-import {isMessageAttachmentArray} from '@mattermost/types/message_attachments';
-import type {Post, PostPriorityMetadata, PostTranslation} from '@mattermost/types/posts';
-import {PostPriority} from '@mattermost/types/posts';
-import type {Reaction} from '@mattermost/types/reactions';
-import type {UserProfile} from '@mattermost/types/users';
+import {isMobile} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Group} from '@hanzoteam/types/groups';
+import {isMessageAttachmentArray} from '@hanzoteam/types/message_attachments';
+import type {Post, PostPriorityMetadata, PostTranslation} from '@hanzoteam/types/posts';
+import {PostPriority} from '@hanzoteam/types/posts';
+import type {Reaction} from '@hanzoteam/types/reactions';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {Permissions, Posts} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getAllGroupsForReferenceByName} from 'mattermost-redux/selectors/entities/groups';
-import {isPostFlagged, makeGetReactionsForPost} from 'mattermost-redux/selectors/entities/posts';
-import {getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId, getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetDisplayName, getCurrentUserId, getUser, getUsersByUsername} from 'mattermost-redux/selectors/entities/users';
-import type {UserMentionKey} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
-import * as PostListUtils from 'mattermost-redux/utils/post_list';
-import {canEditPost as canEditPostRedux} from 'mattermost-redux/utils/post_utils';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {Permissions, Posts} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getAllGroupsForReferenceByName} from '@hanzoteam/redux/selectors/entities/groups';
+import {isPostFlagged, makeGetReactionsForPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetDisplayName, getCurrentUserId, getUser, getUsersByUsername} from '@hanzoteam/redux/selectors/entities/users';
+import type {UserMentionKey} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
+import * as PostListUtils from '@hanzoteam/redux/utils/post_list';
+import {canEditPost as canEditPostRedux} from '@hanzoteam/redux/utils/post_utils';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {getEmojiMap} from 'selectors/emojis';
 import {getIsMobileView} from 'selectors/views/browser';
@@ -388,7 +388,7 @@ export function isIdNotPost(postId: string): boolean {
 }
 
 // getOldestPostId returns the oldest valid post ID in the given list of post IDs. This function is copied from
-// mattermost-redux, except it also includes additional special IDs that are only used in the web app.
+// @hanzoteam/redux, except it also includes additional special IDs that are only used in the web app.
 export function getOldestPostId(postIds: string[]): string {
     for (let i = postIds.length - 1; i >= 0; i--) {
         const item = postIds[i];
@@ -436,7 +436,7 @@ export function getPreviousPostId(postIds: string[], startIndex: number): string
 }
 
 // getLatestPostId returns the most recent valid post ID in the given list of post IDs. This function is copied from
-// mattermost-redux, except it also includes additional special IDs that are only used in the web app.
+// @hanzoteam/redux, except it also includes additional special IDs that are only used in the web app.
 export function getLatestPostId(postIds: string[]): string {
     for (let i = 0; i < postIds.length; i++) {
         const item = postIds[i];

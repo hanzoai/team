@@ -3,13 +3,13 @@
 
 import {connect} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getAllChannels, getChannelsWithUserProfiles} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
-import {filterProfilesStartingWithTerm} from 'mattermost-redux/utils/user_utils';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getAllChannels, getChannelsWithUserProfiles} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
+import {filterProfilesStartingWithTerm} from '@hanzoteam/redux/utils/user_utils';
 
 import Constants from 'utils/constants';
 

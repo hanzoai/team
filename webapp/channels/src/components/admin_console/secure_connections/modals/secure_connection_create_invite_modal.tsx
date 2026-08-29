@@ -4,9 +4,9 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {CheckIcon, ContentCopyIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
+import {CheckIcon, ContentCopyIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
 import useCopyText, {messages as copymsg} from 'components/common/hooks/useCopyText';
 import LoadingScreen from 'components/loading_screen';

@@ -4,9 +4,9 @@
 import React from 'react';
 import {DragDropContext, Droppable} from 'react-beautiful-dnd';
 
-import {CategorySorting} from '@mattermost/types/channel_categories';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

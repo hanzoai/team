@@ -17,7 +17,7 @@ import type {
 } from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
 import CloseCircleSolidIcon from 'components/widgets/icons/close_circle_solid_icon';

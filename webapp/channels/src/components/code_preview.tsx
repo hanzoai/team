@@ -3,7 +3,7 @@
 
 import React, {useEffect, useState} from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
 import FileInfoPreview from 'components/file_info_preview';
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';

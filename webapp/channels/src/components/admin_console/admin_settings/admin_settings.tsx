@@ -6,7 +6,7 @@
 import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import FormError from 'components/form_error';
 import SaveButton from 'components/save_button';

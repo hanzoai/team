@@ -8,9 +8,9 @@ import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useLocation} from 'react-router-dom';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {redirectUserToDefaultTeam} from 'actions/global_actions';
 import {loginWithDesktopToken} from 'actions/views/login';

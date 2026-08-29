@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {PropertyField, PropertyValue} from '@mattermost/types/properties';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {PropertyField, PropertyValue} from '@hanzoteam/types/properties';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {
     DISPLAY_BANNER_BOTTOM,
@@ -26,7 +26,7 @@ const MOCK_USER_ID = 'current_user_id_12345678';
 
 import GlobalClassificationBanner from './global_classification_banner';
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 const TEMPLATE_FIELD_ID = 'template_field1';
 const LINKED_FIELD_ID = 'linked_field1';

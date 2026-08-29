@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {Preferences} from 'mattermost-redux/constants';
-import * as GeneralSelectors from 'mattermost-redux/selectors/entities/general';
-import * as PreferenceSelectors from 'mattermost-redux/selectors/entities/preferences';
-import * as UserSelectors from 'mattermost-redux/selectors/entities/users';
+import {Preferences} from '@hanzoteam/redux/constants';
+import * as GeneralSelectors from '@hanzoteam/redux/selectors/entities/general';
+import * as PreferenceSelectors from '@hanzoteam/redux/selectors/entities/preferences';
+import * as UserSelectors from '@hanzoteam/redux/selectors/entities/users';
 
 import {makeGetCustomStatus, getRecentCustomStatuses, isCustomStatusEnabled, showStatusDropdownPulsatingDot, showPostHeaderUpdateStatusButton} from 'selectors/views/custom_status';
 import configureStore from 'store';
@@ -14,16 +14,16 @@ import configureStore from 'store';
 import {TestHelper} from 'utils/test_helper';
 import {addTimeToTimestamp, TimeInformation} from 'utils/utils';
 
-jest.mock('mattermost-redux/selectors/entities/users', () => {
-    const originalModule = jest.requireActual('mattermost-redux/selectors/entities/users');
+jest.mock('@hanzoteam/redux/selectors/entities/users', () => {
+    const originalModule = jest.requireActual('@hanzoteam/redux/selectors/entities/users');
     return {
         ...originalModule,
         getCurrentUser: jest.fn(),
         getUser: jest.fn(),
     };
 });
-jest.mock('mattermost-redux/selectors/entities/general');
-jest.mock('mattermost-redux/selectors/entities/preferences');
+jest.mock('@hanzoteam/redux/selectors/entities/general');
+jest.mock('@hanzoteam/redux/selectors/entities/preferences');
 
 const customStatus = {
     emoji: 'speech_balloon',

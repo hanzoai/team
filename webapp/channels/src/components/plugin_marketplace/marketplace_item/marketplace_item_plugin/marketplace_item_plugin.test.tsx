@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PluginStatusRedux} from '@mattermost/types/plugins';
+import type {PluginStatusRedux} from '@hanzoteam/types/plugins';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

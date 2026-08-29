@@ -6,11 +6,11 @@ import {defineMessage, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Scheme} from '@mattermost/types/schemes';
-import type {Team} from '@mattermost/types/teams';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Scheme} from '@hanzoteam/types/schemes';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';

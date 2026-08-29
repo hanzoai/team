@@ -10,7 +10,7 @@ import type {
     PublishedFormattingBarHandle,
     PublishedSuggestionProviderConstructors,
     PublishedWysiwygEditorHandle,
-} from '@mattermost/shared/types/global';
+} from '@hanzoteam/shared/types/global';
 
 import type {FormattingBarHandle} from 'components/advanced_text_editor/formatting_bar/formatting_bar';
 import type {WysiwygEditorHandle} from 'components/advanced_text_editor/wysiwyg_editor/wysiwyg_editor';

@@ -5,9 +5,9 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import styled from 'styled-components';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import Markdown from 'components/markdown';
 import ProfilePicture from 'components/profile_picture';

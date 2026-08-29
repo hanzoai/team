@@ -1,15 +1,15 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {addUserIdsForStatusFetchingPoll} from 'mattermost-redux/actions/status_profile_polling';
-import {getStatusesByIds} from 'mattermost-redux/actions/users';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
-import {getPostsInCurrentChannel} from 'mattermost-redux/selectors/entities/posts';
-import {getDirectShowPreferences} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {addUserIdsForStatusFetchingPoll} from '@hanzoteam/redux/actions/status_profile_polling';
+import {getStatusesByIds} from '@hanzoteam/redux/actions/users';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
+import {getPostsInCurrentChannel} from '@hanzoteam/redux/selectors/entities/posts';
+import {getDirectShowPreferences} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadCustomEmojisForCustomStatusesByUserIds} from 'actions/emoji_actions';
 

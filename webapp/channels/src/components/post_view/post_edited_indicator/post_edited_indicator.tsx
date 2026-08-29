@@ -5,10 +5,10 @@ import React from 'react';
 import type {MouseEvent, KeyboardEvent} from 'react';
 import {useIntl} from 'react-intl';
 
-import {PencilOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {PencilOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {getDateForTimezone} from 'mattermost-redux/utils/timezone_utils';
+import {getDateForTimezone} from '@hanzoteam/redux/utils/timezone_utils';
 
 import Constants from 'utils/constants';
 import {isSameDay, isWithinLastWeek, isYesterday} from 'utils/datetime';

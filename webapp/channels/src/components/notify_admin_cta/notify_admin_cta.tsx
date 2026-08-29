@@ -5,7 +5,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import styled from 'styled-components';
 
-import type {NotifyAdminRequest} from '@mattermost/types/cloud';
+import type {NotifyAdminRequest} from '@hanzoteam/types/cloud';
 
 import {NotifyStatus, useGetNotifyAdmin} from 'components/common/hooks/useGetNotifyAdmin';
 import type {NotifyStatusValues} from 'components/common/hooks/useGetNotifyAdmin';

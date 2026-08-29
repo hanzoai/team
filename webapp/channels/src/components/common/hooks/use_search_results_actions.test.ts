@@ -3,7 +3,7 @@
 
 import {act} from '@testing-library/react';
 
-import {getMoreFilesForSearch, getMorePostsForSearch} from 'mattermost-redux/actions/search';
+import {getMoreFilesForSearch, getMorePostsForSearch} from '@hanzoteam/redux/actions/search';
 
 import {
     filterFilesSearchByExt,
@@ -19,7 +19,7 @@ import {TestHelper} from 'utils/test_helper';
 import useSearchResultsActions from './use_search_results_actions';
 
 const MOCK_ACTION = {type: 'MOCK'};
-jest.mock('mattermost-redux/actions/search', () => ({
+jest.mock('@hanzoteam/redux/actions/search', () => ({
     getMorePostsForSearch: jest.fn(() => MOCK_ACTION),
     getMoreFilesForSearch: jest.fn(() => MOCK_ACTION),
 }));

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {BasicUnreadMeta} from 'mattermost-redux/selectors/entities/channels';
+import type {BasicUnreadMeta} from '@hanzoteam/redux/selectors/entities/channels';
 
 const NotifyCounts = ({unreadMentionCount, isUnread}: BasicUnreadMeta) => {
     if (unreadMentionCount) {

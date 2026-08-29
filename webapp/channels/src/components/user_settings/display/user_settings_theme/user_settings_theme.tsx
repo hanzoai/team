@@ -5,7 +5,7 @@ import React from 'react';
 import type {RefObject} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import ExternalLink from 'components/external_link';
 import SettingItemMax from 'components/setting_item_max';

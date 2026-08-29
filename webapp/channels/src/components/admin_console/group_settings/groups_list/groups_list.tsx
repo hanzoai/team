@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {GroupSearchOpts, MixedUnlinkedGroupRedux} from '@mattermost/types/groups';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {GroupSearchOpts, MixedUnlinkedGroupRedux} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import GroupRow from 'components/admin_console/group_settings/group_row';
 import LocalizedPlaceholderInput from 'components/localized_placeholder_input';

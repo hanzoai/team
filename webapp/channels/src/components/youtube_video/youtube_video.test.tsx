@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {fireEvent, renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

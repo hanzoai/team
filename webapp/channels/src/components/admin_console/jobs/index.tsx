@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getJobsByType, createJob, cancelJob} from 'mattermost-redux/actions/jobs';
-import {getConfig} from 'mattermost-redux/selectors/entities/admin';
-import {makeGetJobsByType} from 'mattermost-redux/selectors/entities/jobs';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getJobsByType, createJob, cancelJob} from '@hanzoteam/redux/actions/jobs';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {makeGetJobsByType} from '@hanzoteam/redux/selectors/entities/jobs';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

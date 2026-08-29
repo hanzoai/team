@@ -5,11 +5,11 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {UserStatus} from '@mattermost/types/users';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserStatus} from '@hanzoteam/types/users';
 
-import {Preferences} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Preferences} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 

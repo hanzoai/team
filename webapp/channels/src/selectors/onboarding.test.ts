@@ -1,13 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {getShowTaskListBool} from 'selectors/onboarding';
 
 import {OnboardingTaskCategory, OnboardingTaskList} from 'components/onboarding_tasks';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import {RecommendedNextStepsLegacy, Preferences} from 'utils/constants';
 
 import type {GlobalState} from 'types/store';

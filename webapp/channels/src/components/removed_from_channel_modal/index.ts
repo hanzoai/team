@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

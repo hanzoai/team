@@ -6,11 +6,11 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {ClientConfig} from '@mattermost/types/config';
+import type {ClientConfig} from '@hanzoteam/types/config';
 
-import {getInProductNotices, updateNoticesAsViewed} from 'mattermost-redux/actions/teams';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {getInProductNotices, updateNoticesAsViewed} from '@hanzoteam/redux/actions/teams';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getSocketStatus} from 'selectors/views/websocket';
 

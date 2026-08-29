@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {updateChannelPrivacy} from 'mattermost-redux/actions/channels';
+import {updateChannelPrivacy} from '@hanzoteam/redux/actions/channels';
 
 import ConvertChannelModal from './convert_channel_modal';
 

@@ -6,7 +6,7 @@ import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import {setAdminConsoleUsersManagementTableProperties} from 'actions/views/admin';
 

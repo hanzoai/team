@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
 import {Measure, measureAndReport} from 'utils/performance_telemetry';
 

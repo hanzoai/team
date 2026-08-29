@@ -4,7 +4,7 @@
 import {screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import type {IncomingWebhook} from '@mattermost/types/integrations';
+import type {IncomingWebhook} from '@hanzoteam/types/integrations';
 
 import InstalledIncomingWebhooks from 'components/integrations/installed_incoming_webhooks/installed_incoming_webhooks';
 

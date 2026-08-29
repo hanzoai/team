@@ -4,12 +4,12 @@
 import type {ComponentProps} from 'react';
 import {connect} from 'react-redux';
 
-import {setThreadFollow} from 'mattermost-redux/actions/threads';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam, getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId, getCurrentUserMentionKeys} from 'mattermost-redux/selectors/entities/users';
+import {setThreadFollow} from '@hanzoteam/redux/actions/threads';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam, getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId, getCurrentUserMentionKeys} from '@hanzoteam/redux/selectors/entities/users';
 
 import {
     setRhsExpanded,

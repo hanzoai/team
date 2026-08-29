@@ -4,9 +4,9 @@
 import React from 'react';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 
-import {CheckCircleIcon, CloseCircleIcon, MinusCircleIcon, MinusCircleOutlineIcon} from '@mattermost/compass-icons/components';
-import type {PolicySimulationActionDecision, PolicySimulationBlame} from '@mattermost/types/access_control';
-import {POLICY_SIMULATION_BLAME_SOURCES} from '@mattermost/types/access_control';
+import {CheckCircleIcon, CloseCircleIcon, MinusCircleIcon, MinusCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {PolicySimulationActionDecision, PolicySimulationBlame} from '@hanzoteam/types/access_control';
+import {POLICY_SIMULATION_BLAME_SOURCES} from '@hanzoteam/types/access_control';
 
 import './decision_chip.scss';
 

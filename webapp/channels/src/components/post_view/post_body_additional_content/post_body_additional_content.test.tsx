@@ -8,9 +8,9 @@ import type {
     PostEmbed,
     PostImage,
     PostMetadata,
-} from '@mattermost/types/posts';
+} from '@hanzoteam/types/posts';
 
-import {getEmbedFromMetadata} from 'mattermost-redux/utils/post_utils';
+import {getEmbedFromMetadata} from '@hanzoteam/redux/utils/post_utils';
 
 import {testPluginComponentErrorHandling} from 'tests/helpers/plugin_error_handling';
 import {render, renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
@@ -18,8 +18,8 @@ import {render, renderWithContext, screen, userEvent} from 'tests/react_testing_
 import PostBodyAdditionalContent from './post_body_additional_content';
 import type {Props} from './post_body_additional_content';
 
-jest.mock('mattermost-redux/utils/post_utils', () => {
-    const actual = jest.requireActual('mattermost-redux/utils/post_utils');
+jest.mock('@hanzoteam/redux/utils/post_utils', () => {
+    const actual = jest.requireActual('@hanzoteam/redux/utils/post_utils');
     return {
         ...actual,
         getEmbedFromMetadata: jest.fn(actual.getEmbedFromMetadata),

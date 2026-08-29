@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import React, {memo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {EmojiCategory} from '@mattermost/types/emojis';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {EmojiCategory} from '@hanzoteam/types/emojis';
 
 import type {Category, CategoryOrEmojiRow} from 'components/emoji_picker/types';
 

@@ -6,9 +6,9 @@
 import React from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 
-import type {Job} from '@mattermost/types/jobs';
+import type {Job} from '@hanzoteam/types/jobs';
 
-import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
+import {RESOURCE_KEYS} from '@hanzoteam/redux/constants/permissions_sysconsole';
 
 import {
     ldapTestAttributes,

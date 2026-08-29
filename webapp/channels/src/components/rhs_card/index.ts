@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getSelectedPostCard} from 'selectors/rhs';
 import {getIsMobileView} from 'selectors/views/browser';

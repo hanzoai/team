@@ -3,9 +3,9 @@
 
 import isEmpty from 'lodash/isEmpty';
 
-import type {Emoji, EmojiCategory, SystemEmoji} from '@mattermost/types/emojis';
+import type {Emoji, EmojiCategory, SystemEmoji} from '@hanzoteam/types/emojis';
 
-import {isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {
     EMOJI_PER_ROW,

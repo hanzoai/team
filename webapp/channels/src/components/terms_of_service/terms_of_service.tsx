@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import type {RouteComponentProps} from 'react-router';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {TermsOfService as ReduxTermsOfService} from '@mattermost/types/terms_of_service';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {TermsOfService as ReduxTermsOfService} from '@hanzoteam/types/terms_of_service';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
 
 import * as GlobalActions from 'actions/global_actions';
 

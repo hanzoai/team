@@ -5,8 +5,8 @@ import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {RHS_PLUGIN_TITLE} from 'components/rhs_plugin_popout/rhs_plugin_popout';
 import SearchResultsHeader from 'components/search_results_header';

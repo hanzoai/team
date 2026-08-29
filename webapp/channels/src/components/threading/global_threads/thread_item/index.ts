@@ -3,11 +3,11 @@
 
 import {connect} from 'react-redux';
 
-import {isMyChannelAutotranslated, makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost, isPostPriorityEnabled, makeGetPostsForThread} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {getThread} from 'mattermost-redux/selectors/entities/threads';
-import {makeGetDisplayName} from 'mattermost-redux/selectors/entities/users';
+import {isMyChannelAutotranslated, makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost, isPostPriorityEnabled, makeGetPostsForThread} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThread} from '@hanzoteam/redux/selectors/entities/threads';
+import {makeGetDisplayName} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

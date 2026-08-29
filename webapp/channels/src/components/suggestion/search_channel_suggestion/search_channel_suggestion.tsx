@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
 
 import ChannelTypeIcon from 'components/channel_type_icon';
 import usePrefixedIds from 'components/common/hooks/usePrefixedIds';

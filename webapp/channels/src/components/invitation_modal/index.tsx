@@ -6,18 +6,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {searchChannels as reduxSearchChannels} from 'mattermost-redux/actions/channels';
-import {regenerateTeamInviteId} from 'mattermost-redux/actions/teams';
-import {getProfiles, searchProfiles as reduxSearchProfiles} from 'mattermost-redux/actions/users';
-import {Permissions} from 'mattermost-redux/constants';
-import {getCurrentChannel, getChannelsInCurrentTeam, getChannelsNameMapInCurrentTeam} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveIChannelPermission, haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam, getCurrentTeamId, getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import {isAdmin} from 'mattermost-redux/utils/user_utils';
+import {searchChannels as reduxSearchChannels} from '@hanzoteam/redux/actions/channels';
+import {regenerateTeamInviteId} from '@hanzoteam/redux/actions/teams';
+import {getProfiles, searchProfiles as reduxSearchProfiles} from '@hanzoteam/redux/actions/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCurrentChannel, getChannelsInCurrentTeam, getChannelsNameMapInCurrentTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveIChannelPermission, haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam, getCurrentTeamId, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isAdmin} from '@hanzoteam/redux/utils/user_utils';
 
 import {
     sendMembersInvites,

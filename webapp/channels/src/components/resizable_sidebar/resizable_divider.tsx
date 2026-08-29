@@ -7,7 +7,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useSelector} from 'react-redux';
 import styled, {createGlobalStyle, css} from 'styled-components';
 
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getIsMobileView} from 'selectors/views/browser';
 import {useGlobalState} from 'stores/hooks';

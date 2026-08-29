@@ -3,8 +3,8 @@
 
 import React, {memo} from 'react';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Post} from '@hanzoteam/types/posts';
 
 import type {TextFormattingOptions} from 'utils/text_formatting';
 

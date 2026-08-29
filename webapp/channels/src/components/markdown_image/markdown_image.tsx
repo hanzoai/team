@@ -4,7 +4,7 @@
 import React, {PureComponent} from 'react';
 import type {KeyboardEvent, MouseEvent} from 'react';
 
-import type {Post, PostImage} from '@mattermost/types/posts';
+import type {Post, PostImage} from '@hanzoteam/types/posts';
 
 import ExternalImage from 'components/external_image';
 import ExternalLink from 'components/external_link';

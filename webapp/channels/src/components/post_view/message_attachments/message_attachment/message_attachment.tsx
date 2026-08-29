@@ -6,14 +6,14 @@ import React from 'react';
 import type {KeyboardEvent, MouseEvent, CSSProperties} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {PostActionOption} from '@mattermost/types/integration_actions';
+import type {PostActionOption} from '@hanzoteam/types/integration_actions';
 import type {
     MessageAttachment as MessageAttachmentType,
-} from '@mattermost/types/message_attachments';
-import type {PostImage} from '@mattermost/types/posts';
+} from '@hanzoteam/types/message_attachments';
+import type {PostImage} from '@hanzoteam/types/posts';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
 
 import ExternalImage from 'components/external_image';
 import ExternalLink from 'components/external_link';

@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import IconButton from 'components/global_header/header_icon_button';
 import KeyboardShortcutsModal from 'components/keyboard_shortcuts/keyboard_shortcuts_modal/keyboard_shortcuts_modal';

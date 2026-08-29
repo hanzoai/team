@@ -4,12 +4,12 @@
 import React, {useState, useEffect, useCallback, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {AccessControlTestResult, AccessControlVisualAST} from '@mattermost/types/access_control';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {SESSION_ATTRIBUTES_OBJECT_TYPE, isSessionAttributeField} from '@mattermost/types/properties_user';
+import type {AccessControlTestResult, AccessControlVisualAST} from '@hanzoteam/types/access_control';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import {SESSION_ATTRIBUTES_OBJECT_TYPE, isSessionAttributeField} from '@hanzoteam/types/properties_user';
 
-import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {CPA_FIELD_NAME_PATTERN} from 'utils/properties';
 

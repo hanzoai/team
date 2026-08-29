@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getFilteredUsersStats, getProfiles, searchProfiles} from 'mattermost-redux/actions/users';
-import {getRoles} from 'mattermost-redux/selectors/entities/roles_helpers';
-import {getProfiles as selectProfiles, getFilteredUsersStats as selectFilteredUserStats, makeSearchProfilesStartingWithTerm, filterProfiles} from 'mattermost-redux/selectors/entities/users';
-import {filterProfilesStartingWithTerm, profileListToMap} from 'mattermost-redux/utils/user_utils';
+import {getFilteredUsersStats, getProfiles, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getRoles} from '@hanzoteam/redux/selectors/entities/roles_helpers';
+import {getProfiles as selectProfiles, getFilteredUsersStats as selectFilteredUserStats, makeSearchProfilesStartingWithTerm, filterProfiles} from '@hanzoteam/redux/selectors/entities/users';
+import {filterProfilesStartingWithTerm, profileListToMap} from '@hanzoteam/redux/utils/user_utils';
 
 import {setUserGridSearch} from 'actions/views/search';
 

@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {CloudUsage} from '@mattermost/types/cloud';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
 
-import * as PostListUtils from 'mattermost-redux/utils/post_list';
+import * as PostListUtils from '@hanzoteam/redux/utils/post_list';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {PostListRowListIds} from 'utils/constants';

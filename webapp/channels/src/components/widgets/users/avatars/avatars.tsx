@@ -7,12 +7,12 @@ import {useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 import tinycolor from 'tinycolor2';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserProfile} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
-import {getUser as selectUser, makeDisplayNameGetter} from 'mattermost-redux/selectors/entities/users';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getUser as selectUser, makeDisplayNameGetter} from '@hanzoteam/redux/selectors/entities/users';
 
 import ProfilePopover from 'components/profile_popover';
 import Avatar from 'components/widgets/users/avatar';

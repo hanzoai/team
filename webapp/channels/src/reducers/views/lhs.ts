@@ -3,7 +3,7 @@
 
 import {combineReducers} from 'redux';
 
-import {TeamTypes, UserTypes} from 'mattermost-redux/action_types';
+import {TeamTypes, UserTypes} from '@hanzoteam/redux/action_types';
 
 import {SidebarSize} from 'components/resizable_sidebar/constants';
 

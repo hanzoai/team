@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getCurrentChannelId, getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getLimitedViews, getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getCurrentChannelId, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getLimitedViews, getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {emitShortcutReactToLastPostFrom} from 'actions/post_actions';
 import {getShortcutReactToLastPostEmittedFrom} from 'selectors/emojis';

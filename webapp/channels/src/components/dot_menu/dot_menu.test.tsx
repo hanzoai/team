@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {Post, PostType} from '@mattermost/types/posts';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {Post, PostType} from '@hanzoteam/types/posts';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {Locations} from 'utils/constants';

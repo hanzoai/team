@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {openShowEditHistory} from 'actions/views/rhs';
 

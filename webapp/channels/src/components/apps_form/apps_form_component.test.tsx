@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
 
 import {renderWithContext, screen, waitFor, userEvent} from 'tests/react_testing_utils';
 

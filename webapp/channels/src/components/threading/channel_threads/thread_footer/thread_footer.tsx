@@ -5,17 +5,17 @@ import React, {memo, useCallback, useEffect, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Post} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
-import {threadIsSynthetic} from '@mattermost/types/threads';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
+import {threadIsSynthetic} from '@hanzoteam/types/threads';
 
-import {setThreadFollow, getThread as fetchThread} from 'mattermost-redux/actions/threads';
-import {Posts} from 'mattermost-redux/constants';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {setThreadFollow, getThread as fetchThread} from '@hanzoteam/redux/actions/threads';
+import {Posts} from '@hanzoteam/redux/constants';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {selectPost} from 'actions/views/rhs';
 

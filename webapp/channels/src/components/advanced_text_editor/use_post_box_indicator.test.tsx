@@ -4,7 +4,7 @@
 import {DateTime} from 'luxon';
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import useTimePostBoxIndicator from 'components/advanced_text_editor/use_post_box_indicator';
 

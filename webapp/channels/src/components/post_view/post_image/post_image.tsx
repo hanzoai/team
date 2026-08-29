@@ -7,7 +7,7 @@ import type {KeyboardEvent, MouseEvent} from 'react';
 import type {
     Post,
     PostImage as PostImageMetadata,
-} from '@mattermost/types/posts';
+} from '@hanzoteam/types/posts';
 
 import ExternalImage from 'components/external_image';
 import FilePreviewModal from 'components/file_preview_modal';

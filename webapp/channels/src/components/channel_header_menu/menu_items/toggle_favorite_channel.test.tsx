@@ -4,7 +4,7 @@
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import * as channelActions from 'mattermost-redux/actions/channels';
+import * as channelActions from '@hanzoteam/redux/actions/channels';
 
 import {WithTestMenuContext} from 'components/menu/menu_context_test';
 
@@ -42,7 +42,7 @@ describe('components/ChannelHeaderMenu/MenuItems/ToggleFavoriteChannel', () => {
     });
 
     test('should render menu item as disabled when channel is in a managed category', () => {
-        const isChannelInManagedCategorySpy = jest.spyOn(require('mattermost-redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
+        const isChannelInManagedCategorySpy = jest.spyOn(require('@hanzoteam/redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
 
         renderWithContext(
             <WithTestMenuContext>

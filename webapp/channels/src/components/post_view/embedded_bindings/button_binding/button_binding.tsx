@@ -5,13 +5,13 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {AppBindingLocations, AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {AppBindingLocations, AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import Markdown from 'components/markdown';
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';

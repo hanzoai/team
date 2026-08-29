@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
-import {Client4} from 'mattermost-redux/client';
+import {searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 
@@ -32,7 +32,7 @@ jest.mock('./language_provider', () => ({
     MonacoLanguageProvider: () => null,
 }));
 
-jest.mock('mattermost-redux/actions/access_control', () => ({
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
     searchUsersForExpression: jest.fn(),
 }));
 

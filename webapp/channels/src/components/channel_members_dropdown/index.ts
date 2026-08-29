@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getChannelStats, updateChannelMemberSchemeRoles, removeChannelMember, getChannelMember} from 'mattermost-redux/actions/channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getChannelStats, updateChannelMemberSchemeRoles, removeChannelMember, getChannelMember} from '@hanzoteam/redux/actions/channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 

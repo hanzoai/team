@@ -9,7 +9,7 @@ import type {
     PublishedFormattingBarHandle,
     PublishedSuggestionProviderId,
     PublishedWysiwygEditorHandle,
-} from '@mattermost/shared/types/global';
+} from '@hanzoteam/shared/types/global';
 
 jest.mock('components/advanced_text_editor/wysiwyg_editor/wysiwyg_editor', () => {
     const ReactMock = require('react') as typeof import('react');

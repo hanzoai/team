@@ -4,9 +4,9 @@
 import React from 'react';
 import type {MultiValueProps} from 'react-select';
 
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

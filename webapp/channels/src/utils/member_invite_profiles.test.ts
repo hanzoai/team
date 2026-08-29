@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MemberInviteProfile} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {MemberInviteProfile} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {TestHelper} from 'utils/test_helper';
 

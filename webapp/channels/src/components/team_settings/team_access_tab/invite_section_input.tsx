@@ -5,14 +5,14 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {RefreshIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {Team} from '@mattermost/types/teams';
+import {RefreshIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import Input from 'components/widgets/inputs/input/input';
 import type {BaseSettingItemProps} from 'components/widgets/modals/components/base_setting_item';

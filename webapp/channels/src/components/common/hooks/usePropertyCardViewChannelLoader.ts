@@ -3,7 +3,7 @@
 
 import {useEffect, useRef, useState} from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {useChannel} from 'components/common/hooks/useChannel';
 

@@ -4,7 +4,7 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

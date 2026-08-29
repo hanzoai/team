@@ -1,5 +1,5 @@
 {
-  "name": "@mattermost/components",
+  "name": "@hanzoteam/components",
   "version": "11.11.0",
   "private": true,
   "module": "dist/index.esm.js",
@@ -41,8 +41,8 @@
   },
   "peerDependencies": {
     "@babel/runtime-corejs3": "^7.17.8",
-    "@mattermost/compass-icons": "0.1.61",
-    "@mattermost/shared": "^11.11.0",
+    "@hanzoteam/compass-icons": "0.1.61",
+    "@hanzoteam/shared": "^11.11.0",
     "classnames": "^2.3.1",
     "lodash": "^4.17.21",
     "react-intl": "*",

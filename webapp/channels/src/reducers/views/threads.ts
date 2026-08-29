@@ -4,7 +4,7 @@
 import findKey from 'lodash/findKey';
 import {combineReducers} from 'redux';
 
-import {PostTypes, UserTypes} from 'mattermost-redux/action_types';
+import {PostTypes, UserTypes} from '@hanzoteam/redux/action_types';
 
 import {Threads, ActionTypes} from 'utils/constants';
 

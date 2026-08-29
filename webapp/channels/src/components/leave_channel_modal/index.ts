@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getMyChannelMemberships, getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
+import {getMyChannelMemberships, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
 
 import {muteChannel} from 'actions/channel_actions';
 import {leaveChannel} from 'actions/views/channel';

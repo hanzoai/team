@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {openModal} from 'actions/views/modals';
 import {isModalOpen} from 'selectors/views/modals';

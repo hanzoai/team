@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {SystemEmoji} from '@mattermost/types/emojis';
+import type {SystemEmoji} from '@hanzoteam/types/emojis';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import EmojiMap from 'utils/emoji_map';

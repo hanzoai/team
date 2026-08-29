@@ -7,10 +7,10 @@ import type {ListChildComponentProps} from 'react-window';
 import {VariableSizeList} from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 
-import {AccountMultipleOutlineIcon, ArchiveOutlineIcon, RestoreIcon} from '@mattermost/compass-icons/components';
-import type {Group, GroupPermissions} from '@mattermost/types/groups';
+import {AccountMultipleOutlineIcon, ArchiveOutlineIcon, RestoreIcon} from '@hanzoteam/compass-icons/components';
+import type {Group, GroupPermissions} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LoadingScreen from 'components/loading_screen';
 import * as Menu from 'components/menu';

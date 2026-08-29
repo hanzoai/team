@@ -6,11 +6,11 @@ import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import type {PostAcknowledgement} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {PostAcknowledgement} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {makeGetDisplayName} from 'mattermost-redux/selectors/entities/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {makeGetDisplayName} from '@hanzoteam/redux/selectors/entities/users';
 
 import Nbsp from 'components/html_entities/nbsp';
 import Timestamp from 'components/timestamp';

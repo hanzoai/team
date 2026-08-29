@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as PreferenceActions from 'mattermost-redux/actions/preferences';
+import * as PreferenceActions from '@hanzoteam/redux/actions/preferences';
 
 import * as EmojiActions from 'actions/emoji_actions';
 import {getRecentEmojisData, getEmojiMap} from 'selectors/emojis';
@@ -22,7 +22,7 @@ jest.mock('selectors/emojis', () => ({
     getEmojiMap: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: (...args) => ({type: 'RECEIVED_PREFERENCES', args}),
 }));
 

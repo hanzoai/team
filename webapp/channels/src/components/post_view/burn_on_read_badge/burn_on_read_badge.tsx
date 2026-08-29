@@ -5,11 +5,11 @@ import React, {memo, useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {FireIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Post} from '@mattermost/types/posts';
+import {FireIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getBurnOnReadRecipientData} from 'selectors/burn_on_read_recipients';
 

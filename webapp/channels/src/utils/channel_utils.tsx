@@ -1,16 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {ArchiveLockOutlineIcon, ArchiveOutlineIcon, GlobeIcon, LockOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Channel, ChannelType} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
+import {ArchiveLockOutlineIcon, ArchiveOutlineIcon, GlobeIcon, LockOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {TeamTypes} from 'mattermost-redux/action_types';
-import {removeUserFromTeam} from 'mattermost-redux/actions/teams';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getRedirectChannelNameForTeam} from 'mattermost-redux/selectors/entities/channels';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {TeamTypes} from '@hanzoteam/redux/action_types';
+import {removeUserFromTeam} from '@hanzoteam/redux/actions/teams';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getRedirectChannelNameForTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import LocalStorageStore from 'stores/local_storage_store';

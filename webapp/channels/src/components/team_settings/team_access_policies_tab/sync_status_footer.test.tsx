@@ -10,11 +10,11 @@ import SyncStatusFooter from './sync_status_footer';
 const mockGetJobsByType = jest.fn();
 const mockCreateSyncJob = jest.fn();
 
-jest.mock('mattermost-redux/actions/jobs', () => ({
+jest.mock('@hanzoteam/redux/actions/jobs', () => ({
     getJobsByType: (...args: any[]) => mockGetJobsByType(...args),
 }));
 
-jest.mock('mattermost-redux/actions/access_control', () => ({
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
     createAccessControlSyncJob: (...args: any[]) => mockCreateSyncJob(...args),
 }));
 

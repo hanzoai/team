@@ -14,8 +14,8 @@ import {
     installPluginFromUrl,
     enablePlugin,
     disablePlugin,
-} from 'mattermost-redux/actions/admin';
-import {appsFeatureFlagEnabled} from 'mattermost-redux/selectors/entities/apps';
+} from '@hanzoteam/redux/actions/admin';
+import {appsFeatureFlagEnabled} from '@hanzoteam/redux/selectors/entities/apps';
 
 import usePluginStatusesSync from 'components/common/hooks/usePluginStatusesSync';
 

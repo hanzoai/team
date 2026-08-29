@@ -6,9 +6,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {setStatus} from 'mattermost-redux/actions/users';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {setStatus} from '@hanzoteam/redux/actions/users';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {makeAsyncComponent} from 'components/async_load';
 

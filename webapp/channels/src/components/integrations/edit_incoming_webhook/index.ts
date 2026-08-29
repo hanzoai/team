@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getIncomingHook, updateIncomingHook} from 'mattermost-redux/actions/integrations';
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
+import {getIncomingHook, updateIncomingHook} from '@hanzoteam/redux/actions/integrations';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import EditIncomingWebhook from './edit_incoming_webhook';
 

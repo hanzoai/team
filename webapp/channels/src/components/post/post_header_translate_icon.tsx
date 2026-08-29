@@ -5,9 +5,9 @@ import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {TranslateIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {PostTranslation, PostType} from '@mattermost/types/posts';
+import {TranslateIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {PostTranslation, PostType} from '@hanzoteam/types/posts';
 
 import {openModal} from 'actions/views/modals';
 

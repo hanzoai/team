@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {memo, useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import TeamIcon from 'components/widgets/team_icon/team_icon';
 

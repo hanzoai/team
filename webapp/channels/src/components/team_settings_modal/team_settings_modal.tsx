@@ -5,11 +5,11 @@ import React, {useState, useRef, useCallback, useEffect} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {haveISystemPermission, haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {haveISystemPermission, haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {isChannelAccessControlEnabled, isTeamMembershipAccessControlEnabled} from 'selectors/general';
 

@@ -4,8 +4,8 @@
 import range from 'lodash/range';
 import React from 'react';
 
-import {GroupSource, PluginGroupSourcePrefix} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import {GroupSource, PluginGroupSourcePrefix} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import GroupUsers from 'components/admin_console/group_settings/group_details/group_users';
 

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import Preferences from 'mattermost-redux/constants/preferences';
-import {DATE_LINE} from 'mattermost-redux/utils/post_list';
+import Preferences from '@hanzoteam/redux/constants/preferences';
+import {DATE_LINE} from '@hanzoteam/redux/utils/post_list';
 
 import {HINT_TOAST_TESTID} from 'components/hint-toast/hint_toast';
 import {SCROLL_TO_BOTTOM_DISMISS_BUTTON_TESTID, SCROLL_TO_BOTTOM_TOAST_TESTID} from 'components/scroll_to_bottom_toast/scroll_to_bottom_toast';

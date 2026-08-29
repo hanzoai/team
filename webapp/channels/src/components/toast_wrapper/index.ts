@@ -6,13 +6,13 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {Posts} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCurrentChannel, countCurrentChannelUnreadMessages, isManuallyUnread} from 'mattermost-redux/selectors/entities/channels';
-import {getAllPosts, getPostIdsInChannel} from 'mattermost-redux/selectors/entities/posts';
-import {getUnreadScrollPositionPreference, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {makePreparePostIdsForPostList} from 'mattermost-redux/utils/post_list';
+import {Posts} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCurrentChannel, countCurrentChannelUnreadMessages, isManuallyUnread} from '@hanzoteam/redux/selectors/entities/channels';
+import {getAllPosts, getPostIdsInChannel} from '@hanzoteam/redux/selectors/entities/posts';
+import {getUnreadScrollPositionPreference, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {makePreparePostIdsForPostList} from '@hanzoteam/redux/utils/post_list';
 
 import {updateToastStatus} from 'actions/views/channel';
 

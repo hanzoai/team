@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

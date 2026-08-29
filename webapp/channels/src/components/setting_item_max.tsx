@@ -6,7 +6,7 @@ import React, {useCallback, useEffect, useRef} from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button, type ButtonVariant} from '@mattermost/shared/components/button';
+import {Button, type ButtonVariant} from '@hanzoteam/shared/components/button';
 
 import SaveButton from 'components/save_button';
 

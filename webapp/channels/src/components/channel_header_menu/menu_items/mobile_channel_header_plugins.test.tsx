@@ -5,7 +5,7 @@ import cloneDeep from 'lodash/cloneDeep';
 import React from 'react';
 import {useDispatch} from 'react-redux';
 
-import {AppBindingLocations, AppCallResponseTypes} from 'mattermost-redux/constants/apps';
+import {AppBindingLocations, AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
 
 import * as appsActions from 'actions/apps';
 import * as channelActions from 'actions/views/channel';

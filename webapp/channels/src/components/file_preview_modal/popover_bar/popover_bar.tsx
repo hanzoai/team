@@ -5,7 +5,7 @@ import debounce from 'lodash/debounce';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {ZoomSettings} from 'utils/constants';
 

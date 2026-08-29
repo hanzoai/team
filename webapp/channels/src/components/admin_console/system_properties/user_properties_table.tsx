@@ -7,11 +7,11 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import styled, {css} from 'styled-components';
 
-import {AlertOutlineIcon, InformationOutlineIcon, PlusIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import {supportsOptions} from '@mattermost/types/properties';
-import {type UserPropertyField} from '@mattermost/types/properties_user';
-import {collectionToArray} from '@mattermost/types/utilities';
+import {AlertOutlineIcon, InformationOutlineIcon, PlusIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import {supportsOptions} from '@hanzoteam/types/properties';
+import {type UserPropertyField} from '@hanzoteam/types/properties_user';
+import {collectionToArray} from '@hanzoteam/types/utilities';
 
 import AlertBanner from 'components/alert_banner';
 import LoadingScreen from 'components/loading_screen';

@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {ReportDuration} from '@mattermost/types/reports';
+import {ReportDuration} from '@hanzoteam/types/reports';
 
 import {setAdminConsoleUsersManagementTableProperties} from 'actions/views/admin';
 

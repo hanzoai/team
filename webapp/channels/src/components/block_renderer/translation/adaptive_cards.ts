@@ -10,8 +10,8 @@ import type {
     MmContainerBlock,
     MmImageBlock,
     MmImageSize,
-} from '@mattermost/types/mm_blocks';
-import {ensureString} from '@mattermost/types/utilities';
+} from '@hanzoteam/types/mm_blocks';
+import {ensureString} from '@hanzoteam/types/utilities';
 
 export function translateAdaptiveCards(cards: unknown[]): MmBlock[] {
     const result: MmBlock[] = [];

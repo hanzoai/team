@@ -4,10 +4,10 @@
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {PostPriorityMetadata} from '@mattermost/types/posts';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {PostPriorityMetadata} from '@hanzoteam/types/posts';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {isBurnOnReadEnabled} from 'selectors/burn_on_read';
 

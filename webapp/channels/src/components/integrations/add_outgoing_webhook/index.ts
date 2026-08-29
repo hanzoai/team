@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {createOutgoingHook} from 'mattermost-redux/actions/integrations';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {createOutgoingHook} from '@hanzoteam/redux/actions/integrations';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

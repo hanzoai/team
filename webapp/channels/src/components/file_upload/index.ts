@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {uploadFile} from 'actions/file_actions';
 import {getCurrentLocale} from 'selectors/i18n';

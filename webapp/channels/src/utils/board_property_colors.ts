@@ -4,9 +4,9 @@
 import type {MessageDescriptor} from 'react-intl';
 import {defineMessage} from 'react-intl';
 
-import {BOARDS_COLOR_TOKEN_NAMES, type BoardsColorToken} from '@mattermost/types/properties_board';
+import {BOARDS_COLOR_TOKEN_NAMES, type BoardsColorToken} from '@hanzoteam/types/properties_board';
 
-// Token names live in @mattermost/types/properties_board; hex values +
+// Token names live in @hanzoteam/types/properties_board; hex values +
 // labels are presentation-only and live here.
 export {BOARDS_COLOR_TOKEN_NAMES, type BoardsColorToken};
 

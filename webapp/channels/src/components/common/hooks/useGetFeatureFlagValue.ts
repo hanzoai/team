@@ -3,10 +3,10 @@
 
 import {useSelector} from 'react-redux';
 
-import type {FeatureFlags} from '@mattermost/types/config';
-import type {GlobalState} from '@mattermost/types/store';
+import type {FeatureFlags} from '@hanzoteam/types/config';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
 
 /**
  * Hook to get the value of a specific feature flag from the Redux store

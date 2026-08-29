@@ -5,8 +5,8 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {LLMService} from '@mattermost/types/agents';
-import type {AutoTranslationSettings} from '@mattermost/types/config';
+import type {LLMService} from '@hanzoteam/types/agents';
+import type {AutoTranslationSettings} from '@hanzoteam/types/config';
 
 import DropdownSetting from 'components/admin_console/dropdown_setting';
 import useGetLLMServices from 'components/common/hooks/useGetLLMServices';

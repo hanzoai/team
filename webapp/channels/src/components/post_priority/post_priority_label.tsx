@@ -4,7 +4,7 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import {PostPriority} from '@mattermost/types/posts';
+import {PostPriority} from '@hanzoteam/types/posts';
 
 import Tag from 'components/widgets/tag/tag';
 import type {TagSize} from 'components/widgets/tag/tag';

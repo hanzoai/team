@@ -5,16 +5,16 @@ import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import {useMemo} from 'react';
 
-import type {ClientError} from '@mattermost/client';
-import type {PropertyField, PropertyFieldOption} from '@mattermost/types/properties';
-import {supportsOptions} from '@mattermost/types/properties';
-import type {BoardsPropertyField, BoardsPropertyFieldPatch} from '@mattermost/types/properties_board';
-import {BOARDS_PROPERTY_GROUP_NAME, BOARDS_PROPERTY_OBJECT_TYPE, BOARDS_PROPERTY_TARGET_TYPE} from '@mattermost/types/properties_board';
-import {collectionAddItem, collectionFromArray, collectionRemoveItem, collectionReplaceItem, collectionToArray} from '@mattermost/types/utilities';
-import type {IDMappedCollection, IDMappedObjects} from '@mattermost/types/utilities';
+import type {ClientError} from '@hanzoteam/client';
+import type {PropertyField, PropertyFieldOption} from '@hanzoteam/types/properties';
+import {supportsOptions} from '@hanzoteam/types/properties';
+import type {BoardsPropertyField, BoardsPropertyFieldPatch} from '@hanzoteam/types/properties_board';
+import {BOARDS_PROPERTY_GROUP_NAME, BOARDS_PROPERTY_OBJECT_TYPE, BOARDS_PROPERTY_TARGET_TYPE} from '@hanzoteam/types/properties_board';
+import {collectionAddItem, collectionFromArray, collectionRemoveItem, collectionReplaceItem, collectionToArray} from '@hanzoteam/types/utilities';
+import type {IDMappedCollection, IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import {insertWithoutDuplicates} from 'mattermost-redux/utils/array_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {insertWithoutDuplicates} from '@hanzoteam/redux/utils/array_utils';
 
 import {generateId} from 'utils/utils';
 

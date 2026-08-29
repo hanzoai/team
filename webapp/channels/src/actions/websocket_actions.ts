@@ -6,27 +6,27 @@
 import React from 'react';
 import {batchActions} from 'redux-batched-actions';
 
-import type {WebSocketMessage, WebSocketMessages} from '@mattermost/client';
-import {WebSocketEvents} from '@mattermost/client';
-import {AlertCircleOutlineIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
-import type {ChannelBookmarkWithFileInfo, UpdateChannelBookmarkResponse} from '@mattermost/types/channel_bookmarks';
-import type {Channel, ChannelJoinRequest, ChannelMembership} from '@mattermost/types/channels';
-import type {Draft} from '@mattermost/types/drafts';
-import type {Emoji} from '@mattermost/types/emojis';
-import {FileDownloadTypes} from '@mattermost/types/files';
-import type {Group, GroupMember} from '@mattermost/types/groups';
-import type {OpenDialogRequest} from '@mattermost/types/integrations';
-import type {Job} from '@mattermost/types/jobs';
-import type {Post, PostAcknowledgement} from '@mattermost/types/posts';
-import type {PreferenceType} from '@mattermost/types/preferences';
-import {SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
-import type {Reaction} from '@mattermost/types/reactions';
-import type {Role} from '@mattermost/types/roles';
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserThread} from '@mattermost/types/threads';
+import type {WebSocketMessage, WebSocketMessages} from '@hanzoteam/client';
+import {WebSocketEvents} from '@hanzoteam/client';
+import {AlertCircleOutlineIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {ChannelBookmarkWithFileInfo, UpdateChannelBookmarkResponse} from '@hanzoteam/types/channel_bookmarks';
+import type {Channel, ChannelJoinRequest, ChannelMembership} from '@hanzoteam/types/channels';
+import type {Draft} from '@hanzoteam/types/drafts';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import {FileDownloadTypes} from '@hanzoteam/types/files';
+import type {Group, GroupMember} from '@hanzoteam/types/groups';
+import type {OpenDialogRequest} from '@hanzoteam/types/integrations';
+import type {Job} from '@hanzoteam/types/jobs';
+import type {Post, PostAcknowledgement} from '@hanzoteam/types/posts';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import {SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
+import type {Reaction} from '@hanzoteam/types/reactions';
+import type {Role} from '@hanzoteam/types/roles';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import type {MMReduxAction} from 'mattermost-redux/action_types';
+import type {MMReduxAction} from '@hanzoteam/redux/action_types';
 import {
     ChannelTypes,
     EmojiTypes,
@@ -46,10 +46,10 @@ import {
     PropertyTypes,
     ScheduledPostTypes,
     ContentFlaggingTypes,
-} from 'mattermost-redux/action_types';
-import {getStandardAnalytics} from 'mattermost-redux/actions/admin';
-import {fetchAppBindings, fetchRHSAppsBindings} from 'mattermost-redux/actions/apps';
-import {addChannelToInitialCategory, fetchMyCategories, handleManagedCategoryPropertyValuesUpdated, receivedCategoryOrder} from 'mattermost-redux/actions/channel_categories';
+} from '@hanzoteam/redux/action_types';
+import {getStandardAnalytics} from '@hanzoteam/redux/actions/admin';
+import {fetchAppBindings, fetchRHSAppsBindings} from '@hanzoteam/redux/actions/apps';
+import {addChannelToInitialCategory, fetchMyCategories, handleManagedCategoryPropertyValuesUpdated, receivedCategoryOrder} from '@hanzoteam/redux/actions/channel_categories';
 import {
     getChannelAndMyMember,
     getChannelMember,
@@ -60,12 +60,12 @@ import {
     fetchAllMyChannelMembers,
     fetchAllMyTeamsChannels,
     fetchChannelsAndMembers,
-} from 'mattermost-redux/actions/channels';
-import {clearErrors, logError} from 'mattermost-redux/actions/errors';
-import {setServerVersion, getClientConfig, getCustomProfileAttributeFields} from 'mattermost-redux/actions/general';
-import {getGroup as fetchGroup} from 'mattermost-redux/actions/groups';
-import {getJobsByType} from 'mattermost-redux/actions/jobs';
-import {getServerLimits} from 'mattermost-redux/actions/limits';
+} from '@hanzoteam/redux/actions/channels';
+import {clearErrors, logError} from '@hanzoteam/redux/actions/errors';
+import {setServerVersion, getClientConfig, getCustomProfileAttributeFields} from '@hanzoteam/redux/actions/general';
+import {getGroup as fetchGroup} from '@hanzoteam/redux/actions/groups';
+import {getJobsByType} from '@hanzoteam/redux/actions/jobs';
+import {getServerLimits} from '@hanzoteam/redux/actions/limits';
 import {
     getCustomEmojiForReaction,
     getPosts,
@@ -77,17 +77,17 @@ import {
     receivedPost,
     resetReloadPostsInChannel,
     resetReloadPostsInTranslatedChannels,
-} from 'mattermost-redux/actions/posts';
+} from '@hanzoteam/redux/actions/posts';
 import {
     fetchPropertyFields,
     fetchSystemPropertyValues,
-} from 'mattermost-redux/actions/properties';
-import {getRecap} from 'mattermost-redux/actions/recaps';
-import {loadRolesIfNeeded} from 'mattermost-redux/actions/roles';
-import {fetchTeamScheduledPosts} from 'mattermost-redux/actions/scheduled_posts';
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {batchFetchStatusesProfilesGroupsFromPosts} from 'mattermost-redux/actions/status_profile_polling';
-import * as TeamActions from 'mattermost-redux/actions/teams';
+} from '@hanzoteam/redux/actions/properties';
+import {getRecap} from '@hanzoteam/redux/actions/recaps';
+import {loadRolesIfNeeded} from '@hanzoteam/redux/actions/roles';
+import {fetchTeamScheduledPosts} from '@hanzoteam/redux/actions/scheduled_posts';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {batchFetchStatusesProfilesGroupsFromPosts} from '@hanzoteam/redux/actions/status_profile_polling';
+import * as TeamActions from '@hanzoteam/redux/actions/teams';
 import {
     getThread as fetchThread,
     getCountsAndThreadsSince,
@@ -98,15 +98,15 @@ import {
     handleAllThreadsInChannelMarkedRead,
     updateThreadRead,
     decrementThreadCounts,
-} from 'mattermost-redux/actions/threads';
+} from '@hanzoteam/redux/actions/threads';
 import {
     checkForModifiedUsers,
     getUser as loadUser,
-} from 'mattermost-redux/actions/users';
-import {removeNotVisibleUsers} from 'mattermost-redux/actions/websocket';
-import {Client4} from 'mattermost-redux/client';
-import {General, Permissions} from 'mattermost-redux/constants';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
+} from '@hanzoteam/redux/actions/users';
+import {removeNotVisibleUsers} from '@hanzoteam/redux/actions/websocket';
+import {Client4} from '@hanzoteam/redux/client';
+import {General, Permissions} from '@hanzoteam/redux/constants';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
 import {
     getChannel,
     getChannelMembersInChannels,
@@ -115,14 +115,14 @@ import {
     getCurrentChannelId,
     getRedirectChannelNameForTeam,
     hasAutotranslationBecomeEnabled,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
-import {getConfig, getFeatureFlagValue, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getGroup} from 'mattermost-redux/selectors/entities/groups';
-import {getPost, getMostRecentPostIdInChannel, getTeamIdFromPost} from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveISystemPermission, haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getScheduledPostTeamId, isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig, getFeatureFlagValue, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getGroup} from '@hanzoteam/redux/selectors/entities/groups';
+import {getPost, getMostRecentPostIdInChannel, getTeamIdFromPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveISystemPermission, haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getScheduledPostTeamId, isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
 import {
     getTeamIdByChannelId,
     getMyTeams,
@@ -130,10 +130,10 @@ import {
     getCurrentTeamUrl,
     getTeam,
     getRelativeTeamUrl,
-} from 'mattermost-redux/selectors/entities/teams';
-import {getNewestThreadInTeam, getThread, getThreads} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUser, getCurrentUserId, getUser, getIsManualStatusForUserId, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {getNewestThreadInTeam, getThread, getThreads} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUser, getCurrentUserId, getUser, getIsManualStatusForUserId, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {handlePostExpired} from 'actions/burn_on_read_deletion';
 import {handleBurnOnReadPostRevealed, handleBurnOnReadAllRevealed} from 'actions/burn_on_read_websocket';

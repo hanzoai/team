@@ -6,18 +6,18 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import type {RouterProps} from 'react-router-dom';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {GeneralTypes} from 'mattermost-redux/action_types';
-import {getFirstAdminSetupComplete as getFirstAdminSetupCompleteAction} from 'mattermost-redux/actions/general';
-import {sendEmailInvitesToTeamGracefully} from 'mattermost-redux/actions/teams';
-import {Client4} from 'mattermost-redux/client';
-import {General} from 'mattermost-redux/constants';
-import {getFirstAdminSetupComplete, getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getIsOnboardingFlowEnabled, getTheme} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam, getMyTeams} from 'mattermost-redux/selectors/entities/teams';
-import {isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {GeneralTypes} from '@hanzoteam/redux/action_types';
+import {getFirstAdminSetupComplete as getFirstAdminSetupCompleteAction} from '@hanzoteam/redux/actions/general';
+import {sendEmailInvitesToTeamGracefully} from '@hanzoteam/redux/actions/teams';
+import {Client4} from '@hanzoteam/redux/client';
+import {General} from '@hanzoteam/redux/constants';
+import {getFirstAdminSetupComplete, getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getIsOnboardingFlowEnabled, getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam, getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
+import {isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LogoSvg from 'components/common/svg_images_components/wordmark';
 

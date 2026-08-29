@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import * as cloudActions from 'mattermost-redux/actions/cloud';
+import * as cloudActions from '@hanzoteam/redux/actions/cloud';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {CloudProducts} from 'utils/constants';
 
 import PaymentAnnouncementBar from './';
 
-jest.mock('mattermost-redux/actions/cloud', () => {
-    const original = jest.requireActual('mattermost-redux/actions/cloud');
+jest.mock('@hanzoteam/redux/actions/cloud', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/cloud');
     return {
         ...original,
         __esModule: true,

@@ -3,25 +3,25 @@
 
 import type {Dispatch, AnyAction} from 'redux';
 
-import type {Channel, ChannelMembership, ChannelMessageCount} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership, ChannelMessageCount} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Preferences, General} from 'mattermost-redux/constants';
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {Preferences, General} from '@hanzoteam/redux/constants';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import * as UserActions from 'actions/user_actions';
 import store from 'stores/redux_store';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import mockStore from 'tests/test_store';
 
 import type {GlobalState} from 'types/store';
 
-jest.mock('mattermost-redux/actions/users', () => {
-    const original = jest.requireActual('mattermost-redux/actions/users');
+jest.mock('@hanzoteam/redux/actions/users', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/users');
     return {
         ...original,
         searchProfiles: (...args: any[]) => ({type: 'MOCK_SEARCH_PROFILES', args}),
@@ -32,24 +32,24 @@ jest.mock('mattermost-redux/actions/users', () => {
     };
 });
 
-jest.mock('mattermost-redux/actions/teams', () => {
-    const original = jest.requireActual('mattermost-redux/actions/teams');
+jest.mock('@hanzoteam/redux/actions/teams', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/teams');
     return {
         ...original,
         getTeamMembersByIds: (...args: any[]) => ({type: 'MOCK_GET_TEAM_MEMBERS_BY_IDS', args}),
     };
 });
 
-jest.mock('mattermost-redux/actions/channels', () => {
-    const original = jest.requireActual('mattermost-redux/actions/channels');
+jest.mock('@hanzoteam/redux/actions/channels', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/channels');
     return {
         ...original,
         getChannelMembersByIds: (...args: any[]) => ({type: 'MOCK_GET_CHANNEL_MEMBERS_BY_IDS', args}),
     };
 });
 
-jest.mock('mattermost-redux/actions/preferences', () => {
-    const original = jest.requireActual('mattermost-redux/actions/preferences');
+jest.mock('@hanzoteam/redux/actions/preferences', () => {
+    const original = jest.requireActual('@hanzoteam/redux/actions/preferences');
     return {
         ...original,
         deletePreferences: (...args: any[]) => ({type: 'MOCK_DELETE_PREFERENCES', args}),

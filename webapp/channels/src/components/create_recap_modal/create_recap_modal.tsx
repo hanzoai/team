@@ -6,21 +6,21 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {ChevronLeftIcon, ChevronRightIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
-import type {ScheduledRecap, ScheduledRecapInput, ScheduledRecapTimePeriod} from '@mattermost/types/recaps';
-import {ScheduledRecapChannelModes, ScheduledRecapTimePeriods} from '@mattermost/types/recaps';
+import {ChevronLeftIcon, ChevronRightIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ScheduledRecap, ScheduledRecapInput, ScheduledRecapTimePeriod} from '@hanzoteam/types/recaps';
+import {ScheduledRecapChannelModes, ScheduledRecapTimePeriods} from '@hanzoteam/types/recaps';
 
-import {getAgents} from 'mattermost-redux/actions/agents';
-import {createRecap, createScheduledRecap, updateScheduledRecap, getRecapLimitStatus as fetchRecapLimitStatus} from 'mattermost-redux/actions/recaps';
-import {getAgents as getAgentsSelector, getDefaultAgent} from 'mattermost-redux/selectors/entities/agents';
-import {getMyChannels, getUnreadChannelIds} from 'mattermost-redux/selectors/entities/channels';
-import {getRecapLimitStatus} from 'mattermost-redux/selectors/entities/recaps';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getAgents} from '@hanzoteam/redux/actions/agents';
+import {createRecap, createScheduledRecap, updateScheduledRecap, getRecapLimitStatus as fetchRecapLimitStatus} from '@hanzoteam/redux/actions/recaps';
+import {getAgents as getAgentsSelector, getDefaultAgent} from '@hanzoteam/redux/selectors/entities/agents';
+import {getMyChannels, getUnreadChannelIds} from '@hanzoteam/redux/selectors/entities/channels';
+import {getRecapLimitStatus} from '@hanzoteam/redux/selectors/entities/recaps';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {AgentDropdown, useSelectedAgent} from 'components/common/agents';
 import PaginationDots from 'components/common/pagination_dots';

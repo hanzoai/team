@@ -5,10 +5,10 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import Constants from 'utils/constants';
 

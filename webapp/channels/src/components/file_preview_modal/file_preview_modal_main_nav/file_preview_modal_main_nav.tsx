@@ -6,7 +6,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 
 import './file_preview_modal_main_nav.scss';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 interface Props {
     fileIndex: number;

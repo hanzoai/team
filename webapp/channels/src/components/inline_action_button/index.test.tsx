@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import {doPostActionWithCookie} from 'mattermost-redux/actions/posts';
+import {doPostActionWithCookie} from '@hanzoteam/redux/actions/posts';
 
 import {act, fireEvent, renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {applyIntegrationGotoLocation} from 'utils/integration_navigation';
 
 import InlineActionButton from './index';
 
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     doPostActionWithCookie: jest.fn(),
 }));
 

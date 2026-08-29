@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserReportOptions, UserReport, UserReportFilter} from '@mattermost/types/reports';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserReportOptions, UserReport, UserReportFilter} from '@hanzoteam/types/reports';
 
-import {logError} from 'mattermost-redux/actions/errors';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {ActionTypes} from 'utils/constants';
 

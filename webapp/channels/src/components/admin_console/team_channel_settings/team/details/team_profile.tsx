@@ -6,11 +6,11 @@ import type {ChangeEvent} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Team} from '@mattermost/types/teams';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import useGetUsage from 'components/common/hooks/useGetUsage';
 import useGetUsageDeltas from 'components/common/hooks/useGetUsageDeltas';

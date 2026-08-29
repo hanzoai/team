@@ -5,9 +5,9 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {Route, Switch, useLocation, useParams, useRouteMatch} from 'react-router-dom';
 
-import {fetchChannelsAndMembers, getChannelMembers, selectChannel} from 'mattermost-redux/actions/channels';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {getChannelByName} from 'mattermost-redux/selectors/entities/channels';
+import {fetchChannelsAndMembers, getChannelMembers, selectChannel} from '@hanzoteam/redux/actions/channels';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {getChannelByName} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {useTeamByName} from 'components/common/hooks/use_team';
 import RhsPluginPopout from 'components/rhs_plugin_popout';

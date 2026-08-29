@@ -23,7 +23,7 @@ const DIRECTORIES_TO_SCAN = [
     'channels/src',
     'platform/client/src',
     'platform/components/src',
-    'platform/mattermost-redux/src',
+    'platform/@hanzoteam/redux/src',
 ];
 
 function getAllSourceFiles(dir, excludeTests = true) {

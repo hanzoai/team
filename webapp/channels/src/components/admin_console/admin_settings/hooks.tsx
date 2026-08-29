@@ -4,11 +4,11 @@
 import {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
-import {patchConfig} from 'mattermost-redux/actions/admin';
-import {getConfig, getEnvironmentConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {patchConfig} from '@hanzoteam/redux/actions/admin';
+import {getConfig, getEnvironmentConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

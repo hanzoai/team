@@ -4,9 +4,9 @@
 import React, {useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ContentFlaggingConfig} from '@hanzoteam/types/content_flagging';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import BodyMainActionText from 'components/remove_flagged_message_confirmation_modal/body_main_action_text';
 

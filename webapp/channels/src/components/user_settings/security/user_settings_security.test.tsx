@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {UserProfile} from '@mattermost/types/users';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {PasswordConfig} from 'mattermost-redux/selectors/entities/general';
+import type {PasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {renderWithContext, screen, userEvent, waitFor, fireEvent} from 'tests/react_testing_utils';
 import Constants from 'utils/constants';

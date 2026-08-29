@@ -3,24 +3,24 @@
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import {WebSocketEvents} from '@mattermost/client';
+import {WebSocketEvents} from '@hanzoteam/client';
 
-import {ChannelTypes, CloudTypes, JobTypes, TeamTypes} from 'mattermost-redux/action_types';
-import {fetchMyCategories} from 'mattermost-redux/actions/channel_categories';
-import {fetchAllMyTeamsChannels, getChannelMember} from 'mattermost-redux/actions/channels';
-import {getCustomProfileAttributeFields} from 'mattermost-redux/actions/general';
-import {getGroup} from 'mattermost-redux/actions/groups';
-import {getJobsByType} from 'mattermost-redux/actions/jobs';
+import {ChannelTypes, CloudTypes, JobTypes, TeamTypes} from '@hanzoteam/redux/action_types';
+import {fetchMyCategories} from '@hanzoteam/redux/actions/channel_categories';
+import {fetchAllMyTeamsChannels, getChannelMember} from '@hanzoteam/redux/actions/channels';
+import {getCustomProfileAttributeFields} from '@hanzoteam/redux/actions/general';
+import {getGroup} from '@hanzoteam/redux/actions/groups';
+import {getJobsByType} from '@hanzoteam/redux/actions/jobs';
 import {
     getPostThreads,
     getPostsAround,
     receivedNewPost,
-} from 'mattermost-redux/actions/posts';
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {batchFetchStatusesProfilesGroupsFromPosts} from 'mattermost-redux/actions/status_profile_polling';
-import {getUser} from 'mattermost-redux/actions/users';
-import {getCustomProfileAttributes} from 'mattermost-redux/selectors/entities/general';
-import {getStatusForUserId, getUser as stateUser} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/posts';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {batchFetchStatusesProfilesGroupsFromPosts} from '@hanzoteam/redux/actions/status_profile_polling';
+import {getUser} from '@hanzoteam/redux/actions/users';
+import {getCustomProfileAttributes} from '@hanzoteam/redux/selectors/entities/general';
+import {getStatusForUserId, getUser as stateUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {handleNewPost} from 'actions/post_actions';
 import {syncPostsInChannel} from 'actions/views/channel';
@@ -30,7 +30,7 @@ import store from 'stores/redux_store';
 
 import {invalidateAccessControlAttributesCache} from 'components/common/hooks/useAccessControlAttributes';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import configureStore from 'tests/test_store';
 import {getHistory} from 'utils/browser_history';
@@ -65,40 +65,40 @@ import {
     handleJobUpdated,
 } from './websocket_actions';
 
-jest.mock('mattermost-redux/actions/posts', () => ({
-    ...jest.requireActual('mattermost-redux/actions/posts'),
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/posts'),
     getPostThreads: jest.fn(() => ({type: 'GET_THREADS_FOR_POSTS'})),
     getPostsAround: jest.fn(() => ({type: 'GET_POSTS_AROUND'})),
     getMentionsAndStatusesForPosts: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/channel_categories', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channel_categories'),
+jest.mock('@hanzoteam/redux/actions/channel_categories', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channel_categories'),
     fetchMyCategories: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/status_profile_polling', () => ({
-    ...jest.requireActual('mattermost-redux/actions/status_profile_polling'),
+jest.mock('@hanzoteam/redux/actions/status_profile_polling', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/status_profile_polling'),
     batchFetchStatusesProfilesGroupsFromPosts: jest.fn(() => ({type: ''})),
 }));
 
-jest.mock('mattermost-redux/actions/general', () => ({
-    ...jest.requireActual('mattermost-redux/actions/general'),
+jest.mock('@hanzoteam/redux/actions/general', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/general'),
     getCustomProfileAttributeFields: jest.fn(() => ({type: 'CUSTOM_PROFILE_ATTRIBUTE_FIELDS_RECEIVED'})),
 }));
 
-jest.mock('mattermost-redux/actions/groups', () => ({
-    ...jest.requireActual('mattermost-redux/actions/groups'),
+jest.mock('@hanzoteam/redux/actions/groups', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/groups'),
     getGroup: jest.fn(() => ({type: 'RECEIVED_GROUP'})),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getMissingProfilesByIds: jest.fn(() => ({type: 'GET_MISSING_PROFILES_BY_IDS'})),
     getStatusesByIds: jest.fn(() => ({type: 'GET_STATUSES_BY_IDS'})),
     getUser: jest.fn(() => ({type: 'GET_STATUSES_BY_IDS'})),
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     getChannelStats: jest.fn(() => ({type: 'GET_CHANNEL_STATS'})),
     getChannelMember: jest.fn(() => ({type: 'GET_CHANNEL_MEMBER'})),
     fetchAllMyChannelMembers: jest.fn(() => ({type: 'FETCH_ALL_MY_CHANNEL_MEMBERS'})),
@@ -135,7 +135,7 @@ jest.mock('components/common/hooks/useAccessControlAttributes', () => ({
     invalidateAccessControlAttributesCache: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/shared_channels', () => ({
+jest.mock('@hanzoteam/redux/actions/shared_channels', () => ({
     fetchChannelRemotes: jest.fn((channelId, forceRefresh) => ({
         type: 'MOCK_FETCH_CHANNEL_REMOTES',
         channelId,
@@ -143,7 +143,7 @@ jest.mock('mattermost-redux/actions/shared_channels', () => ({
     })),
 }));
 
-jest.mock('mattermost-redux/actions/jobs', () => ({
+jest.mock('@hanzoteam/redux/actions/jobs', () => ({
     getJobsByType: jest.fn((jobType) => ({type: 'MOCK_GET_JOBS_BY_TYPE', jobType})),
 }));
 

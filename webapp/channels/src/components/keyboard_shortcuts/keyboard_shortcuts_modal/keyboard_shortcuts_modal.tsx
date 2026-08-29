@@ -6,7 +6,7 @@ import {Modal} from 'react-bootstrap';
 import {defineMessages, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import {isCallsEnabled} from 'selectors/calls';
 

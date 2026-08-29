@@ -7,7 +7,7 @@ import {FormattedMessage, useIntl, defineMessage} from 'react-intl';
 import ReactSelect from 'react-select';
 import type {OnChangeValue, Options} from 'react-select';
 
-import type {UserNotifyProps} from '@mattermost/types/users';
+import type {UserNotifyProps} from '@hanzoteam/types/users';
 
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import type {UserThread} from '@mattermost/types/threads';
+import type {UserThread} from '@hanzoteam/types/threads';
 
 import {fakeDate} from 'tests/helpers/date';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';

@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getSelectedChannel, getSelectedPost} from 'selectors/rhs';
 

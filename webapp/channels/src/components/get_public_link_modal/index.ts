@@ -6,10 +6,10 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getFilePublicLink} from 'mattermost-redux/actions/files';
-import * as Selectors from 'mattermost-redux/selectors/entities/files';
+import {getFilePublicLink} from '@hanzoteam/redux/actions/files';
+import * as Selectors from '@hanzoteam/redux/selectors/entities/files';
 
 import GetPublicLinkModal from './get_public_link_modal';
 

@@ -4,8 +4,8 @@
 import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Team} from '@mattermost/types/teams';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Team} from '@hanzoteam/types/teams';
 
 import TeamInfoIcon from 'components/widgets/icons/team_info_icon';
 

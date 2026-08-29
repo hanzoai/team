@@ -6,13 +6,13 @@ import type {ChangeEvent, FormEvent} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getFullName} from 'mattermost-redux/utils/user_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getFullName} from '@hanzoteam/redux/utils/user_utils';
 
 import ModalSuggestionList from 'components/suggestion/modal_suggestion_list';
 import SearchChannelWithPermissionsProvider from 'components/suggestion/search_channel_with_permissions_provider';

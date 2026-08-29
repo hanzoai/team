@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import './action.scss';
 

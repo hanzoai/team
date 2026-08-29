@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getAudits} from 'mattermost-redux/actions/admin';
-import * as Selectors from 'mattermost-redux/selectors/entities/admin';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getAudits} from '@hanzoteam/redux/actions/admin';
+import * as Selectors from '@hanzoteam/redux/selectors/entities/admin';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

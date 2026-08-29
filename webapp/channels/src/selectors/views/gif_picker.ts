@@ -3,8 +3,8 @@
 
 import {GiphyFetch} from '@giphy/js-fetch-api';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

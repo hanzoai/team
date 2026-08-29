@@ -450,7 +450,7 @@ export type DateTimeConfig = {
     allow_manual_time_entry?: boolean;
 };
 
-// This should go in mattermost-redux
+// This should go in @hanzoteam/redux
 export type AppField = {
 
     // Name is the name of the JSON field to use.

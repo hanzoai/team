@@ -1,17 +1,17 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {getChannelMember} from 'mattermost-redux/actions/channels';
-import {getTeamMember} from 'mattermost-redux/actions/teams';
+import {getChannelMember} from '@hanzoteam/redux/actions/channels';
+import {getTeamMember} from '@hanzoteam/redux/actions/teams';
 
 import testConfigureStore from 'tests/test_store';
 
 import {getMembershipForEntities} from './profile_popover';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     getChannelMember: jest.fn(() => ({type: 'GET_CHANNEL_MEMBER'})),
 }));
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     getTeamMember: jest.fn(() => ({type: 'GET_TEAM_MEMBER'})),
 }));
 

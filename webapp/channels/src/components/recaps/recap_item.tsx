@@ -5,13 +5,13 @@ import React, {useState, useMemo, useCallback} from 'react';
 import {useIntl, FormattedDate, FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckAllIcon, RefreshIcon, TrashCanOutlineIcon, CheckCircleIcon} from '@mattermost/compass-icons/components';
-import type {Recap} from '@mattermost/types/recaps';
-import {RecapStatus} from '@mattermost/types/recaps';
+import {CheckAllIcon, RefreshIcon, TrashCanOutlineIcon, CheckCircleIcon} from '@hanzoteam/compass-icons/components';
+import type {Recap} from '@hanzoteam/types/recaps';
+import {RecapStatus} from '@hanzoteam/types/recaps';
 
-import {readMultipleChannels} from 'mattermost-redux/actions/channels';
-import {markRecapAsRead, deleteRecap, regenerateRecap} from 'mattermost-redux/actions/recaps';
-import {getAgents} from 'mattermost-redux/selectors/entities/agents';
+import {readMultipleChannels} from '@hanzoteam/redux/actions/channels';
+import {markRecapAsRead, deleteRecap, regenerateRecap} from '@hanzoteam/redux/actions/recaps';
+import {getAgents} from '@hanzoteam/redux/selectors/entities/agents';
 
 import useGetAgentsBridgeEnabled from 'components/common/hooks/useGetAgentsBridgeEnabled';
 import ConfirmModal from 'components/confirm_modal';

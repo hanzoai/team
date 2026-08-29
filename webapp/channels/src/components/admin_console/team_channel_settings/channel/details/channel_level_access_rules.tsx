@@ -5,10 +5,10 @@ import React, {useState, useEffect, useCallback, useMemo, useRef} from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {getAccessControlSettings} from 'mattermost-redux/selectors/entities/access_control';
+import {getAccessControlSettings} from '@hanzoteam/redux/selectors/entities/access_control';
 
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';
 import AdminPanelWithButton from 'components/widgets/admin_console/admin_panel_with_button';

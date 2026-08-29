@@ -4,8 +4,8 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

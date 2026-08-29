@@ -7,11 +7,11 @@ import type {ReactNode} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import type {UserThread, UserThreadSynthetic} from '@mattermost/types/threads';
+import type {UserThread, UserThreadSynthetic} from '@hanzoteam/types/threads';
 
-import {setThreadFollow} from 'mattermost-redux/actions/threads';
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost, makeGetPostsForThread} from 'mattermost-redux/selectors/entities/posts';
+import {setThreadFollow} from '@hanzoteam/redux/actions/threads';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost, makeGetPostsForThread} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {focusPost} from 'components/permalink_view/actions';
 import PopoutButton from 'components/popout_button';

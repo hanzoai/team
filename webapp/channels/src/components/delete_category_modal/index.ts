@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {deleteCategory} from 'mattermost-redux/actions/channel_categories';
+import {deleteCategory} from '@hanzoteam/redux/actions/channel_categories';
 
 import DeleteCategoryModal from './delete_category_modal';
 

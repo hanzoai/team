@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {General} from 'mattermost-redux/constants';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {General} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {Preferences} from 'utils/constants';
@@ -22,7 +22,7 @@ jest.mock('react-redux', () => ({
     useDispatch: jest.fn().mockReturnValue(() => {}),
 }));
 
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: jest.fn(),
 }));
 

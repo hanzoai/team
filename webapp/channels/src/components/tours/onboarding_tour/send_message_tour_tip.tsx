@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {useMeasurePunchouts} from '@mattermost/components';
+import {useMeasurePunchouts} from '@hanzoteam/components';
 
 import PrewrittenChips from 'components/advanced_create_post/prewritten_chips';
 

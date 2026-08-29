@@ -3,10 +3,10 @@
 
 import React, {memo, useCallback} from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SidebarChannelLink from 'components/sidebar/sidebar_channel/sidebar_channel_link';
 

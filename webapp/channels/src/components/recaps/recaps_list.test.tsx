@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import type {Recap} from '@mattermost/types/recaps';
-import {RecapStatus} from '@mattermost/types/recaps';
+import type {Recap} from '@hanzoteam/types/recaps';
+import {RecapStatus} from '@hanzoteam/types/recaps';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 
 import RecapsList from './recaps_list';
 
-jest.mock('mattermost-redux/actions/recaps', () => ({
+jest.mock('@hanzoteam/redux/actions/recaps', () => ({
     pollRecapStatus: jest.fn(() => ({type: 'POLL_RECAP_STATUS'})),
 }));
 

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import useCopyText, {messages as copyMessages} from 'components/common/hooks/useCopyText';
 import ExternalLink from 'components/external_link';

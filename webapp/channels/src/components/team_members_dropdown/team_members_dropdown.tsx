@@ -5,12 +5,12 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isGuest, isAdmin, isSystemAdmin} from 'mattermost-redux/utils/user_utils';
+import type {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isGuest, isAdmin, isSystemAdmin} from '@hanzoteam/redux/utils/user_utils';
 
 import ConfirmModal from 'components/confirm_modal';
 import * as Menu from 'components/menu';

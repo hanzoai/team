@@ -9,10 +9,10 @@ import type {
     ContentFlaggingAdditionalSettings,
     ContentFlaggingNotificationSettings,
     ContentFlaggingSettings as TypeContentFlaggingSettings,
-    ContentFlaggingReviewerSetting} from '@mattermost/types/config';
-import type {ServerError} from '@mattermost/types/errors';
+    ContentFlaggingReviewerSetting} from '@hanzoteam/types/config';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import BooleanSetting from 'components/admin_console/boolean_setting';
 import ContentFlaggingAdditionalSettingsSection

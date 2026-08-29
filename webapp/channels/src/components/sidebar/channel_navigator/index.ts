@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {shouldShowUnreadsCategory} from 'mattermost-redux/selectors/entities/preferences';
+import {shouldShowUnreadsCategory} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {openModal, closeModal} from 'actions/views/modals';
 import {isModalOpen} from 'selectors/views/modals';

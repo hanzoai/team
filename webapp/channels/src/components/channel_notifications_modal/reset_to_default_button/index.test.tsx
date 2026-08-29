@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ChannelMembership} from '@mattermost/types/channels';
-import type {UserNotifyProps} from '@mattermost/types/users';
+import type {ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserNotifyProps} from '@hanzoteam/types/users';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {NotificationLevels, DesktopSound} from 'utils/constants';

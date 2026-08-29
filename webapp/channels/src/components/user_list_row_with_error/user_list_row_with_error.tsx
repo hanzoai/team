@@ -6,11 +6,11 @@ import {FormattedMessage} from 'react-intl';
 import type {ConnectedComponent} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';
 import ProfilePicture from 'components/profile_picture';

@@ -4,7 +4,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import webSocketClient from 'client/web_websocket_client';
 

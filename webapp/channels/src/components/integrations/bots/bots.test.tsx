@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Bot} from '@mattermost/types/bots';
+import type {Bot} from '@hanzoteam/types/bots';
 
 import {renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {OptionProps} from 'react-select';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

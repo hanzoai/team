@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getSocketStatus} from 'selectors/views/websocket';
 

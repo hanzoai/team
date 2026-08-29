@@ -8,12 +8,12 @@ import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import type {SelectInstance} from 'react-select';
 import ReactSelect from 'react-select';
 
-import type {AdminConfig} from '@mattermost/types/config';
-import type {DataRetentionCustomPolicies, DataRetentionCustomPolicy} from '@mattermost/types/data_retention';
-import type {JobTypeBase, JobType} from '@mattermost/types/jobs';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {DataRetentionCustomPolicies, DataRetentionCustomPolicy} from '@hanzoteam/types/data_retention';
+import type {JobTypeBase, JobType} from '@hanzoteam/types/jobs';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import type {Row, Column} from 'components/admin_console/data_grid/data_grid';

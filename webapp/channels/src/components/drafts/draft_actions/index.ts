@@ -3,12 +3,12 @@
 
 import {connect} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {Constants} from 'utils/constants';
 

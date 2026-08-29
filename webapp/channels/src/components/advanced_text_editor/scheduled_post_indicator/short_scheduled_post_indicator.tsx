@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {ChannelScheduledPostIndicatorData} from 'mattermost-redux/selectors/entities/scheduled_posts';
+import type {ChannelScheduledPostIndicatorData} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
 
 type Props = {
     scheduledPostData: ChannelScheduledPostIndicatorData;

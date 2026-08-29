@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {fetchIsRestrictedDM} from 'mattermost-redux/actions/channels';
+import {fetchIsRestrictedDM} from '@hanzoteam/redux/actions/channels';
 import {
     getCurrentChannel,
     getMyChannelMembership,
     isDeactivatedDirectChannel,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getRoles} from 'mattermost-redux/selectors/entities/roles_helpers';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getRoles} from '@hanzoteam/redux/selectors/entities/roles_helpers';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {goToLastViewedChannel} from 'actions/views/channel';
 

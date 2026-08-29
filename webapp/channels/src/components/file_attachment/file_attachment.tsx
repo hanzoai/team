@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import React, {useRef, useState, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {ArchiveOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
+import {ArchiveOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFileThumbnailUrl, getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileThumbnailUrl, getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import GetPublicModal from 'components/get_public_link_modal';
 import Menu from 'components/widgets/menu/menu';

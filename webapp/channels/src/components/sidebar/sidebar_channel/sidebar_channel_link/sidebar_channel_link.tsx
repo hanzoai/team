@@ -6,8 +6,8 @@ import React from 'react';
 import {type WrappedComponentProps, defineMessages, injectIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel} from '@mattermost/types/channels';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {mark} from 'actions/telemetry_actions';
 

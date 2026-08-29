@@ -4,13 +4,13 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {AppField} from '@mattermost/types/apps';
+import type {AppField} from '@hanzoteam/types/apps';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 
 import AppsFormDateTimeField from './apps_form_datetime_field';
 
-jest.mock('mattermost-redux/selectors/entities/timezone', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/timezone', () => ({
     getCurrentTimezone: jest.fn().mockReturnValue('America/New_York'),
 }));
 

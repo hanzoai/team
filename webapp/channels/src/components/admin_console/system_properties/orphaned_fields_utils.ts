@@ -3,7 +3,7 @@
 
 import {useSelector} from 'react-redux';
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import type {GlobalState} from 'types/store';
 

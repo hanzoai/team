@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import type {GlobalState} from 'types/store';
 

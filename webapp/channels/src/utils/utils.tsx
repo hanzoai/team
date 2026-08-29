@@ -11,41 +11,41 @@ import React from 'react';
 import type {LinkHTMLAttributes} from 'react';
 import type {MessageDescriptor} from 'react-intl';
 
-import {isFirefox, isSafari} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {Address} from '@mattermost/types/cloud';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Group} from '@mattermost/types/groups';
-import type {GlobalState} from '@mattermost/types/store';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {isFirefox, isSafari} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Address} from '@hanzoteam/types/cloud';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Group} from '@hanzoteam/types/groups';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {
     getChannel as getChannelAction,
     getChannelByNameAndTeamName,
     getChannelMember,
     joinChannel,
-} from 'mattermost-redux/actions/channels';
-import {getPost as getPostAction} from 'mattermost-redux/actions/posts';
-import {getTeamByName as getTeamByNameAction} from 'mattermost-redux/actions/teams';
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
+} from '@hanzoteam/redux/actions/channels';
+import {getPost as getPostAction} from '@hanzoteam/redux/actions/posts';
+import {getTeamByName as getTeamByNameAction} from '@hanzoteam/redux/actions/teams';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
 import {
     getChannel,
     getChannelsNameMapInTeam,
     getMyChannelMemberships,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getTeammateNameDisplaySetting, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     getTeamByName,
     getTeamMemberships,
     isTeamSameWithCurrentTeam,
-} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser, getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {blendColors, changeOpacity} from 'mattermost-redux/utils/theme_utils';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {blendColors, changeOpacity} from '@hanzoteam/redux/utils/theme_utils';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {searchForTerm} from 'actions/post_actions';
 import {addUserToTeam} from 'actions/team_actions';

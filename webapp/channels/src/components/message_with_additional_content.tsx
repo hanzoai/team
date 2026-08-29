@@ -4,9 +4,9 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import PostBodyAdditionalContent from 'components/post_view/post_body_additional_content';
 import PostMessageView from 'components/post_view/post_message_view';

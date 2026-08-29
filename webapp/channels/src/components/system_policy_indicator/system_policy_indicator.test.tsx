@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

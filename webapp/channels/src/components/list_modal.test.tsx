@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

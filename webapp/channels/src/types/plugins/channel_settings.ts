@@ -3,7 +3,7 @@
 
 import type React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import type {SettingsSchema} from 'plugins/settings_schema/types';
 

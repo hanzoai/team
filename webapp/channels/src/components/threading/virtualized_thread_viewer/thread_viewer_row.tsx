@@ -3,9 +3,9 @@
 
 import React, {memo} from 'react';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import * as PostListUtils from 'mattermost-redux/utils/post_list';
+import * as PostListUtils from '@hanzoteam/redux/utils/post_list';
 
 import PostComponent from 'components/post';
 import CombinedUserActivityPost from 'components/post_view/combined_user_activity_post';

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

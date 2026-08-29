@@ -5,7 +5,7 @@ import React, {useState, useMemo, useEffect} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {CSSTransition} from 'react-transition-group';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import UsersEmailsInput from 'components/widgets/inputs/users_emails_input';
 

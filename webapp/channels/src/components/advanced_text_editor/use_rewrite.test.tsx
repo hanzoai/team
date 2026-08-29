@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import type {Agent} from '@mattermost/types/agents';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {Agent} from '@hanzoteam/types/agents';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {getAgents as getAgentsAction} from 'mattermost-redux/actions/agents';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Client4} from 'mattermost-redux/client';
+import {getAgents as getAgentsAction} from '@hanzoteam/redux/actions/agents';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Client4} from '@hanzoteam/redux/client';
 
 import type TextboxClass from 'components/textbox/textbox';
 
@@ -21,15 +21,15 @@ import type {PostDraft} from 'types/store/draft';
 import {RewriteAction} from './rewrite_action';
 import useRewrite from './use_rewrite';
 
-jest.mock('mattermost-redux/actions/agents', () => ({
+jest.mock('@hanzoteam/redux/actions/agents', () => ({
     getAgents: jest.fn(() => ({type: 'GET_AGENTS'})),
 }));
 
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: jest.fn(() => ({type: 'SAVE_PREFERENCES'})),
 }));
 
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         getAIRewrittenMessage: jest.fn(),
     },

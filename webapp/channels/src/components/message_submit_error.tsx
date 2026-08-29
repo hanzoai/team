@@ -5,7 +5,7 @@ import React from 'react';
 import type {MouseEventHandler} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ServerError} from '@mattermost/types/errors';
+import type {ServerError} from '@hanzoteam/types/errors';
 
 import {isErrorInvalidSlashCommand} from 'utils/post_utils';
 

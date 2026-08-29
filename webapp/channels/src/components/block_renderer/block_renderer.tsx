@@ -12,8 +12,8 @@
 
 import React, {useMemo} from 'react';
 
-import type {MmBlock} from '@mattermost/types/mm_blocks';
-import type {PostImage} from '@mattermost/types/posts';
+import type {MmBlock} from '@hanzoteam/types/mm_blocks';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 import {MmBlocksImagesMetadataContext, MmBlocksInlineMarkdownActionsContext, MmBlocksInteractionsDisabledContext} from './context';
 import type {MmBlocksInlineMarkdownActions} from './context';

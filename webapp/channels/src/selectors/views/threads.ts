@@ -3,18 +3,18 @@
 
 import moment from 'moment';
 
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {makeGetPostsForIds} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentTeam, getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getThreads} from 'mattermost-redux/selectors/entities/threads';
-import {createIdsSelector} from 'mattermost-redux/utils/helpers';
-import {DATE_LINE, makeCombineUserActivityPosts, START_OF_NEW_MESSAGES} from 'mattermost-redux/utils/post_list';
-import {getUserCurrentTimezone} from 'mattermost-redux/utils/timezone_utils';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {makeGetPostsForIds} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentTeam, getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThreads} from '@hanzoteam/redux/selectors/entities/threads';
+import {createIdsSelector} from '@hanzoteam/redux/utils/helpers';
+import {DATE_LINE, makeCombineUserActivityPosts, START_OF_NEW_MESSAGES} from '@hanzoteam/redux/utils/post_list';
+import {getUserCurrentTimezone} from '@hanzoteam/redux/utils/timezone_utils';
 
 import {getIsRhsOpen, getSelectedPostId} from 'selectors/rhs';
 

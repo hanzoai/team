@@ -5,8 +5,8 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
-import type {Reaction as ReactionType} from '@mattermost/types/reactions';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Reaction as ReactionType} from '@hanzoteam/types/reactions';
 
 import ReactionTooltip from './reaction_tooltip';
 

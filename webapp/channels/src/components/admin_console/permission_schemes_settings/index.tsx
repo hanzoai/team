@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getSchemeTeams as loadSchemeTeams, getSchemes as loadSchemes} from 'mattermost-redux/actions/schemes';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getSchemes} from 'mattermost-redux/selectors/entities/schemes';
+import {getSchemeTeams as loadSchemeTeams, getSchemes as loadSchemes} from '@hanzoteam/redux/actions/schemes';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getSchemes} from '@hanzoteam/redux/selectors/entities/schemes';
 
 import type {GlobalState} from 'types/store';
 

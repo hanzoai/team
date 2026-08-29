@@ -4,8 +4,8 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import {PostPriority} from '@mattermost/types/posts';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import {PostPriority} from '@hanzoteam/types/posts';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import * as utils from 'utils/utils';

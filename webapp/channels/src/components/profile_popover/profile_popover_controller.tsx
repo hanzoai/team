@@ -20,8 +20,8 @@ import type {HtmlHTMLAttributes, ReactNode} from 'react';
 import React, {useCallback, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {A11yClassNames, OverlaysTimings, OverlayTransitionStyles, RootHtmlPortalId} from 'utils/constants';
 

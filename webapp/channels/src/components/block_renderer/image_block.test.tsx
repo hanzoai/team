@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {MmImageBlock} from '@mattermost/types/mm_blocks';
+import type {MmImageBlock} from '@hanzoteam/types/mm_blocks';
 
 import {openModal} from 'actions/views/modals';
 

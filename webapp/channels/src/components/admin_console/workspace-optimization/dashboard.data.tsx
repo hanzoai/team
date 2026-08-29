@@ -12,11 +12,11 @@ import {
     TuneIcon,
     LockOutlineIcon,
     AccountMultipleOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {AdminConfig} from '@mattermost/types/config';
-import type {GlobalState} from '@mattermost/types/store';
+} from '@hanzoteam/compass-icons/components';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getLicense, getServerVersion} from 'mattermost-redux/selectors/entities/general';
+import {getLicense, getServerVersion} from '@hanzoteam/redux/selectors/entities/general';
 
 import useOpenSalesLink from 'components/common/hooks/useOpenSalesLink';
 

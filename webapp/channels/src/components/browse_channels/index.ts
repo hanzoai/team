@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {
     getChannels,
@@ -16,13 +16,13 @@ import {
     searchAllChannels,
     getMyChannelJoinRequests,
     withdrawMyChannelJoinRequest,
-} from 'mattermost-redux/actions/channels';
-import {RequestStatus} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getChannelsInCurrentTeam, getMyChannelMemberships, getChannelsMemberCount as getChannelsMemberCountSelector, getMyPendingJoinRequestsByChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeam, getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/channels';
+import {RequestStatus} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getChannelsInCurrentTeam, getMyChannelMemberships, getChannelsMemberCount as getChannelsMemberCountSelector, getMyPendingJoinRequestsByChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isDiscoverableChannelsEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeam, getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setGlobalItem} from 'actions/storage';
 import {openModal, closeModal} from 'actions/views/modals';

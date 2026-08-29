@@ -1,17 +1,17 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getChannel, getChannelMember, selectChannel, joinChannel, getChannelStats} from 'mattermost-redux/actions/channels';
-import {getPostThread} from 'mattermost-redux/actions/posts';
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getCurrentChannel, getChannel as getChannelFromRedux} from 'mattermost-redux/selectors/entities/channels';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam, getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
+import {getChannel, getChannelMember, selectChannel, joinChannel, getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {getPostThread} from '@hanzoteam/redux/actions/posts';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCurrentChannel, getChannel as getChannelFromRedux} from '@hanzoteam/redux/selectors/entities/channels';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
 
 import {loadChannelsForCurrentUser} from 'actions/channel_actions';
 import {loadNewDMIfNeeded, loadNewGMIfNeeded} from 'actions/user_actions';

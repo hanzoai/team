@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {favoriteChannel, unfavoriteChannel} from 'mattermost-redux/actions/channels';
-import {getTotalUsersStats} from 'mattermost-redux/actions/users';
-import {isChannelInManagedCategory} from 'mattermost-redux/selectors/entities/channel_categories';
-import {getCurrentChannel, getDirectTeammate, getMyCurrentChannelMembership, isCurrentChannelFavorite} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser, getProfilesInCurrentChannel, getCurrentUserId, getUser, getTotalUsersStats as getTotalUsersStatsSelector} from 'mattermost-redux/selectors/entities/users';
+import {favoriteChannel, unfavoriteChannel} from '@hanzoteam/redux/actions/channels';
+import {getTotalUsersStats} from '@hanzoteam/redux/actions/users';
+import {isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
+import {getCurrentChannel, getDirectTeammate, getMyCurrentChannelMembership, isCurrentChannelFavorite} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser, getProfilesInCurrentChannel, getCurrentUserId, getUser, getTotalUsersStats as getTotalUsersStatsSelector} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getCurrentLocale} from 'selectors/i18n';
 import {getIsMobileView} from 'selectors/views/browser';

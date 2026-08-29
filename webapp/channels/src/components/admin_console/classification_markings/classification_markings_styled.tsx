@@ -3,7 +3,7 @@
 
 import styled from 'styled-components';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import {SectionContent} from '../system_properties/controls';
 

@@ -1,27 +1,27 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {CommandArgs} from '@mattermost/types/integrations';
-import type {Post, PostMetadata} from '@mattermost/types/posts';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
-import {scheduledPostFromPost} from '@mattermost/types/schedule_post';
+import type {CommandArgs} from '@hanzoteam/types/integrations';
+import type {Post, PostMetadata} from '@hanzoteam/types/posts';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
+import {scheduledPostFromPost} from '@hanzoteam/types/schedule_post';
 
-import type {CreatePostReturnType, SubmitReactionReturnType} from 'mattermost-redux/actions/posts';
-import {addMessageIntoHistory} from 'mattermost-redux/actions/posts';
-import {Permissions} from 'mattermost-redux/constants';
-import {PostTypes} from 'mattermost-redux/constants/posts';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCustomEmojisByName} from 'mattermost-redux/selectors/entities/emojis';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAssociatedGroupsForReferenceByMention} from 'mattermost-redux/selectors/entities/groups';
+import type {CreatePostReturnType, SubmitReactionReturnType} from '@hanzoteam/redux/actions/posts';
+import {addMessageIntoHistory} from '@hanzoteam/redux/actions/posts';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {PostTypes} from '@hanzoteam/redux/constants/posts';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCustomEmojisByName} from '@hanzoteam/redux/selectors/entities/emojis';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAssociatedGroupsForReferenceByMention} from '@hanzoteam/redux/selectors/entities/groups';
 import {
     getLatestInteractablePostId,
     getLatestPostToEdit,
-} from 'mattermost-redux/selectors/entities/posts';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/posts';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {ExecuteCommandReturnType} from 'actions/command';
 import {executeCommand} from 'actions/command';

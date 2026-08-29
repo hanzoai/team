@@ -3,15 +3,15 @@
 
 import moment from 'moment-timezone';
 
-import type {UserCustomStatus} from '@mattermost/types/users';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import type {UserCustomStatus} from '@hanzoteam/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUser, getUser} from 'mattermost-redux/selectors/entities/users';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUser, getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getEmojiMap} from 'selectors/emojis';
 

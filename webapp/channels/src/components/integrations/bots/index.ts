@@ -5,17 +5,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Bot as BotType} from '@mattermost/types/bots';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Bot as BotType} from '@hanzoteam/types/bots';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {loadBots, disableBot, enableBot} from 'mattermost-redux/actions/bots';
-import {getAppsBotIDs as fetchAppsBotIDs} from 'mattermost-redux/actions/integrations';
-import {createUserAccessToken, revokeUserAccessToken, enableUserAccessToken, disableUserAccessToken, getUserAccessTokensForUser, getUser} from 'mattermost-redux/actions/users';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getExternalBotAccounts} from 'mattermost-redux/selectors/entities/bots';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getAppsBotIDs} from 'mattermost-redux/selectors/entities/integrations';
-import * as UserSelectors from 'mattermost-redux/selectors/entities/users';
+import {loadBots, disableBot, enableBot} from '@hanzoteam/redux/actions/bots';
+import {getAppsBotIDs as fetchAppsBotIDs} from '@hanzoteam/redux/actions/integrations';
+import {createUserAccessToken, revokeUserAccessToken, enableUserAccessToken, disableUserAccessToken, getUserAccessTokensForUser, getUser} from '@hanzoteam/redux/actions/users';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getExternalBotAccounts} from '@hanzoteam/redux/selectors/entities/bots';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getAppsBotIDs} from '@hanzoteam/redux/selectors/entities/integrations';
+import * as UserSelectors from '@hanzoteam/redux/selectors/entities/users';
 
 import {getPluginDisplayName} from 'selectors/plugins';
 

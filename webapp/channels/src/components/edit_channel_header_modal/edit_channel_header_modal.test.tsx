@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Channel, ChannelType} from '@mattermost/types/channels';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
 
 import {EditChannelHeaderModal} from 'components/edit_channel_header_modal/edit_channel_header_modal';
 

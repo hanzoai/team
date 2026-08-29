@@ -7,8 +7,8 @@ import {Route, Switch} from 'react-router-dom';
 import type {match} from 'react-router-dom';
 import {createGlobalStyle} from 'styled-components';
 
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Emoji from 'components/emoji';
 import AddEmoji from 'components/emoji/add_emoji';

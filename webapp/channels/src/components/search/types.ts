@@ -4,9 +4,9 @@
 import type React from 'react';
 import type {Action} from 'redux';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
 import type {SearchType} from 'types/store/rhs';
 

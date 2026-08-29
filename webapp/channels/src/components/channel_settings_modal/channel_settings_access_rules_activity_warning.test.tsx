@@ -4,7 +4,7 @@
 import {act, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';
 

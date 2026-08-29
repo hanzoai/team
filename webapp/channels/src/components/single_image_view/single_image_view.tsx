@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import React from 'react';
 import type {KeyboardEvent, MouseEvent} from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {Client4} from 'mattermost-redux/client';
-import {getFilePreviewUrl, getFileUrl, getFileThumbnailUrl} from 'mattermost-redux/utils/file_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {getFilePreviewUrl, getFileUrl, getFileThumbnailUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import FilePreviewModal from 'components/file_preview_modal';
 import SizeAwareImage from 'components/size_aware_image';

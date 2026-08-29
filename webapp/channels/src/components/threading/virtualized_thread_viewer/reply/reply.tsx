@@ -3,7 +3,7 @@
 
 import React, {memo} from 'react';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
 import PostComponent from 'components/post';
 import type {Props as TimestampProps} from 'components/timestamp/timestamp';

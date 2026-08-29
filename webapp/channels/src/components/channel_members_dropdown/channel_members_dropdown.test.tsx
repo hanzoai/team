@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ChannelMembersDropdown from 'components/channel_members_dropdown/channel_members_dropdown';
 
-import {mockDispatch} from 'packages/mattermost-redux/test/test_store';
+import {mockDispatch} from 'packages/@hanzoteam/redux/test/test_store';
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {ModalIdentifiers} from 'utils/constants';
 

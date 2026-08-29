@@ -3,8 +3,8 @@
 
 import {
     addMessageIntoHistory,
-} from 'mattermost-redux/actions/posts';
-import {Posts} from 'mattermost-redux/constants';
+} from '@hanzoteam/redux/actions/posts';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import {executeCommand} from 'actions/command';
 import * as HookActions from 'actions/hooks';
@@ -21,8 +21,8 @@ import {TestHelper} from 'utils/test_helper';
 
 /* eslint-disable global-require */
 
-jest.mock('mattermost-redux/client', () => {
-    const original = jest.requireActual('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client', () => {
+    const original = jest.requireActual('@hanzoteam/redux/client');
 
     return {
         ...original,
@@ -34,7 +34,7 @@ jest.mock('mattermost-redux/client', () => {
     };
 });
 
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     removeReaction: (...args) => ({type: 'MOCK_REMOVE_REACTION', args}),
     addMessageIntoHistory: (...args) => ({type: 'MOCK_ADD_MESSAGE_INTO_HISTORY', args}),
     moveHistoryIndexBack: (...args) => ({type: 'MOCK_MOVE_MESSAGE_HISTORY_BACK', args}),

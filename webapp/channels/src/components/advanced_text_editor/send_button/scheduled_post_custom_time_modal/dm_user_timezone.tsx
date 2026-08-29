@@ -5,9 +5,9 @@ import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {General} from 'mattermost-redux/constants';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {General} from '@hanzoteam/redux/constants';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import Timestamp, {RelativeRanges} from 'components/timestamp';
 

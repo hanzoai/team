@@ -13,7 +13,7 @@ const externals = [
     ...Object.keys(packagejson.peerDependencies || {}),
     'lodash/throttle',
     'react',
-    'mattermost-redux',
+    '@hanzoteam/redux',
     'reselect',
 ];
 

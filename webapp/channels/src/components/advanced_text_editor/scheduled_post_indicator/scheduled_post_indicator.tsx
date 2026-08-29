@@ -6,8 +6,8 @@ import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {showChannelOrThreadScheduledPostIndicator} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {showChannelOrThreadScheduledPostIndicator} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {
     ShortScheduledPostIndicator,

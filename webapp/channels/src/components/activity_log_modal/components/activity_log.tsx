@@ -5,10 +5,10 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedDate, FormattedMessage, FormattedTime, defineMessages} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Session} from '@mattermost/types/sessions';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Session} from '@hanzoteam/types/sessions';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import {getMonthLong} from 'utils/i18n';
 

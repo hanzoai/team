@@ -3,7 +3,7 @@
 
 import {useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import type {GlobalState} from 'types/store';
 

@@ -5,10 +5,10 @@ import React, {useState, useEffect} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {getDesktopVersion, isDesktopApp} from '@mattermost/shared/utils/user_agent';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
+import {getDesktopVersion, isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import CopyButton from 'components/copy_button';
 import ExternalLink from 'components/external_link';

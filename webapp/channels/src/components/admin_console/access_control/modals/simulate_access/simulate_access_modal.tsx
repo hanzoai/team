@@ -6,24 +6,24 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
+import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
 import type {
     AccessControlPolicy,
     PolicyEvaluationScope,
     PolicySimulationByUsersParams,
     PolicySimulationResponse,
     PolicySimulationUserOverride,
-} from '@mattermost/types/access_control';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {isSessionAttributeField} from '@mattermost/types/properties_user';
-import type {UserProfile} from '@mattermost/types/users';
+} from '@hanzoteam/types/access_control';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import {isSessionAttributeField} from '@hanzoteam/types/properties_user';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {simulatePolicyForUsers} from 'mattermost-redux/actions/access_control';
-import {getProfiles, getProfilesInChannel, searchProfiles} from 'mattermost-redux/actions/users';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {simulatePolicyForUsers} from '@hanzoteam/redux/actions/access_control';
+import {getProfiles, getProfilesInChannel, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import * as Menu from 'components/menu';
 

@@ -5,10 +5,10 @@ import React, {memo, forwardRef, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost, getLimitedViews} from 'mattermost-redux/selectors/entities/posts';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost, getLimitedViews} from '@hanzoteam/redux/selectors/entities/posts';
 
 import AdvancedCreateComment from 'components/advanced_create_comment';
 import {compassIconForName, useChannelIconOverrideName} from 'components/channel_type_icon';

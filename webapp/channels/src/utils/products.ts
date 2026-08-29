@@ -4,8 +4,8 @@
 import {useSelector} from 'react-redux';
 import {useLocation, matchPath} from 'react-router-dom';
 
-import type {Product} from '@mattermost/types/cloud';
-import type {ProductIdentifier, ProductScope} from '@mattermost/types/products';
+import type {Product} from '@hanzoteam/types/cloud';
+import type {ProductIdentifier, ProductScope} from '@hanzoteam/types/products';
 
 import {selectProducts, selectCurrentProductId, selectCurrentProduct} from 'selectors/products';
 

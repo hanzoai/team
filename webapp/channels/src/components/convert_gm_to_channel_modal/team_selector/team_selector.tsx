@@ -5,7 +5,7 @@ import React, {useCallback, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

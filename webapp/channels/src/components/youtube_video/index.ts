@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOpenGraphMetadataForUrl} from 'mattermost-redux/selectors/entities/posts';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOpenGraphMetadataForUrl} from '@hanzoteam/redux/selectors/entities/posts';
 
 import type {GlobalState} from 'types/store';
 

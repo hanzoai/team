@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getMyChannelMember} from 'mattermost-redux/actions/channels';
-import {getGroupsAssociatedToChannel, unlinkGroupSyncable, patchGroupSyncable} from 'mattermost-redux/actions/groups';
+import {getMyChannelMember} from '@hanzoteam/redux/actions/channels';
+import {getGroupsAssociatedToChannel, unlinkGroupSyncable, patchGroupSyncable} from '@hanzoteam/redux/actions/groups';
 
 import {closeModal, openModal} from 'actions/views/modals';
 

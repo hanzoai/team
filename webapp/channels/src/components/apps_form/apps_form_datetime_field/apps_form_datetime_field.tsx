@@ -6,9 +6,9 @@ import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {AppField} from '@mattermost/types/apps';
+import type {AppField} from '@hanzoteam/types/apps';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import DateTimeInput from 'components/datetime_input/datetime_input';
 

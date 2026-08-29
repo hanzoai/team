@@ -5,8 +5,8 @@ import type {ComponentProps} from 'react';
 import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import DropdownInput from 'components/dropdown_input';
 

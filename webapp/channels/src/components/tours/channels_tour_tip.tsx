@@ -5,13 +5,13 @@ import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import type {Placement} from 'tippy.js';
 
-import type {PunchOutCoordsHeightAndWidth} from '@mattermost/components';
-import {TourTip} from '@mattermost/components';
+import type {PunchOutCoordsHeightAndWidth} from '@hanzoteam/components';
+import {TourTip} from '@hanzoteam/components';
 
 import {useTourTipManager} from './tour_manager';
 import {getLastStep} from './utils';
 
-// TODO MM-51399 These strings are properly defined in @mattermost/components, but the i18n tooling currently can't
+// TODO MM-51399 These strings are properly defined in @hanzoteam/components, but the i18n tooling currently can't
 // find them there, so we've had to redefine them here
 defineMessages({
     optOut: {

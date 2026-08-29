@@ -6,15 +6,15 @@ import React, {memo, useCallback, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import {isRecurringScheduledPost} from '@mattermost/types/schedule_post';
-import type {ScheduledPost, SchedulingInfo} from '@mattermost/types/schedule_post';
+import type {Channel} from '@hanzoteam/types/channels';
+import {isRecurringScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {ScheduledPost, SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {fetchMissingChannels} from 'mattermost-redux/actions/channels';
-import {isDeactivatedDirectChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getMyChannelMemberships} from 'mattermost-redux/selectors/entities/common';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {fetchMissingChannels} from '@hanzoteam/redux/actions/channels';
+import {isDeactivatedDirectChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getMyChannelMemberships} from '@hanzoteam/redux/selectors/entities/common';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 

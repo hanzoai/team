@@ -6,11 +6,11 @@ import {createPortal} from 'react-dom';
 import type {IntlShape} from 'react-intl';
 import {injectIntl} from 'react-intl';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import MarketplaceModal from 'components/plugin_marketplace/marketplace_modal';
 import Menu from 'components/widgets/menu/menu';

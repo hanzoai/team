@@ -4,11 +4,11 @@
 import React, {useCallback, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import Input from 'components/widgets/inputs/input/input';
 

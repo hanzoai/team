@@ -4,7 +4,7 @@
 import FlexSearch from 'flexsearch/dist/flexsearch.es5';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 
-import type {PluginRedux} from '@mattermost/types/plugins';
+import type {PluginRedux} from '@hanzoteam/types/plugins';
 
 import type AdminDefinition from 'components/admin_console/admin_definition';
 import type {AdminDefinitionSetting, AdminDefinitionSubSection} from 'components/admin_console/types';

@@ -5,10 +5,10 @@ import React, {useState} from 'react';
 import {defineMessages} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions.js';
+import type {ActionResult} from '@hanzoteam/redux/types/actions.js';
 
 import AbstractOAuthApp from '../abstract_oauth_app';
 

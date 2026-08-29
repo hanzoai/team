@@ -4,16 +4,16 @@
 import {createMemoryHistory} from 'history';
 import React from 'react';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {RequestStatus} from 'mattermost-redux/constants';
+import {RequestStatus} from '@hanzoteam/redux/constants';
 
 import * as loginActions from 'actions/views/login';
 import LocalStorageStore from 'stores/local_storage_store';
 
 import Login from 'components/login/login';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import Constants, {WindowSizes} from 'utils/constants';
 import DesktopApp from 'utils/desktop_api';
@@ -33,7 +33,7 @@ jest.mock('utils/desktop_api', () => ({
     setSessionExpired: jest.fn(),
 }));
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(),
 }));
 

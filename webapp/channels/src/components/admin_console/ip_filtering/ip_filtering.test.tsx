@@ -6,10 +6,10 @@ import {IntlProvider} from 'react-intl';
 import {Provider} from 'react-redux';
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import type {Installation} from '@mattermost/types/cloud';
-import type {AllowedIPRange, FetchIPResponse} from '@mattermost/types/config';
+import type {Installation} from '@hanzoteam/types/cloud';
+import type {AllowedIPRange, FetchIPResponse} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import configureStore from 'store';
 
@@ -19,7 +19,7 @@ import {fireEvent, render, screen, userEvent, waitFor} from 'tests/react_testing
 
 import IPFiltering from './index';
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 describe('IPFiltering', () => {
     const ipFilters = [

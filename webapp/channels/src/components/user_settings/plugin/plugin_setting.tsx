@@ -4,9 +4,9 @@
 import React, {useCallback, useEffect, useMemo, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';

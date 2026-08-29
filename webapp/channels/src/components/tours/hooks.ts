@@ -4,8 +4,8 @@
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserId, isCurrentUserGuestUser} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserId, isCurrentUserGuestUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {open as openLhs} from 'actions/views/lhs';
 import {switchToChannels} from 'actions/views/onboarding_tasks';

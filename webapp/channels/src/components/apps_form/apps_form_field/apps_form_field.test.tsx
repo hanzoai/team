@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {AppField} from '@mattermost/types/apps';
+import type {AppField} from '@hanzoteam/types/apps';
 
-import {AppFieldTypes} from 'mattermost-redux/constants/apps';
+import {AppFieldTypes} from '@hanzoteam/redux/constants/apps';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

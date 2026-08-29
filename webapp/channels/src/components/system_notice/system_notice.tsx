@@ -4,11 +4,11 @@
 import React from 'react';
 import {FormattedMessage, injectIntl, type WrappedComponentProps} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AnalyticsState} from '@mattermost/types/admin';
-import type {Channel} from '@mattermost/types/channels';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {PreferenceType} from '@mattermost/types/preferences';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AnalyticsState} from '@hanzoteam/types/admin';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
 import type {Notice} from 'components/system_notice/types';
 import BrandMark from 'components/widgets/icons/brand_mark';

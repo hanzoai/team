@@ -4,8 +4,8 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {applyTheme} from 'utils/utils';
 

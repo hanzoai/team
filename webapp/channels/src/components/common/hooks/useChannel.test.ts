@@ -4,7 +4,7 @@
 import nock from 'nock';
 import * as ReactRedux from 'react-redux';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderHookWithContext, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

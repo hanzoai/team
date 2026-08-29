@@ -17,7 +17,7 @@ jest.mock('utils/channel_utils', () => ({
     )),
 }));
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {compassIconForName} from 'components/channel_type_icon';
 
@@ -63,7 +63,7 @@ jest.mock('selectors/views/channel_sidebar', () => ({
     getDraggingState: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
     getCurrentChannel: jest.fn(),
     isCurrentChannelFavorite: jest.fn(),
     makeGetChannel: jest.fn(() => jest.fn()),

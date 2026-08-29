@@ -5,23 +5,23 @@ import classNames from 'classnames';
 import React, {useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {GenericModal} from '@hanzoteam/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {
     AccessControlPolicy,
     PolicySimulationActionDecision,
     PolicySimulationBlame,
     PolicySimulationEvaluationNode,
-} from '@mattermost/types/access_control';
+} from '@hanzoteam/types/access_control';
 import {
     POLICY_SIMULATION_BLAME_SOURCES,
     POLICY_SIMULATION_EVALUATION_NODE_KIND,
     POLICY_SIMULATION_EVALUATION_OUTCOME,
-} from '@mattermost/types/access_control';
-import type {UserProfile} from '@mattermost/types/users';
+} from '@hanzoteam/types/access_control';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import ProfilePicture from 'components/profile_picture';
 
@@ -538,7 +538,7 @@ type DenyTrace = {
      *  standalone evaluation tree, so the picker can render numbered
      *  per-rule sections that line up 1:1 with the merged tree's
      *  branches. The merged AST shape is ambiguous on its own (see
-     *  type comment in @mattermost/types/access_control), which is
+     *  type comment in @hanzoteam/types/access_control), which is
      *  why we trust the server-provided list rather than reconstructing
      *  it client-side.
      *

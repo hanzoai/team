@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Bot} from '@mattermost/types/bots';
-import type {IncomingWebhook, OAuthApp, OutgoingOAuthConnection, OutgoingWebhook} from '@mattermost/types/integrations';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Bot} from '@hanzoteam/types/bots';
+import type {IncomingWebhook, OAuthApp, OutgoingOAuthConnection, OutgoingWebhook} from '@hanzoteam/types/integrations';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import ConfirmIntegration from 'components/integrations/confirm_integration/confirm_integration';
 

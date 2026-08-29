@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MmButtonBlock, MmColumnSetBlock, MmContainerBlock} from '@mattermost/types/mm_blocks';
+import type {MmButtonBlock, MmColumnSetBlock, MmContainerBlock} from '@hanzoteam/types/mm_blocks';
 
 import {translateBlockKit} from './block_kit';
 

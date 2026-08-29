@@ -5,7 +5,7 @@ import React, {memo, useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
 import {openModal} from 'actions/views/modals';
 

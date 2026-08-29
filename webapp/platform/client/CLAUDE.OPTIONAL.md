@@ -1,4 +1,4 @@
-# CLAUDE: `platform/client/` (`@mattermost/client`)
+# CLAUDE: `platform/client/` (`@hanzoteam/client`)
 
 ## Purpose
 - Implements the Client4 HTTP layer and WebSocket client used by all Mattermost web apps and plugins.

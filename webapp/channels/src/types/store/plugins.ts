@@ -5,20 +5,20 @@ import type React from 'react';
 import type {IntlShape} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {WebSocketClient} from '@mattermost/client';
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
-import type {PluginAnalyticsRow} from '@mattermost/types/admin';
-import type {Board} from '@mattermost/types/boards';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {FileInfo} from '@mattermost/types/files';
-import type {CommandArgs} from '@mattermost/types/integrations';
-import type {ClientPluginManifest, NewChannelFormResult, NewChannelFormState} from '@mattermost/types/plugins';
-import type {Post, PostEmbed} from '@mattermost/types/posts';
-import type {ProductScope} from '@mattermost/types/products';
-import type {UserProfile} from '@mattermost/types/users';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {WebSocketClient} from '@hanzoteam/client';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import type {PluginAnalyticsRow} from '@hanzoteam/types/admin';
+import type {Board} from '@hanzoteam/types/boards';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {CommandArgs} from '@hanzoteam/types/integrations';
+import type {ClientPluginManifest, NewChannelFormResult, NewChannelFormState} from '@hanzoteam/types/plugins';
+import type {Post, PostEmbed} from '@hanzoteam/types/posts';
+import type {ProductScope} from '@hanzoteam/types/products';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import type {NewPostMessageProps} from 'actions/new_post';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Job} from '@mattermost/types/jobs';
+import type {Job} from '@hanzoteam/types/jobs';
 
 import MessageExportSettingsDefault, {MessageExportSettings} from 'components/admin_console/message_export_settings';
 

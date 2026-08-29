@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {usePostAriaLabel} from 'utils/post_utils';
 

@@ -5,9 +5,9 @@ import {createMemoryHistory} from 'history';
 import React from 'react';
 import {VariableSizeList} from 'react-window';
 
-import type {ScheduledPost, ScheduledPostErrorCode} from '@mattermost/types/schedule_post';
+import type {ScheduledPost, ScheduledPostErrorCode} from '@hanzoteam/types/schedule_post';
 
-import {fetchMissingChannels} from 'mattermost-redux/actions/channels';
+import {fetchMissingChannels} from '@hanzoteam/redux/actions/channels';
 
 import {act, renderWithContext, screen} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -16,7 +16,7 @@ import {isUserInitiatedScroll} from './virtualized_scheduled_post_list';
 
 import ScheduledPostList from './index';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     fetchMissingChannels: jest.fn(() => ({type: 'MOCK_FETCH_MISSING_CHANNELS'})),
 }));
 

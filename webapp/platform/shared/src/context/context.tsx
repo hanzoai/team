@@ -3,7 +3,7 @@
 
 import React, {useMemo} from 'react';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
 /* eslint-disable no-underscore-dangle */
 
@@ -19,7 +19,7 @@ declare global {
 }
 
 // If multiple copies of the shared package happen to be loaded, this makes them share the same context. In practice,
-// // this should never happen because the web app is supposed to provide the only copy of @mattermost/shared,
+// // this should never happen because the web app is supposed to provide the only copy of @hanzoteam/shared,
 // but I borrowed the idea from React Intl.
 export const SharedContext = window?.__MATTERMOST_SHARED_CONTEXT__ ?? (
     window.__MATTERMOST_SHARED_CONTEXT__ = React.createContext<SharedContextValue>(

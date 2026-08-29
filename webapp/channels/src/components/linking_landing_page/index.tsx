@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import {Client4} from 'mattermost-redux/client';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {Client4} from '@hanzoteam/redux/client';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

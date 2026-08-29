@@ -5,7 +5,7 @@ import React, {useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getMyTeams} from 'mattermost-redux/selectors/entities/teams';
+import {getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getSearchTeam} from 'selectors/rhs';
 

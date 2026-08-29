@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import {act, renderWithContext, screen, waitFor, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -28,7 +28,7 @@ const pluginSaveMocks = new Map<string, jest.Mock<Promise<void>, []>>();
 const pluginResetMocks = new Map<string, jest.Mock<void, []>>();
 
 // Mock the channel banner selector
-jest.mock('mattermost-redux/selectors/entities/channel_banner', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/channel_banner', () => ({
     selectChannelBannerEnabled: jest.fn().mockImplementation((state) => {
         // Return true only for advanced license, false for all others
         return state?.entities?.general?.license?.SkuShortName === 'advanced';
@@ -36,7 +36,7 @@ jest.mock('mattermost-redux/selectors/entities/channel_banner', () => ({
 }));
 
 // Mock the roles selector which is used for permission checks
-jest.mock('mattermost-redux/selectors/entities/roles', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/roles', () => ({
     haveIChannelPermission: jest.fn().mockImplementation((state, teamId, channelId, permission) => {
         // Return different values based on the permission being checked
         if (permission === 'delete_private_channel') {

@@ -43,20 +43,20 @@ jest.mock('components/unreads_status_handler', () => ({
 }));
 
 // Mock only the essential Redux dependencies
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     fetchChannelsAndMembers: jest.fn().mockReturnValue(() => ({type: 'FETCH_CHANNELS_AND_MEMBERS'})),
     selectChannel: jest.fn().mockReturnValue(() => ({type: 'SELECT_CHANNEL'})),
 }));
 
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     selectTeam: jest.fn().mockReturnValue(() => ({type: 'SELECT_TEAM'})),
 }));
 
-jest.mock('mattermost-redux/actions/threads', () => ({
+jest.mock('@hanzoteam/redux/actions/threads', () => ({
     getThread: jest.fn().mockReturnValue(() => ({type: 'GET_THREAD'})),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getProfiles: jest.fn().mockReturnValue(() => ({type: 'GET_PROFILES'})),
 }));
 

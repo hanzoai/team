@@ -5,7 +5,7 @@ import {defineConfig, globalIgnores} from 'eslint/config';
 import formatjsPlugin from 'eslint-plugin-formatjs';
 import noOnlyTestsPlugin from 'eslint-plugin-no-only-tests';
 
-import eslintPlugin from '@mattermost/eslint-plugin';
+import eslintPlugin from '@hanzoteam/eslint-plugin';
 
 export default defineConfig([
     ...eslintPlugin.configs.react,
@@ -59,18 +59,18 @@ export default defineConfig([
         },
     },
     {
-        ignores: ['src/packages/mattermost-redux/**'],
+        ignores: ['src/packages/@hanzoteam/redux/**'],
         rules: {
             '@typescript-eslint/no-restricted-imports': [
                 'error',
                 {
                     paths: [{
-                        name: 'mattermost-redux/types/actions',
+                        name: '@hanzoteam/redux/types/actions',
                         importNames: ['DispatchFunc', 'GetStateFunc', 'ActionFunc', 'ActionFuncAsync', 'ThunkActionFunc'],
                         message: 'Use the web app version of it from types/store',
                     }],
                     patterns: [{
-                        group: ['@mattermost/client/src/*', '@mattermost/components/src/*', '@mattermost/types/src/*'],
+                        group: ['@hanzoteam/client/src/*', '@hanzoteam/components/src/*', '@hanzoteam/types/src/*'],
                         message: "Don't include the src folder when importing from packages in webapp/platform",
                     }],
                 },

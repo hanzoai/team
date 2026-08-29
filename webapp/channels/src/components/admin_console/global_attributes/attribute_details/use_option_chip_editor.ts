@@ -5,7 +5,7 @@ import type {KeyboardEvent, MouseEvent} from 'react';
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import Constants from 'utils/constants';
 

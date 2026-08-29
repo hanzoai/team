@@ -6,10 +6,10 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getTeam, patchTeam, removeTeamIcon, setTeamIcon} from 'mattermost-redux/actions/teams';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getTeam, patchTeam, removeTeamIcon, setTeamIcon} from '@hanzoteam/redux/actions/teams';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store/index';
 

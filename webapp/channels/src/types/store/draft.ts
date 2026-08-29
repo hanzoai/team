@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {FileInfo} from '@mattermost/types/files';
-import type {PostPriority, PostType} from '@mattermost/types/posts';
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {PostPriority, PostType} from '@hanzoteam/types/posts';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
 
 import {PostTypes} from 'utils/constants';
 

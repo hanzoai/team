@@ -4,9 +4,9 @@
 import PQueue from 'p-queue';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {loadProfilesForSidebar} from 'actions/user_actions';
 

@@ -17,7 +17,7 @@ import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getRecapLimitStatus} from 'mattermost-redux/selectors/entities/recaps';
+import {getRecapLimitStatus} from '@hanzoteam/redux/selectors/entities/recaps';
 
 import './recap_usage_badge.scss';
 

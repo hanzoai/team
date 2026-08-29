@@ -4,11 +4,11 @@
 import type {ConnectedProps} from 'react-redux';
 import {connect} from 'react-redux';
 
-import {ReportDuration} from '@mattermost/types/reports';
+import {ReportDuration} from '@hanzoteam/types/reports';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getUserCountForReporting, getUserReports, setAdminConsoleUsersManagementTableProperties} from 'actions/views/admin';
 import {adminConsoleUserManagementTablePropertiesInitialState} from 'reducers/views/admin';

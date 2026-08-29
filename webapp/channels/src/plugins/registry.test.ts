@@ -23,7 +23,7 @@ jest.mock('stores/redux_store', () => ({
 }));
 
 // Stub out side-effecting imports that registry.ts pulls in but aren't needed for this test.
-jest.mock('mattermost-redux/store/reducer_registry', () => ({default: {register: jest.fn()}, register: jest.fn()}));
+jest.mock('@hanzoteam/redux/store/reducer_registry', () => ({default: {register: jest.fn()}, register: jest.fn()}));
 jest.mock('actions/admin_actions', () => ({
     registerAdminConsolePlugin: jest.fn(),
     unregisterAdminConsolePlugin: jest.fn(),

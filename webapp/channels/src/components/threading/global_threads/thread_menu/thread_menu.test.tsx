@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {setThreadFollow, updateThreadRead, markLastPostInThreadAsUnread} from 'mattermost-redux/actions/threads';
+import {setThreadFollow, updateThreadRead, markLastPostInThreadAsUnread} from '@hanzoteam/redux/actions/threads';
 
 import {
     flagPost as savePost,
@@ -12,7 +12,7 @@ import {
 } from 'actions/post_actions';
 import {manuallyMarkThreadAsUnread} from 'actions/views/threads';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {fakeDate} from 'tests/helpers/date';
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -20,7 +20,7 @@ import {copyToClipboard} from 'utils/utils';
 
 import ThreadMenu from '../thread_menu';
 
-jest.mock('mattermost-redux/actions/threads');
+jest.mock('@hanzoteam/redux/actions/threads');
 jest.mock('actions/views/threads');
 jest.mock('actions/post_actions');
 jest.mock('utils/utils');

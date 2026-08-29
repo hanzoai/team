@@ -5,10 +5,10 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import type {CSSProperties} from 'react';
 import {useIntl} from 'react-intl';
 
-import {PlayIcon} from '@mattermost/compass-icons/components';
-import type {FileInfo} from '@mattermost/types/files';
+import {PlayIcon} from '@hanzoteam/compass-icons/components';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import TileUtilityButtons from './tile_utility_buttons';
 

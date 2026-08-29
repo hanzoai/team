@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';
 
@@ -14,13 +14,13 @@ import {TestHelper} from 'utils/test_helper';
 import TeamMembershipTab from './team_membership_tab';
 
 jest.mock('hooks/useChannelAccessControlActions');
-jest.mock('mattermost-redux/actions/access_control', () => ({
-    ...jest.requireActual('mattermost-redux/actions/access_control'),
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/access_control'),
     getTeamAccessControlPolicy: jest.fn(() => () => Promise.resolve({data: {policy: null, enforced: false}})),
     createAccessControlTeamSyncJob: jest.fn(() => () => Promise.resolve({data: {}})),
 }));
-jest.mock('mattermost-redux/actions/teams', () => ({
-    ...jest.requireActual('mattermost-redux/actions/teams'),
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/teams'),
     getTeamStats: jest.fn(() => () => Promise.resolve({data: {total_member_count: 10, active_member_count: 10}})),
 }));
 
@@ -142,7 +142,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('renders auto-add checkbox reflecting initial policy state', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -168,7 +168,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
 
     it('shows advisory auto-add descriptions on a public team', async () => {
         // baseTeam is public: neither description may promise join-restriction or removal.
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -208,7 +208,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
             imports: [],
         };
 
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -238,7 +238,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('triggers createAccessControlTeamSyncJob on a rule change even with auto-add off', async () => {
-        const {createAccessControlTeamSyncJob} = require('mattermost-redux/actions/access_control');
+        const {createAccessControlTeamSyncJob} = require('@hanzoteam/redux/actions/access_control');
 
         renderWithContext(
             <TeamMembershipTab {...baseProps}/>,
@@ -267,7 +267,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('triggers createAccessControlTeamSyncJob when auto-add toggled on', async () => {
-        const {getTeamAccessControlPolicy, createAccessControlTeamSyncJob} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy, createAccessControlTeamSyncJob} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -303,7 +303,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('does not trigger sync job when auto-add is turned off', async () => {
-        const {getTeamAccessControlPolicy, createAccessControlTeamSyncJob} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy, createAccessControlTeamSyncJob} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -341,7 +341,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('unchecks and disables auto-add when the last rule is cleared', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -371,7 +371,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('removes the policy and reports success when the last rule is cleared', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -408,7 +408,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('does not show the removal warning when a parent import remains, even if its policy is not yet loaded', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -441,7 +441,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('reports an error when clearing the last rule fails to delete the policy', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -474,7 +474,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('shows a saving state on the save panel while the save is in flight', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {policy: null, enforced: false},
         }));
@@ -508,7 +508,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('does not block self-exclusion on a public team (advisory: no removal)', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {policy: {id: 'team_id', active: false, rules: [], imports: []}, enforced: false},
         }));
@@ -534,7 +534,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
     });
 
     it('blocks save with the strict self-exclusion message on a private team', async () => {
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {policy: {id: 'team_id', active: false, rules: [], imports: []}, enforced: false},
         }));
@@ -646,7 +646,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
             imports: [],
         };
 
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {
@@ -692,7 +692,7 @@ describe('components/team_settings/TeamMembershipTab', () => {
 
     it('preserves masked values when expression is loaded from policy', async () => {
         const maskedExpression = 'user.attributes.department in []';
-        const {getTeamAccessControlPolicy} = require('mattermost-redux/actions/access_control');
+        const {getTeamAccessControlPolicy} = require('@hanzoteam/redux/actions/access_control');
         getTeamAccessControlPolicy.mockImplementation(() => () => Promise.resolve({
             data: {
                 policy: {

@@ -3,12 +3,12 @@
 
 import {connect} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getMyChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserLocale} from 'mattermost-redux/selectors/entities/i18n';
-import {sortChannelsByTypeAndDisplayName} from 'mattermost-redux/utils/channel_utils';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getMyChannels} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserLocale} from '@hanzoteam/redux/selectors/entities/i18n';
+import {sortChannelsByTypeAndDisplayName} from '@hanzoteam/redux/utils/channel_utils';
 
 import ChannelSelect from './channel_select';
 

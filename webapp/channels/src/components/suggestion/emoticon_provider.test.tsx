@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {CustomEmoji, Emoji} from '@mattermost/types/emojis';
+import type {CustomEmoji, Emoji} from '@hanzoteam/types/emojis';
 
 import {getEmojiMap, getRecentEmojisNames} from 'selectors/emojis';
 

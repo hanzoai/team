@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import CommercialSupportModal from 'components/commercial_support_modal/commercial_support_modal';
 

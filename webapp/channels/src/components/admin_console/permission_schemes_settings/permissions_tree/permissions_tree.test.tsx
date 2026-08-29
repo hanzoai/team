@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import GeneralConstants from 'mattermost-redux/constants/general';
+import GeneralConstants from '@hanzoteam/redux/constants/general';
 
 import PermissionsTree from 'components/admin_console/permission_schemes_settings/permissions_tree/permissions_tree';
 

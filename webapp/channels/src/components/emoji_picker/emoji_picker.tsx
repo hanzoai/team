@@ -7,9 +7,9 @@ import {FormattedMessage} from 'react-intl';
 import type {FixedSizeList} from 'react-window';
 import type InfiniteLoader from 'react-window-infinite-loader';
 
-import type {Emoji, EmojiCategory} from '@mattermost/types/emojis';
+import type {Emoji, EmojiCategory} from '@hanzoteam/types/emojis';
 
-import {getEmojiName} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiName} from '@hanzoteam/redux/utils/emoji_utils';
 
 import EmojiPickerCategories from 'components/emoji_picker/components/emoji_picker_categories';
 import EmojiPickerCurrentResults from 'components/emoji_picker/components/emoji_picker_current_results';

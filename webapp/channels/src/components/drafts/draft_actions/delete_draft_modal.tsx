@@ -5,7 +5,7 @@ import noop from 'lodash/noop';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
 type Props = {
     displayName: string;

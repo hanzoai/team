@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {canManageChannelMembers} from 'mattermost-redux/selectors/entities/channels';
+import {canManageChannelMembers} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {openModal} from 'actions/views/modals';
 

@@ -5,10 +5,10 @@ import React, {useState, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {JobType, JobTypeBase, Job} from '@mattermost/types/jobs';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {JobType, JobTypeBase, Job} from '@hanzoteam/types/jobs';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {isTeamMembershipAccessControlEnabled} from 'selectors/general';
 

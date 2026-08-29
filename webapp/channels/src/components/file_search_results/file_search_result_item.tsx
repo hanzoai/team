@@ -4,9 +4,9 @@
 import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import FileThumbnail from 'components/file_attachment/file_thumbnail';
 import FilePreviewModal from 'components/file_preview_modal';

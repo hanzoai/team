@@ -6,11 +6,11 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {matchPath, useLocation} from 'react-router-dom';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {isCurrentUserGuestUser, isCurrentUserSystemAdmin, isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {isCurrentUserGuestUser, isCurrentUserSystemAdmin, isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {
     openInvitationsModal,

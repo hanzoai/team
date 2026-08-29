@@ -4,7 +4,7 @@
 import React, {useCallback, useMemo, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {AppField} from '@mattermost/types/apps';
+import type {AppField} from '@hanzoteam/types/apps';
 
 import DatePicker from 'components/date_picker/date_picker';
 

@@ -7,14 +7,14 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {PencilOutlineIcon, CheckIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
-import type {ChannelBookmark, ChannelBookmarkCreate, ChannelBookmarkPatch} from '@mattermost/types/channel_bookmarks';
-import type {FileInfo} from '@mattermost/types/files';
+import {PencilOutlineIcon, CheckIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
+import type {ChannelBookmark, ChannelBookmarkCreate, ChannelBookmarkPatch} from '@hanzoteam/types/channel_bookmarks';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFile} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {getFile} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {UploadFile} from 'actions/file_actions';
 import {uploadFile} from 'actions/file_actions';

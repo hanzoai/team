@@ -6,12 +6,12 @@ import type {ChangeEvent, FormEvent, SyntheticEvent} from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {Button, buttonClassNames} from '@mattermost/shared/components/button';
-import type {CustomEmoji} from '@mattermost/types/emojis';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button, buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {CustomEmoji} from '@hanzoteam/types/emojis';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import FormError from 'components/form_error';

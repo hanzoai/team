@@ -5,11 +5,11 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, FormattedList, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import AlertBanner from 'components/alert_banner';
 import AtMention from 'components/at_mention';

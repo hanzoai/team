@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 

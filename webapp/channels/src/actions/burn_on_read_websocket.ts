@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {WebSocketMessages} from '@mattermost/client';
+import type {WebSocketMessages} from '@hanzoteam/client';
 
-import {PostTypes} from 'mattermost-redux/action_types';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {PostTypes} from '@hanzoteam/redux/action_types';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {DispatchFunc, GetStateFunc} from 'types/store';
 

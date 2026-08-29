@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
 import PermissionCheckbox from './permission_checkbox';
 import PermissionDescription from './permission_description';

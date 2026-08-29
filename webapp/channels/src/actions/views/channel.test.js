@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {leaveChannel, markChannelAsRead, getChannel} from 'mattermost-redux/actions/channels';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import * as UserActions from 'mattermost-redux/actions/users';
-import {General, Posts, RequestStatus} from 'mattermost-redux/constants';
+import {leaveChannel, markChannelAsRead, getChannel} from '@hanzoteam/redux/actions/channels';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import * as UserActions from '@hanzoteam/redux/actions/users';
+import {General, Posts, RequestStatus} from '@hanzoteam/redux/constants';
 
 import * as Actions from 'actions/views/channel';
 import {closeRightHandSide} from 'actions/views/rhs';
@@ -23,10 +23,10 @@ jest.mock('utils/channel_utils.tsx', () => {
     };
 });
 
-jest.mock('mattermost-redux/actions/users');
+jest.mock('@hanzoteam/redux/actions/users');
 
-jest.mock('mattermost-redux/actions/channels', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channels'),
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channels'),
     markChannelAsRead: jest.fn(() => ({type: ''})),
     leaveChannel: jest.fn(() => ({type: ''})),
     getChannel: jest.fn(() => ({
@@ -45,13 +45,13 @@ jest.mock('actions/views/threads', () => ({
     markThreadAsRead: jest.fn(() => ({type: ''})),
 }));
 
-jest.mock('mattermost-redux/actions/posts');
+jest.mock('@hanzoteam/redux/actions/posts');
 
 jest.mock('selectors/local_storage', () => ({
     getLastViewedChannelName: () => 'channel1',
 }));
 
-jest.mock('mattermost-redux/selectors/entities/utils', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/utils', () => ({
     makeAddLastViewAtToProfiles: () => jest.fn().mockReturnValue([]),
 }));
 

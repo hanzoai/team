@@ -6,10 +6,10 @@ import type {RouteComponentProps} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {deleteScheme} from 'mattermost-redux/actions/schemes';
-import {makeGetSchemeTeams} from 'mattermost-redux/selectors/entities/schemes';
+import {deleteScheme} from '@hanzoteam/redux/actions/schemes';
+import {makeGetSchemeTeams} from '@hanzoteam/redux/selectors/entities/schemes';
 
 import PermissionsSchemeSummary from './permissions_scheme_summary';
 import type {Props} from './permissions_scheme_summary';

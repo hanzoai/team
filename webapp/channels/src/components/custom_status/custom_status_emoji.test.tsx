@@ -9,7 +9,7 @@ import {renderWithContext} from 'tests/react_testing_utils';
 
 import CustomStatusEmoji from './custom_status_emoji';
 
-jest.mock('mattermost-redux/selectors/entities/timezone');
+jest.mock('@hanzoteam/redux/selectors/entities/timezone');
 jest.mock('selectors/views/custom_status');
 
 describe('components/custom_status/custom_status_emoji', () => {

@@ -4,10 +4,10 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {PreviewModalContentData} from '@mattermost/types/cloud';
+import type {PreviewModalContentData} from '@hanzoteam/types/cloud';
 
-import {getCloudSubscription} from 'mattermost-redux/selectors/entities/cloud';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getCloudSubscription} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getCloudPreviewModalData} from 'actions/cloud';
 

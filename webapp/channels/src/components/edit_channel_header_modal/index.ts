@@ -6,9 +6,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {patchChannel} from 'mattermost-redux/actions/channels';
-import {Preferences} from 'mattermost-redux/constants';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {patchChannel} from '@hanzoteam/redux/actions/channels';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {setShowPreviewOnEditChannelHeaderModal} from 'actions/views/textbox';
 import {showPreviewOnEditChannelHeaderModal} from 'selectors/views/textbox';

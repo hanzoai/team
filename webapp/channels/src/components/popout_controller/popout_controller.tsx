@@ -6,8 +6,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {getMe} from 'mattermost-redux/actions/users';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getMe} from '@hanzoteam/redux/actions/users';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadStatusesByIds} from 'actions/status_actions';
 

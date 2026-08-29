@@ -4,11 +4,11 @@
 import React from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getMyChannels, getMyChannelMemberships} from 'mattermost-redux/selectors/entities/channels';
-import type {ActionResult} from 'mattermost-redux/types/actions.js';
-import {sortChannelsByTypeAndDisplayName} from 'mattermost-redux/utils/channel_utils';
+import {getMyChannels, getMyChannelMemberships} from '@hanzoteam/redux/selectors/entities/channels';
+import type {ActionResult} from '@hanzoteam/redux/types/actions.js';
+import {sortChannelsByTypeAndDisplayName} from '@hanzoteam/redux/utils/channel_utils';
 
 import store from 'stores/redux_store';
 

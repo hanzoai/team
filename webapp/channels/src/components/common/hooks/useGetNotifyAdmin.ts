@@ -4,9 +4,9 @@
 import {useCallback, useState} from 'react';
 import {defineMessages} from 'react-intl';
 
-import type {NotifyAdminRequest} from '@mattermost/types/cloud';
+import type {NotifyAdminRequest} from '@hanzoteam/types/cloud';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 export const NotifyStatus = {
     NotStarted: 'NOT_STARTED',

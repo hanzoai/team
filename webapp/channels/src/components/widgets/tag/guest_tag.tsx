@@ -6,9 +6,9 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import Tag from './tag';
 import type {TagSize} from './tag';

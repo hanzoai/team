@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getTeamStats, getTeamMembers} from 'mattermost-redux/actions/teams';
-import {searchProfiles} from 'mattermost-redux/actions/users';
-import {Permissions} from 'mattermost-redux/constants';
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getMembersInCurrentTeam, getCurrentTeamStats} from 'mattermost-redux/selectors/entities/teams';
-import {getProfilesInCurrentTeam, searchProfilesInCurrentTeam} from 'mattermost-redux/selectors/entities/users';
+import {getTeamStats, getTeamMembers} from '@hanzoteam/redux/actions/teams';
+import {searchProfiles} from '@hanzoteam/redux/actions/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getMembersInCurrentTeam, getCurrentTeamStats} from '@hanzoteam/redux/selectors/entities/teams';
+import {getProfilesInCurrentTeam, searchProfilesInCurrentTeam} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadStatusesForProfilesList} from 'actions/status_actions';
 import {loadProfilesAndTeamMembers, loadTeamMembersForProfilesList} from 'actions/user_actions';

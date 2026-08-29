@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {Post, PostEmbed} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {Post, PostEmbed} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import InteractiveMessages from 'components/post_view/interactive_messages';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 

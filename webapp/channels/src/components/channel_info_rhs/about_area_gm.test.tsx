@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
-import {getGroups, getGroupsByUserIdPaginated, searchGroups} from 'mattermost-redux/actions/groups';
-import {Permissions} from 'mattermost-redux/constants';
-import {makeGetAllAssociatedGroupsForReference, makeGetMyAllowReferencedGroups, searchAllowReferencedGroups, searchMyAllowReferencedGroups, searchArchivedGroups, getArchivedGroups} from 'mattermost-redux/selectors/entities/groups';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getGroups, getGroupsByUserIdPaginated, searchGroups} from '@hanzoteam/redux/actions/groups';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {makeGetAllAssociatedGroupsForReference, makeGetMyAllowReferencedGroups, searchAllowReferencedGroups, searchMyAllowReferencedGroups, searchArchivedGroups, getArchivedGroups} from '@hanzoteam/redux/selectors/entities/groups';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import {setModalSearchTerm} from 'actions/views/search';

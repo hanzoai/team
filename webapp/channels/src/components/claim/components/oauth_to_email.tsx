@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import React, {useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AuthChangeResponse} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AuthChangeResponse} from '@hanzoteam/types/users';
 
-import type {PasswordConfig} from 'mattermost-redux/selectors/entities/general';
+import type {PasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {oauthToEmail} from 'actions/admin_actions';
 

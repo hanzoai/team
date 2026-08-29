@@ -2,10 +2,10 @@
 // See LICENSE.txt for license information.
 
 import type {PopoutViewProps} from '@mattermost/desktop-api';
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
-import type {ChannelType} from '@mattermost/types/channels';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import Constants, {RHSStates} from 'utils/constants';
 import DesktopApp from 'utils/desktop_api';

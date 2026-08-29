@@ -4,8 +4,8 @@
 import {useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Preferences} from 'mattermost-redux/constants';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import {burnPostNow} from 'actions/burn_on_read_deletion';
 import {closeModal} from 'actions/views/modals';

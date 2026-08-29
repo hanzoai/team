@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 
 import type {GlobalState} from 'types/store';
 

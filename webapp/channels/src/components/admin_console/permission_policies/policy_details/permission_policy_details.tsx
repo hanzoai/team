@@ -6,14 +6,14 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import type {AccessControlSettings} from '@mattermost/types/config';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {GenericModal} from '@hanzoteam/components';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import type {AccessControlSettings} from '@hanzoteam/types/config';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {isPolicySimulationEnabled} from 'mattermost-redux/selectors/entities/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {isPolicySimulationEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SimulateAccessModal from 'components/admin_console/access_control/modals/simulate_access/simulate_access_modal';
 import BlockableLink from 'components/admin_console/blockable_link';

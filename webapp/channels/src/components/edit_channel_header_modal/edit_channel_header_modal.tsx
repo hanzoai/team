@@ -6,10 +6,10 @@ import {Modal} from 'react-bootstrap';
 import type {WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, injectIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {isMobile} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import {Button} from '@hanzoteam/shared/components/button';
+import {isMobile} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
 import Textbox, {TextboxLinks} from 'components/textbox';
 import type {TextboxElement} from 'components/textbox';

@@ -4,9 +4,9 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import Gate from './gate';
 

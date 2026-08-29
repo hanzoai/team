@@ -4,7 +4,7 @@
 import type {ChangeEvent, FormEvent, HTMLProps} from 'react';
 import React, {useRef, useEffect, useCallback, useState} from 'react';
 
-import type {Intersection} from '@mattermost/types/utilities';
+import type {Intersection} from '@hanzoteam/types/utilities';
 
 type Props = {
     id?: string;

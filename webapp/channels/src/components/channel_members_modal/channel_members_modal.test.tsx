@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
 import ChannelInviteModal from 'components/channel_invite_modal';
 

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import AddOutgoingWebhook from 'components/integrations/add_outgoing_webhook/add_outgoing_webhook';
 

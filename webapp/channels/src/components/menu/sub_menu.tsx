@@ -16,9 +16,9 @@ import type {
     KeyboardEvent} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {openModal, closeModal} from 'actions/views/modals';
 import {getIsMobileView} from 'selectors/views/browser';

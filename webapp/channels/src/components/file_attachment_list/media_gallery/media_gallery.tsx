@@ -6,11 +6,11 @@ import React, {useCallback, useMemo, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {DownloadOutlineIcon} from '@mattermost/compass-icons/components';
-import type {FileInfo} from '@mattermost/types/files';
+import {DownloadOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {FileTypes} from 'utils/constants';
 import {getFileType} from 'utils/utils';

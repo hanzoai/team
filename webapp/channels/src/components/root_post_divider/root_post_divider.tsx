@@ -5,8 +5,8 @@ import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
 
 import type {GlobalState} from 'types/store';
 

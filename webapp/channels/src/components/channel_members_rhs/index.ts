@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {AnyAction, Dispatch} from 'redux';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
 import {
     countPendingChannelJoinRequests,
     getChannelJoinRequests,
     loadMyChannelMemberAndRole,
-} from 'mattermost-redux/actions/channels';
-import {fetchRemoteClusterInfo} from 'mattermost-redux/actions/shared_channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
+} from '@hanzoteam/redux/actions/channels';
+import {fetchRemoteClusterInfo} from '@hanzoteam/redux/actions/shared_channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
 import {
     canManageChannelJoinRequests,
     getCurrentChannel,
@@ -25,16 +25,16 @@ import {
     getMyCurrentChannelMembership,
     getPendingChannelJoinRequests,
     isCurrentChannelArchived,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getRemoteDisplayName} from 'mattermost-redux/selectors/entities/shared_channels';
-import {getCurrentRelativeTeamUrl, getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getRemoteDisplayName} from '@hanzoteam/redux/selectors/entities/shared_channels';
+import {getCurrentRelativeTeamUrl, getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 import {
     getActiveProfilesInCurrentChannelWithoutSorting,
     getUserStatuses, searchActiveProfilesInCurrentChannel,
-} from 'mattermost-redux/selectors/entities/users';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/selectors/entities/users';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import {loadProfilesAndReloadChannelMembers, searchProfilesAndChannelMembers} from 'actions/user_actions';

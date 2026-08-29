@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import TeamWarningBanner from 'components/channel_invite_modal/team_warning_banner/team_warning_banner';
 import type {Value} from 'components/multiselect/multiselect';

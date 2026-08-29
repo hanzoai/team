@@ -25,11 +25,11 @@ import {
     ReplyOutlineIcon,
     TranslateIcon,
     TrashCanOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {Post} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
+} from '@hanzoteam/compass-icons/components';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {closeModal} from 'actions/views/modals';
 

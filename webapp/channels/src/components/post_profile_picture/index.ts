@@ -3,13 +3,13 @@
 
 import {connect} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Client4} from 'mattermost-redux/client';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getUser, getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getUser, getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {Preferences} from 'utils/constants';
 

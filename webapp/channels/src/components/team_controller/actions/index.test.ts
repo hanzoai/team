@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as teamsActions from 'mattermost-redux/actions/teams';
+import * as teamsActions from '@hanzoteam/redux/actions/teams';
 
 import * as teamActions from 'actions/team_actions';
 

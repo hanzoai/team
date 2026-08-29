@@ -4,8 +4,8 @@
 import React from 'react';
 import {MemoryRouter, Route} from 'react-router-dom';
 
-import {fetchChannelsAndMembers, getChannelMembers, selectChannel} from 'mattermost-redux/actions/channels';
-import {selectTeam} from 'mattermost-redux/actions/teams';
+import {fetchChannelsAndMembers, getChannelMembers, selectChannel} from '@hanzoteam/redux/actions/channels';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
 
 import {useTeamByName} from 'components/common/hooks/use_team';
 
@@ -14,13 +14,13 @@ import {TestHelper} from 'utils/test_helper';
 
 import RhsPopout from './rhs_popout';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     fetchChannelsAndMembers: jest.fn(() => ({type: 'MOCK'})),
     getChannelMembers: jest.fn(() => ({type: 'MOCK'})),
     selectChannel: jest.fn(() => ({type: 'MOCK'})),
 }));
 
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     selectTeam: jest.fn(() => ({type: 'MOCK'})),
 }));
 

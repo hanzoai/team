@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

@@ -7,13 +7,13 @@ import type {MouseEvent, KeyboardEvent} from 'react';
 import {Draggable, Droppable} from 'react-beautiful-dnd';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import {CategorySorting} from '@mattermost/types/channel_categories';
-import type {PreferenceType} from '@mattermost/types/preferences';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {localizeMessage} from 'mattermost-redux/utils/i18n_utils';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {localizeMessage} from '@hanzoteam/redux/utils/i18n_utils';
 
 import KeyboardShortcutSequence, {
     KEYBOARD_SHORTCUTS,

@@ -10,16 +10,16 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {ChevronDownCircleOutlineIcon, ContentCopyIcon, DotsHorizontalIcon, FormatListBulletedIcon, MenuVariantIcon, OpenInNewIcon, PencilOutlineIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FieldType, PropertyField, PropertyFieldOption} from '@mattermost/types/properties';
-import {supportsOptions} from '@mattermost/types/properties';
+import {ChevronDownCircleOutlineIcon, ContentCopyIcon, DotsHorizontalIcon, FormatListBulletedIcon, MenuVariantIcon, OpenInNewIcon, PencilOutlineIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FieldType, PropertyField, PropertyFieldOption} from '@hanzoteam/types/properties';
+import {supportsOptions} from '@hanzoteam/types/properties';
 
-import {fetchPropertyFields} from 'mattermost-redux/actions/properties';
-import {getConfig as getAdminConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from 'mattermost-redux/selectors/entities/properties';
+import {fetchPropertyFields} from '@hanzoteam/redux/actions/properties';
+import {getConfig as getAdminConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from '@hanzoteam/redux/selectors/entities/properties';
 
 import {getPluginDisplayName} from 'selectors/plugins';
 import {getIsMobileView} from 'selectors/views/browser';

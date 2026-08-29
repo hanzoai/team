@@ -4,8 +4,8 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {PostPreviewMetadata} from '@mattermost/types/posts';
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PostPreviewMetadata} from '@hanzoteam/types/posts';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import PostMessagePreview from 'components/post_view/post_message_preview';
 import type {PostPreviewFieldMetadata} from 'components/properties_card_view/properties_card_view';

@@ -3,10 +3,10 @@
 
 import {connect} from 'react-redux';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {isFileRejected} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {isFileRejected} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

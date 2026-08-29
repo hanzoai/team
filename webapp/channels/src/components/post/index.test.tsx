@@ -4,9 +4,9 @@
 import nock from 'nock';
 import React from 'react';
 
-import {CollapsedThreads} from '@mattermost/types/config';
+import {CollapsedThreads} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
 import {Locations} from 'utils/constants';

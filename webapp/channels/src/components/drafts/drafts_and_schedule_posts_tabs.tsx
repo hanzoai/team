@@ -7,11 +7,11 @@ import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {useHistory, useLocation} from 'react-router-dom';
 
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
-import {makeGetScheduledPostsByTeam} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {makeGetScheduledPostsByTeam} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {type Draft} from 'selectors/drafts';
 

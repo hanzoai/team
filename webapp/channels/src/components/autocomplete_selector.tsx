@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import SuggestionBox from 'components/suggestion/suggestion_box';
 import type {SuggestionBoxElement} from 'components/suggestion/suggestion_box/suggestion_box';

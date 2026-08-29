@@ -5,8 +5,8 @@ import React, {useState, useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {deleteChannel} from 'actions/views/channel';
 

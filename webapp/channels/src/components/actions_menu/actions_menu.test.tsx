@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PostType} from '@mattermost/types/posts';
+import type {PostType} from '@hanzoteam/types/posts';
 
 import {isMobile} from 'components/widgets/menu/is_mobile_view_hack';
 

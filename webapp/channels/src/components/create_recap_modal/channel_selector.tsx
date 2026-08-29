@@ -4,7 +4,7 @@
 import React, {useState, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import ChannelTypeIcon from 'components/channel_type_icon';
 import Input from 'components/widgets/inputs/input/input';

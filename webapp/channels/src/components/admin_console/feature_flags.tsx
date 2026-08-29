@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import AdminHeader from 'components/widgets/admin_console/admin_header';
 

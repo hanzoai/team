@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Reaction as ReactionType} from '@mattermost/types/reactions';
+import type {Reaction as ReactionType} from '@hanzoteam/types/reactions';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

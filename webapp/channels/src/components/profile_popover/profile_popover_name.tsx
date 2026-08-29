@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import BotDescription from 'components/profile_popover/profile_popover_bot_description';
 import FullName from 'components/profile_popover/profile_popover_full_name';

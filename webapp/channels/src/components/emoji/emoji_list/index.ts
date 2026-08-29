@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getCustomEmojis, searchCustomEmojis} from 'mattermost-redux/actions/emojis';
-import {getCustomEmojiIdsSortedByName} from 'mattermost-redux/selectors/entities/emojis';
+import {getCustomEmojis, searchCustomEmojis} from '@hanzoteam/redux/actions/emojis';
+import {getCustomEmojiIdsSortedByName} from '@hanzoteam/redux/selectors/entities/emojis';
 
 import EmojiList from './emoji_list';
 

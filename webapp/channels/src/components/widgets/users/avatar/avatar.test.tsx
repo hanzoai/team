@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import BotDefaultIcon from 'images/bot_default_icon.png';
 import {withIntl} from 'tests/helpers/intl-test-helper';

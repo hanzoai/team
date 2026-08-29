@@ -4,8 +4,8 @@
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import ConfirmModal from 'components/confirm_modal';
 

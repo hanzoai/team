@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/channels'),
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/channels'),
     getMyChannels: jest.fn(() => []),
     getMyChannelMemberships: jest.fn(() => {}),
 }));
@@ -11,7 +11,7 @@ jest.mock('stores/redux_store');
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

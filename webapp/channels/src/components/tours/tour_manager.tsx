@@ -5,11 +5,11 @@ import {useCallback, useEffect, useState} from 'react';
 import type React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {savePreferences as storeSavePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentChannelId, getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getInt} from 'mattermost-redux/selectors/entities/preferences';
+import {savePreferences as storeSavePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentChannelId, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getInt} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {
     getLastStep,

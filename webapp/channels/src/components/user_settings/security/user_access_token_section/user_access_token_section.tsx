@@ -5,13 +5,13 @@ import React from 'react';
 import {FormattedDate, FormattedMessage, FormattedTime, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {isMobile} from '@mattermost/shared/utils/user_agent';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserAccessToken, UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import {isMobile} from '@hanzoteam/shared/utils/user_agent';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserAccessToken, UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import ConfirmModal from 'components/confirm_modal';
 import ExternalLink from 'components/external_link';

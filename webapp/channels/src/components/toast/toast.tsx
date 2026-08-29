@@ -6,7 +6,7 @@ import React from 'react';
 import type {ReactNode, MouseEventHandler} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import CloseIcon from 'components/widgets/icons/close_icon';
 import UnreadAboveIcon from 'components/widgets/icons/unread_above_icon';

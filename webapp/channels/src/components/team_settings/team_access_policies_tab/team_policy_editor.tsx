@@ -5,15 +5,15 @@ import cloneDeep from 'lodash/cloneDeep';
 import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import type {ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
-import type {AccessControlSettings} from '@mattermost/types/config';
-import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import type {ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {AccessControlSettings} from '@hanzoteam/types/config';
+import type {JobTypeBase} from '@hanzoteam/types/jobs';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {excludeSessionAttributes, hasUsableAttributes} from 'components/admin_console/access_control/editors/shared';
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';

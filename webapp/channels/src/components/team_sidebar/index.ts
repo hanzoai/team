@@ -7,17 +7,17 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {ClientConfig} from '@mattermost/types/config';
+import type {ClientConfig} from '@hanzoteam/types/config';
 
-import {getTeams} from 'mattermost-redux/actions/teams';
-import {getTeamsUnreadStatuses} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
+import {getTeams} from '@hanzoteam/redux/actions/teams';
+import {getTeamsUnreadStatuses} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     getCurrentTeamId,
     getJoinableTeamIds,
     getMyTeams,
-} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {switchTeam, updateTeamsOrderForUser} from 'actions/team_actions';
 import {getCurrentLocale} from 'selectors/i18n';

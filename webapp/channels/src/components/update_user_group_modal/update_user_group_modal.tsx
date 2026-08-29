@@ -5,10 +5,10 @@ import React, {useCallback, useEffect, useState} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {CustomGroupPatch, Group} from '@mattermost/types/groups';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {CustomGroupPatch, Group} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SaveButton from 'components/save_button';
 import Input from 'components/widgets/inputs/input/input';

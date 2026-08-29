@@ -1,17 +1,17 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getRedirectChannelNameForTeam} from 'mattermost-redux/selectors/entities/channels';
+import {getRedirectChannelNameForTeam} from '@hanzoteam/redux/selectors/entities/channels';
 import {
     getCurrentRelativeTeamUrl,
     getCurrentTeam,
     getCurrentTeamId,
     getTeam,
-} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/selectors/entities/teams';
 
 import Constants from 'utils/constants';
 

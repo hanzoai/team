@@ -8,21 +8,21 @@ import {useDispatch, useSelector} from 'react-redux';
 import type {MultiValue, SingleValue} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getGroup, searchGroups} from 'mattermost-redux/actions/groups';
-import {debounce} from 'mattermost-redux/actions/helpers';
-import {getTeam, searchTeams} from 'mattermost-redux/actions/teams';
-import {getMissingProfilesByIds, searchProfiles} from 'mattermost-redux/actions/users';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAllGroups} from 'mattermost-redux/selectors/entities/groups';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getTeams} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetUsersByIds} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {getGroup, searchGroups} from '@hanzoteam/redux/actions/groups';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import {getTeam, searchTeams} from '@hanzoteam/redux/actions/teams';
+import {getMissingProfilesByIds, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAllGroups} from '@hanzoteam/redux/selectors/entities/groups';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getTeams} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetUsersByIds} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {sortUsersAndGroups} from 'utils/utils';
 

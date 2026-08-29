@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

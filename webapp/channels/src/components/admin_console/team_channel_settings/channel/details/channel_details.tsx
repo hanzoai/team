@@ -5,19 +5,19 @@ import cloneDeep from 'lodash/cloneDeep';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import {getMembershipRule, buildRulesWithMembership} from '@mattermost/types/access_control';
-import type {Channel, ChannelModeration as ChannelPermissions, ChannelModerationPatch} from '@mattermost/types/channels';
-import {SyncableType} from '@mattermost/types/groups';
-import type {SyncablePatch, Group} from '@mattermost/types/groups';
-import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {Scheme} from '@mattermost/types/schemes';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {AccessControlPolicy, AccessControlPolicyActiveUpdate, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import {getMembershipRule, buildRulesWithMembership} from '@hanzoteam/types/access_control';
+import type {Channel, ChannelModeration as ChannelPermissions, ChannelModerationPatch} from '@hanzoteam/types/channels';
+import {SyncableType} from '@hanzoteam/types/groups';
+import type {SyncablePatch, Group} from '@hanzoteam/types/groups';
+import type {JobTypeBase} from '@hanzoteam/types/jobs';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {Scheme} from '@hanzoteam/types/schemes';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Permissions} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {excludeSessionAttributes} from 'components/admin_console/access_control/editors/shared';
 import BlockableLink from 'components/admin_console/blockable_link';

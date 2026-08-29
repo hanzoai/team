@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import {CollapsedThreads} from '@mattermost/types/config';
+import {CollapsedThreads} from '@hanzoteam/types/config';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {WindowSizes} from 'utils/constants';

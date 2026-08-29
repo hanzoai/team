@@ -4,9 +4,9 @@
 import React from 'react';
 import {Route, Switch} from 'react-router-dom';
 
-import type {AuthChangeResponse} from '@mattermost/types/users';
+import type {AuthChangeResponse} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import EmailToLDAP from 'components/claim/components/email_to_ldap';
 import EmailToOAuth from 'components/claim/components/email_to_oauth';

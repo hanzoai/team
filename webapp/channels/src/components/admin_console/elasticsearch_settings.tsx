@@ -5,8 +5,8 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
-import type {Job, JobType} from '@mattermost/types/jobs';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {Job, JobType} from '@hanzoteam/types/jobs';
 
 import {elasticsearchPurgeIndexes, elasticsearchTest, rebuildChannelsIndex} from 'actions/admin_actions';
 

@@ -4,16 +4,16 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import {CreationOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Agent} from '@mattermost/types/agents';
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import {CreationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Agent} from '@hanzoteam/types/agents';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {Filters} from 'mattermost-redux/selectors/entities/users';
-import {makeGetProfilesInChannel} from 'mattermost-redux/selectors/entities/users';
-import {makeAddLastViewAtToProfiles} from 'mattermost-redux/selectors/entities/utils';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getSuggestionsSplitBy, getSuggestionsSplitByMultiple} from 'mattermost-redux/utils/user_utils';
+import type {Filters} from '@hanzoteam/redux/selectors/entities/users';
+import {makeGetProfilesInChannel} from '@hanzoteam/redux/selectors/entities/users';
+import {makeAddLastViewAtToProfiles} from '@hanzoteam/redux/selectors/entities/utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getSuggestionsSplitBy, getSuggestionsSplitByMultiple} from '@hanzoteam/redux/utils/user_utils';
 
 import store from 'stores/redux_store';
 

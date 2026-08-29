@@ -7,16 +7,16 @@ import React, {lazy, useCallback, useEffect, useMemo, useRef, useState} from 're
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Permissions} from 'mattermost-redux/constants';
-import {getChannel, makeGetChannel, getDirectChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
-import {get, getBool, getInt, getWysiwygEditorPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentUserId, isCurrentUserGuestUser, getStatusForUserId, makeGetDisplayName} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getChannel, makeGetChannel, getDirectChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
+import {get, getBool, getInt, getWysiwygEditorPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentUserId, isCurrentUserGuestUser, getStatusForUserId, makeGetDisplayName} from '@hanzoteam/redux/selectors/entities/users';
 
 import * as GlobalActions from 'actions/global_actions';
 import type {CreatePostOptions} from 'actions/post_actions';

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import {
     isCreatePending,

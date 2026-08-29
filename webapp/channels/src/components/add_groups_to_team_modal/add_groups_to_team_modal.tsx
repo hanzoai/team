@@ -7,10 +7,10 @@ import {Modal} from 'react-bootstrap';
 import type {IntlShape} from 'react-intl';
 import {injectIntl, FormattedMessage, defineMessage} from 'react-intl';
 
-import type {Group, SyncablePatch, GroupSource} from '@mattermost/types/groups';
-import {SyncableType} from '@mattermost/types/groups';
+import type {Group, SyncablePatch, GroupSource} from '@hanzoteam/types/groups';
+import {SyncableType} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import Nbsp from 'components/html_entities/nbsp';
 import MultiSelect from 'components/multiselect/multiselect';

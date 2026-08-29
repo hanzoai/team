@@ -387,7 +387,7 @@ const base = {
                         position: 'after',
                     },
                     {
-                        pattern: 'mattermost-redux/**',
+                        pattern: '@hanzoteam/redux/**',
                         group: 'external',
                         position: 'after',
                     },
@@ -497,7 +497,7 @@ const base = {
                     {
                         name: 'redux',
                         importNames: ['DeepPartial'],
-                        message: 'Use DeepPartial from @mattermost/types/utilities instead.',
+                        message: 'Use DeepPartial from @hanzoteam/types/utilities instead.',
                     },
                     {
                         name: 'lodash',

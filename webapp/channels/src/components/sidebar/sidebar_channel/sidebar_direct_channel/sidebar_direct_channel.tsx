@@ -5,12 +5,12 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Client4} from '@hanzoteam/redux/client';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ProfilePicture from 'components/profile_picture';
 

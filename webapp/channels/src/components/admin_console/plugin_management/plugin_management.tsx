@@ -6,12 +6,12 @@ import type {WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, defineMessages, injectIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AdminConfig} from '@mattermost/types/config';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import PluginState from 'mattermost-redux/constants/plugins';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import PluginState from '@hanzoteam/redux/constants/plugins';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 import ExternalLink from 'components/external_link';

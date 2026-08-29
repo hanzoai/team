@@ -17,7 +17,7 @@ import type {
     FormatRelativeTimeOptions} from 'react-intl';
 import {isValidElementType} from 'react-is';
 
-import type {RequireOnlyOne} from '@mattermost/types/utilities';
+import type {RequireOnlyOne} from '@hanzoteam/types/utilities';
 
 import {isSameYear, isWithin, isEqual, getDiff} from 'utils/datetime';
 import {resolve} from 'utils/resolvable';

@@ -4,14 +4,14 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy, AccessControlPolicyActiveUpdate} from '@mattermost/types/access_control';
-import type {ChannelSearchOpts} from '@mattermost/types/channels';
-import type {AccessControlSettings} from '@mattermost/types/config';
-import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {Team} from '@mattermost/types/teams';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy, AccessControlPolicyActiveUpdate} from '@hanzoteam/types/access_control';
+import type {ChannelSearchOpts} from '@hanzoteam/types/channels';
+import type {AccessControlSettings} from '@hanzoteam/types/config';
+import type {JobTypeBase} from '@hanzoteam/types/jobs';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import PolicyList from 'components/admin_console/access_control/policies';
 import SaveChangesPanel from 'components/widgets/modals/components/save_changes_panel';

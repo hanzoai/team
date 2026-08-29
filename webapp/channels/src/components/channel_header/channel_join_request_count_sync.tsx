@@ -4,8 +4,8 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {countPendingChannelJoinRequests} from 'mattermost-redux/actions/channels';
-import {canManageChannelJoinRequests, getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
+import {countPendingChannelJoinRequests} from '@hanzoteam/redux/actions/channels';
+import {canManageChannelJoinRequests, getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import type {GlobalState} from 'types/store';
 

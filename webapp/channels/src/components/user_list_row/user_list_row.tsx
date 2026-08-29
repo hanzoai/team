@@ -7,11 +7,11 @@ import {FormattedMessage} from 'react-intl';
 import type {ConnectedComponent} from 'react-redux';
 import styled from 'styled-components';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile as UserProfileType} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile as UserProfileType} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';
 import Nbsp from 'components/html_entities/nbsp';

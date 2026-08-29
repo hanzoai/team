@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Preferences} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {appBarEnabled, getAppBarAppBindings} from 'mattermost-redux/selectors/entities/apps';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {createShallowSelector} from 'mattermost-redux/utils/helpers';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {appBarEnabled, getAppBarAppBindings} from '@hanzoteam/redux/selectors/entities/apps';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {createShallowSelector} from '@hanzoteam/redux/utils/helpers';
 
 import type {GlobalState} from 'types/store';
 

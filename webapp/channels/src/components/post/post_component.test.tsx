@@ -17,14 +17,14 @@ jest.mock('utils/channel_utils', () => ({
     )),
 }));
 
-import {PostPriority} from '@mattermost/types/posts';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {PostPriority} from '@hanzoteam/types/posts';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Posts} from 'mattermost-redux/constants';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import {compassIconForName} from 'components/channel_type_icon';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {getHistory} from 'utils/browser_history';
 import {Locations} from 'utils/constants';

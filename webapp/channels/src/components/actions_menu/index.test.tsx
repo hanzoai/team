@@ -3,7 +3,7 @@
 
 import React, {useState} from 'react';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import ActionsMenu from 'components/actions_menu';
 import ModalController from 'components/modal_controller';

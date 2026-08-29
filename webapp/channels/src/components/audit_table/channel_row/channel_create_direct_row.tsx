@@ -5,10 +5,10 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Audit} from '@mattermost/types/audits';
-import type {Channel} from '@mattermost/types/channels';
+import type {Audit} from '@hanzoteam/types/audits';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getDirectTeammate} from 'mattermost-redux/selectors/entities/channels';
+import {getDirectTeammate} from '@hanzoteam/redux/selectors/entities/channels';
 
 import type {GlobalState} from 'types/store';
 

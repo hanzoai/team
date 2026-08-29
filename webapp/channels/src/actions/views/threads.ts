@@ -3,10 +3,10 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import {updateThreadRead} from 'mattermost-redux/actions/threads';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getThread} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {updateThreadRead} from '@hanzoteam/redux/actions/threads';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThread} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {isThreadManuallyUnread, isThreadOpen} from 'selectors/views/threads';
 

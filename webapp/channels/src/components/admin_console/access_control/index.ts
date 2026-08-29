@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {searchAccessControlPolicies, deleteAccessControlPolicy} from 'mattermost-redux/actions/access_control';
+import {searchAccessControlPolicies, deleteAccessControlPolicy} from '@hanzoteam/redux/actions/access_control';
 
 import PolicyList from './policies';
 

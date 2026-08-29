@@ -4,10 +4,10 @@
 import {useState, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
-import type {Channel} from '@mattermost/types/channels';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getAccessControlPolicy} from 'mattermost-redux/actions/access_control';
+import {getAccessControlPolicy} from '@hanzoteam/redux/actions/access_control';
 
 import type {ActionFunc} from 'types/store';
 

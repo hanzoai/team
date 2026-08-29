@@ -3,11 +3,11 @@
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {ResourceToSysConsolePermissionsTable, RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getMySystemPermissions, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles_helpers';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {ResourceToSysConsolePermissionsTable, RESOURCE_KEYS} from '@hanzoteam/redux/constants/permissions_sysconsole';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getMySystemPermissions, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles_helpers';
 
 import AdminDefinition from 'components/admin_console/admin_definition';
 

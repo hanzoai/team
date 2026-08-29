@@ -5,17 +5,17 @@ import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {updateUserActive} from 'mattermost-redux/actions/users';
-import {Permissions} from 'mattermost-redux/constants';
-import General from 'mattermost-redux/constants/general';
-import {getConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles_helpers';
-import {isSystemAdmin, isGuest} from 'mattermost-redux/utils/user_utils';
+import {updateUserActive} from '@hanzoteam/redux/actions/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import General from '@hanzoteam/redux/constants/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles_helpers';
+import {isSystemAdmin, isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {adminResetMfa} from 'actions/admin_actions';
 import {openModal} from 'actions/views/modals';

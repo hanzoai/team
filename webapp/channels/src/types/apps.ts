@@ -3,8 +3,8 @@
 
 import type {IntlShape} from 'react-intl';
 
-import type {AppBinding, AppCallRequest, AppCallResponse, AppContext, AppForm} from '@mattermost/types/apps';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding, AppCallRequest, AppCallResponse, AppContext, AppForm} from '@hanzoteam/types/apps';
+import type {Post} from '@hanzoteam/types/posts';
 
 export type DoAppCallResult<Res=unknown> = {
     data?: AppCallResponse<Res>;

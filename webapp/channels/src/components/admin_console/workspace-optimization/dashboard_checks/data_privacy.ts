@@ -3,9 +3,9 @@
 
 import type {useIntl} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {ConsolePages, DocLinks} from 'utils/constants';
 

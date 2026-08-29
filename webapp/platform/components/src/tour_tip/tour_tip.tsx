@@ -7,7 +7,7 @@ import React, {useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 import type {Placement} from 'tippy.js';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import {TourTipBackdrop} from './tour_tip_backdrop';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Agent} from '@mattermost/types/agents';
+import type {Agent} from '@hanzoteam/types/agents';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 

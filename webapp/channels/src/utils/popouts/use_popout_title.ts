@@ -5,11 +5,11 @@ import {useEffect} from 'react';
 import {type MessageDescriptor, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import DesktopApp from 'utils/desktop_api';
 

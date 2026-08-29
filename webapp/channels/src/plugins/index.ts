@@ -3,12 +3,12 @@
 
 import regeneratorRuntime from 'regenerator-runtime';
 
-import type {PluginManifest, ClientPluginManifest} from '@mattermost/types/plugins';
+import type {PluginManifest, ClientPluginManifest} from '@hanzoteam/types/plugins';
 
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
-import {getConfig, isPerformanceDebuggingEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getConfig, isPerformanceDebuggingEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {unregisterAdminConsolePlugin} from 'actions/admin_actions';
 import {unregisterPluginTranslationsSource} from 'actions/views/root';

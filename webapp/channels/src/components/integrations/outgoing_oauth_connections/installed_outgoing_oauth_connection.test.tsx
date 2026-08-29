@@ -5,7 +5,7 @@ import {screen} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
 
 import type {InstalledOutgoingOAuthConnectionProps} from 'components/integrations/outgoing_oauth_connections/installed_outgoing_oauth_connection';
 import InstalledOutgoingOAuthConnection from 'components/integrations/outgoing_oauth_connections/installed_outgoing_oauth_connection';

@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {BellOffOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
+import {BellOffOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {updateChannelNotifyProps} from 'mattermost-redux/actions/channels';
+import {updateChannelNotifyProps} from '@hanzoteam/redux/actions/channels';
 
 import * as Menu from 'components/menu';
 

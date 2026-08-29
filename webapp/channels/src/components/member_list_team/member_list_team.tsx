@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {TeamMembership, TeamStats, GetTeamMembersOpts} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {TeamMembership, TeamStats, GetTeamMembersOpts} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Teams} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Teams} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SearchableUserList from 'components/searchable_user_list/searchable_user_list_container';
 import TeamMembersDropdown from 'components/team_members_dropdown';

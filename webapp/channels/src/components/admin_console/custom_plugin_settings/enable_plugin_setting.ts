@@ -3,7 +3,7 @@
 
 import {defineMessage} from 'react-intl';
 
-import type {PluginRedux, PluginSetting} from '@mattermost/types/plugins';
+import type {PluginRedux, PluginSetting} from '@hanzoteam/types/plugins';
 
 import {escapePathPart} from '../schema_admin_settings';
 import type {AdminDefinitionSetting} from '../types';

@@ -3,14 +3,14 @@
 
 import {connect, type ConnectedProps} from 'react-redux';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getChannelNameToDisplayNameMap} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getManagedResourcePaths} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getAllUserMentionKeys} from 'mattermost-redux/selectors/entities/search';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getChannelNameToDisplayNameMap} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getManagedResourcePaths} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getAllUserMentionKeys} from '@hanzoteam/redux/selectors/entities/search';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getEmojiMap} from 'selectors/emojis';
 

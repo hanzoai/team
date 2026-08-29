@@ -4,11 +4,11 @@
 import {useCallback, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {WebSocketMessage} from '@mattermost/client';
-import {WebSocketEvents} from '@mattermost/client';
+import type {WebSocketMessage} from '@hanzoteam/client';
+import {WebSocketEvents} from '@hanzoteam/client';
 
-import {getAgentsStatus} from 'mattermost-redux/actions/agents';
-import {getAgentsStatus as getAgentsStatusSelector} from 'mattermost-redux/selectors/entities/agents';
+import {getAgentsStatus} from '@hanzoteam/redux/actions/agents';
+import {getAgentsStatus as getAgentsStatusSelector} from '@hanzoteam/redux/selectors/entities/agents';
 
 import {useWebSocket} from 'utils/use_websocket/hooks';
 

@@ -6,12 +6,12 @@ import type {ChangeEvent, SyntheticEvent, ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Bot as BotType} from '@mattermost/types/bots';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile, UserAccessToken} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Bot as BotType} from '@hanzoteam/types/bots';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile, UserAccessToken} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 import Markdown from 'components/markdown';

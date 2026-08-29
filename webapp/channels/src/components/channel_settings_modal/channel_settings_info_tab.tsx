@@ -5,15 +5,15 @@ import React, {useCallback, useState, useEffect, useMemo, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel, ChannelType} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {patchChannel, updateChannelPrivacy} from 'mattermost-redux/actions/channels';
-import {General} from 'mattermost-redux/constants';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {areManagedCategoriesEnabled, getChannelManagedCategoryName, isChannelCategorySortingEnabled, makeGetSidebarCategoryNamesForTeam} from 'mattermost-redux/selectors/entities/channel_categories';
-import {isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
+import {patchChannel, updateChannelPrivacy} from '@hanzoteam/redux/actions/channels';
+import {General} from '@hanzoteam/redux/constants';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {areManagedCategoriesEnabled, getChannelManagedCategoryName, isChannelCategorySortingEnabled, makeGetSidebarCategoryNamesForTeam} from '@hanzoteam/redux/selectors/entities/channel_categories';
+import {isDiscoverableChannelsEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {
     setShowPreviewOnChannelSettingsHeaderModal,

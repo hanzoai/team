@@ -4,18 +4,18 @@
 import {act} from '@testing-library/react';
 import * as ReactRedux from 'react-redux';
 
-import type {WebSocketMessage} from '@mattermost/client';
-import {WebSocketEvents} from '@mattermost/client';
+import type {WebSocketMessage} from '@hanzoteam/client';
+import {WebSocketEvents} from '@hanzoteam/client';
 
-import {getPluginStatuses} from 'mattermost-redux/actions/admin';
+import {getPluginStatuses} from '@hanzoteam/redux/actions/admin';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 import * as webSocketHooks from 'utils/use_websocket/hooks';
 
 import usePluginStatusesSync from './usePluginStatusesSync';
 
-jest.mock('mattermost-redux/actions/admin', () => ({
-    ...jest.requireActual('mattermost-redux/actions/admin'),
+jest.mock('@hanzoteam/redux/actions/admin', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/admin'),
     getPluginStatuses: jest.fn(() => ({type: 'MOCK_GET_PLUGIN_STATUSES'})),
 }));
 

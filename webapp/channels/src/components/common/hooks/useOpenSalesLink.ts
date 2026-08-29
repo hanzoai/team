@@ -4,8 +4,8 @@
 import {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getCloudCustomer, isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {getCloudCustomer, isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {useExternalLink} from 'components/common/hooks/use_external_link';
 

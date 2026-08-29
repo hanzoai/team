@@ -5,7 +5,7 @@ import React from 'react';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
-jest.mock('@mattermost/components', () => ({
+jest.mock('@hanzoteam/components', () => ({
     GenericModal: ({
         children,
         handleConfirm,

@@ -4,10 +4,10 @@
 import {useCallback, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {WebSocketMessage} from '@mattermost/client';
-import {WebSocketEvents} from '@mattermost/client';
+import type {WebSocketMessage} from '@hanzoteam/client';
+import {WebSocketEvents} from '@hanzoteam/client';
 
-import {getConfig} from 'mattermost-redux/actions/admin';
+import {getConfig} from '@hanzoteam/redux/actions/admin';
 
 import {useWebSocket, useWebSocketClient} from 'utils/use_websocket/hooks';
 

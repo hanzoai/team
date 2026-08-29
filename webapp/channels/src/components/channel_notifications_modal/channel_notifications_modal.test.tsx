@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ChannelMembership} from '@mattermost/types/channels';
-import type {UserNotifyProps} from '@mattermost/types/users';
+import type {ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserNotifyProps} from '@hanzoteam/types/users';
 
 import ChannelNotificationsModal, {createChannelNotifyPropsFromSelectedSettings, getInitialValuesOfChannelNotifyProps, areDesktopAndMobileSettingsDifferent} from 'components/channel_notifications_modal/channel_notifications_modal';
 import type {Props} from 'components/channel_notifications_modal/channel_notifications_modal';

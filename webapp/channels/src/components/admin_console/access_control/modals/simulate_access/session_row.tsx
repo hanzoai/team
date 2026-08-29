@@ -4,7 +4,7 @@
 import React, {useMemo} from 'react';
 import {FormattedMessage, FormattedRelativeTime} from 'react-intl';
 
-import type {PolicySimulationSession} from '@mattermost/types/access_control';
+import type {PolicySimulationSession} from '@hanzoteam/types/access_control';
 
 import {aggregateDecisions} from './decision_aggregate';
 import SessionStateChip from './session_state_chip';

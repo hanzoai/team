@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ExperimentalSettings, PluginSettings, SSOSettings, Office365Settings} from '@mattermost/types/config';
+import type {ExperimentalSettings, PluginSettings, SSOSettings, Office365Settings} from '@hanzoteam/types/config';
 
-import {RESOURCE_KEYS} from 'mattermost-redux/constants/permissions_sysconsole';
+import {RESOURCE_KEYS} from '@hanzoteam/redux/constants/permissions_sysconsole';
 
 import AdminDefinition from 'components/admin_console/admin_definition';
 import AdminSidebar from 'components/admin_console/admin_sidebar/admin_sidebar';

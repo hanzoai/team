@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import BackIcon from 'components/widgets/icons/fa_back_icon';

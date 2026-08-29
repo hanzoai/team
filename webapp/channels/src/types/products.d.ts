@@ -15,7 +15,7 @@ declare module 'boards' {
 
 declare module 'boards/manifest' {
     // eslint-disable-next-line import/no-duplicates
-    import type {PluginManifest} from '@mattermost/types/plugins';
+    import type {PluginManifest} from '@hanzoteam/types/plugins';
     const module: PluginManifest;
     export default module;
 }
@@ -32,7 +32,7 @@ declare module 'playbooks' {
 
 declare module 'playbooks/manifest' {
     // eslint-disable-next-line import/no-duplicates
-    import type {PluginManifest} from '@mattermost/types/plugins';
+    import type {PluginManifest} from '@hanzoteam/types/plugins';
     const module: PluginManifest;
     export default module;
 }

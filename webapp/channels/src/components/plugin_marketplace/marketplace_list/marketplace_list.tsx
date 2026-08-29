@@ -4,9 +4,9 @@
 import React, {useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {MarketplaceApp, MarketplacePlugin} from '@mattermost/types/marketplace';
+import type {MarketplaceApp, MarketplacePlugin} from '@hanzoteam/types/marketplace';
 
-import {isPlugin, getName} from 'mattermost-redux/utils/marketplace';
+import {isPlugin, getName} from '@hanzoteam/redux/utils/marketplace';
 
 import PluginIcon from 'components/widgets/icons/plugin_icon';
 

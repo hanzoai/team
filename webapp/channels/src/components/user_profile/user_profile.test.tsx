@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {UserProfile as UserProfileType} from '@mattermost/types/users';
+import type {UserProfile as UserProfileType} from '@hanzoteam/types/users';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import {render} from 'tests/react_testing_utils';
 

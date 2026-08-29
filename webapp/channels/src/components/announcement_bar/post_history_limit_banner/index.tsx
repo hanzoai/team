@@ -5,10 +5,10 @@ import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserLocale} from 'mattermost-redux/selectors/entities/i18n';
-import {getPostHistoryLimitBannerPreferences} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserLocale} from '@hanzoteam/redux/selectors/entities/i18n';
+import {getPostHistoryLimitBannerPreferences} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import AnnouncementBar from 'components/announcement_bar/default_announcement_bar';
 import useGetServerLimits from 'components/common/hooks/useGetServerLimits';

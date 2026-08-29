@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import type {MockIntl} from 'tests/helpers/intl-test-helper';
 import {renderWithContext, screen} from 'tests/react_testing_utils';
@@ -15,7 +15,7 @@ import type {Props} from './mobile_sidebar_right_items';
 
 const isDesktopAppMock = jest.mocked(UserAgent.isDesktopApp);
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
 }));
 

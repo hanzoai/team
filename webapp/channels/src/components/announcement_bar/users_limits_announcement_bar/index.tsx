@@ -5,14 +5,14 @@ import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AlertOutlineIcon} from '@mattermost/compass-icons/components';
-import type {ClientLicense} from '@mattermost/types/config';
-import type {PreferenceType} from '@mattermost/types/preferences';
+import {AlertOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getServerLimits} from 'mattermost-redux/selectors/entities/limits';
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getServerLimits} from '@hanzoteam/redux/selectors/entities/limits';
+import {get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import AnnouncementBar from 'components/announcement_bar/default_announcement_bar';
 

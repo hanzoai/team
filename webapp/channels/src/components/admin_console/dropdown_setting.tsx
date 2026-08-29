@@ -4,7 +4,7 @@
 import React, {memo, useCallback, useMemo} from 'react';
 import type {ReactNode, ChangeEvent} from 'react';
 
-import type {EmailSettings} from '@mattermost/types/config';
+import type {EmailSettings} from '@hanzoteam/types/config';
 
 import Setting from './setting';
 

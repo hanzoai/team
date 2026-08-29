@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import ManageTeamsModal from 'components/admin_console/manage_teams_modal/manage_teams_modal';
 

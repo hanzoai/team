@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {UserProfile} from '@mattermost/types/users';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 type Props = {
     attribute: UserPropertyField;

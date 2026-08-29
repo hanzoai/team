@@ -6,9 +6,9 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import styled, {css} from 'styled-components';
 
-import {Button as MmButton} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
+import {Button as MmButton} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
 import Timestamp, {RelativeRanges} from 'components/timestamp';
 

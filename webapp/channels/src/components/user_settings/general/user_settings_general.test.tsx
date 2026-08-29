@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import {renderWithContext, screen, userEvent, act, fireEvent, waitFor} from 'tests/react_testing_utils';
@@ -12,9 +12,9 @@ import {TestHelper} from 'utils/test_helper';
 
 import UserSettingsGeneral, {UserSettingsGeneralTab} from './user_settings_general';
 
-jest.mock('@mattermost/client', () => ({
-    ...jest.requireActual('@mattermost/client'),
-    Client4: class MockClient4 extends jest.requireActual('@mattermost/client').Client4 {
+jest.mock('@hanzoteam/client', () => ({
+    ...jest.requireActual('@hanzoteam/client'),
+    Client4: class MockClient4 extends jest.requireActual('@hanzoteam/client').Client4 {
         getUserCustomProfileAttributesValues = jest.fn();
     },
 }));

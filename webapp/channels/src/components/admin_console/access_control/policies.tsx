@@ -4,11 +4,11 @@
 import React, {useState, useEffect, useMemo, useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {Row, Column} from 'components/admin_console/data_grid/data_grid';
 import DataGrid from 'components/admin_console/data_grid/data_grid';

@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import type {OnChangeValue} from 'react-select';
 import CreatableReactSelect from 'react-select/creatable';
 
-import type {ContentFlaggingAdditionalSettings} from '@mattermost/types/config';
+import type {ContentFlaggingAdditionalSettings} from '@hanzoteam/types/config';
 
 import {Label} from 'components/admin_console/boolean_setting';
 import type {SystemConsoleCustomSettingChangeHandler} from 'components/admin_console/schema_admin_settings';

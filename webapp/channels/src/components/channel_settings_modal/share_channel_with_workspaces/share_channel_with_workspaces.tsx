@@ -4,11 +4,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
-import type {RemoteClusterInfo} from '@mattermost/types/shared_channels';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
+import type {RemoteClusterInfo} from '@hanzoteam/types/shared_channels';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import Toggle from 'components/toggle';
 

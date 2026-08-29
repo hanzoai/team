@@ -4,7 +4,7 @@
 import React, {useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {isCustomStatusEnabled} from 'selectors/views/custom_status';
 

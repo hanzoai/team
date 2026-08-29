@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ClientConfig} from '@mattermost/types/config';
+import type {ClientConfig} from '@hanzoteam/types/config';
 
-import {RequestStatus} from 'mattermost-redux/constants';
+import {RequestStatus} from '@hanzoteam/redux/constants';
 
 import {redirectUserToDefaultTeam} from 'actions/global_actions';
 
@@ -37,16 +37,16 @@ jest.mock('react-router-dom', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/general', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/general') as typeof import('mattermost-redux/selectors/entities/general'),
+jest.mock('@hanzoteam/redux/selectors/entities/general', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/general') as typeof import('@hanzoteam/redux/selectors/entities/general'),
     getLicense: () => mockLicense,
     getConfig: () => mockConfig,
 }));
 
 let mockCurrentUserId = '';
 
-jest.mock('mattermost-redux/selectors/entities/users', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/users') as typeof import('mattermost-redux/selectors/entities/users'),
+jest.mock('@hanzoteam/redux/selectors/entities/users', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/users') as typeof import('@hanzoteam/redux/selectors/entities/users'),
     getCurrentUserId: () => mockCurrentUserId,
 }));
 
@@ -61,8 +61,8 @@ jest.mock('actions/team_actions', () => ({
     addUsersToTeamFromInvite: jest.fn().mockResolvedValue({name: 'teamName'}),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
-    ...jest.requireActual('mattermost-redux/actions/users') as typeof import('mattermost-redux/actions/users'),
+jest.mock('@hanzoteam/redux/actions/users', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/users') as typeof import('@hanzoteam/redux/actions/users'),
     createUser: jest.fn().mockResolvedValue({data: {}}),
 }));
 

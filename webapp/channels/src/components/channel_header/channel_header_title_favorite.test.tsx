@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {favoriteChannel, unfavoriteChannel} from 'mattermost-redux/actions/channels';
-import * as channelsSelectors from 'mattermost-redux/selectors/entities/channels';
+import {favoriteChannel, unfavoriteChannel} from '@hanzoteam/redux/actions/channels';
+import * as channelsSelectors from '@hanzoteam/redux/selectors/entities/channels';
 
 import {act, fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import type {A11yFocusEventDetail} from 'utils/constants';
@@ -14,7 +14,7 @@ import {A11yCustomEventTypes} from 'utils/constants';
 
 import ChannelHeaderTitleFavorite from './channel_header_title_favorite';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     favoriteChannel: jest.fn(),
     unfavoriteChannel: jest.fn(),
 }));
@@ -189,7 +189,7 @@ describe('ChannelHeaderTitleFavorite Component', () => {
     it('should render button as disabled when channel is in a managed category', () => {
         isCurrentChannelFavoriteMock.mockReturnValue(false);
         getCurrentChannelMock.mockReturnValue(activeChannel);
-        jest.spyOn(require('mattermost-redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
+        jest.spyOn(require('@hanzoteam/redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
 
         renderComponent();
 

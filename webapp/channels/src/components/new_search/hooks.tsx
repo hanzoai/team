@@ -4,8 +4,8 @@
 import {useState, useRef, useEffect, useMemo, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
 import {autocompleteChannelsForSearchInTeam} from 'actions/channel_actions';
 import {autocompleteUsersInTeam} from 'actions/user_actions';

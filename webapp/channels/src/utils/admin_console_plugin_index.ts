@@ -3,7 +3,7 @@
 
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 
-import type {PluginRedux, PluginSetting} from '@mattermost/types/plugins';
+import type {PluginRedux, PluginSetting} from '@hanzoteam/types/plugins';
 
 import getEnablePluginSetting from 'components/admin_console/custom_plugin_settings/enable_plugin_setting';
 import type {AdminDefinitionSetting} from 'components/admin_console/types';

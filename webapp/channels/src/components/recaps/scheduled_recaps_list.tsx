@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ScheduledRecap} from '@mattermost/types/recaps';
+import type {ScheduledRecap} from '@hanzoteam/types/recaps';
 
 import ScheduledRecapItem from './scheduled_recap_item';
 import ScheduledRecapsEmptyState from './scheduled_recaps_empty_state';

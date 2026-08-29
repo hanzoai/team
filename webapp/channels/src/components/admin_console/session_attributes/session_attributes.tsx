@@ -5,11 +5,11 @@ import React, {useEffect, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
-import type {GlobalState} from '@mattermost/types/store';
+import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {fetchPropertyFields} from 'mattermost-redux/actions/properties';
-import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from 'mattermost-redux/selectors/entities/properties';
+import {fetchPropertyFields} from '@hanzoteam/redux/actions/properties';
+import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from '@hanzoteam/redux/selectors/entities/properties';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

@@ -7,11 +7,11 @@ import {renderWithContext} from 'tests/react_testing_utils';
 
 import AdminChannelSharedIndicator from './admin_channel_shared_indicator';
 
-jest.mock('mattermost-redux/actions/shared_channels', () => ({
+jest.mock('@hanzoteam/redux/actions/shared_channels', () => ({
     fetchChannelRemotes: jest.fn(() => ({type: 'MOCK_FETCH_CHANNEL_REMOTES'})),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/shared_channels', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/shared_channels', () => ({
     getRemoteNamesForChannel: jest.fn(() => [] as string[]),
 }));
 
@@ -25,8 +25,8 @@ describe('admin_console/team_channel_settings/channel/list/AdminChannelSharedInd
     });
 
     test('fetches remotes on mount when remoteNames is empty', () => {
-        const {getRemoteNamesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-        const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
+        const {getRemoteNamesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+        const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
         getRemoteNamesForChannel.mockReturnValue([]);
 
         renderWithContext(<AdminChannelSharedIndicator channelId='channel-1'/>);
@@ -36,8 +36,8 @@ describe('admin_console/team_channel_settings/channel/list/AdminChannelSharedInd
     });
 
     test('does not fetch remotes when remoteNames is already populated', () => {
-        const {getRemoteNamesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-        const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
+        const {getRemoteNamesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+        const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
         getRemoteNamesForChannel.mockReturnValue(['Org A', 'Org B']);
 
         renderWithContext(<AdminChannelSharedIndicator channelId='channel-1'/>);
@@ -46,7 +46,7 @@ describe('admin_console/team_channel_settings/channel/list/AdminChannelSharedInd
     });
 
     test('passes remoteNames from the selector to SharedChannelIndicator', () => {
-        const {getRemoteNamesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
+        const {getRemoteNamesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
         const SharedChannelIndicator = require('components/shared_channel_indicator');
         getRemoteNamesForChannel.mockReturnValue(['Org A', 'Org B']);
 

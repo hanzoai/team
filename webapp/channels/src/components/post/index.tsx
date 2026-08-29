@@ -6,23 +6,23 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Emoji} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {General, Preferences as ReduxPreferences} from 'mattermost-redux/constants';
-import {getDirectTeammate, isMyChannelAutotranslated} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, isPermissionPoliciesEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUserLocale} from 'mattermost-redux/selectors/entities/i18n';
-import {getPost, makeGetCommentCountForPost, makeIsPostCommentMention, isPostAcknowledgementsEnabled, isPostPriorityEnabled, isPostFlagged} from 'mattermost-redux/selectors/entities/posts';
-import type {UserActivityPost} from 'mattermost-redux/selectors/entities/posts';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {General, Preferences as ReduxPreferences} from '@hanzoteam/redux/constants';
+import {getDirectTeammate, isMyChannelAutotranslated} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, isPermissionPoliciesEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUserLocale} from '@hanzoteam/redux/selectors/entities/i18n';
+import {getPost, makeGetCommentCountForPost, makeIsPostCommentMention, isPostAcknowledgementsEnabled, isPostPriorityEnabled, isPostFlagged} from '@hanzoteam/redux/selectors/entities/posts';
+import type {UserActivityPost} from '@hanzoteam/redux/selectors/entities/posts';
 import {
     get,
     getBool,
     isCollapsedThreadsEnabled,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam, getTeam, getTeamMemberships} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam, getTeam, getTeamMemberships} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {burnPostNow} from 'actions/burn_on_read_deletion';
 import {revealBurnOnReadPost} from 'actions/burn_on_read_posts';

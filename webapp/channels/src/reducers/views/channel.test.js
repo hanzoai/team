@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {GeneralTypes, UserTypes, ChannelTypes} from 'mattermost-redux/action_types';
+import {GeneralTypes, UserTypes, ChannelTypes} from '@hanzoteam/redux/action_types';
 
 import channelReducer from 'reducers/views/channel';
 

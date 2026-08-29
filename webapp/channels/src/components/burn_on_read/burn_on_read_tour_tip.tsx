@@ -5,10 +5,10 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {TourTip, useMeasurePunchouts} from '@mattermost/components';
+import {TourTip, useMeasurePunchouts} from '@hanzoteam/components';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
 
 import {hasSeenBurnOnReadTourTip, BURN_ON_READ_TOUR_TIP_PREFERENCE, getBurnOnReadDurationMinutes} from 'selectors/burn_on_read';
 

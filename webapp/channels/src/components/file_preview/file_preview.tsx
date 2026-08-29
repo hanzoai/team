@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import React from 'react';
 import type {ReactNode} from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getFileThumbnailUrl, getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileThumbnailUrl, getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import FilenameOverlay from 'components/file_attachment/filename_overlay';
 import FilePreviewModal from 'components/file_preview_modal';

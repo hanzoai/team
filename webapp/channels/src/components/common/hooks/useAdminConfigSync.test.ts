@@ -4,18 +4,18 @@
 import {act} from '@testing-library/react';
 import * as ReactRedux from 'react-redux';
 
-import type {WebSocketMessage} from '@mattermost/client';
-import {WebSocketEvents} from '@mattermost/client';
+import type {WebSocketMessage} from '@hanzoteam/client';
+import {WebSocketEvents} from '@hanzoteam/client';
 
-import {getConfig} from 'mattermost-redux/actions/admin';
+import {getConfig} from '@hanzoteam/redux/actions/admin';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 import * as webSocketHooks from 'utils/use_websocket/hooks';
 
 import useAdminConfigSync from './useAdminConfigSync';
 
-jest.mock('mattermost-redux/actions/admin', () => ({
-    ...jest.requireActual('mattermost-redux/actions/admin'),
+jest.mock('@hanzoteam/redux/actions/admin', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/admin'),
     getConfig: jest.fn(() => ({type: 'MOCK_GET_ADMIN_CONFIG'})),
 }));
 

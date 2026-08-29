@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {LogLevelEnum} from '@mattermost/types/admin';
+import {LogLevelEnum} from '@hanzoteam/types/admin';
 
 import {renderWithContext, userEvent, screen, waitFor} from 'tests/react_testing_utils';
 

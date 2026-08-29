@@ -4,7 +4,7 @@
 import React from 'react';
 import {IntlProvider} from 'react-intl';
 
-import type {ContentFlaggingNotificationSettings} from '@mattermost/types/config';
+import type {ContentFlaggingNotificationSettings} from '@hanzoteam/types/config';
 
 import {fireEvent, render, screen, userEvent} from 'tests/react_testing_utils';
 

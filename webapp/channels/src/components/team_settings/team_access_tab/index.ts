@@ -6,15 +6,15 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {
     createAccessControlTeamSyncJob,
     getTeamAccessControlPolicy,
     searchUsersForExpression,
     validateExpressionAgainstRequester,
-} from 'mattermost-redux/actions/access_control';
-import {patchTeam, regenerateTeamInviteId, getTeamStats} from 'mattermost-redux/actions/teams';
+} from '@hanzoteam/redux/actions/access_control';
+import {patchTeam, regenerateTeamInviteId, getTeamStats} from '@hanzoteam/redux/actions/teams';
 
 import {isTeamMembershipAccessControlEnabled} from 'selectors/general';
 

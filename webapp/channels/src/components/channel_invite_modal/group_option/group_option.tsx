@@ -5,13 +5,13 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {AccountMultipleOutlineIcon, ChevronRightIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Group} from '@mattermost/types/groups';
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import {AccountMultipleOutlineIcon, ChevronRightIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Group} from '@hanzoteam/types/groups';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getUser, makeDisplayNameGetter, makeGetProfilesByIdsAndUsernames} from 'mattermost-redux/selectors/entities/users';
+import {getUser, makeDisplayNameGetter, makeGetProfilesByIdsAndUsernames} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {Value} from 'components/multiselect/multiselect';
 

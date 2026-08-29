@@ -3,9 +3,9 @@
 
 import * as ReactRedux from 'react-redux';
 
-import type {PropertyField, PropertyValue} from '@mattermost/types/properties';
+import type {PropertyField, PropertyValue} from '@hanzoteam/types/properties';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {
     CLASSIFICATIONS_CHANNEL_FIELD_NAME,

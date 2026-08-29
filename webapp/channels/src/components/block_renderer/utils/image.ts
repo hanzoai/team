@@ -3,7 +3,7 @@
 
 import type {CSSProperties} from 'react';
 
-import type {MmImageBlock, MmImageSize} from '@mattermost/types/mm_blocks';
+import type {MmImageBlock, MmImageSize} from '@hanzoteam/types/mm_blocks';
 
 /** Preset caps loosely aligned with Adaptive Cards `Image` sizes; `stretch` matches legacy attachment `image_url`. */
 export const MM_IMAGE_SIZE_CAPS: Record<MmImageSize, {maxWidth: number; maxHeight: number} | null> = {

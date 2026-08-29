@@ -4,8 +4,8 @@
 import React from 'react';
 import {MemoryRouter, Route} from 'react-router-dom';
 
-import type {GeneralState} from '@mattermost/types/general';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {GeneralState} from '@hanzoteam/types/general';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
 import {SCHEDULED_POST_URL_SUFFIX} from 'utils/constants';
@@ -20,7 +20,7 @@ jest.mock('actions/views/drafts', () => ({
     getDrafts: jest.fn(() => ({type: 'MOCK_GET_DRAFTS'})),
 }));
 
-jest.mock('mattermost-redux/actions/scheduled_posts', () => ({
+jest.mock('@hanzoteam/redux/actions/scheduled_posts', () => ({
     fetchTeamScheduledPosts: jest.fn(() => ({type: 'MOCK_FETCH_SCHEDULED_POSTS'})),
 }));
 
@@ -193,7 +193,7 @@ describe('components/drafts/drafts_link', () => {
     });
 
     it('should fetch scheduled posts when component mounts', async () => {
-        const fetchTeamScheduledPosts = require('mattermost-redux/actions/scheduled_posts').fetchTeamScheduledPosts;
+        const fetchTeamScheduledPosts = require('@hanzoteam/redux/actions/scheduled_posts').fetchTeamScheduledPosts;
 
         renderWithRouter(baseState);
 
@@ -206,7 +206,7 @@ describe('components/drafts/drafts_link', () => {
         {config: {ScheduledPosts: 'false'}},
         {license: {IsLicensed: 'false'}},
     ])('should not fetch scheduled posts when component mounts if disabled', async (partialConf) => {
-        const fetchTeamScheduledPosts = require('mattermost-redux/actions/scheduled_posts').fetchTeamScheduledPosts;
+        const fetchTeamScheduledPosts = require('@hanzoteam/redux/actions/scheduled_posts').fetchTeamScheduledPosts;
         const state: DeepPartial<GlobalState> = {
             ...baseState,
             entities: {

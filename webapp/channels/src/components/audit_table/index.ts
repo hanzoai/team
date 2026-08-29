@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
 
 import AuditTable from './audit_table';
 

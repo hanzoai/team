@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {saveTheme, deleteTeamSpecificThemes} from 'mattermost-redux/actions/preferences';
-import {getTheme, getThemePreferences} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeamId, getMyTeamsCount} from 'mattermost-redux/selectors/entities/teams';
+import {saveTheme, deleteTeamSpecificThemes} from '@hanzoteam/redux/actions/preferences';
+import {getTheme, getThemePreferences} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeamId, getMyTeamsCount} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {openModal} from 'actions/views/modals';
 

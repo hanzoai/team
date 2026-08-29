@@ -6,9 +6,9 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector, shallowEqual} from 'react-redux';
 import styled from 'styled-components';
 
-import {MessageTextOutlineIcon, ProductsIcon} from '@mattermost/compass-icons/components';
+import {MessageTextOutlineIcon, ProductsIcon} from '@hanzoteam/compass-icons/components';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setProductMenuSwitcherOpen} from 'actions/views/product_menu';
 import {isSwitcherOpen} from 'selectors/views/product_menu';

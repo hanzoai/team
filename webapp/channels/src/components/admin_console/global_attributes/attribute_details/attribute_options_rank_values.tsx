@@ -7,8 +7,8 @@ import {useIntl} from 'react-intl';
 import {components} from 'react-select';
 import {css} from 'styled-components';
 
-import {CheckIcon, ChevronRightIcon} from '@mattermost/compass-icons/components';
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import {CheckIcon, ChevronRightIcon} from '@hanzoteam/compass-icons/components';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import RankBadge from 'components/admin_console/system_properties/rank_badge';
 import {moveOptionByAscIndex, nextRank, sortOptionsByRankAsc} from 'components/admin_console/system_properties/rank_utils';

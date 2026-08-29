@@ -5,10 +5,10 @@ import React from 'react';
 import {MemoryRouter} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getMe} from 'mattermost-redux/actions/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {getMe} from '@hanzoteam/redux/actions/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {loadStatusesByIds} from 'actions/status_actions';
 
@@ -18,7 +18,7 @@ import {TestHelper} from 'utils/test_helper';
 import PopoutController from './popout_controller';
 
 // Mock dependencies
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getMe: jest.fn(),
 }));
 

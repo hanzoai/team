@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {CheckIcon} from '@mattermost/compass-icons/components';
+import {CheckIcon} from '@hanzoteam/compass-icons/components';
 
 import {render, screen, userEvent} from 'tests/react_testing_utils';
 

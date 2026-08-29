@@ -7,10 +7,10 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {CSSTransition} from 'react-transition-group';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getTeams} from 'mattermost-redux/actions/teams';
-import {getActiveTeamsList} from 'mattermost-redux/selectors/entities/teams';
+import {getTeams} from '@hanzoteam/redux/actions/teams';
+import {getActiveTeamsList} from '@hanzoteam/redux/selectors/entities/teams';
 
 import CompanySVG from 'components/common/svg_images_components/company_svg';
 import QuickInput from 'components/quick_input';

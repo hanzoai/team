@@ -6,7 +6,7 @@ import {connect} from 'react-redux';
 import type {Dispatch} from 'redux';
 import {bindActionCreators} from 'redux';
 
-import {moveThread} from 'mattermost-redux/actions/posts';
+import {moveThread} from '@hanzoteam/redux/actions/posts';
 
 import {joinChannelById, switchToChannel} from 'actions/views/channel';
 

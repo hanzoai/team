@@ -1,6 +1,6 @@
 # Mattermost Client
 
-[![npm version](https://img.shields.io/npm/v/@mattermost/client?style=flat)](https://www.npmjs.com/package/@mattermost/client)
+[![npm version](https://img.shields.io/npm/v/@hanzoteam/client?style=flat)](https://www.npmjs.com/package/@hanzoteam/client)
 
 This package contains the JavaScript/TypeScript client for [Mattermost](https://github.com/mattermost/mattermost). It's used by [the Mattermost web app](https://github.com/mattermost/mattermost/tree/master/webapp/channels) and related projects.
 
@@ -9,13 +9,13 @@ This package contains the JavaScript/TypeScript client for [Mattermost](https://
 ### JavaScript
 
 ```sh
-$ npm install @mattermost/client
+$ npm install @hanzoteam/client
 ```
 
 ### TypeScript
 
 ```sh
-$ npm install @mattermost/client @mattermost/types
+$ npm install @hanzoteam/client @hanzoteam/types
 ```
 
 ## Usage
@@ -25,7 +25,7 @@ $ npm install @mattermost/client @mattermost/types
 To use this client, create an instance of `Client4`, set the server URL, and log in, and then you can start making requests.
 
 ```js
-import {Client4} from '@mattermost/client';
+import {Client4} from '@hanzoteam/client';
 
 const client = new Client4();
 client.setUrl('https://mymattermostserver.example.com');
@@ -38,7 +38,7 @@ client.login('username', 'password').then((user) => {
 If you already have a session token or a user access token, you can call `Client4.setToken` instead of logging in.
 
 ```js
-import {Client4} from '@mattermost/client';
+import {Client4} from '@hanzoteam/client';
 
 const client = new Client4();
 client.setUrl('https://mymattermostserver.example.com');
@@ -67,7 +67,7 @@ try {
 To use the WebSocket client, create an instance of `WebSocketClient` and then call its `initialize` method with the connection URL and an optional session token or user access token. After that, you can call the client's `addMessageListener` method to register a listener which will be called whenever a WebSocket message is received from the server.
 
 ```js
-import {WebSocketClient} from '@mattermost/client';
+import {WebSocketClient} from '@hanzoteam/client';
 
 // If you already have an instance of Client4, you can call its getWebSocketUrl method to get this URL
 const connectionUrl = 'https://mymattermostserver.example.com/v1/team/websocket';

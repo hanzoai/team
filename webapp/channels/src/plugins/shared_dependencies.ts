@@ -3,14 +3,14 @@
 
 type Loader = () => unknown;
 
-// Every module exported from the @mattermost/shared package must be added to this map
+// Every module exported from the @hanzoteam/shared package must be added to this map
 const sharedDependencies = new Map<string, Loader>([
-    ['@mattermost/shared/components/button', () => import('@mattermost/shared/components/button')],
-    ['@mattermost/shared/components/emoji', () => import('@mattermost/shared/components/emoji')],
-    ['@mattermost/shared/components/shortcut_key', () => import('@mattermost/shared/components/shortcut_key')],
-    ['@mattermost/shared/components/tooltip', () => import('@mattermost/shared/components/tooltip')],
-    ['@mattermost/shared/utils/i18n', () => import('@mattermost/shared/utils/i18n')],
-    ['@mattermost/shared/utils/user_agent', () => import('@mattermost/shared/utils/user_agent')],
+    ['@hanzoteam/shared/components/button', () => import('@hanzoteam/shared/components/button')],
+    ['@hanzoteam/shared/components/emoji', () => import('@hanzoteam/shared/components/emoji')],
+    ['@hanzoteam/shared/components/shortcut_key', () => import('@hanzoteam/shared/components/shortcut_key')],
+    ['@hanzoteam/shared/components/tooltip', () => import('@hanzoteam/shared/components/tooltip')],
+    ['@hanzoteam/shared/utils/i18n', () => import('@hanzoteam/shared/utils/i18n')],
+    ['@hanzoteam/shared/utils/user_agent', () => import('@hanzoteam/shared/utils/user_agent')],
 ]);
 
 export function loadSharedDependency(request: string) {

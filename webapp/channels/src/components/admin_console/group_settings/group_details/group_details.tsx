@@ -5,21 +5,21 @@ import React from 'react';
 import type {WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, defineMessage, injectIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 import {
     SyncableType,
-} from '@mattermost/types/groups';
+} from '@hanzoteam/types/groups';
 import type {
     Group,
     GroupChannel,
     GroupPatch,
     GroupTeam,
-    SyncablePatch} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+    SyncablePatch} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import {GroupProfileAndSettings} from 'components/admin_console/group_settings/group_details/group_profile_and_settings';

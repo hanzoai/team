@@ -9,10 +9,10 @@ import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessage} from 'react-intl';
 import type {Timezone} from 'timezones.json';
 
-import type {PreferencesType, PreferenceType} from '@mattermost/types/preferences';
-import type {UserProfile, UserTimezone} from '@mattermost/types/users';
+import type {PreferencesType, PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserProfile, UserTimezone} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SettingItem from 'components/setting_item';
 import SettingItemMax from 'components/setting_item_max';

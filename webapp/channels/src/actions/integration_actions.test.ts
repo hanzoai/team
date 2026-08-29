@@ -1,24 +1,24 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {IncomingWebhook, OutgoingWebhook, Command, OAuthApp} from '@mattermost/types/integrations';
+import type {IncomingWebhook, OutgoingWebhook, Command, OAuthApp} from '@hanzoteam/types/integrations';
 
-import {IntegrationTypes} from 'mattermost-redux/action_types';
-import * as IntegrationActions from 'mattermost-redux/actions/integrations';
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
+import {IntegrationTypes} from '@hanzoteam/redux/action_types';
+import * as IntegrationActions from '@hanzoteam/redux/actions/integrations';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
 
 import * as Actions from 'actions/integration_actions';
 
 import mockStore from 'tests/test_store';
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getProfilesByIds: jest.fn(() => {
         return {type: ''};
     }),
 }));
 
-jest.mock('mattermost-redux/actions/integrations', () => ({
+jest.mock('@hanzoteam/redux/actions/integrations', () => ({
     submitInteractiveDialog: jest.fn(() => {
         return {type: 'MOCK_SUBMIT_DIALOG', data: {errors: {}}};
     }),
@@ -46,21 +46,21 @@ jest.mock('mattermost-redux/actions/integrations', () => ({
     isIncomingWebhooksWithCount: jest.fn(() => false),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/apps', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/apps', () => ({
     appsEnabled: jest.fn(() => true),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/integrations', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/integrations', () => ({
     getDialogArguments: jest.fn(() => null),
 }));
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
-jest.mock('mattermost-redux/actions/helpers', () => ({
+jest.mock('@hanzoteam/redux/actions/helpers', () => ({
     forceLogoutIfNecessary: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/errors', () => ({
+jest.mock('@hanzoteam/redux/actions/errors', () => ({
     logError: jest.fn(() => ({type: 'MOCK_LOG_ERROR'})),
 }));
 
@@ -175,7 +175,7 @@ describe('actions/integration_actions', () => {
 
     describe('submitInteractiveDialog', () => {
         test('submitInteractiveDialog with current channel', async () => {
-            const {getDialogArguments} = require('mattermost-redux/selectors/entities/integrations');
+            const {getDialogArguments} = require('@hanzoteam/redux/selectors/entities/integrations');
             const testState = {
                 ...initialState,
                 entities: {
@@ -213,7 +213,7 @@ describe('actions/integration_actions', () => {
         });
 
         test('submitInteractiveDialog with currentChannel context', async () => {
-            const {getDialogArguments} = require('mattermost-redux/selectors/entities/integrations');
+            const {getDialogArguments} = require('@hanzoteam/redux/selectors/entities/integrations');
             getDialogArguments.mockReturnValue(null);
             const testStore = mockStore(initialState);
 
@@ -263,7 +263,7 @@ describe('actions/integration_actions', () => {
     });
 
     describe('lookupInteractiveDialog', () => {
-        const {getDialogArguments} = require('mattermost-redux/selectors/entities/integrations');
+        const {getDialogArguments} = require('@hanzoteam/redux/selectors/entities/integrations');
 
         test('lookupInteractiveDialog with current channel', async () => {
             const testState = {
@@ -329,7 +329,7 @@ describe('actions/integration_actions', () => {
 
         test('lookupInteractiveDialog with current channel', async () => {
             const testStore = mockStore(initialState);
-            const {getDialogArguments} = require('mattermost-redux/selectors/entities/integrations');
+            const {getDialogArguments} = require('@hanzoteam/redux/selectors/entities/integrations');
             getDialogArguments.mockReturnValue(null);
 
             const submission = {
@@ -463,7 +463,7 @@ describe('actions/integration_actions', () => {
     });
 
     describe('executeDialogAction', () => {
-        const {getDialogArguments} = require('mattermost-redux/selectors/entities/integrations');
+        const {getDialogArguments} = require('@hanzoteam/redux/selectors/entities/integrations');
 
         const url = 'https://example.com/action';
         const context = {key: 'value'};

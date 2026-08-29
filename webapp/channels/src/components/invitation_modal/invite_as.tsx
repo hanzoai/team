@@ -5,10 +5,10 @@ import React, {useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {getPrevTrialLicense} from 'mattermost-redux/actions/admin';
-import {getSubscriptionProduct, checkHadPriorTrial} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getPrevTrialLicense} from '@hanzoteam/redux/actions/admin';
+import {getSubscriptionProduct, checkHadPriorTrial} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import RadioGroup from 'components/common/radio_group';
 import RestrictedIndicator from 'components/widgets/menu/menu_items/restricted_indicator';

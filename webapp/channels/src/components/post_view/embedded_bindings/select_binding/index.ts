@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getChannel} from 'mattermost-redux/actions/channels';
+import {getChannel} from '@hanzoteam/redux/actions/channels';
 
 import {postEphemeralCallResponseForPost, handleBindingClick, openAppsModal} from 'actions/apps';
 

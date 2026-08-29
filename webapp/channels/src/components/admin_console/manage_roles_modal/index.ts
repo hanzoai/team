@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {updateUserRoles} from 'mattermost-redux/actions/users';
+import {updateUserRoles} from '@hanzoteam/redux/actions/users';
 
 import type {GlobalState} from 'types/store';
 

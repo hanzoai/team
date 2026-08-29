@@ -4,11 +4,11 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {Team} from '@mattermost/types/teams';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Team} from '@hanzoteam/types/teams';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import AlertBanner from 'components/alert_banner';
 import useAccessControlAttributes, {EntityType} from 'components/common/hooks/useAccessControlAttributes';

@@ -6,13 +6,13 @@ import {Modal} from 'react-bootstrap';
 import type {IntlShape} from 'react-intl';
 import {injectIntl, FormattedMessage, defineMessage} from 'react-intl';
 
-import type {Role} from '@mattermost/types/roles';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Role} from '@hanzoteam/types/roles';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {filterProfiles} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {filterProfilesStartingWithTerm, profileListToMap, isGuest} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {filterProfiles} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {filterProfilesStartingWithTerm, profileListToMap, isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import MultiSelect from 'components/multiselect/multiselect';
 import type {Value} from 'components/multiselect/multiselect';

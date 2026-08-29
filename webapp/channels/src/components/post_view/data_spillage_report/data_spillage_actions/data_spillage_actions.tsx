@@ -6,9 +6,9 @@ import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
 import './data_spillage_actions.scss';
-import {Button} from '@mattermost/shared/components/button';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {closeModal, openModal} from 'actions/views/modals';
 

@@ -5,10 +5,10 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Audit} from '@mattermost/types/audits';
-import type {GlobalState} from '@mattermost/types/store';
+import type {Audit} from '@hanzoteam/types/audits';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import AuditRow from '../audit_row/audit_row';
 import holders from '../holders';

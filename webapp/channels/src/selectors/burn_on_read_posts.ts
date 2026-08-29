@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {PostTypes} from 'utils/constants';
 

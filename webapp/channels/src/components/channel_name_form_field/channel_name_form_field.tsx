@@ -6,9 +6,9 @@ import type {IntlShape} from 'react-intl';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {isAnonymousURLEnabled} from 'selectors/config';
 

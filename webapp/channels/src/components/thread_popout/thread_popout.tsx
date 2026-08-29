@@ -6,21 +6,21 @@ import {defineMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLocation, useParams} from 'react-router-dom';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {fetchChannelsAndMembers, selectChannel} from 'mattermost-redux/actions/channels';
-import {getPostThread} from 'mattermost-redux/actions/posts';
-import {fetchTeamScheduledPosts} from 'mattermost-redux/actions/scheduled_posts';
-import {extractUserIdsAndMentionsFromPosts} from 'mattermost-redux/actions/status_profile_polling';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {getThread} from 'mattermost-redux/actions/threads';
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
-import {getChannel, getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getTeamByName} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {fetchChannelsAndMembers, selectChannel} from '@hanzoteam/redux/actions/channels';
+import {getPostThread} from '@hanzoteam/redux/actions/posts';
+import {fetchTeamScheduledPosts} from '@hanzoteam/redux/actions/scheduled_posts';
+import {extractUserIdsAndMentionsFromPosts} from '@hanzoteam/redux/actions/status_profile_polling';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {getThread} from '@hanzoteam/redux/actions/threads';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {getChannel, getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getTeamByName} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadStatusesByIds} from 'actions/status_actions';
 import {selectPost} from 'actions/views/rhs';

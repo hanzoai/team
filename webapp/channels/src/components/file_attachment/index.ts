@@ -6,11 +6,11 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isFileRejected} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isFileRejected} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {openModal} from 'actions/views/modals';
 import {getFilesDropdownPluginMenuItems} from 'selectors/plugins';

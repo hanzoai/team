@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {PreferencesType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import type {PreferencesType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import type {PluginConfiguration} from 'types/plugins/user_settings';
 

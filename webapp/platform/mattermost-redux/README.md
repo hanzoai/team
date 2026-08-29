@@ -7,5 +7,5 @@ This code doesn't strictly follow semantic versioning as it is mostly internal c
 ## Installation
 
 ```sh
-$ npm install mattermost-redux @mattermost/types @mattermost/client
+$ npm install mattermost-redux @hanzoteam/types @hanzoteam/client
 ```

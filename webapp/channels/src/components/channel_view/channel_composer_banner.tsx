@@ -4,7 +4,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import Pluggable from 'plugins/pluggable';
 

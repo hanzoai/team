@@ -6,7 +6,7 @@ import {DropIndicator} from '@atlaskit/pragmatic-drag-and-drop-react-drop-indica
 import React, {useCallback, useState} from 'react';
 import styled, {css} from 'styled-components';
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 
 import BookmarkItemContent from './bookmark_item_content';
 import {useBookmarkDragDrop, type KeyboardReorderItemProps} from './hooks';

@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {PostTypes} from 'mattermost-redux/action_types';
-import {logError} from 'mattermost-redux/actions/errors';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
+import {PostTypes} from '@hanzoteam/redux/action_types';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
 
 import type {ActionFuncAsync} from 'types/store';
 

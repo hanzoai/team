@@ -15,7 +15,7 @@ jest.mock('components/common/hooks/useGetFeatureFlagValue', () => ({
 }));
 
 const mockGetBadge = jest.fn(() => ({count: 0, hasFailed: false}));
-jest.mock('mattermost-redux/selectors/entities/recaps', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/recaps', () => ({
     getUnreadFinishedRecapsBadge: () => mockGetBadge(),
 }));
 

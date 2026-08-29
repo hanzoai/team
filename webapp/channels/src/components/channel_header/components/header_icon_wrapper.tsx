@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ShortcutDefinition} from '@mattermost/shared/components/tooltip';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import type {ShortcutDefinition} from '@hanzoteam/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import NewChannelWithBoardTourTip from 'components/app_bar/new_channel_with_board_tour_tip';
 

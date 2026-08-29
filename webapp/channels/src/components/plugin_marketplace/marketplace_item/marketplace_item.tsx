@@ -4,8 +4,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {MarketplaceLabel} from '@mattermost/types/marketplace';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {MarketplaceLabel} from '@hanzoteam/types/marketplace';
 
 import ExternalLink from 'components/external_link';
 import PluginIcon from 'components/widgets/icons/plugin_icon';

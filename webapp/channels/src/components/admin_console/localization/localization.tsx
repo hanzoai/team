@@ -5,7 +5,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import styled from 'styled-components';
 
-import type {LocalizationSettings} from '@mattermost/types/config';
+import type {LocalizationSettings} from '@hanzoteam/types/config';
 
 import BooleanSetting from 'components/admin_console/boolean_setting';
 import DropdownSetting from 'components/admin_console/dropdown_setting';

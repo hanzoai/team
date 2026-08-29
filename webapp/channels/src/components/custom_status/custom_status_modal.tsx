@@ -10,15 +10,15 @@ import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
 
-import {GenericModal} from '@mattermost/components';
-import type {Emoji} from '@mattermost/types/emojis';
-import type {UserCustomStatus} from '@mattermost/types/users';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import type {UserCustomStatus} from '@hanzoteam/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {setCustomStatusInitialisationState} from 'mattermost-redux/actions/preferences';
-import {setCustomStatus, unsetCustomStatus, removeRecentCustomStatus} from 'mattermost-redux/actions/users';
-import {Preferences} from 'mattermost-redux/constants';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {setCustomStatusInitialisationState} from '@hanzoteam/redux/actions/preferences';
+import {setCustomStatus, unsetCustomStatus, removeRecentCustomStatus} from '@hanzoteam/redux/actions/users';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {loadCustomEmojisForRecentCustomStatuses} from 'actions/emoji_actions';
 import {closeModal} from 'actions/views/modals';

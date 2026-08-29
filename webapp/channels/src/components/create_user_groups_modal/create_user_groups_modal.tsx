@@ -5,10 +5,10 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, type IntlShape, defineMessage, injectIntl} from 'react-intl';
 
-import type {GroupCreateWithUserIds} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GroupCreateWithUserIds} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AddUserToGroupMultiSelect from 'components/add_user_to_group_multiselect';
 import Input from 'components/widgets/inputs/input/input';

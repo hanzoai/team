@@ -5,16 +5,16 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {ChannelStats} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ChannelStats} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getChannelStats} from 'mattermost-redux/actions/channels';
-import {getFilteredUsersStats} from 'mattermost-redux/actions/users';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getChannelMembersInChannels, getAllChannelStats, getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {makeGetProfilesInChannel, makeSearchProfilesInChannel, filterProfiles, getFilteredUsersStats as selectFilteredUsersStats} from 'mattermost-redux/selectors/entities/users';
-import {filterProfilesStartingWithTerm, profileListToMap} from 'mattermost-redux/utils/user_utils';
+import {getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {getFilteredUsersStats} from '@hanzoteam/redux/actions/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getChannelMembersInChannels, getAllChannelStats, getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {makeGetProfilesInChannel, makeSearchProfilesInChannel, filterProfiles, getFilteredUsersStats as selectFilteredUsersStats} from '@hanzoteam/redux/selectors/entities/users';
+import {filterProfilesStartingWithTerm, profileListToMap} from '@hanzoteam/redux/utils/user_utils';
 
 import {loadProfilesAndReloadChannelMembers, searchProfilesAndChannelMembers} from 'actions/user_actions';
 import {setUserGridSearch, setUserGridFilters} from 'actions/views/search';

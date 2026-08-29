@@ -4,9 +4,9 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {PropertyField, PropertyValue} from '@mattermost/types/properties';
-import type {UserProfile} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {PropertyField, PropertyValue} from '@hanzoteam/types/properties';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

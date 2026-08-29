@@ -4,10 +4,10 @@
 import {useState, useEffect, useCallback} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {AccessControlAttribute} from '@mattermost/types/access_control';
+import type {AccessControlAttribute} from '@hanzoteam/types/access_control';
 
-import {getChannelAccessControlAttributes} from 'mattermost-redux/actions/channels';
-import {getTeamAccessControlAttributes} from 'mattermost-redux/actions/teams';
+import {getChannelAccessControlAttributes} from '@hanzoteam/redux/actions/channels';
+import {getTeamAccessControlAttributes} from '@hanzoteam/redux/actions/teams';
 
 // Define supported entity types
 export enum EntityType {

@@ -4,24 +4,24 @@
 import type {AnyAction} from 'redux';
 import {batchActions} from 'redux-batched-actions';
 
-import type {WebSocketMessages} from '@mattermost/client';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
+import type {WebSocketMessages} from '@hanzoteam/client';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
 
-import {SearchTypes} from 'mattermost-redux/action_types';
-import {getMyChannelMember} from 'mattermost-redux/actions/channels';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import {createSchedulePost} from 'mattermost-redux/actions/scheduled_posts';
-import * as ThreadActions from 'mattermost-redux/actions/threads';
-import {getChannel, getMyChannelMember as getMyChannelMemberSelector} from 'mattermost-redux/selectors/entities/channels';
-import {makeGetFilesForPost} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import * as PostSelectors from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
-import {canEditPost, comparePosts} from 'mattermost-redux/utils/post_utils';
+import {SearchTypes} from '@hanzoteam/redux/action_types';
+import {getMyChannelMember} from '@hanzoteam/redux/actions/channels';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import {createSchedulePost} from '@hanzoteam/redux/actions/scheduled_posts';
+import * as ThreadActions from '@hanzoteam/redux/actions/threads';
+import {getChannel, getMyChannelMember as getMyChannelMemberSelector} from '@hanzoteam/redux/selectors/entities/channels';
+import {makeGetFilesForPost} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import * as PostSelectors from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import {canEditPost, comparePosts} from '@hanzoteam/redux/utils/post_utils';
 
 import {addRecentEmoji, addRecentEmojis} from 'actions/emoji_actions';
 import {setGlobalItem} from 'actions/storage';

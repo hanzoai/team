@@ -6,16 +6,16 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import ReactSelect, {type StylesConfig} from 'react-select';
 
-import {GenericModal} from '@mattermost/components';
-import type {ServerError} from '@mattermost/types/errors';
-import type {PostPreviewMetadata} from '@mattermost/types/posts';
+import {GenericModal} from '@hanzoteam/components';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {PostPreviewMetadata} from '@hanzoteam/types/posts';
 
-import {getContentFlaggingConfig} from 'mattermost-redux/actions/content_flagging';
-import {Client4} from 'mattermost-redux/client';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {contentFlaggingConfig} from 'mattermost-redux/selectors/entities/content_flagging';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getContentFlaggingConfig} from '@hanzoteam/redux/actions/content_flagging';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {contentFlaggingConfig} from '@hanzoteam/redux/selectors/entities/content_flagging';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import PostMessagePreview from 'components/post_view/post_message_preview';
 import type {TextboxElement} from 'components/textbox';

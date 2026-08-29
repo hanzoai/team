@@ -7,11 +7,11 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {PulsatingDot} from '@mattermost/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import {type UserCustomStatus, CustomStatusDuration} from '@mattermost/types/users';
+import {PulsatingDot} from '@hanzoteam/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import {type UserCustomStatus, CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {unsetCustomStatus} from 'mattermost-redux/actions/users';
+import {unsetCustomStatus} from '@hanzoteam/redux/actions/users';
 
 import {showStatusDropdownPulsatingDot} from 'selectors/views/custom_status';
 

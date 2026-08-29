@@ -3,16 +3,16 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
-import {UserTypes} from 'mattermost-redux/action_types';
-import {getChannelAndMyMember, getChannelMembersByIds} from 'mattermost-redux/actions/channels';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getTeamMembersByIds} from 'mattermost-redux/actions/teams';
-import * as UserActions from 'mattermost-redux/actions/users';
-import {Preferences as PreferencesRedux, General} from 'mattermost-redux/constants';
+import {UserTypes} from '@hanzoteam/redux/action_types';
+import {getChannelAndMyMember, getChannelMembersByIds} from '@hanzoteam/redux/actions/channels';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getTeamMembersByIds} from '@hanzoteam/redux/actions/teams';
+import * as UserActions from '@hanzoteam/redux/actions/users';
+import {Preferences as PreferencesRedux, General} from '@hanzoteam/redux/constants';
 import {
     getChannel,
     getChannelMembersInChannels,
@@ -20,13 +20,13 @@ import {
     getCurrentChannelId,
     getMyChannelMember,
     getMyChannels,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
-import {getBool, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeamId, getTeamMember} from 'mattermost-redux/selectors/entities/teams';
-import * as Selectors from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {calculateUnreadCount} from 'mattermost-redux/utils/channel_utils';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
+import {getBool, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeamId, getTeamMember} from '@hanzoteam/redux/selectors/entities/teams';
+import * as Selectors from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {calculateUnreadCount} from '@hanzoteam/redux/utils/channel_utils';
 
 import {loadCustomEmojisForCustomStatusesByUserIds} from 'actions/emoji_actions';
 import {loadStatusesForProfilesList} from 'actions/status_actions';

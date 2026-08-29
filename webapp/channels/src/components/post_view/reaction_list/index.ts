@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {canAddReactions} from 'mattermost-redux/selectors/entities/reactions';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {canAddReactions} from '@hanzoteam/redux/selectors/entities/reactions';
 
 import {toggleReaction} from 'actions/post_actions';
 

@@ -4,12 +4,12 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {isAppSelectOption, type AppField, type AppFormValue, type AppSelectOption} from '@mattermost/types/apps';
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
+import {isAppSelectOption, type AppField, type AppFormValue, type AppSelectOption} from '@hanzoteam/types/apps';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {AppFieldTypes} from 'mattermost-redux/constants/apps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {AppFieldTypes} from '@hanzoteam/redux/constants/apps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type AutocompleteSelector from 'components/autocomplete_selector';
 import Markdown from 'components/markdown';

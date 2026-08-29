@@ -6,8 +6,8 @@ Subpackages should be imported using their full name, both inside the web app an
 
 ```javascript
 // Correct
-import {Client4} from '@mattermost/client';
-import {UserProfile} from '@mattermost/types/users';
+import {Client4} from '@hanzoteam/client';
+import {UserProfile} from '@hanzoteam/types/users';
 
 // Incorrect
 import Client4 from 'packages/client/src/client4.ts';

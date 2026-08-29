@@ -4,11 +4,11 @@
 import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {haveITeamPermission, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getMyTeams, getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {haveITeamPermission, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getMyTeams, getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

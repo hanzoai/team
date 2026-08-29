@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {PropertyField, PropertyFieldOption, PropertyValue} from '@mattermost/types/properties';
+import type {PropertyField, PropertyFieldOption, PropertyValue} from '@hanzoteam/types/properties';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {act, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 
@@ -37,7 +37,7 @@ import {PRESET_CUSTOM, presets} from './utils/presets';
 const MOCK_USER_ID = 'current_user_id_12345678';
 const BASE_STATE = {entities: {users: {currentUserId: MOCK_USER_ID}}};
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 function makePropertyField(overrides: Partial<PropertyField> = {}): PropertyField {
     return {

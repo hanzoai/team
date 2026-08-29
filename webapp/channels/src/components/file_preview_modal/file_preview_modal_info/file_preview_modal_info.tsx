@@ -5,14 +5,14 @@ import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
 import {
     getUser as selectUser,
     makeGetDisplayName,
-} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/users';
 
 import Avatar from 'components/widgets/users/avatar/avatar';
 

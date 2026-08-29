@@ -4,7 +4,7 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {PostMetadata} from '@mattermost/types/posts';
+import type {PostMetadata} from '@hanzoteam/types/posts';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

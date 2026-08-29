@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import * as useDesktopAppNotificationPermission from 'components/common/hooks/use_desktop_notification_permission';
 import type {DesktopNotificationPermission} from 'components/common/hooks/use_desktop_notification_permission';
@@ -14,7 +14,7 @@ import * as utilsNotifications from 'utils/notifications';
 import NotificationPermissionSectionNotice from './index';
 
 const isM365MobileMock = jest.mocked(UserAgent.isM365Mobile);
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
     isM365Mobile: jest.fn(() => false),
 }));

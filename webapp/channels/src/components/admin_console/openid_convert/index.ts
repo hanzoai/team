@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {patchConfig} from 'mattermost-redux/actions/admin';
+import {patchConfig} from '@hanzoteam/redux/actions/admin';
 
 import OpenIdConvert from './openid_convert';
 

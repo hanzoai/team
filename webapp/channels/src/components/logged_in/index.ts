@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {updateApproximateViewTime} from 'mattermost-redux/actions/channels';
-import {getCustomProfileAttributeFields} from 'mattermost-redux/actions/general';
-import {autoUpdateTimezone} from 'mattermost-redux/actions/timezone';
-import {getChannel, getCurrentChannelId, isManuallyUnread} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense, getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUser, shouldShowTermsOfService} from 'mattermost-redux/selectors/entities/users';
+import {updateApproximateViewTime} from '@hanzoteam/redux/actions/channels';
+import {getCustomProfileAttributeFields} from '@hanzoteam/redux/actions/general';
+import {autoUpdateTimezone} from '@hanzoteam/redux/actions/timezone';
+import {getChannel, getCurrentChannelId, isManuallyUnread} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense, getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUser, shouldShowTermsOfService} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getChannelURL} from 'selectors/urls';
 

@@ -5,8 +5,8 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
 import DeleteIntegrationLink from '../delete_integration_link';
 

@@ -4,7 +4,7 @@
 import {defineMessages} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
-import {DaysOfWeek} from '@mattermost/types/recaps';
+import {DaysOfWeek} from '@hanzoteam/types/recaps';
 
 // Static descriptors are required so the formatjs extractor can collect every day label; runtime-computed
 // message IDs are silently dropped from the catalog and never become translatable.

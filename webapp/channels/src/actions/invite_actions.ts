@@ -3,17 +3,17 @@
 
 import {defineMessage} from 'react-intl';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {TeamMemberWithError, TeamInviteWithError, MemberInviteProfile} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {TeamMemberWithError, TeamInviteWithError, MemberInviteProfile} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {joinChannel} from 'mattermost-redux/actions/channels';
-import * as TeamActions from 'mattermost-redux/actions/teams';
-import {getChannelMembersInChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getTeamMember} from 'mattermost-redux/selectors/entities/teams';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {joinChannel} from '@hanzoteam/redux/actions/channels';
+import * as TeamActions from '@hanzoteam/redux/actions/teams';
+import {getChannelMembersInChannels} from '@hanzoteam/redux/selectors/entities/channels';
+import {getTeamMember} from '@hanzoteam/redux/selectors/entities/teams';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {addUsersToTeam} from 'actions/team_actions';
 

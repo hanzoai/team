@@ -9,17 +9,17 @@ import type {IntlShape} from 'react-intl';
 import {injectIntl, FormattedMessage, defineMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {Group, GroupSearchParams} from '@mattermost/types/groups';
-import type {TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Group, GroupSearchParams} from '@hanzoteam/types/groups';
+import type {TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {filterGroupsMatchingTerm} from 'mattermost-redux/utils/group_utils';
-import {displayUsername, filterProfilesStartingWithTerm, isGuest} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {filterGroupsMatchingTerm} from '@hanzoteam/redux/utils/group_utils';
+import {displayUsername, filterProfilesStartingWithTerm, isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {areChannelAccessControlIndicatorsEnabled} from 'selectors/general';
 

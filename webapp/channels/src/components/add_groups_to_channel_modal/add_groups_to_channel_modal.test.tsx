@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {SyncableType} from '@mattermost/types/groups';
+import {SyncableType} from '@hanzoteam/types/groups';
 
 import {AddGroupsToChannelModal} from 'components/add_groups_to_channel_modal/add_groups_to_channel_modal';
 import type {AddGroupsToChannelModal as AddGroupsToChannelModalClass, Props} from 'components/add_groups_to_channel_modal/add_groups_to_channel_modal';

@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import {renderWithContext, act, screen, waitFor} from 'tests/react_testing_utils';

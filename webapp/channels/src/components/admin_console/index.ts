@@ -6,15 +6,15 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig, getEnvironmentConfig, patchConfig} from 'mattermost-redux/actions/admin';
-import {loadRolesIfNeeded, editRole} from 'mattermost-redux/actions/roles';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {General} from 'mattermost-redux/constants';
-import * as Selectors from 'mattermost-redux/selectors/entities/admin';
-import {getConfig as getGeneralConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getRoles} from 'mattermost-redux/selectors/entities/roles';
-import {getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {isCurrentUserSystemAdmin, currentUserHasAnAdminRole, getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getConfig, getEnvironmentConfig, patchConfig} from '@hanzoteam/redux/actions/admin';
+import {loadRolesIfNeeded, editRole} from '@hanzoteam/redux/actions/roles';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {General} from '@hanzoteam/redux/constants';
+import * as Selectors from '@hanzoteam/redux/selectors/entities/admin';
+import {getConfig as getGeneralConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getRoles} from '@hanzoteam/redux/selectors/entities/roles';
+import {getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {isCurrentUserSystemAdmin, currentUserHasAnAdminRole, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setNavigationBlocked, deferNavigation, cancelNavigation, confirmNavigation} from 'actions/admin_actions';
 import {setAdminConsoleUsersManagementTableProperties} from 'actions/views/admin';

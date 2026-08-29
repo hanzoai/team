@@ -8,9 +8,9 @@ import {useIntl, FormattedMessage, defineMessages} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
-import type {ServerError} from '@mattermost/types/errors';
-import {CursorPaginationDirection} from '@mattermost/types/reports';
-import type {ReportDuration, UserReport} from '@mattermost/types/reports';
+import type {ServerError} from '@hanzoteam/types/errors';
+import {CursorPaginationDirection} from '@hanzoteam/types/reports';
+import type {ReportDuration, UserReport} from '@hanzoteam/types/reports';
 
 import {AdminConsoleListTable, ElapsedDurationCell, PAGE_SIZES, LoadingStates} from 'components/admin_console/list_table';
 import type {TableMeta} from 'components/admin_console/list_table';

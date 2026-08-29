@@ -5,10 +5,10 @@ import React from 'react';
 import type {RefObject} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {Preferences} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Preferences} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';

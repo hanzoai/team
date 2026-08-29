@@ -4,10 +4,10 @@
 import React, {useCallback, useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
-import {PostTypes} from 'mattermost-redux/constants/posts';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUser, getUser} from 'mattermost-redux/selectors/entities/users';
-import {getDirectChannelName, getUserIdFromChannelName, isDirectChannel} from 'mattermost-redux/utils/channel_utils';
+import {PostTypes} from '@hanzoteam/redux/constants/posts';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUser, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {getDirectChannelName, getUserIdFromChannelName, isDirectChannel} from '@hanzoteam/redux/utils/channel_utils';
 
 import {
     isBurnOnReadEnabled,

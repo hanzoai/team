@@ -5,9 +5,9 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {defineMessage} from 'react-intl';
 
-import type {Team, TeamMembership} from '@mattermost/types/teams';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {filterAndSortTeamsByDisplayName} from 'utils/team_utils';
 

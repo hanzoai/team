@@ -4,9 +4,9 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {getPluginPreferenceKey} from 'utils/plugins/preferences';

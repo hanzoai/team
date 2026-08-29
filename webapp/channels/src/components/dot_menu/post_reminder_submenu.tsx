@@ -5,10 +5,10 @@ import React, {memo} from 'react';
 import {FormattedMessage, FormattedDate, FormattedTime, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {ChevronRightIcon, ClockOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Post} from '@mattermost/types/posts';
+import {ChevronRightIcon, ClockOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {addPostReminder} from 'mattermost-redux/actions/posts';
+import {addPostReminder} from '@hanzoteam/redux/actions/posts';
 
 import {openModal} from 'actions/views/modals';
 

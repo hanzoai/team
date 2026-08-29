@@ -6,9 +6,9 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
 
 import {InviteType} from './invite_as';
 import ResultTable from './result_table';

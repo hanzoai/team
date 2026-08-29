@@ -6,8 +6,8 @@ import userEvent from '@testing-library/user-event';
 import React from 'react';
 import type {MockStoreEnhanced} from 'redux-mock-store';
 
-import {ContentFlaggingTypes} from 'mattermost-redux/action_types';
-import {Client4} from 'mattermost-redux/client';
+import {ContentFlaggingTypes} from '@hanzoteam/redux/action_types';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

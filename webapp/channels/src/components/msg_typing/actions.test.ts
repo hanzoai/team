@@ -1,16 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {WebSocketTypes} from 'mattermost-redux/action_types';
-import {getMissingProfilesByIds, getStatusesByIds} from 'mattermost-redux/actions/users';
-import {General} from 'mattermost-redux/constants';
+import {WebSocketTypes} from '@hanzoteam/redux/action_types';
+import {getMissingProfilesByIds, getStatusesByIds} from '@hanzoteam/redux/actions/users';
+import {General} from '@hanzoteam/redux/constants';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import configureStore from 'tests/test_store';
 
 import {userStartedTyping} from './actions';
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getMissingProfilesByIds: jest.fn(() => ({type: 'GET_MISSING_PROFILES_BY_IDS'})),
     getStatusesByIds: jest.fn(() => ({type: 'GET_STATUSES_BY_IDS'})),
 }));

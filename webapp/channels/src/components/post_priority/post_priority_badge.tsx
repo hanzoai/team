@@ -4,8 +4,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import {AlertOutlineIcon, AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
-import {PostPriority} from '@mattermost/types/posts';
+import {AlertOutlineIcon, AlertCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {PostPriority} from '@hanzoteam/types/posts';
 
 type Props = {
     priority?: PostPriority;

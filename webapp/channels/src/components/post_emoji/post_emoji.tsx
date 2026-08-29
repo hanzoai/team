@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 export interface Props {
     children: React.ReactNode;

@@ -6,12 +6,12 @@ import {screen} from '@testing-library/react';
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
-import {CustomStatusDuration} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {UserProfile} from '@hanzoteam/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import {General, Permissions} from 'mattermost-redux/constants';
+import {Client4} from '@hanzoteam/redux/client';
+import {General, Permissions} from '@hanzoteam/redux/constants';
 
 import {act, renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -21,9 +21,9 @@ import type {GlobalState} from 'types/store';
 
 import ProfilePopover from './profile_popover';
 
-jest.mock('@mattermost/client', () => ({
-    ...jest.requireActual('@mattermost/client'),
-    Client4: class MockClient4 extends jest.requireActual('@mattermost/client').Client4 {
+jest.mock('@hanzoteam/client', () => ({
+    ...jest.requireActual('@hanzoteam/client'),
+    Client4: class MockClient4 extends jest.requireActual('@hanzoteam/client').Client4 {
         getCallsChannelState = jest.fn();
         getUserCustomProfileAttributesValues = jest.fn();
     },

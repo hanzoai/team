@@ -4,10 +4,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
-import {getCloudSubscription} from 'mattermost-redux/selectors/entities/cloud';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getCloudSubscription} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import NotificationPermissionNeverGrantedBar from 'components/announcement_bar/notification_permission_bar/notification_permission_never_granted_bar';
 import NotificationPermissionUnsupportedBar from 'components/announcement_bar/notification_permission_bar/notification_permission_unsupported_bar';

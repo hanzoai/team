@@ -4,10 +4,10 @@
 import React, {memo, useCallback, useEffect, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {uploadBrandImage, deleteBrandImage} from 'actions/admin_actions';
 

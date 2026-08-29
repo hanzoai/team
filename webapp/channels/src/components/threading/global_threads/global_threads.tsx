@@ -8,14 +8,14 @@ import {useIntl} from 'react-intl';
 import {useSelector, useDispatch, shallowEqual} from 'react-redux';
 import {Link, useRouteMatch} from 'react-router-dom';
 
-import {getThreadCounts, getThreadsForCurrentTeam} from 'mattermost-redux/actions/threads';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getThreadCounts, getThreadsForCurrentTeam} from '@hanzoteam/redux/actions/threads';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 import {
     getThreadOrderInCurrentTeam,
     getUnreadThreadOrderInCurrentTeam,
     getThreadCountsInCurrentTeam,
     getThread,
-} from 'mattermost-redux/selectors/entities/threads';
+} from '@hanzoteam/redux/selectors/entities/threads';
 
 import {clearLastUnreadChannel} from 'actions/global_actions';
 import {loadProfilesForSidebar} from 'actions/user_actions';

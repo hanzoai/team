@@ -5,8 +5,8 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {openModal} from 'actions/views/modals';
 

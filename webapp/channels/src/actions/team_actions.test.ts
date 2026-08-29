@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as channelActions from 'mattermost-redux/actions/channels';
-import * as TeamActions from 'mattermost-redux/actions/teams';
-import * as userActions from 'mattermost-redux/actions/users';
+import * as channelActions from '@hanzoteam/redux/actions/channels';
+import * as TeamActions from '@hanzoteam/redux/actions/teams';
+import * as userActions from '@hanzoteam/redux/actions/users';
 
 import * as Actions from 'actions/team_actions';
 
@@ -11,8 +11,8 @@ import configureStore from 'tests/test_store';
 import {getHistory} from 'utils/browser_history';
 import {TestHelper} from 'utils/test_helper';
 
-jest.mock('mattermost-redux/actions/teams', () => ({
-    ...jest.requireActual('mattermost-redux/actions/teams'),
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/teams'),
     addUsersToTeamGracefully: jest.fn(() => {
         return {
             type: 'ADD_USER',
@@ -43,7 +43,7 @@ jest.mock('mattermost-redux/actions/teams', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     viewChannel: jest.fn(() => {
         return {
             type: 'VIEW_CHANNEL',
@@ -56,7 +56,7 @@ jest.mock('mattermost-redux/actions/channels', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getUser: jest.fn(() => {
         return {
             type: 'GET_USER',

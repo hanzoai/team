@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getSubscriptionProductName} from 'mattermost-redux/selectors/entities/cloud';
+import {getSubscriptionProductName} from '@hanzoteam/redux/selectors/entities/cloud';
 
 export default function CloudArchived() {
     const planName = useSelector(getSubscriptionProductName);

@@ -12,15 +12,15 @@ import {
     FolderMoveOutlineIcon,
     ChevronRightIcon,
     CheckIcon,
-} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import type {Channel} from '@mattermost/types/channels';
+} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {getCategoryInTeamWithChannel, isChannelInManagedCategory} from 'mattermost-redux/selectors/entities/channel_categories';
-import {getAllChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {getCategoryInTeamWithChannel, isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
+import {getAllChannels} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {addChannelsInSidebar} from 'actions/views/channel_sidebar';
 import {openModal} from 'actions/views/modals';

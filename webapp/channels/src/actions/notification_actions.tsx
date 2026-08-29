@@ -1,26 +1,26 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {isDesktopApp, isMobile} from '@mattermost/shared/utils/user_agent';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import {isMessageAttachmentArray} from '@mattermost/types/message_attachments';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import {isDesktopApp, isMobile} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import {isMessageAttachmentArray} from '@hanzoteam/types/message_attachments';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {logError} from 'mattermost-redux/actions/errors';
-import {Client4} from 'mattermost-redux/client';
-import {getCurrentChannel, getMyChannelMember, makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCurrentChannel, getMyChannelMember, makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 import {
     getTeammateNameDisplaySetting,
     isCollapsedThreadsEnabled,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {getAllUserMentionKeys} from 'mattermost-redux/selectors/entities/search';
-import {getCurrentUserId, getCurrentUser, getStatusForUserId, getUser} from 'mattermost-redux/selectors/entities/users';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
-import {ensureString, isNotificationSuppressed, isSystemMessage, isUserAddedInChannel} from 'mattermost-redux/utils/post_utils';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getAllUserMentionKeys} from '@hanzoteam/redux/selectors/entities/search';
+import {getCurrentUserId, getCurrentUser, getStatusForUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
+import {ensureString, isNotificationSuppressed, isSystemMessage, isUserAddedInChannel} from '@hanzoteam/redux/utils/post_utils';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {getChannelURL, getPermalinkURL} from 'selectors/urls';
 import {isThreadOpen} from 'selectors/views/threads';

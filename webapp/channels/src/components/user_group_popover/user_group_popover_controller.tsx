@@ -18,9 +18,9 @@ import type {ReactNode} from 'react';
 import React, {useCallback, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
-import {getProfilesInGroup} from 'mattermost-redux/actions/users';
+import {getProfilesInGroup} from '@hanzoteam/redux/actions/users';
 
 import {A11yClassNames} from 'utils/constants';
 

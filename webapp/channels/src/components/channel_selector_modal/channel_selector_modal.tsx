@@ -5,10 +5,10 @@ import React from 'react';
 import type {IntlShape} from 'react-intl';
 import {injectIntl, FormattedMessage, defineMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ChannelTypeIcon from 'components/channel_type_icon';
 import MultiSelect from 'components/multiselect/multiselect';

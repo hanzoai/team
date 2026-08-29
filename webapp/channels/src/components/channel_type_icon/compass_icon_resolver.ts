@@ -3,9 +3,9 @@
 
 import type React from 'react';
 
-import glyphMap from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
+import glyphMap from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
 
 /**
  * Maps a Compass IconGlyphTypes name to its SVG React component.

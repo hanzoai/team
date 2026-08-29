@@ -11,8 +11,8 @@
 
 import type {IntlShape} from 'react-intl';
 
-import type {PostActionIntegrationFormat} from '@mattermost/types/integration_actions';
-import type {MmBlock} from '@mattermost/types/mm_blocks';
+import type {PostActionIntegrationFormat} from '@hanzoteam/types/integration_actions';
+import type {MmBlock} from '@hanzoteam/types/mm_blocks';
 
 import {translateAdaptiveCards} from './adaptive_cards';
 import {translateAttachments} from './attachments';

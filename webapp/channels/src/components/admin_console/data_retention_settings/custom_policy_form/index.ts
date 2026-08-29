@@ -14,9 +14,9 @@ import {
     removeDataRetentionCustomPolicyTeams,
     addDataRetentionCustomPolicyChannels,
     removeDataRetentionCustomPolicyChannels,
-} from 'mattermost-redux/actions/admin';
-import {getDataRetentionCustomPolicy} from 'mattermost-redux/selectors/entities/admin';
-import {getTeamsInPolicy} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/actions/admin';
+import {getDataRetentionCustomPolicy} from '@hanzoteam/redux/selectors/entities/admin';
+import {getTeamsInPolicy} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

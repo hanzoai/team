@@ -5,9 +5,9 @@ import React from 'react';
 import {isValidElementType} from 'react-is';
 import type {Reducer} from 'redux';
 
-import type {WebSocketMessages} from '@mattermost/client';
+import type {WebSocketMessages} from '@hanzoteam/client';
 
-import reducerRegistry from 'mattermost-redux/store/reducer_registry';
+import reducerRegistry from '@hanzoteam/redux/store/reducer_registry';
 
 import {
     registerAdminConsolePlugin,

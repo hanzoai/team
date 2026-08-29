@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Audit} from '@mattermost/types/audits';
+import type {Audit} from '@hanzoteam/types/audits';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

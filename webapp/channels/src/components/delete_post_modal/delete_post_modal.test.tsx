@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PostType, PostMetadata} from '@mattermost/types/posts';
+import type {PostType, PostMetadata} from '@hanzoteam/types/posts';
 
 import DeletePostModal from 'components/delete_post_modal/delete_post_modal';
 

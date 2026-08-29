@@ -5,9 +5,9 @@ import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {UserProfile} from '@mattermost/types/users';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {UserProfile} from '@hanzoteam/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
 import {openModal} from 'actions/views/modals';
 import {makeGetCustomStatus, isCustomStatusEnabled as getIsCustomStatusEnabled, isCustomStatusExpired as getIsCustomStatusExpired} from 'selectors/views/custom_status';

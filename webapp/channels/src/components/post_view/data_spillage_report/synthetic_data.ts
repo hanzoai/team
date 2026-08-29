@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {NameMappedPropertyFields, PropertyValue} from '@mattermost/types/properties';
+import type {NameMappedPropertyFields, PropertyValue} from '@hanzoteam/types/properties';
 
 export function getSyntheticPropertyFields(groupId: string): NameMappedPropertyFields {
     return {

@@ -5,7 +5,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {defineMessage, defineMessages, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {AutoTranslationSettings} from '@mattermost/types/config';
+import type {AutoTranslationSettings} from '@hanzoteam/types/config';
 
 import BooleanSetting from 'components/admin_console/boolean_setting';
 import MultiSelectSetting from 'components/admin_console/multiselect_settings';

@@ -6,8 +6,8 @@ import {combineReducers} from 'redux';
 import {createMigrate, persistReducer, REHYDRATE} from 'redux-persist';
 import type {MigrationManifest, PersistedState} from 'redux-persist';
 
-import {UserTypes} from 'mattermost-redux/action_types';
-import {General} from 'mattermost-redux/constants';
+import {UserTypes} from '@hanzoteam/redux/action_types';
+import {General} from '@hanzoteam/redux/constants';
 
 import {StoragePrefixes, StorageTypes} from 'utils/constants';
 import {getDraftInfoFromKey} from 'utils/storage_utils';

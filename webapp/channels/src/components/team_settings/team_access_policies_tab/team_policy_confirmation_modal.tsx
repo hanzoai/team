@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import './team_policy_confirmation_modal.scss';
 

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {sendAddToChannelEphemeralPost} from 'actions/global_actions';
 

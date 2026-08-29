@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {Permissions} from 'mattermost-redux/constants';
-import * as teams from 'mattermost-redux/selectors/entities/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import * as teams from '@hanzoteam/redux/selectors/entities/teams';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

@@ -6,9 +6,9 @@ import {FormattedMessage, injectIntl, type IntlShape} from 'react-intl';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {CloudUsage} from '@mattermost/types/cloud';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
+import type {Team} from '@hanzoteam/types/teams';
 
 import AnnouncementBar from 'components/announcement_bar';
 import BackButton from 'components/common/back_button';

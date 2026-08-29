@@ -3,10 +3,10 @@
 
 /* eslint-disable @typescript-eslint/no-require-imports */
 
-import type {PublishedEditorUtils, PublishedModalId, PublishedModalIdCandidate, PublishedModalProps, PublishedModalUtils} from '@mattermost/shared/types/global';
+import type {PublishedEditorUtils, PublishedModalId, PublishedModalIdCandidate, PublishedModalProps, PublishedModalUtils} from '@hanzoteam/shared/types/global';
 
-import {favoriteChannel, unfavoriteChannel} from 'mattermost-redux/actions/channels';
-import {isFavoriteChannel} from 'mattermost-redux/selectors/entities/channels';
+import {favoriteChannel, unfavoriteChannel} from '@hanzoteam/redux/actions/channels';
+import {isFavoriteChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {notifyMe} from 'actions/notification_actions';
 import {openModal} from 'actions/views/modals';

@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {switchLdapToEmail} from 'mattermost-redux/actions/users';
-import {getConfig, getPasswordConfig} from 'mattermost-redux/selectors/entities/general';
+import {switchLdapToEmail} from '@hanzoteam/redux/actions/users';
+import {getConfig, getPasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import ClaimController from './claim_controller';
 

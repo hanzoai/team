@@ -3,8 +3,8 @@
 
 import marked from 'marked';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getAutolinkedUrlSchemes, getConfig} from 'mattermost-redux/selectors/entities/general';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getAutolinkedUrlSchemes, getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import store from 'stores/redux_store';
 

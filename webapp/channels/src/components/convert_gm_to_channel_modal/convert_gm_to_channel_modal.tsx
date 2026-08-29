@@ -9,12 +9,12 @@ import {useDispatch} from 'react-redux';
 
 import './convert_gm_to_channel_modal.scss';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {getGroupMessageMembersCommonTeams} from 'actions/team_actions';
 

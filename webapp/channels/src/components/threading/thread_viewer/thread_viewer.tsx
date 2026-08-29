@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import React from 'react';
 import type {HTMLAttributes} from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ChannelBanner from 'components/channel_banner/channel_banner';
 import deferComponentRender from 'components/deferComponentRender';

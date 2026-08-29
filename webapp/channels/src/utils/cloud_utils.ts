@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {CloudCustomer, InvoiceLineItem, Subscription} from '@mattermost/types/cloud';
+import type {CloudCustomer, InvoiceLineItem, Subscription} from '@hanzoteam/types/cloud';
 
 import {CloudLinks} from 'utils/constants';
 

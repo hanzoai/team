@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {removePost} from 'mattermost-redux/actions/posts';
-import type {ExtendedPost} from 'mattermost-redux/actions/posts';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
+import {removePost} from '@hanzoteam/redux/actions/posts';
+import type {ExtendedPost} from '@hanzoteam/redux/actions/posts';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
 
 import {loadPostsAround} from 'actions/views/channel';
 import {removeDraft} from 'actions/views/drafts';

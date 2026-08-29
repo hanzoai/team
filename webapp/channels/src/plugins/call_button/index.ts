@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentChannel, getMyCurrentChannelMembership} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannel, getMyCurrentChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
 
 import type {GlobalState} from 'types/store/index';
 

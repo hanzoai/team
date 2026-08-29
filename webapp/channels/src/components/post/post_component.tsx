@@ -6,17 +6,17 @@ import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import type {MouseEvent} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel} from '@mattermost/types/channels';
-import type {Emoji} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Posts} from 'mattermost-redux/constants/index';
+import {Posts} from '@hanzoteam/redux/constants/index';
 import {
     isMeMessage as checkIsMeMessage,
-    isPostPendingOrFailed} from 'mattermost-redux/utils/post_utils';
+    isPostPendingOrFailed} from '@hanzoteam/redux/utils/post_utils';
 
 import BurnOnReadConfirmationModal from 'components/burn_on_read_confirmation_modal';
 import {compassIconForName, useChannelIconOverrideName} from 'components/channel_type_icon';

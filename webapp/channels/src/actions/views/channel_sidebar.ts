@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {createCategory as createCategoryRedux, moveChannelsToCategory} from 'mattermost-redux/actions/channel_categories';
-import {General} from 'mattermost-redux/constants';
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {getCategory, makeGetChannelIdsForCategory} from 'mattermost-redux/selectors/entities/channel_categories';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {insertMultipleWithoutDuplicates} from 'mattermost-redux/utils/array_utils';
+import {createCategory as createCategoryRedux, moveChannelsToCategory} from '@hanzoteam/redux/actions/channel_categories';
+import {General} from '@hanzoteam/redux/constants';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {getCategory, makeGetChannelIdsForCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {insertMultipleWithoutDuplicates} from '@hanzoteam/redux/utils/array_utils';
 
 import {getCategoriesForCurrentTeam, getChannelsInCategoryOrder, getDisplayedChannels} from 'selectors/views/channel_sidebar';
 

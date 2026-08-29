@@ -4,11 +4,11 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {markLastPostInThreadAsUnread, updateThreadRead} from 'mattermost-redux/actions/threads';
+import {markLastPostInThreadAsUnread, updateThreadRead} from '@hanzoteam/redux/actions/threads';
 
 import {manuallyMarkThreadAsUnread} from 'actions/views/threads';
 
@@ -19,7 +19,7 @@ import * as Utils from 'utils/utils';
 
 import ThreadItem from './thread_item';
 
-jest.mock('mattermost-redux/actions/threads');
+jest.mock('@hanzoteam/redux/actions/threads');
 
 jest.mock('actions/views/threads');
 

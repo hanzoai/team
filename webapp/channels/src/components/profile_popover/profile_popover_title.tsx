@@ -5,9 +5,9 @@ import React, {useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {getChannelMember} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam, getTeamMember} from 'mattermost-redux/selectors/entities/teams';
-import {isGuest, isSystemAdmin} from 'mattermost-redux/utils/user_utils';
+import {getChannelMember} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam, getTeamMember} from '@hanzoteam/redux/selectors/entities/teams';
+import {isGuest, isSystemAdmin} from '@hanzoteam/redux/utils/user_utils';
 
 import {getRhsState} from 'selectors/rhs';
 

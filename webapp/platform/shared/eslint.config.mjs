@@ -4,7 +4,7 @@
 import formatjsPlugin from 'eslint-plugin-formatjs';
 import noOnlyTestsPlugin from 'eslint-plugin-no-only-tests';
 
-import eslintPlugin from '@mattermost/eslint-plugin';
+import eslintPlugin from '@hanzoteam/eslint-plugin';
 
 export default [
     ...eslintPlugin.configs.react,

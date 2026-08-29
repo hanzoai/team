@@ -4,10 +4,10 @@
 import {useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 type MinimalPreferenceType = Omit<PreferenceType, 'user_id'>;
 export default function useSavePreferences(): (preferences: MinimalPreferenceType | MinimalPreferenceType[]) => void {

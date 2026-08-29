@@ -7,22 +7,22 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {FileInfo} from '@mattermost/types/files';
-import {isRecurringScheduledPost} from '@mattermost/types/schedule_post';
-import type {SchedulingInfo, ScheduledPost} from '@mattermost/types/schedule_post';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {FileInfo} from '@hanzoteam/types/files';
+import {isRecurringScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {SchedulingInfo, ScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
-import {getPost as getPostAction} from 'mattermost-redux/actions/posts';
-import {deleteScheduledPost, updateScheduledPost} from 'mattermost-redux/actions/scheduled_posts';
-import {Permissions} from 'mattermost-redux/constants';
-import {PostTypes} from 'mattermost-redux/constants/posts';
-import {isDeactivatedDirectChannel, makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
+import {getPost as getPostAction} from '@hanzoteam/redux/actions/posts';
+import {deleteScheduledPost, updateScheduledPost} from '@hanzoteam/redux/actions/scheduled_posts';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {PostTypes} from '@hanzoteam/redux/constants/posts';
+import {isDeactivatedDirectChannel, makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
 
 import type {SubmitPostReturnType} from 'actions/views/create_comment';
 import {removeDraft} from 'actions/views/drafts';

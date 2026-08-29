@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getTermsOfService, updateMyTermsOfServiceStatus} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import {getTermsOfService, updateMyTermsOfServiceStatus} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getIsOnboardingFlowEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {getEmojiMap} from 'selectors/emojis';
 

@@ -4,7 +4,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import AlertBanner from 'components/alert_banner';
 import ConfirmModal from 'components/confirm_modal';

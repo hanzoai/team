@@ -8,7 +8,7 @@ import React, {useMemo, useRef, useCallback, useEffect, memo} from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import {VariableSizeList} from 'react-window';
 
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import type {Draft} from 'selectors/drafts';
 

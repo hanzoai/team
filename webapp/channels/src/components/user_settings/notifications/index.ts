@@ -3,16 +3,16 @@
 
 import {connect, type ConnectedProps} from 'react-redux';
 
-import type {PreferencesType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import type {PreferencesType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {patchUser, updateMe} from 'mattermost-redux/actions/users';
-import {getSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {patchUser, updateMe} from '@hanzoteam/redux/actions/users';
+import {getSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 import {
     isCollapsedThreadsEnabled,
     isCollapsedThreadsEnabledForUser,
-} from 'mattermost-redux/selectors/entities/preferences';
+} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {isCallsEnabled, isCallsRingingEnabledOnServer} from 'selectors/calls';
 

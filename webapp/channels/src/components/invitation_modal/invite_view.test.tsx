@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
 
 import {fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {SelfHostedProducts} from 'utils/constants';

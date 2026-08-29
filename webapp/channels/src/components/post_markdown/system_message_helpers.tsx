@@ -5,14 +5,14 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import {FormattedDate, FormattedMessage, FormattedTime, defineMessages} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
-import {isStringArray} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
+import {isStringArray} from '@hanzoteam/types/utilities';
 
-import {General, Posts} from 'mattermost-redux/constants';
-import {isUserActivityProp} from 'mattermost-redux/utils/post_list';
-import {ensureNumber, ensureString, isPostEphemeral} from 'mattermost-redux/utils/post_utils';
+import {General, Posts} from '@hanzoteam/redux/constants';
+import {isUserActivityProp} from '@hanzoteam/redux/utils/post_list';
+import {ensureNumber, ensureString, isPostEphemeral} from '@hanzoteam/redux/utils/post_utils';
 
 import Markdown from 'components/markdown';
 import CombinedSystemMessage from 'components/post_view/combined_system_message';

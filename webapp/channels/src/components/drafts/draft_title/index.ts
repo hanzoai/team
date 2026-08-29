@@ -3,11 +3,11 @@
 
 import {connect} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {makeGetGmChannelMemberCount} from 'mattermost-redux/selectors/entities/channels';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
+import {makeGetGmChannelMemberCount} from '@hanzoteam/redux/selectors/entities/channels';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
 
 import {Constants} from 'utils/constants';
 

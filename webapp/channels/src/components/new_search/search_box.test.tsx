@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {
     renderWithContext,

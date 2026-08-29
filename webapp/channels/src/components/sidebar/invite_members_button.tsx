@@ -5,8 +5,8 @@ import React from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import InvitationModal from 'components/invitation_modal';
 import TeamPermissionGate from 'components/permissions_gates/team_permission_gate';

@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {Channel, ChannelStats, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {Channel, ChannelStats, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ChannelMembersDropdown from 'components/channel_members_dropdown';
 import LoadingScreen from 'components/loading_screen';

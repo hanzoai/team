@@ -4,17 +4,17 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 import type {
     DataRetentionCustomPolicy,
     CreateDataRetentionCustomPolicy,
     PatchDataRetentionCustomPolicy,
-} from '@mattermost/types/data_retention';
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+} from '@hanzoteam/types/data_retention';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import ChannelList from 'components/admin_console/data_retention_settings/channel_list';

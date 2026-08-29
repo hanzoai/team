@@ -4,9 +4,9 @@
 import memoize from 'memoize-one';
 import React from 'react';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import Markdown from 'components/markdown';
 import {DataSpillageReport} from 'components/post_view/data_spillage_report/data_spillage_report';

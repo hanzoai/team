@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {makeGetSidebarCategoryNamesForTeam} from 'mattermost-redux/selectors/entities/channel_categories';
+import {makeGetSidebarCategoryNamesForTeam} from '@hanzoteam/redux/selectors/entities/channel_categories';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

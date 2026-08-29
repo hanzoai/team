@@ -3,7 +3,7 @@
 
 import {useContext, useEffect} from 'react';
 
-import type {WebSocketClient, WebSocketMessage} from '@mattermost/client';
+import type {WebSocketClient, WebSocketMessage} from '@hanzoteam/client';
 
 import {WebSocketContext} from './context';
 

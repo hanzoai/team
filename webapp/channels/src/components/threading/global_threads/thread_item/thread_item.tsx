@@ -7,17 +7,17 @@ import type {MouseEvent, KeyboardEvent} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import {PostPriority} from '@mattermost/types/posts';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import {PostPriority} from '@hanzoteam/types/posts';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {getChannel as fetchChannel} from 'mattermost-redux/actions/channels';
-import {markLastPostInThreadAsUnread, updateThreadRead} from 'mattermost-redux/actions/threads';
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {Posts} from 'mattermost-redux/constants';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {getChannel as fetchChannel} from '@hanzoteam/redux/actions/channels';
+import {markLastPostInThreadAsUnread, updateThreadRead} from '@hanzoteam/redux/actions/threads';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {Posts} from '@hanzoteam/redux/constants';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {manuallyMarkThreadAsUnread} from 'actions/views/threads';
 

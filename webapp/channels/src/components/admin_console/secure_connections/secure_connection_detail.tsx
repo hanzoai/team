@@ -10,11 +10,11 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useHistory, useParams, useLocation} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {PlusIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import {isRemoteClusterPatch, type RemoteCluster} from '@mattermost/types/remote_clusters';
+import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import {isRemoteClusterPatch, type RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

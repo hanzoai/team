@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

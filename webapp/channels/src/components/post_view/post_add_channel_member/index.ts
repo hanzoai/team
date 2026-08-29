@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {addChannelMember} from 'mattermost-redux/actions/channels';
-import {removePost} from 'mattermost-redux/actions/posts';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {addChannelMember} from '@hanzoteam/redux/actions/channels';
+import {removePost} from '@hanzoteam/redux/actions/posts';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {isMembershipPolicyEnforced} from 'utils/channel_utils';
 

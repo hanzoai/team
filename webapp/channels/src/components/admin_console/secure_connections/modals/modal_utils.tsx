@@ -4,13 +4,13 @@
 import {useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {StatusOK} from '@mattermost/types/client4';
-import type {ServerError} from '@mattermost/types/errors';
-import type {RemoteClusterPatch, RemoteCluster, RemoteClusterAcceptInvite} from '@mattermost/types/remote_clusters';
-import type {PartialExcept} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {StatusOK} from '@hanzoteam/types/client4';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {RemoteClusterPatch, RemoteCluster, RemoteClusterAcceptInvite} from '@hanzoteam/types/remote_clusters';
+import type {PartialExcept} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {openModal} from 'actions/views/modals';
 

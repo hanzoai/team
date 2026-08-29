@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {setStatus} from 'mattermost-redux/actions/users';
-import {Preferences} from 'mattermost-redux/constants';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {setStatus} from '@hanzoteam/redux/actions/users';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {autoResetStatus} from 'actions/user_actions';
 

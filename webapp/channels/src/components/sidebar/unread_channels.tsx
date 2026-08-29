@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {readMultipleChannels} from 'mattermost-redux/actions/channels';
+import {readMultipleChannels} from '@hanzoteam/redux/actions/channels';
 
 import {getUnreadChannels} from 'selectors/views/channel_sidebar';
 

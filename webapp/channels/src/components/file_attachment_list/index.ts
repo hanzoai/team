@@ -6,16 +6,16 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {PostTypes} from 'mattermost-redux/constants/posts';
+import {PostTypes} from '@hanzoteam/redux/constants/posts';
 import {
     makeGetFilesForEditHistory,
     makeGetFilesForPost,
     isFileRejected,
-} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {toggleEmbedVisibility} from 'actions/post_actions';
 import {openModal} from 'actions/views/modals';

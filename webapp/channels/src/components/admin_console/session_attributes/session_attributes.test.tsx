@@ -4,11 +4,11 @@
 import {screen, waitFor, within} from '@testing-library/react';
 import React from 'react';
 
-import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

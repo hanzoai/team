@@ -1,12 +1,12 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {PostTypes} from 'mattermost-redux/action_types';
-import {Client4} from 'mattermost-redux/client';
+import {PostTypes} from '@hanzoteam/redux/action_types';
+import {Client4} from '@hanzoteam/redux/client';
 
 import * as Actions from './burn_on_read_deletion';
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 describe('burn_on_read_deletion actions', () => {
     let mockDispatch: jest.Mock;

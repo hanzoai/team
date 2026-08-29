@@ -7,7 +7,7 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import type {PluginRedux} from '@mattermost/types/plugins';
+import type {PluginRedux} from '@hanzoteam/types/plugins';
 
 import AdminSidebarCategory from 'components/admin_console/admin_sidebar/admin_sidebar_category';
 import AdminSidebarSection from 'components/admin_console/admin_sidebar/admin_sidebar_section';

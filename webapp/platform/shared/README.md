@@ -1,6 +1,6 @@
 # Mattermost Shared Package
 
-[![npm version](https://img.shields.io/npm/v/@mattermost/shared?style=flat)](https://www.npmjs.com/package/@mattermost/shared)
+[![npm version](https://img.shields.io/npm/v/@hanzoteam/shared?style=flat)](https://www.npmjs.com/package/@hanzoteam/shared)
 
 This package contains shared components and other utilities for use by the Mattermost web app and its plugins.
 
@@ -9,10 +9,10 @@ This package contains shared components and other utilities for use by the Matte
 
 ## Installation
 
-This package requires a matching version of the `@mattermost/types` package. It also requires [React](https://react.dev/) and [React Intl](https://formatjs.github.io/docs/react-intl/).
+This package requires a matching version of the `@hanzoteam/types` package. It also requires [React](https://react.dev/) and [React Intl](https://formatjs.github.io/docs/react-intl/).
 
 ```sh
-$ npm install @mattermost/shared @mattermost/types
+$ npm install @hanzoteam/shared @hanzoteam/types
 ```
 
 Additionally, if you're writing unit tests involving these components, [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/) is also required.

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ClientLicense, ClientConfig} from '@mattermost/types/config';
+import type {ClientLicense, ClientConfig} from '@hanzoteam/types/config';
 
 import ConfigurationAnnouncementBar from './configuration_bar';
 import AnnouncementBar from './default_announcement_bar';

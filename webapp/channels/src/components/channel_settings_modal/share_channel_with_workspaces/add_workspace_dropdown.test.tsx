@@ -4,7 +4,7 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 

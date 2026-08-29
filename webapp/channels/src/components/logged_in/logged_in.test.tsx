@@ -4,7 +4,7 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import * as GlobalActions from 'actions/global_actions';
 import BrowserStore from 'stores/browser_store';

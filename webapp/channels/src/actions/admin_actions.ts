@@ -1,20 +1,20 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ClusterInfo} from '@mattermost/types/admin';
-import type {StatusOK} from '@mattermost/types/client4';
-import type {AdminConfig, AllowedIPRange, FetchIPResponse, RequestLicenseBody} from '@mattermost/types/config';
-import type {Job, JobTypeBase} from '@mattermost/types/jobs';
-import type {SamlCertificateStatus, SamlMetadataResponse} from '@mattermost/types/saml';
-import type {AuthChangeResponse, UserProfile} from '@mattermost/types/users';
+import type {ClusterInfo} from '@hanzoteam/types/admin';
+import type {StatusOK} from '@hanzoteam/types/client4';
+import type {AdminConfig, AllowedIPRange, FetchIPResponse, RequestLicenseBody} from '@hanzoteam/types/config';
+import type {Job, JobTypeBase} from '@hanzoteam/types/jobs';
+import type {SamlCertificateStatus, SamlMetadataResponse} from '@hanzoteam/types/saml';
+import type {AuthChangeResponse, UserProfile} from '@hanzoteam/types/users';
 
-import * as AdminActions from 'mattermost-redux/actions/admin';
-import {bindClientFunc} from 'mattermost-redux/actions/helpers';
-import {createJob} from 'mattermost-redux/actions/jobs';
-import {getServerLimits as getServerLimitsAction} from 'mattermost-redux/actions/limits';
-import * as TeamActions from 'mattermost-redux/actions/teams';
-import * as UserActions from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
+import * as AdminActions from '@hanzoteam/redux/actions/admin';
+import {bindClientFunc} from '@hanzoteam/redux/actions/helpers';
+import {createJob} from '@hanzoteam/redux/actions/jobs';
+import {getServerLimits as getServerLimitsAction} from '@hanzoteam/redux/actions/limits';
+import * as TeamActions from '@hanzoteam/redux/actions/teams';
+import * as UserActions from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 import {getOnNavigationConfirmed} from 'selectors/views/admin';

@@ -6,10 +6,10 @@ import React, {useMemo} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {ScheduledRecapTimePeriods} from '@mattermost/types/recaps';
-import type {ScheduledRecapTimePeriod} from '@mattermost/types/recaps';
+import {ScheduledRecapTimePeriods} from '@hanzoteam/types/recaps';
+import type {ScheduledRecapTimePeriod} from '@hanzoteam/types/recaps';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import DropdownInput from 'components/dropdown_input';
 import {formatRelativeScheduleTime} from 'components/recaps/schedule_time_format';

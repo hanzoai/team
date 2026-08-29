@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
 import ChannelSelect from 'components/channel_select/channel_select';
 

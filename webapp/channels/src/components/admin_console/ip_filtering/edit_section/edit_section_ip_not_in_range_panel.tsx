@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {AlertOutlineIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
+import {AlertOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
 
 type IPNotInRangeErrorPanelProps = {
     currentUsersIP: string | null;

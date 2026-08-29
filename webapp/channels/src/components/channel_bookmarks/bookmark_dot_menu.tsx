@@ -14,12 +14,12 @@ import {
     OpenInNewIcon,
     BookOutlineIcon,
     DownloadOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {ChannelBookmark, ChannelBookmarkPatch} from '@mattermost/types/channel_bookmarks';
+} from '@hanzoteam/compass-icons/components';
+import type {ChannelBookmark, ChannelBookmarkPatch} from '@hanzoteam/types/channel_bookmarks';
 
-import {getFile} from 'mattermost-redux/selectors/entities/files';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFile} from '@hanzoteam/redux/selectors/entities/files';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {editBookmark, deleteBookmark} from 'actions/channel_bookmarks';
 import {openModal} from 'actions/views/modals';

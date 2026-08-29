@@ -3,7 +3,7 @@
 
 import {useEffect, useRef, useState} from 'react';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {usePost} from 'components/common/hooks/usePost';
 

@@ -4,7 +4,7 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {OpenGraphMetadata} from '@mattermost/types/posts';
+import type {OpenGraphMetadata} from '@hanzoteam/types/posts';
 
 import ExternalImage from 'components/external_image';
 import ExternalLink from 'components/external_link';

@@ -18,7 +18,7 @@ import {
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
 import {getIsMobileView} from 'selectors/views/browser';
 

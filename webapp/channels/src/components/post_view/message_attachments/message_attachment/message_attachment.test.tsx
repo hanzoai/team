@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {PostAction} from '@mattermost/types/integration_actions';
-import type {MessageAttachment as MessageAttachmentType} from '@mattermost/types/message_attachments';
-import type {PostImage} from '@mattermost/types/posts';
+import type {PostAction} from '@hanzoteam/types/integration_actions';
+import type {MessageAttachment as MessageAttachmentType} from '@hanzoteam/types/message_attachments';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 import MessageAttachment from 'components/post_view/message_attachments/message_attachment/message_attachment';
 

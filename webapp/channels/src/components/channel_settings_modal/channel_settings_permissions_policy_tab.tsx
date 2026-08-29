@@ -6,8 +6,8 @@ import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AccessControlPolicy, AccessControlPolicyRule} from '@mattermost/types/access_control';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AccessControlPolicy, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
 import {
     ACCESS_CONTROL_ACTION_DOWNLOAD_FILE,
     ACCESS_CONTROL_ACTION_UPLOAD_FILE,
@@ -21,13 +21,13 @@ import {
     getMembershipRule,
     getPermissionRules,
     hasOverlappingPermissionRules,
-} from '@mattermost/types/access_control';
-import type {Channel} from '@mattermost/types/channels';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+} from '@hanzoteam/types/access_control';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {getAccessControlSettings} from 'mattermost-redux/selectors/entities/access_control';
-import {getFeatureFlagValue, isPolicySimulationEnabled} from 'mattermost-redux/selectors/entities/general';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getAccessControlSettings} from '@hanzoteam/redux/selectors/entities/access_control';
+import {getFeatureFlagValue, isPolicySimulationEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {mergeSessionAttributes} from 'components/admin_console/access_control/editors/shared';
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Constants from 'utils/constants';
 

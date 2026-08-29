@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import {LinkVariantIcon, AccountMultipleOutlineIcon} from '@mattermost/compass-icons/components';
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import {LinkVariantIcon, AccountMultipleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
 import './user_profile_pill.scss';
 

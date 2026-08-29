@@ -3,7 +3,7 @@
 
 import ipaddr from 'ipaddr.js';
 
-import type {AllowedIPRange} from '@mattermost/types/config';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 export function isIPAddressInRanges(ipAddress: string, allowedIPRanges: AllowedIPRange[]): boolean {
     const usersAddr = ipaddr.parse(ipAddress);

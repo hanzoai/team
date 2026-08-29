@@ -5,13 +5,13 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedDate, FormattedMessage, defineMessages} from 'react-intl';
 
-import type {AnalyticsRow, AnalyticsState} from '@mattermost/types/admin';
-import type {ClientLicense} from '@mattermost/types/config';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {AnalyticsRow, AnalyticsState} from '@hanzoteam/types/admin';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import * as AdminActions from 'actions/admin_actions';
 

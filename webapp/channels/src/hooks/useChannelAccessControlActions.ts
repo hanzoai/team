@@ -4,10 +4,10 @@
 import {useMemo} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {AccessControlVisualAST, AccessControlTestResult, AccessControlPolicy, AccessControlPolicyActiveUpdate, PolicySimulationResponse, PolicySimulationByUsersParams} from '@mattermost/types/access_control';
-import type {ChannelMembership} from '@mattermost/types/channels';
-import type {JobTypeBase} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlVisualAST, AccessControlTestResult, AccessControlPolicy, AccessControlPolicyActiveUpdate, PolicySimulationResponse, PolicySimulationByUsersParams} from '@hanzoteam/types/access_control';
+import type {ChannelMembership} from '@hanzoteam/types/channels';
+import type {JobTypeBase} from '@hanzoteam/types/jobs';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {
     getAccessControlFields,
@@ -20,10 +20,10 @@ import {
     validateExpressionAgainstRequester,
     createAccessControlSyncJob,
     updateAccessControlPoliciesActive,
-} from 'mattermost-redux/actions/access_control';
-import {getChannelMembers} from 'mattermost-redux/actions/channels';
-import {createJob} from 'mattermost-redux/actions/jobs';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+} from '@hanzoteam/redux/actions/access_control';
+import {getChannelMembers} from '@hanzoteam/redux/actions/channels';
+import {createJob} from '@hanzoteam/redux/actions/jobs';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 export interface ChannelAccessControlActions {
     getAccessControlFields: (after: string, limit: number) => Promise<ActionResult<UserPropertyField[]>>;

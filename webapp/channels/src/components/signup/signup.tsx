@@ -8,17 +8,17 @@ import {useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 import {useLocation, useHistory, Route} from 'react-router-dom';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getTeamInviteInfo} from 'mattermost-redux/actions/teams';
-import {createUser, loadMe} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getConfig, getLicense, getPasswordConfig} from 'mattermost-redux/selectors/entities/general';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import {getTeamInviteInfo} from '@hanzoteam/redux/actions/teams';
+import {createUser, loadMe} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getConfig, getLicense, getPasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getIsOnboardingFlowEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import {redirectUserToDefaultTeam} from 'actions/global_actions';
 import {removeGlobalItem, setGlobalItem} from 'actions/storage';

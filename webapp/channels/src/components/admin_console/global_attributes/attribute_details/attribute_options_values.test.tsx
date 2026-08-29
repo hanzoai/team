@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

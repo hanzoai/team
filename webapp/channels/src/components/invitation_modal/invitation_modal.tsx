@@ -4,17 +4,17 @@
 import React from 'react';
 import {defineMessages} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {LockProfileFieldsSetting} from '@mattermost/types/config';
-import type {MemberInviteProfile, Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {LockProfileFieldsSetting} from '@hanzoteam/types/config';
+import type {MemberInviteProfile, Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {debounce} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import {focusElement} from 'utils/a11y_utils';
 import {isMembershipPolicyEnforced} from 'utils/channel_utils';

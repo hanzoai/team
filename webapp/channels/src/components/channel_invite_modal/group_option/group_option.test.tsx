@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Group} from '@mattermost/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
 import type {Value} from 'components/multiselect/multiselect';
 

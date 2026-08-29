@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

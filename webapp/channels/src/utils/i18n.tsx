@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, createIntl, createIntlCache, type IntlShape, type MessageDescriptor} from 'react-intl';
 
-import {isMessageDescriptor} from '@mattermost/shared/utils/i18n';
+import {isMessageDescriptor} from '@hanzoteam/shared/utils/i18n';
 
 import {getCurrentLocale, getTranslations} from 'selectors/i18n';
 import store from 'stores/redux_store';

@@ -5,7 +5,7 @@ import React from 'react';
 import {components} from 'react-select';
 import type {OptionProps} from 'react-select';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import ChannelTypeIcon from 'components/channel_type_icon';
 

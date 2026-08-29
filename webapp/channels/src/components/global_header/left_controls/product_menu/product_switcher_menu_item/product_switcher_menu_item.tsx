@@ -4,8 +4,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import glyphMap from '@mattermost/compass-icons/components';
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
+import glyphMap from '@hanzoteam/compass-icons/components';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
 
 import type {ProductSwitcherMenuItemRegistration} from 'types/store/plugins';
 

@@ -4,10 +4,10 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {ProductIdentifier} from '@mattermost/types/products';
-import type {Team} from '@mattermost/types/teams';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ProductIdentifier} from '@hanzoteam/types/products';
+import type {Team} from '@hanzoteam/types/teams';
 
 import ChannelInfoRhs from 'components/channel_info_rhs';
 import ChannelMembersRhs from 'components/channel_members_rhs';

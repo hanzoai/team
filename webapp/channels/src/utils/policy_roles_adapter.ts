@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
-import {Permissions} from 'mattermost-redux/constants/index';
+import {Permissions} from '@hanzoteam/redux/constants/index';
 
 const trueString = 'true';
 const falseString = 'false';
@@ -50,8 +50,8 @@ type MappingValueTypes = {roleName: string;
  * Get the roles that were changed (but unsaved) for given mapping key/values.
  *
  * @param {object} mappingValues key/value to indicate which mapping items to use to update the roles.
- * @param {object} roles same structure as returned by mattermost-redux `getRoles`.
- * @return {object} the updated roles (only) in the same structure as returned by mattermost-redux `getRoles`.
+ * @param {object} roles same structure as returned by @hanzoteam/redux `getRoles`.
+ * @return {object} the updated roles (only) in the same structure as returned by @hanzoteam/redux `getRoles`.
  */
 export function rolesFromMapping(mappingValues: Record<string, string>, roles: Record<string, Role>): Record<string, Role> {
     const rolesClone: Record<string, Role> = JSON.parse(JSON.stringify(roles));
@@ -84,7 +84,7 @@ export function rolesFromMapping(mappingValues: Record<string, string>, roles: R
  * Get the mapping value that matches for a given set of roles.
  *
  * @param {string} key to match under in the mapping.
- * @param {object} roles same structure as returned by mattermost-redux `getRoles`.
+ * @param {object} roles same structure as returned by @hanzoteam/redux `getRoles`.
  * @return {string} the value that the roles/permissions assignment match in the mapping.
  */
 export function mappingValueFromRoles(key: MappingKeyTypes, roles: Record<string, Role>): string {

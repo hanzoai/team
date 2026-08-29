@@ -10,12 +10,12 @@ import {useDispatch} from 'react-redux';
 import type {AnyAction} from 'redux';
 import type {ThunkDispatch} from 'redux-thunk';
 
-import {CheckIcon, DownloadOutlineIcon, LinkVariantIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
+import {CheckIcon, DownloadOutlineIcon, LinkVariantIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFilePublicLink} from 'mattermost-redux/actions/files';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFilePublicLink} from '@hanzoteam/redux/actions/files';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {copyToClipboard} from 'utils/utils';
 

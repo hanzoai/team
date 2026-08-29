@@ -7,9 +7,9 @@ import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {emitCloseRightHandSide} from 'actions/global_actions';
 

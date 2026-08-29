@@ -11,8 +11,8 @@ import {
     CheckIcon,
     CloseIcon,
     InformationOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import './alert_banner.scss';
 

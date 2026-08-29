@@ -4,13 +4,13 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {IncomingWebhook, IncomingWebhooksWithCount} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {IncomingWebhook, IncomingWebhooksWithCount} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BackstageList from 'components/backstage/components/backstage_list';
 import ExternalLink from 'components/external_link';

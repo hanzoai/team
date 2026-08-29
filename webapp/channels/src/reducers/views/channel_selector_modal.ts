@@ -3,9 +3,9 @@
 
 import {combineReducers} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {ChannelTypes, UserTypes} from 'mattermost-redux/action_types';
+import {ChannelTypes, UserTypes} from '@hanzoteam/redux/action_types';
 
 import type {MMAction} from 'types/store';
 

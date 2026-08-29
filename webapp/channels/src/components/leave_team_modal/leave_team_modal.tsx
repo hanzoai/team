@@ -5,10 +5,10 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import Constants from 'utils/constants';
 import {isKeyPressed} from 'utils/keyboard';

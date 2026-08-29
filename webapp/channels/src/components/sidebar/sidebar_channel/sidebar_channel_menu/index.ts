@@ -4,15 +4,15 @@
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {favoriteChannel, unfavoriteChannel, readMultipleChannels} from 'mattermost-redux/actions/channels';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {isFavoriteChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getMyChannelMemberships, getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
+import {favoriteChannel, unfavoriteChannel, readMultipleChannels} from '@hanzoteam/redux/actions/channels';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {isFavoriteChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getMyChannelMemberships, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
 
 import {unmuteChannel, muteChannel} from 'actions/channel_actions';
 import {markMostRecentPostInChannelAsUnread} from 'actions/post_actions';

@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import React, {useState, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AuthChangeResponse} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AuthChangeResponse} from '@hanzoteam/types/users';
 
 import {emailToOAuth} from 'actions/admin_actions';
 

@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel, ChannelStats} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelStats} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {act, renderWithContext} from 'tests/react_testing_utils';
 import {ModalIdentifiers} from 'utils/constants';

@@ -4,9 +4,9 @@
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {PermissionSystemSchemeSettings} from 'components/admin_console/permission_schemes_settings/permission_system_scheme_settings/permission_system_scheme_settings';
 

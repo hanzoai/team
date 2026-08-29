@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {OpenGraphMetadata, Post} from '@mattermost/types/posts';
+import type {OpenGraphMetadata, Post} from '@hanzoteam/types/posts';
 
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {render, renderWithContext} from 'tests/react_testing_utils';
 import {Preferences} from 'utils/constants';

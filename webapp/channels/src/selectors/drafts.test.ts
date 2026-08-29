@@ -3,7 +3,7 @@
 
 import cloneDeep from 'lodash/cloneDeep';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {StoragePrefixes} from 'utils/constants';
 import {TestHelper} from 'utils/test_helper';
 
@@ -122,7 +122,7 @@ const expectedChannelDrafts = [
     },
 ];
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
     getMyActiveChannelIds: () => currentChannelId,
 }));
 

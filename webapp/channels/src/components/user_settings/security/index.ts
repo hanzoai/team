@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getAuthorizedOAuthApps, deauthorizeOAuthApp} from 'mattermost-redux/actions/integrations';
-import {getMe, updateUserPassword} from 'mattermost-redux/actions/users';
-import {getConfig, getPasswordConfig} from 'mattermost-redux/selectors/entities/general';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import {getAuthorizedOAuthApps, deauthorizeOAuthApp} from '@hanzoteam/redux/actions/integrations';
+import {getMe, updateUserPassword} from '@hanzoteam/redux/actions/users';
+import {getConfig, getPasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import {Preferences} from 'utils/constants';
 

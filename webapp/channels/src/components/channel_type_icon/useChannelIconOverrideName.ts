@@ -3,8 +3,8 @@
 
 import {useSelector} from 'react-redux';
 
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
-import type {Channel} from '@mattermost/types/channels';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import type {GlobalState} from 'types/store';
 

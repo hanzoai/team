@@ -3,9 +3,9 @@
 
 import {combineReducers} from 'redux';
 
-import {CursorPaginationDirection} from '@mattermost/types/reports';
+import {CursorPaginationDirection} from '@hanzoteam/types/reports';
 
-import {UserTypes} from 'mattermost-redux/action_types';
+import {UserTypes} from '@hanzoteam/redux/action_types';
 
 import {ActionTypes} from 'utils/constants';
 

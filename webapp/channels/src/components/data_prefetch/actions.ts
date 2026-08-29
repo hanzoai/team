@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
 
 enum Priority {
     high = 1,

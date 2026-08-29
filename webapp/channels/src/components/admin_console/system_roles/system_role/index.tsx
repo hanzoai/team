@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {editRole} from 'mattermost-redux/actions/roles';
-import {updateUserRoles} from 'mattermost-redux/actions/users';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getRolesById} from 'mattermost-redux/selectors/entities/roles';
+import {editRole} from '@hanzoteam/redux/actions/roles';
+import {updateUserRoles} from '@hanzoteam/redux/actions/users';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getRolesById} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

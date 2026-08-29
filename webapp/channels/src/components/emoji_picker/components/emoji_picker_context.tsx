@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
 import type {EmojiCursor} from '../types';
 

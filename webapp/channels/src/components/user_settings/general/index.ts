@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {clearErrors, logError} from 'mattermost-redux/actions/errors';
+import {clearErrors, logError} from '@hanzoteam/redux/actions/errors';
 import {
     updateMe,
     sendVerificationEmail,
@@ -13,10 +13,10 @@ import {
     uploadProfileImage,
     saveCustomProfileAttribute,
     getCustomProfileAttributeValues,
-} from 'mattermost-redux/actions/users';
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig, getCustomProfileAttributes, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
+} from '@hanzoteam/redux/actions/users';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig, getCustomProfileAttributes, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {getIsMobileView} from 'selectors/views/browser';
 

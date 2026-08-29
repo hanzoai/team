@@ -3,11 +3,11 @@
 
 import {act} from '@testing-library/react';
 
-import type {UserPropertyField, UserPropertyFieldPatch} from '@mattermost/types/properties_user';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {UserPropertyField, UserPropertyFieldPatch} from '@hanzoteam/types/properties_user';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import {generateId} from 'mattermost-redux/utils/helpers';
+import {Client4} from '@hanzoteam/redux/client';
+import {generateId} from '@hanzoteam/redux/utils/helpers';
 
 import {renderHookWithContext, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

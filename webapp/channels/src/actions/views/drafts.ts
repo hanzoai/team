@@ -3,14 +3,14 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import type {Draft as ServerDraft} from '@mattermost/types/drafts';
-import type {FileInfo} from '@mattermost/types/files';
-import type {PostMetadata, PostPriorityMetadata} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Draft as ServerDraft} from '@hanzoteam/types/drafts';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {PostMetadata, PostPriorityMetadata} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {syncedDraftsAreAllowedAndEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {syncedDraftsAreAllowedAndEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setGlobalItem} from 'actions/storage';
 import {makeGetDrafts} from 'selectors/drafts';

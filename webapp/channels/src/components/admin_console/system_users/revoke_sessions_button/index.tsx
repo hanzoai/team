@@ -5,10 +5,10 @@ import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
-import {revokeSessionsForAllUsers} from 'mattermost-redux/actions/users';
-import {Permissions} from 'mattermost-redux/constants';
+import {revokeSessionsForAllUsers} from '@hanzoteam/redux/actions/users';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

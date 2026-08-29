@@ -9,7 +9,7 @@ import {WithTooltip} from './with_tooltip';
 
 import {renderWithContext} from '../../testing';
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isMac: jest.fn().mockReturnValue(false),
 }));
 

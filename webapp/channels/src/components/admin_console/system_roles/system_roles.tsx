@@ -5,7 +5,7 @@ import React, {memo, useMemo} from 'react';
 import {FormattedMessage, defineMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import type {Row, Column} from 'components/admin_console/data_grid/data_grid';

@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
 import {
     getGroup as fetchGroup,
@@ -15,15 +15,15 @@ import {
     patchGroup,
     patchGroupSyncable,
     unlinkGroupSyncable,
-} from 'mattermost-redux/actions/groups';
-import {getProfilesInGroup} from 'mattermost-redux/actions/users';
+} from '@hanzoteam/redux/actions/groups';
+import {getProfilesInGroup} from '@hanzoteam/redux/actions/users';
 import {
     getGroup,
     getGroupChannels,
     getGroupMemberCount,
     getGroupTeams,
-} from 'mattermost-redux/selectors/entities/groups';
-import {getProfilesInGroup as selectProfilesInGroup} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/groups';
+import {getProfilesInGroup as selectProfilesInGroup} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

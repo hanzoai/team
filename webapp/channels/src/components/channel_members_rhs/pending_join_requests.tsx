@@ -5,22 +5,22 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {ChannelJoinRequest} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {ChannelJoinRequest} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {
     countPendingChannelJoinRequests,
     getChannelJoinRequests,
     patchChannelJoinRequest,
-} from 'mattermost-redux/actions/channels';
-import {getProfilesByIds, ProfilesInChannelSortBy} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/actions/channels';
+import {getProfilesByIds, ProfilesInChannelSortBy} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {loadProfilesAndReloadChannelMembers} from 'actions/user_actions';
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 // Helpers for working with ranked property-field options. A ranked field stores
 // the usual select options plus a unique integer `rank` per option.

@@ -7,10 +7,10 @@ import ReactSelect from 'react-select';
 import type {OnChangeValue, StylesConfig} from 'react-select';
 import type {Timezone} from 'timezones.json';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getTimezoneLabel} from 'mattermost-redux/utils/timezone_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getTimezoneLabel} from '@hanzoteam/redux/utils/timezone_utils';
 
 import SettingItemMax from 'components/setting_item_max';
 

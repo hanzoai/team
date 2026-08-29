@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {GroupChannel, GroupTeam} from '@mattermost/types/groups';
+import type {GroupChannel, GroupTeam} from '@hanzoteam/types/groups';
 
 import GroupTeamsAndChannelsRow from 'components/admin_console/group_settings/group_details/group_teams_and_channels_row';
 

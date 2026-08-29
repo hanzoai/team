@@ -3,30 +3,30 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {Post, PostType} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {Post, PostType} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {ChannelTypes} from 'mattermost-redux/action_types';
-import {fetchAppBindings} from 'mattermost-redux/actions/apps';
+import {ChannelTypes} from '@hanzoteam/redux/action_types';
+import {fetchAppBindings} from '@hanzoteam/redux/actions/apps';
 import {
     fetchChannelsAndMembers,
     getChannelByNameAndTeamName,
     getChannelStats,
     selectChannel,
-} from 'mattermost-redux/actions/channels';
-import {fetchTeamScheduledPosts} from 'mattermost-redux/actions/scheduled_posts';
-import {logout, loadMe} from 'mattermost-redux/actions/users';
-import {Preferences} from 'mattermost-redux/constants';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getCurrentChannelStats, getCurrentChannelId, getMyChannelMember, getRedirectChannelNameForTeam, getChannelsNameMapInTeam, getAllDirectChannels, getChannelMessageCount} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, isPerformanceDebuggingEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getBool, getIsOnboardingFlowEnabled, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getCurrentTeamId, getMyTeams, getTeam, getMyTeamMember, getTeamMemberships, getActiveTeamsList} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser, getCurrentUserId, isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
-import {calculateUnreadCount} from 'mattermost-redux/utils/channel_utils';
+} from '@hanzoteam/redux/actions/channels';
+import {fetchTeamScheduledPosts} from '@hanzoteam/redux/actions/scheduled_posts';
+import {logout, loadMe} from '@hanzoteam/redux/actions/users';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getCurrentChannelStats, getCurrentChannelId, getMyChannelMember, getRedirectChannelNameForTeam, getChannelsNameMapInTeam, getAllDirectChannels, getChannelMessageCount} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, isPerformanceDebuggingEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool, getIsOnboardingFlowEnabled, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getCurrentTeamId, getMyTeams, getTeam, getMyTeamMember, getTeamMemberships, getActiveTeamsList} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser, getCurrentUserId, isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import {calculateUnreadCount} from '@hanzoteam/redux/utils/channel_utils';
 
 import {handleNewPost} from 'actions/post_actions';
 import {loadProfilesForSidebar} from 'actions/user_actions';

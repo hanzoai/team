@@ -5,7 +5,7 @@
 
 module.exports = {
     moduleNameMapper: {
-        '^@mattermost/types/(.*)$': '<rootDir>/../types/src/$1',
+        '^@hanzoteam/types/(.*)$': '<rootDir>/../types/src/$1',
     },
     testPathIgnorePatterns: ['/node_modules/', '/lib/'],
     setupFiles: ['<rootDir>/setup_jest.ts'],

@@ -4,7 +4,7 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

@@ -5,10 +5,10 @@ import React, {useState, useEffect, useRef} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Recap} from '@mattermost/types/recaps';
-import {RecapStatus} from '@mattermost/types/recaps';
+import type {Recap} from '@hanzoteam/types/recaps';
+import {RecapStatus} from '@hanzoteam/types/recaps';
 
-import {getRecap} from 'mattermost-redux/actions/recaps';
+import {getRecap} from '@hanzoteam/redux/actions/recaps';
 
 import RecapItem from './recap_item';
 

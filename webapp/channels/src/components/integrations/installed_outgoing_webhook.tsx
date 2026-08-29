@@ -5,10 +5,10 @@ import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {OutgoingWebhook} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {OutgoingWebhook} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import CopyText from 'components/copy_text';
 

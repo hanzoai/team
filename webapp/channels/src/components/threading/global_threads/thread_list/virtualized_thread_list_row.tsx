@@ -5,8 +5,8 @@ import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {areEqual} from 'react-window';
 
-import {ShortcutKeyVariant} from '@mattermost/shared/components/shortcut_key';
-import type {UserThread} from '@mattermost/types/threads';
+import {ShortcutKeyVariant} from '@hanzoteam/shared/components/shortcut_key';
+import type {UserThread} from '@hanzoteam/types/threads';
 
 import {SearchSVG} from 'components/common/svg_images_components/search_svg';
 import LoadingScreen from 'components/loading_screen';

@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {updateUserPassword} from 'mattermost-redux/actions/users';
-import {getPasswordConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {updateUserPassword} from '@hanzoteam/redux/actions/users';
+import {getPasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {deactivateMfa} from 'actions/views/mfa';
 

@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {getIsCrossTeamSearchEnabled} from 'mattermost-redux/selectors/entities/general';
+import {getIsCrossTeamSearchEnabled} from '@hanzoteam/redux/selectors/entities/general';
 
 import {autocompleteChannelsForSearch} from 'actions/channel_actions';
 import {autocompleteUsersInCurrentTeam} from 'actions/user_actions';

@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {sendMembersInvites, sendGuestsInvites} from 'actions/invite_actions';
 
@@ -16,7 +16,7 @@ jest.mock('actions/team_actions', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     joinChannel: (_userId: string, _teamId: string, channelId: string, _channelName: string) => {
         if (channelId === 'correct') {
@@ -35,7 +35,7 @@ jest.mock('mattermost-redux/actions/channels', () => ({
 
 const mockSendEmailInvitesCalls: Array<{team: string; emails: string[]; profiles?: unknown}> = [];
 
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     getTeamMembersByIds: () => ({type: 'MOCK_RECEIVED_ME'}),
     sendEmailInvitesToTeamGracefully: (team: string, emails: string[], profiles?: unknown) => {
         mockSendEmailInvitesCalls.push({team, emails, profiles});

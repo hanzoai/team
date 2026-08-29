@@ -4,7 +4,7 @@
 import React, {useCallback, useEffect, useRef, useState} from 'react';
 import type {MouseEvent} from 'react';
 
-import type {ClusterInfo} from '@mattermost/types/admin';
+import type {ClusterInfo} from '@hanzoteam/types/admin';
 
 import {getClusterStatus} from 'actions/admin_actions';
 

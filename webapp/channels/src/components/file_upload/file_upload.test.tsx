@@ -4,9 +4,9 @@
 import React from 'react';
 import type {MouseEvent, DragEvent, ChangeEvent} from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, act} from 'tests/react_testing_utils';
 import {clearFileInput} from 'utils/utils';

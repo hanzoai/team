@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {AuthorType, ReleaseStage} from '@mattermost/types/marketplace';
-import type {MarketplaceApp, MarketplacePlugin} from '@mattermost/types/marketplace';
+import {AuthorType, ReleaseStage} from '@hanzoteam/types/marketplace';
+import type {MarketplaceApp, MarketplacePlugin} from '@hanzoteam/types/marketplace';
 
 import {
     getPlugins,

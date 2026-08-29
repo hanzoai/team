@@ -3,10 +3,10 @@
 
 import type {IntlShape} from 'react-intl';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {AutocompleteSuggestion} from '@mattermost/types/integrations';
-import type {UserProfile} from '@mattermost/types/users';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {AutocompleteSuggestion} from '@hanzoteam/types/integrations';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {sendEphemeralPost} from 'actions/global_actions';
 import reduxStore from 'stores/redux_store';
@@ -31,7 +31,7 @@ export type {
     AutocompleteChannelSelect,
     AppLookupResponse,
     AppSelectOption,
-} from '@mattermost/types/apps';
+} from '@hanzoteam/types/apps';
 
 export type {
     DoAppCallResult,
@@ -41,7 +41,7 @@ export type {AutocompleteSuggestion};
 
 export type {Channel};
 
-export type {UserAutocomplete} from '@mattermost/types/autocomplete';
+export type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
 
 export type {UserProfile};
 
@@ -49,19 +49,19 @@ export {
     AppBindingLocations,
     AppFieldTypes,
     AppCallResponseTypes,
-} from 'mattermost-redux/constants/apps';
+} from '@hanzoteam/redux/constants/apps';
 
 export {autocompleteUsersInChannel} from 'actions/views/channel';
 
-export {makeAppBindingsSelector, makeRHSAppBindingSelector, getAppCommandForm, getAppRHSCommandForm} from 'mattermost-redux/selectors/entities/apps';
+export {makeAppBindingsSelector, makeRHSAppBindingSelector, getAppCommandForm, getAppRHSCommandForm} from '@hanzoteam/redux/selectors/entities/apps';
 
-export {getPost} from 'mattermost-redux/selectors/entities/posts';
-export {getChannel as selectChannel, getCurrentChannel, getChannelByName as selectChannelByName} from 'mattermost-redux/selectors/entities/channels';
-export {getCurrentTeamId, getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-export {getUserByUsername as selectUserByUsername, getUser as selectUser} from 'mattermost-redux/selectors/entities/users';
+export {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+export {getChannel as selectChannel, getCurrentChannel, getChannelByName as selectChannelByName} from '@hanzoteam/redux/selectors/entities/channels';
+export {getCurrentTeamId, getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+export {getUserByUsername as selectUserByUsername, getUser as selectUser} from '@hanzoteam/redux/selectors/entities/users';
 
-export {getUserByUsername, getUser} from 'mattermost-redux/actions/users';
-export {getChannelByNameAndTeamName, getChannel, autocompleteChannels} from 'mattermost-redux/actions/channels';
+export {getUserByUsername, getUser} from '@hanzoteam/redux/actions/users';
+export {getChannelByNameAndTeamName, getChannel, autocompleteChannels} from '@hanzoteam/redux/actions/channels';
 
 export {doAppFetchForm, doAppLookup} from 'actions/apps';
 
@@ -80,7 +80,7 @@ export const COMMAND_SUGGESTION_ERROR = Constants.Integrations.COMMAND_SUGGESTIO
 export const COMMAND_SUGGESTION_CHANNEL = Constants.Integrations.COMMAND_SUGGESTION_CHANNEL;
 export const COMMAND_SUGGESTION_USER = Constants.Integrations.COMMAND_SUGGESTION_USER;
 
-export {AppsTypes} from 'mattermost-redux/action_types';
+export {AppsTypes} from '@hanzoteam/redux/action_types';
 
 export const getExecuteSuggestion = (parsed: ParsedCommand): AutocompleteSuggestion | null => {
     let key = 'Ctrl';

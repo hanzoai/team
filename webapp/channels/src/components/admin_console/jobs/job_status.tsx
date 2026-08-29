@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {Job} from '@mattermost/types/jobs';
+import type {Job} from '@hanzoteam/types/jobs';
 
 import {JobStatuses} from 'utils/constants';
 

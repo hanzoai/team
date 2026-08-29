@@ -5,8 +5,8 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AllowedIPRange} from '@mattermost/types/config';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 import './delete_confirmation.scss';
 

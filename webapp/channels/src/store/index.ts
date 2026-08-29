@@ -9,10 +9,10 @@ import type {Persistor} from 'redux-persist';
 import {persistStore, REHYDRATE} from 'redux-persist';
 import Observable from 'zen-observable';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {General, RequestStatus} from 'mattermost-redux/constants';
-import configureServiceStore from 'mattermost-redux/store';
+import {General, RequestStatus} from '@hanzoteam/redux/constants';
+import configureServiceStore from '@hanzoteam/redux/store';
 
 import {actionOnGlobalItemsWithPrefix, cleanLocalStorage} from 'actions/storage';
 import {clearUserCookie} from 'actions/views/cookie';

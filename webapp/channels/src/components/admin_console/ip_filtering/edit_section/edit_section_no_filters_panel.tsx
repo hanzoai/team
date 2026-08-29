@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import IPFilteringEarthSvg from 'components/common/svg_images_components/ip_filtering_earth_svg';
 

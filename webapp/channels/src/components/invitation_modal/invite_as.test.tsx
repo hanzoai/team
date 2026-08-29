@@ -9,13 +9,13 @@ import {CloudProducts} from 'utils/constants';
 
 import InviteAs, {InviteType} from './invite_as';
 
-jest.mock('mattermost-redux/selectors/entities/users', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/users') as typeof import('mattermost-redux/selectors/entities/users'),
+jest.mock('@hanzoteam/redux/selectors/entities/users', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/users') as typeof import('@hanzoteam/redux/selectors/entities/users'),
     isCurrentUserSystemAdmin: () => true,
 }));
 
-jest.mock('mattermost-redux/actions/admin', () => ({
-    ...jest.requireActual('mattermost-redux/actions/admin') as typeof import('mattermost-redux/actions/admin'),
+jest.mock('@hanzoteam/redux/actions/admin', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/admin') as typeof import('@hanzoteam/redux/actions/admin'),
     getPrevTrialLicense: () => ({type: 'MOCK_GET_PREV_TRIAL_LICENSE'}),
 }));
 

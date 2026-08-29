@@ -6,12 +6,12 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {updateChannelNotifyProps} from 'mattermost-redux/actions/channels';
-import {getMyCurrentChannelMembership} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {updateChannelNotifyProps} from '@hanzoteam/redux/actions/channels';
+import {getMyCurrentChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 import {
     isCollapsedThreadsEnabled,
-} from 'mattermost-redux/selectors/entities/preferences';
+} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import type {GlobalState} from 'types/store/index';
 

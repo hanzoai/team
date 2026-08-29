@@ -3,13 +3,13 @@
 
 import React from 'react';
 
-import {isAppBinding, type AppBinding} from '@mattermost/types/apps';
-import {isMessageAttachmentArray} from '@mattermost/types/message_attachments';
-import type {Post, PostEmbed} from '@mattermost/types/posts';
-import {isArrayOf} from '@mattermost/types/utilities';
+import {isAppBinding, type AppBinding} from '@hanzoteam/types/apps';
+import {isMessageAttachmentArray} from '@hanzoteam/types/message_attachments';
+import type {Post, PostEmbed} from '@hanzoteam/types/posts';
+import {isArrayOf} from '@hanzoteam/types/utilities';
 
-import {validateBindings} from 'mattermost-redux/utils/apps';
-import {getEmbedFromMetadata} from 'mattermost-redux/utils/post_utils';
+import {validateBindings} from '@hanzoteam/redux/utils/apps';
+import {getEmbedFromMetadata} from '@hanzoteam/redux/utils/post_utils';
 
 import {hasInteractiveMessageProps} from 'components/block_renderer/translation';
 import MessageAttachmentList from 'components/post_view/message_attachments/message_attachment_list';

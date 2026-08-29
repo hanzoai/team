@@ -7,10 +7,10 @@ import type {IntlShape} from 'react-intl';
 import {defineMessages, FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {ClientError} from '@mattermost/client';
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {PropertyField, PropertyFieldOption} from '@mattermost/types/properties';
-import {supportsOptions} from '@mattermost/types/properties';
+import type {ClientError} from '@hanzoteam/client';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {PropertyField, PropertyFieldOption} from '@hanzoteam/types/properties';
+import {supportsOptions} from '@hanzoteam/types/properties';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {deleteCommand, regenCommandToken} from 'mattermost-redux/actions/integrations';
-import {Permissions} from 'mattermost-redux/constants';
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
+import {deleteCommand, regenCommandToken} from '@hanzoteam/redux/actions/integrations';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import InstalledCommands from './installed_commands';
 

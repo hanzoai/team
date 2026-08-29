@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getUserAudits} from 'mattermost-redux/actions/users';
-import {getCurrentUserId, getUserAudits as getCurrentUserAudits} from 'mattermost-redux/selectors/entities/users';
+import {getUserAudits} from '@hanzoteam/redux/actions/users';
+import {getCurrentUserId, getUserAudits as getCurrentUserAudits} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

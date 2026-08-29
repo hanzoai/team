@@ -4,7 +4,7 @@
 import React, {memo} from 'react';
 import type {KeyboardEvent} from 'react';
 
-import type {EmojiCategory} from '@mattermost/types/emojis';
+import type {EmojiCategory} from '@hanzoteam/types/emojis';
 
 import EmojiPickerCategory from 'components/emoji_picker/components/emoji_picker_category';
 import {

@@ -5,12 +5,12 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {AppBindingLocations, AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {AppBindingLocations, AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AutocompleteSelector from 'components/autocomplete_selector';
 import type {Option, Selected} from 'components/autocomplete_selector';

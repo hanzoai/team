@@ -4,7 +4,7 @@
 import {waitFor} from '@testing-library/react';
 import React from 'react';
 
-import {ClientError} from '@mattermost/client';
+import {ClientError} from '@hanzoteam/client';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

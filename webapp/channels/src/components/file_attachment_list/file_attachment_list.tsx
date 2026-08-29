@@ -3,7 +3,7 @@
 
 import React, {useCallback, useMemo} from 'react';
 
-import {sortFileInfos} from 'mattermost-redux/utils/file_utils';
+import {sortFileInfos} from '@hanzoteam/redux/utils/file_utils';
 
 import FileAttachment from 'components/file_attachment';
 import FilePreviewModal from 'components/file_preview_modal';

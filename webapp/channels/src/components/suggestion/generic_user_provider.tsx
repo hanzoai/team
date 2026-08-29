@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import {Client4} from 'mattermost-redux/client';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import usePrefixedIds, {joinIds} from 'components/common/hooks/usePrefixedIds';
 import BotTag from 'components/widgets/tag/bot_tag';

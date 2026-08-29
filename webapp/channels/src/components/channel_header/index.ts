@@ -8,10 +8,10 @@ import type {Dispatch} from 'redux';
 
 import {
     updateChannelNotifyProps,
-} from 'mattermost-redux/actions/channels';
-import {getCustomEmojisInText} from 'mattermost-redux/actions/emojis';
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {General} from 'mattermost-redux/constants';
+} from '@hanzoteam/redux/actions/channels';
+import {getCustomEmojisInText} from '@hanzoteam/redux/actions/emojis';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {General} from '@hanzoteam/redux/constants';
 import {
     canManageChannelJoinRequests,
     getCurrentChannel,
@@ -20,10 +20,10 @@ import {
     getCurrentChannelStats,
     isMyChannelAutotranslated,
     getPendingJoinRequestsCount,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getRemoteNamesForChannel} from 'mattermost-redux/selectors/entities/shared_channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getRemoteNamesForChannel} from '@hanzoteam/redux/selectors/entities/shared_channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 import {
     displayLastActiveLabel,
     getCurrentUser,
@@ -31,8 +31,8 @@ import {
     getLastActivityForUserId,
     getUser,
     makeGetProfilesInChannel,
-} from 'mattermost-redux/selectors/entities/users';
-import {getUserIdFromChannelName} from 'mattermost-redux/utils/channel_utils';
+} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserIdFromChannelName} from '@hanzoteam/redux/utils/channel_utils';
 
 import {
     showPinnedPosts,

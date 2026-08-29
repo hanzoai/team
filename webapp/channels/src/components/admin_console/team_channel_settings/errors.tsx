@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {UserProfile} from '@mattermost/types/users';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import FormError from 'components/form_error';
 import ToggleModalButton from 'components/toggle_modal_button';

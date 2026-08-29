@@ -4,8 +4,8 @@
 import React, {useCallback} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
+import {GenericModal} from '@hanzoteam/components';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
 
 import '../category_modal.scss';
 
@@ -59,7 +59,7 @@ export default function DeleteCategoryModal(props: Props) {
     );
 }
 
-// TODO MM-52680 These strings are properly defined in @mattermost/components, but the i18n tooling currently can't
+// TODO MM-52680 These strings are properly defined in @hanzoteam/components, but the i18n tooling currently can't
 // find them there, so we've had to redefine them here
 defineMessages({
     cancel: {

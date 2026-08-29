@@ -4,8 +4,8 @@
 import React, {useState, useRef, useEffect} from 'react';
 import {FormattedMessage, defineMessages, injectIntl, type WrappedComponentProps} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Team} from '@mattermost/types/teams';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Team} from '@hanzoteam/types/teams';
 
 import MagnifyingGlassSVG from 'components/common/svg_images_components/magnifying_glass_svg';
 import LoadingScreen from 'components/loading_screen';

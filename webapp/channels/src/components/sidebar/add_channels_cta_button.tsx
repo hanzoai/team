@@ -6,14 +6,14 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {GlobeIcon, PlusIcon} from '@mattermost/compass-icons/components';
+import {GlobeIcon, PlusIcon} from '@hanzoteam/compass-icons/components';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {haveICurrentChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveICurrentChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {openModal} from 'actions/views/modals';
 

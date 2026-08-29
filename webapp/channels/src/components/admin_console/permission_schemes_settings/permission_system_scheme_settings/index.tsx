@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {loadRolesIfNeeded, editRole} from 'mattermost-redux/actions/roles';
-import {getLicense, getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getRoles} from 'mattermost-redux/selectors/entities/roles';
+import {loadRolesIfNeeded, editRole} from '@hanzoteam/redux/actions/roles';
+import {getLicense, getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getRoles} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

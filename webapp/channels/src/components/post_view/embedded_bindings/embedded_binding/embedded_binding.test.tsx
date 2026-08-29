@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {MessageAttachment as MessageAttachmentType} from '@mattermost/types/message_attachments';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {MessageAttachment as MessageAttachmentType} from '@hanzoteam/types/message_attachments';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

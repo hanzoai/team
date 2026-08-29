@@ -4,7 +4,7 @@
 import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import type {MarketplaceLabel} from '@mattermost/types/marketplace';
+import type {MarketplaceLabel} from '@hanzoteam/types/marketplace';
 
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';
 

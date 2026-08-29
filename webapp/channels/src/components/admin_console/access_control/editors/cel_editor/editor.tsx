@@ -5,13 +5,13 @@ import * as monaco from 'monaco-editor';
 import React, {useCallback, useEffect, useRef, useState, useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {AccessControlTestResult, CELExpressionError} from '@mattermost/types/access_control';
-import {SESSION_ATTRIBUTES_OBJECT_TYPE, USER_OBJECT_TYPE} from '@mattermost/types/properties_user';
+import type {AccessControlTestResult, CELExpressionError} from '@hanzoteam/types/access_control';
+import {SESSION_ATTRIBUTES_OBJECT_TYPE, USER_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
 
-import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
-import {debounce} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {MonacoLanguageProvider} from './language_provider';
 

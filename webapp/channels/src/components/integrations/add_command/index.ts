@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {addCommand} from 'mattermost-redux/actions/integrations';
+import {addCommand} from '@hanzoteam/redux/actions/integrations';
 
 import AddCommand from './add_command';
 

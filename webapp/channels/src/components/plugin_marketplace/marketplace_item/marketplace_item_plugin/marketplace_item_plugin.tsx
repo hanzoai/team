@@ -7,8 +7,8 @@ import {defineMessage, FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 import semver from 'semver';
 
-import type {MarketplaceLabel} from '@mattermost/types/marketplace';
-import type {PluginStatusRedux} from '@mattermost/types/plugins';
+import type {MarketplaceLabel} from '@hanzoteam/types/marketplace';
+import type {PluginStatusRedux} from '@hanzoteam/types/plugins';
 
 import ConfirmModal from 'components/confirm_modal';
 import ExternalLink from 'components/external_link';

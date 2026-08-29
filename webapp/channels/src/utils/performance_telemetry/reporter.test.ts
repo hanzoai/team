@@ -4,7 +4,7 @@
 import nock from 'nock';
 import {onCLS, onFCP, onINP, onLCP} from 'web-vitals/attribution';
 
-import {Client4} from '@mattermost/client';
+import {Client4} from '@hanzoteam/client';
 
 import configureStore from 'store';
 

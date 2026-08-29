@@ -7,10 +7,10 @@ import type {ChangeEvent, DragEvent, MouseEvent, TouchEvent, RefObject} from 're
 import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {PaperclipIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ServerError} from '@mattermost/types/errors';
-import type {FileInfo, FileUploadResponse} from '@mattermost/types/files';
+import {PaperclipIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {FileInfo, FileUploadResponse} from '@hanzoteam/types/files';
 
 import type {UploadFile} from 'actions/file_actions';
 

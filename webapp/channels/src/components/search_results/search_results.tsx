@@ -6,14 +6,14 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIntl, FormattedMessage, defineMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {FileSearchResultItem as FileSearchResultItemType} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import type {FileSearchResultItem as FileSearchResultItemType} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {debounce} from 'mattermost-redux/actions/helpers';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {isDateLine, getDateForDateLine} from 'mattermost-redux/utils/post_list';
+import {debounce} from '@hanzoteam/redux/actions/helpers';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {isDateLine, getDateForDateLine} from '@hanzoteam/redux/utils/post_list';
 
 import {getFilesDropdownPluginMenuItems} from 'selectors/plugins';
 import {getSearchTeam} from 'selectors/rhs';

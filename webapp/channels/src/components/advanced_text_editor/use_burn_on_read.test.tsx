@@ -5,12 +5,12 @@ import {renderHook} from '@testing-library/react';
 import React from 'react';
 import {Provider} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {PostType} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {PostType} from '@hanzoteam/types/posts';
 
-import {PostTypes} from 'mattermost-redux/constants/posts';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {PostTypes} from '@hanzoteam/redux/constants/posts';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {
     isBurnOnReadEnabled,
@@ -30,11 +30,11 @@ jest.mock('selectors/burn_on_read', () => ({
     canUserSendBurnOnRead: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
     getChannel: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/users', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/users', () => ({
     getCurrentUser: jest.fn(),
     getUser: jest.fn(),
 }));
@@ -140,7 +140,7 @@ describe('useBurnOnRead', () => {
         });
 
         it('should hide burn-on-read button in DMs with bots/AI agents', () => {
-            const {getUser} = require('mattermost-redux/selectors/entities/users');
+            const {getUser} = require('@hanzoteam/redux/selectors/entities/users');
 
             // DM with a bot - channel name is user-id__bot-id
             const dmWithBotChannel = createMockChannel('D', 'bot-id__user-id');

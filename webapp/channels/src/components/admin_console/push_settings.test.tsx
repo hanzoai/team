@@ -4,7 +4,7 @@
 import React from 'react';
 import {act} from 'react-dom/test-utils';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import {PushSettings} from 'components/admin_console/push_settings';
 

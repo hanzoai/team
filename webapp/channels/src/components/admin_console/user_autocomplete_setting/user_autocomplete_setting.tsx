@@ -3,8 +3,8 @@
 
 import React, {useCallback, useRef} from 'react';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Setting from 'components/admin_console/setting';
 import GenericUserProvider from 'components/suggestion/generic_user_provider';

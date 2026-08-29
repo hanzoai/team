@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as PreferencesSelectors from 'mattermost-redux/selectors/entities/preferences';
+import * as PreferencesSelectors from '@hanzoteam/redux/selectors/entities/preferences';
 
 import type {GlobalState} from 'types/store';
 import {LhsPage} from 'types/store/lhs';
@@ -12,7 +12,7 @@ jest.mock('selectors/drafts', () => ({
     makeGetDraftsCount: jest.fn().mockImplementation(() => jest.fn()),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/preferences', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/preferences', () => ({
     isCollapsedThreadsEnabled: jest.fn(),
 }));
 

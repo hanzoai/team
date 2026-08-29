@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import styled from 'styled-components';
 
-import type {UserTimezone} from '@mattermost/types/users';
+import type {UserTimezone} from '@hanzoteam/types/users';
 
 import Moon from 'components/common/svg_images_components/moon_svg';
 import Timestamp from 'components/timestamp';

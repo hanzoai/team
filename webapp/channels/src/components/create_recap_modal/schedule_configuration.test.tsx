@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {DaysOfWeek, ScheduledRecapTimePeriods} from '@mattermost/types/recaps';
+import {DaysOfWeek, ScheduledRecapTimePeriods} from '@hanzoteam/types/recaps';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

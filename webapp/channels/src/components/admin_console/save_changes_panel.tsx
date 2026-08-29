@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button, buttonClassNames} from '@mattermost/shared/components/button';
+import {Button, buttonClassNames} from '@hanzoteam/shared/components/button';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import SaveButton from 'components/save_button';

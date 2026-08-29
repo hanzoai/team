@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import AboutBuildModal from 'components/about_build_modal/about_build_modal';
 

@@ -6,8 +6,8 @@ import AutoSizer from 'react-virtualized-auto-sizer';
 import {VariableSizeList} from 'react-window';
 import InfiniteLoader from 'react-window-infinite-loader';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import MemberListItem from './member_list_item';
 import type {ItemData} from './member_list_item';

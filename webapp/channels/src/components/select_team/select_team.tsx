@@ -6,12 +6,12 @@ import type {ReactNode, MouseEvent} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {CloudUsage} from '@mattermost/types/cloud';
-import type {Team} from '@mattermost/types/teams';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {Permissions} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Permissions} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

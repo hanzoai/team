@@ -5,12 +5,12 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {updateUserActive} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getExternalBotAccounts} from 'mattermost-redux/selectors/entities/bots';
+import {updateUserActive} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getExternalBotAccounts} from '@hanzoteam/redux/selectors/entities/bots';
 
 import ConfirmModalRedux from 'components/confirm_modal_redux';
 import ExternalLink from 'components/external_link';

@@ -1,14 +1,14 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AppCall, AppExpand, AppFormValues} from '@mattermost/types/apps';
-import type {MarketplaceApp, MarketplacePlugin} from '@mattermost/types/marketplace';
+import type {AppCall, AppExpand, AppFormValues} from '@hanzoteam/types/apps';
+import type {MarketplaceApp, MarketplacePlugin} from '@hanzoteam/types/marketplace';
 
-import {Client4} from 'mattermost-redux/client';
-import {AppBindingLocations, AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {Client4} from '@hanzoteam/redux/client';
+import {AppBindingLocations, AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {getFilter, getPlugin} from 'selectors/views/marketplace';
 

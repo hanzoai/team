@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getTeams as loadTeams, searchTeams} from 'mattermost-redux/actions/teams';
-import {getTeams} from 'mattermost-redux/selectors/entities/teams';
+import {getTeams as loadTeams, searchTeams} from '@hanzoteam/redux/actions/teams';
+import {getTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setModalSearchTerm} from 'actions/views/search';
 

@@ -5,14 +5,14 @@ import React from 'react';
 import {FormattedDate, FormattedMessage, defineMessages} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {BellRingOutlineIcon, PencilOutlineIcon, StarOutlineIcon, StarIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile as UserProfileType} from '@mattermost/types/users';
+import {BellRingOutlineIcon, PencilOutlineIcon, StarOutlineIcon, StarIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile as UserProfileType} from '@hanzoteam/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {NotificationLevel} from 'mattermost-redux/constants/channels';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {NotificationLevel} from '@hanzoteam/redux/constants/channels';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
 
 import {getChannelIntroOverride} from 'selectors/channel_intro';
 

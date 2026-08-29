@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
 import {act, renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -11,7 +11,7 @@ import {TestHelper} from 'utils/test_helper';
 import ChannelSettingsInfoTab from './channel_settings_info_tab';
 
 // Mock the redux actions and selectors
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     patchChannel: jest.fn(),
     updateChannelPrivacy: jest.fn(),
 }));
@@ -37,7 +37,7 @@ let mockConvertToPublicPermission = true;
 let mockConvertToPrivatePermission = true;
 let mockDiscoverabilityPermission = true;
 
-jest.mock('mattermost-redux/selectors/entities/roles', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/roles', () => ({
     haveITeamPermission: jest.fn().mockReturnValue(true),
     haveIChannelPermission: jest.fn().mockImplementation((state, teamId, channelId, permission: string) => {
         if (permission === 'manage_private_channel_properties' || permission === 'manage_public_channel_properties') {
@@ -68,8 +68,8 @@ jest.mock('actions/views/textbox', () => ({
 }));
 
 // Mock the isChannelAdmin function
-jest.mock('mattermost-redux/utils/user_utils', () => {
-    const original = jest.requireActual('mattermost-redux/utils/user_utils');
+jest.mock('@hanzoteam/redux/utils/user_utils', () => {
+    const original = jest.requireActual('@hanzoteam/redux/utils/user_utils');
     return {
         ...original,
         isChannelAdmin: jest.fn().mockReturnValue(false),
@@ -100,14 +100,14 @@ const mockUser = TestHelper.getUserMock({
     roles: 'system_admin',
 });
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/channels') as typeof import('mattermost-redux/selectors/entities/channels'),
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/channels') as typeof import('@hanzoteam/redux/selectors/entities/channels'),
     getChannelMember: jest.fn(() => mockChannelMember),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/common', () => {
+jest.mock('@hanzoteam/redux/selectors/entities/common', () => {
     return {
-        ...jest.requireActual('mattermost-redux/selectors/entities/common') as typeof import('mattermost-redux/selectors/entities/users'),
+        ...jest.requireActual('@hanzoteam/redux/selectors/entities/common') as typeof import('@hanzoteam/redux/selectors/entities/users'),
         getCurrentUser: () => mockUser,
     };
 });
@@ -184,7 +184,7 @@ describe('ChannelSettingsInfoTab', () => {
     });
 
     it('should call patchChannel with updated values when Save is clicked (non-privacy changes)', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -223,7 +223,7 @@ describe('ChannelSettingsInfoTab', () => {
     });
 
     it('should save DM header from channel settings without requiring channel name', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(
@@ -248,7 +248,7 @@ describe('ChannelSettingsInfoTab', () => {
     });
 
     it('should trim whitespace from channel fields when saving', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -296,7 +296,7 @@ describe('ChannelSettingsInfoTab', () => {
 
     it('should hide SaveChangesPanel after successful save', async () => {
         // Mock the patchChannel function to return a successful response
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -352,7 +352,7 @@ describe('ChannelSettingsInfoTab', () => {
     });
 
     it('should show error state when save fails', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', error: {message: 'Error saving channel'}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -586,7 +586,7 @@ describe('ChannelSettingsInfoTab', () => {
     it('should convert channel when confirming in ConvertConfirmModal', async () => {
         mockConvertToPrivatePermission = true;
 
-        const {updateChannelPrivacy} = require('mattermost-redux/actions/channels');
+        const {updateChannelPrivacy} = require('@hanzoteam/redux/actions/channels');
         updateChannelPrivacy.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -608,7 +608,7 @@ describe('ChannelSettingsInfoTab', () => {
     it('should not convert channel when canceling in ConvertConfirmModal', async () => {
         mockConvertToPrivatePermission = true;
 
-        const {updateChannelPrivacy} = require('mattermost-redux/actions/channels');
+        const {updateChannelPrivacy} = require('@hanzoteam/redux/actions/channels');
         updateChannelPrivacy.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsInfoTab {...baseProps}/>);
@@ -630,7 +630,7 @@ describe('ChannelSettingsInfoTab', () => {
     it('should handle errors when converting channel privacy', async () => {
         mockConvertToPrivatePermission = true;
 
-        const {updateChannelPrivacy} = require('mattermost-redux/actions/channels');
+        const {updateChannelPrivacy} = require('@hanzoteam/redux/actions/channels');
         updateChannelPrivacy.mockReturnValue({
             type: 'MOCK_ACTION',
             error: {message: 'Error changing privacy'},
@@ -732,7 +732,7 @@ describe('ChannelSettingsInfoTab', () => {
         });
 
         it('includes discoverable: true in the patchChannel payload when toggled on and saved', async () => {
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {discoverable: true}});
 
             renderWithContext(
@@ -756,7 +756,7 @@ describe('ChannelSettingsInfoTab', () => {
         });
 
         it('omits the discoverable field from the patch when the toggle is unchanged', async () => {
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
             renderWithContext(

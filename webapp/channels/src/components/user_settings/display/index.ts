@@ -6,25 +6,25 @@ import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 import timezones from 'timezones.json';
 
-import {CollapsedThreads} from '@mattermost/types/config';
+import {CollapsedThreads} from '@hanzoteam/types/config';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {autoUpdateTimezone} from 'mattermost-redux/actions/timezone';
-import {patchUser, updateMe} from 'mattermost-redux/actions/users';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {autoUpdateTimezone} from '@hanzoteam/redux/actions/timezone';
+import {patchUser, updateMe} from '@hanzoteam/redux/actions/users';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 import {
     get,
     isCollapsedThreadsAllowed,
     getCollapsedThreadsPreference,
-} from 'mattermost-redux/selectors/entities/preferences';
+} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     generateCurrentTimezoneLabel,
     getCurrentTimezoneFull,
     getCurrentTimezoneLabel,
     getTimezoneForUserProfile,
-} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId, getUser} from 'mattermost-redux/selectors/entities/users';
-import {getUserCurrentTimezone} from 'mattermost-redux/utils/timezone_utils';
+} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {getUserCurrentTimezone} from '@hanzoteam/redux/utils/timezone_utils';
 
 import {getLanguages, isLanguageAvailable} from 'i18n/i18n';
 import {Preferences} from 'utils/constants';

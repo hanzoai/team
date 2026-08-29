@@ -4,8 +4,8 @@
 import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {MemberInviteProfile} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {MemberInviteProfile} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import InputError from 'components/input_error';
 import Input from 'components/widgets/inputs/input/input';

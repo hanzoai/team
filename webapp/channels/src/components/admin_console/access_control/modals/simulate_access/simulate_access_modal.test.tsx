@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
-import {POLICY_SIMULATION_BLAME_SOURCES} from '@mattermost/types/access_control';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
+import {POLICY_SIMULATION_BLAME_SOURCES} from '@hanzoteam/types/access_control';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {act, fireEvent, renderWithContext, screen, userEvent, waitFor, within} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -17,11 +17,11 @@ const mockSearchProfiles = jest.fn();
 const mockGetProfilesInChannel = jest.fn();
 const mockGetProfiles = jest.fn();
 
-jest.mock('mattermost-redux/actions/access_control', () => ({
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
     simulatePolicyForUsers: (params: any) => () => mockSimulatePolicyForUsers(params),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
 
     // Match real thunks (async functions) so redux-thunk always invokes these.
     searchProfiles: (term: string, opts: any) => async () => mockSearchProfiles(term, opts),

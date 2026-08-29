@@ -4,8 +4,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import glyphMap, {ProductChannelsIcon} from '@mattermost/compass-icons/components';
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
+import glyphMap, {ProductChannelsIcon} from '@hanzoteam/compass-icons/components';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
 
 import {useCurrentProduct} from 'utils/products';
 

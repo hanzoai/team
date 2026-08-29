@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {fetchAllMyTeamsChannels, fetchAllMyChannelMembers, fetchChannelsAndMembers, unsetActiveChannelOnServer} from 'mattermost-redux/actions/channels';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense, getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeamId, getMyTeams} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {fetchAllMyTeamsChannels, fetchAllMyChannelMembers, fetchChannelsAndMembers, unsetActiveChannelOnServer} from '@hanzoteam/redux/actions/channels';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense, getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeamId, getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {markAsReadOnFocus} from 'actions/views/channel';
 import {selectTeamScopedProducts} from 'selectors/products';

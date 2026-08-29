@@ -14,14 +14,14 @@ import {
     ClockOutlineIcon,
     ChevronRightIcon,
     CheckIcon,
-} from '@mattermost/compass-icons/components';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import {CategorySorting} from '@mattermost/types/channel_categories';
+} from '@hanzoteam/compass-icons/components';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
 
-import {setCategoryMuted, setCategorySorting} from 'mattermost-redux/actions/channel_categories';
-import {readMultipleChannels} from 'mattermost-redux/actions/channels';
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {shouldShowUnreadsCategory} from 'mattermost-redux/selectors/entities/preferences';
+import {setCategoryMuted, setCategorySorting} from '@hanzoteam/redux/actions/channel_categories';
+import {readMultipleChannels} from '@hanzoteam/redux/actions/channels';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {shouldShowUnreadsCategory} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {openModal} from 'actions/views/modals';
 import {makeGetUnreadIdsForCategory} from 'selectors/views/channel_sidebar';

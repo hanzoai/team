@@ -4,17 +4,17 @@
 import {useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
-import type {Channel} from '@mattermost/types/channels';
-import type {GlobalState} from '@mattermost/types/store';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getChannelBookmarks} from 'mattermost-redux/selectors/entities/channel_bookmarks';
-import {getChannel, getMyChannelMember} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {insertWithoutDuplicates} from 'mattermost-redux/utils/array_utils';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getChannelBookmarks} from '@hanzoteam/redux/selectors/entities/channel_bookmarks';
+import {getChannel, getMyChannelMember} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {insertWithoutDuplicates} from '@hanzoteam/redux/utils/array_utils';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {fetchChannelBookmarks, reorderBookmark} from 'actions/channel_bookmarks';
 import {loadCustomEmojisIfNeeded} from 'actions/emoji_actions';

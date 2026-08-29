@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {PostActionIntegrationFormat} from '@mattermost/types/integration_actions';
-import type {PostImage, PostType} from '@mattermost/types/posts';
+import type {PostActionIntegrationFormat} from '@hanzoteam/types/integration_actions';
+import type {PostImage, PostType} from '@hanzoteam/types/posts';
 
-import type {HighlightWithoutNotificationKey} from 'mattermost-redux/selectors/entities/users';
+import type {HighlightWithoutNotificationKey} from '@hanzoteam/redux/selectors/entities/users';
 
 import PostEditedIndicator from 'components/post_view/post_edited_indicator';
 

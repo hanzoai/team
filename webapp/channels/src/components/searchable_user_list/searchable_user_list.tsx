@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Scrollbars from 'components/common/scrollbars';
 import QuickInput from 'components/quick_input';

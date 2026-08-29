@@ -3,7 +3,7 @@
 
 import {useIntl} from 'react-intl';
 
-import {Weekdays, Weekend, EveryDay} from '@mattermost/types/recaps';
+import {Weekdays, Weekend, EveryDay} from '@hanzoteam/types/recaps';
 
 import {DAY_DESCRIPTORS} from './day_descriptors';
 import {formatRelativeScheduleTime} from './schedule_time_format';

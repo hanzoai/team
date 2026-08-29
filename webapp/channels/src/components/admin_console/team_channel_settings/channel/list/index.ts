@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 
-import {getAllChannelsWithCount as getData, searchAllChannels} from 'mattermost-redux/actions/channels';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getAllChannels} from 'mattermost-redux/selectors/entities/channels';
+import {getAllChannelsWithCount as getData, searchAllChannels} from '@hanzoteam/redux/actions/channels';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getAllChannels} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {Constants} from 'utils/constants';
 

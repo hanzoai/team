@@ -4,7 +4,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import {getDraftRemotes, type Draft} from 'selectors/drafts';
 

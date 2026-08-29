@@ -4,10 +4,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {getIsMobileView} from 'selectors/views/browser';
 

@@ -4,7 +4,7 @@
 import {act} from '@testing-library/react';
 import React from 'react';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

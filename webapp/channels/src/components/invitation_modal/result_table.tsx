@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import AlertIcon from 'components/widgets/icons/alert_icon';
 import EmailIcon from 'components/widgets/icons/mail_icon';

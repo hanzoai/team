@@ -1,28 +1,28 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import {CategorySorting} from '@mattermost/types/channel_categories';
-import type {Channel} from '@mattermost/types/channels';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
 import {
     makeGetCategoriesForTeam,
     makeGetNonManagedCategoriesForTeam,
     makeGetChannelsByCategory,
     makeGetChannelIdsForCategory,
-} from 'mattermost-redux/selectors/entities/channel_categories';
+} from '@hanzoteam/redux/selectors/entities/channel_categories';
 import {
     getAllChannels,
     getCurrentChannelId,
     getMyChannelMemberships,
     getUnreadChannelIds,
     sortUnreadChannels,
-} from 'mattermost-redux/selectors/entities/channels';
-import {shouldShowUnreadsCategory, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {shouldShowUnreadsCategory, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
 
 import type {DraggingState, GlobalState} from 'types/store';
 

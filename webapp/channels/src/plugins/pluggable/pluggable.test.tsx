@@ -5,7 +5,7 @@ import type {ComponentProps} from 'react';
 import React from 'react';
 import {Provider} from 'react-redux';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import testConfigureStore from 'tests/test_store';

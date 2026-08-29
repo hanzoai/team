@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Permissions, Preferences} from 'mattermost-redux/constants';
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
+import {Permissions, Preferences} from '@hanzoteam/redux/constants';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {fireEvent, renderWithContext, screen, waitFor} from 'tests/react_testing_utils';
 import Constants, {ModalIdentifiers} from 'utils/constants';
 import {TestHelper} from 'utils/test_helper';

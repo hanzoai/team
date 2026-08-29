@@ -6,13 +6,13 @@ import React, {useEffect, useMemo} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
-import type {LockProfileFieldsSetting} from '@mattermost/types/config';
-import type {MemberInviteProfile, Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {LockProfileFieldsSetting} from '@hanzoteam/types/config';
+import type {MemberInviteProfile, Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
 
 import AlertBanner from 'components/alert_banner';
 import useAccessControlAttributes, {EntityType} from 'components/common/hooks/useAccessControlAttributes';

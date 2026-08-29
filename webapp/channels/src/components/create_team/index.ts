@@ -3,10 +3,10 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCloudSubscription as selectCloudSubscription} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCloudSubscription as selectCloudSubscription} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {isAnonymousURLEnabled} from 'selectors/config';
 

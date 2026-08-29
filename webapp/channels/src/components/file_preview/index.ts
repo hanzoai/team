@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {openModal} from 'actions/views/modals';
 import {isCompactMode} from 'selectors/preferences';

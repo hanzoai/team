@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Invoice, Subscription} from '@mattermost/types/cloud';
+import type {Invoice, Subscription} from '@hanzoteam/types/cloud';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

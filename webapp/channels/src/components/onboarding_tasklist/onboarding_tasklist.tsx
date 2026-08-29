@@ -7,17 +7,17 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 
-import {CloseIcon, PlaylistCheckIcon} from '@mattermost/compass-icons/components';
+import {CloseIcon, PlaylistCheckIcon} from '@hanzoteam/compass-icons/components';
 
-import {getPrevTrialLicense} from 'mattermost-redux/actions/admin';
-import {getMyPreferences, savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCloudSubscription} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getPrevTrialLicense} from '@hanzoteam/redux/actions/admin';
+import {getMyPreferences, savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCloudSubscription} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 import {
     getBool,
     getMyPreferences as getMyPreferencesSelector,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getShowTaskListBool} from 'selectors/onboarding';
 

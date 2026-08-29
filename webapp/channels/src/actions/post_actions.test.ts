@@ -1,16 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {FileInfo, FilesState} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import type {FileInfo, FilesState} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {ChannelTypes, SearchTypes} from 'mattermost-redux/action_types';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import {Posts} from 'mattermost-redux/constants';
+import {ChannelTypes, SearchTypes} from '@hanzoteam/redux/action_types';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import * as Actions from 'actions/post_actions';
 
-import test_helper from 'packages/mattermost-redux/test/test_helper';
+import test_helper from 'packages/@hanzoteam/redux/test/test_helper';
 import mockStore from 'tests/test_store';
 import {Constants, ActionTypes, RHSStates} from 'utils/constants';
 import * as PostUtils from 'utils/post_utils';
@@ -19,7 +19,7 @@ import type {GlobalState} from 'types/store';
 
 import {sendDesktopNotification} from './notification_actions';
 
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     removeReaction: (...args: any[]) => ({type: 'MOCK_REMOVE_REACTION', args}),
     addReaction: (...args: any[]) => ({type: 'MOCK_ADD_REACTION', args}),
     createPost: (...args: any[]) => ({type: 'MOCK_CREATE_POST', args}),
@@ -50,7 +50,7 @@ jest.mock('actions/storage', () => {
     };
 });
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn().mockReturnValue(false),
 }));
 

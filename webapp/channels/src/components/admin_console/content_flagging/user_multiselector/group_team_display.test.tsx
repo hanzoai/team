@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

@@ -5,11 +5,11 @@ import React, {useEffect} from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 import {Link, useHistory} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {Bot} from '@mattermost/types/bots';
-import type {Command, IncomingWebhook, OAuthApp, OutgoingOAuthConnection, OutgoingWebhook} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {Bot} from '@hanzoteam/types/bots';
+import type {Command, IncomingWebhook, OAuthApp, OutgoingOAuthConnection, OutgoingWebhook} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import CopyText from 'components/copy_text';

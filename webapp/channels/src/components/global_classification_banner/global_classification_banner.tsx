@@ -4,13 +4,13 @@
 import React, {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {PropertyField, PropertyFieldOption, PropertyValue} from '@mattermost/types/properties';
-import type {GlobalState} from '@mattermost/types/store';
+import type {PropertyField, PropertyFieldOption, PropertyValue} from '@hanzoteam/types/properties';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {fetchPropertyFields, fetchSystemPropertyValues} from 'mattermost-redux/actions/properties';
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
-import {getPropertyValueForTargetField} from 'mattermost-redux/selectors/entities/properties';
-import {getContrastingSimpleColor} from 'mattermost-redux/utils/theme_utils';
+import {fetchPropertyFields, fetchSystemPropertyValues} from '@hanzoteam/redux/actions/properties';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
+import {getPropertyValueForTargetField} from '@hanzoteam/redux/selectors/entities/properties';
+import {getContrastingSimpleColor} from '@hanzoteam/redux/utils/theme_utils';
 
 import {
     CLASSIFICATIONS_FIELD_TARGET_ID,

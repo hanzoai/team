@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import {AuthorType, ReleaseStage} from '@mattermost/types/marketplace';
-import type {MarketplacePlugin} from '@mattermost/types/marketplace';
+import {AuthorType, ReleaseStage} from '@hanzoteam/types/marketplace';
+import type {MarketplacePlugin} from '@hanzoteam/types/marketplace';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

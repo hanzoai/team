@@ -5,9 +5,9 @@ import React, {useState} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {InformationOutlineIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {AllowedIPRange} from '@mattermost/types/config';
+import {InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 import ExternalLink from 'components/external_link';
 import type {CustomMessageInputType} from 'components/widgets/inputs/input/input';

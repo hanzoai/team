@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -13,7 +13,7 @@ import type {GlobalState} from 'types/store';
 import RequestJoinChannelModal from './request_join_channel_modal';
 
 const mockRequestJoinChannel = jest.fn();
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     requestJoinChannel: (...args: unknown[]) => mockRequestJoinChannel(...args),
 }));
 

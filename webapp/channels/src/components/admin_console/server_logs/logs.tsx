@@ -5,15 +5,15 @@ import debounce from 'lodash/debounce';
 import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {Button, buttonClassNames} from '@mattermost/shared/components/button';
+import {Button, buttonClassNames} from '@hanzoteam/shared/components/button';
 import type {
     LogFilter,
     LogLevels,
     LogObject,
     LogServerNames,
-} from '@mattermost/types/admin';
+} from '@hanzoteam/types/admin';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import ExternalLink from 'components/external_link';
 import AdminHeader from 'components/widgets/admin_console/admin_header';

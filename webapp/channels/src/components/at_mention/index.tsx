@@ -4,9 +4,9 @@
 import type {ConnectedProps} from 'react-redux';
 import {connect} from 'react-redux';
 
-import {getAllGroupsForReferenceByName} from 'mattermost-redux/selectors/entities/groups';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId, getUsersByUsername} from 'mattermost-redux/selectors/entities/users';
+import {getAllGroupsForReferenceByName} from '@hanzoteam/redux/selectors/entities/groups';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId, getUsersByUsername} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelType} from '@mattermost/types/channels';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
 import CheckCircleIcon from 'components/widgets/icons/check_circle_icon';
 import GlobeCircleSolidIcon from 'components/widgets/icons/globe_circle_solid_icon';

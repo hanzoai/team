@@ -5,17 +5,17 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {PropertyTypes} from 'mattermost-redux/action_types';
-import {patchChannel} from 'mattermost-redux/actions/channels';
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {Client4} from 'mattermost-redux/client';
-import {Permissions} from 'mattermost-redux/constants';
-import {isChannelAutotranslated as isChannelAutotranslatedSelector} from 'mattermost-redux/selectors/entities/channels';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getRemotesForChannel} from 'mattermost-redux/selectors/entities/shared_channels';
+import {PropertyTypes} from '@hanzoteam/redux/action_types';
+import {patchChannel} from '@hanzoteam/redux/actions/channels';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {Client4} from '@hanzoteam/redux/client';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {isChannelAutotranslated as isChannelAutotranslatedSelector} from '@hanzoteam/redux/selectors/entities/channels';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getRemotesForChannel} from '@hanzoteam/redux/selectors/entities/shared_channels';
 
 import {ColorSwatch, LevelOptionLabel} from 'components/admin_console/classification_markings/classification_markings_styled';
 import {

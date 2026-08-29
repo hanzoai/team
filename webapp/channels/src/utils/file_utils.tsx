@@ -3,8 +3,8 @@
 
 import exif2css from 'exif2css';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {ClientConfig} from '@mattermost/types/config';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {ClientConfig} from '@hanzoteam/types/config';
 
 import Constants from 'utils/constants';
 

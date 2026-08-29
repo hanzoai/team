@@ -5,9 +5,9 @@ import {useEffect, useRef} from 'react';
 import type {MutableRefObject} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getCurrentUser, isFirstAdmin, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUser, isFirstAdmin, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {isModalOpen} from 'selectors/views/modals';
 

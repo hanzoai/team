@@ -6,7 +6,7 @@ import React, {useState, useEffect, useCallback, useRef} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {Button, type ButtonVariant} from '@mattermost/shared/components/button';
+import {Button, type ButtonVariant} from '@hanzoteam/shared/components/button';
 
 import {useFocusTrap} from '../hooks/useFocusTrap';
 import {useStackedModal} from '../hooks/useStackedModal';

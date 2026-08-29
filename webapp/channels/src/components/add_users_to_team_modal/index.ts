@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getProfilesNotInTeam, searchProfiles} from 'mattermost-redux/actions/users';
-import {getProfilesNotInTeam as selectProfilesNotInTeam} from 'mattermost-redux/selectors/entities/users';
+import {getProfilesNotInTeam, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getProfilesNotInTeam as selectProfilesNotInTeam} from '@hanzoteam/redux/selectors/entities/users';
 
 import AddUsersToTeamModal from './add_users_to_team_modal';
 

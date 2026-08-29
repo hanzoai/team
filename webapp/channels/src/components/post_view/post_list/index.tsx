@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {markChannelAsRead} from 'mattermost-redux/actions/channels';
-import {RequestStatus} from 'mattermost-redux/constants';
-import {isMyChannelAutotranslated} from 'mattermost-redux/selectors/entities/channels';
-import {getRecentPostsChunkInChannel, makeGetPostsChunkAroundPost, getUnreadPostsChunk, getPost, isPostsChunkIncludingUnreadsPosts, getLimitedViews} from 'mattermost-redux/selectors/entities/posts';
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
-import {makePreparePostIdsForPostList} from 'mattermost-redux/utils/post_list';
+import {markChannelAsRead} from '@hanzoteam/redux/actions/channels';
+import {RequestStatus} from '@hanzoteam/redux/constants';
+import {isMyChannelAutotranslated} from '@hanzoteam/redux/selectors/entities/channels';
+import {getRecentPostsChunkInChannel, makeGetPostsChunkAroundPost, getUnreadPostsChunk, getPost, isPostsChunkIncludingUnreadsPosts, getLimitedViews} from '@hanzoteam/redux/selectors/entities/posts';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
+import {makePreparePostIdsForPostList} from '@hanzoteam/redux/utils/post_list';
 
 import {updateNewMessagesAtInChannel} from 'actions/global_actions';
 import {

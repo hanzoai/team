@@ -4,8 +4,8 @@
 import React from 'react';
 import type {match} from 'react-router-dom';
 
-import type {CloudState} from '@mattermost/types/cloud';
-import type {PluginSettings} from '@mattermost/types/config';
+import type {CloudState} from '@hanzoteam/types/cloud';
+import type {PluginSettings} from '@hanzoteam/types/config';
 
 import CustomPluginSettings from 'components/admin_console/custom_plugin_settings';
 

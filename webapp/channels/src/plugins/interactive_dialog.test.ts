@@ -21,7 +21,7 @@ jest.mock('components/dialog_router', () => ({
     default: () => null,
 }));
 
-import {IntegrationTypes} from 'mattermost-redux/action_types';
+import {IntegrationTypes} from '@hanzoteam/redux/action_types';
 
 import {openModal} from 'actions/views/modals';
 import store from 'stores/redux_store';

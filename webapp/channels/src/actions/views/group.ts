@@ -1,13 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {GroupSearchParams} from '@mattermost/types/groups';
+import type {GroupSearchParams} from '@hanzoteam/types/groups';
 
-import {searchGroups} from 'mattermost-redux/actions/groups';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {searchAssociatedGroupsForReferenceLocal} from 'mattermost-redux/selectors/entities/groups';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
+import {searchGroups} from '@hanzoteam/redux/actions/groups';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {searchAssociatedGroupsForReferenceLocal} from '@hanzoteam/redux/selectors/entities/groups';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import type {ActionFuncAsync} from 'types/store';
 

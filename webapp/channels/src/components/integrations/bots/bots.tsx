@@ -5,12 +5,12 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {Bot as BotType} from '@mattermost/types/bots';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile, UserAccessToken} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {Bot as BotType} from '@hanzoteam/types/bots';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile, UserAccessToken} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AlertBanner from 'components/alert_banner';
 import BackstageList from 'components/backstage/components/backstage_list';

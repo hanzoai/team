@@ -1,15 +1,15 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {WebSocketTypes} from 'mattermost-redux/action_types';
-import {getMissingProfilesByIds, getStatusesByIds} from 'mattermost-redux/actions/users';
-import {General, Preferences} from 'mattermost-redux/constants';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
-import {getConfig, isPerformanceDebuggingEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId, getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
+import {WebSocketTypes} from '@hanzoteam/redux/action_types';
+import {getMissingProfilesByIds, getStatusesByIds} from '@hanzoteam/redux/actions/users';
+import {General, Preferences} from '@hanzoteam/redux/constants';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig, isPerformanceDebuggingEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId, getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {ActionFuncAsync, ThunkActionFunc} from 'types/store';
 

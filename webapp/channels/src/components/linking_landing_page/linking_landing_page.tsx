@@ -4,8 +4,8 @@
 import React, {PureComponent} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import BrowserStore from 'stores/browser_store';
 

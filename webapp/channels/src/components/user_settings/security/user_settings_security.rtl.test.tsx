@@ -4,9 +4,9 @@
 import React from 'react';
 import type {IntlShape} from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {PasswordConfig} from 'mattermost-redux/selectors/entities/general';
+import type {PasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import Constants from 'utils/constants';

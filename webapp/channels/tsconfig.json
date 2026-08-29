@@ -25,7 +25,7 @@
     "composite": true,
     "types": ["@testing-library/jest-dom"],
     "paths": {
-        "mattermost-redux/*": ["packages/mattermost-redux/src/*"],
+        "@hanzoteam/redux/*": ["packages/@hanzoteam/redux/src/*"],
         "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
     },
     "plugins": [{

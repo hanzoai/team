@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
-import type {Channel} from '@mattermost/types/channels';
+import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {getChannelIconClassName} from 'utils/channel_utils';
 import {createPluginErrorLog} from 'utils/plugin_error_log';

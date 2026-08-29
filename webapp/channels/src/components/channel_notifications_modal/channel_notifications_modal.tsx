@@ -5,11 +5,11 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import type {OnChangeValue} from 'react-select';
 
-import {BellOffOutlineIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel, ChannelMembership, ChannelNotifyProps} from '@mattermost/types/channels';
-import type {UserNotifyProps, UserProfile} from '@mattermost/types/users';
+import {BellOffOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel, ChannelMembership, ChannelNotifyProps} from '@hanzoteam/types/channels';
+import type {UserNotifyProps, UserProfile} from '@hanzoteam/types/users';
 
 import AlertBanner from 'components/alert_banner';
 import CheckboxSettingItem from 'components/widgets/modals/components/checkbox_setting_item';

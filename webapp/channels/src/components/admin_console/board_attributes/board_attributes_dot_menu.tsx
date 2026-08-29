@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {ContentCopyIcon, DotsHorizontalIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import type {BoardsPropertyField} from '@mattermost/types/properties_board';
+import {ContentCopyIcon, DotsHorizontalIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {BoardsPropertyField} from '@hanzoteam/types/properties_board';
 
 import * as Menu from 'components/menu';
 

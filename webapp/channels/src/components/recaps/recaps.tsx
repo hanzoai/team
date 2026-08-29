@@ -6,12 +6,12 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect, useHistory, useLocation} from 'react-router-dom';
 
-import {PlusIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
+import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
 
-import {getAgents} from 'mattermost-redux/actions/agents';
-import {getRecaps, getScheduledRecaps, getRecapLimitStatus as fetchRecapLimitStatus, markRecapsAsViewed} from 'mattermost-redux/actions/recaps';
-import {getAllRecaps, getUnreadRecaps, getReadRecaps, getAllScheduledRecaps} from 'mattermost-redux/selectors/entities/recaps';
+import {getAgents} from '@hanzoteam/redux/actions/agents';
+import {getRecaps, getScheduledRecaps, getRecapLimitStatus as fetchRecapLimitStatus, markRecapsAsViewed} from '@hanzoteam/redux/actions/recaps';
+import {getAllRecaps, getUnreadRecaps, getReadRecaps, getAllScheduledRecaps} from '@hanzoteam/redux/selectors/entities/recaps';
 
 import {selectLhsItem} from 'actions/views/lhs';
 import {openModal} from 'actions/views/modals';

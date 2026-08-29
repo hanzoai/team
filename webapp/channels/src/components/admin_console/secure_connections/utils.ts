@@ -5,18 +5,18 @@ import type {LocationDescriptor} from 'history';
 import {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ClientError} from '@mattermost/client';
-import type {Channel} from '@mattermost/types/channels';
-import {isRemoteClusterPatch, type RemoteCluster, type RemoteClusterPatch} from '@mattermost/types/remote_clusters';
-import type {SharedChannelRemote} from '@mattermost/types/shared_channels';
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects, RelationOneToOne} from '@mattermost/types/utilities';
+import type {ClientError} from '@hanzoteam/client';
+import type {Channel} from '@hanzoteam/types/channels';
+import {isRemoteClusterPatch, type RemoteCluster, type RemoteClusterPatch} from '@hanzoteam/types/remote_clusters';
+import type {SharedChannelRemote} from '@hanzoteam/types/shared_channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects, RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {ChannelTypes} from 'mattermost-redux/action_types';
-import {getChannel as fetchChannel} from 'mattermost-redux/actions/channels';
-import {Client4} from 'mattermost-redux/client';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getActiveTeamsList, getTeam} from 'mattermost-redux/selectors/entities/teams';
+import {ChannelTypes} from '@hanzoteam/redux/action_types';
+import {getChannel as fetchChannel} from '@hanzoteam/redux/actions/channels';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getActiveTeamsList, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 export const useRemoteClusters = () => {
     const [remoteClusters, setRemoteClusters] = useState<RemoteCluster[]>();

@@ -5,17 +5,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
 
-import {addMessageIntoHistory} from 'mattermost-redux/actions/posts';
-import {updateScheduledPost} from 'mattermost-redux/actions/scheduled_posts';
-import {Preferences, Permissions} from 'mattermost-redux/constants';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {addMessageIntoHistory} from '@hanzoteam/redux/actions/posts';
+import {updateScheduledPost} from '@hanzoteam/redux/actions/scheduled_posts';
+import {Preferences, Permissions} from '@hanzoteam/redux/constants';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {runMessageWillBeUpdatedHooks} from 'actions/hooks';
 import {unsetEditingPost} from 'actions/post_actions';

@@ -31,8 +31,8 @@ jest.mock('actions/status_actions', () => ({
     addVisibleUsersInCurrentChannelAndSelfToStatusPoll: jest.fn().mockImplementation(() => () => {}),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/general', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/general') as typeof import('mattermost-redux/selectors/entities/general'),
+jest.mock('@hanzoteam/redux/selectors/entities/general', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/general') as typeof import('@hanzoteam/redux/selectors/entities/general'),
 }));
 
 jest.mock('selectors/views/browser', () => ({

@@ -5,12 +5,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getGroup} from 'mattermost-redux/actions/groups';
-import {getProfilesInGroup as getUsersInGroup, searchProfiles} from 'mattermost-redux/actions/users';
-import {getGroup as getGroupById} from 'mattermost-redux/selectors/entities/groups';
-import {getProfilesInGroup, searchProfilesInGroup} from 'mattermost-redux/selectors/entities/users';
+import {getGroup} from '@hanzoteam/redux/actions/groups';
+import {getProfilesInGroup as getUsersInGroup, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getGroup as getGroupById} from '@hanzoteam/redux/selectors/entities/groups';
+import {getProfilesInGroup, searchProfilesInGroup} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import {setModalSearchTerm} from 'actions/views/search';

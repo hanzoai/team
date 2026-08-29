@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

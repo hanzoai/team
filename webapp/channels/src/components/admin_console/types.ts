@@ -9,9 +9,9 @@ import type {
     IntlShape,
 } from 'react-intl';
 
-import type {CloudState, Product} from '@mattermost/types/cloud';
-import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
-import type {JobType} from '@mattermost/types/jobs';
+import type {CloudState, Product} from '@hanzoteam/types/cloud';
+import type {AdminConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {JobType} from '@hanzoteam/types/jobs';
 
 import type Constants from 'utils/constants';
 

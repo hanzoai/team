@@ -1,5 +1,5 @@
 {
-  "name": "@mattermost/shared",
+  "name": "@hanzoteam/shared",
   "version": "11.11.1",
   "description": "Shared components and utilities for use by the Mattermost web app and its plugins",
   "keywords": [
@@ -56,7 +56,7 @@
     "classnames": "^2.3.1"
   },
   "devDependencies": {
-    "@mattermost/eslint-plugin": "*",
+    "@hanzoteam/eslint-plugin": "*",
     "@parcel/bundler-library": "^2.16.3",
     "@parcel/packager-ts": "^2.16.3",
     "@parcel/transformer-typescript-types": "^2.16.3",
@@ -80,7 +80,7 @@
     "typescript": "^5.0.0"
   },
   "peerDependencies": {
-    "@mattermost/types": "^11.11.0",
+    "@hanzoteam/types": "^11.11.0",
     "@testing-library/react": "^16",
     "react": ">=17",
     "react-intl": ">=7",

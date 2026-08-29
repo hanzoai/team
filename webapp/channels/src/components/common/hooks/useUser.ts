@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {makeUseEntity} from './useEntity';
 

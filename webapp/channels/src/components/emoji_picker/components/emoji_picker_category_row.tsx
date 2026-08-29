@@ -5,7 +5,7 @@ import React, {memo} from 'react';
 import type {CSSProperties} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {EmojiCategory} from '@mattermost/types/emojis';
+import type {EmojiCategory} from '@hanzoteam/types/emojis';
 
 import {EMOJI_CATEGORIES} from '../constants';
 

@@ -4,17 +4,17 @@
 import nock from 'nock';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import ConvertGmToChannelModal from 'components/convert_gm_to_channel_modal/convert_gm_to_channel_modal';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import {fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {LicenseSkus} from 'utils/constants';
 

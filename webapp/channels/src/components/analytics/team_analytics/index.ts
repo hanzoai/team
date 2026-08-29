@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getTeams} from 'mattermost-redux/actions/teams';
-import {getProfilesInTeam} from 'mattermost-redux/actions/users';
-import {getTeamsList} from 'mattermost-redux/selectors/entities/teams';
+import {getTeams} from '@hanzoteam/redux/actions/teams';
+import {getProfilesInTeam} from '@hanzoteam/redux/actions/users';
+import {getTeamsList} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setGlobalItem} from 'actions/storage';
 import {getCurrentLocale} from 'selectors/i18n';

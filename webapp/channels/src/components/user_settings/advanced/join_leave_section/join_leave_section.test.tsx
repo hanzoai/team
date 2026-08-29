@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import JoinLeaveSection from 'components/user_settings/advanced/join_leave_section/join_leave_section';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
 import type {GlobalState} from 'types/store';

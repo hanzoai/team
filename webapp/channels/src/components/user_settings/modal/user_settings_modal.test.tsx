@@ -5,9 +5,9 @@ import {screen} from '@testing-library/react';
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 
@@ -33,9 +33,9 @@ const baseState: DeepPartial<GlobalState> = {
     },
 };
 
-jest.mock('@mattermost/client', () => ({
-    ...jest.requireActual('@mattermost/client'),
-    Client4: class MockClient4 extends jest.requireActual('@mattermost/client').Client4 {
+jest.mock('@hanzoteam/client', () => ({
+    ...jest.requireActual('@hanzoteam/client'),
+    Client4: class MockClient4 extends jest.requireActual('@hanzoteam/client').Client4 {
         getUserCustomProfileAttributesValues = jest.fn();
     },
 }));

@@ -8,7 +8,7 @@ import {
     TeamTypes,
     SearchTypes,
     UserTypes,
-} from 'mattermost-redux/action_types';
+} from '@hanzoteam/redux/action_types';
 
 import {SidebarSize} from 'components/resizable_sidebar/constants';
 

@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {GlobalState} from '@mattermost/types/store';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getCurrentChannelId, getRedirectChannelNameForTeam, makeGetGmChannelMemberCount} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getCurrentChannelId, getRedirectChannelNameForTeam, makeGetGmChannelMemberCount} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import SidebarGroupChannel from './sidebar_group_channel';
 

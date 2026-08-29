@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {getTheme, getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getTheme, getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
 
 import type {GlobalState} from 'types/store';
 

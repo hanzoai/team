@@ -5,10 +5,10 @@ import {act} from '@testing-library/react';
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {Post, PostType} from '@mattermost/types/posts';
+import type {Post, PostType} from '@hanzoteam/types/posts';
 
-import {Client4} from 'mattermost-redux/client';
-import {Posts} from 'mattermost-redux/constants';
+import {Client4} from '@hanzoteam/redux/client';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {PostTypes} from 'utils/constants';
@@ -19,7 +19,7 @@ import PostMarkdown from './post_markdown';
 jest.mock('components/properties_card_view/propertyValueRenderer/post_preview_property_renderer/post_preview_property_renderer', () => {
     return jest.fn(() => <div data-testid='post-preview-property-renderer-mock'>{'PostPreviewPropertyRenderer Mock'}</div>);
 });
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 jest.mock('components/remove_flagged_message_confirmation_modal/remove_flagged_message_confirmation_modal', () => {
     return jest.fn(() => <div data-testid='keep-remove-flagged-message-confirmation-modal'>{'KeepRemoveFlaggedMessageConfirmationModal Mock'}</div>);

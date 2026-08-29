@@ -5,11 +5,11 @@ import React, {useState, useCallback, useMemo} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckAllIcon, ArrowExpandIcon} from '@mattermost/compass-icons/components';
-import type {RecapChannel} from '@mattermost/types/recaps';
+import {CheckAllIcon, ArrowExpandIcon} from '@hanzoteam/compass-icons/components';
+import type {RecapChannel} from '@hanzoteam/types/recaps';
 
-import {readMultipleChannels} from 'mattermost-redux/actions/channels';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+import {readMultipleChannels} from '@hanzoteam/redux/actions/channels';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {switchToChannel} from 'actions/views/channel';
 

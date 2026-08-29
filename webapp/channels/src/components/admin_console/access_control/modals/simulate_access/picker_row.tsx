@@ -5,12 +5,12 @@ import classNames from 'classnames';
 import React, {useCallback, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AccessControlPolicy, PolicySimulationActionDecision} from '@mattermost/types/access_control';
-import {POLICY_SIMULATION_BLAME_SOURCES} from '@mattermost/types/access_control';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlPolicy, PolicySimulationActionDecision} from '@hanzoteam/types/access_control';
+import {POLICY_SIMULATION_BLAME_SOURCES} from '@hanzoteam/types/access_control';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {Client4} from 'mattermost-redux/client';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import ProfilePicture from 'components/profile_picture';
 

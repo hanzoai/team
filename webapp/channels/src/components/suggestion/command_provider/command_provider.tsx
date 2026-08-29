@@ -5,12 +5,12 @@ import React from 'react';
 import {defineMessage} from 'react-intl';
 import type {Store} from 'redux';
 
-import {DockWindowIcon} from '@mattermost/compass-icons/components';
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {AutocompleteSuggestion, CommandArgs} from '@mattermost/types/integrations';
+import {DockWindowIcon} from '@hanzoteam/compass-icons/components';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {AutocompleteSuggestion, CommandArgs} from '@hanzoteam/types/integrations';
 
-import {Client4} from 'mattermost-redux/client';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
+import {Client4} from '@hanzoteam/redux/client';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
 
 import globalStore from 'stores/redux_store';
 

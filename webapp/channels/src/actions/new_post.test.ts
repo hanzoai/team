@@ -1,20 +1,20 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Post} from '@mattermost/types/posts';
-import type {GlobalState} from '@mattermost/types/store';
+import type {Post} from '@hanzoteam/types/posts';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {ChannelTypes} from 'mattermost-redux/action_types';
-import {receivedNewPost} from 'mattermost-redux/actions/posts';
-import {Posts} from 'mattermost-redux/constants';
+import {ChannelTypes} from '@hanzoteam/redux/action_types';
+import {receivedNewPost} from '@hanzoteam/redux/actions/posts';
+import {Posts} from '@hanzoteam/redux/constants';
 
 import * as NewPostActions from 'actions/new_post';
 
 import mockStore from 'tests/test_store';
 import {Constants} from 'utils/constants';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channels'),
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channels'),
     markChannelAsReadOnServer: (...args: any[]) => ({type: 'MOCK_MARK_CHANNEL_AS_READ_ON_SERVER', args}),
     markChannelAsViewedOnServer: (...args: any[]) => ({type: 'MOCK_MARK_CHANNEL_AS_VIEWED_ON_SERVER', args}),
 }));

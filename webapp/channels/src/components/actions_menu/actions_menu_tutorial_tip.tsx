@@ -4,7 +4,7 @@
 import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {TourTip} from '@mattermost/components';
+import {TourTip} from '@hanzoteam/components';
 
 const translate = {x: 6, y: -16};
 

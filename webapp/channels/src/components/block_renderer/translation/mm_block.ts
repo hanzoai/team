@@ -20,8 +20,8 @@ import type {
     MmStaticSelectBlock,
     MmStaticSelectOption,
     MmTextBlock,
-} from '@mattermost/types/mm_blocks';
-import {ensureString} from '@mattermost/types/utilities';
+} from '@hanzoteam/types/mm_blocks';
+import {ensureString} from '@hanzoteam/types/utilities';
 
 import {parseMmButtonStyle} from '../utils/button';
 

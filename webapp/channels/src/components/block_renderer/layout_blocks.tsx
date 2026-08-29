@@ -13,7 +13,7 @@ import type {
     MmContainerAccentSemantic,
     MmContainerBlock,
     MmContainerGap,
-} from '@mattermost/types/mm_blocks';
+} from '@hanzoteam/types/mm_blocks';
 
 import {makeIsEligibleForClick} from 'utils/utils';
 

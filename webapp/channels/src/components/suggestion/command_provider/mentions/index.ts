@@ -3,12 +3,12 @@
 
 import type {Store} from 'redux';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
-import type {AutocompleteSuggestion} from '@mattermost/types/integrations';
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {AutocompleteSuggestion} from '@hanzoteam/types/integrations';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {autocompleteChannels} from 'mattermost-redux/actions/channels';
+import {autocompleteChannels} from '@hanzoteam/redux/actions/channels';
 
 import {autocompleteUsersInChannel} from 'actions/views/channel';
 

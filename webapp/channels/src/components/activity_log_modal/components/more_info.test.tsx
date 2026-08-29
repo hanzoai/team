@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import MoreInfo from 'components/activity_log_modal/components/more_info';
 

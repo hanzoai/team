@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelModeration as ChannelPermissions} from '@mattermost/types/channels';
+import type {ChannelModeration as ChannelPermissions} from '@hanzoteam/types/channels';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

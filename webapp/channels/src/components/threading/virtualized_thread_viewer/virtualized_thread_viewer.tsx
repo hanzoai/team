@@ -5,11 +5,11 @@ import React, {PureComponent} from 'react';
 import type {RefObject} from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Posts} from 'mattermost-redux/constants';
-import {getNewMessagesIndex, isDateLine, isStartOfNewMessages, isCreateComment} from 'mattermost-redux/utils/post_list';
+import {Posts} from '@hanzoteam/redux/constants';
+import {getNewMessagesIndex, isDateLine, isStartOfNewMessages, isCreateComment} from '@hanzoteam/redux/utils/post_list';
 
 import type {OnScrollArgs, OnItemsRenderedArgs, InitialScrollIndex, DynamicVirtualizedChildProps} from 'components/dynamic_virtualized_list';
 import {DynamicVirtualizedList} from 'components/dynamic_virtualized_list';

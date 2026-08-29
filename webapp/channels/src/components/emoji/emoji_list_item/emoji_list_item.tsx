@@ -3,10 +3,10 @@
 
 import React, {useCallback, useMemo} from 'react';
 
-import type {CustomEmoji} from '@mattermost/types/emojis';
+import type {CustomEmoji} from '@hanzoteam/types/emojis';
 
-import {Client4} from 'mattermost-redux/client';
-import Permissions from 'mattermost-redux/constants/permissions';
+import {Client4} from '@hanzoteam/redux/client';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import AnyTeamPermissionGate from 'components/permissions_gates/any_team_permission_gate';
 

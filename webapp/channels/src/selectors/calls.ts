@@ -5,7 +5,7 @@ import semver from 'semver';
 
 import type {CallsConfig, UserSessionState} from '@mattermost/calls-common/lib/types';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
 
 import {suitePluginIds} from 'utils/constants';
 

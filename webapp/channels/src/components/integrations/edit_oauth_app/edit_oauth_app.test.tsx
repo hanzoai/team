@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
 import EditOAuthApp from 'components/integrations/edit_oauth_app/edit_oauth_app';
 

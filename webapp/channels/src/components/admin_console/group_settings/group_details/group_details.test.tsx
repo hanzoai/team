@@ -3,24 +3,24 @@
 
 import React from 'react';
 
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
-import type {Group, GroupChannel, GroupTeam} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {Group, GroupChannel, GroupTeam} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {GroupDetails} from 'components/admin_console/group_settings/group_details/group_details';
 
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import {renderWithContext, act} from 'tests/react_testing_utils';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channels'),
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channels'),
     getAllChannels: () => () => Promise.resolve({data: []}),
     searchAllChannels: () => () => Promise.resolve({data: []}),
 }));
 
-jest.mock('mattermost-redux/actions/teams', () => ({
-    ...jest.requireActual('mattermost-redux/actions/teams'),
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/teams'),
     getTeams: () => () => Promise.resolve({data: []}),
     searchTeams: () => () => Promise.resolve({data: []}),
 }));

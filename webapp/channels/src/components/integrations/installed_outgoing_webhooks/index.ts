@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import * as Actions from 'mattermost-redux/actions/integrations';
-import {Permissions} from 'mattermost-redux/constants';
-import {getAllChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOutgoingHooks} from 'mattermost-redux/selectors/entities/integrations';
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getUsers} from 'mattermost-redux/selectors/entities/users';
+import * as Actions from '@hanzoteam/redux/actions/integrations';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getAllChannels} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOutgoingHooks} from '@hanzoteam/redux/selectors/entities/integrations';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getUsers} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadOutgoingHooksAndProfilesForTeam} from 'actions/integration_actions';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import * as ChannelSelectors from 'mattermost-redux/selectors/entities/channels';
+import * as ChannelSelectors from '@hanzoteam/redux/selectors/entities/channels';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

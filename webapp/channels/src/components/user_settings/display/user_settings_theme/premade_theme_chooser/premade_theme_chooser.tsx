@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import {Preferences} from 'mattermost-redux/constants';
-import type {Theme, ThemeKey} from 'mattermost-redux/selectors/entities/preferences';
-import {changeOpacity} from 'mattermost-redux/utils/theme_utils';
+import {Preferences} from '@hanzoteam/redux/constants';
+import type {Theme, ThemeKey} from '@hanzoteam/redux/selectors/entities/preferences';
+import {changeOpacity} from '@hanzoteam/redux/utils/theme_utils';
 
 import {toTitleCase} from 'utils/utils';
 

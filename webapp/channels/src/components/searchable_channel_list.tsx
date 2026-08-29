@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage, defineMessages, injectIntl, type WrappedComponentProps} from 'react-intl';
 
-import {ArchiveOutlineIcon, CheckIcon, ChevronDownIcon, GlobeIcon, LockOutlineIcon, AccountOutlineIcon, GlobeCheckedIcon, AccountPlusOutlineIcon, ClockOutlineIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {Channel, ChannelJoinRequest, ChannelMembership} from '@mattermost/types/channels';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import {ArchiveOutlineIcon, CheckIcon, ChevronDownIcon, GlobeIcon, LockOutlineIcon, AccountOutlineIcon, GlobeCheckedIcon, AccountPlusOutlineIcon, ClockOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {Channel, ChannelJoinRequest, ChannelMembership} from '@hanzoteam/types/channels';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
 import {ChannelIcon} from 'components/channel_type_icon';
 import MagnifyingGlassSVG from 'components/common/svg_images_components/magnifying_glass_svg';

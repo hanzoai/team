@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 // Plugin-facing contract for the `window.WebappUtils` API. Hand-authored, not derived:
 // the web app checks at build time that each stays assignable to the real modal, so

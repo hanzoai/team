@@ -1,17 +1,17 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ClientConfig} from '@mattermost/types/config';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ClientConfig} from '@hanzoteam/types/config';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {moveThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId, getCurrentUserRoles} from 'mattermost-redux/selectors/entities/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {moveThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId, getCurrentUserRoles} from '@hanzoteam/redux/selectors/entities/users';
 
 import {arePreviewsCollapsed} from 'selectors/preferences';
 import {getGlobalItem} from 'selectors/storage';

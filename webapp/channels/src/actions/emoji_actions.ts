@@ -1,16 +1,16 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Post} from '@mattermost/types/posts';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Post} from '@hanzoteam/types/posts';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import * as EmojiActions from 'mattermost-redux/actions/emojis';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Preferences as ReduxPreferences} from 'mattermost-redux/constants';
-import {getCustomEmojisByName as selectCustomEmojisByName, getCustomEmojisEnabled} from 'mattermost-redux/selectors/entities/emojis';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {getEmojiName} from 'mattermost-redux/utils/emoji_utils';
+import * as EmojiActions from '@hanzoteam/redux/actions/emojis';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Preferences as ReduxPreferences} from '@hanzoteam/redux/constants';
+import {getCustomEmojisByName as selectCustomEmojisByName, getCustomEmojisEnabled} from '@hanzoteam/redux/selectors/entities/emojis';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {getEmojiName} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {getEmojiMap, getRecentEmojisData, getRecentEmojisNames, isCustomEmojiEnabled} from 'selectors/emojis';
 import {isCustomStatusEnabled, makeGetCustomStatus} from 'selectors/views/custom_status';

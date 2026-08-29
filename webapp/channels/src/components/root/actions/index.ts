@@ -3,22 +3,22 @@
 
 import type {History} from 'history';
 
-import {LogLevel} from '@mattermost/types/client4';
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import {LogLevel} from '@hanzoteam/types/client4';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {GeneralTypes} from 'mattermost-redux/action_types';
-import {logError} from 'mattermost-redux/actions/errors';
-import {getClientConfig, getLicenseConfig, getFirstAdminSetupComplete} from 'mattermost-redux/actions/general';
-import {getServerLimits} from 'mattermost-redux/actions/limits';
-import {getMyPreferences} from 'mattermost-redux/actions/preferences';
-import {getMyTeamMembers, getMyTeams, getMyTeamUnreads} from 'mattermost-redux/actions/teams';
-import {getMe, getProfiles} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {General} from 'mattermost-redux/constants';
-import {isCollapsedThreadsEnabled, getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getActiveTeamsList} from 'mattermost-redux/selectors/entities/teams';
-import {checkIsFirstAdmin, getCurrentUser, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {GeneralTypes} from '@hanzoteam/redux/action_types';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {getClientConfig, getLicenseConfig, getFirstAdminSetupComplete} from '@hanzoteam/redux/actions/general';
+import {getServerLimits} from '@hanzoteam/redux/actions/limits';
+import {getMyPreferences} from '@hanzoteam/redux/actions/preferences';
+import {getMyTeamMembers, getMyTeams, getMyTeamUnreads} from '@hanzoteam/redux/actions/teams';
+import {getMe, getProfiles} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {General} from '@hanzoteam/redux/constants';
+import {isCollapsedThreadsEnabled, getIsOnboardingFlowEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getActiveTeamsList} from '@hanzoteam/redux/selectors/entities/teams';
+import {checkIsFirstAdmin, getCurrentUser, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {redirectUserToDefaultTeam, emitUserLoggedOutEvent} from 'actions/global_actions';
 

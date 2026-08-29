@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {patchUser, updateMe} from 'mattermost-redux/actions/users';
+import {patchUser, updateMe} from '@hanzoteam/redux/actions/users';
 
 import {getLanguages} from 'i18n/i18n';
 

@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {makeGetFilesForPost} from 'mattermost-redux/selectors/entities/files';
+import {makeGetFilesForPost} from '@hanzoteam/redux/selectors/entities/files';
 
 import CommentedOnFilesMessage from './commented_on_files_message';
 

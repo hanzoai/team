@@ -6,19 +6,19 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Post} from '@mattermost/types/posts';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {AppBindingLocations} from 'mattermost-redux/constants/apps';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {isMarketplaceEnabled} from 'mattermost-redux/selectors/entities/general';
-import {haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import {isCombinedUserActivityPost} from 'mattermost-redux/utils/post_list';
-import {isSystemMessage} from 'mattermost-redux/utils/post_utils';
-import {isSystemAdmin} from 'mattermost-redux/utils/user_utils';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {AppBindingLocations} from '@hanzoteam/redux/constants/apps';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {isMarketplaceEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isCombinedUserActivityPost} from '@hanzoteam/redux/utils/post_list';
+import {isSystemMessage} from '@hanzoteam/redux/utils/post_utils';
+import {isSystemAdmin} from '@hanzoteam/redux/utils/user_utils';
 
 import {makeFetchBindings, postEphemeralCallResponseForPost, handleBindingClick, openAppsModal} from 'actions/apps';
 import {openModal} from 'actions/views/modals';

@@ -4,13 +4,13 @@
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import type {FileSearchResultItem} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import type {FileSearchResultItem} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getSearchFilesResults} from 'mattermost-redux/selectors/entities/files';
-import {getSearchMatches, getSearchResults} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {makeAddDateSeparatorsForSearchResults} from 'mattermost-redux/utils/post_list';
+import {getSearchFilesResults} from '@hanzoteam/redux/selectors/entities/files';
+import {getSearchMatches, getSearchResults} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeAddDateSeparatorsForSearchResults} from '@hanzoteam/redux/utils/post_list';
 
 import {
     getSearchResultsTerms,

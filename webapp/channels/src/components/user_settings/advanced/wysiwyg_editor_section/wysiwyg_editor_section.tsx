@@ -5,11 +5,11 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import SettingItem from 'components/setting_item';
 import SettingItemMax from 'components/setting_item_max';

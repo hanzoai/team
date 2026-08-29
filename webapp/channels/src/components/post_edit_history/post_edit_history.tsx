@@ -5,9 +5,9 @@ import React, {memo, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getPostEditHistory} from 'mattermost-redux/actions/posts';
+import {getPostEditHistory} from '@hanzoteam/redux/actions/posts';
 
 import Scrollbars from 'components/common/scrollbars';
 import AlertIcon from 'components/common/svg_images_components/alert_svg';

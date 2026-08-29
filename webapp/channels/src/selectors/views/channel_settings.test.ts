@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import type {GlobalState} from 'types/store';
 import type {ChannelSettingsTabComponent} from 'types/store/plugins';
@@ -102,8 +102,8 @@ describe('Selectors.Views.ChannelSettings', () => {
     // Mock the dependencies directly
     beforeEach(() => {
         // Create a spy on the original function
-        jest.spyOn(require('mattermost-redux/selectors/entities/roles'), 'haveIChannelPermission').mockImplementation(() => false);
-        jest.spyOn(require('mattermost-redux/selectors/entities/roles'), 'haveISystemPermission').mockImplementation(() => false);
+        jest.spyOn(require('@hanzoteam/redux/selectors/entities/roles'), 'haveIChannelPermission').mockImplementation(() => false);
+        jest.spyOn(require('@hanzoteam/redux/selectors/entities/roles'), 'haveISystemPermission').mockImplementation(() => false);
     });
 
     afterEach(() => {
@@ -112,7 +112,7 @@ describe('Selectors.Views.ChannelSettings', () => {
 
     // Helper to set permission check results for specific tests
     const setPermissionCheckResults = (permissionResults: Record<string, boolean>) => {
-        const mockFunction = require('mattermost-redux/selectors/entities/roles').haveIChannelPermission as jest.Mock;
+        const mockFunction = require('@hanzoteam/redux/selectors/entities/roles').haveIChannelPermission as jest.Mock;
         mockFunction.mockImplementation(
             (_state: GlobalState, _teamId: string, _channelId: string, permission: string) => {
                 return permissionResults[permission] || false;
@@ -273,7 +273,7 @@ describe('Selectors.Views.ChannelSettings', () => {
             [Permissions.MANAGE_PUBLIC_CHANNEL_BANNER]: false,
             [Permissions.DELETE_PUBLIC_CHANNEL]: false,
         });
-        const haveISystemPermissionMock = require('mattermost-redux/selectors/entities/roles').haveISystemPermission as jest.Mock;
+        const haveISystemPermissionMock = require('@hanzoteam/redux/selectors/entities/roles').haveISystemPermission as jest.Mock;
         haveISystemPermissionMock.mockImplementation((_state: GlobalState, {permission}: {permission: string}) =>
             permission === Permissions.MANAGE_SHARED_CHANNELS,
         );

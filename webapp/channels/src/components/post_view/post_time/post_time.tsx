@@ -5,8 +5,8 @@ import React from 'react';
 import type {ComponentProps} from 'react';
 import {Link} from 'react-router-dom';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import {isMobile} from '@mattermost/shared/utils/user_agent';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import {isMobile} from '@hanzoteam/shared/utils/user_agent';
 
 import * as GlobalActions from 'actions/global_actions';
 

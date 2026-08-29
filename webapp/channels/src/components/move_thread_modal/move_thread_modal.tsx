@@ -7,14 +7,14 @@ import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import type {OnChangeValue} from 'react-select';
 
-import type {ClientError} from '@mattermost/client';
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {Post, PostPreviewMetadata} from '@mattermost/types/posts';
+import type {ClientError} from '@hanzoteam/client';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post, PostPreviewMetadata} from '@hanzoteam/types/posts';
 
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {ChannelOption} from 'components/forward_post_modal/forward_post_channel_select';
 import ChannelSelector from 'components/forward_post_modal/forward_post_channel_select';

@@ -6,17 +6,17 @@ import React from 'react';
 import type {ComponentProps} from 'react';
 import type {match} from 'react-router-dom';
 
-import {CollapsedThreads} from '@mattermost/types/config';
+import {CollapsedThreads} from '@hanzoteam/types/config';
 
-import {getPostThread} from 'mattermost-redux/actions/posts';
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
-import * as Channels from 'mattermost-redux/selectors/entities/channels';
+import {getPostThread} from '@hanzoteam/redux/actions/posts';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
+import * as Channels from '@hanzoteam/redux/selectors/entities/channels';
 
 import {focusPost} from 'components/permalink_view/actions';
 import PermalinkView from 'components/permalink_view/permalink_view';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import {renderWithContext, waitFor} from 'tests/react_testing_utils';
 import mockStore from 'tests/test_store';
 import {getHistory} from 'utils/browser_history';
@@ -35,7 +35,7 @@ jest.mock('actions/views/rhs.ts', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     getPostThread: jest.fn((postId) => {
         const post = {id: 'postid1', message: 'some message', channel_id: 'channelid1'};
         const post2 = {id: 'postid2', message: 'some message', channel_id: 'channelid2'};
@@ -63,11 +63,11 @@ jest.mock('mattermost-redux/actions/posts', () => ({
     }),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getMissingProfilesByIds: (userIds: string[]) => ({type: 'MOCK_GET_MISSING_PROFILES', userIds}),
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     selectChannel: (...args: any) => ({type: 'MOCK_SELECT_CHANNEL', args}),
     joinChannel: (...args: any) => ({type: 'MOCK_JOIN_CHANNEL', args}),
     getChannelStats: (...args: any) => ({type: 'MOCK_GET_CHANNEL_STATS', args}),

@@ -3,10 +3,10 @@
 
 import type {ComponentType, ForwardRefExoticComponent, KeyboardEvent, KeyboardEventHandler, ReactNode, ReactNodeArray, RefAttributes, RefObject} from 'react';
 
-import type {Agent} from '@mattermost/types/agents';
-import type {Channel} from '@mattermost/types/channels';
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Agent} from '@hanzoteam/types/agents';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import type {ProviderResults, SuggestionResults} from './suggestions';
 

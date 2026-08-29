@@ -5,7 +5,7 @@ import React, {memo} from 'react';
 import type {ChangeEventHandler} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import Constants from 'utils/constants';
 

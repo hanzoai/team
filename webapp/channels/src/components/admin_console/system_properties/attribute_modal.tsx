@@ -4,7 +4,7 @@
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
 import QuickInput, {MaxLengthInput} from 'components/quick_input';
 

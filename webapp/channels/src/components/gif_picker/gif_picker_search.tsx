@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import tinycolor from 'tinycolor2';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import giphyBlackImage from 'images/gif_picker/powered-by-giphy-black.png';
 import giphyWhiteImage from 'images/gif_picker/powered-by-giphy-white.png';

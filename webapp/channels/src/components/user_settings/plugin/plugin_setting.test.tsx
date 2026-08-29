@@ -5,10 +5,10 @@ import {screen} from '@testing-library/react';
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import * as preferencesActions from 'mattermost-redux/actions/preferences';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import * as preferencesActions from '@hanzoteam/redux/actions/preferences';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import {getPluginPreferenceKey} from 'utils/plugins/preferences';

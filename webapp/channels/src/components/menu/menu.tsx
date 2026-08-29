@@ -17,10 +17,10 @@ import type {
 } from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {GenericModal} from '@hanzoteam/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {openModal, closeModal} from 'actions/views/modals';
 import {getIsMobileView} from 'selectors/views/browser';

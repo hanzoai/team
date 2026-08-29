@@ -4,13 +4,13 @@
 import type {IntlShape} from 'react-intl';
 import type {AnyAction} from 'redux';
 
-import type {AppCallResponse, AppForm, AppCallRequest, AppContext, AppBinding} from '@mattermost/types/apps';
-import type {CommandArgs} from '@mattermost/types/integrations';
-import type {Post} from '@mattermost/types/posts';
+import type {AppCallResponse, AppForm, AppCallRequest, AppContext, AppBinding} from '@hanzoteam/types/apps';
+import type {CommandArgs} from '@hanzoteam/types/integrations';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Client4} from 'mattermost-redux/client';
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import {cleanForm} from 'mattermost-redux/utils/apps';
+import {Client4} from '@hanzoteam/redux/client';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import {cleanForm} from '@hanzoteam/redux/utils/apps';
 
 import {openModal} from 'actions/views/modals';
 

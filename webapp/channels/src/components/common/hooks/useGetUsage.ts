@@ -4,10 +4,10 @@
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {CloudUsage} from '@mattermost/types/cloud';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
 
-import {isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
-import {getUsage} from 'mattermost-redux/selectors/entities/usage';
+import {isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getUsage} from '@hanzoteam/redux/selectors/entities/usage';
 
 import {
     getMessagesUsage,

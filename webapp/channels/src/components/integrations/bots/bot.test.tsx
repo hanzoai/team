@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {generateId} from 'mattermost-redux/utils/helpers';
+import {generateId} from '@hanzoteam/redux/utils/helpers';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {TestHelper as UtilsTestHelper} from 'utils/test_helper';

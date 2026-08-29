@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import type {AppBinding} from '@mattermost/types/apps';
+import type {AppBinding} from '@hanzoteam/types/apps';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {AppBindingLocations} from 'mattermost-redux/constants/apps';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {AppBindingLocations} from '@hanzoteam/redux/constants/apps';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 

@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import type {GlobalState} from 'types/store';
 

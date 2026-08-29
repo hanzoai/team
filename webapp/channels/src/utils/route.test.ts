@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ClientLicense} from '@mattermost/types/config';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {checkIfMFARequired} from './route';
 import type {ConfigOption} from './route';

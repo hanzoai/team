@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button, type ButtonEmphasis} from '@mattermost/shared/components/button';
+import {Button, type ButtonEmphasis} from '@hanzoteam/shared/components/button';
 
 import useOpenSalesLink from 'components/common/hooks/useOpenSalesLink';
 

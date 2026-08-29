@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {PluginManifest} from '@mattermost/types/plugins';
+import type {PluginManifest} from '@hanzoteam/types/plugins';
 
 import {hideRHSPlugin as hideRHSPluginAction} from 'actions/views/rhs';
 import {getPluggableId} from 'selectors/rhs';

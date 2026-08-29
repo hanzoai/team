@@ -4,8 +4,8 @@
 import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {Audit} from '@mattermost/types/audits';
+import {GenericModal} from '@hanzoteam/components';
+import type {Audit} from '@hanzoteam/types/audits';
 
 import AuditTable from 'components/audit_table';
 import LoadingScreen from 'components/loading_screen';

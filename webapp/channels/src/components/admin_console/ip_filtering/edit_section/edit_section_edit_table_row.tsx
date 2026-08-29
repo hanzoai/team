@@ -7,9 +7,9 @@ import {useIntl} from 'react-intl';
 import {
     PencilOutlineIcon,
     TrashCanOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {AllowedIPRange} from '@mattermost/types/config';
+} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 type EditTableRowProps = {
     allowedIPRange: AllowedIPRange;

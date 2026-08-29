@@ -5,11 +5,11 @@ import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General} from 'mattermost-redux/constants';
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {General} from '@hanzoteam/redux/constants';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {hasInteractiveMessageProps} from 'components/block_renderer/translation';
 import FileAttachmentListContainer from 'components/file_attachment_list';

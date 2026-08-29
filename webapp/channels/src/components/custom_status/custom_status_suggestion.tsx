@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserCustomStatus} from '@mattermost/types/users';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserCustomStatus} from '@hanzoteam/types/users';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
 import RenderEmoji from 'components/emoji/render_emoji';
 

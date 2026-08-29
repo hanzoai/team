@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ServerError} from '@mattermost/types/errors';
+import type {ServerError} from '@hanzoteam/types/errors';
 
 import ConfirmModalRedux from 'components/confirm_modal_redux';
 

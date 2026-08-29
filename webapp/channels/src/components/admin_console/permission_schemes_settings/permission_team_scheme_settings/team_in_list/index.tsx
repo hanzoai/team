@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getTeamStats as loadTeamStats} from 'mattermost-redux/actions/teams';
-import {getTeamStats} from 'mattermost-redux/selectors/entities/teams';
+import {getTeamStats as loadTeamStats} from '@hanzoteam/redux/actions/teams';
+import {getTeamStats} from '@hanzoteam/redux/selectors/entities/teams';
 
 import TeamInList from './team_in_list';
 

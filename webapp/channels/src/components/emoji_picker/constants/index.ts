@@ -3,7 +3,7 @@
 
 import {defineMessage} from 'react-intl';
 
-import type {EmojiCategory} from '@mattermost/types/emojis';
+import type {EmojiCategory} from '@hanzoteam/types/emojis';
 
 import type {Categories} from '../types';
 

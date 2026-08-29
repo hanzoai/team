@@ -4,7 +4,7 @@
 import React from 'react';
 import type {OptionProps} from 'react-select';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import * as Utils from 'utils/utils';

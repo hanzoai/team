@@ -5,11 +5,11 @@ import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import styled from 'styled-components';
 
-import type {Channel, ChannelStats} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelStats} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import ChannelInviteModal from 'components/channel_invite_modal';
 import ChannelNotificationsModal from 'components/channel_notifications_modal';

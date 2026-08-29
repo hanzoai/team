@@ -4,8 +4,8 @@
 import React from 'react';
 import {useIntl, defineMessages} from 'react-intl';
 
-import type {LdapDiagnosticResult, TestLdapFiltersResponse} from '@mattermost/types/admin';
-import type {LdapSettings} from '@mattermost/types/config';
+import type {LdapDiagnosticResult, TestLdapFiltersResponse} from '@hanzoteam/types/admin';
+import type {LdapSettings} from '@hanzoteam/types/config';
 
 import type {GeneralSettingProps, LDAPDefinitionSettingButton} from './ldap_wizard';
 

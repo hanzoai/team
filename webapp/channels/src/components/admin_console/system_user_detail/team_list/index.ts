@@ -10,7 +10,7 @@ import {
     getTeamMembersForUser,
     removeUserFromTeam,
     updateTeamMemberSchemeRoles,
-} from 'mattermost-redux/actions/teams';
+} from '@hanzoteam/redux/actions/teams';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

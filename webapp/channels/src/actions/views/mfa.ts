@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MfaSecret} from '@mattermost/types/mfa';
+import type {MfaSecret} from '@hanzoteam/types/mfa';
 
-import * as UserActions from 'mattermost-redux/actions/users';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import * as UserActions from '@hanzoteam/redux/actions/users';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {ActionFuncAsync} from 'types/store';
 

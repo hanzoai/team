@@ -7,9 +7,9 @@ import {FormattedMessage, defineMessage, injectIntl} from 'react-intl';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 import {CSSTransition} from 'react-transition-group';
 
-import {CloseIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {SystemEmoji} from '@mattermost/types/emojis';
+import {CloseIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {SystemEmoji} from '@hanzoteam/types/emojis';
 
 import imgTrans from 'images/img_trans.gif';
 import * as Emoji from 'utils/emoji';

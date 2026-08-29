@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {loadRolesIfNeeded} from 'mattermost-redux/actions/roles';
-import {getTeams} from 'mattermost-redux/actions/teams';
-import {Permissions} from 'mattermost-redux/constants';
-import {getCloudSubscription as selectCloudSubscription} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getSortedListableTeams, getTeamMemberships} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {loadRolesIfNeeded} from '@hanzoteam/redux/actions/roles';
+import {getTeams} from '@hanzoteam/redux/actions/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCloudSubscription as selectCloudSubscription} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getSortedListableTeams, getTeamMemberships} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {addUserToTeam} from 'actions/team_actions';
 

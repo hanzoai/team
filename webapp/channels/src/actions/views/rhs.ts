@@ -5,23 +5,23 @@ import debounce from 'lodash/debounce';
 import type {AnyAction} from 'redux';
 import {batchActions} from 'redux-batched-actions';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {SearchTypes} from 'mattermost-redux/action_types';
-import {getChannel} from 'mattermost-redux/actions/channels';
-import {getPostsByIds, getPost as fetchPost} from 'mattermost-redux/actions/posts';
+import {SearchTypes} from '@hanzoteam/redux/action_types';
+import {getChannel} from '@hanzoteam/redux/actions/channels';
+import {getPostsByIds, getPost as fetchPost} from '@hanzoteam/redux/actions/posts';
 import {
     clearSearch,
     getFlaggedPosts,
     getPinnedPosts,
     searchPostsWithParams,
     searchFilesWithParams,
-} from 'mattermost-redux/actions/search';
-import {getCurrentChannelId, getCurrentChannelNameForSearchShortcut, getChannel as getChannelSelector} from 'mattermost-redux/selectors/entities/channels';
-import {getLatestInteractablePostId, getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserMentionKeys} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/search';
+import {getCurrentChannelId, getCurrentChannelNameForSearchShortcut, getChannel as getChannelSelector} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLatestInteractablePostId, getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserMentionKeys} from '@hanzoteam/redux/selectors/entities/users';
 
 import {
     getSearchType,

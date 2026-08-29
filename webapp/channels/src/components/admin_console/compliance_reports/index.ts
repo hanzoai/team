@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {createComplianceReport, getComplianceReports} from 'mattermost-redux/actions/admin';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getComplianceReports as selectComplianceReports, getConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {createComplianceReport, getComplianceReports} from '@hanzoteam/redux/actions/admin';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getComplianceReports as selectComplianceReports, getConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import ComplianceReports from './compliance_reports';
 

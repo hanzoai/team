@@ -5,10 +5,10 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedDate, FormattedMessage, FormattedTime} from 'react-intl';
 
-import type {UserAccessToken, UserProfile} from '@mattermost/types/users';
+import type {UserAccessToken, UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import RevokeTokenButton from 'components/admin_console/revoke_token_button';
 import ExternalLink from 'components/external_link';

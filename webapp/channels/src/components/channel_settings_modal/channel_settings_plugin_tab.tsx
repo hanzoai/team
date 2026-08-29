@@ -5,7 +5,7 @@ import noop from 'lodash/noop';
 import React, {useCallback, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import SaveChangesPanel from 'components/widgets/modals/components/save_changes_panel';
 

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {MouseEvent} from 'react';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import ActivityLogModal from 'components/activity_log_modal/activity_log_modal';
 

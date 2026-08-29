@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {Post, PostType} from '@mattermost/types/posts';
+import type {Post, PostType} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants';
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import {Posts} from '@hanzoteam/redux/constants';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import PostMessageView from 'components/post_view/post_message_view/post_message_view';
 

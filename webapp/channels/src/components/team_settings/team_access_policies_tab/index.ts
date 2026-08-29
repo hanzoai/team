@@ -14,9 +14,9 @@ import {
     assignChannelsToAccessControlPolicy,
     unassignChannelsFromAccessControlPolicy,
     updateAccessControlPoliciesActive,
-} from 'mattermost-redux/actions/access_control';
-import {createJob} from 'mattermost-redux/actions/jobs';
-import {getAccessControlSettings} from 'mattermost-redux/selectors/entities/access_control';
+} from '@hanzoteam/redux/actions/access_control';
+import {createJob} from '@hanzoteam/redux/actions/jobs';
+import {getAccessControlSettings} from '@hanzoteam/redux/selectors/entities/access_control';
 
 import type {GlobalState} from 'types/store';
 

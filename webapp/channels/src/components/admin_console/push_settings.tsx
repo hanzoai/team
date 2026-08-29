@@ -5,7 +5,7 @@ import React from 'react';
 import type {WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, defineMessage, defineMessages, injectIntl} from 'react-intl';
 
-import type {AdminConfig, ClientLicense, EmailSettings} from '@mattermost/types/config';
+import type {AdminConfig, ClientLicense, EmailSettings} from '@hanzoteam/types/config';
 
 import ExternalLink from 'components/external_link';
 

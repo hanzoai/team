@@ -5,8 +5,8 @@ import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {Feedback} from '@mattermost/types/cloud';
+import {GenericModal} from '@hanzoteam/components';
+import type {Feedback} from '@hanzoteam/types/cloud';
 
 import {closeModal} from 'actions/views/modals';
 

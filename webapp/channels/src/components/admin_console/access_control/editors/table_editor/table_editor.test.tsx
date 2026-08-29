@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AccessControlVisualAST} from '@mattermost/types/access_control';
-import type {FieldType} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlVisualAST} from '@hanzoteam/types/access_control';
+import type {FieldType} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {isSimpleExpression, isSimpleCondition, isMultiselectOrGroup} from 'components/admin_console/access_control/editors/shared';
 import {parseExpression, findFirstAvailableAttributeFromList, rowToCEL, celStringLiteral, isRowValueValid, isOperatorValidForType} from 'components/admin_console/access_control/editors/table_editor/table_editor';

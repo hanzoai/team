@@ -1,28 +1,28 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Bot} from '@mattermost/types/bots';
-import {CategorySorting} from '@mattermost/types/channel_categories';
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import type {Channel, ChannelMembership, ChannelNotifyProps, ChannelWithTeamData} from '@mattermost/types/channels';
-import type {Invoice, Product, Subscription, CloudCustomer} from '@mattermost/types/cloud';
-import type {ClientLicense} from '@mattermost/types/config';
-import type {SystemEmoji, CustomEmoji} from '@mattermost/types/emojis';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Group} from '@mattermost/types/groups';
-import type {Command, IncomingWebhook, OutgoingWebhook} from '@mattermost/types/integrations';
-import type {Post} from '@mattermost/types/posts';
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {Reaction} from '@mattermost/types/reactions';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
-import type {Role} from '@mattermost/types/roles';
-import type {Session} from '@mattermost/types/sessions';
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import {CustomStatusDuration} from '@mattermost/types/users';
-import type {UserProfile, UserAccessToken, UserCustomStatus} from '@mattermost/types/users';
+import type {Bot} from '@hanzoteam/types/bots';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import type {Channel, ChannelMembership, ChannelNotifyProps, ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {Invoice, Product, Subscription, CloudCustomer} from '@hanzoteam/types/cloud';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {SystemEmoji, CustomEmoji} from '@hanzoteam/types/emojis';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Command, IncomingWebhook, OutgoingWebhook} from '@hanzoteam/types/integrations';
+import type {Post} from '@hanzoteam/types/posts';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {Reaction} from '@hanzoteam/types/reactions';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
+import type {Role} from '@hanzoteam/types/roles';
+import type {Session} from '@hanzoteam/types/sessions';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
+import type {UserProfile, UserAccessToken, UserCustomStatus} from '@hanzoteam/types/users';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import type {PostDraft} from 'types/store/draft';
 import type {ProductComponent} from 'types/store/plugins';

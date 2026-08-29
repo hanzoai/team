@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {makeGetUsersTypingByChannelAndPost} from 'mattermost-redux/selectors/entities/typing';
+import {makeGetUsersTypingByChannelAndPost} from '@hanzoteam/redux/selectors/entities/typing';
 
 import type {GlobalState} from 'types/store';
 

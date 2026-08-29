@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
-import type {Channel} from '@mattermost/types/channels';
-import type {FieldVisibility, FieldValueType} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {FieldVisibility, FieldValueType} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -42,7 +42,7 @@ const mockAccessControlSettings = {
     EnableChannelPolicyIndicators: true,
 };
 
-jest.mock('mattermost-redux/selectors/entities/access_control', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/access_control', () => ({
     getAccessControlSettings: jest.fn(() => mockAccessControlSettings),
 }));
 

@@ -5,12 +5,12 @@ import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isSyncableSource} from 'mattermost-redux/utils/group_utils';
+import {getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isSyncableSource} from '@hanzoteam/redux/utils/group_utils';
 
 import StatusIcon from 'components/status_icon';
 import Avatar from 'components/widgets/users/avatar';

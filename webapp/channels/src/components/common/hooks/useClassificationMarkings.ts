@@ -4,11 +4,11 @@
 import {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {PropertyField, PropertyFieldOption} from '@mattermost/types/properties';
-import type {GlobalState} from '@mattermost/types/store';
+import type {PropertyField, PropertyFieldOption} from '@hanzoteam/types/properties';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {fetchPropertyFields} from 'mattermost-redux/actions/properties';
-import {getFeatureFlagValue, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {fetchPropertyFields} from '@hanzoteam/redux/actions/properties';
+import {getFeatureFlagValue, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {
     CLASSIFICATIONS_CHANNEL_FIELD_NAME,

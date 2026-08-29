@@ -5,12 +5,12 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {AppBinding, AppCallResponse} from '@mattermost/types/apps';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {AppBinding, AppCallResponse} from '@hanzoteam/types/apps';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/common';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/common';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {handleBindingClick, openAppsModal, postEphemeralCallResponseForContext} from 'actions/apps';
 

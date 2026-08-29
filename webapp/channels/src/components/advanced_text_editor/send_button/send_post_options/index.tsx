@@ -6,8 +6,8 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import ChevronDownIcon from '@mattermost/compass-icons/components/chevron-down';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import ChevronDownIcon from '@hanzoteam/compass-icons/components/chevron-down';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
 import {openModal} from 'actions/views/modals';
 

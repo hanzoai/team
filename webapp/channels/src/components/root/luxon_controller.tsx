@@ -5,7 +5,7 @@ import {Settings} from 'luxon';
 import {useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

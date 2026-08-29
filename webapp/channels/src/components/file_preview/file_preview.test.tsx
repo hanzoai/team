@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import FilePreviewModal from 'components/file_preview_modal';
 

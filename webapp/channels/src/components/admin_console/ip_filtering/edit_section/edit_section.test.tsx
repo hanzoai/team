@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {AllowedIPRange} from '@mattermost/types/config';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

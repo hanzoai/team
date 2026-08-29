@@ -4,15 +4,15 @@
 import nock from 'nock';
 import {BATCH} from 'redux-batched-actions';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {EmojiTypes} from 'mattermost-redux/action_types';
-import {setSystemEmojis} from 'mattermost-redux/actions/emojis';
-import {Client4} from 'mattermost-redux/client';
+import {EmojiTypes} from '@hanzoteam/redux/action_types';
+import {setSystemEmojis} from '@hanzoteam/redux/actions/emojis';
+import {Client4} from '@hanzoteam/redux/client';
 
 import * as Actions from 'actions/emoji_actions';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import mockStore from 'tests/test_store';
 import {Preferences} from 'utils/constants';
 import {EmojiIndicesByAlias} from 'utils/emoji';

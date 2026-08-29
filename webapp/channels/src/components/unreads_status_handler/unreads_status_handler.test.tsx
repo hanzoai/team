@@ -4,9 +4,9 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {isChrome, isFirefox} from '@mattermost/shared/utils/user_agent';
-import type {ChannelType} from '@mattermost/types/channels';
-import type {TeamType} from '@mattermost/types/teams';
+import {isChrome, isFirefox} from '@hanzoteam/shared/utils/user_agent';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {TeamType} from '@hanzoteam/types/teams';
 
 import UnreadsStatusHandler, {UnreadsStatusHandlerClass} from 'components/unreads_status_handler/unreads_status_handler';
 
@@ -16,8 +16,8 @@ import {TestHelper} from 'utils/test_helper';
 
 type Props = ComponentProps<typeof UnreadsStatusHandlerClass>;
 
-jest.mock('@mattermost/shared/utils/user_agent', () => {
-    const original = jest.requireActual('@mattermost/shared/utils/user_agent');
+jest.mock('@hanzoteam/shared/utils/user_agent', () => {
+    const original = jest.requireActual('@hanzoteam/shared/utils/user_agent');
     return {
         ...original,
         isFirefox: jest.fn().mockReturnValue(true),

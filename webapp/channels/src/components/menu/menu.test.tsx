@@ -3,8 +3,8 @@
 
 import React, {useState} from 'react';
 
-import {DotsVerticalIcon} from '@mattermost/compass-icons/components';
-import {GenericModal} from '@mattermost/components';
+import {DotsVerticalIcon} from '@hanzoteam/compass-icons/components';
+import {GenericModal} from '@hanzoteam/components';
 
 import {
     renderWithContext,

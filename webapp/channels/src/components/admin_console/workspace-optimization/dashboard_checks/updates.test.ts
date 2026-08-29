@@ -5,7 +5,7 @@ import {fetchAndCompareVersion} from './updates';
 
 import {ItemStatus} from '../dashboard.type';
 
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         getBaseRoute: jest.fn(() => 'http://localhost/v1/workspace'),
     },

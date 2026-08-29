@@ -5,7 +5,7 @@ import type {Column, CoreColumn} from '@tanstack/react-table';
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {UserReport} from '@mattermost/types/reports';
+import type {UserReport} from '@hanzoteam/types/reports';
 
 import * as Menu from 'components/menu';
 import Input from 'components/widgets/inputs/input/input';

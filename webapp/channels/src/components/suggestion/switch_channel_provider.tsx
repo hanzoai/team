@@ -6,19 +6,19 @@ import React, {useLayoutEffect, useRef, useState} from 'react';
 import {defineMessage, useIntl} from 'react-intl';
 import {connect, useSelector} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {UserTypes} from 'mattermost-redux/action_types';
-import {fetchAllMyTeamsChannels, searchAllChannels} from 'mattermost-redux/actions/channels';
-import {logError} from 'mattermost-redux/actions/errors';
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
+import {UserTypes} from '@hanzoteam/redux/action_types';
+import {fetchAllMyTeamsChannels, searchAllChannels} from '@hanzoteam/redux/actions/channels';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
 import {
     getDirectAndGroupChannels,
     getGroupChannels,
@@ -30,27 +30,27 @@ import {
     getSortedAllTeamsUnreadChannels,
     getAllTeamsUnreadChannelIds,
     getMyPendingJoinRequestsByChannel,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getMyPreferences, isGroupChannelManuallyVisible, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, isDiscoverableChannelsEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getMyPreferences, isGroupChannelManuallyVisible, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     getActiveTeamsList,
     getCurrentTeamId,
     getMyTeams,
     getTeam,
-} from 'mattermost-redux/selectors/entities/teams';
-import {getThreadCountsInCurrentTeam} from 'mattermost-redux/selectors/entities/threads';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThreadCountsInCurrentTeam} from '@hanzoteam/redux/selectors/entities/threads';
 import {
     getCurrentUserId,
     getUserIdsInChannels,
     getUser,
     makeSearchProfilesMatchingWithTerm,
     getStatusForUserId,
-} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {sortChannelsByTypeAndDisplayName, isChannelMuted} from 'mattermost-redux/utils/channel_utils';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {sortChannelsByTypeAndDisplayName, isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {getPostDraft} from 'selectors/rhs';
 import globalStore from 'stores/redux_store';

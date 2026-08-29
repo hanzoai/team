@@ -10,12 +10,12 @@ import {FormattedMessage, injectIntl, type WrappedComponentProps} from 'react-in
 import {SpringSystem} from 'rebound';
 import type {Spring} from 'rebound';
 
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {General} from 'mattermost-redux/constants';
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
+import {General} from '@hanzoteam/redux/constants';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
 
 import {makeAsyncComponent} from 'components/async_load';
 import Scrollbars from 'components/common/scrollbars';

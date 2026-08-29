@@ -4,11 +4,11 @@
 import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {MfaSecret} from '@mattermost/types/mfa';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {MfaSecret} from '@hanzoteam/types/mfa';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LocalizedPlaceholderInput from 'components/localized_placeholder_input';
 

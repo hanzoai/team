@@ -4,7 +4,7 @@
 import React, {useEffect} from 'react';
 import {Redirect, useHistory, useLocation} from 'react-router-dom';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import * as GlobalActions from 'actions/global_actions';
 

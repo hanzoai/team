@@ -6,21 +6,21 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {Client4} from 'mattermost-redux/client';
-import {Preferences} from 'mattermost-redux/constants';
-import {getCloudSubscription as selectCloudSubscription, getSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
+import {Client4} from '@hanzoteam/redux/client';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getCloudSubscription as selectCloudSubscription, getSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
 import {
     getConfig,
     getLicense,
-} from 'mattermost-redux/selectors/entities/general';
-import {get} from 'mattermost-redux/selectors/entities/preferences';
-import {getReportAProblemLink} from 'mattermost-redux/selectors/entities/report_a_problem';
+} from '@hanzoteam/redux/selectors/entities/general';
+import {get} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getReportAProblemLink} from '@hanzoteam/redux/selectors/entities/report_a_problem';
 import {
     getJoinableTeamIds,
     getCurrentTeam,
-} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUser, getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUser, getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import {showMentions, showFlaggedPosts, closeRightHandSide, closeMenu as closeRhsMenu} from 'actions/views/rhs';

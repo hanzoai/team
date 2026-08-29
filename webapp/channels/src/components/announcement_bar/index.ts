@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getStandardAnalytics} from 'mattermost-redux/actions/admin';
-import {dismissError} from 'mattermost-redux/actions/errors';
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
-import {getDisplayableErrors} from 'mattermost-redux/selectors/errors';
+import {getStandardAnalytics} from '@hanzoteam/redux/actions/admin';
+import {dismissError} from '@hanzoteam/redux/actions/errors';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
+import {getDisplayableErrors} from '@hanzoteam/redux/selectors/errors';
 
 import {dismissNotice} from 'actions/views/notice';
 

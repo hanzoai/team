@@ -3,10 +3,10 @@
 
 import {connect} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getHasReactions, makeGetPostAcknowledgementsWithProfiles} from 'mattermost-redux/selectors/entities/posts';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getHasReactions, makeGetPostAcknowledgementsWithProfiles} from '@hanzoteam/redux/selectors/entities/posts';
 
 import type {GlobalState} from 'types/store';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 
 import {ChannelSelectorModal} from 'components/channel_selector_modal/channel_selector_modal';
 

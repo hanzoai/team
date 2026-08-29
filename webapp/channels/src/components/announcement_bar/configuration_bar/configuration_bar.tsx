@@ -7,10 +7,10 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {ClientConfig} from '@mattermost/types/config';
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {ClientConfig} from '@hanzoteam/types/config';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ExternalLink from 'components/external_link';
 

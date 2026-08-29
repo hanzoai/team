@@ -4,11 +4,11 @@
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Preferences} from 'mattermost-redux/constants';
-import {isPerformanceDebuggingEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getBool, getUserPreferences} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {isPerformanceDebuggingEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool, getUserPreferences} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

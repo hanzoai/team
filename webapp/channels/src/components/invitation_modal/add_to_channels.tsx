@@ -4,9 +4,9 @@
 import React, {useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import deepFreeze from 'mattermost-redux/utils/deep_freeze';
+import deepFreeze from '@hanzoteam/redux/utils/deep_freeze';
 
 import CloseCircleIcon from 'components/widgets/icons/close_circle_icon';
 import ChannelsInput from 'components/widgets/inputs/channels_input';

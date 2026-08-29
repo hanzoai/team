@@ -12,7 +12,7 @@ import {
     OpenInNewIcon,
     TrashCanOutlineIcon,
     TextBoxOutlineIcon,
-} from '@mattermost/compass-icons/components';
+} from '@hanzoteam/compass-icons/components';
 
 import {RootHtmlPortalId} from 'utils/constants';
 import {isUrlSafe} from 'utils/url';

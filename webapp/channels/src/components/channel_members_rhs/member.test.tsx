@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {renderWithContext, screen, waitFor, userEvent} from 'tests/react_testing_utils';
 

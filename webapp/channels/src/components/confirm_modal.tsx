@@ -4,8 +4,8 @@
 import React, {memo, useCallback, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button, type ButtonVariant} from '@mattermost/shared/components/button';
+import {GenericModal} from '@hanzoteam/components';
+import {Button, type ButtonVariant} from '@hanzoteam/shared/components/button';
 
 import {focusElement} from 'utils/a11y_utils';
 

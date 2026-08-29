@@ -5,13 +5,13 @@ import React, {useCallback, useMemo, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {FileInfo} from '@mattermost/types/files';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {sortFileInfos} from 'mattermost-redux/utils/file_utils';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {sortFileInfos} from '@hanzoteam/redux/utils/file_utils';
 
 import {getCurrentLocale} from 'selectors/i18n';
 

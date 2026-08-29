@@ -4,8 +4,8 @@
 import React, {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getChannelsNameMapInCurrentTeam} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentRelativeTeamUrl, getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getChannelsNameMapInCurrentTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentRelativeTeamUrl, getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import Markdown from 'components/markdown';
 

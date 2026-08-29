@@ -4,8 +4,8 @@
 import React, {memo} from 'react';
 import type {ListChildComponentProps} from 'react-window';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Member from './member';
 import type {ChannelMember, ListItem} from './member_list';

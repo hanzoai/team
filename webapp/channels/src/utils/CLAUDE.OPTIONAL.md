@@ -30,7 +30,7 @@ utils/
 - `markdown/`: `renderer.tsx` (custom renderer), `apply_markdown.ts`.
 
 ## Guidelines
-- **Strong Typing**: Prefer concrete interfaces over `any`. Reference `channels/src/types` or `@mattermost/types`.
+- **Strong Typing**: Prefer concrete interfaces over `any`. Reference `channels/src/types` or `@hanzoteam/types`.
 - **Purity**: Keep utilities pure when possible. Document side-effects.
 - **Accessibility**: Helpers should follow `webapp/STYLE_GUIDE.md → Accessibility`.
 - **Organization**: Prefix folders by domain. Avoid sprawling “misc” files.

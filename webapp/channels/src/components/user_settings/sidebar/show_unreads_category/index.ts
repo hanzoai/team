@@ -3,13 +3,13 @@
 
 import {connect} from 'react-redux';
 
-import type {PreferencesType} from '@mattermost/types/preferences';
+import type {PreferencesType} from '@hanzoteam/types/preferences';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
 import {
     shouldShowUnreadsCategory,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

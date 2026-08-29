@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import type {GlobalState} from 'types/store';
 

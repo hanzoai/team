@@ -5,10 +5,10 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Job, JobType} from '@mattermost/types/jobs';
+import type {Job, JobType} from '@hanzoteam/types/jobs';
 
-import {createAccessControlSyncJob} from 'mattermost-redux/actions/access_control';
-import {getJobsByType} from 'mattermost-redux/actions/jobs';
+import {createAccessControlSyncJob} from '@hanzoteam/redux/actions/access_control';
+import {getJobsByType} from '@hanzoteam/redux/actions/jobs';
 
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';
 

@@ -7,13 +7,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {getFile} from 'mattermost-redux/selectors/entities/files';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFile} from '@hanzoteam/redux/selectors/entities/files';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {openModal} from 'actions/views/modals';
 

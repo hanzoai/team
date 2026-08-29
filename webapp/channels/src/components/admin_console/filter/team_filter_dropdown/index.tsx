@@ -3,7 +3,7 @@
 
 import {connect, type ConnectedProps} from 'react-redux';
 
-import {getTeams, searchTeams} from 'mattermost-redux/actions/teams';
+import {getTeams, searchTeams} from '@hanzoteam/redux/actions/teams';
 
 import TeamFilterDropdown from './team_filter_dropdown';
 

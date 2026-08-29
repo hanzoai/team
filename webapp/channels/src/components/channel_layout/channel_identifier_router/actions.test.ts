@@ -3,9 +3,9 @@
 
 import nock from 'nock';
 
-import {getChannelByNameAndTeamName, getChannelMember, joinChannel} from 'mattermost-redux/actions/channels';
-import {getUserByEmail} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
+import {getChannelByNameAndTeamName, getChannelMember, joinChannel} from '@hanzoteam/redux/actions/channels';
+import {getUserByEmail} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {emitChannelClickEvent} from 'actions/global_actions';
 import {openModal} from 'actions/views/modals';
@@ -19,7 +19,7 @@ import {
     getPathFromIdentifier,
 } from 'components/channel_layout/channel_identifier_router/actions';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import mockStore from 'tests/test_store';
 import {joinPrivateChannelPrompt} from 'utils/channel_utils';
 import {ModalIdentifiers} from 'utils/constants';
@@ -30,13 +30,13 @@ jest.mock('actions/global_actions', () => ({
     emitChannelClickEvent: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     joinChannel: jest.fn(() => ({type: '', data: {channel: {id: 'channel_id3', name: 'achannel3', team_id: 'team_id1', type: 'O'}}})),
     getChannelByNameAndTeamName: jest.fn(() => ({type: '', data: {id: 'channel_id3', name: 'achannel3', team_id: 'team_id1', type: 'O'}})),
     getChannelMember: jest.fn(() => ({type: '', error: {}})),
 }));
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getUserByEmail: jest.fn(() => ({type: '', data: {id: 'user_id3', email: 'user3@bladekick.com', username: 'user3'}})),
     getUser: jest.fn(() => ({type: '', data: {id: 'user_id3', email: 'user3@bladekick.com', username: 'user3'}})),
 }));

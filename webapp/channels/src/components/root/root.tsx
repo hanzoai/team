@@ -5,11 +5,11 @@ import React, {lazy} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {isAndroid, isChromebook, isDesktopApp, isIos} from '@mattermost/shared/utils/user_agent';
+import {isAndroid, isChromebook, isDesktopApp, isIos} from '@hanzoteam/shared/utils/user_agent';
 
-import {setSystemEmojis} from 'mattermost-redux/actions/emojis';
-import {setUrl} from 'mattermost-redux/actions/general';
-import {Client4} from 'mattermost-redux/client';
+import {setSystemEmojis} from '@hanzoteam/redux/actions/emojis';
+import {setUrl} from '@hanzoteam/redux/actions/general';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {temporarilySetPageLoadContext} from 'actions/telemetry_actions';
 import BrowserStore from 'stores/browser_store';

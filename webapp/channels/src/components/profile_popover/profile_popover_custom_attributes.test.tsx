@@ -6,7 +6,7 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import configureStore from 'redux-mock-store';
 
-import type {UserPropertyField, UserPropertyValueType} from '@mattermost/types/properties_user';
+import type {UserPropertyField, UserPropertyValueType} from '@hanzoteam/types/properties_user';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 
@@ -14,7 +14,7 @@ import ProfilePopoverCustomAttributes from './profile_popover_custom_attributes'
 
 import {TestHelper} from '../../utils/test_helper';
 
-jest.mock('mattermost-redux/actions/users', () => ({
+jest.mock('@hanzoteam/redux/actions/users', () => ({
     getCustomProfileAttributeValues: jest.fn().mockReturnValue({type: 'GET_CUSTOM_PROFILE_ATTRIBUTE_VALUES'}),
 }));
 

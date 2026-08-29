@@ -5,17 +5,17 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getAgents} from 'mattermost-redux/actions/agents';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getDefaultAgent} from 'mattermost-redux/selectors/entities/agents';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAssociatedGroupsForReference} from 'mattermost-redux/selectors/entities/groups';
-import {makeGetProfilesForThread} from 'mattermost-redux/selectors/entities/posts';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getAgents} from '@hanzoteam/redux/actions/agents';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getDefaultAgent} from '@hanzoteam/redux/selectors/entities/agents';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAssociatedGroupsForReference} from '@hanzoteam/redux/selectors/entities/groups';
+import {makeGetProfilesForThread} from '@hanzoteam/redux/selectors/entities/posts';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {autocompleteChannels} from 'actions/channel_actions';
 import {autocompleteUsersInChannel} from 'actions/views/channel';

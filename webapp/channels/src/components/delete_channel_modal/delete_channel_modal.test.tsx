@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Channel, ChannelType} from '@mattermost/types/channels';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
 
 import DeleteChannelModal from 'components/delete_channel_modal/delete_channel_modal';
 import type {Props} from 'components/delete_channel_modal/delete_channel_modal';

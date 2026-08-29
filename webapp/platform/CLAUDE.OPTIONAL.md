@@ -8,15 +8,15 @@
 
 | Package | Directory | Purpose |
 |---------|-----------|---------|
-| `@mattermost/types` | `types/` | TypeScript type definitions |
-| `@mattermost/client` | `client/` | REST and WebSocket API client |
-| `@mattermost/components` | `components/` | Shared React components |
-| `@mattermost/shared` | `shared/` | Cross-product components and utilities for the web app and plugins (e.g. `Button`, `WithTooltip`). Prefer these over rolling your own |
-| `@mattermost/eslint-plugin` | `eslint-plugin/` | Custom ESLint rules |
+| `@hanzoteam/types` | `types/` | TypeScript type definitions |
+| `@hanzoteam/client` | `client/` | REST and WebSocket API client |
+| `@hanzoteam/components` | `components/` | Shared React components |
+| `@hanzoteam/shared` | `shared/` | Cross-product components and utilities for the web app and plugins (e.g. `Button`, `WithTooltip`). Prefer these over rolling your own |
+| `@hanzoteam/eslint-plugin` | `eslint-plugin/` | Custom ESLint rules |
 
 ## Workspace Basics
 - Each subpackage is its own npm workspace with independent `package.json`, tests, and build scripts.
-- Run commands with `npm run <script> --workspace=@mattermost/<pkg>` (e.g., `@mattermost/client`).
+- Run commands with `npm run <script> --workspace=@mattermost/<pkg>` (e.g., `@hanzoteam/client`).
 - Versioning follows the monorepo; publishable artifacts come from CI pipelines.
 
 ## Import Convention
@@ -24,7 +24,7 @@ Always import using the full package name:
 
 ```typescript
 // CORRECT
-import {Client4} from '@mattermost/client';
+import {Client4} from '@hanzoteam/client';
 // INCORRECT - never use relative paths
 import Client4 from '../platform/client/src/client4';
 ```
@@ -37,7 +37,7 @@ Platform packages are automatically built on `npm install` via postinstall hook.
 ## Adding Dependencies
 When adding dependencies to platform packages:
 ```bash
-npm add package-name --workspace=@mattermost/client
+npm add package-name --workspace=@hanzoteam/client
 ```
 
 ## Expectations

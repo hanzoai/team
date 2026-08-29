@@ -4,7 +4,7 @@
 import type {ComponentProps} from 'react';
 import React from 'react';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import PostMessageView from 'components/post_view/post_message_view/post_message_view';
 

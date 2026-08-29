@@ -6,11 +6,11 @@ import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {matchPath} from 'react-router-dom';
 
-import {Button} from '@mattermost/shared/components/button';
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {Post} from '@mattermost/types/posts';
+import {Button} from '@hanzoteam/shared/components/button';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {Post} from '@hanzoteam/types/posts';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SectionNotice from 'components/section_notice';
 

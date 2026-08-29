@@ -6,9 +6,9 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getReportAProblemLink} from 'mattermost-redux/selectors/entities/report_a_problem';
-import {isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getReportAProblemLink} from '@hanzoteam/redux/selectors/entities/report_a_problem';
+import {isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import {getUserGuideDropdownPluginMenuItems} from 'selectors/plugins';

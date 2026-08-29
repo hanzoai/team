@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserAccessToken} from '@mattermost/types/users';
+import type {UserAccessToken} from '@hanzoteam/types/users';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

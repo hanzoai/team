@@ -5,7 +5,7 @@ import type React from 'react';
 import {useCallback, useEffect, useRef} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import {focusedRHS} from 'actions/views/rhs';
 import {getIsRhsExpanded, getIsRhsOpen} from 'selectors/rhs';

@@ -39,21 +39,21 @@ This is the Mattermost web app codebase, a React-based frontend application for 
 This repository uses npm workspaces:
 
 - **channels** (`channels/`): Main Mattermost web app containing all UI components, Redux logic, and application code
-- **@mattermost/types** (`platform/types/`): TypeScript type definitions
-- **@mattermost/client** (`platform/client/`): REST and WebSocket client for the Mattermost API
-- **@mattermost/components** (`platform/components/`): Shared React components
-- **@mattermost/shared** (`platform/shared/`): Cross-product components and utilities used by the web app and plugins (e.g. `Button`, `WithTooltip`). Prefer these over hand-rolled equivalents.
-- **@mattermost/eslint-plugin** (`platform/eslint-plugin/`): Custom ESLint rules
+- **@hanzoteam/types** (`platform/types/`): TypeScript type definitions
+- **@hanzoteam/client** (`platform/client/`): REST and WebSocket client for the Mattermost API
+- **@hanzoteam/components** (`platform/components/`): Shared React components
+- **@hanzoteam/shared** (`platform/shared/`): Cross-product components and utilities used by the web app and plugins (e.g. `Button`, `WithTooltip`). Prefer these over hand-rolled equivalents.
+- **@hanzoteam/eslint-plugin** (`platform/eslint-plugin/`): Custom ESLint rules
 
 ### Importing Packages
 
 Always import packages using their full name, never relative paths:
 ```typescript
 // Correct
-import {Client4} from '@mattermost/client';
-import {UserProfile} from '@mattermost/types/users';
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {Client4} from '@hanzoteam/client';
+import {UserProfile} from '@hanzoteam/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import {getUser} from 'mattermost-redux/selectors/entities/users';
 
 // Incorrect
@@ -66,9 +66,9 @@ import Client4 from '../platform/client/src/client4.ts';
 - **Redux 5.0**: State management
 - **React Router 5.3**: Client-side routing
 - **React Intl**: Internationalization
-- **Floating UI**: Tooltips and popovers (prefer `WithTooltip` from `@mattermost/shared/components/tooltip`)
-- **@mattermost/shared**: Shared components and utilities (`Button`, `WithTooltip`, etc.) — prefer these over rolling your own
-- **@mattermost/compass-icons**: Icon library (prefer over font-awesome)
+- **Floating UI**: Tooltips and popovers (prefer `WithTooltip` from `@hanzoteam/shared/components/tooltip`)
+- **@hanzoteam/shared**: Shared components and utilities (`Button`, `WithTooltip`, etc.) — prefer these over rolling your own
+- **@hanzoteam/compass-icons**: Icon library (prefer over font-awesome)
 - **Monaco Editor**: Code editor integration
 - **Styled Components**: Limited use (for MUI and some legacy components)
 

@@ -4,7 +4,7 @@
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import PluggableErrorBoundary from 'plugins/pluggable/error_boundary';
 import Radio from 'plugins/settings_schema/controls/radio';

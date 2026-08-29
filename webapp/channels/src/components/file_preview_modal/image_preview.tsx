@@ -4,9 +4,9 @@
 import classNames from 'classnames';
 import React, {useEffect, useRef} from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFilePreviewUrl, getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFilePreviewUrl, getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {FileTypes} from 'utils/constants';
 import {getFileType} from 'utils/utils';

@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {AnyAction, Dispatch} from 'redux';
 
-import {unfavoriteChannel, favoriteChannel, getChannelStats} from 'mattermost-redux/actions/channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {isChannelInManagedCategory} from 'mattermost-redux/selectors/entities/channel_categories';
-import {getCurrentChannel, isCurrentChannelFavorite, isCurrentChannelMuted, isCurrentChannelArchived, getCurrentChannelStats} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getProfilesInCurrentChannel, getStatusForUserId, getUser} from 'mattermost-redux/selectors/entities/users';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {unfavoriteChannel, favoriteChannel, getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
+import {getCurrentChannel, isCurrentChannelFavorite, isCurrentChannelMuted, isCurrentChannelArchived, getCurrentChannelStats} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getProfilesInCurrentChannel, getStatusForUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {muteChannel, unmuteChannel} from 'actions/channel_actions';
 import {openModal} from 'actions/views/modals';

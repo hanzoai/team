@@ -4,8 +4,8 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import type {CloudState} from '@mattermost/types/cloud';
-import type {AdminConfig, EnvironmentConfig} from '@mattermost/types/config';
+import type {CloudState} from '@hanzoteam/types/cloud';
+import type {AdminConfig, EnvironmentConfig} from '@hanzoteam/types/config';
 
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';

@@ -5,13 +5,13 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {basicUnreadMeta} from 'mattermost-redux/selectors/entities/channels';
-import type {BasicUnreadStatus} from 'mattermost-redux/selectors/entities/channels';
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {basicUnreadMeta} from '@hanzoteam/redux/selectors/entities/channels';
+import type {BasicUnreadStatus} from '@hanzoteam/redux/selectors/entities/channels';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import faviconDefault16x16 from 'images/favicon/favicon-default-16x16.png';
 import faviconDefault24x24 from 'images/favicon/favicon-default-24x24.png';

@@ -6,8 +6,8 @@ import {defineMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {getChannel, getDirectTeammate} from 'mattermost-redux/selectors/entities/channels';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {getChannel, getDirectTeammate} from '@hanzoteam/redux/selectors/entities/channels';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import Chip from 'components/common/chip/chip';
 

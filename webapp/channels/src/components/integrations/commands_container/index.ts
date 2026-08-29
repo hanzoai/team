@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {AnyAction, Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCommands} from 'mattermost-redux/selectors/entities/integrations';
-import {getUsers} from 'mattermost-redux/selectors/entities/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCommands} from '@hanzoteam/redux/selectors/entities/integrations';
+import {getUsers} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadCommandsAndProfilesForTeam} from 'actions/integration_actions';
 

@@ -5,16 +5,16 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {getStandardAnalytics} from 'mattermost-redux/actions/admin';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Permissions} from 'mattermost-redux/constants';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {makeGetCategory} from 'mattermost-redux/selectors/entities/preferences';
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
+import {getStandardAnalytics} from '@hanzoteam/redux/actions/admin';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {makeGetCategory} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {dismissNotice} from 'actions/views/notice';
 

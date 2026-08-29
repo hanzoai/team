@@ -6,13 +6,13 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useRouteMatch} from 'react-router-dom';
 import type {AnyAction, Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {IntegrationTypes} from 'mattermost-redux/action_types';
-import {Client4} from 'mattermost-redux/client';
-import {getChannelByTeamIdAndChannelName} from 'mattermost-redux/selectors/entities/channels';
-import {getTeamByName} from 'mattermost-redux/selectors/entities/teams';
-import {generateId} from 'mattermost-redux/utils/helpers';
+import {IntegrationTypes} from '@hanzoteam/redux/action_types';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannelByTeamIdAndChannelName} from '@hanzoteam/redux/selectors/entities/channels';
+import {getTeamByName} from '@hanzoteam/redux/selectors/entities/teams';
+import {generateId} from '@hanzoteam/redux/utils/helpers';
 
 import {switchToChannel} from 'actions/views/channel';
 import {getLastViewedChannelNameByTeamName} from 'selectors/local_storage';

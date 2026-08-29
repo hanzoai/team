@@ -5,12 +5,12 @@ import React from 'react';
 import type {WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, defineMessage, injectIntl} from 'react-intl';
 
-import {Button, buttonClassNames} from '@mattermost/shared/components/button';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
+import {Button, buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
 
-import GeneralConstants from 'mattermost-redux/constants/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import GeneralConstants from '@hanzoteam/redux/constants/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import ConfirmModal from 'components/confirm_modal';

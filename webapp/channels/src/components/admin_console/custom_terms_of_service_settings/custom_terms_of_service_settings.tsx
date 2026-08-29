@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
-import type {TermsOfService} from '@mattermost/types/terms_of_service';
+import type {AdminConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {TermsOfService} from '@hanzoteam/types/terms_of_service';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BooleanSetting from 'components/admin_console/boolean_setting';
 import OLDAdminSettings from 'components/admin_console/old_admin_settings';

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 
@@ -11,7 +11,7 @@ import Completed from './onboarding_tasklist_completed';
 
 const isDesktopAppMock = jest.mocked(UserAgent.isDesktopApp);
 
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
 }));
 

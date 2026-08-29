@@ -4,11 +4,11 @@
 import React, {type RefObject} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
-import type {UserNotifyProps} from '@mattermost/types/users';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
+import type {UserNotifyProps} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getEmailInterval} from 'mattermost-redux/utils/notify_props';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getEmailInterval} from '@hanzoteam/redux/utils/notify_props';
 
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';

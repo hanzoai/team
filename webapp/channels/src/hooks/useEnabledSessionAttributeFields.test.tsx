@@ -1,15 +1,15 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {fetchPropertyFields} from 'mattermost-redux/actions/properties';
+import {fetchPropertyFields} from '@hanzoteam/redux/actions/properties';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 
 import {useEnabledSessionAttributeFields} from './useEnabledSessionAttributeFields';
 
-jest.mock('mattermost-redux/actions/properties', () => ({
+jest.mock('@hanzoteam/redux/actions/properties', () => ({
     fetchPropertyFields: jest.fn(() => () => Promise.resolve({data: []})),
 }));
 

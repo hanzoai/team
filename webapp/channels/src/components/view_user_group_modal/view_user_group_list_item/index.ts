@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {removeUsersFromGroup} from 'mattermost-redux/actions/groups';
-import {Permissions} from 'mattermost-redux/constants';
-import {getGroup as getGroupById} from 'mattermost-redux/selectors/entities/groups';
-import {haveIGroupPermission} from 'mattermost-redux/selectors/entities/roles';
+import {removeUsersFromGroup} from '@hanzoteam/redux/actions/groups';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getGroup as getGroupById} from '@hanzoteam/redux/selectors/entities/groups';
+import {haveIGroupPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import type {GlobalState} from 'types/store';
 

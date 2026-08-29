@@ -4,7 +4,7 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {AdminConfig, ClientLicense} from '@mattermost/types/config';
+import type {AdminConfig, ClientLicense} from '@hanzoteam/types/config';
 
 import SectionNotice from 'components/section_notice';
 

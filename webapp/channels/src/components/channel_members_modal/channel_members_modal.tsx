@@ -5,8 +5,8 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import ChannelInviteModal from 'components/channel_invite_modal';
 import MemberListChannel from 'components/member_list_channel';

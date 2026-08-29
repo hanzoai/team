@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {POLICY_SIMULATION_BLAME_SOURCES} from '@mattermost/types/access_control';
+import {POLICY_SIMULATION_BLAME_SOURCES} from '@hanzoteam/types/access_control';
 
 import {aggregateDecisions} from './decision_aggregate';
 

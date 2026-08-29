@@ -5,9 +5,9 @@ import {waitFor, screen, within} from '@testing-library/react';
 import React from 'react';
 import '@testing-library/jest-dom';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {haveISystemPermission} from 'mattermost-redux/selectors/entities/roles_helpers';
+import {haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles_helpers';
 
 import {renderWithContext, userEvent} from 'tests/react_testing_utils';
 import Constants from 'utils/constants';
@@ -15,12 +15,12 @@ import {TestHelper} from 'utils/test_helper';
 
 import {SystemUsersListAction} from './index';
 
-jest.mock('mattermost-redux/selectors/entities/roles_helpers', () => ({
-    ...jest.requireActual('mattermost-redux/selectors/entities/roles_helpers'),
+jest.mock('@hanzoteam/redux/selectors/entities/roles_helpers', () => ({
+    ...jest.requireActual('@hanzoteam/redux/selectors/entities/roles_helpers'),
     haveISystemPermission: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/common', () => {
+jest.mock('@hanzoteam/redux/selectors/entities/common', () => {
     const {TestHelper} = jest.requireActual('utils/test_helper');
     const currentUser = TestHelper.getUserMock({
         id: 'other_user_id',
@@ -29,7 +29,7 @@ jest.mock('mattermost-redux/selectors/entities/common', () => {
     });
 
     return {
-        ...jest.requireActual('mattermost-redux/selectors/entities/common') as typeof import('mattermost-redux/selectors/entities/users'),
+        ...jest.requireActual('@hanzoteam/redux/selectors/entities/common') as typeof import('@hanzoteam/redux/selectors/entities/users'),
         getCurrentUser: () => currentUser,
     };
 });

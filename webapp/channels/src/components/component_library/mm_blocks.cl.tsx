@@ -9,7 +9,7 @@ import React, {useCallback, useMemo, useState} from 'react';
 import type {IntlShape} from 'react-intl';
 import {useIntl} from 'react-intl';
 
-import {type MmBlock} from '@mattermost/types/mm_blocks';
+import {type MmBlock} from '@hanzoteam/types/mm_blocks';
 
 import {BlockRenderer} from 'components/block_renderer';
 import {translateAdaptiveCards} from 'components/block_renderer/translation/adaptive_cards';

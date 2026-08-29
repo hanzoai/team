@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import * as fileActions from 'mattermost-redux/actions/files';
+import * as fileActions from '@hanzoteam/redux/actions/files';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

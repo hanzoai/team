@@ -5,10 +5,10 @@ import {screen} from '@testing-library/react';
 import cloneDeep from 'lodash/cloneDeep';
 import React from 'react';
 
-import type {PropertyValue} from '@mattermost/types/properties';
-import type {Team} from '@mattermost/types/teams';
+import type {PropertyValue} from '@hanzoteam/types/properties';
+import type {Team} from '@hanzoteam/types/teams';
 
-import state from 'mattermost-redux/store/initial_state';
+import state from '@hanzoteam/redux/store/initial_state';
 
 import type {TeamFieldMetadata} from 'components/properties_card_view/properties_card_view';
 

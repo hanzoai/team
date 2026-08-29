@@ -10,15 +10,15 @@ import {useSelector} from 'react-redux';
 import type {OnChangeValue, ActionMeta, StylesConfig} from 'react-select';
 import ReactSelect from 'react-select';
 
-import type {LockProfileFieldsSetting} from '@mattermost/types/config';
-import {supportsOptions, type PropertyFieldOption} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {UserProfile} from '@mattermost/types/users';
+import type {LockProfileFieldsSetting} from '@hanzoteam/types/config';
+import {supportsOptions, type PropertyFieldOption} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {LogErrorOptions} from 'mattermost-redux/actions/errors';
-import {LogErrorBarMode} from 'mattermost-redux/actions/errors';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import type {LogErrorOptions} from '@hanzoteam/redux/actions/errors';
+import {LogErrorBarMode} from '@hanzoteam/redux/actions/errors';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import {getPluginDisplayName} from 'selectors/plugins';
 

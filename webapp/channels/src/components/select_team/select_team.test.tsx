@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {CloudUsage} from '@mattermost/types/cloud';
-import type {Team} from '@mattermost/types/teams';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

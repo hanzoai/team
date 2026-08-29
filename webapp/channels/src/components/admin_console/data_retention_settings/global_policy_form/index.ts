@@ -7,9 +7,9 @@ import type {Dispatch} from 'redux';
 
 import {
     patchConfig,
-} from 'mattermost-redux/actions/admin';
-import {getEnvironmentConfig} from 'mattermost-redux/selectors/entities/admin';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+} from '@hanzoteam/redux/actions/admin';
+import {getEnvironmentConfig} from '@hanzoteam/redux/selectors/entities/admin';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

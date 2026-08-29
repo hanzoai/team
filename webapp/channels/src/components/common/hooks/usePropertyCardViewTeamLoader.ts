@@ -3,7 +3,7 @@
 
 import {useEffect, useRef, useState} from 'react';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {useTeam} from 'components/common/hooks/use_team';
 

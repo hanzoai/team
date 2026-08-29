@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ClientLicense} from '@mattermost/types/config';
+import type {ClientLicense} from '@hanzoteam/types/config';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import {LicenseSkus} from 'utils/constants';
 import {isEnterpriseLicense} from 'utils/license_utils';
 

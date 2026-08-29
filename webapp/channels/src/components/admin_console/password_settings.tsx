@@ -5,8 +5,8 @@ import React from 'react';
 import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import Constants from 'utils/constants';
 import {passwordErrors} from 'utils/password';

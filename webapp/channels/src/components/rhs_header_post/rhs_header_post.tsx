@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage, injectIntl, type WrappedComponentProps} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
 
 import KeyboardShortcutSequence, {
     KEYBOARD_SHORTCUTS,

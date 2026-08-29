@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AppBinding} from '@mattermost/types/apps';
+import type {AppBinding} from '@hanzoteam/types/apps';
 
-import {AppBindingLocations} from 'mattermost-redux/constants/apps';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {makeAppBindingsSelector, makeRHSAppBindingSelector} from 'mattermost-redux/selectors/entities/apps';
+import {AppBindingLocations} from '@hanzoteam/redux/constants/apps';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {makeAppBindingsSelector, makeRHSAppBindingSelector} from '@hanzoteam/redux/selectors/entities/apps';
 
 import {Locations} from 'utils/constants';
 

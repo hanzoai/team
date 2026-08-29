@@ -4,7 +4,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import ConfirmModal from 'components/confirm_modal';
 

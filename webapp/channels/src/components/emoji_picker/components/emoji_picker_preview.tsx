@@ -4,9 +4,9 @@
 import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
-import {getEmojiImageUrl, isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiImageUrl, isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import imgTrans from 'images/img_trans.gif';
 

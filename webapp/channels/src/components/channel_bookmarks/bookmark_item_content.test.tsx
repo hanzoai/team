@@ -4,8 +4,8 @@
 import {act} from '@testing-library/react';
 import * as ReactRedux from 'react-redux';
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
-import type {FileInfo} from '@mattermost/types/files';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
+import type {FileInfo} from '@hanzoteam/types/files';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 import {ActionTypes, ModalIdentifiers} from 'utils/constants';

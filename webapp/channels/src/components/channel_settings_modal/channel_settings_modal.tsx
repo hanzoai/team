@@ -10,13 +10,13 @@ import React, {
 import {useIntl} from 'react-intl';
 import {shallowEqual, useSelector, useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense, isChannelPermissionPoliciesEnabled} from 'mattermost-redux/selectors/entities/general';
-import {haveIChannelPermission, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense, isChannelPermissionPoliciesEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {haveIChannelPermission, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {
     setShowPreviewOnChannelSettingsHeaderModal,

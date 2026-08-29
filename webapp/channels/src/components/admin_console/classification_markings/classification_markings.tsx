@@ -5,12 +5,12 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ClientError} from '@mattermost/client';
-import {PlusIcon} from '@mattermost/compass-icons/components';
-import type {PropertyField} from '@mattermost/types/properties';
+import type {ClientError} from '@hanzoteam/client';
+import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import type {PropertyField} from '@hanzoteam/types/properties';
 
-import PropertyTypes from 'mattermost-redux/action_types/properties';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import PropertyTypes from '@hanzoteam/redux/action_types/properties';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

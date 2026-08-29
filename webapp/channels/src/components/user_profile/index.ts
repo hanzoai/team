@@ -6,13 +6,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile as UserProfileType} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile as UserProfileType} from '@hanzoteam/types/users';
 
-import {fetchRemoteClusterInfo} from 'mattermost-redux/actions/shared_channels';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
-import {getRemoteDisplayName} from 'mattermost-redux/selectors/entities/shared_channels';
-import {getUser, makeGetDisplayName} from 'mattermost-redux/selectors/entities/users';
+import {fetchRemoteClusterInfo} from '@hanzoteam/redux/actions/shared_channels';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getRemoteDisplayName} from '@hanzoteam/redux/selectors/entities/shared_channels';
+import {getUser, makeGetDisplayName} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

@@ -4,11 +4,11 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {Channel, ChannelType} from '@mattermost/types/channels';
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
 
-import * as commonSelectors from 'mattermost-redux/selectors/entities/common';
-import * as usersSelectors from 'mattermost-redux/selectors/entities/users';
+import * as commonSelectors from '@hanzoteam/redux/selectors/entities/common';
+import * as usersSelectors from '@hanzoteam/redux/selectors/entities/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

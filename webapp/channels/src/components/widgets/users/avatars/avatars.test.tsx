@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 
 import Avatars from './avatars';
 
-jest.mock('mattermost-redux/actions/users', () => {
+jest.mock('@hanzoteam/redux/actions/users', () => {
     return {
-        ...jest.requireActual('mattermost-redux/actions/users'),
+        ...jest.requireActual('@hanzoteam/redux/actions/users'),
         getMissingProfilesByIds: jest.fn((ids) => {
             return {
                 type: 'MOCK_GET_MISSING_PROFILES_BY_IDS',

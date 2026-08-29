@@ -3,7 +3,7 @@
 
 import type {useIntl} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import {ldapTest} from 'actions/admin_actions';
 
@@ -13,8 +13,8 @@ import {impactModifiers} from '../dashboard.data';
 import {ItemStatus} from '../dashboard.type';
 import type {ItemModel, Options} from '../dashboard.type';
 
-// import {Client4} from 'mattermost-redux/client';
-// import {AnalyticsRow} from '@mattermost/types/admin';
+// import {Client4} from '@hanzoteam/redux/client';
+// import {AnalyticsRow} from '@hanzoteam/types/admin';
 
 const usesLDAP = async (
     config: Partial<AdminConfig>,

@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {checkIfTeamExists, createTeam} from 'mattermost-redux/actions/teams';
+import {checkIfTeamExists, createTeam} from '@hanzoteam/redux/actions/teams';
 
 import CreateTeamForm from './create_team_form';
 

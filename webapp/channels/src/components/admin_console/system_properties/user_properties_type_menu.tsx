@@ -8,11 +8,11 @@ import type {MessageDescriptor} from 'react-intl';
 import {defineMessage, FormattedMessage, useIntl} from 'react-intl';
 import {css} from 'styled-components';
 
-import {CheckIcon, ChevronDownCircleOutlineIcon, EmailOutlineIcon, FormatListBulletedIcon, LinkVariantIcon, MenuVariantIcon, PoundIcon, SortAscendingIcon} from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import type {FieldType, FieldValueType} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import {CheckIcon, ChevronDownCircleOutlineIcon, EmailOutlineIcon, FormatListBulletedIcon, LinkVariantIcon, MenuVariantIcon, PoundIcon, SortAscendingIcon} from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import type {FieldType, FieldValueType} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import useGetFeatureFlagValue from 'components/common/hooks/useGetFeatureFlagValue';
 import * as Menu from 'components/menu';

@@ -11,7 +11,7 @@ import {Provider} from 'react-redux';
 import {Router} from 'react-router-dom';
 import type {Reducer} from 'redux';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import configureStore from 'store';
 import globalStore from 'stores/redux_store';
@@ -19,7 +19,7 @@ import globalStore from 'stores/redux_store';
 import SharedPackageProvider from 'components/root/shared_package_provider';
 
 import WebSocketClient from 'client/web_websocket_client';
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import mockStore from 'tests/test_store';
 import {WebSocketContext} from 'utils/use_websocket';
 

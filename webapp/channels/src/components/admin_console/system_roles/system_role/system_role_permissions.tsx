@@ -4,9 +4,9 @@
 import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
-import {memoizeResult} from 'mattermost-redux/utils/helpers';
+import {memoizeResult} from '@hanzoteam/redux/utils/helpers';
 
 import ExternalLink from 'components/external_link';
 import AdminPanel from 'components/widgets/admin_console/admin_panel';

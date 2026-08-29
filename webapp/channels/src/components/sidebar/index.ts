@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {fetchMyCategories} from 'mattermost-redux/actions/channel_categories';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveICurrentChannelPermission, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {fetchMyCategories} from '@hanzoteam/redux/actions/channel_categories';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveICurrentChannelPermission, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {clearChannelSelection} from 'actions/views/channel_sidebar';
 import {closeModal, openModal} from 'actions/views/modals';

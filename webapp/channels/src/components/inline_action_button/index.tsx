@@ -6,9 +6,9 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {PostActionIntegrationFormat} from '@mattermost/types/integration_actions';
+import type {PostActionIntegrationFormat} from '@hanzoteam/types/integration_actions';
 
-import {doPostActionWithCookie} from 'mattermost-redux/actions/posts';
+import {doPostActionWithCookie} from '@hanzoteam/redux/actions/posts';
 
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';
 

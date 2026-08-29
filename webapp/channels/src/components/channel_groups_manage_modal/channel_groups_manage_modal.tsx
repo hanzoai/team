@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
-import {SyncableType} from '@mattermost/types/groups';
-import type {Group} from '@mattermost/types/groups';
+import type {Channel} from '@hanzoteam/types/channels';
+import {SyncableType} from '@hanzoteam/types/groups';
+import type {Group} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AddGroupsToChannelModal from 'components/add_groups_to_channel_modal';
 import ListModal, {DEFAULT_NUM_PER_PAGE} from 'components/list_modal';

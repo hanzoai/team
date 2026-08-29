@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {TeamType} from '@mattermost/types/teams';
+import type {TeamType} from '@hanzoteam/types/teams';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

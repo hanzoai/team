@@ -4,7 +4,7 @@
 import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {AllowedIPRange} from '@mattermost/types/config';
+import type {AllowedIPRange} from '@hanzoteam/types/config';
 
 import EditTableRow from './edit_section_edit_table_row';
 import EditSectionHeader from './edit_section_header';

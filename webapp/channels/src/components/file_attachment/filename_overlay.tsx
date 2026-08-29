@@ -4,10 +4,10 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import ExternalLink from 'components/external_link';
 import AttachmentIcon from 'components/widgets/icons/attachment_icon';

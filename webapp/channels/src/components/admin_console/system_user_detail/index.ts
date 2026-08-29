@@ -4,14 +4,14 @@
 import type {ConnectedProps} from 'react-redux';
 import {connect} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getCustomProfileAttributeFields} from 'mattermost-redux/actions/general';
-import {getUserPreferences} from 'mattermost-redux/actions/preferences';
-import {addUserToTeam} from 'mattermost-redux/actions/teams';
-import {updateUserActive, updateUserAuth, getUser, patchUser, updateUserMfa, getCustomProfileAttributeValues, saveCustomProfileAttribute} from 'mattermost-redux/actions/users';
-import {getConfig, getCustomProfileAttributes, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getCustomProfileAttributeFields} from '@hanzoteam/redux/actions/general';
+import {getUserPreferences} from '@hanzoteam/redux/actions/preferences';
+import {addUserToTeam} from '@hanzoteam/redux/actions/teams';
+import {updateUserActive, updateUserAuth, getUser, patchUser, updateUserMfa, getCustomProfileAttributeValues, saveCustomProfileAttribute} from '@hanzoteam/redux/actions/users';
+import {getConfig, getCustomProfileAttributes, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 import {openModal} from 'actions/views/modals';

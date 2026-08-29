@@ -4,11 +4,11 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isAdmin, isSystemAdmin, isGuest} from 'mattermost-redux/utils/user_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isAdmin, isSystemAdmin, isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import * as Menu from 'components/menu';
 import DropdownIcon from 'components/widgets/icons/fa_dropdown_icon';

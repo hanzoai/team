@@ -5,13 +5,13 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {ServerError} from '@mattermost/types/errors';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {removeContentFlaggingPost} from 'mattermost-redux/actions/content_flagging';
-import {Client4} from 'mattermost-redux/client';
+import {removeContentFlaggingPost} from '@hanzoteam/redux/actions/content_flagging';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {useChannel} from 'components/common/hooks/useChannel';
 import {useContentFlaggingConfig} from 'components/common/hooks/useContentFlaggingFields';

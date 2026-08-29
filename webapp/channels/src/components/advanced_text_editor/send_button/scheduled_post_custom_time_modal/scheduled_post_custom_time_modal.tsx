@@ -7,14 +7,14 @@ import React, {useCallback, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {testingEnabled} from 'mattermost-redux/selectors/entities/general';
-import {isRecurringScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {generateCurrentTimezoneLabel, getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {testingEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {isRecurringScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {generateCurrentTimezoneLabel, getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {
     DMUserTimezone,

@@ -5,14 +5,14 @@ import React, {useCallback, useState, useMemo} from 'react';
 import type {MessageDescriptor, WrappedComponentProps} from 'react-intl';
 import {FormattedMessage} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {TestLdapFiltersResponse} from '@mattermost/types/admin';
-import type {CloudState} from '@mattermost/types/cloud';
-import type {AdminConfig, ClientLicense, EnvironmentConfig} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {TestLdapFiltersResponse} from '@hanzoteam/types/admin';
+import type {CloudState} from '@hanzoteam/types/cloud';
+import type {AdminConfig, ClientLicense, EnvironmentConfig} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SettingsGroup from 'components/admin_console/settings_group';
 import {useSectionNavigation} from 'components/common/hooks/useSectionNavigation';

@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import ProfilePicture from 'components/profile_picture';
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {GuestFilter} from '@mattermost/types/reports';
-import type {UserReport} from '@mattermost/types/reports';
+import {GuestFilter} from '@hanzoteam/types/reports';
+import type {UserReport} from '@hanzoteam/types/reports';
 
 import {ColumnNames, RoleFilters, StatusFilter} from '../constants';
 

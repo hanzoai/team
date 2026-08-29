@@ -5,10 +5,10 @@ import React from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {isSessionAttributeField} from '@mattermost/types/properties_user';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import {isSessionAttributeField} from '@hanzoteam/types/properties_user';
 
 import Markdown from 'components/markdown';
 

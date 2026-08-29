@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getMyTeams} from 'mattermost-redux/selectors/entities/teams';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {deferNavigation} from 'actions/admin_actions';
 import {getCurrentLocale} from 'selectors/i18n';

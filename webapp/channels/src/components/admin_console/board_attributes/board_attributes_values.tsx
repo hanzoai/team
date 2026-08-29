@@ -6,10 +6,10 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import styled, {css} from 'styled-components';
 
-import {CheckIcon, CloseCircleIcon, LockOutlineIcon, PlusIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import {supportsOptions} from '@mattermost/types/properties';
-import {type BoardsPropertyField, type BoardsPropertyFieldOption} from '@mattermost/types/properties_board';
+import {CheckIcon, CloseCircleIcon, LockOutlineIcon, PlusIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import {supportsOptions} from '@hanzoteam/types/properties';
+import {type BoardsPropertyField, type BoardsPropertyFieldOption} from '@hanzoteam/types/properties_board';
 
 import * as Menu from 'components/menu';
 

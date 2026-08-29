@@ -5,16 +5,16 @@ import React, {useState, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel} from '@mattermost/types/channels';
-import type {Job} from '@mattermost/types/jobs';
-import type {Team} from '@mattermost/types/teams';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Job} from '@hanzoteam/types/jobs';
+import type {Team} from '@hanzoteam/types/teams';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import * as ChannelActions from 'mattermost-redux/actions/channels';
-import {getJob} from 'mattermost-redux/actions/jobs';
-import {getTeam as fetchTeam} from 'mattermost-redux/actions/teams';
-import {getAllJobs} from 'mattermost-redux/selectors/entities/jobs';
+import * as ChannelActions from '@hanzoteam/redux/actions/channels';
+import {getJob} from '@hanzoteam/redux/actions/jobs';
+import {getTeam as fetchTeam} from '@hanzoteam/redux/actions/teams';
+import {getAllJobs} from '@hanzoteam/redux/selectors/entities/jobs';
 
 import AlertBanner from 'components/alert_banner';
 import CodeBlock from 'components/code_block/code_block';

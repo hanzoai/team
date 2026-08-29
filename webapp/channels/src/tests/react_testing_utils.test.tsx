@@ -6,16 +6,16 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {connect, useDispatch, useSelector} from 'react-redux';
 import {Link, Route} from 'react-router-dom';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {UserTypes} from 'mattermost-redux/action_types';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {UserTypes} from '@hanzoteam/redux/action_types';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 
 import ModalController from 'components/modal_controller';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
 import {TestHelper} from 'utils/test_helper';
 
 import type {GlobalState} from 'types/store';

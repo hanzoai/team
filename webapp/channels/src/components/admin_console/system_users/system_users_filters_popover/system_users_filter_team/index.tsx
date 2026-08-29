@@ -10,10 +10,10 @@ import {components} from 'react-select';
 import type {IndicatorsContainerProps, ControlProps, OptionProps, Options, OnChangeValue, StylesConfig} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import type {Team, TeamSearchOpts} from '@mattermost/types/teams';
+import type {Team, TeamSearchOpts} from '@hanzoteam/types/teams';
 
-import {getTeams, searchTeams} from 'mattermost-redux/actions/teams';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {getTeams, searchTeams} from '@hanzoteam/redux/actions/teams';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import InputError from 'components/input_error';
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';

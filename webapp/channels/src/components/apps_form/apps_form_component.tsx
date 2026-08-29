@@ -7,14 +7,14 @@ import {Modal, Fade} from 'react-bootstrap';
 import {defineMessage, FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {AppCallResponse, AppField, AppForm, AppFormValues, AppSelectOption, FormResponseData, AppLookupResponse, AppFormValue} from '@mattermost/types/apps';
-import type {DialogElement} from '@mattermost/types/integrations';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {AppCallResponse, AppField, AppForm, AppFormValues, AppSelectOption, FormResponseData, AppLookupResponse, AppFormValue} from '@hanzoteam/types/apps';
+import type {DialogElement} from '@hanzoteam/types/integrations';
 
-import {AppCallResponseTypes, AppFieldTypes} from 'mattermost-redux/constants/apps';
+import {AppCallResponseTypes, AppFieldTypes} from '@hanzoteam/redux/constants/apps';
 import {
     checkDialogElementForError, checkIfErrorsMatchElements,
-} from 'mattermost-redux/utils/integration_utils';
+} from '@hanzoteam/redux/utils/integration_utils';
 
 import Markdown from 'components/markdown';
 import SpinnerButton from 'components/spinner_button';

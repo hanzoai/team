@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import type {Emoji} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
-import type {Reaction as ReactionType} from '@mattermost/types/reactions';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Reaction as ReactionType} from '@hanzoteam/types/reactions';
 
-import {getEmojiName} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiName} from '@hanzoteam/redux/utils/emoji_utils';
 
 import Reaction from 'components/post_view/reaction';
 

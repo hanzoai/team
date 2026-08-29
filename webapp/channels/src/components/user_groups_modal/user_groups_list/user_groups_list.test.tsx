@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Group, GroupPermissions} from '@mattermost/types/groups';
+import type {Group, GroupPermissions} from '@hanzoteam/types/groups';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

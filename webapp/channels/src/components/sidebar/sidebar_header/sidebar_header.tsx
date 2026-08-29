@@ -4,7 +4,7 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import SidebarBrowseOrAddChannelMenu from './sidebar_browse_or_add_channel_menu';
 import SidebarTeamMenu from './sidebar_team_menu';

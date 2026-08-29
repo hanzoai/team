@@ -5,11 +5,11 @@ import React, {useState, useCallback} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {DotsHorizontalIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import type {ScheduledRecap} from '@mattermost/types/recaps';
+import {DotsHorizontalIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {ScheduledRecap} from '@hanzoteam/types/recaps';
 
-import {pauseScheduledRecap, resumeScheduledRecap, deleteScheduledRecap} from 'mattermost-redux/actions/recaps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {pauseScheduledRecap, resumeScheduledRecap, deleteScheduledRecap} from '@hanzoteam/redux/actions/recaps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 import * as Menu from 'components/menu';

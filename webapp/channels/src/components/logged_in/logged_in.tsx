@@ -4,8 +4,8 @@
 import React from 'react';
 import {Redirect} from 'react-router-dom';
 
-import {isAndroid, isIos} from '@mattermost/shared/utils/user_agent';
-import type {UserProfile} from '@mattermost/types/users';
+import {isAndroid, isIos} from '@hanzoteam/shared/utils/user_agent';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import * as GlobalActions from 'actions/global_actions';
 import * as WebSocketActions from 'actions/websocket_actions';

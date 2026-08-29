@@ -5,9 +5,9 @@ import type {ComponentType} from 'react';
 import React from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 
-import {MonitorIcon, CellphoneIcon, GlobeIcon} from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {MonitorIcon, CellphoneIcon, GlobeIcon} from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {SESSION_PLATFORMS, type SessionPlatform} from './utils';
 

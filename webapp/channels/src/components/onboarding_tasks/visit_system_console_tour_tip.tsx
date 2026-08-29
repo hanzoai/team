@@ -5,7 +5,7 @@ import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {TourTip, useMeasurePunchouts} from '@mattermost/components';
+import {TourTip, useMeasurePunchouts} from '@hanzoteam/components';
 
 import {setShowOnboardingVisitConsoleTour} from 'actions/views/onboarding_tasks';
 import {isShowOnboardingVisitConsoleTour} from 'selectors/views/onboarding_tasks';

@@ -5,8 +5,8 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {GenericModal} from '@hanzoteam/components';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {openModal} from 'actions/views/modals';
 

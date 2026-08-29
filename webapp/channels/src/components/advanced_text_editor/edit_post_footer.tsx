@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
 
 import {unsetEditingPost} from 'actions/post_actions';
 import {isSendOnCtrlEnter} from 'selectors/preferences';

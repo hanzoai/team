@@ -5,7 +5,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import type {OptionProps} from 'react-select';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {TeamIcon} from 'components/widgets/team_icon/team_icon';
 

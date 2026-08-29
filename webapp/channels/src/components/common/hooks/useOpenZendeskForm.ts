@@ -4,7 +4,7 @@
 import {useCallback} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getCloudCustomer} from 'mattermost-redux/selectors/entities/cloud';
+import {getCloudCustomer} from '@hanzoteam/redux/selectors/entities/cloud';
 
 import {getCloudSupportLink, goToCloudSupportForm} from 'utils/contact_support_sales';
 

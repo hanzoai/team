@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import {ClientError} from '@mattermost/client';
-import type {PropertyField} from '@mattermost/types/properties';
+import {ClientError} from '@hanzoteam/client';
+import type {PropertyField} from '@hanzoteam/types/properties';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 

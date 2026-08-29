@@ -12,7 +12,7 @@
 ## Guidelines
 - Keep files small and discoverable; prefer feature-specific files (`cloud/sku.ts`) instead of dumping into `global.d.ts`.
 - Avoid `any`; if unavoidable, annotate why and track TODO for future refinement.
-- Align naming with server and platform types to prevent duplication (e.g., reuse `UserProfile` from `@mattermost/types`).
+- Align naming with server and platform types to prevent duplication (e.g., reuse `UserProfile` from `@hanzoteam/types`).
 - When extending globals (`global.d.ts`), document the reason and include links to usage.
 
 ## Coordination

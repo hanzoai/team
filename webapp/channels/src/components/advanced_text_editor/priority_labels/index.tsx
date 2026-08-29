@@ -5,8 +5,8 @@ import classNames from 'classnames';
 import React, {memo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {PostPriorityMetadata} from '@mattermost/types/posts';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {PostPriorityMetadata} from '@hanzoteam/types/posts';
 
 import {HasNoMentions, HasSpecialMentions} from 'components/post_priority/error_messages';
 import PriorityLabel from 'components/post_priority/post_priority_label';

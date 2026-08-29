@@ -8,11 +8,11 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {FooterPagination, GenericModal} from '@mattermost/components';
+import {FooterPagination, GenericModal} from '@hanzoteam/components';
 
-import {getPluginStatuses} from 'mattermost-redux/actions/admin';
-import {setFirstAdminVisitMarketplaceStatus} from 'mattermost-redux/actions/general';
-import {getFirstAdminVisitMarketplaceStatus, getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getPluginStatuses} from '@hanzoteam/redux/actions/admin';
+import {setFirstAdminVisitMarketplaceStatus} from '@hanzoteam/redux/actions/general';
+import {getFirstAdminVisitMarketplaceStatus, getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {fetchListing} from 'actions/marketplace';
 import {closeModal} from 'actions/views/modals';

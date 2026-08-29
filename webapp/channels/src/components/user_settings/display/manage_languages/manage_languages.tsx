@@ -7,9 +7,9 @@ import type {IntlShape} from 'react-intl';
 import ReactSelect from 'react-select';
 import type {StylesConfig, OnChangeValue, AriaOnFocus, AriaOnChange} from 'react-select';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ExternalLink from 'components/external_link';
 import SettingItemMax from 'components/setting_item_max';

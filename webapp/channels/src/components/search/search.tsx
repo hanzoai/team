@@ -6,9 +6,9 @@ import type {FormEvent} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {isDesktopApp, getDesktopVersion, isMacApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp, getDesktopVersion, isMacApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {getCurrentChannelNameForSearchShortcut} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannelNameForSearchShortcut} from '@hanzoteam/redux/selectors/entities/channels';
 
 import HeaderIconWrapper from 'components/channel_header/components/header_icon_wrapper';
 import useSearchResultsActions from 'components/common/hooks/use_search_results_actions';

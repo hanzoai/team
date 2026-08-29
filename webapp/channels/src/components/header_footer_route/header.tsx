@@ -6,7 +6,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import BackButton from 'components/common/back_button';
 import Wordmark from 'components/common/svg_images_components/wordmark';

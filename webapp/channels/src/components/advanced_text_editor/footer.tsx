@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import type {ReactNode} from 'react';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import type {Post} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Post} from '@hanzoteam/types/posts';
 
 import MessageSubmitError from 'components/message_submit_error';
 import MsgTyping from 'components/msg_typing';

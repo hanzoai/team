@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import EmojiMap from 'utils/emoji_map';

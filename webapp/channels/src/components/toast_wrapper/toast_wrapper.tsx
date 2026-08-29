@@ -6,8 +6,8 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape, WrappedComponentProps} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {getNewMessagesIndex} from 'mattermost-redux/utils/post_list';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getNewMessagesIndex} from '@hanzoteam/redux/utils/post_list';
 
 import {HintToast} from 'components/hint-toast/hint_toast';
 import ScrollToBottomToast from 'components/scroll_to_bottom_toast';

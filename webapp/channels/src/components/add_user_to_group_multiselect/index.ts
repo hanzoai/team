@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getProfilesNotInGroup, searchProfiles, getProfiles} from 'mattermost-redux/actions/users';
-import {getProfilesNotInCurrentGroup, getUserStatuses, getProfiles as getUsers} from 'mattermost-redux/selectors/entities/users';
+import {getProfilesNotInGroup, searchProfiles, getProfiles} from '@hanzoteam/redux/actions/users';
+import {getProfilesNotInCurrentGroup, getUserStatuses, getProfiles as getUsers} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadStatusesForProfilesList} from 'actions/status_actions';
 

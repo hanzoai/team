@@ -6,9 +6,9 @@ import isEqual from 'lodash/isEqual';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
+import type {ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import type {Column, Row} from 'components/admin_console/data_grid/data_grid';

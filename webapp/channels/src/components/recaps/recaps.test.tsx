@@ -26,18 +26,18 @@ jest.mock('react-redux', () => ({
     useSelector: (selector: (state: unknown) => unknown) => selector({}),
 }));
 
-jest.mock('mattermost-redux/actions/agents', () => ({
+jest.mock('@hanzoteam/redux/actions/agents', () => ({
     getAgents: () => mockGetAgents(),
 }));
 
-jest.mock('mattermost-redux/actions/recaps', () => ({
+jest.mock('@hanzoteam/redux/actions/recaps', () => ({
     getRecaps: (page: number, perPage: number) => mockGetRecaps(page, perPage),
     getScheduledRecaps: (page: number, perPage: number) => mockGetScheduledRecaps(page, perPage),
     getRecapLimitStatus: () => mockFetchRecapLimitStatus(),
     markRecapsAsViewed: () => mockMarkRecapsAsViewed(),
 }));
 
-jest.mock('mattermost-redux/selectors/entities/recaps', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/recaps', () => ({
     getAllRecaps: jest.fn(() => []),
     getUnreadRecaps: jest.fn(() => []),
     getReadRecaps: jest.fn(() => []),

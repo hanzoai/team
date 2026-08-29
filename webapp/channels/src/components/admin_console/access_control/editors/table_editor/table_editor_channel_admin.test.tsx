@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {searchUsersForExpression} from 'mattermost-redux/actions/access_control';
+import {searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
 
 import {fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 
 import TableEditor from './table_editor';
 
-jest.mock('mattermost-redux/actions/access_control', () => ({
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
     searchUsersForExpression: jest.fn(),
 }));
 

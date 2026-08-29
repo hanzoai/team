@@ -3,11 +3,11 @@
 
 import {defineMessage} from 'react-intl';
 
-import type {ServerError} from '@mattermost/types/errors';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {General} from 'mattermost-redux/constants';
-import {getChannelNameForSearchShortcut} from 'mattermost-redux/selectors/entities/channels';
-import {isDirectChannel, isGroupChannel, sortChannelsByTypeListAndDisplayName} from 'mattermost-redux/utils/channel_utils';
+import {General} from '@hanzoteam/redux/constants';
+import {getChannelNameForSearchShortcut} from '@hanzoteam/redux/selectors/entities/channels';
+import {isDirectChannel, isGroupChannel, sortChannelsByTypeListAndDisplayName} from '@hanzoteam/redux/utils/channel_utils';
 
 import {loadProfilesForGroupChannels} from 'actions/user_actions';
 import {getCurrentLocale} from 'selectors/i18n';

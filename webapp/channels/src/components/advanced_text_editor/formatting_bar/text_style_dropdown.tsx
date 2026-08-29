@@ -6,7 +6,7 @@ import React, {memo, useCallback, useEffect, useState} from 'react';
 import {useIntl, defineMessages} from 'react-intl';
 import styled from 'styled-components';
 
-import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
+import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
 
 import * as Menu from 'components/menu';
 

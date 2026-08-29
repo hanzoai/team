@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelJoinRequest} from '@mattermost/types/channels';
+import type {ChannelJoinRequest} from '@hanzoteam/types/channels';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -14,7 +14,7 @@ const mockPatchChannelJoinRequest = jest.fn();
 const mockGetChannelJoinRequests = jest.fn();
 const mockCountPendingChannelJoinRequests = jest.fn();
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     patchChannelJoinRequest: (...args: unknown[]) => mockPatchChannelJoinRequest(...args),
     getChannelJoinRequests: (...args: unknown[]) => mockGetChannelJoinRequests(...args),
     countPendingChannelJoinRequests: (...args: unknown[]) => mockCountPendingChannelJoinRequests(...args),

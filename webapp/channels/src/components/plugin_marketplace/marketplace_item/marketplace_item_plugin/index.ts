@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getPluginStatus} from 'mattermost-redux/selectors/entities/admin';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getPluginStatus} from '@hanzoteam/redux/selectors/entities/admin';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import {installPlugin} from 'actions/marketplace';
 import {closeModal} from 'actions/views/modals';

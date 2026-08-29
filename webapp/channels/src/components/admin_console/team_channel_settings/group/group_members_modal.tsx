@@ -5,8 +5,8 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Group} from '@mattermost/types/groups';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Group} from '@hanzoteam/types/groups';
 
 import MemberListGroup from 'components/admin_console/member_list_group';
 

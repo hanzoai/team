@@ -1,20 +1,20 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {Team, TeamMemberWithError} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Team, TeamMemberWithError} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {TeamTypes} from 'mattermost-redux/action_types';
-import {getChannelStats} from 'mattermost-redux/actions/channels';
-import {logError} from 'mattermost-redux/actions/errors';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import * as TeamActions from 'mattermost-redux/actions/teams';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {getUser} from 'mattermost-redux/actions/users';
-import {Client4} from 'mattermost-redux/client';
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {TeamTypes} from '@hanzoteam/redux/action_types';
+import {getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import * as TeamActions from '@hanzoteam/redux/actions/teams';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {getUser} from '@hanzoteam/redux/actions/users';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getHistory} from 'utils/browser_history';
 import {Preferences} from 'utils/constants';

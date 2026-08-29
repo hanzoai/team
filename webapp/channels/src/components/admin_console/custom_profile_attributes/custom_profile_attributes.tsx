@@ -11,10 +11,10 @@ import {FormattedMessage, defineMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import type {UserPropertyField, UserPropertyFieldType} from '@mattermost/types/properties_user';
+import type {UserPropertyField, UserPropertyFieldType} from '@hanzoteam/types/properties_user';
 
-import {Client4} from 'mattermost-redux/client';
-import {getCustomProfileAttributes} from 'mattermost-redux/selectors/entities/general';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCustomProfileAttributes} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getPluginDisplayName} from 'selectors/plugins';
 

@@ -5,10 +5,10 @@ import React from 'react';
 import {defineMessage, FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
+import {Button} from '@hanzoteam/shared/components/button';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isEmail} from 'mattermost-redux/utils/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isEmail} from '@hanzoteam/redux/utils/helpers';
 
 import BackButton from 'components/common/back_button';
 import Input from 'components/widgets/inputs/input/input';

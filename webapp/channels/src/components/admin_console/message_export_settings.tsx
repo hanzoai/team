@@ -7,8 +7,8 @@ import type {MessageDescriptor, WrappedComponentProps} from 'react-intl';
 import {FormattedMessage, defineMessage, defineMessages, injectIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {AdminConfig} from '@mattermost/types/config';
-import type {Job} from '@mattermost/types/jobs';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {Job} from '@hanzoteam/types/jobs';
 
 import ExternalLink from 'components/external_link';
 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {isDesktopApp, getDesktopVersion} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp, getDesktopVersion} from '@hanzoteam/shared/utils/user_agent';
 
 import {act, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 
@@ -11,7 +11,7 @@ import ProductNoticesModal from './product_notices_modal';
 
 const getDesktopVersionMock = jest.mocked(getDesktopVersion);
 const isDesktopAppMock = jest.mocked(isDesktopApp);
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     getDesktopVersion: jest.fn(),
     isDesktopApp: jest.fn(),
 }));

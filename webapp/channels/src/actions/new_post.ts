@@ -4,26 +4,26 @@
 import type {AnyAction} from 'redux';
 import {batchActions} from 'redux-batched-actions';
 
-import type {WebSocketMessages} from '@mattermost/client';
-import type {Post} from '@mattermost/types/posts';
+import type {WebSocketMessages} from '@hanzoteam/client';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {
     actionsToMarkChannelAsRead,
     actionsToMarkChannelAsUnread,
     markChannelAsViewedOnServer,
-} from 'mattermost-redux/actions/channels';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import {getCurrentChannelId, isManuallyUnread} from 'mattermost-redux/selectors/entities/channels';
-import * as PostSelectors from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getThread} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/channels';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import {getCurrentChannelId, isManuallyUnread} from '@hanzoteam/redux/selectors/entities/channels';
+import * as PostSelectors from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getThread} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 import {
     isFromWebhook,
     isNotificationSuppressed,
     isSystemMessage,
     shouldIgnorePost,
-} from 'mattermost-redux/utils/post_utils';
+} from '@hanzoteam/redux/utils/post_utils';
 
 import {sendDesktopNotification} from 'actions/notification_actions';
 import {updateThreadLastOpened} from 'actions/views/threads';

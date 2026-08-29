@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import AbstractOutgoingWebhook from 'components/integrations/abstract_outgoing_webhook';
 

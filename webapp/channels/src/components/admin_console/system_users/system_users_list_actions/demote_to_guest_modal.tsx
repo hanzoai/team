@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {demoteUserToGuest} from 'mattermost-redux/actions/users';
+import {demoteUserToGuest} from '@hanzoteam/redux/actions/users';
 
 import ConfirmModalRedux from 'components/confirm_modal_redux';
 

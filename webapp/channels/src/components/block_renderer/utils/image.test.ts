@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MmImageBlock} from '@mattermost/types/mm_blocks';
+import type {MmImageBlock} from '@hanzoteam/types/mm_blocks';
 
 import {MM_IMAGE_ALIGN_JUSTIFY, MM_IMAGE_SIZE_CAPS, resolveMmImageCaps} from './image';
 

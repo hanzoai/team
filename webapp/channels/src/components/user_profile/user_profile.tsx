@@ -4,7 +4,7 @@
 import type {ReactNode} from 'react';
 import React, {useEffect} from 'react';
 
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import ProfilePopover from 'components/profile_popover';
 import SharedUserIndicator from 'components/shared_user_indicator';

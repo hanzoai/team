@@ -4,9 +4,9 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ContentFlaggingConfig} from '@hanzoteam/types/content_flagging';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import type {TextboxElement} from 'components/textbox';
 import AdvancedTextbox from 'components/widgets/advanced_textbox/advanced_textbox';

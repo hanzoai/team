@@ -10,9 +10,9 @@ import {
     LinkVariantIcon,
     PaperclipIcon,
     PlusIcon,
-} from '@mattermost/compass-icons/components';
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+} from '@hanzoteam/compass-icons/components';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
 import * as Menu from 'components/menu';
 

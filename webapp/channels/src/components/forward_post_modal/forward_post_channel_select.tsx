@@ -13,13 +13,13 @@ import {
     GlobeIcon,
     LockOutlineIcon,
     MessageTextOutlineIcon,
-} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
+} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getDirectTeammate} from 'mattermost-redux/selectors/entities/channels';
-import {getMyTeams, getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getStatusForUserId, getUser} from 'mattermost-redux/selectors/entities/users';
-import {isGuest} from 'mattermost-redux/utils/user_utils';
+import {getDirectTeammate} from '@hanzoteam/redux/selectors/entities/channels';
+import {getMyTeams, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getStatusForUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import {compassIconForName, useChannelIconOverrideName} from 'components/channel_type_icon';
 import CustomStatusEmoji from 'components/custom_status/custom_status_emoji';

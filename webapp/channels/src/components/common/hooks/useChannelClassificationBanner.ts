@@ -4,14 +4,14 @@
 import {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ChannelBanner} from '@mattermost/types/channels';
-import type {PropertyValue} from '@mattermost/types/properties';
-import type {GlobalState} from '@mattermost/types/store';
+import type {ChannelBanner} from '@hanzoteam/types/channels';
+import type {PropertyValue} from '@hanzoteam/types/properties';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {PropertyTypes} from 'mattermost-redux/action_types';
-import {Client4} from 'mattermost-redux/client';
-import {getChannelBanner} from 'mattermost-redux/selectors/entities/channels';
-import {getPropertyValueForTargetField} from 'mattermost-redux/selectors/entities/properties';
+import {PropertyTypes} from '@hanzoteam/redux/action_types';
+import {Client4} from '@hanzoteam/redux/client';
+import {getChannelBanner} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPropertyValueForTargetField} from '@hanzoteam/redux/selectors/entities/properties';
 
 import {
     CLASSIFICATIONS_CHANNEL_OBJECT_TYPE,

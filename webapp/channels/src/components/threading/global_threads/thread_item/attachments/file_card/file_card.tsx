@@ -4,9 +4,9 @@
 import cn from 'classnames';
 import React, {useMemo, memo} from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFileThumbnailUrl, getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileThumbnailUrl, getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {FileTypes} from 'utils/constants';
 import {fileSizeToString, getCompassIconClassName, getFileType} from 'utils/utils';

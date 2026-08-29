@@ -1,10 +1,10 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {batchGetProfilesInGroupChannel} from 'mattermost-redux/actions/users';
-import {getUserIdsInChannels} from 'mattermost-redux/selectors/entities/users';
+import {batchGetProfilesInGroupChannel} from '@hanzoteam/redux/actions/users';
+import {getUserIdsInChannels} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

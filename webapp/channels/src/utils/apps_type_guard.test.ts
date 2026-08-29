@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {isAppBinding} from '@mattermost/types/apps';
+import {isAppBinding} from '@hanzoteam/types/apps';
 
 // isAppField and isAppForm are not exported. Tests exercise them via the
 // exported isAppBinding, which validates a binding's form.fields[] using

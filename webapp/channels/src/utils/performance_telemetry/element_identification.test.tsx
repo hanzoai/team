@@ -4,7 +4,7 @@
 import {createMemoryHistory} from 'history';
 import React from 'react';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import ChannelController from 'components/channel_layout/channel_controller';
 

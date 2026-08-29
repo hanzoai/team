@@ -4,11 +4,11 @@
 import React from 'react';
 import type {MovementMode, DropResult} from 'react-beautiful-dnd';
 
-import {CategorySorting} from '@mattermost/types/channel_categories';
-import type {ChannelType} from '@mattermost/types/channels';
-import type {TeamType} from '@mattermost/types/teams';
+import {CategorySorting} from '@hanzoteam/types/channel_categories';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {TeamType} from '@hanzoteam/types/teams';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
 
 import {act, renderWithContext, screen} from 'tests/react_testing_utils';
 import {DraggingStates, DraggingStateTypes} from 'utils/constants';

@@ -5,11 +5,11 @@ import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import * as UserUtils from 'mattermost-redux/utils/user_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import * as UserUtils from '@hanzoteam/redux/utils/user_utils';
 
 import LeaveChannelModal from 'components/leave_channel_modal';
 import DropdownIcon from 'components/widgets/icons/fa_dropdown_icon';

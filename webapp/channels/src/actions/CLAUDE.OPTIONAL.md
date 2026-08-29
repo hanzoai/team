@@ -2,7 +2,7 @@
 
 ## Purpose
 - Hosts Redux action creators (sync + thunk) for UI behaviors and server calls specific to the Channels webapp.
-- Bridges components to `mattermost-redux` and `@mattermost/client`.
+- Bridges components to `mattermost-redux` and `@hanzoteam/client`.
 
 ## Directory Structure
 

@@ -4,7 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import type {ProductIdentifier} from '@mattermost/types/products';
+import type {ProductIdentifier} from '@hanzoteam/types/products';
 
 import Pluggable from 'plugins/pluggable';
 import {isChannels} from 'utils/products';

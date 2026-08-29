@@ -5,12 +5,12 @@ import React, {memo} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Channel} from '@mattermost/types/channels';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {AppCallResponseTypes, AppBindingLocations} from 'mattermost-redux/constants/apps';
-import {makeAppBindingsSelector} from 'mattermost-redux/selectors/entities/apps';
-import {getMyCurrentChannelMembership} from 'mattermost-redux/selectors/entities/channels';
+import {AppCallResponseTypes, AppBindingLocations} from '@hanzoteam/redux/constants/apps';
+import {makeAppBindingsSelector} from '@hanzoteam/redux/selectors/entities/apps';
+import {getMyCurrentChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {handleBindingClick, openAppsModal, postEphemeralCallResponseForChannel} from 'actions/apps';
 import {getChannelMobileHeaderPluginButtons} from 'selectors/plugins';

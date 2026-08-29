@@ -6,9 +6,9 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {Link, useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {DotsHorizontalIcon, CodeTagsIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {RemoteCluster} from '@mattermost/types/remote_clusters';
+import {DotsHorizontalIcon, CodeTagsIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 
 import * as Menu from 'components/menu';
 

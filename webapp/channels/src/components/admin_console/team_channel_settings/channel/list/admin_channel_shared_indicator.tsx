@@ -4,8 +4,8 @@
 import React, {useEffect} from 'react';
 import {shallowEqual, useDispatch, useSelector} from 'react-redux';
 
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {getRemoteNamesForChannel} from 'mattermost-redux/selectors/entities/shared_channels';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {getRemoteNamesForChannel} from '@hanzoteam/redux/selectors/entities/shared_channels';
 
 import SharedChannelIndicator from 'components/shared_channel_indicator';
 

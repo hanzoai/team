@@ -4,11 +4,11 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
 
-import GeneralConstants from 'mattermost-redux/constants/general';
-import Permissions from 'mattermost-redux/constants/permissions';
+import GeneralConstants from '@hanzoteam/redux/constants/general';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {
     isEnterpriseLicense,

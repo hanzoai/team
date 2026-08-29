@@ -4,11 +4,11 @@
 import React from 'react';
 import {defineMessages, FormattedMessage} from 'react-intl';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {AdminConfig, EnvironmentConfig} from '@mattermost/types/config';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {AdminConfig, EnvironmentConfig} from '@hanzoteam/types/config';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import {keepForeverOption, yearsOption, daysOption, FOREVER, YEARS, DAYS, hoursOption} from 'components/admin_console/data_retention_settings/dropdown_options/dropdown_options';

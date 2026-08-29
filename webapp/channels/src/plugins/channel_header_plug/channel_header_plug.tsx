@@ -9,11 +9,11 @@ import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 import {RootCloseWrapper} from 'react-overlays';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {AppBinding} from '@mattermost/types/apps';
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {AppBinding} from '@hanzoteam/types/apps';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
 
 import HeaderIconWrapper from 'components/channel_header/components/header_icon_wrapper';
 import PluginChannelHeaderIcon from 'components/widgets/icons/plugin_channel_header_icon';

@@ -5,7 +5,7 @@ import React from 'react';
 import type {ComponentProps} from 'react';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {Scheme} from '@mattermost/types/schemes';
+import type {Scheme} from '@hanzoteam/types/schemes';
 
 import PermissionSchemesSettings from 'components/admin_console/permission_schemes_settings/permission_schemes_settings';
 

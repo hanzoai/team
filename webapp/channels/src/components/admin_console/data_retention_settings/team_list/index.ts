@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {DataRetentionCustomPolicy} from '@mattermost/types/data_retention';
-import type {Team} from '@mattermost/types/teams';
+import type {DataRetentionCustomPolicy} from '@hanzoteam/types/data_retention';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {getDataRetentionCustomPolicyTeams, searchDataRetentionCustomPolicyTeams as searchTeams} from 'mattermost-redux/actions/admin';
-import {getDataRetentionCustomPolicy} from 'mattermost-redux/selectors/entities/admin';
-import {getTeamsInPolicy, searchTeamsInPolicy} from 'mattermost-redux/selectors/entities/teams';
-import {teamListToMap, filterTeamsStartingWithTerm} from 'mattermost-redux/utils/team_utils';
+import {getDataRetentionCustomPolicyTeams, searchDataRetentionCustomPolicyTeams as searchTeams} from '@hanzoteam/redux/actions/admin';
+import {getDataRetentionCustomPolicy} from '@hanzoteam/redux/selectors/entities/admin';
+import {getTeamsInPolicy, searchTeamsInPolicy} from '@hanzoteam/redux/selectors/entities/teams';
+import {teamListToMap, filterTeamsStartingWithTerm} from '@hanzoteam/redux/utils/team_utils';
 
 import {setTeamListSearch} from 'actions/views/search';
 

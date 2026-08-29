@@ -4,10 +4,10 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import type {Emoji, SystemEmoji} from '@mattermost/types/emojis';
+import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
 
-import {autocompleteCustomEmojis} from 'mattermost-redux/actions/emojis';
-import {getEmojiImageUrl, isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {autocompleteCustomEmojis} from '@hanzoteam/redux/actions/emojis';
+import {getEmojiImageUrl, isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {getEmojiMap, getRecentEmojisNames} from 'selectors/emojis';
 import store from 'stores/redux_store';

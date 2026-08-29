@@ -5,8 +5,8 @@ import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Post} from '@mattermost/types/posts';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {selectPostFromRightHandSideSearch} from 'actions/views/rhs';
 

@@ -7,12 +7,12 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {Route, Switch, Redirect} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {CloudState} from '@mattermost/types/cloud';
-import type {AdminConfig, ClientLicense, EnvironmentConfig} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {CloudState} from '@hanzoteam/types/cloud';
+import type {AdminConfig, ClientLicense, EnvironmentConfig} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SchemaAdminSettings from 'components/admin_console/schema_admin_settings';
 import SearchKeywordMarking from 'components/admin_console/search_keyword_marking';

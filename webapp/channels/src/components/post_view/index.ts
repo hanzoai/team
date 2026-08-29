@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {withRouter} from 'react-router-dom';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getUnreadScrollPositionPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {getTeamByName, getTeamMemberships} from 'mattermost-redux/selectors/entities/teams';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getUnreadScrollPositionPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getTeamByName, getTeamMemberships} from '@hanzoteam/redux/selectors/entities/teams';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {Constants} from 'utils/constants';
 

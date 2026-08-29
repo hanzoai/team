@@ -5,10 +5,10 @@ import React, {memo, useCallback} from 'react';
 import type {MouseEvent} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {FileInfo} from '@mattermost/types/files';
-import type {Post} from '@mattermost/types/posts';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {Post} from '@hanzoteam/types/posts';
 
-import type {ExtendedPost} from 'mattermost-redux/actions/posts';
+import type {ExtendedPost} from '@hanzoteam/redux/actions/posts';
 
 type Props = {
     post: Post;

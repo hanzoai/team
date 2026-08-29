@@ -4,10 +4,10 @@
 import type {AnyAction} from 'redux';
 import {batchActions} from 'redux-batched-actions';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {TeamTypes} from 'mattermost-redux/action_types';
+import {TeamTypes} from '@hanzoteam/redux/action_types';
 import {
     leaveChannel as leaveChannelRedux,
     joinChannel,
@@ -15,11 +15,11 @@ import {
     unfavoriteChannel,
     deleteChannel as deleteChannelRedux,
     getChannel as loadChannel,
-} from 'mattermost-redux/actions/channels';
-import * as PostActions from 'mattermost-redux/actions/posts';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {autocompleteUsers} from 'mattermost-redux/actions/users';
-import {Posts, RequestStatus} from 'mattermost-redux/constants';
+} from '@hanzoteam/redux/actions/channels';
+import * as PostActions from '@hanzoteam/redux/actions/posts';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {autocompleteUsers} from '@hanzoteam/redux/actions/users';
+import {Posts, RequestStatus} from '@hanzoteam/redux/constants';
 import {
     getChannel,
     getChannelsNameMapInCurrentTeam,
@@ -31,19 +31,19 @@ import {
     isFavoriteChannel,
     isManuallyUnread,
     getCurrentChannelId,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getMostRecentPostIdInChannel, getPost} from 'mattermost-redux/selectors/entities/posts';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getMostRecentPostIdInChannel, getPost} from '@hanzoteam/redux/selectors/entities/posts';
 import {
     getCurrentRelativeTeamUrl,
     getCurrentTeam,
     getCurrentTeamId,
     getRelativeTeamUrl,
     getTeamsList,
-} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getUserByUsername} from 'mattermost-redux/selectors/entities/users';
-import {makeAddLastViewAtToProfiles} from 'mattermost-redux/selectors/entities/utils';
-import {getChannelByName} from 'mattermost-redux/utils/channel_utils';
-import EventEmitter from 'mattermost-redux/utils/event_emitter';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getUserByUsername} from '@hanzoteam/redux/selectors/entities/users';
+import {makeAddLastViewAtToProfiles} from '@hanzoteam/redux/selectors/entities/utils';
+import {getChannelByName} from '@hanzoteam/redux/utils/channel_utils';
+import EventEmitter from '@hanzoteam/redux/utils/event_emitter';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import {loadCustomStatusEmojisForPostList} from 'actions/emoji_actions';

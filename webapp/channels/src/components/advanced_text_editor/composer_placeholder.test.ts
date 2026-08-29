@@ -3,7 +3,7 @@
 
 import type {IntlShape} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import type {GlobalState} from 'types/store';
 import type {ComposerPlaceholderRegistration} from 'types/store/plugins';

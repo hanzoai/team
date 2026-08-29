@@ -1,22 +1,22 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {AppCallResponse} from '@mattermost/types/apps';
-import type {CommandArgs, CommandResponse} from '@mattermost/types/integrations';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {AppCallResponse} from '@hanzoteam/types/apps';
+import type {CommandArgs, CommandResponse} from '@hanzoteam/types/integrations';
 
-import {IntegrationTypes} from 'mattermost-redux/action_types';
-import {unfavoriteChannel} from 'mattermost-redux/actions/channels';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {Client4} from 'mattermost-redux/client';
-import {Permissions} from 'mattermost-redux/constants';
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getCurrentChannel, getRedirectChannelNameForTeam, isFavoriteChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isMarketplaceEnabled} from 'mattermost-redux/selectors/entities/general';
-import {haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentRelativeTeamUrl, getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {IntegrationTypes} from '@hanzoteam/redux/action_types';
+import {unfavoriteChannel} from '@hanzoteam/redux/actions/channels';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {Client4} from '@hanzoteam/redux/client';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getCurrentChannel, getRedirectChannelNameForTeam, isFavoriteChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isMarketplaceEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentRelativeTeamUrl, getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import * as GlobalActions from 'actions/global_actions';
 import * as PostActions from 'actions/post_actions';

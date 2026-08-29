@@ -4,7 +4,7 @@
 import React, {memo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
 
 import {ShortcutSequence, ShortcutKeyVariant, KEY_SEPARATOR} from 'components/shortcut_sequence';
 

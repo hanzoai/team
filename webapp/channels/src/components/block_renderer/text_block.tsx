@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React, {useContext} from 'react';
 
-import type {MmTextBlock} from '@mattermost/types/mm_blocks';
+import type {MmTextBlock} from '@hanzoteam/types/mm_blocks';
 
 import Markdown from 'components/markdown';
 

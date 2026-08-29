@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import {getBotAccounts} from 'mattermost-redux/selectors/entities/bots';
-import {getCommands, getOAuthApps, getIncomingHooks, getOutgoingHooks, getOutgoingOAuthConnections} from 'mattermost-redux/selectors/entities/integrations';
+import {getBotAccounts} from '@hanzoteam/redux/selectors/entities/bots';
+import {getCommands, getOAuthApps, getIncomingHooks, getOutgoingHooks, getOutgoingOAuthConnections} from '@hanzoteam/redux/selectors/entities/integrations';
 
 import type {GlobalState} from 'types/store';
 

@@ -7,10 +7,10 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import type {Channel, ChannelJoinRequest} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelJoinRequest} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {ProfilesInChannelSortBy} from 'mattermost-redux/actions/users';
+import {ProfilesInChannelSortBy} from '@hanzoteam/redux/actions/users';
 
 import {areChannelAccessControlIndicatorsEnabled, getConnectionId} from 'selectors/general';
 

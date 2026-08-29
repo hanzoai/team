@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {getAllLanguages} from 'i18n/i18n';
 import {defaultIntl} from 'tests/helpers/intl-test-helper';

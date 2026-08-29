@@ -4,7 +4,7 @@
 import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import * as PostList from 'mattermost-redux/utils/post_list';
+import * as PostList from '@hanzoteam/redux/utils/post_list';
 
 import NotificationSeparator from 'components/widgets/separator/notification-separator';
 

@@ -6,14 +6,14 @@ import React, {useEffect, useState} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {getCloudCustomer} from 'mattermost-redux/actions/cloud';
+import {getCloudCustomer} from '@hanzoteam/redux/actions/cloud';
 import {
     getCloudSubscription as selectCloudSubscription,
     getCloudCustomer as selectCloudCustomer,
     getSubscriptionProduct,
-} from 'mattermost-redux/selectors/entities/cloud';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getHistory} from 'utils/browser_history';
 import {isCustomerCardExpired} from 'utils/cloud_utils';

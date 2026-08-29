@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {SyncableType} from '@mattermost/types/groups';
-import type {Group, SyncablePatch} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import {SyncableType} from '@hanzoteam/types/groups';
+import type {Group, SyncablePatch} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AddGroupsToTeamModal from 'components/add_groups_to_team_modal';
 import ConfirmModal from 'components/confirm_modal';

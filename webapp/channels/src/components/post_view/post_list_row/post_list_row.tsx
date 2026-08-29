@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import * as PostListUtils from 'mattermost-redux/utils/post_list';
+import * as PostListUtils from '@hanzoteam/redux/utils/post_list';
 
 import type {emitShortcutReactToLastPostFrom} from 'actions/post_actions';
 

@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {fetchChannelRemotes} from 'mattermost-redux/actions/shared_channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {makeGetChannelUnreadCount, getPendingJoinRequestsCount} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId, getMyChannelMemberships} from 'mattermost-redux/selectors/entities/common';
-import {getConfig, isDiscoverableChannelsEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getInt} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getRemoteNamesForChannel} from 'mattermost-redux/selectors/entities/shared_channels';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
+import {fetchChannelRemotes} from '@hanzoteam/redux/actions/shared_channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {makeGetChannelUnreadCount, getPendingJoinRequestsCount} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId, getMyChannelMemberships} from '@hanzoteam/redux/selectors/entities/common';
+import {getConfig, isDiscoverableChannelsEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getInt} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getRemoteNamesForChannel} from '@hanzoteam/redux/selectors/entities/shared_channels';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
 
 import {markMostRecentPostInChannelAsUnread, unsetEditingPost} from 'actions/post_actions';
 import {clearChannelSelection, multiSelectChannelAdd, multiSelectChannelTo} from 'actions/views/channel_sidebar';

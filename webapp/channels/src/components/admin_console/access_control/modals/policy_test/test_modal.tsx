@@ -5,11 +5,11 @@ import React, {useEffect, useState, useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {AccessControlTestResult} from '@mattermost/types/access_control';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {AccessControlTestResult} from '@hanzoteam/types/access_control';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SearchableUserList from 'components/searchable_user_list/searchable_user_list_container';
 

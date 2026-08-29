@@ -9,13 +9,13 @@ import type {CSSProperties, KeyboardEvent, MouseEvent, SyntheticEvent} from 'rea
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {DownloadOutlineIcon, LinkVariantIcon, CheckIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
-import type {PostImage} from '@mattermost/types/posts';
+import {DownloadOutlineIcon, LinkVariantIcon, CheckIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
+import type {PostImage} from '@hanzoteam/types/posts';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {getFileMiniPreviewUrl} from 'mattermost-redux/utils/file_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {getFileMiniPreviewUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import LoadingImagePreview from 'components/loading_image_preview';
 

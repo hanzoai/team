@@ -7,12 +7,12 @@ import type {PropsWithChildren} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {PlaylistCheckIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserThread} from '@mattermost/types/threads';
+import {PlaylistCheckIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {getThreadsForCurrentTeam, markAllThreadsInTeamRead} from 'mattermost-redux/actions/threads';
-import {getThreadCountsInCurrentTeam} from 'mattermost-redux/selectors/entities/threads';
+import {getThreadsForCurrentTeam, markAllThreadsInTeamRead} from '@hanzoteam/redux/actions/threads';
+import {getThreadCountsInCurrentTeam} from '@hanzoteam/redux/selectors/entities/threads';
 
 import {closeModal, openModal} from 'actions/views/modals';
 

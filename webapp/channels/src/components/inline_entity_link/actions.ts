@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {getChannelByNameAndTeamName} from 'mattermost-redux/actions/channels';
-import {getTeamByName} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getChannelByNameAndTeamName} from '@hanzoteam/redux/actions/channels';
+import {getTeamByName} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {switchTeam} from 'actions/team_actions';
 import {switchToChannel} from 'actions/views/channel';

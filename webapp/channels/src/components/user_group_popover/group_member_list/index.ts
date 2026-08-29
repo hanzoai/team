@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Group} from '@mattermost/types/groups';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getProfilesInGroup as getUsersInGroup} from 'mattermost-redux/actions/users';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
-import {getProfilesInGroupWithoutSorting, searchProfilesInGroupWithoutSorting} from 'mattermost-redux/selectors/entities/users';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {getProfilesInGroup as getUsersInGroup} from '@hanzoteam/redux/actions/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
+import {getProfilesInGroupWithoutSorting, searchProfilesInGroupWithoutSorting} from '@hanzoteam/redux/selectors/entities/users';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import {closeRightHandSide} from 'actions/views/rhs';

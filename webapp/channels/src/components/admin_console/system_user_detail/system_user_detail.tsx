@@ -12,17 +12,17 @@ import {useSelector} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
 import ReactSelect from 'react-select';
 
-import {SyncIcon, PowerPlugOutlineIcon, CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ServerError} from '@mattermost/types/errors';
-import {supportsOptions, type PropertyFieldOption} from '@mattermost/types/properties';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {Team, TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import {SyncIcon, PowerPlugOutlineIcon, CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ServerError} from '@hanzoteam/types/errors';
+import {supportsOptions, type PropertyFieldOption} from '@hanzoteam/types/properties';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {Team, TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {isEmail, getInputTypeFromValueType} from 'mattermost-redux/utils/helpers';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {isEmail, getInputTypeFromValueType} from '@hanzoteam/redux/utils/helpers';
 
 import {getPluginDisplayName} from 'selectors/plugins';
 

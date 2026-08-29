@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {removeUserFromTeam as leaveTeam} from 'mattermost-redux/actions/teams';
-import {getMyChannels} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId, getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {removeUserFromTeam as leaveTeam} from '@hanzoteam/redux/actions/teams';
+import {getMyChannels} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId, getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {toggleSideBarRightMenuAction} from 'actions/global_actions';
 

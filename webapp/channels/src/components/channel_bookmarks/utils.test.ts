@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {shouldOpenInNewTab} from 'utils/url';
 import {copyToClipboard} from 'utils/utils';
@@ -18,7 +18,7 @@ jest.mock('utils/utils', () => ({
     copyToClipboard: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/utils/file_utils', () => ({
+jest.mock('@hanzoteam/redux/utils/file_utils', () => ({
     getFileDownloadUrl: jest.fn((fileId: string) => `/files/${fileId}`),
 }));
 

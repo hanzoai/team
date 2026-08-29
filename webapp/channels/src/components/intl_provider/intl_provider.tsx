@@ -6,8 +6,8 @@ import type {ReactNode} from 'react';
 import {IntlProvider as BaseIntlProvider, useIntl} from 'react-intl';
 import type {IntlConfig} from 'react-intl';
 
-import {Client4} from 'mattermost-redux/client';
-import {setLocalizeFunction} from 'mattermost-redux/utils/i18n_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {setLocalizeFunction} from '@hanzoteam/redux/utils/i18n_utils';
 
 import * as I18n from 'i18n/i18n';
 import {setIntl} from 'utils/i18n';
@@ -38,7 +38,7 @@ function IntlCapture() {
 
 export default class IntlProvider extends React.PureComponent<Props> {
     componentDidMount() {
-        // Pass localization function back to mattermost-redux
+        // Pass localization function back to @hanzoteam/redux
         setLocalizeFunction(localizeMessage);
 
         this.handleLocaleChange(this.props.locale);

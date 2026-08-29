@@ -6,17 +6,17 @@ import type {RouteComponentProps} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getAccessControlPolicy, getTeamAccessControlPolicy, assignTeamsToAccessControlPolicy, unassignTeamsFromAccessControlPolicy, searchAccessControlPolicies, updateAccessControlPoliciesActive, createAccessControlTeamSyncJob, createAccessControlPolicy, deleteAccessControlPolicy, getAccessControlFields, searchUsersForExpression} from 'mattermost-redux/actions/access_control';
+import {getAccessControlPolicy, getTeamAccessControlPolicy, assignTeamsToAccessControlPolicy, unassignTeamsFromAccessControlPolicy, searchAccessControlPolicies, updateAccessControlPoliciesActive, createAccessControlTeamSyncJob, createAccessControlPolicy, deleteAccessControlPolicy, getAccessControlFields, searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
 import {
     getGroupsAssociatedToTeam as fetchAssociatedGroups,
     linkGroupSyncable,
     unlinkGroupSyncable,
     patchGroupSyncable,
-} from 'mattermost-redux/actions/groups';
-import {getTeam as fetchTeam, membersMinusGroupMembers, patchTeam, removeUserFromTeam, updateTeamMemberSchemeRoles, addUserToTeam, deleteTeam, unarchiveTeam, getTeamStats, getTeamMembers} from 'mattermost-redux/actions/teams';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAllGroups, getGroupsAssociatedToTeam} from 'mattermost-redux/selectors/entities/groups';
-import {getTeam} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/actions/groups';
+import {getTeam as fetchTeam, membersMinusGroupMembers, patchTeam, removeUserFromTeam, updateTeamMemberSchemeRoles, addUserToTeam, deleteTeam, unarchiveTeam, getTeamStats, getTeamMembers} from '@hanzoteam/redux/actions/teams';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAllGroups, getGroupsAssociatedToTeam} from '@hanzoteam/redux/selectors/entities/groups';
+import {getTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

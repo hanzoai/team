@@ -6,11 +6,11 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getPlugins} from 'mattermost-redux/actions/admin';
-import {getSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {isFirstAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getPlugins} from '@hanzoteam/redux/actions/admin';
+import {getSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {isFirstAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getAdminDefinition, getConsoleAccess} from 'selectors/admin_console';
 import {getNavigationBlocked} from 'selectors/views/admin';

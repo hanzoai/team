@@ -4,10 +4,10 @@
 import {act} from '@testing-library/react';
 import React from 'react';
 
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {collectionFromArray} from '@mattermost/types/utilities';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import {collectionFromArray} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {fireEvent, renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import Constants from 'utils/constants';

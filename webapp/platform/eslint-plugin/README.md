@@ -1,4 +1,4 @@
-# @mattermost/eslint-plugin
+# @hanzoteam/eslint-plugin
 
 An ESLint plugin containing the configuration used by Mattermost as well as support for custom rules specific to the Mattermost code base.
 

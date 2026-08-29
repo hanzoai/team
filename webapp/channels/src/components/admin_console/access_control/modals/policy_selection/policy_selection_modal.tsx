@@ -4,10 +4,10 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import {GenericModal} from '@hanzoteam/components';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import PolicyList from 'components/admin_console/access_control/policies';
 

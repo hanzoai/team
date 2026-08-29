@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Emoji as EmojiType} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
-import type {Reaction as ReactionType} from '@mattermost/types/reactions';
-import type {GlobalState} from '@mattermost/types/store';
+import type {Emoji as EmojiType} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Reaction as ReactionType} from '@hanzoteam/types/reactions';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {removeReaction} from 'mattermost-redux/actions/posts';
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getCustomEmojisByName} from 'mattermost-redux/selectors/entities/emojis';
-import {canAddReactions, canRemoveReactions} from 'mattermost-redux/selectors/entities/reactions';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import {getEmojiImageUrl} from 'mattermost-redux/utils/emoji_utils';
+import {removeReaction} from '@hanzoteam/redux/actions/posts';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getCustomEmojisByName} from '@hanzoteam/redux/selectors/entities/emojis';
+import {canAddReactions, canRemoveReactions} from '@hanzoteam/redux/selectors/entities/reactions';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {getEmojiImageUrl} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {addReaction} from 'actions/post_actions';
 

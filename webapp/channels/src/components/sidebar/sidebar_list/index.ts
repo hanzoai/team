@@ -5,19 +5,19 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {PreferenceType} from '@mattermost/types/preferences';
+import type {PreferenceType} from '@hanzoteam/types/preferences';
 
-import {moveCategory} from 'mattermost-redux/actions/channel_categories';
-import {readAllMessages} from 'mattermost-redux/actions/channels';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {markAllInTeamAsRead} from 'mattermost-redux/actions/teams';
-import {Preferences} from 'mattermost-redux/constants';
-import {getCurrentChannelId, getUnreadChannelIds} from 'mattermost-redux/selectors/entities/channels';
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
-import {shouldShowUnreadsCategory, isCollapsedThreadsEnabled, get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getThreadCountsInCurrentTeam} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {moveCategory} from '@hanzoteam/redux/actions/channel_categories';
+import {readAllMessages} from '@hanzoteam/redux/actions/channels';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {markAllInTeamAsRead} from '@hanzoteam/redux/actions/teams';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getCurrentChannelId, getUnreadChannelIds} from '@hanzoteam/redux/selectors/entities/channels';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
+import {shouldShowUnreadsCategory, isCollapsedThreadsEnabled, get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThreadCountsInCurrentTeam} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {switchToChannelById} from 'actions/views/channel';
 import {

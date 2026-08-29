@@ -3,7 +3,7 @@
 
 import {useMemo} from 'react';
 
-import type {CloudUsage} from '@mattermost/types/cloud';
+import type {CloudUsage} from '@hanzoteam/types/cloud';
 
 import useGetLimits from './useGetLimits';
 import useGetUsage from './useGetUsage';

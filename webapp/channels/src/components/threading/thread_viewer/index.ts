@@ -5,19 +5,19 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserThread} from '@mattermost/types/threads';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {fetchRHSAppsBindings} from 'mattermost-redux/actions/apps';
-import {getNewestPostThread, getPostThread} from 'mattermost-redux/actions/posts';
-import {getThread as fetchThread, updateThreadRead} from 'mattermost-redux/actions/threads';
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {makeGetChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost, makeGetPostIdsForThread} from 'mattermost-redux/selectors/entities/posts';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getThread} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {fetchRHSAppsBindings} from '@hanzoteam/redux/actions/apps';
+import {getNewestPostThread, getPostThread} from '@hanzoteam/redux/actions/posts';
+import {getThread as fetchThread, updateThreadRead} from '@hanzoteam/redux/actions/threads';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {makeGetChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost, makeGetPostIdsForThread} from '@hanzoteam/redux/selectors/entities/posts';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getThread} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {selectPostCard} from 'actions/views/rhs';
 import {updateThreadLastOpened, updateThreadLastUpdateAt} from 'actions/views/threads';

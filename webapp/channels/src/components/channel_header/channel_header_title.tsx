@@ -5,10 +5,10 @@ import type {ReactNode} from 'react';
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
+import {Client4} from '@hanzoteam/redux/client';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {compassIconForName, useChannelIconOverrideName} from 'components/channel_type_icon';
 import ProfilePicture from 'components/profile_picture';

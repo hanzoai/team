@@ -5,11 +5,11 @@ import React from 'react';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 import {defineMessage, injectIntl} from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {filterProfilesStartingWithTerm} from 'mattermost-redux/utils/user_utils';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {filterProfilesStartingWithTerm} from '@hanzoteam/redux/utils/user_utils';
 
 import MultiSelect from 'components/multiselect/multiselect';
 import type {Value} from 'components/multiselect/multiselect';

@@ -6,11 +6,11 @@ import {Modal} from 'react-bootstrap';
 import type {IntlShape} from 'react-intl';
 import {injectIntl, FormattedMessage, defineMessage} from 'react-intl';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {Group, GroupSource, SyncablePatch} from '@mattermost/types/groups';
-import {SyncableType} from '@mattermost/types/groups';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Group, GroupSource, SyncablePatch} from '@hanzoteam/types/groups';
+import {SyncableType} from '@hanzoteam/types/groups';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import MultiSelect from 'components/multiselect/multiselect';
 import type {Value} from 'components/multiselect/multiselect';

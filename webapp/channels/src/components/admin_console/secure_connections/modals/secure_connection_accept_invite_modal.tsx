@@ -4,10 +4,10 @@
 import React, {useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {ClientError} from '@mattermost/client';
-import {GenericModal} from '@mattermost/components';
-import type {RemoteCluster, RemoteClusterAcceptInvite} from '@mattermost/types/remote_clusters';
-import type {PartialExcept} from '@mattermost/types/utilities';
+import type {ClientError} from '@hanzoteam/client';
+import {GenericModal} from '@hanzoteam/components';
+import type {RemoteCluster, RemoteClusterAcceptInvite} from '@hanzoteam/types/remote_clusters';
+import type {PartialExcept} from '@hanzoteam/types/utilities';
 
 import LoadingScreen from 'components/loading_screen';
 import Input from 'components/widgets/inputs/input/input';

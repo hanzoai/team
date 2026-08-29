@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Channel, ChannelWithTeamData} from '@mattermost/types/channels';
+import type {Channel, ChannelWithTeamData} from '@hanzoteam/types/channels';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

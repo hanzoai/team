@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {renameCategory} from 'mattermost-redux/actions/channel_categories';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {renameCategory} from '@hanzoteam/redux/actions/channel_categories';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {createCategory} from 'actions/views/channel_sidebar';
 

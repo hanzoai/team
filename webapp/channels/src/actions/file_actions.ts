@@ -3,13 +3,13 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {FileInfo} from '@mattermost/types/files';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {FileTypes} from 'mattermost-redux/action_types';
-import {getLogErrorAction} from 'mattermost-redux/actions/errors';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import {Client4} from 'mattermost-redux/client';
+import {FileTypes} from '@hanzoteam/redux/action_types';
+import {getLogErrorAction} from '@hanzoteam/redux/actions/errors';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {getConnectionId} from 'selectors/general';
 

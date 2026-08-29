@@ -11,7 +11,7 @@ import type {
     MmImageSize,
     MmStaticSelectOption,
     MmTextSize,
-} from '@mattermost/types/mm_blocks';
+} from '@hanzoteam/types/mm_blocks';
 
 /** Identifies which child array a path segment refers to. */
 export type ChildListKey = 'root' | 'content' | 'items' | 'columns' | 'header';

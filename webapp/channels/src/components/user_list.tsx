@@ -4,9 +4,9 @@
 import React, {memo, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
-import type {TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
+import type {TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import LoadingScreen from 'components/loading_screen';
 

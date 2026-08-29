@@ -6,7 +6,7 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {openModal} from 'actions/views/modals';
 import {editPost} from 'actions/views/posts';

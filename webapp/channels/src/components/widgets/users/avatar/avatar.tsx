@@ -6,7 +6,7 @@ import React, {memo, forwardRef} from 'react';
 import type {HTMLAttributes, RefObject, SyntheticEvent} from 'react';
 import {useIntl} from 'react-intl';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import BotDefaultIcon from 'images/bot_default_icon.png';
 

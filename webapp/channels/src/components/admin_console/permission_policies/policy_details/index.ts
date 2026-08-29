@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getAccessControlPolicy as fetchPolicy, createAccessControlPolicy as createPolicy, deleteAccessControlPolicy as deletePolicy} from 'mattermost-redux/actions/access_control';
-import {getAccessControlSettings, getAccessControlPolicy as getPolicy} from 'mattermost-redux/selectors/entities/access_control';
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
+import {getAccessControlPolicy as fetchPolicy, createAccessControlPolicy as createPolicy, deleteAccessControlPolicy as deletePolicy} from '@hanzoteam/redux/actions/access_control';
+import {getAccessControlSettings, getAccessControlPolicy as getPolicy} from '@hanzoteam/redux/selectors/entities/access_control';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 

@@ -16,11 +16,11 @@ import {
     TextLongIcon,
     AutoFixIcon,
     SpellcheckIcon,
-} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {Agent} from '@mattermost/types/agents';
+} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Agent} from '@hanzoteam/types/agents';
 
-import {getDefaultAgent} from 'mattermost-redux/selectors/entities/agents';
+import {getDefaultAgent} from '@hanzoteam/redux/selectors/entities/agents';
 
 import AgentDropdown from 'components/common/agents/agent_dropdown';
 import * as Menu from 'components/menu';

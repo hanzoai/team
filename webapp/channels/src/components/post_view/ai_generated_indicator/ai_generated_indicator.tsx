@@ -4,8 +4,8 @@
 import React, {useMemo, memo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CreationOutlineIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {CreationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 type Props = {
     userId: string;

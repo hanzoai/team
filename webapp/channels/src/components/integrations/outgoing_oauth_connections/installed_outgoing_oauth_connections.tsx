@@ -5,14 +5,14 @@ import React, {useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {deleteOutgoingOAuthConnection} from 'mattermost-redux/actions/integrations';
-import {Permissions} from 'mattermost-redux/constants';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOutgoingOAuthConnections} from 'mattermost-redux/selectors/entities/integrations';
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
+import {deleteOutgoingOAuthConnection} from '@hanzoteam/redux/actions/integrations';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOutgoingOAuthConnections} from '@hanzoteam/redux/selectors/entities/integrations';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {loadOutgoingOAuthConnectionsAndProfiles} from 'actions/integration_actions';
 

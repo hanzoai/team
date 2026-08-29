@@ -4,9 +4,9 @@
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
 
 import {SyncedUserList} from './synced_user_list';
 

@@ -4,10 +4,10 @@
 import React, {useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ClientLicense} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
+import type {ClientLicense} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {isMinimumProfessionalLicense} from 'utils/license_utils';
 

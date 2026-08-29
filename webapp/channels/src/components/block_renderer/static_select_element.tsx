@@ -4,13 +4,13 @@
 import React, {useCallback, useContext, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import type {MmStaticSelectBlock} from '@mattermost/types/mm_blocks';
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {MmStaticSelectBlock} from '@hanzoteam/types/mm_blocks';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
 
 import {autocompleteChannels} from 'actions/channel_actions';
 import {autocompleteUsers} from 'actions/user_actions';

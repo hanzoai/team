@@ -4,7 +4,7 @@
 import {connect} from 'react-redux';
 import {bindActionCreators, type Dispatch} from 'redux';
 
-import {addMessageIntoHistory} from 'mattermost-redux/actions/posts';
+import {addMessageIntoHistory} from '@hanzoteam/redux/actions/posts';
 
 import SuggestionBox from './suggestion_box';
 

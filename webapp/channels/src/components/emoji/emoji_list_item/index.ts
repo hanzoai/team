@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {deleteCustomEmoji} from 'mattermost-redux/actions/emojis';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getUser, getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {deleteCustomEmoji} from '@hanzoteam/redux/actions/emojis';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getUser, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getDisplayNameByUser} from 'utils/utils';
 

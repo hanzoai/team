@@ -5,10 +5,10 @@ import classNames from 'classnames';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Job, JobType} from '@mattermost/types/jobs';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Job, JobType} from '@hanzoteam/types/jobs';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import NextIcon from 'components/widgets/icons/fa_next_icon';
 import PreviousIcon from 'components/widgets/icons/fa_previous_icon';

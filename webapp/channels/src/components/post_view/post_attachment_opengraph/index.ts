@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOpenGraphMetadataForUrl} from 'mattermost-redux/selectors/entities/posts';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOpenGraphMetadataForUrl} from '@hanzoteam/redux/selectors/entities/posts';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {editPost} from 'actions/views/posts';
 import {arePreviewsCollapsed} from 'selectors/preferences';

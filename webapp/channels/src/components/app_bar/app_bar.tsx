@@ -5,12 +5,12 @@ import partition from 'lodash/partition';
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getAppBarAppBindings} from 'mattermost-redux/selectors/entities/apps';
-import {isMarketplaceEnabled} from 'mattermost-redux/selectors/entities/general';
-import {haveICurrentTeamPermission} from 'mattermost-redux/selectors/entities/roles';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getAppBarAppBindings} from '@hanzoteam/redux/selectors/entities/apps';
+import {isMarketplaceEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {haveICurrentTeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {getAppBarPluginComponents, getChannelHeaderPluginComponents, shouldShowAppBar} from 'selectors/plugins';
 

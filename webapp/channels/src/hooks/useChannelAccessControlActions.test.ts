@@ -5,10 +5,10 @@ import {
     getAccessControlFields,
     getVisualAST,
     searchUsersForExpression,
-} from 'mattermost-redux/actions/access_control';
+} from '@hanzoteam/redux/actions/access_control';
 
 // Mock the redux actions
-jest.mock('mattermost-redux/actions/access_control', () => ({
+jest.mock('@hanzoteam/redux/actions/access_control', () => ({
     getAccessControlFields: jest.fn(),
     getVisualAST: jest.fn(),
     searchUsersForExpression: jest.fn(),

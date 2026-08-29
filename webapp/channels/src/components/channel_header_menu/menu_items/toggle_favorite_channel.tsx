@@ -5,10 +5,10 @@ import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {favoriteChannel, unfavoriteChannel} from 'mattermost-redux/actions/channels';
-import {isChannelInManagedCategory} from 'mattermost-redux/selectors/entities/channel_categories';
+import {favoriteChannel, unfavoriteChannel} from '@hanzoteam/redux/actions/channels';
+import {isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
 
 import * as Menu from 'components/menu';
 

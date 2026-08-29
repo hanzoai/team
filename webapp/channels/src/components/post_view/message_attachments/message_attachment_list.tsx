@@ -3,8 +3,8 @@
 
 import React, {memo} from 'react';
 
-import type {MessageAttachment as MessageAttachmentType} from '@mattermost/types/message_attachments';
-import type {PostImage} from '@mattermost/types/posts';
+import type {MessageAttachment as MessageAttachmentType} from '@hanzoteam/types/message_attachments';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 import type {TextFormattingOptions} from 'utils/text_formatting';
 

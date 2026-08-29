@@ -4,9 +4,9 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {isMyChannelAutotranslated} from 'mattermost-redux/selectors/entities/channels';
+import {isMyChannelAutotranslated} from '@hanzoteam/redux/selectors/entities/channels';
 
 import PostComponent from 'components/post';
 

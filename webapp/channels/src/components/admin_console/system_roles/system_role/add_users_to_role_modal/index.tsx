@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
-import type {UserProfile} from '@mattermost/types/users';
+import type {GlobalState} from '@hanzoteam/types/store';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getProfiles, searchProfiles} from 'mattermost-redux/actions/users';
-import {getProfiles as selectProfiles} from 'mattermost-redux/selectors/entities/users';
+import {getProfiles, searchProfiles} from '@hanzoteam/redux/actions/users';
+import {getProfiles as selectProfiles} from '@hanzoteam/redux/selectors/entities/users';
 
 import AddUsersToRoleModal from './add_users_to_role_modal';
 import type {Props} from './add_users_to_role_modal';

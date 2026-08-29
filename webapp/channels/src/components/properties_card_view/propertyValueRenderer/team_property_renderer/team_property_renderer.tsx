@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {PropertyValue} from '@mattermost/types/properties';
+import type {PropertyValue} from '@hanzoteam/types/properties';
 
 import type {TeamFieldMetadata} from 'components/properties_card_view/properties_card_view';
 import {TeamIcon} from 'components/widgets/team_icon/team_icon';

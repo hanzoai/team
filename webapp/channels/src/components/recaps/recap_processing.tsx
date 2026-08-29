@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Recap} from '@mattermost/types/recaps';
+import type {Recap} from '@hanzoteam/types/recaps';
 
 type Props = {
     recap: Recap;

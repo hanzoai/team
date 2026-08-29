@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {FolderPlusOutlineIcon} from '@mattermost/compass-icons/components';
+import {FolderPlusOutlineIcon} from '@hanzoteam/compass-icons/components';
 
 import {openModal} from 'actions/views/modals';
 

@@ -7,16 +7,16 @@ const baseConfig = require('./jest.config.js');
 
 const config = {
     ...baseConfig,
-    displayName: 'mattermost-redux',
+    displayName: '@hanzoteam/redux',
     testMatch: [
-        '<rootDir>/src/packages/mattermost-redux/src/**/*.test.{js,jsx,ts,tsx}',
+        '<rootDir>/src/packages/@hanzoteam/redux/src/**/*.test.{js,jsx,ts,tsx}',
     ],
     collectCoverageFrom: [
-        'src/packages/mattermost-redux/src/**/*.{js,jsx,ts,tsx}',
+        'src/packages/@hanzoteam/redux/src/**/*.{js,jsx,ts,tsx}',
     ],
     coveragePathIgnorePatterns: [
         '/node_modules/',
-        'src/packages/mattermost-redux/src/selectors/create_selector',
+        'src/packages/@hanzoteam/redux/src/selectors/create_selector',
     ],
 };
 

@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
 import type {Value} from 'components/multiselect/multiselect';
 

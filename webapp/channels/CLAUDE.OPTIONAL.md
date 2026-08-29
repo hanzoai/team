@@ -60,7 +60,7 @@ src/
 ## Dependencies & UI Stack
 - React 18, Redux 5, React Router 5, React Intl, Floating UI, Compass Icons, Monaco.
 - Follow `webapp/STYLE_GUIDE.md → Dependencies & Packages` before introducing new libs.
-- `@mattermost/types`, `@mattermost/client`, and `platform/components` are first-party packages; import via full package names, not deep relative paths.
+- `@hanzoteam/types`, `@hanzoteam/client`, and `platform/components` are first-party packages; import via full package names, not deep relative paths.
 
 ## Common Gotchas
 - Postinstall builds platform packages—if TypeScript types feel stale, re-run `npm install` at repo root.

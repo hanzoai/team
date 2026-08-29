@@ -4,9 +4,9 @@
 import React, {memo, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {isMessageAttachmentArray} from '@mattermost/types/message_attachments';
+import {isMessageAttachmentArray} from '@hanzoteam/types/message_attachments';
 
-import {ensureString} from 'mattermost-redux/utils/post_utils';
+import {ensureString} from '@hanzoteam/redux/utils/post_utils';
 
 import {usePost} from 'components/common/hooks/usePost';
 import {useUser} from 'components/common/hooks/useUser';

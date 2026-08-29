@@ -6,10 +6,10 @@ import {defineMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {addOutgoingOAuthConnection} from 'mattermost-redux/actions/integrations';
+import {addOutgoingOAuthConnection} from '@hanzoteam/redux/actions/integrations';
 
 import AbstractOutgoingOAuthConnection from './abstract_outgoing_oauth_connection';
 

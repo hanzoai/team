@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {FilterVariantIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {FilterVariantIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {IconContainer} from 'components/advanced_text_editor/formatting_bar/formatting_icon';
 import type {SearchFilterType} from 'components/search/types';

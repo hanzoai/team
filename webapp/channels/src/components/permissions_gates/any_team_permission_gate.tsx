@@ -4,10 +4,10 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {haveITeamPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getMyTeams} from 'mattermost-redux/selectors/entities/teams';
+import {haveITeamPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import Gate from './gate';
 

@@ -4,7 +4,7 @@
 import React, {memo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CloseIcon, FireIcon} from '@mattermost/compass-icons/components';
+import {CloseIcon, FireIcon} from '@hanzoteam/compass-icons/components';
 
 import './burn_on_read_label.scss';
 

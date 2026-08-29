@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import Permissions from 'mattermost-redux/constants/permissions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {renderWithContext, screen, act, userEvent, waitFor} from 'tests/react_testing_utils';
 

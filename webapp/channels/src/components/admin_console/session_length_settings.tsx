@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage, defineMessage, defineMessages} from 'react-intl';
 
-import type {AdminConfig, ClientLicense, ServiceSettings} from '@mattermost/types/config';
+import type {AdminConfig, ClientLicense, ServiceSettings} from '@hanzoteam/types/config';
 
 import BooleanSetting from './boolean_setting';
 import OLDAdminSettings from './old_admin_settings';

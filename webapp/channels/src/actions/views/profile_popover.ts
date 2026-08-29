@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {getChannelMember} from 'mattermost-redux/actions/channels';
-import {getTeamMember} from 'mattermost-redux/actions/teams';
+import {getChannelMember} from '@hanzoteam/redux/actions/channels';
+import {getTeamMember} from '@hanzoteam/redux/actions/teams';
 
 import type {ThunkActionFunc} from 'types/store';
 

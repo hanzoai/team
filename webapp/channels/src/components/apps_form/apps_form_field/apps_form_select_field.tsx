@@ -6,14 +6,14 @@ import type {StylesConfig} from 'react-select';
 import ReactSelect from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import type {AppField, AppSelectOption} from '@mattermost/types/apps';
-import type {UserAutocomplete} from '@mattermost/types/autocomplete';
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {AppField, AppSelectOption} from '@hanzoteam/types/apps';
+import type {UserAutocomplete} from '@hanzoteam/types/autocomplete';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {AppFieldTypes} from 'mattermost-redux/constants/apps';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {AppFieldTypes} from '@hanzoteam/redux/constants/apps';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {imageURLForUser} from 'utils/utils';
 

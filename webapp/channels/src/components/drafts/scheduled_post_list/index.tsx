@@ -4,12 +4,12 @@
 import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
-import {fetchMissingChannels} from 'mattermost-redux/actions/channels';
-import {hasScheduledPostError} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {fetchMissingChannels} from '@hanzoteam/redux/actions/channels';
+import {hasScheduledPostError} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import type {GlobalState} from 'types/store';
 

@@ -4,19 +4,19 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {logError} from 'mattermost-redux/actions/errors';
-import {Permissions} from 'mattermost-redux/constants';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {Permissions} from '@hanzoteam/redux/constants';
 import {
     getChannelsInCurrentTeam,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getMyChannelMemberships} from 'mattermost-redux/selectors/entities/common';
-import {getCurrentUserLocale} from 'mattermost-redux/selectors/entities/i18n';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import type {ActionResult} from 'mattermost-redux/types/actions';
-import {sortChannelsByTypeAndDisplayName} from 'mattermost-redux/utils/channel_utils';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getMyChannelMemberships} from '@hanzoteam/redux/selectors/entities/common';
+import {getCurrentUserLocale} from '@hanzoteam/redux/selectors/entities/i18n';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
+import {sortChannelsByTypeAndDisplayName} from '@hanzoteam/redux/utils/channel_utils';
 
 import store from 'stores/redux_store';
 

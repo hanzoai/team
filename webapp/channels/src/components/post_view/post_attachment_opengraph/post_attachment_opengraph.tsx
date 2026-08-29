@@ -5,14 +5,14 @@ import classNames from 'classnames';
 import React, {memo, useRef} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CloseIcon, MenuDownIcon, MenuRightIcon} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {CloseIcon, MenuDownIcon, MenuRightIcon} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {
     OpenGraphMetadata,
     OpenGraphMetadataImage,
     Post,
     PostImage,
-} from '@mattermost/types/posts';
+} from '@hanzoteam/types/posts';
 
 import AutoHeightSwitcher from 'components/common/auto_height_switcher';
 import ExternalImage from 'components/external_image';

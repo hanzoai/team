@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AccountOutlineIcon} from '@mattermost/compass-icons/components';
-import type {UserProfile} from '@mattermost/types/users';
+import {AccountOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getInt} from 'mattermost-redux/selectors/entities/preferences';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getInt} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {openModal} from 'actions/views/modals';
 

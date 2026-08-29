@@ -1,13 +1,13 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General} from 'mattermost-redux/constants';
-import * as ChannelUtils from 'mattermost-redux/utils/channel_utils';
+import {General} from '@hanzoteam/redux/constants';
+import * as ChannelUtils from '@hanzoteam/redux/utils/channel_utils';
 
-import mergeObjects from 'packages/mattermost-redux/test/merge_objects';
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import mergeObjects from 'packages/@hanzoteam/redux/test/merge_objects';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 
 import type {GlobalState} from 'types/store';
 

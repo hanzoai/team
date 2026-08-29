@@ -5,14 +5,14 @@ import {waitFor} from '@testing-library/react';
 import cloneDeep from 'lodash/cloneDeep';
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {PropertyValue} from '@mattermost/types/properties';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {PropertyValue} from '@hanzoteam/types/properties';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import type {PostPreviewFieldMetadata} from 'components/properties_card_view/properties_card_view';
 

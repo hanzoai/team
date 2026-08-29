@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {displayLastActiveLabel, getLastActiveTimestampUnits, getLastActivityForUserId} from 'mattermost-redux/selectors/entities/users';
+import {displayLastActiveLabel, getLastActiveTimestampUnits, getLastActivityForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import Timestamp from 'components/timestamp';
 

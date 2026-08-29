@@ -5,14 +5,14 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getTeamStats as loadTeamStats} from 'mattermost-redux/actions/teams';
-import {getFilteredUsersStats} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getMembersInTeams, getTeamStats, getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getProfilesInTeam, searchProfilesInTeam, filterProfiles, getFilteredUsersStats as selectFilteredUsersStats} from 'mattermost-redux/selectors/entities/users';
-import {filterProfilesStartingWithTerm, profileListToMap} from 'mattermost-redux/utils/user_utils';
+import {getTeamStats as loadTeamStats} from '@hanzoteam/redux/actions/teams';
+import {getFilteredUsersStats} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getMembersInTeams, getTeamStats, getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getProfilesInTeam, searchProfilesInTeam, filterProfiles, getFilteredUsersStats as selectFilteredUsersStats} from '@hanzoteam/redux/selectors/entities/users';
+import {filterProfilesStartingWithTerm, profileListToMap} from '@hanzoteam/redux/utils/user_utils';
 
 import {loadProfilesAndReloadTeamMembers, searchProfilesAndTeamMembers} from 'actions/user_actions';
 import {setUserGridSearch, setUserGridFilters} from 'actions/views/search';

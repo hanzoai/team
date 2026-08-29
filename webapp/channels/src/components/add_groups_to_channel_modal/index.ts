@@ -5,13 +5,13 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Group} from '@mattermost/types/groups';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Group} from '@hanzoteam/types/groups';
 
-import {getGroupsNotAssociatedToChannel, linkGroupSyncable, getAllGroupsAssociatedToChannel, getAllGroupsAssociatedToTeam} from 'mattermost-redux/actions/groups';
-import {getTeam} from 'mattermost-redux/actions/teams';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getGroupsNotAssociatedToChannel as selectGroupsNotAssociatedToChannel} from 'mattermost-redux/selectors/entities/groups';
+import {getGroupsNotAssociatedToChannel, linkGroupSyncable, getAllGroupsAssociatedToChannel, getAllGroupsAssociatedToTeam} from '@hanzoteam/redux/actions/groups';
+import {getTeam} from '@hanzoteam/redux/actions/teams';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getGroupsNotAssociatedToChannel as selectGroupsNotAssociatedToChannel} from '@hanzoteam/redux/selectors/entities/groups';
 
 import {setModalSearchTerm} from 'actions/views/search';
 

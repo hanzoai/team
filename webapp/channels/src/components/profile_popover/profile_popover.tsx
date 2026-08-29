@@ -4,11 +4,11 @@
 import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getCurrentChannelId, getCurrentUserId} from 'mattermost-redux/selectors/entities/common';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentRelativeTeamUrl, getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getStatusForUserId, getUser} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentChannelId, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/common';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentRelativeTeamUrl, getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getStatusForUserId, getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openDirectChannelToUserId} from 'actions/channel_actions';
 import * as GlobalActions from 'actions/global_actions';

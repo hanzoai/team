@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
-import * as teams from 'mattermost-redux/selectors/entities/teams';
+import * as teams from '@hanzoteam/redux/selectors/entities/teams';
 
 import * as channelActions from 'actions/views/channel';
 
@@ -24,7 +24,7 @@ jest.mock('utils/browser_history', () => ({
 }));
 
 // Mock the roles selector which is a dependency for other selectors
-jest.mock('mattermost-redux/selectors/entities/roles', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/roles', () => ({
     haveITeamPermission: jest.fn().mockReturnValue(true),
     haveIChannelPermission: jest.fn().mockReturnValue(true),
     getRoles: jest.fn().mockReturnValue({}),

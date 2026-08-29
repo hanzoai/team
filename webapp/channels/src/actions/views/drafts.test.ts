@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Client4} from 'mattermost-redux/client';
-import {Posts, Preferences} from 'mattermost-redux/constants';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {Posts, Preferences} from '@hanzoteam/redux/constants';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {setGlobalItem} from 'actions/storage';
 
@@ -14,8 +14,8 @@ import type {PostDraft} from 'types/store/draft';
 
 import {removeDraft, setGlobalDraftSource, updateDraft} from './drafts';
 
-jest.mock('mattermost-redux/client', () => {
-    const original = jest.requireActual('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client', () => {
+    const original = jest.requireActual('@hanzoteam/redux/client');
 
     return {
         ...original,

@@ -5,9 +5,9 @@ import React, {useCallback} from 'react';
 import type {CSSProperties} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {FileInfo} from '@mattermost/types/files';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFilePreviewUrl, getFileThumbnailUrl, getFileUrl} from 'mattermost-redux/utils/file_utils';
+import {getFilePreviewUrl, getFileThumbnailUrl, getFileUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import {isGIFImage} from 'utils/utils';
 

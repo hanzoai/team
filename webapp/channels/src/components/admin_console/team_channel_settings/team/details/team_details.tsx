@@ -5,15 +5,15 @@ import cloneDeep from 'lodash/cloneDeep';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AccessControlPolicy, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import {getMembershipRule, buildRulesWithMembership, combineMembershipExpressions} from '@mattermost/types/access_control';
-import {SyncableType} from '@mattermost/types/groups';
-import type {Group, SyncablePatch} from '@mattermost/types/groups';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {AccessControlPolicy, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import {getMembershipRule, buildRulesWithMembership, combineMembershipExpressions} from '@hanzoteam/types/access_control';
+import {SyncableType} from '@hanzoteam/types/groups';
+import type {Group, SyncablePatch} from '@hanzoteam/types/groups';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import ConfirmModal from 'components/confirm_modal';

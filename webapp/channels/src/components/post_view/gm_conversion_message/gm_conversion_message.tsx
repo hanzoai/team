@@ -5,11 +5,11 @@ import React, {useEffect, useMemo, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
-import {isStringArray} from '@mattermost/types/utilities';
+import type {Post} from '@hanzoteam/types/posts';
+import {isStringArray} from '@hanzoteam/types/utilities';
 
-import {getMissingProfilesByIds} from 'mattermost-redux/actions/users';
-import {makeGetProfilesByIdsAndUsernames} from 'mattermost-redux/selectors/entities/users';
+import {getMissingProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {makeGetProfilesByIdsAndUsernames} from '@hanzoteam/redux/selectors/entities/users';
 
 import {renderUsername} from 'components/post_markdown/system_message_helpers';
 

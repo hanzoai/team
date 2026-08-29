@@ -4,7 +4,7 @@
 import {useEffect, useState, useCallback} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {getInstallation} from 'actions/cloud';
 

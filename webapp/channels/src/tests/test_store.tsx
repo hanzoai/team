@@ -9,7 +9,7 @@ import configureStore from 'redux-mock-store';
 import {withExtraArgument as thunkWithExtraArgument} from 'redux-thunk';
 import type {ThunkDispatch} from 'redux-thunk';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import type {GlobalState} from 'types/store';
 

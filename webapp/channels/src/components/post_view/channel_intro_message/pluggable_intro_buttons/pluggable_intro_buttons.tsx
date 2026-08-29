@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
 
 import type {ChannelIntroButtonAction} from 'types/store/plugins';
 

@@ -3,10 +3,10 @@
 
 import React from 'react';
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {AutocompleteSuggestion} from '@mattermost/types/integrations';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {AutocompleteSuggestion} from '@hanzoteam/types/integrations';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

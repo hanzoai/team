@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {AccessControlSettings} from '@mattermost/types/config';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import type {AccessControlSettings} from '@hanzoteam/types/config';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {useChannelAccessControlActions} from 'hooks/useChannelAccessControlActions';
 import {useEnabledSessionAttributeFields} from 'hooks/useEnabledSessionAttributeFields';

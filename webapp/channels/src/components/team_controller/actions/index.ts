@@ -1,19 +1,19 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {GetGroupsForUserParams, GetGroupsParams} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {GetGroupsForUserParams, GetGroupsParams} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {fetchChannelsAndMembers} from 'mattermost-redux/actions/channels';
-import {logError} from 'mattermost-redux/actions/errors';
-import {getGroups, getAllGroupsAssociatedToChannelsInTeam, getAllGroupsAssociatedToTeam, getGroupsByUserIdPaginated} from 'mattermost-redux/actions/groups';
-import {forceLogoutIfNecessary} from 'mattermost-redux/actions/helpers';
-import {getTeamByName, selectTeam} from 'mattermost-redux/actions/teams';
-import {getIsUserStatusesConfigEnabled} from 'mattermost-redux/selectors/entities/common';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {fetchChannelsAndMembers} from '@hanzoteam/redux/actions/channels';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {getGroups, getAllGroupsAssociatedToChannelsInTeam, getAllGroupsAssociatedToTeam, getGroupsByUserIdPaginated} from '@hanzoteam/redux/actions/groups';
+import {forceLogoutIfNecessary} from '@hanzoteam/redux/actions/helpers';
+import {getTeamByName, selectTeam} from '@hanzoteam/redux/actions/teams';
+import {getIsUserStatusesConfigEnabled} from '@hanzoteam/redux/selectors/entities/common';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {addVisibleUsersInCurrentChannelAndSelfToStatusPoll} from 'actions/status_actions';
 import {addUserToTeam} from 'actions/team_actions';

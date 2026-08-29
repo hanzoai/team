@@ -5,10 +5,10 @@ import React, {useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
-import type {Command} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {Command} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions.js';
+import type {ActionResult} from '@hanzoteam/redux/types/actions.js';
 
 import AbstractCommand from '../abstract_command';
 

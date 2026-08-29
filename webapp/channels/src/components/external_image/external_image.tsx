@@ -3,7 +3,7 @@
 
 import React, {memo} from 'react';
 
-import type {PostImage} from '@mattermost/types/posts';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 import {getImageSrc} from 'utils/post_utils';
 

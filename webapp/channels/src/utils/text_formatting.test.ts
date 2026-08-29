@@ -3,7 +3,7 @@
 
 import emojiRegex from 'emoji-regex';
 
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
 import {getEmojiMap} from 'selectors/emojis';
 import store from 'stores/redux_store';

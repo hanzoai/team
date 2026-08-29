@@ -6,8 +6,8 @@ import {DropIndicator} from '@atlaskit/pragmatic-drag-and-drop-react-drop-indica
 import classNames from 'classnames';
 import React, {useCallback, useContext, useState} from 'react';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 
 import * as Menu from 'components/menu';
 import {MenuContext} from 'components/menu/menu_context';

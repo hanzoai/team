@@ -4,7 +4,7 @@
 import {waitForElementToBeRemoved} from '@testing-library/react';
 import React from 'react';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import ConvertChannelModal from 'components/convert_channel_modal/convert_channel_modal';
 

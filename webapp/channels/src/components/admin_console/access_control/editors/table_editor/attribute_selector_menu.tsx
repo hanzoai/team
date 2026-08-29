@@ -17,11 +17,11 @@ import {
     SyncIcon,
     ShieldAlertOutlineIcon,
     SortAscendingIcon,
-} from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import {isSessionAttributeField} from '@mattermost/types/properties_user';
+} from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import {isSessionAttributeField} from '@hanzoteam/types/properties_user';
 
 import {PLATFORM_ICONS, platformLabels} from 'components/admin_console/session_attributes/platform_icons';
 import {getSessionAttrs} from 'components/admin_console/session_attributes/utils';

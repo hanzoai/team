@@ -20,7 +20,7 @@
 // published.
 //
 // This exists because the first publish was done by hand and got that wrong in
-// one place: @hanzoteam/client shipped a peerDependency on `@mattermost/types`
+// one place: @hanzoteam/client shipped a peerDependency on `@hanzoteam/types`
 // at THIS fork's version, 11.11.0 — a coordinate that exists in no registry,
 // upstream or ours. npm 7+ installs peers automatically, so every `npm i
 // @hanzoteam/client` died with ETARGET and the package was unusable from the
@@ -32,12 +32,12 @@ import os from 'node:os';
 import path from 'node:path';
 
 const OURS = {
-    '@mattermost/client': '@hanzoteam/client',
-    '@mattermost/components': '@hanzoteam/components',
-    '@mattermost/eslint-plugin': '@hanzoteam/eslint-plugin',
-    '@mattermost/shared': '@hanzoteam/shared',
-    '@mattermost/types': '@hanzoteam/types',
-    'mattermost-redux': '@hanzoteam/redux',
+    '@hanzoteam/client': '@hanzoteam/client',
+    '@hanzoteam/components': '@hanzoteam/components',
+    '@hanzoteam/eslint-plugin': '@hanzoteam/eslint-plugin',
+    '@hanzoteam/shared': '@hanzoteam/shared',
+    '@hanzoteam/types': '@hanzoteam/types',
+    '@hanzoteam/redux': '@hanzoteam/redux',
 };
 
 const REGISTRY = 'https://git.hanzo.ai/v1/packages/hanzoteam/npm/';

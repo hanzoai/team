@@ -4,16 +4,16 @@
 import {useCallback, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {GroupSource} from '@mattermost/types/groups';
+import {GroupSource} from '@hanzoteam/types/groups';
 
-import {getChannelMemberCountsByGroup} from 'mattermost-redux/actions/channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {getChannel, getChannelMemberCountsByGroup as selectChannelMemberCountsByGroup} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAssociatedGroupsForReferenceByMention} from 'mattermost-redux/selectors/entities/groups';
-import {isCustomGroupsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {getChannelMemberCountsByGroup} from '@hanzoteam/redux/actions/channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getChannel, getChannelMemberCountsByGroup as selectChannelMemberCountsByGroup} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAssociatedGroupsForReferenceByMention} from '@hanzoteam/redux/selectors/entities/groups';
+import {isCustomGroupsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {searchAssociatedGroupsForReference} from 'actions/views/group';
 

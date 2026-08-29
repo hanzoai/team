@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General, Posts} from 'mattermost-redux/constants';
+import {General, Posts} from '@hanzoteam/redux/constants';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

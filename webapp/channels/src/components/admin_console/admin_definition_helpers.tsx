@@ -4,10 +4,10 @@
 import React from 'react';
 import {defineMessage, type MessageDescriptor} from 'react-intl';
 
-import type {CloudState, Product} from '@mattermost/types/cloud';
-import type {AdminConfig, ClientConfig, ClientLicense} from '@mattermost/types/config';
+import type {CloudState, Product} from '@hanzoteam/types/cloud';
+import type {AdminConfig, ClientConfig, ClientLicense} from '@hanzoteam/types/config';
 
-import {getConfig as getClientConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig as getClientConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import store from 'stores/redux_store';
 

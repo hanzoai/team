@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {SystemEmoji} from '@mattermost/types/emojis';
+import type {SystemEmoji} from '@hanzoteam/types/emojis';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import {testPluginComponentErrorHandling} from 'tests/helpers/plugin_error_handling';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';

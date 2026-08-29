@@ -15,10 +15,10 @@ import {
     AccountPlusOutlineIcon,
     DotsVerticalIcon,
     ExitToAppIcon,
-} from '@mattermost/compass-icons/components';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+} from '@hanzoteam/compass-icons/components';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {isChannelInManagedCategory} from 'mattermost-redux/selectors/entities/channel_categories';
+import {isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';
 
 import MenuItemOpenInNewWindow from 'components/channel_header_menu/menu_items/open_in_new_window';
 import ChannelInviteModal from 'components/channel_invite_modal';

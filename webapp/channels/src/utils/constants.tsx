@@ -9,13 +9,13 @@ import githubCSS from 'highlight.js/styles/github.css';
 import monokaiCSS from 'highlight.js/styles/monokai.css';
 import {defineMessage, defineMessages} from 'react-intl';
 
-import type {LockProfileFieldsSetting} from '@mattermost/types/config';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import type {LockProfileFieldsSetting} from '@hanzoteam/types/config';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {Preferences as ReduxPreferences} from 'mattermost-redux/constants';
-import Permissions from 'mattermost-redux/constants/permissions';
-import keyMirror from 'mattermost-redux/utils/key_mirror';
-import * as PostListUtils from 'mattermost-redux/utils/post_list';
+import {Preferences as ReduxPreferences} from '@hanzoteam/redux/constants';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import keyMirror from '@hanzoteam/redux/utils/key_mirror';
+import * as PostListUtils from '@hanzoteam/redux/utils/post_list';
 
 import audioIcon from 'images/icons/audio.svg';
 import codeIcon from 'images/icons/code.svg';
@@ -615,7 +615,7 @@ export const AppEvents = {
 };
 
 /**
- * @deprecated Use WebSocketEvents from @mattermost/client instead.
+ * @deprecated Use WebSocketEvents from @hanzoteam/client instead.
  */
 export const SocketEvents = {
     APPS_FRAMEWORK_REFRESH_BINDINGS: 'custom_com.mattermost.apps_refresh_bindings',

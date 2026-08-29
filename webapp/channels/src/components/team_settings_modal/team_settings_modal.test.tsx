@@ -3,14 +3,14 @@
 
 import React from 'react';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import TeamSettingsModal from 'components/team_settings_modal/team_settings_modal';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 
 // Mock Redux actions
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     patchTeam: jest.fn(() => async () => ({data: {}, error: null})),
     getTeam: jest.fn(() => async () => ({data: {}, error: null})),
     removeTeamIcon: jest.fn(() => async () => ({data: {}, error: null})),

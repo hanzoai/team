@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getUserAccessTokensForUser} from 'mattermost-redux/actions/users';
+import {getUserAccessTokensForUser} from '@hanzoteam/redux/actions/users';
 
 import type {GlobalState} from 'types/store';
 

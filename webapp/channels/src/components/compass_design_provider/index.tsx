@@ -6,7 +6,7 @@ import type {Theme as MuiTheme} from '@mui/material/styles';
 import React, {memo, useMemo} from 'react';
 import type {FC, ReactNode} from 'react';
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 interface Props {
     theme?: Theme;

@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
-import {CollapsedThreads} from '@mattermost/types/config';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import {CollapsedThreads} from '@hanzoteam/types/config';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {General, Preferences} from 'mattermost-redux/constants';
+import {General, Preferences} from '@hanzoteam/redux/constants';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import mockStore from 'tests/test_store';
@@ -25,8 +25,8 @@ const latestPost = TestHelper.getPostMock({
     create_at: Date.now(),
 });
 
-jest.mock('mattermost-redux/client', () => {
-    const original = jest.requireActual('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client', () => {
+    const original = jest.requireActual('@hanzoteam/redux/client');
 
     return {
         ...original,
@@ -37,8 +37,8 @@ jest.mock('mattermost-redux/client', () => {
     };
 });
 
-jest.mock('mattermost-redux/actions/channels', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channels'),
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channels'),
     searchAllChannels: () => jest.fn().mockResolvedValue(Promise.resolve({
         data: [{
             id: 'channel_other_user1',

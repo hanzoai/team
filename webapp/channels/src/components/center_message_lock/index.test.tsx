@@ -11,8 +11,8 @@ import {TestHelper} from 'utils/test_helper';
 
 import CenterMessageLock from './';
 
-jest.mock('mattermost-redux/actions/cloud', () => {
-    const actual = jest.requireActual('mattermost-redux/actions/cloud');
+jest.mock('@hanzoteam/redux/actions/cloud', () => {
+    const actual = jest.requireActual('@hanzoteam/redux/actions/cloud');
 
     return {
         ...actual,

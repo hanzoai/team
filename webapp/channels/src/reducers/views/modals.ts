@@ -3,7 +3,7 @@
 
 import {combineReducers} from 'redux';
 
-import {GeneralTypes, UserTypes} from 'mattermost-redux/action_types';
+import {GeneralTypes, UserTypes} from '@hanzoteam/redux/action_types';
 
 import {ActionTypes} from 'utils/constants';
 

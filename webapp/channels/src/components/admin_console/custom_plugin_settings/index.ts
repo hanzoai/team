@@ -5,12 +5,12 @@ import type {MessageDescriptor} from 'react-intl';
 import {defineMessage} from 'react-intl';
 import {connect} from 'react-redux';
 
-import type {PluginRedux, PluginSetting, PluginSettingSection} from '@mattermost/types/plugins';
+import type {PluginRedux, PluginSetting, PluginSettingSection} from '@hanzoteam/types/plugins';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {appsFeatureFlagEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
-import {getRoles} from 'mattermost-redux/selectors/entities/roles';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {appsFeatureFlagEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getRoles} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {getAdminConsoleCustomComponents, getAdminConsoleCustomSections} from 'selectors/admin_console';
 

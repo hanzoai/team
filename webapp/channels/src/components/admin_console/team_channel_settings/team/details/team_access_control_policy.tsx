@@ -5,9 +5,9 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage, defineMessage, useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import PolicySelectionModal from 'components/admin_console/access_control/modals/policy_selection/policy_selection_modal';
 import ConfirmModal from 'components/confirm_modal';

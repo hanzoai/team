@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
 import {
     clearUserAccessTokens,
@@ -15,8 +15,8 @@ import {
     enableUserAccessToken,
     disableUserAccessToken,
     rotateUserAccessToken,
-} from 'mattermost-redux/actions/users';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+} from '@hanzoteam/redux/actions/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import UserAccessTokenSection from './user_access_token_section';
 

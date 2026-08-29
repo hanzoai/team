@@ -5,10 +5,10 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {revokeAllSessionsForUser} from 'mattermost-redux/actions/users';
+import {revokeAllSessionsForUser} from '@hanzoteam/redux/actions/users';
 
 import {emitUserLoggedOutEvent} from 'actions/global_actions';
 

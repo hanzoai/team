@@ -3,13 +3,13 @@
 
 import {batchActions} from 'redux-batched-actions';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {UserTypes} from 'mattermost-redux/action_types';
-import {logError} from 'mattermost-redux/actions/errors';
-import {loadRolesIfNeeded} from 'mattermost-redux/actions/roles';
-import {Client4} from 'mattermost-redux/client';
+import {UserTypes} from '@hanzoteam/redux/action_types';
+import {logError} from '@hanzoteam/redux/actions/errors';
+import {loadRolesIfNeeded} from '@hanzoteam/redux/actions/roles';
+import {Client4} from '@hanzoteam/redux/client';
 
 import type {ActionFuncAsync, DispatchFunc} from 'types/store';
 

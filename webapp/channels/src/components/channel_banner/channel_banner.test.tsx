@@ -4,7 +4,7 @@
 import {screen} from '@testing-library/react';
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import {LicenseSkus, Constants} from 'utils/constants';

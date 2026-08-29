@@ -6,7 +6,7 @@ import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 import {CSSTransition} from 'react-transition-group';
 
-import {GeneralTypes} from 'mattermost-redux/action_types';
+import {GeneralTypes} from '@hanzoteam/redux/action_types';
 
 import LogoSvg from 'components/common/svg_images_components/wordmark';
 

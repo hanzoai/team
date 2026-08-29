@@ -5,10 +5,10 @@ import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import type {TeamReviewerSetting} from '@mattermost/types/config';
-import type {Team, TeamSearchOpts} from '@mattermost/types/teams';
+import type {TeamReviewerSetting} from '@hanzoteam/types/config';
+import type {Team, TeamSearchOpts} from '@hanzoteam/types/teams';
 
-import {searchTeams} from 'mattermost-redux/actions/teams';
+import {searchTeams} from '@hanzoteam/redux/actions/teams';
 
 import DataGrid from 'components/admin_console/data_grid/data_grid';
 import Toggle from 'components/toggle';

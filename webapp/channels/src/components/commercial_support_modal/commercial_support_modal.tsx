@@ -7,11 +7,11 @@ import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {SupportPacketContent} from '@mattermost/types/admin';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {SupportPacketContent} from '@hanzoteam/types/admin';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import AlertBanner from 'components/alert_banner';
 import ExternalLink from 'components/external_link';

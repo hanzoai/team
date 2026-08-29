@@ -4,8 +4,8 @@
 import classNames from 'classnames';
 import React from 'react';
 
-import {ShortcutKey, ShortcutKeyVariant} from '@mattermost/shared/components/shortcut_key';
-import {isDesktopApp, isMac} from '@mattermost/shared/utils/user_agent';
+import {ShortcutKey, ShortcutKeyVariant} from '@hanzoteam/shared/components/shortcut_key';
+import {isDesktopApp, isMac} from '@hanzoteam/shared/utils/user_agent';
 
 import './search_shortcut.scss';
 

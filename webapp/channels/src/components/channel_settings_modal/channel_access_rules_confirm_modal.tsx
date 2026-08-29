@@ -5,12 +5,12 @@ import React, {useState, useEffect, useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import {Button} from '@mattermost/shared/components/button';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import SearchableUserList from 'components/searchable_user_list/searchable_user_list_container';
 

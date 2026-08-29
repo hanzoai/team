@@ -1,5 +1,5 @@
 {
-  "name": "@mattermost/types",
+  "name": "@hanzoteam/types",
   "version": "11.11.1",
   "description": "Shared type definitions used by the Mattermost web app",
   "keywords": [

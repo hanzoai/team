@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {addUsersToGroup, archiveGroup, removeUsersFromGroup} from 'mattermost-redux/actions/groups';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {addUsersToGroup, archiveGroup, removeUsersFromGroup} from '@hanzoteam/redux/actions/groups';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 

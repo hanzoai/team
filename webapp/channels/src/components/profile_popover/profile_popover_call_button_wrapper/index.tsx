@@ -5,11 +5,11 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {getChannelByName} from 'mattermost-redux/selectors/entities/channels';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
-import {isSystemAdmin} from 'mattermost-redux/utils/user_utils';
+import {getChannelByName} from '@hanzoteam/redux/selectors/entities/channels';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isSystemAdmin} from '@hanzoteam/redux/utils/user_utils';
 
 import {
     isCallsEnabled as getIsCallsEnabled,

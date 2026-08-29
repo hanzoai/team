@@ -6,24 +6,24 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {setThreadFollow} from 'mattermost-redux/actions/threads';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense, getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {getBool, isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {setThreadFollow} from '@hanzoteam/redux/actions/threads';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense, getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {getBool, isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     getCurrentTeamId,
     getCurrentTeam,
     getTeam,
     contentFlaggingEnabledInTeam,
-} from 'mattermost-redux/selectors/entities/teams';
-import {makeGetThreadOrSynthetic} from 'mattermost-redux/selectors/entities/threads';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId, getCurrentUserMentionKeys} from 'mattermost-redux/selectors/entities/users';
-import {isSystemMessage} from 'mattermost-redux/utils/post_utils';
+} from '@hanzoteam/redux/selectors/entities/teams';
+import {makeGetThreadOrSynthetic} from '@hanzoteam/redux/selectors/entities/threads';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId, getCurrentUserMentionKeys} from '@hanzoteam/redux/selectors/entities/users';
+import {isSystemMessage} from '@hanzoteam/redux/utils/post_utils';
 
 import {burnPostNow} from 'actions/burn_on_read_deletion';
 import {

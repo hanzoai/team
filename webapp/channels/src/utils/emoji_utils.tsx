@@ -4,7 +4,7 @@
 import emojiRegex from 'emoji-regex';
 import React from 'react';
 
-import type {Emoji, SystemEmoji} from '@mattermost/types/emojis';
+import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
 
 import {EmojiIndicesByUnicode, Emojis} from 'utils/emoji';
 

@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import Permissions from 'mattermost-redux/constants/permissions';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import Permissions from '@hanzoteam/redux/constants/permissions';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {WindowSizes} from 'utils/constants';
 
 import AddChannelsCtaButton from './add_channels_cta_button';
 
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: jest.fn(() => ({type: 'MOCK_SAVE_PREFERENCES'})),
 }));
 

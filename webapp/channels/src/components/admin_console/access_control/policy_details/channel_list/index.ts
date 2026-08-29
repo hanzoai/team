@@ -6,12 +6,12 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@mattermost/types/channels';
+import type {Channel, ChannelSearchOpts, ChannelWithTeamData} from '@hanzoteam/types/channels';
 
-import {searchAccessControlPolicyChannels as searchChannelsAction} from 'mattermost-redux/actions/access_control';
-import {searchChannelsInheritsPolicy, makeGetChannelsInAccessControlPolicy} from 'mattermost-redux/selectors/entities/access_control';
-import {filterChannelList} from 'mattermost-redux/selectors/entities/channels';
-import {filterChannelsMatchingTerm, channelListToMap} from 'mattermost-redux/utils/channel_utils';
+import {searchAccessControlPolicyChannels as searchChannelsAction} from '@hanzoteam/redux/actions/access_control';
+import {searchChannelsInheritsPolicy, makeGetChannelsInAccessControlPolicy} from '@hanzoteam/redux/selectors/entities/access_control';
+import {filterChannelList} from '@hanzoteam/redux/selectors/entities/channels';
+import {filterChannelsMatchingTerm, channelListToMap} from '@hanzoteam/redux/utils/channel_utils';
 
 import {setChannelListSearch, setChannelListFilters} from 'actions/views/search';
 

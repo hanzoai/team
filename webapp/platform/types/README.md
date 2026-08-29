@@ -7,7 +7,7 @@ This package contains shared type definitions used by [the Mattermost web app](h
 For technologies that support [subpath exports](https://nodejs.org/api/packages.html#subpath-exports), such as Node.js, Webpack, and Babel, you can import these types directly from individual files.
 
 ```javascript
-import {UserProfile} from '@mattermost/types/users';
+import {UserProfile} from '@hanzoteam/types/users';
 ```
 
 For technologies that don't support that yet, you can add an alias in its package resolution settings to support that.
@@ -19,7 +19,7 @@ In your Jest config, you can use the `moduleNameMapper` field to add that alias.
 ```json
 {
     "moduleNameMapper": {
-        "^@mattermost/types/(.*)$": "<rootDir>/node_modules/@mattermost/types/lib/$1"
+        "^@hanzoteam/types/(.*)$": "<rootDir>/node_modules/@hanzoteam/types/lib/$1"
     }
 }
 ```

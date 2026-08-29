@@ -10,15 +10,15 @@ const config = {
     displayName: 'channels',
     testPathIgnorePatterns: [
         '/node_modules/',
-        '<rootDir>/src/packages/mattermost-redux/',
+        '<rootDir>/src/packages/@hanzoteam/redux/',
     ],
     collectCoverageFrom: [
         'src/**/*.{js,jsx,ts,tsx}',
-        '!src/packages/mattermost-redux/**',
+        '!src/packages/@hanzoteam/redux/**',
     ],
     coveragePathIgnorePatterns: [
         '/node_modules/',
-        'src/packages/mattermost-redux/',
+        'src/packages/@hanzoteam/redux/',
     ],
 };
 

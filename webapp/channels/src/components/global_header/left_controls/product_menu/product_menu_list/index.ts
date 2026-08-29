@@ -5,22 +5,22 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getPrevTrialLicense} from 'mattermost-redux/actions/admin';
-import {Permissions} from 'mattermost-redux/constants';
-import {getCloudSubscription, getSubscriptionProduct} from 'mattermost-redux/selectors/entities/cloud';
+import {getPrevTrialLicense} from '@hanzoteam/redux/actions/admin';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCloudSubscription, getSubscriptionProduct} from '@hanzoteam/redux/selectors/entities/cloud';
 import {
     getConfig,
     getFirstAdminVisitMarketplaceStatus,
     getLicense,
     isMarketplaceEnabled,
-} from 'mattermost-redux/selectors/entities/general';
+} from '@hanzoteam/redux/selectors/entities/general';
 import {
     getInt,
     isCustomGroupsEnabled,
-} from 'mattermost-redux/selectors/entities/preferences';
-import {haveICurrentTeamPermission, haveISystemPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/preferences';
+import {haveICurrentTeamPermission, haveISystemPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 import {getIsMobileView} from 'selectors/views/browser';

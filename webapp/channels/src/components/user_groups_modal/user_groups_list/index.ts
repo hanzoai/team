@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {archiveGroup, restoreGroup} from 'mattermost-redux/actions/groups';
-import {getGroupListPermissions} from 'mattermost-redux/selectors/entities/roles';
+import {archiveGroup, restoreGroup} from '@hanzoteam/redux/actions/groups';
+import {getGroupListPermissions} from '@hanzoteam/redux/selectors/entities/roles';
 
 import {openModal} from 'actions/views/modals';
 

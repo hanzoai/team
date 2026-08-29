@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getTeams as fetchTeams, searchTeams} from 'mattermost-redux/actions/teams';
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {getTeams} from 'mattermost-redux/selectors/entities/teams';
+import {getTeams as fetchTeams, searchTeams} from '@hanzoteam/redux/actions/teams';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {getTeams} from '@hanzoteam/redux/selectors/entities/teams';
 
 import type {GlobalState} from 'types/store';
 

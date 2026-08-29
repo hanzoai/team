@@ -6,11 +6,11 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import type {ReactNode} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Emoji} from '@mattermost/types/emojis';
-import type {Post} from '@mattermost/types/posts';
+import type {Emoji} from '@hanzoteam/types/emojis';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {Posts} from 'mattermost-redux/constants/index';
-import {isPostEphemeral} from 'mattermost-redux/utils/post_utils';
+import {Posts} from '@hanzoteam/redux/constants/index';
+import {isPostEphemeral} from '@hanzoteam/redux/utils/post_utils';
 
 import ActionsMenu from 'components/actions_menu';
 import CommentIcon from 'components/common/comment_icon';

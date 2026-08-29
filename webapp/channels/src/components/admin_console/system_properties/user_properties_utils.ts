@@ -5,14 +5,14 @@ import groupBy from 'lodash/groupBy';
 import isEmpty from 'lodash/isEmpty';
 import {useMemo} from 'react';
 
-import type {ClientError} from '@mattermost/client';
-import {supportsOptions, type FieldValueType, type FieldVisibility} from '@mattermost/types/properties';
-import type {UserPropertyField, UserPropertyFieldGroupID, UserPropertyFieldPatch} from '@mattermost/types/properties_user';
-import {collectionAddItem, collectionFromArray, collectionRemoveItem, collectionReplaceItem, collectionToArray} from '@mattermost/types/utilities';
-import type {IDMappedCollection, IDMappedObjects} from '@mattermost/types/utilities';
+import type {ClientError} from '@hanzoteam/client';
+import {supportsOptions, type FieldValueType, type FieldVisibility} from '@hanzoteam/types/properties';
+import type {UserPropertyField, UserPropertyFieldGroupID, UserPropertyFieldPatch} from '@hanzoteam/types/properties_user';
+import {collectionAddItem, collectionFromArray, collectionRemoveItem, collectionReplaceItem, collectionToArray} from '@hanzoteam/types/utilities';
+import type {IDMappedCollection, IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
-import {insertWithoutDuplicates} from 'mattermost-redux/utils/array_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {insertWithoutDuplicates} from '@hanzoteam/redux/utils/array_utils';
 
 import {validateCPAFieldName} from 'utils/properties';
 import {generateId} from 'utils/utils';

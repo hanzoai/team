@@ -6,11 +6,11 @@ import type {ChangeEvent, ClipboardEvent, MouseEvent, RefObject} from 'react';
 import {defineMessages, FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {Button} from '@hanzoteam/shared/components/button';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
-import {setThemeDefaults} from 'mattermost-redux/utils/theme_utils';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {setThemeDefaults} from '@hanzoteam/redux/utils/theme_utils';
 
 import Constants from 'utils/constants';
 

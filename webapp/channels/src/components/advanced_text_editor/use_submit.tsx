@@ -5,19 +5,19 @@ import type React from 'react';
 import {useCallback, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {ServerError} from '@mattermost/types/errors';
-import type {Post} from '@mattermost/types/posts';
-import type {SchedulingInfo} from '@mattermost/types/schedule_post';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Post} from '@hanzoteam/types/posts';
+import type {SchedulingInfo} from '@hanzoteam/types/schedule_post';
 
-import {FileTypes} from 'mattermost-redux/action_types';
-import {getChannelTimezones} from 'mattermost-redux/actions/channels';
-import {Permissions} from 'mattermost-redux/constants';
-import {getChannel, getAllChannelStats} from 'mattermost-redux/selectors/entities/channels';
-import {makeGetFileIdsForPost} from 'mattermost-redux/selectors/entities/files';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentUserId, getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
+import {FileTypes} from '@hanzoteam/redux/action_types';
+import {getChannelTimezones} from '@hanzoteam/redux/actions/channels';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getChannel, getAllChannelStats} from '@hanzoteam/redux/selectors/entities/channels';
+import {makeGetFileIdsForPost} from '@hanzoteam/redux/selectors/entities/files';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentUserId, getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {unsetEditingPost, type CreatePostOptions} from 'actions/post_actions';
 import {scrollPostListToBottom} from 'actions/views/channel';

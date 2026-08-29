@@ -5,11 +5,11 @@ import React, {useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {UserProfile} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {canManageAnyChannelMembersInCurrentTeam as getCanManageAnyChannelMembersInCurrentTeam} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam, getTeamMember} from 'mattermost-redux/selectors/entities/teams';
+import {canManageAnyChannelMembersInCurrentTeam as getCanManageAnyChannelMembersInCurrentTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam, getTeamMember} from '@hanzoteam/redux/selectors/entities/teams';
 
 import AddUserToChannelModal from 'components/add_user_to_channel_modal';
 import ToggleModalButton from 'components/toggle_modal_button';

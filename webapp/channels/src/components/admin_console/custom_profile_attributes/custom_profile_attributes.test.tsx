@@ -3,15 +3,15 @@
 
 import React from 'react';
 
-import type {UserPropertyField, UserPropertyFieldGroupID, UserPropertyFieldType} from '@mattermost/types/properties_user';
+import type {UserPropertyField, UserPropertyFieldGroupID, UserPropertyFieldType} from '@hanzoteam/types/properties_user';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {act, renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
 import CustomProfileAttributes from './custom_profile_attributes';
 
-jest.mock('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client');
 
 describe('components/admin_console/custom_profile_attributes/CustomProfileAttributes', () => {
     const baseProps = {

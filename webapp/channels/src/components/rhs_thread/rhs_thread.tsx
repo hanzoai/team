@@ -4,9 +4,9 @@
 import React, {memo, useEffect} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {closeRightHandSide} from 'actions/views/rhs';
 

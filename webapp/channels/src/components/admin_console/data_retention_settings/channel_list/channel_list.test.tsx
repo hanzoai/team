@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import ChannelList from 'components/admin_console/data_retention_settings/channel_list/channel_list';
 

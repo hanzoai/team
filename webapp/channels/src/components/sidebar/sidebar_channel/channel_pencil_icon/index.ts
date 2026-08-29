@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getCurrentChannelId} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannelId} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {getPostDraft} from 'selectors/rhs';
 

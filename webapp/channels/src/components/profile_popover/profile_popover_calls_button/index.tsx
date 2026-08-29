@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import {getMyCurrentChannelMembership} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getMyCurrentChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store/index';
 

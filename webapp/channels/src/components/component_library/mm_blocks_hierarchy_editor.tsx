@@ -6,8 +6,8 @@
 import classNames from 'classnames';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {MmBlock, MmColumnBlock} from '@mattermost/types/mm_blocks';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {MmBlock, MmColumnBlock} from '@hanzoteam/types/mm_blocks';
 
 import {
     type AddBlockTarget,

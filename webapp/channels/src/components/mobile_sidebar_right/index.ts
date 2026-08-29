@@ -4,7 +4,7 @@
 import type {ConnectedProps} from 'react-redux';
 import {connect} from 'react-redux';
 
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getIsRhsMenuOpen} from 'selectors/rhs';
 

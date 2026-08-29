@@ -5,9 +5,9 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
+import {GenericModal} from '@hanzoteam/components';
 
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import Post from 'components/post';
 import Tag from 'components/widgets/tag/tag';

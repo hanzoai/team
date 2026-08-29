@@ -6,7 +6,7 @@ import {createMemoryHistory} from 'history';
 import React from 'react';
 import {Route} from 'react-router-dom';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

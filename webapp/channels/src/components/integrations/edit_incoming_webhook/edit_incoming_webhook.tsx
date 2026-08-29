@@ -4,10 +4,10 @@
 import React from 'react';
 import {defineMessages} from 'react-intl';
 
-import type {IncomingWebhook} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import type {IncomingWebhook} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AbstractIncomingWebhook from 'components/integrations/abstract_incoming_webhook';
 import LoadingScreen from 'components/loading_screen';

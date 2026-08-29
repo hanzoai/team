@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {ContentFlaggingConfig} from '@mattermost/types/content_flagging';
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
+import type {ContentFlaggingConfig} from '@hanzoteam/types/content_flagging';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import FlaggedMessageBody from '../flagged_message_body';
 import ReportNotice from '../report_notice';

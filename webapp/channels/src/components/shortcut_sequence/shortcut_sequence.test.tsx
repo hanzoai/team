@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {ShortcutKeyVariant} from '@mattermost/shared/components/shortcut_key';
+import {ShortcutKeyVariant} from '@hanzoteam/shared/components/shortcut_key';
 
 import {renderWithContext, screen} from 'tests/react_testing_utils';
 

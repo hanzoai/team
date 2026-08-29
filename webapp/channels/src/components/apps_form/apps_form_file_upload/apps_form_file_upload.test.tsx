@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {FileInfo} from '@mattermost/types/files';
-import {MaxDialogFileIds} from '@mattermost/types/integrations';
+import type {FileInfo} from '@hanzoteam/types/files';
+import {MaxDialogFileIds} from '@hanzoteam/types/integrations';
 
 import {renderWithContext, screen, fireEvent, waitFor, act} from 'tests/react_testing_utils';
 
@@ -27,21 +27,21 @@ jest.mock('actions/file_actions', () => ({
 }));
 
 const mockGetFileInfo = jest.fn();
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         getFileInfo: (...args: any[]) => mockGetFileInfo(...args),
     },
 }));
 
 const mockLogError = jest.fn();
-jest.mock('mattermost-redux/actions/errors', () => ({
+jest.mock('@hanzoteam/redux/actions/errors', () => ({
     logError: (err: any) => {
         mockLogError(err);
         return {type: 'LOG_ERROR'};
     },
 }));
 
-jest.mock('mattermost-redux/selectors/entities/channels', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/channels', () => ({
     getCurrentChannelId: () => 'channel-id-1',
 }));
 

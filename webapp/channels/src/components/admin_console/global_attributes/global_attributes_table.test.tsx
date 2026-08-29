@@ -4,11 +4,11 @@
 import {screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import {ChevronDownCircleOutlineIcon, FormatListBulletedIcon, MenuVariantIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon} from '@mattermost/compass-icons/components';
-import type {PropertyField} from '@mattermost/types/properties';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import {ChevronDownCircleOutlineIcon, FormatListBulletedIcon, MenuVariantIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon} from '@hanzoteam/compass-icons/components';
+import type {PropertyField} from '@hanzoteam/types/properties';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {
     CLASSIFICATIONS_MARKINGS_ADMIN_URL,

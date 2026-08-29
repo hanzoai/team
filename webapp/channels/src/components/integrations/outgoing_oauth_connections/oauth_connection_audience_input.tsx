@@ -7,16 +7,16 @@ import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {OauthIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
+import {OauthIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
 
 import {
     getOutgoingOAuthConnectionsForAudience as fetchOutgoingOAuthConnectionsForAudience,
     getOutgoingOAuthConnections as fetchOutgoingOAuthConnections,
-} from 'mattermost-redux/actions/integrations';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getOutgoingOAuthConnections} from 'mattermost-redux/selectors/entities/integrations';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/actions/integrations';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getOutgoingOAuthConnections} from '@hanzoteam/redux/selectors/entities/integrations';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import LocalizedPlaceholderInput from 'components/localized_placeholder_input';
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';

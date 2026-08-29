@@ -6,7 +6,7 @@ import {useIntl} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 import styled from 'styled-components';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import IconButton from 'components/global_header/header_icon_button';
 import KeyboardShortcutSequence, {

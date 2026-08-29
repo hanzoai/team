@@ -5,8 +5,8 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Group} from '@mattermost/types/groups';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Group} from '@hanzoteam/types/groups';
 
 import LoadingScreen from 'components/loading_screen';
 

@@ -5,9 +5,9 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import type {OptionProps} from 'react-select';
 
-import type {Group} from '@mattermost/types/groups';
-import type {Team} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Group} from '@hanzoteam/types/groups';
+import type {Team} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Avatar from 'components/widgets/users/avatar';
 

@@ -7,13 +7,13 @@ import {withRouter, matchPath} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
 import {
     getCurrentChannel,
     getMyCurrentChannelMembership,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import {isChannelMuted} from 'mattermost-redux/utils/channel_utils';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import {isChannelMuted} from '@hanzoteam/redux/utils/channel_utils';
 
 import {close as closeLhs} from 'actions/views/lhs';
 import {

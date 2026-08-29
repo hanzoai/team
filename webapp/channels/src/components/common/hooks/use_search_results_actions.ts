@@ -4,8 +4,8 @@
 import {useCallback, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getMoreFilesForSearch, getMorePostsForSearch} from 'mattermost-redux/actions/search';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
+import {getMoreFilesForSearch, getMorePostsForSearch} from '@hanzoteam/redux/actions/search';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {filterFilesSearchByExt, showChannelFiles, showSearchResults, updateSearchTeam as updateSearchTeamAction, updateSearchTerms as updateSearchTermsAction, updateSearchType as updateSearchTypeAction} from 'actions/views/rhs';
 import {getRhsState, getSearchTeam, getSearchTerms} from 'selectors/rhs';

@@ -6,8 +6,8 @@ import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {getCloudSubscription as selectCloudSubscription, isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+import {getCloudSubscription as selectCloudSubscription, isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 
 import {TrialPeriodDays} from 'utils/constants';
 import {getRemainingDaysFromFutureTimestamp} from 'utils/utils';

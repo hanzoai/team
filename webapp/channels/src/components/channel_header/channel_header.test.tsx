@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {UserCustomStatus} from '@mattermost/types/users';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {UserCustomStatus} from '@hanzoteam/types/users';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 import Constants, {RHSStates} from 'utils/constants';

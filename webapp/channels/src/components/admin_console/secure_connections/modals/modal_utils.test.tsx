@@ -3,9 +3,9 @@
 
 import {act} from '@testing-library/react';
 
-import type {RemoteClusterPatch} from '@mattermost/types/remote_clusters';
+import type {RemoteClusterPatch} from '@hanzoteam/types/remote_clusters';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 import {ModalIdentifiers} from 'utils/constants';

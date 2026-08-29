@@ -5,7 +5,7 @@ import type {
     Loading,
     ProviderResults,
     SuggestionResults,
-} from '@mattermost/shared/types/global';
+} from '@hanzoteam/shared/types/global';
 
 export type {
     Loading,
@@ -13,7 +13,7 @@ export type {
     ProviderResultsGroup,
     SuggestionResults,
     SuggestionResultsUngrouped,
-} from '@mattermost/shared/types/global';
+} from '@hanzoteam/shared/types/global';
 
 export function isItemLoaded<Item>(item: Item | Loading): item is Item {
     return !item || typeof item !== 'object' || !('loading' in item) || !item.loading;

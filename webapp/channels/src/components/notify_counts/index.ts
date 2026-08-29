@@ -3,7 +3,7 @@
 
 import {connect} from 'react-redux';
 
-import {getUnreadStatusInCurrentTeam, basicUnreadMeta} from 'mattermost-redux/selectors/entities/channels';
+import {getUnreadStatusInCurrentTeam, basicUnreadMeta} from '@hanzoteam/redux/selectors/entities/channels';
 
 import type {GlobalState} from 'types/store';
 

@@ -11,20 +11,20 @@ const config = {
     ],
     coveragePathIgnorePatterns: [
         '/node_modules/',
-        'mattermost-redux/src/selectors/create_selector',
+        '@hanzoteam/redux/src/selectors/create_selector',
     ],
     coverageReporters: ['json', 'lcov', 'text-summary'],
     fakeTimers: {
         doNotFake: ['performance'],
     },
     moduleNameMapper: {
-        '^@mattermost/(components)$': '<rootDir>/../platform/$1/src',
-        '^@mattermost/(client)$': '<rootDir>/../platform/$1/src',
-        '^@mattermost/(types)/(.*)$': '<rootDir>/../platform/$1/src/$2',
-        '^@mattermost/shared/(.*)$': '<rootDir>/../platform/shared/src/$1',
-        '^mattermost-redux/test/(.*)$':
-            '<rootDir>/src/packages/mattermost-redux/test/$1',
-        '^mattermost-redux/(.*)$': '<rootDir>/src/packages/mattermost-redux/src/$1',
+        '^@hanzoteam/(components)$': '<rootDir>/../platform/$1/src',
+        '^@hanzoteam/(client)$': '<rootDir>/../platform/$1/src',
+        '^@hanzoteam/(types)/(.*)$': '<rootDir>/../platform/$1/src/$2',
+        '^@hanzoteam/shared/(.*)$': '<rootDir>/../platform/shared/src/$1',
+        '^@hanzoteam/redux/test/(.*)$':
+            '<rootDir>/src/packages/@hanzoteam/redux/test/$1',
+        '^@hanzoteam/redux/(.*)$': '<rootDir>/src/packages/@hanzoteam/redux/src/$1',
         '^pdfjs-dist/.*': '<rootDir>/src/tests/pdfjs_mock.ts',
         '^.+\\.(jpg|jpeg|png|apng|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$':
             '<rootDir>/src/tests/image_url_mock.json',
@@ -34,7 +34,7 @@ const config = {
     moduleDirectories: ['src', 'node_modules'],
     moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
     transformIgnorePatterns: [
-        'node_modules/(?!react-native|react-router|pdfjs-dist|p-queue|p-timeout|@mattermost/compass-icons|cidr-regex|ip-regex|serialize-error|@tiptap|marked|lowlight|devlop|fault|hast-util-to-text|@types/hast|unist-util-find-after)',
+        'node_modules/(?!react-native|react-router|pdfjs-dist|p-queue|p-timeout|@hanzoteam/compass-icons|cidr-regex|ip-regex|serialize-error|@tiptap|marked|lowlight|devlop|fault|hast-util-to-text|@types/hast|unist-util-find-after)',
     ],
     transform: {
         '^.+\\.(js|jsx|ts|tsx|mjs)$': 'babel-jest',

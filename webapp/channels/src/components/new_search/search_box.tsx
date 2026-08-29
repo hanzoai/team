@@ -5,7 +5,7 @@ import React, {useState, useRef, forwardRef, useCallback, useEffect} from 'react
 import {useIntl} from 'react-intl';
 import styled from 'styled-components';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {hasResults} from 'components/suggestion/suggestion_results';
 

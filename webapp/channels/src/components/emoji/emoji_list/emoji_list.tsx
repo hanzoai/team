@@ -5,12 +5,12 @@ import React from 'react';
 import type {ChangeEvent, ChangeEventHandler} from 'react';
 import {defineMessage, FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {CustomEmoji} from '@mattermost/types/emojis';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {CustomEmoji} from '@hanzoteam/types/emojis';
 
-import {deleteCustomEmoji} from 'mattermost-redux/actions/emojis';
-import {Emoji} from 'mattermost-redux/constants';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {deleteCustomEmoji} from '@hanzoteam/redux/actions/emojis';
+import {Emoji} from '@hanzoteam/redux/constants';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import EmojiListItem from 'components/emoji/emoji_list_item';
 import LoadingScreen from 'components/loading_screen';

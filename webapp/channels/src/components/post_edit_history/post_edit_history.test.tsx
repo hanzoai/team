@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderWithContext, screen, waitForElementToBeRemoved} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

@@ -5,12 +5,12 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CloseIcon} from '@mattermost/compass-icons/components';
-import type {Channel} from '@mattermost/types/channels';
+import {CloseIcon} from '@hanzoteam/compass-icons/components';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
-import {getRedirectChannelNameForCurrentTeam} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
+import {getRedirectChannelNameForCurrentTeam} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {leaveDirectChannel} from 'actions/views/channel';
 

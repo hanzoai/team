@@ -4,9 +4,9 @@
 import React from 'react';
 import type {InputActionMeta} from 'react-select';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {defaultIntl} from 'tests/helpers/intl-test-helper';
 import {fireEvent, renderWithContext, userEvent, waitFor, screen} from 'tests/react_testing_utils';

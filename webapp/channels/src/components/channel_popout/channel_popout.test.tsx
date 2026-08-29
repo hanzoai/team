@@ -4,10 +4,10 @@
 import React from 'react';
 import {MemoryRouter, Route} from 'react-router-dom';
 
-import {fetchMyCategories} from 'mattermost-redux/actions/channel_categories';
-import {fetchChannelsAndMembers, getChannelStats} from 'mattermost-redux/actions/channels';
-import {fetchTeamScheduledPosts} from 'mattermost-redux/actions/scheduled_posts';
-import {selectTeam} from 'mattermost-redux/actions/teams';
+import {fetchMyCategories} from '@hanzoteam/redux/actions/channel_categories';
+import {fetchChannelsAndMembers, getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {fetchTeamScheduledPosts} from '@hanzoteam/redux/actions/scheduled_posts';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
 
 import {useTeamByName} from 'components/common/hooks/use_team';
 
@@ -19,18 +19,18 @@ import ChannelPopout from './index';
 
 const MOCK_ACTION = {type: 'MOCK'};
 
-jest.mock('mattermost-redux/actions/channel_categories', () => ({
+jest.mock('@hanzoteam/redux/actions/channel_categories', () => ({
     fetchMyCategories: jest.fn(() => MOCK_ACTION),
 }));
-jest.mock('mattermost-redux/actions/channels', () => ({
-    ...jest.requireActual('mattermost-redux/actions/channels'),
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/channels'),
     fetchChannelsAndMembers: jest.fn(() => MOCK_ACTION),
     getChannelStats: jest.fn(() => MOCK_ACTION),
 }));
-jest.mock('mattermost-redux/actions/scheduled_posts', () => ({
+jest.mock('@hanzoteam/redux/actions/scheduled_posts', () => ({
     fetchTeamScheduledPosts: jest.fn(() => MOCK_ACTION),
 }));
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     selectTeam: jest.fn(() => MOCK_ACTION),
 }));
 jest.mock('components/common/hooks/use_team', () => ({

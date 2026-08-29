@@ -4,9 +4,9 @@
 import {useState, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Limits} from '@mattermost/types/cloud';
+import type {Limits} from '@hanzoteam/types/cloud';
 
-import {getSubscriptionProduct, getCloudLimits, getCloudLimitsLoaded, isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
+import {getSubscriptionProduct, getCloudLimits, getCloudLimitsLoaded, isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
 
 import {getCloudLimits as getCloudLimitsAction} from 'actions/cloud';
 

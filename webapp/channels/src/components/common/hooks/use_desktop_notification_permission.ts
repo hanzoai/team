@@ -3,7 +3,7 @@
 
 import {useCallback, useEffect, useState} from 'react';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
 import type {NotificationPermissionNeverGranted} from 'utils/notifications';
 import {isNotificationAPISupported} from 'utils/notifications';

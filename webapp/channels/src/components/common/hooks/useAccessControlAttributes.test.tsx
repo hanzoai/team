@@ -10,7 +10,7 @@ import {thunk} from 'redux-thunk';
 import {invalidateAccessControlAttributesCache, useAccessControlAttributes, EntityType} from './useAccessControlAttributes';
 
 // Mock the getChannelAccessControlAttributes action
-jest.mock('mattermost-redux/actions/channels', () => {
+jest.mock('@hanzoteam/redux/actions/channels', () => {
     const mockFn = jest.fn();
 
     // Default implementation
@@ -185,7 +185,7 @@ describe('useAccessControlAttributes', () => {
         expect(result1.current.loading).toBe(false);
 
         // Reset the mock to track new calls
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         // Second call should use the cache
@@ -213,7 +213,7 @@ describe('useAccessControlAttributes', () => {
         });
 
         // Reset the mock to track new calls
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         // Manually fetch attributes with forceRefresh=true to bypass cache
@@ -242,7 +242,7 @@ describe('useAccessControlAttributes', () => {
         // verifies that the *next* mount sees fresh data after invalidation.
         unmount();
 
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         // After invalidating the cache the next mount should hit the action again.
@@ -265,7 +265,7 @@ describe('useAccessControlAttributes', () => {
             await new Promise((resolve) => setTimeout(resolve, 0));
         });
 
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         await act(async () => {
@@ -284,7 +284,7 @@ describe('useAccessControlAttributes', () => {
             await new Promise((resolve) => setTimeout(resolve, 0));
         });
 
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         await act(async () => {
@@ -302,7 +302,7 @@ describe('useAccessControlAttributes', () => {
             await new Promise((resolve) => setTimeout(resolve, 0));
         });
 
-        const getChannelAccessControlAttributes = require('mattermost-redux/actions/channels').getChannelAccessControlAttributes;
+        const getChannelAccessControlAttributes = require('@hanzoteam/redux/actions/channels').getChannelAccessControlAttributes;
         getChannelAccessControlAttributes.mockClear();
 
         await act(async () => {

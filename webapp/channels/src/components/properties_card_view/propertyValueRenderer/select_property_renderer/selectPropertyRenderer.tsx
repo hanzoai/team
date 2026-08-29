@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PropertyField, PropertyValue, SelectPropertyField} from '@mattermost/types/properties';
+import type {PropertyField, PropertyValue, SelectPropertyField} from '@hanzoteam/types/properties';
 
 import './selectPropertyRenderer.scss';
 

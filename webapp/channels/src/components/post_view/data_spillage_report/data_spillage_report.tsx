@@ -5,12 +5,12 @@ import React, {useMemo} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {matchPath, useLocation} from 'react-router-dom';
 
-import {ContentFlaggingStatus} from '@mattermost/types/content_flagging';
-import type {Post} from '@mattermost/types/posts';
-import type {NameMappedPropertyFields, PropertyValue} from '@mattermost/types/properties';
+import {ContentFlaggingStatus} from '@hanzoteam/types/content_flagging';
+import type {Post} from '@hanzoteam/types/posts';
+import type {NameMappedPropertyFields, PropertyValue} from '@hanzoteam/types/properties';
 
-import {Client4} from 'mattermost-redux/client';
-import {getFileDownloadUrl} from 'mattermost-redux/utils/file_utils';
+import {Client4} from '@hanzoteam/redux/client';
+import {getFileDownloadUrl} from '@hanzoteam/redux/utils/file_utils';
 
 import AtMention from 'components/at_mention';
 import {useGetContentFlaggingChannel, useGetContentFlaggingTeam, useGetFlaggedPost} from 'components/common/hooks/content_flagging';

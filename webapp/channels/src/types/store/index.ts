@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {GlobalState as BaseGlobalState} from '@mattermost/types/store';
+import type {GlobalState as BaseGlobalState} from '@hanzoteam/types/store';
 
-import type {MMReduxAction} from 'mattermost-redux/action_types';
+import type {MMReduxAction} from '@hanzoteam/redux/action_types';
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import type * as MMReduxTypes from 'mattermost-redux/types/actions';
+import type * as MMReduxTypes from '@hanzoteam/redux/types/actions';
 
 import type {PluginsState} from './plugins';
 import type {StorageState} from './storage';
@@ -24,7 +24,7 @@ export type GlobalState = BaseGlobalState & {
 };
 
 /**
- * An MMAction is any non-Thunk Redux action accepted by the web app and mattermost-redux.
+ * An MMAction is any non-Thunk Redux action accepted by the web app and @hanzoteam/redux.
  */
 export type MMAction = MMReduxAction;
 

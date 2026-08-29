@@ -3,8 +3,8 @@
 
 import moment from 'moment';
 
-import type {Product} from '@mattermost/types/cloud';
-import type {ClientLicense} from '@mattermost/types/config';
+import type {Product} from '@hanzoteam/types/cloud';
+import type {ClientLicense} from '@hanzoteam/types/config';
 
 import {CloudProducts, getLicenseTier, LicenseSkus, SelfHostedProducts} from 'utils/constants';
 

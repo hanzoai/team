@@ -5,9 +5,9 @@ import {DateTime, Duration} from 'luxon';
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {UserTimezone} from '@mattermost/types/users';
+import type {UserTimezone} from '@hanzoteam/types/users';
 
-import {getUserCurrentTimezone} from 'mattermost-redux/utils/timezone_utils';
+import {getUserCurrentTimezone} from '@hanzoteam/redux/utils/timezone_utils';
 
 import Timestamp from 'components/timestamp';
 

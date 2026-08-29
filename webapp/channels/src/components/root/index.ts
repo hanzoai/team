@@ -8,10 +8,10 @@ import {withRouter} from 'react-router-dom';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {isCurrentLicenseCloud} from 'mattermost-redux/selectors/entities/cloud';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getTeam} from 'mattermost-redux/selectors/entities/teams';
-import {shouldShowTermsOfService, getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {isCurrentLicenseCloud} from '@hanzoteam/redux/selectors/entities/cloud';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {shouldShowTermsOfService, getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {loadRecentlyUsedCustomEmojis, migrateRecentEmojis} from 'actions/emoji_actions';
 import {isDevModeEnabled} from 'selectors/general';

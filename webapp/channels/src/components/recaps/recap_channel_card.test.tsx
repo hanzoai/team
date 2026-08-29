@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {RecapChannel} from '@mattermost/types/recaps';
+import type {RecapChannel} from '@hanzoteam/types/recaps';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
@@ -17,7 +17,7 @@ jest.mock('react-redux', () => ({
     useDispatch: () => mockDispatch,
 }));
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     readMultipleChannels: jest.fn((channelIds) => ({type: 'READ_MULTIPLE_CHANNELS', channelIds})),
 }));
 
@@ -226,7 +226,7 @@ describe('RecapChannelCard', () => {
     });
 
     test('should call mark channel as read action', async () => {
-        const {readMultipleChannels} = require('mattermost-redux/actions/channels');
+        const {readMultipleChannels} = require('@hanzoteam/redux/actions/channels');
         const user = userEvent.setup();
         renderWithContext(
             <RecapChannelCard channel={mockRecapChannel}/>,

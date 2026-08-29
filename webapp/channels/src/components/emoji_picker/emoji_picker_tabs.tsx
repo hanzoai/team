@@ -5,7 +5,7 @@ import React, {useCallback, useRef, useState} from 'react';
 import {Tab, Tabs} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
 import {makeAsyncComponent} from 'components/async_load';
 import EmojiPicker from 'components/emoji_picker';

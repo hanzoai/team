@@ -6,11 +6,11 @@ import ReactDOM from 'react-dom';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {PreferencesType} from '@mattermost/types/preferences';
-import type {UserProfile} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {PreferencesType} from '@hanzoteam/types/preferences';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ConfirmModal from 'components/confirm_modal';
 import SettingsSidebar, {normalizePluginIcon} from 'components/settings_sidebar';

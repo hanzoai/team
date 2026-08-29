@@ -5,7 +5,7 @@ import React from 'react';
 import type {ReactNode} from 'react';
 import type {MessageDescriptor} from 'react-intl';
 
-import {Button, type ButtonProps} from '@mattermost/shared/components/button';
+import {Button, type ButtonProps} from '@hanzoteam/shared/components/button';
 
 import LoadingWrapper from 'components/widgets/loading/loading_wrapper';
 

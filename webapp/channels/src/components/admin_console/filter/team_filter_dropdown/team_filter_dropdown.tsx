@@ -6,9 +6,9 @@ import {useIntl} from 'react-intl';
 import type {ActionMeta, Options, OnChangeValue} from 'react-select';
 import AsyncSelect from 'react-select/async';
 
-import type {PagedTeamSearchOpts, Team} from '@mattermost/types/teams';
+import type {PagedTeamSearchOpts, Team} from '@hanzoteam/types/teams';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';
 

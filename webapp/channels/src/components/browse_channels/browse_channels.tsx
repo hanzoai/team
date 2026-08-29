@@ -4,13 +4,13 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {Button, type ButtonEmphasis, type ButtonSize} from '@mattermost/shared/components/button';
-import type {Channel, ChannelJoinRequest, ChannelMembership, ChannelSearchOpts, ChannelsWithTotalCount, GetChannelJoinRequestsOptions} from '@mattermost/types/channels';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import {GenericModal} from '@hanzoteam/components';
+import {Button, type ButtonEmphasis, type ButtonSize} from '@hanzoteam/shared/components/button';
+import type {Channel, ChannelJoinRequest, ChannelMembership, ChannelSearchOpts, ChannelsWithTotalCount, GetChannelJoinRequestsOptions} from '@hanzoteam/types/channels';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import Permissions from 'mattermost-redux/constants/permissions';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LoadingScreen from 'components/loading_screen';
 import NewChannelModal from 'components/new_channel_modal/new_channel_modal';

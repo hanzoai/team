@@ -11,8 +11,8 @@ import type {
     MmColumnSetBlock,
     MmContainerBlock,
     MmStaticSelectOption,
-} from '@mattermost/types/mm_blocks';
-import {ensureString} from '@mattermost/types/utilities';
+} from '@hanzoteam/types/mm_blocks';
+import {ensureString} from '@hanzoteam/types/utilities';
 
 import {isUrlSafe} from 'utils/url';
 

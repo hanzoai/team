@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getAccessControlPolicy, deleteAccessControlPolicy, assignChannelsToAccessControlPolicy, searchAccessControlPolicies, unassignChannelsFromAccessControlPolicy, createAccessControlPolicy, getAccessControlFields, getVisualAST, validateExpressionAgainstRequester, updateAccessControlPoliciesActive, searchUsersForExpression} from 'mattermost-redux/actions/access_control';
+import {getAccessControlPolicy, deleteAccessControlPolicy, assignChannelsToAccessControlPolicy, searchAccessControlPolicies, unassignChannelsFromAccessControlPolicy, createAccessControlPolicy, getAccessControlFields, getVisualAST, validateExpressionAgainstRequester, updateAccessControlPoliciesActive, searchUsersForExpression} from '@hanzoteam/redux/actions/access_control';
 import {
     addChannelMember,
     deleteChannel,
@@ -19,22 +19,22 @@ import {
     unarchiveChannel,
     updateChannelMemberSchemeRoles,
     updateChannelPrivacy,
-} from 'mattermost-redux/actions/channels';
+} from '@hanzoteam/redux/actions/channels';
 import {
     getGroupsAssociatedToChannel as fetchAssociatedGroups,
     linkGroupSyncable,
     patchGroupSyncable,
     unlinkGroupSyncable,
-} from 'mattermost-redux/actions/groups';
-import {createJob} from 'mattermost-redux/actions/jobs';
-import {getScheme as loadScheme} from 'mattermost-redux/actions/schemes';
-import {getTeam as fetchTeam} from 'mattermost-redux/actions/teams';
-import {getProfilesByIds} from 'mattermost-redux/actions/users';
-import {getChannel, getChannelModerations} from 'mattermost-redux/selectors/entities/channels';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAllGroups, getGroupsAssociatedToChannel} from 'mattermost-redux/selectors/entities/groups';
-import {getScheme} from 'mattermost-redux/selectors/entities/schemes';
-import {getTeam} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/actions/groups';
+import {createJob} from '@hanzoteam/redux/actions/jobs';
+import {getScheme as loadScheme} from '@hanzoteam/redux/actions/schemes';
+import {getTeam as fetchTeam} from '@hanzoteam/redux/actions/teams';
+import {getProfilesByIds} from '@hanzoteam/redux/actions/users';
+import {getChannel, getChannelModerations} from '@hanzoteam/redux/selectors/entities/channels';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAllGroups, getGroupsAssociatedToChannel} from '@hanzoteam/redux/selectors/entities/groups';
+import {getScheme} from '@hanzoteam/redux/selectors/entities/schemes';
+import {getTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {setNavigationBlocked} from 'actions/admin_actions';
 import {isChannelAccessControlEnabled} from 'selectors/general';

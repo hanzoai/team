@@ -5,20 +5,20 @@ import React, {useState, useEffect, useCallback, useMemo, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {AccessControlPolicy, AccessControlPolicyRule} from '@mattermost/types/access_control';
-import {getMembershipRule, buildRulesWithMembership} from '@mattermost/types/access_control';
-import type {JobType} from '@mattermost/types/jobs';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
-import type {Team} from '@mattermost/types/teams';
+import type {AccessControlPolicy, AccessControlPolicyRule} from '@hanzoteam/types/access_control';
+import {getMembershipRule, buildRulesWithMembership} from '@hanzoteam/types/access_control';
+import type {JobType} from '@hanzoteam/types/jobs';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {
     createAccessControlTeamSyncJob,
     getTeamAccessControlPolicy,
-} from 'mattermost-redux/actions/access_control';
-import {getJobsByType} from 'mattermost-redux/actions/jobs';
-import {getTeamStats} from 'mattermost-redux/actions/teams';
-import {getAccessControlSettings} from 'mattermost-redux/selectors/entities/access_control';
-import {isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/access_control';
+import {getJobsByType} from '@hanzoteam/redux/actions/jobs';
+import {getTeamStats} from '@hanzoteam/redux/actions/teams';
+import {getAccessControlSettings} from '@hanzoteam/redux/selectors/entities/access_control';
+import {isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';
 import ConfirmModal from 'components/confirm_modal';

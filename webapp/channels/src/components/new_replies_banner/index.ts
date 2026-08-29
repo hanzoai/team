@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {makeGetPostsForThread} from 'mattermost-redux/selectors/entities/posts';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {makeGetPostsForThread} from '@hanzoteam/redux/selectors/entities/posts';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {updateThreadToastStatus} from 'actions/views/threads';
 

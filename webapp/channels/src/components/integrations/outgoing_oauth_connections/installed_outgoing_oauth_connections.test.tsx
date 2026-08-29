@@ -4,9 +4,9 @@
 import React from 'react';
 import {BrowserRouter as Router} from 'react-router-dom';
 
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
 
-import {Permissions} from 'mattermost-redux/constants';
+import {Permissions} from '@hanzoteam/redux/constants';
 
 import InstalledOutgoingOAuthConnections from 'components/integrations/outgoing_oauth_connections/installed_outgoing_oauth_connections';
 

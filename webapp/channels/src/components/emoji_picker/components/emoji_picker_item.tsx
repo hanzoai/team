@@ -6,9 +6,9 @@ import throttle from 'lodash/throttle';
 import React, {memo, useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Emoji} from '@mattermost/types/emojis';
+import type {Emoji} from '@hanzoteam/types/emojis';
 
-import {getEmojiImageUrl, isSystemEmoji} from 'mattermost-redux/utils/emoji_utils';
+import {getEmojiImageUrl, isSystemEmoji} from '@hanzoteam/redux/utils/emoji_utils';
 
 import {EMOJI_SCROLL_THROTTLE_DELAY} from 'components/emoji_picker/constants';
 import type {EmojiCursor} from 'components/emoji_picker/types';

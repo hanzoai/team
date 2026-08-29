@@ -4,10 +4,10 @@
 import React, {memo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AdminConfig} from '@mattermost/types/config';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {AdminConfig} from '@hanzoteam/types/config';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {BaseProps} from 'components/admin_console/old_admin_settings';
 import ExternalLink from 'components/external_link';

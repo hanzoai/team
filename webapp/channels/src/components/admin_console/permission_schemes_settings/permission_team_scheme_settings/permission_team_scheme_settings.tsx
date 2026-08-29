@@ -6,14 +6,14 @@ import {defineMessage, FormattedMessage} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {Role} from '@mattermost/types/roles';
-import type {Scheme, SchemePatch} from '@mattermost/types/schemes';
-import type {Team} from '@mattermost/types/teams';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {Role} from '@hanzoteam/types/roles';
+import type {Scheme, SchemePatch} from '@hanzoteam/types/schemes';
+import type {Team} from '@hanzoteam/types/teams';
 
-import GeneralConstants from 'mattermost-redux/constants/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import GeneralConstants from '@hanzoteam/redux/constants/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import ExternalLink from 'components/external_link';

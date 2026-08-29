@@ -4,7 +4,7 @@
 import {within} from '@testing-library/react';
 import React from 'react';
 
-import {DATE_LINE} from 'mattermost-redux/utils/post_list';
+import {DATE_LINE} from '@hanzoteam/redux/utils/post_list';
 
 import SearchResults, {arePropsEqual} from 'components/search_results/search_results';
 import type {Props} from 'components/search_results/search_results';

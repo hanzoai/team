@@ -5,20 +5,20 @@ import type {Editor} from '@tiptap/react';
 import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
-import type {Group} from '@mattermost/types/groups';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
+import type {Group} from '@hanzoteam/types/groups';
 
-import {addMessageIntoHistory} from 'mattermost-redux/actions/posts';
-import Permissions from 'mattermost-redux/constants/permissions';
-import {getDefaultAgent} from 'mattermost-redux/selectors/entities/agents';
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getAssociatedGroupsForReference} from 'mattermost-redux/selectors/entities/groups';
-import {makeGetProfilesForThread} from 'mattermost-redux/selectors/entities/posts';
-import {haveIChannelPermission} from 'mattermost-redux/selectors/entities/roles';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {addMessageIntoHistory} from '@hanzoteam/redux/actions/posts';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import {getDefaultAgent} from '@hanzoteam/redux/selectors/entities/agents';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getAssociatedGroupsForReference} from '@hanzoteam/redux/selectors/entities/groups';
+import {makeGetProfilesForThread} from '@hanzoteam/redux/selectors/entities/posts';
+import {haveIChannelPermission} from '@hanzoteam/redux/selectors/entities/roles';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {autocompleteChannels} from 'actions/channel_actions';
 import {autocompleteUsersInChannel} from 'actions/views/channel';

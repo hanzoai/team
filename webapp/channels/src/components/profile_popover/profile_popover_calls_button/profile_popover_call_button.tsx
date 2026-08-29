@@ -4,9 +4,9 @@
 import React, {useState, useEffect, useRef} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {Channel, ChannelMembership} from '@mattermost/types/channels';
+import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
 
-import {createDirectChannel} from 'mattermost-redux/actions/channels';
+import {createDirectChannel} from '@hanzoteam/redux/actions/channels';
 
 import {Constants} from 'utils/constants';
 

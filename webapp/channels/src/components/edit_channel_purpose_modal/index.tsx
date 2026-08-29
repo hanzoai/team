@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {patchChannel} from 'mattermost-redux/actions/channels';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {patchChannel} from '@hanzoteam/redux/actions/channels';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import Constants from 'utils/constants';
 

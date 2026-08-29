@@ -5,9 +5,9 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {withdrawMyChannelJoinRequest} from 'mattermost-redux/actions/channels';
+import {withdrawMyChannelJoinRequest} from '@hanzoteam/redux/actions/channels';
 
 import {joinChannelById, switchToChannel} from 'actions/views/channel';
 import {openModal} from 'actions/views/modals';

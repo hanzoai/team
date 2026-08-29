@@ -1,4 +1,4 @@
-# CLAUDE: `platform/types/` (`@mattermost/types`)
+# CLAUDE: `platform/types/` (`@hanzoteam/types`)
 
 ## Purpose
 - Shared TypeScript definitions for server entities, API payloads, and enums consumed across all Mattermost frontends.
@@ -12,8 +12,8 @@ Files organized by domain in `src/`:
 Import types using subpath exports:
 
 ```typescript
-import {UserProfile} from '@mattermost/types/users';
-import {Channel} from '@mattermost/types/channels';
+import {UserProfile} from '@hanzoteam/types/users';
+import {Channel} from '@hanzoteam/types/channels';
 ```
 
 ## Type Conventions

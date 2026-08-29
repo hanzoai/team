@@ -4,8 +4,8 @@
 import React, {useCallback, useState, useRef} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {AccessControlPolicy} from '@mattermost/types/access_control';
-import {combineMembershipExpressions, getMembershipRule} from '@mattermost/types/access_control';
+import type {AccessControlPolicy} from '@hanzoteam/types/access_control';
+import {combineMembershipExpressions, getMembershipRule} from '@hanzoteam/types/access_control';
 
 import ConfirmModal from 'components/confirm_modal';
 import SaveChangesPanel, {type SaveChangesPanelState} from 'components/widgets/modals/components/save_changes_panel';

@@ -21,7 +21,7 @@ import React, {useMemo, useRef, useState} from 'react';
 import type {MouseEvent} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getCurrentRelativeTeamUrl} from 'mattermost-redux/selectors/entities/teams';
+import {getCurrentRelativeTeamUrl} from '@hanzoteam/redux/selectors/entities/teams';
 
 import Markdown from 'components/markdown';
 

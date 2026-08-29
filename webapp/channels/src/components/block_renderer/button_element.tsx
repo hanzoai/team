@@ -4,10 +4,10 @@
 import React, {useCallback, useContext, useState} from 'react';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {MmButtonBlock} from '@mattermost/types/mm_blocks';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {MmButtonBlock} from '@hanzoteam/types/mm_blocks';
 
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import Markdown from 'components/markdown';
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';

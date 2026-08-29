@@ -6,10 +6,10 @@ import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 import timezones from 'timezones.json';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {patchUser, updateMe} from 'mattermost-redux/actions/users';
-import {getCurrentTimezoneLabel} from 'mattermost-redux/selectors/entities/timezone';
+import {patchUser, updateMe} from '@hanzoteam/redux/actions/users';
+import {getCurrentTimezoneLabel} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import ManageTimezones from './manage_timezones';
 

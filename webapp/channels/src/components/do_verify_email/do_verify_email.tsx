@@ -6,10 +6,10 @@ import {useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 import {useLocation, useHistory} from 'react-router-dom';
 
-import {clearErrors, logError, LogErrorBarMode} from 'mattermost-redux/actions/errors';
-import {verifyUserEmail, getMe} from 'mattermost-redux/actions/users';
-import {getIsOnboardingFlowEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {clearErrors, logError, LogErrorBarMode} from '@hanzoteam/redux/actions/errors';
+import {verifyUserEmail, getMe} from '@hanzoteam/redux/actions/users';
+import {getIsOnboardingFlowEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {redirectUserToDefaultTeam} from 'actions/global_actions';
 

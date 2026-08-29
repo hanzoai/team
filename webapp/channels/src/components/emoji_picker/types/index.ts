@@ -3,7 +3,7 @@
 
 import type {MessageDescriptor} from 'react-intl';
 
-import type {EmojiCategory, Emoji, SystemEmoji, CustomEmoji} from '@mattermost/types/emojis';
+import type {EmojiCategory, Emoji, SystemEmoji, CustomEmoji} from '@hanzoteam/types/emojis';
 
 import type {
     CATEGORY_HEADER_ROW,

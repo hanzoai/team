@@ -5,7 +5,7 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import type {Feedback} from '@mattermost/types/cloud';
+import type {Feedback} from '@hanzoteam/types/cloud';
 
 import FeedbackModal from 'components/feedback_modal/feedback';
 import type {FeedbackOption} from 'components/feedback_modal/feedback';

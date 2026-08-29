@@ -4,11 +4,11 @@
 import React, {memo, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/common';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {isScheduledPostsEnabled} from 'mattermost-redux/selectors/entities/scheduled_posts';
-import {getStatusForUserId} from 'mattermost-redux/selectors/entities/users';
-import {displayUsername} from 'mattermost-redux/utils/user_utils';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/common';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {isScheduledPostsEnabled} from '@hanzoteam/redux/selectors/entities/scheduled_posts';
+import {getStatusForUserId} from '@hanzoteam/redux/selectors/entities/users';
+import {displayUsername} from '@hanzoteam/redux/utils/user_utils';
 
 import {selectLhsItem} from 'actions/views/lhs';
 import {suppressRHS, unsuppressRHS} from 'actions/views/rhs';

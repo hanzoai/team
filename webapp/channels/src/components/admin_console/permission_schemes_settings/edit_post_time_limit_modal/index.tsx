@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {patchConfig} from 'mattermost-redux/actions/admin';
-import {getConfig} from 'mattermost-redux/selectors/entities/admin';
+import {patchConfig} from '@hanzoteam/redux/actions/admin';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/admin';
 
 import type {GlobalState} from 'types/store';
 

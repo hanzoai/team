@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {MmButtonBlock} from '@mattermost/types/mm_blocks';
+import type {MmButtonBlock} from '@hanzoteam/types/mm_blocks';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

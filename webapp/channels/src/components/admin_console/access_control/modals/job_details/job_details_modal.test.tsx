@@ -3,22 +3,22 @@
 
 import React from 'react';
 
-import type {Job} from '@mattermost/types/jobs';
+import type {Job} from '@hanzoteam/types/jobs';
 
 import {renderWithContext, screen, waitFor, userEvent} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';
 
 import JobDetailsModal from './job_details_modal';
 
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     getChannel: jest.fn(() => () => Promise.resolve({data: null})),
 }));
 
-jest.mock('mattermost-redux/actions/teams', () => ({
+jest.mock('@hanzoteam/redux/actions/teams', () => ({
     getTeam: jest.fn(() => () => Promise.resolve({data: null})),
 }));
 
-jest.mock('mattermost-redux/actions/jobs', () => ({
+jest.mock('@hanzoteam/redux/actions/jobs', () => ({
     getJob: jest.fn(() => () => Promise.resolve({data: null})),
 }));
 

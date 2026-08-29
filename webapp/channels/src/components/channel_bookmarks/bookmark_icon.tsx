@@ -5,11 +5,11 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {FileGenericOutlineIcon, BookOutlineIcon, ProductBoardsIcon} from '@mattermost/compass-icons/components';
-import type {ChannelBookmark} from '@mattermost/types/channel_bookmarks';
-import type {FileInfo} from '@mattermost/types/files';
+import {FileGenericOutlineIcon, BookOutlineIcon, ProductBoardsIcon} from '@hanzoteam/compass-icons/components';
+import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import RenderEmoji from 'components/emoji/render_emoji';
 import FileThumbnail from 'components/file_attachment/file_thumbnail';

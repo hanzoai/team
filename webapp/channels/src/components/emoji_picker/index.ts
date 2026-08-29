@@ -6,9 +6,9 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {getCustomEmojis, searchCustomEmojis} from 'mattermost-redux/actions/emojis';
-import {getCustomEmojisEnabled} from 'mattermost-redux/selectors/entities/emojis';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {getCustomEmojis, searchCustomEmojis} from '@hanzoteam/redux/actions/emojis';
+import {getCustomEmojisEnabled} from '@hanzoteam/redux/selectors/entities/emojis';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {incrementEmojiPickerPage, setUserSkinTone} from 'actions/emoji_actions';
 import {getEmojiMap, getRecentEmojisNames, getUserSkinTone} from 'selectors/emojis';

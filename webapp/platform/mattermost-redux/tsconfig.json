@@ -16,17 +16,17 @@
         "jsx": "react",
         "preserveConstEnums": true,
         "outDir": "./lib",
-        "rootDir": "../../channels/src/packages/mattermost-redux/src",
+        "rootDir": "../../channels/src/packages/@hanzoteam/redux/src",
         "composite": true,
         "useUnknownInCatchVariables": false,
         "skipLibCheck": true,
         "tsBuildInfoFile": "tsconfig.tsbuildinfo",
         "paths": {
-            "mattermost-redux/*": ["../../channels/src/packages/mattermost-redux/src/*"]
+            "@hanzoteam/redux/*": ["../../channels/src/packages/@hanzoteam/redux/src/*"]
         }
     },
     "include": [
-        "../../channels/src/packages/mattermost-redux/src/**/*"
+        "../../channels/src/packages/@hanzoteam/redux/src/**/*"
     ],
     "exclude": [
         "../../**/*.test.*"

@@ -6,9 +6,9 @@ import React, {useCallback, useContext} from 'react';
 import type {CSSProperties, KeyboardEvent, MouseEvent} from 'react';
 import {useDispatch} from 'react-redux';
 
-import type {MmImageBlock} from '@mattermost/types/mm_blocks';
+import type {MmImageBlock} from '@hanzoteam/types/mm_blocks';
 
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
 
 import {openModal} from 'actions/views/modals';
 

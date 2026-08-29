@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {UserNotifyProps, UserProfile} from '@mattermost/types/users';
+import type {UserNotifyProps, UserProfile} from '@hanzoteam/types/users';
 
 import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

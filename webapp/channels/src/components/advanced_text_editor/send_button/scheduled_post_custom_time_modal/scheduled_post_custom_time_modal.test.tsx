@@ -7,7 +7,7 @@ import {renderWithContext, screen, userEvent, waitFor} from 'tests/react_testing
 
 import ScheduledPostCustomTimeModal from './scheduled_post_custom_time_modal';
 
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: jest.fn(() => ({type: 'MOCK_SAVE_PREFERENCES'})),
 }));
 

@@ -8,12 +8,12 @@ import type {MessageDescriptor} from 'react-intl';
 import {useDispatch} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {AlertOutlineIcon, CheckCircleOutlineIcon} from '@mattermost/compass-icons/components';
-import {Button, buttonClassNames} from '@mattermost/shared/components/button';
-import type {OutgoingOAuthConnection} from '@mattermost/types/integrations';
-import type {Team} from '@mattermost/types/teams';
+import {AlertOutlineIcon, CheckCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {Button, buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
+import type {Team} from '@hanzoteam/types/teams';
 
-import {validateOutgoingOAuthConnection} from 'mattermost-redux/actions/integrations';
+import {validateOutgoingOAuthConnection} from '@hanzoteam/redux/actions/integrations';
 
 import BackstageHeader from 'components/backstage/components/backstage_header';
 import ConfirmModal from 'components/confirm_modal';

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 
 import {
     trimFilename,
@@ -10,7 +10,7 @@ import {
 } from 'utils/file_utils';
 
 const isMobileMock = jest.mocked(UserAgent.isMobile);
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isMobile: jest.fn(() => false),
 }));
 

@@ -5,10 +5,10 @@ import React, {memo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
 
-import {Preferences} from 'mattermost-redux/constants';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {Preferences} from '@hanzoteam/redux/constants';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import type {GlobalState} from 'types/store';
 

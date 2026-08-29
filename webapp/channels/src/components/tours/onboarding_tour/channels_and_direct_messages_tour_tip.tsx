@@ -5,9 +5,9 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {useMeasurePunchouts} from '@mattermost/components';
+import {useMeasurePunchouts} from '@hanzoteam/components';
 
-import {getChannelsNameMapInCurrentTeam} from 'mattermost-redux/selectors/entities/channels';
+import {getChannelsNameMapInCurrentTeam} from '@hanzoteam/redux/selectors/entities/channels';
 
 import ChannelsImg from 'images/channels_and_direct_tour_tip.svg';
 import Constants from 'utils/constants';

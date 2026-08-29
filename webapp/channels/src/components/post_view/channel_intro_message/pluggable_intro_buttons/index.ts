@@ -3,9 +3,9 @@
 
 import {connect} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {getMyChannelMembership} from 'mattermost-redux/selectors/entities/channels';
+import {getMyChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {getChannelIntroPluginButtons} from 'selectors/plugins';
 

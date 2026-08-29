@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import React, {useState, useEffect} from 'react';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
-import {getCurrentChannel, getMyCurrentChannelMembership} from 'mattermost-redux/selectors/entities/channels';
+import {getCurrentChannel, getMyCurrentChannelMembership} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {getActiveRhsComponent} from 'selectors/rhs';
 

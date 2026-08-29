@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Audit} from '@mattermost/types/audits';
+import type {Audit} from '@hanzoteam/types/audits';
 
 import FormatAudit from './format_audit';
 

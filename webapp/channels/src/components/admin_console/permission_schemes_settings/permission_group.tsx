@@ -5,7 +5,7 @@ import React from 'react';
 import type {MouseEvent} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Role} from '@mattermost/types/roles';
+import type {Role} from '@hanzoteam/types/roles';
 
 import {PermissionsScope} from 'utils/constants';
 

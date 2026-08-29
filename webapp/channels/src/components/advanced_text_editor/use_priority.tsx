@@ -4,13 +4,13 @@
 import React, {useCallback, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {PostPriorityMetadata} from '@mattermost/types/posts';
-import {PostPriority} from '@mattermost/types/posts';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {PostPriorityMetadata} from '@hanzoteam/types/posts';
+import {PostPriority} from '@hanzoteam/types/posts';
 
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {isPostPriorityEnabled as isPostPriorityEnabledSelector} from 'mattermost-redux/selectors/entities/posts';
-import {getUser} from 'mattermost-redux/selectors/entities/users';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {isPostPriorityEnabled as isPostPriorityEnabledSelector} from '@hanzoteam/redux/selectors/entities/posts';
+import {getUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 

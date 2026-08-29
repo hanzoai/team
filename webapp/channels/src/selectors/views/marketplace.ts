@@ -1,11 +1,11 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MarketplaceApp, MarketplacePlugin} from '@mattermost/types/marketplace';
+import type {MarketplaceApp, MarketplacePlugin} from '@hanzoteam/types/marketplace';
 
-import {createSelector} from 'mattermost-redux/selectors/create_selector';
-import {isPlugin} from 'mattermost-redux/utils/marketplace';
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
+import {createSelector} from '@hanzoteam/redux/selectors/create_selector';
+import {isPlugin} from '@hanzoteam/redux/utils/marketplace';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
 
 import type {GlobalState} from 'types/store';
 

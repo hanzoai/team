@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {Team} from '@mattermost/types/teams';
+import type {Team} from '@hanzoteam/types/teams';
 
 import TeamList from 'components/admin_console/data_retention_settings/team_list/team_list';
 

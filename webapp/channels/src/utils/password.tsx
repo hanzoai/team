@@ -5,7 +5,7 @@ import React from 'react';
 import type {IntlShape} from 'react-intl';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import type {PasswordConfig} from 'mattermost-redux/selectors/entities/general';
+import type {PasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import Constants from 'utils/constants';
 

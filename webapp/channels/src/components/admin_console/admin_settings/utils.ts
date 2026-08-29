@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AdminConfig, EnvironmentConfig} from '@mattermost/types/config';
+import type {AdminConfig, EnvironmentConfig} from '@hanzoteam/types/config';
 
 function getConfigValue(config: AdminConfig | Partial<EnvironmentConfig>, path: string) {
     const pathParts = path.split('.');

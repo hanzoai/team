@@ -5,9 +5,9 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 
-import {getChannelByName} from 'mattermost-redux/selectors/entities/channels';
-import {getIsCrossTeamSearchEnabled} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {getChannelByName} from '@hanzoteam/redux/selectors/entities/channels';
+import {getIsCrossTeamSearchEnabled} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import {showChannelFiles, showFlaggedPosts, showMentions, showPinnedPosts, showSearchResults, updateRhsState, updateSearchTeam, updateSearchTerms, updateSearchType} from 'actions/views/rhs';
 import {getIsRhsExpanded, getRhsState} from 'selectors/rhs';

@@ -3,11 +3,11 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
-import type {IncomingWebhook} from '@mattermost/types/integrations';
-import type {DeepPartial} from '@mattermost/types/utilities';
+import type {ChannelType} from '@hanzoteam/types/channels';
+import type {IncomingWebhook} from '@hanzoteam/types/integrations';
+import type {DeepPartial} from '@hanzoteam/types/utilities';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import EditIncomingWebhook from 'components/integrations/edit_incoming_webhook/edit_incoming_webhook';
 

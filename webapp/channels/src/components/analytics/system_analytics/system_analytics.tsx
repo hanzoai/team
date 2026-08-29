@@ -4,12 +4,12 @@
 import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import type {AnalyticsRow, PluginAnalyticsRow, IndexedPluginAnalyticsRow, AnalyticsState} from '@mattermost/types/admin';
-import {AnalyticsVisualizationType} from '@mattermost/types/admin';
-import type {ClientConfig, ClientLicense} from '@mattermost/types/config';
-import type {ServerLimits} from '@mattermost/types/limits';
+import type {AnalyticsRow, PluginAnalyticsRow, IndexedPluginAnalyticsRow, AnalyticsState} from '@hanzoteam/types/admin';
+import {AnalyticsVisualizationType} from '@hanzoteam/types/admin';
+import type {ClientConfig, ClientLicense} from '@hanzoteam/types/config';
+import type {ServerLimits} from '@hanzoteam/types/limits';
 
-import {getFormattedFileSize} from 'mattermost-redux/utils/file_utils';
+import {getFormattedFileSize} from '@hanzoteam/redux/utils/file_utils';
 
 import * as AdminActions from 'actions/admin_actions';
 

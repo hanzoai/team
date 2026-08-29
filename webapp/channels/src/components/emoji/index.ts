@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {loadRolesIfNeeded} from 'mattermost-redux/actions/roles';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+import {loadRolesIfNeeded} from '@hanzoteam/redux/actions/roles';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 
 import EmojiPage from 'components/emoji/emoji_page';
 

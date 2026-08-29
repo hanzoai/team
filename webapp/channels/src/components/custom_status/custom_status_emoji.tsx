@@ -5,10 +5,10 @@ import React, {memo, useMemo, useRef} from 'react';
 import type {MouseEvent, KeyboardEvent} from 'react';
 import {useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import {CustomStatusDuration} from '@mattermost/types/users';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import {CustomStatusDuration} from '@hanzoteam/types/users';
 
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {isCustomStatusEnabled, isCustomStatusExpired, makeGetCustomStatus} from 'selectors/views/custom_status';
 

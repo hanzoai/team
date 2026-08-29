@@ -5,7 +5,7 @@ import type React from 'react';
 import {defineMessage} from 'react-intl';
 import type {Store} from 'redux';
 
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
 
 import {openAppsModal} from 'actions/apps';
 import globalStore from 'stores/redux_store';

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {DATE_LINE} from 'mattermost-redux/utils/post_list';
+import {DATE_LINE} from '@hanzoteam/redux/utils/post_list';
 
 import type {DynamicVirtualizedList} from 'components/dynamic_virtualized_list';
 
@@ -60,7 +60,7 @@ jest.mock('./latest_post_reader', () => ({
     default: () => <div data-testid='latest-post-reader'/>,
 }));
 
-jest.mock('mattermost-redux/utils/event_emitter', () => ({
+jest.mock('@hanzoteam/redux/utils/event_emitter', () => ({
     __esModule: true,
     default: {
         addListener: jest.fn(),

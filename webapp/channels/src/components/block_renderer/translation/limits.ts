@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {MmBlock, MmColumnBlock} from '@mattermost/types/mm_blocks';
+import type {MmBlock, MmColumnBlock} from '@hanzoteam/types/mm_blocks';
 
 export type BlockTranslationLimits = {
 

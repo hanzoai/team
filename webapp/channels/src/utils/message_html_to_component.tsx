@@ -5,7 +5,7 @@ import {Parser, ProcessNodeDefinitions} from 'html-to-react';
 import type {AllHTMLAttributes} from 'react';
 import React from 'react';
 
-import type {PostActionIntegrationFormat} from '@mattermost/types/integration_actions';
+import type {PostActionIntegrationFormat} from '@hanzoteam/types/integration_actions';
 
 import AtMention from 'components/at_mention';
 import CodeBlock from 'components/code_block/code_block';

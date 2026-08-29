@@ -5,20 +5,20 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getChannelStats} from 'mattermost-redux/actions/channels';
+import {getChannelStats} from '@hanzoteam/redux/actions/channels';
 import {
     getMyTeamMembers,
     getMyTeamUnreads,
     getTeamStats,
     getTeamMember,
     updateTeamMemberSchemeRoles,
-} from 'mattermost-redux/actions/teams';
-import {getUser, updateUserActive} from 'mattermost-redux/actions/users';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentRelativeTeamUrl, getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/actions/teams';
+import {getUser, updateUserActive} from '@hanzoteam/redux/actions/users';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentRelativeTeamUrl, getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {removeUserFromTeamAndGetStats} from 'actions/team_actions';
 

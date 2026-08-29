@@ -5,9 +5,9 @@ import classNames from 'classnames';
 import React, {useEffect, useMemo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {SchemaMigration} from '@mattermost/types/admin';
+import type {SchemaMigration} from '@hanzoteam/types/admin';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import './migrations_table.scss';
 

@@ -1,8 +1,8 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {AppFormValues} from '@mattermost/types/apps';
-import type {DialogElement} from '@mattermost/types/integrations';
+import type {AppFormValues} from '@hanzoteam/types/apps';
+import type {DialogElement} from '@hanzoteam/types/integrations';
 
 import {
     convertDialogToAppForm,

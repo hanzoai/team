@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import {isMac} from '@mattermost/shared/utils/user_agent';
+import {isMac} from '@hanzoteam/shared/utils/user_agent';
 
 import AdvancedSettingsDisplay from 'components/user_settings/advanced/user_settings_advanced';
 
@@ -15,7 +15,7 @@ import {TestHelper} from 'utils/test_helper';
 jest.mock('actions/global_actions');
 
 const isMacMock = jest.mocked(isMac);
-jest.mock('@mattermost/shared/utils/user_agent', () => ({
+jest.mock('@hanzoteam/shared/utils/user_agent', () => ({
     isDesktopApp: jest.fn(() => false),
     isMac: jest.fn(() => false),
 }));

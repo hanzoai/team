@@ -5,12 +5,12 @@ import React, {memo, useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {DotsVerticalIcon} from '@mattermost/compass-icons/components';
-import type {UserThread} from '@mattermost/types/threads';
+import {DotsVerticalIcon} from '@hanzoteam/compass-icons/components';
+import type {UserThread} from '@hanzoteam/types/threads';
 
-import {setThreadFollow, updateThreadRead, markLastPostInThreadAsUnread} from 'mattermost-redux/actions/threads';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getPost, isPostFlagged} from 'mattermost-redux/selectors/entities/posts';
+import {setThreadFollow, updateThreadRead, markLastPostInThreadAsUnread} from '@hanzoteam/redux/actions/threads';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost, isPostFlagged} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {
     flagPost as savePost,

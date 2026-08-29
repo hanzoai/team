@@ -3,6 +3,6 @@
 
 import React from 'react';
 
-import type {WebSocketClient} from '@mattermost/client';
+import type {WebSocketClient} from '@hanzoteam/client';
 
 export const WebSocketContext = React.createContext<WebSocketClient>(null!);

@@ -1,24 +1,24 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Post} from '@mattermost/types/posts';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Post} from '@hanzoteam/types/posts';
+import type {Team} from '@hanzoteam/types/teams';
 
 import type {
     ContentFlaggingChannelRequestIdentifier,
     ContentFlaggingTeamRequestIdentifier,
-} from 'mattermost-redux/actions/content_flagging';
+} from '@hanzoteam/redux/actions/content_flagging';
 import {
     loadContentFlaggingTeam,
     loadContentFlaggingChannel,
     loadFlaggedPost,
-} from 'mattermost-redux/actions/content_flagging';
+} from '@hanzoteam/redux/actions/content_flagging';
 import {
     getContentFlaggingChannel,
     getContentFlaggingTeam,
     getFlaggedPost,
-} from 'mattermost-redux/selectors/entities/content_flagging';
+} from '@hanzoteam/redux/selectors/entities/content_flagging';
 
 import {makeUseEntity} from 'components/common/hooks/useEntity';
 

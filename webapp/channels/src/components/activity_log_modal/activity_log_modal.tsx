@@ -4,10 +4,10 @@
 import React, {useCallback, useEffect, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {Session} from '@mattermost/types/sessions';
+import {GenericModal} from '@hanzoteam/components';
+import type {Session} from '@hanzoteam/types/sessions';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import ActivityLog from 'components/activity_log_modal/components/activity_log';
 

@@ -6,8 +6,8 @@ import React from 'react';
 import {useIntl, FormattedMessage, defineMessages} from 'react-intl';
 import {useHistory} from 'react-router-dom';
 
-import type {ButtonEmphasis} from '@mattermost/shared/components/button';
-import {buttonClassNames} from '@mattermost/shared/components/button';
+import type {ButtonEmphasis} from '@hanzoteam/shared/components/button';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
 
 import LoadingScreen from 'components/loading_screen';
 import * as Menu from 'components/menu';

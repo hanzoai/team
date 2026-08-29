@@ -5,9 +5,9 @@ import React from 'react';
 import {injectIntl} from 'react-intl';
 import type {IntlShape} from 'react-intl';
 
-import type {AppContext, AppField, AppForm, AppFormValues, FormResponseData, AppLookupResponse} from '@mattermost/types/apps';
+import type {AppContext, AppField, AppForm, AppFormValues, FormResponseData, AppLookupResponse} from '@hanzoteam/types/apps';
 
-import {AppCallResponseTypes} from 'mattermost-redux/constants/apps';
+import {AppCallResponseTypes} from '@hanzoteam/redux/constants/apps';
 
 import {createCallRequest, makeCallErrorResponse} from 'utils/apps';
 

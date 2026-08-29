@@ -4,7 +4,7 @@
 import type {IntlShape} from 'react-intl';
 import {defineMessages} from 'react-intl';
 
-import type {ScheduledPostErrorCode} from '@mattermost/types/schedule_post';
+import type {ScheduledPostErrorCode} from '@hanzoteam/types/schedule_post';
 
 const errorCodeToErrorMessage = defineMessages<ScheduledPostErrorCode>({
     unknown: {

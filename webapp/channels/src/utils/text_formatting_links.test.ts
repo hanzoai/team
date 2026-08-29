@@ -3,7 +3,7 @@
 
 import store from 'stores/redux_store';
 
-import {makeInitialState} from 'packages/mattermost-redux/test/test_store';
+import {makeInitialState} from 'packages/@hanzoteam/redux/test/test_store';
 import EmojiMap from 'utils/emoji_map';
 import * as Markdown from 'utils/markdown';
 import * as TextFormatting from 'utils/text_formatting';

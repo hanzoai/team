@@ -4,10 +4,10 @@
 import emojiRegex from 'emoji-regex';
 import type {Renderer} from 'marked';
 
-import type {SystemEmoji} from '@mattermost/types/emojis';
-import {isRecordOf} from '@mattermost/types/utilities';
+import type {SystemEmoji} from '@hanzoteam/types/emojis';
+import {isRecordOf} from '@hanzoteam/types/utilities';
 
-import type {HighlightWithoutNotificationKey} from 'mattermost-redux/selectors/entities/users';
+import type {HighlightWithoutNotificationKey} from '@hanzoteam/redux/selectors/entities/users';
 
 import {formatWithRenderer} from 'utils/markdown';
 

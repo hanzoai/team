@@ -4,12 +4,12 @@
 import React, {memo} from 'react';
 import {useSelector} from 'react-redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser} from 'mattermost-redux/selectors/entities/users';
-import {displayUsername, isGuest} from 'mattermost-redux/utils/user_utils';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser} from '@hanzoteam/redux/selectors/entities/users';
+import {displayUsername, isGuest} from '@hanzoteam/redux/utils/user_utils';
 
 import GuestTag from 'components/widgets/tag/guest_tag';
 

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {
     isMmButtonHexColor,

@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {PropertyFieldOption} from '@mattermost/types/properties';
+import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import MultiValueSelector from './multi_value_selector_menu';
 import SingleValueSelector from './single_value_selector_menu';

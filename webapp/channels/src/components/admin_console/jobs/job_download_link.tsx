@@ -4,9 +4,9 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Job} from '@mattermost/types/jobs';
+import type {Job} from '@hanzoteam/types/jobs';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import ExternalLink from 'components/external_link';
 

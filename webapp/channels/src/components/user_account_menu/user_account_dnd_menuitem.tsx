@@ -7,12 +7,12 @@ import type {MouseEvent, KeyboardEvent} from 'react';
 import {FormattedDate, FormattedMessage, FormattedTime, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon, ChevronRightIcon, MinusCircleIcon} from '@mattermost/compass-icons/components';
-import type {UserProfile} from '@mattermost/types/users';
+import {CheckIcon, ChevronRightIcon, MinusCircleIcon} from '@hanzoteam/compass-icons/components';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {setStatus} from 'mattermost-redux/actions/users';
-import {getBool} from 'mattermost-redux/selectors/entities/preferences';
-import {getDndEndTimeForUserId} from 'mattermost-redux/selectors/entities/users';
+import {setStatus} from '@hanzoteam/redux/actions/users';
+import {getBool} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getDndEndTimeForUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openModal} from 'actions/views/modals';
 

@@ -3,10 +3,10 @@
 
 import {combineReducers} from 'redux';
 
-import type {ChannelCategory} from '@mattermost/types/channel_categories';
+import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
 
-import {ChannelCategoryTypes, UserTypes} from 'mattermost-redux/action_types';
-import {removeItem} from 'mattermost-redux/utils/array_utils';
+import {ChannelCategoryTypes, UserTypes} from '@hanzoteam/redux/action_types';
+import {removeItem} from '@hanzoteam/redux/utils/array_utils';
 
 import {ActionTypes} from 'utils/constants';
 

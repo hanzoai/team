@@ -3,7 +3,7 @@
 
 import nock from 'nock';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {
     login,
@@ -11,7 +11,7 @@ import {
 } from 'actions/views/login';
 import configureStore from 'store';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 
 describe('actions/views/login', () => {
     describe('login', () => {

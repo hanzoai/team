@@ -6,12 +6,12 @@ import uniq from 'lodash/uniq';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {Role} from '@mattermost/types/roles';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Role} from '@hanzoteam/types/roles';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import Permissions from 'mattermost-redux/constants/permissions';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Client4} from '@hanzoteam/redux/client';
+import Permissions from '@hanzoteam/redux/constants/permissions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import BlockableLink from 'components/admin_console/blockable_link';
 import SaveChangesPanel from 'components/admin_console/save_changes_panel';

@@ -4,8 +4,8 @@
 import {useMemo} from 'react';
 import {useSelector} from 'react-redux';
 
-import {getConfig, getLicense} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getConfig, getLicense} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {GlobalState} from 'types/store';
 

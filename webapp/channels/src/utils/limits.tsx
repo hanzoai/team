@@ -3,7 +3,7 @@
 
 import type {FormatNumberOptions} from 'react-intl';
 
-import type {CloudUsage, Limits} from '@mattermost/types/cloud';
+import type {CloudUsage, Limits} from '@hanzoteam/types/cloud';
 
 import {FileSizes} from './file_utils';
 

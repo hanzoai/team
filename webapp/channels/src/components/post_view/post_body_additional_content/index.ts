@@ -5,8 +5,8 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {appsEnabled} from 'mattermost-redux/selectors/entities/apps';
-import {getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
+import {appsEnabled} from '@hanzoteam/redux/selectors/entities/apps';
+import {getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
 
 import {toggleEmbedVisibility} from 'actions/post_actions';
 import {isEmbedVisible} from 'selectors/posts';

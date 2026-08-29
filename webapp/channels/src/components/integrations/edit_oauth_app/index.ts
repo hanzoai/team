@@ -8,10 +8,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getOAuthApp, editOAuthApp} from 'mattermost-redux/actions/integrations';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getOAuthApp, editOAuthApp} from '@hanzoteam/redux/actions/integrations';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import EditOAuthApp from './edit_oauth_app';
 

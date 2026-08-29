@@ -7,9 +7,9 @@ import {defineMessages, useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 import {Link, useRouteMatch, useLocation, matchPath} from 'react-router-dom';
 
-import {getThreadCounts} from 'mattermost-redux/actions/threads';
-import {isCollapsedThreadsEnabled} from 'mattermost-redux/selectors/entities/preferences';
-import {getThreadCountsInCurrentTeam} from 'mattermost-redux/selectors/entities/threads';
+import {getThreadCounts} from '@hanzoteam/redux/actions/threads';
+import {isCollapsedThreadsEnabled} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getThreadCountsInCurrentTeam} from '@hanzoteam/redux/selectors/entities/threads';
 
 import {closeRightHandSide} from 'actions/views/rhs';
 import {getIsRhsOpen, getRhsState} from 'selectors/rhs';

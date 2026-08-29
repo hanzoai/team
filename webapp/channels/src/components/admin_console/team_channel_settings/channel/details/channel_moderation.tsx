@@ -7,9 +7,9 @@ import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 import type {MessageDescriptor} from 'react-intl';
 
-import type {ChannelModeration as ChannelPermissions} from '@mattermost/types/channels';
+import type {ChannelModeration as ChannelPermissions} from '@hanzoteam/types/channels';
 
-import {Permissions, Roles} from 'mattermost-redux/constants';
+import {Permissions, Roles} from '@hanzoteam/redux/constants';
 
 import FormattedMarkdownMessage from 'components/formatted_markdown_message';
 import AdminPanel from 'components/widgets/admin_console/admin_panel';

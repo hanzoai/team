@@ -4,8 +4,8 @@
 import React, {useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import {ShortcutKeys} from '@mattermost/shared/components/shortcut_key';
+import {GenericModal} from '@hanzoteam/components';
+import {ShortcutKeys} from '@hanzoteam/shared/components/shortcut_key';
 
 import {ShortcutSequence, ShortcutKeyVariant} from './shortcut_sequence';
 

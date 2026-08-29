@@ -6,12 +6,12 @@ import React, {useCallback, useState, memo, useMemo, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
-import type {PostPriorityMetadata} from '@mattermost/types/posts';
-import {PostPriority} from '@mattermost/types/posts';
+import {AlertCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import type {PostPriorityMetadata} from '@hanzoteam/types/posts';
+import {PostPriority} from '@hanzoteam/types/posts';
 
-import {getPersistentNotificationIntervalMinutes, isPersistentNotificationsEnabled, isPostAcknowledgementsEnabled} from 'mattermost-redux/selectors/entities/posts';
-import {getTheme} from 'mattermost-redux/selectors/entities/preferences';
+import {getPersistentNotificationIntervalMinutes, isPersistentNotificationsEnabled, isPostAcknowledgementsEnabled} from '@hanzoteam/redux/selectors/entities/posts';
+import {getTheme} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {IconContainer} from 'components/advanced_text_editor/formatting_bar/formatting_icon';
 import CompassDesignProvider from 'components/compass_design_provider';

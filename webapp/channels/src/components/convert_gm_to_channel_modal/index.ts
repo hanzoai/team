@@ -5,15 +5,15 @@ import {connect} from 'react-redux';
 import type {Dispatch} from 'redux';
 import {bindActionCreators} from 'redux';
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {convertGroupMessageToPrivateChannel} from 'mattermost-redux/actions/channels';
-import {getTeammateNameDisplaySetting} from 'mattermost-redux/selectors/entities/preferences';
+import {convertGroupMessageToPrivateChannel} from '@hanzoteam/redux/actions/channels';
+import {getTeammateNameDisplaySetting} from '@hanzoteam/redux/selectors/entities/preferences';
 import {
     getCurrentUserId,
     makeGetProfilesInChannel,
-} from 'mattermost-redux/selectors/entities/users';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+} from '@hanzoteam/redux/selectors/entities/users';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {moveChannelsInSidebar} from 'actions/views/channel_sidebar';
 import {closeModal} from 'actions/views/modals';

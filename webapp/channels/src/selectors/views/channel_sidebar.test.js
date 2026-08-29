@@ -1,9 +1,9 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {Preferences} from 'mattermost-redux/constants';
-import mergeObjects from 'mattermost-redux/test/merge_objects';
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {Preferences} from '@hanzoteam/redux/constants';
+import mergeObjects from '@hanzoteam/redux/test/merge_objects';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {TestHelper} from 'utils/test_helper';
 

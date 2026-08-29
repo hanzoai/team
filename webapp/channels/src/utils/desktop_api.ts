@@ -4,7 +4,7 @@
 import semver from 'semver';
 
 import type {DesktopAPI, PopoutViewProps, Theme, SessionAttributeField} from '@mattermost/desktop-api';
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
 declare global {
     interface Window {

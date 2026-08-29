@@ -5,11 +5,11 @@ import React, {memo, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
-import type {FileInfo} from '@mattermost/types/files';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
+import type {FileInfo} from '@hanzoteam/types/files';
 
-import {getFilePublicLink} from 'mattermost-redux/actions/files';
-import {getFilePublicLink as selectFilePublicLink} from 'mattermost-redux/selectors/entities/files';
+import {getFilePublicLink} from '@hanzoteam/redux/actions/files';
+import {getFilePublicLink as selectFilePublicLink} from '@hanzoteam/redux/selectors/entities/files';
 
 import CopyButton from 'components/copy_button';
 import ExternalLink from 'components/external_link';

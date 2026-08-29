@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import {render, renderWithContext} from 'tests/react_testing_utils';
 import {TestHelper} from 'utils/test_helper';

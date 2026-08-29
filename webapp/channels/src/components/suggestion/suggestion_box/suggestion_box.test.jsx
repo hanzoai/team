@@ -11,8 +11,8 @@ import SuggestionList from 'components/suggestion/suggestion_list';
 import {render, act} from 'tests/react_testing_utils';
 import * as Utils from 'utils/utils';
 
-jest.mock('mattermost-redux/client', () => {
-    const actual = jest.requireActual('mattermost-redux/client');
+jest.mock('@hanzoteam/redux/client', () => {
+    const actual = jest.requireActual('@hanzoteam/redux/client');
 
     return {
         ...actual,
@@ -23,8 +23,8 @@ jest.mock('mattermost-redux/client', () => {
     };
 });
 
-jest.mock('@mattermost/shared/utils/user_agent', () => {
-    const original = jest.requireActual('@mattermost/shared/utils/user_agent');
+jest.mock('@hanzoteam/shared/utils/user_agent', () => {
+    const original = jest.requireActual('@hanzoteam/shared/utils/user_agent');
     return {
         ...original,
         isIos: jest.fn().mockReturnValue(true),

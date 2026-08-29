@@ -3,12 +3,12 @@
 
 import React from 'react';
 
-import type {Channel, ChannelType} from '@mattermost/types/channels';
-import type {TeamMembership} from '@mattermost/types/teams';
-import type {UserProfile} from '@mattermost/types/users';
-import type {RelationOneToOne} from '@mattermost/types/utilities';
+import type {Channel, ChannelType} from '@hanzoteam/types/channels';
+import type {TeamMembership} from '@hanzoteam/types/teams';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {RelationOneToOne} from '@hanzoteam/types/utilities';
 
-import {General} from 'mattermost-redux/constants';
+import {General} from '@hanzoteam/redux/constants';
 
 import ChannelInviteModal from 'components/channel_invite_modal/channel_invite_modal';
 import type {Value} from 'components/multiselect/multiselect';
@@ -53,7 +53,7 @@ jest.mock('utils/utils', () => {
 });
 
 // Mock Client4 for ABAC tests
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         getProfilesNotInChannel: jest.fn(),
         getProfilesMatchingChannelPolicy: jest.fn().mockResolvedValue([]),
@@ -144,7 +144,7 @@ describe('components/channel_invite_modal', () => {
 
     beforeEach(() => {
         // Reset Client4 mocks before each test
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockClear();
         Client4.getProfilesMatchingChannelPolicy.mockClear();
         Client4.searchUsers.mockClear();
@@ -662,7 +662,7 @@ describe('components/channel_invite_modal', () => {
 
     test('should not include DM users when ABAC is enabled on a private channel', async () => {
         // Mock Client4 to return user-1 for ABAC channels
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockResolvedValue([users[0]]);
         Client4.searchUsers.mockResolvedValue([users[0]]);
 
@@ -846,7 +846,7 @@ describe('components/channel_invite_modal', () => {
 
     test('should filter out groups when ABAC is enforced on a private channel', async () => {
         // Mock Client4 to return user-1 for ABAC channels
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockResolvedValue([users[0]]);
         Client4.searchUsers.mockResolvedValue([users[0]]);
 
@@ -905,7 +905,7 @@ describe('components/channel_invite_modal', () => {
 
     test('should force fresh API call when ABAC is enforced on a private channel', async () => {
         // For hard-gated (private) ABAC channels we bypass Redux and call Client4 directly.
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockResolvedValue([]);
 
         const props = {
@@ -933,7 +933,7 @@ describe('components/channel_invite_modal', () => {
     test('should ignore contaminated Redux data when ABAC is enforced on a private channel', async () => {
         // Private + policy_enforced uses a dedicated fetch to get only matching users,
         // ignoring Redux-backed sources that may include users from other parts of the app.
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockResolvedValue([users[0]]);
         Client4.searchUsers.mockResolvedValue([users[0]]);
 
@@ -967,7 +967,7 @@ describe('components/channel_invite_modal', () => {
         // Advisory (public) policy: the invite list is the normal team list, but
         // users returned by the recommended-users endpoint get a "Recommended"
         // tag and are boosted to the top of the options.
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesMatchingChannelPolicy.mockResolvedValue([users[1]]);
 
         const props = {
@@ -1022,7 +1022,7 @@ describe('components/channel_invite_modal', () => {
     // call. Before Phase 2 of channel-policy-actions-lazy-fetch this
     // misfired and emptied the picker.
     test('permission-only policy does NOT pivot the invite modal to ABAC mode', async () => {
-        const {Client4} = require('mattermost-redux/client');
+        const {Client4} = require('@hanzoteam/redux/client');
         Client4.getProfilesNotInChannel.mockClear();
         Client4.getProfilesMatchingChannelPolicy.mockClear();
 

@@ -4,8 +4,8 @@
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import {getChannel, getCurrentChannel, isMyChannelAutotranslated} from 'mattermost-redux/selectors/entities/channels';
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
+import {getChannel, getCurrentChannel, isMyChannelAutotranslated} from '@hanzoteam/redux/selectors/entities/channels';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
 
 import {getSelectedPostId} from 'selectors/rhs';
 

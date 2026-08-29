@@ -4,7 +4,7 @@
 import React, {useCallback, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import type {PropertyField} from '@mattermost/types/properties';
+import type {PropertyField} from '@hanzoteam/types/properties';
 
 import './selectable_user_property_renderer.scss';
 import {UserSelector} from 'components/admin_console/content_flagging/user_multiselector/user_multiselector';

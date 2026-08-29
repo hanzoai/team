@@ -4,12 +4,12 @@
 import React from 'react';
 import {FormattedDate, FormattedMessage, FormattedTime, defineMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {Compliance} from '@mattermost/types/compliance';
-import type {UserProfile} from '@mattermost/types/users';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {Compliance} from '@hanzoteam/types/compliance';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Client4} from 'mattermost-redux/client';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import {Client4} from '@hanzoteam/redux/client';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import LoadingScreen from 'components/loading_screen';
 import LocalizedPlaceholderInput from 'components/localized_placeholder_input';

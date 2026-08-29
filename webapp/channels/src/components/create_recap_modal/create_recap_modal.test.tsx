@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import {getAgents} from 'mattermost-redux/actions/agents';
-import {savePreferences} from 'mattermost-redux/actions/preferences';
+import {getAgents} from '@hanzoteam/redux/actions/agents';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
 
 import {renderWithContext, screen, userEvent, waitFor, waitForElementToBeRemoved} from 'tests/react_testing_utils';
 import {Preferences} from 'utils/constants';
@@ -13,19 +13,19 @@ import CreateRecapModal from './create_recap_modal';
 
 const mockHistoryPush = jest.fn();
 
-jest.mock('mattermost-redux/actions/recaps', () => ({
+jest.mock('@hanzoteam/redux/actions/recaps', () => ({
     createRecap: jest.fn(() => ({type: 'CREATE_RECAP'})),
     createScheduledRecap: jest.fn(() => ({type: 'CREATE_SCHEDULED_RECAP'})),
     updateScheduledRecap: jest.fn(() => ({type: 'UPDATE_SCHEDULED_RECAP'})),
     getRecapLimitStatus: jest.fn(() => ({type: 'GET_RECAP_LIMIT_STATUS'})),
 }));
 
-jest.mock('mattermost-redux/actions/agents', () => ({
+jest.mock('@hanzoteam/redux/actions/agents', () => ({
     getAgents: jest.fn(() => ({type: 'GET_AGENTS'})),
 }));
 
 // Persist the selection straight into the store so the resolved agent updates without a network call.
-jest.mock('mattermost-redux/actions/preferences', () => ({
+jest.mock('@hanzoteam/redux/actions/preferences', () => ({
     savePreferences: jest.fn((userId, preferences) => ({type: 'RECEIVED_PREFERENCES', data: preferences})),
 }));
 

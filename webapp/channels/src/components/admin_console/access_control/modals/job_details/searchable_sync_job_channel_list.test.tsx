@@ -7,15 +7,15 @@ jest.mock('components/channel_type_icon/compass_icon_resolver', () => ({
     compassIconForName: jest.fn(),
 }));
 
-import type {Channel} from '@mattermost/types/channels';
-import type {Team} from '@mattermost/types/teams';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {Team} from '@hanzoteam/types/teams';
 
 import {compassIconForName} from 'components/channel_type_icon';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
-jest.mock('@mattermost/compass-icons/components', () => ({
-    ...jest.requireActual('@mattermost/compass-icons/components'),
+jest.mock('@hanzoteam/compass-icons/components', () => ({
+    ...jest.requireActual('@hanzoteam/compass-icons/components'),
     GlobeIcon: () => <span data-testid='default-globe-icon'/>,
     LockOutlineIcon: () => <span data-testid='default-lock-icon'/>,
 }));

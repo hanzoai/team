@@ -3,7 +3,7 @@
 
 import {combineReducers} from 'redux';
 
-import {ChannelTypes, PostTypes, UserTypes, GeneralTypes} from 'mattermost-redux/action_types';
+import {ChannelTypes, PostTypes, UserTypes, GeneralTypes} from '@hanzoteam/redux/action_types';
 
 import {ActionTypes, Constants} from 'utils/constants';
 

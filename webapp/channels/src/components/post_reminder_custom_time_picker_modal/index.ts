@@ -7,9 +7,9 @@ import type {ConnectedProps} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {addPostReminder} from 'mattermost-redux/actions/posts';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {addPostReminder} from '@hanzoteam/redux/actions/posts';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import {makeAsyncComponent} from 'components/async_load';
 

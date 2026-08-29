@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ChannelNotifyProps} from '@mattermost/types/channels';
+import type {ChannelNotifyProps} from '@hanzoteam/types/channels';
 
 import {NotificationLevels} from 'utils/constants';
 

@@ -8,8 +8,8 @@ import React, {useMemo, useRef, useCallback, useEffect} from 'react';
 import AutoSizer from 'react-virtualized-auto-sizer';
 import {VariableSizeList} from 'react-window';
 
-import type {ScheduledPost} from '@mattermost/types/schedule_post';
-import type {UserProfile, UserStatus} from '@mattermost/types/users';
+import type {ScheduledPost} from '@hanzoteam/types/schedule_post';
+import type {UserProfile, UserStatus} from '@hanzoteam/types/users';
 
 import DraftRow from 'components/drafts/draft_row';
 

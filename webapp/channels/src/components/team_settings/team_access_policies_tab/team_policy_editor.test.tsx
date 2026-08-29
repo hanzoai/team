@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import type {ChannelWithTeamData} from '@mattermost/types/channels';
+import type {ChannelWithTeamData} from '@hanzoteam/types/channels';
 
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';
 

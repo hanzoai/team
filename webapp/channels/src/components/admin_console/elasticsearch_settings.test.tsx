@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {AdminConfig} from '@mattermost/types/config';
+import type {AdminConfig} from '@hanzoteam/types/config';
 
 import ElasticSearchSettings from 'components/admin_console/elasticsearch_settings';
 

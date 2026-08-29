@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import * as UserAgent from '@mattermost/shared/utils/user_agent';
-import type {Channel} from '@mattermost/types/channels';
+import {GenericModal} from '@hanzoteam/components';
+import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import NoResultsIndicator from 'components/no_results_indicator/no_results_indicator';
 import {NoResultsVariant} from 'components/no_results_indicator/types';

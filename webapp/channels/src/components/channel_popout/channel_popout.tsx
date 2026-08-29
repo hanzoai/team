@@ -6,13 +6,13 @@ import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useParams} from 'react-router-dom';
 
-import {isDesktopApp} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 
-import {fetchMyCategories} from 'mattermost-redux/actions/channel_categories';
-import {fetchChannelsAndMembers, getChannelStats} from 'mattermost-redux/actions/channels';
-import {fetchTeamScheduledPosts} from 'mattermost-redux/actions/scheduled_posts';
-import {selectTeam} from 'mattermost-redux/actions/teams';
-import {getCurrentChannel} from 'mattermost-redux/selectors/entities/channels';
+import {fetchMyCategories} from '@hanzoteam/redux/actions/channel_categories';
+import {fetchChannelsAndMembers, getChannelStats} from '@hanzoteam/redux/actions/channels';
+import {fetchTeamScheduledPosts} from '@hanzoteam/redux/actions/scheduled_posts';
+import {selectTeam} from '@hanzoteam/redux/actions/teams';
+import {getCurrentChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {getIsRhsOpen} from 'selectors/rhs';
 

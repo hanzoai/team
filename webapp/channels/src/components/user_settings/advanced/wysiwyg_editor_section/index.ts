@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import {savePreferences} from 'mattermost-redux/actions/preferences';
+import {savePreferences} from '@hanzoteam/redux/actions/preferences';
 
 import WysiwygEditorSection from './wysiwyg_editor_section';
 

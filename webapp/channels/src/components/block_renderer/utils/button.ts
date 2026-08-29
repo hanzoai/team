@@ -3,12 +3,12 @@
 
 import type {CSSProperties} from 'react';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {MmButtonStyle} from '@mattermost/types/mm_blocks';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {MmButtonStyle} from '@hanzoteam/types/mm_blocks';
 
-import type {Theme} from 'mattermost-redux/selectors/entities/preferences';
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
-import {changeOpacity} from 'mattermost-redux/utils/theme_utils';
+import type {Theme} from '@hanzoteam/redux/selectors/entities/preferences';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
+import {changeOpacity} from '@hanzoteam/redux/utils/theme_utils';
 
 const MM_BUTTON_SEMANTIC_STYLES = new Set<MmButtonStyle>([
     'default',

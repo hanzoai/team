@@ -6,7 +6,7 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import type {Channel, ChannelStats} from '@mattermost/types/channels';
+import type {Channel, ChannelStats} from '@hanzoteam/types/channels';
 
 import {openModal} from 'actions/views/modals';
 import {canAccessChannelSettings} from 'selectors/views/channel_settings';

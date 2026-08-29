@@ -3,8 +3,8 @@
 
 import {createContext} from 'react';
 
-import type {PostActionIntegrationFormat} from '@mattermost/types/integration_actions';
-import type {PostImage} from '@mattermost/types/posts';
+import type {PostActionIntegrationFormat} from '@hanzoteam/types/integration_actions';
+import type {PostImage} from '@hanzoteam/types/posts';
 
 /** Post-level cookie and format for mmaction:// links inside MM blocks text blocks. */
 export type MmBlocksInlineMarkdownActions = {

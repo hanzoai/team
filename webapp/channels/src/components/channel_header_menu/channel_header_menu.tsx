@@ -7,8 +7,8 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import ChevronDownIcon from '@mattermost/compass-icons/components/chevron-down';
-import type {UserProfile} from '@mattermost/types/users';
+import ChevronDownIcon from '@hanzoteam/compass-icons/components/chevron-down';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import {
     isChannelAutotranslated as isChannelAutotranslatedSelector,
@@ -16,11 +16,11 @@ import {
     isCurrentChannelDefault,
     isCurrentChannelFavorite,
     isCurrentChannelMuted,
-} from 'mattermost-redux/selectors/entities/channels';
-import {getLicense} from 'mattermost-redux/selectors/entities/general';
+} from '@hanzoteam/redux/selectors/entities/channels';
+import {getLicense} from '@hanzoteam/redux/selectors/entities/general';
 import {
     getCurrentUser,
-} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/users';
 
 import {getChannelHeaderMenuPluginComponents} from 'selectors/plugins';
 

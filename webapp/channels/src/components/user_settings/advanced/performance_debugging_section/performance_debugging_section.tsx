@@ -4,7 +4,7 @@
 import React, {useCallback, useState, useRef, useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {Preferences} from 'mattermost-redux/constants';
+import {Preferences} from '@hanzoteam/redux/constants';
 
 import SettingItemMax from 'components/setting_item_max';
 import SettingItemMin from 'components/setting_item_min';

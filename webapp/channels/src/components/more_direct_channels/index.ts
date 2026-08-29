@@ -5,18 +5,18 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {searchGroupChannels} from 'mattermost-redux/actions/channels';
+import {searchGroupChannels} from '@hanzoteam/redux/actions/channels';
 import {
     getProfiles,
     getProfilesInTeam,
     getTotalUsersStats,
     searchProfiles,
     canUserDirectMessage,
-} from 'mattermost-redux/actions/users';
-import {getConfig, getFeatureFlagValue} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentTeam} from 'mattermost-redux/selectors/entities/teams';
+} from '@hanzoteam/redux/actions/users';
+import {getConfig, getFeatureFlagValue} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentTeam} from '@hanzoteam/redux/selectors/entities/teams';
 import {
     getCurrentUserId,
     getProfiles as selectProfiles,
@@ -25,7 +25,7 @@ import {
     makeSearchProfilesStartingWithTerm,
     searchProfilesInCurrentTeam,
     getTotalUsersStats as getTotalUsersStatsSelector,
-} from 'mattermost-redux/selectors/entities/users';
+} from '@hanzoteam/redux/selectors/entities/users';
 
 import {openDirectChannelToUserId, openGroupChannelToUserIds} from 'actions/channel_actions';
 import {loadStatusesForProfilesList, loadProfilesMissingStatus} from 'actions/status_actions';

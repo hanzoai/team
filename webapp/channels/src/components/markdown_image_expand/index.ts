@@ -5,7 +5,7 @@ import type {ReactNode} from 'react';
 import {connect} from 'react-redux';
 import type {ConnectedProps} from 'react-redux';
 
-import type {Post} from '@mattermost/types/posts';
+import type {Post} from '@hanzoteam/types/posts';
 
 import {toggleInlineImageVisibility} from 'actions/post_actions';
 import {isInlineImageVisible} from 'selectors/posts';

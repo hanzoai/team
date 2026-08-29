@@ -5,9 +5,9 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import type {ProductIdentifier} from '@mattermost/types/products';
+import type {ProductIdentifier} from '@hanzoteam/types/products';
 
-import {isCurrentUserGuestUser} from 'mattermost-redux/selectors/entities/users';
+import {isCurrentUserGuestUser} from '@hanzoteam/redux/selectors/entities/users';
 
 import {OnboardingTourSteps, OnboardingTourStepsForGuestUsers} from 'components/tours';
 import {

@@ -4,7 +4,7 @@
 import React from 'react';
 import type {MockStoreEnhanced} from 'redux-mock-store';
 
-import {PropertyTypes} from 'mattermost-redux/action_types';
+import {PropertyTypes} from '@hanzoteam/redux/action_types';
 
 import useChannelClassificationBanner from 'components/common/hooks/useChannelClassificationBanner';
 import useClassificationMarkings from 'components/common/hooks/useClassificationMarkings';
@@ -15,15 +15,15 @@ import {TestHelper} from 'utils/test_helper';
 import ChannelSettingsConfigurationTab from './channel_settings_configuration_tab';
 
 // Mock the redux actions and selectors
-jest.mock('mattermost-redux/actions/channels', () => ({
+jest.mock('@hanzoteam/redux/actions/channels', () => ({
     patchChannel: jest.fn(),
 }));
 
-jest.mock('mattermost-redux/actions/shared_channels', () => ({
+jest.mock('@hanzoteam/redux/actions/shared_channels', () => ({
     fetchChannelRemotes: jest.fn(() => ({type: 'MOCK_ACTION', data: []})),
 }));
 
-jest.mock('mattermost-redux/client', () => ({
+jest.mock('@hanzoteam/redux/client', () => ({
     Client4: {
         sharedChannelRemoteInvite: jest.fn().mockResolvedValue({}),
         sharedChannelRemoteUninvite: jest.fn().mockResolvedValue({}),
@@ -36,7 +36,7 @@ jest.mock('mattermost-redux/client', () => ({
     },
 }));
 
-jest.mock('mattermost-redux/selectors/entities/shared_channels', () => {
+jest.mock('@hanzoteam/redux/selectors/entities/shared_channels', () => {
     const emptyList: any[] = [];
     return {
         getRemotesForChannel: jest.fn(() => emptyList),
@@ -45,7 +45,7 @@ jest.mock('mattermost-redux/selectors/entities/shared_channels', () => {
 });
 
 let mockManageChannelRolesPermission = false;
-jest.mock('mattermost-redux/selectors/entities/roles', () => ({
+jest.mock('@hanzoteam/redux/selectors/entities/roles', () => ({
     haveIChannelPermission: jest.fn().mockImplementation((_state, _teamId, _channelId, permission) => {
         if (permission === 'manage_channel_roles') {
             return mockManageChannelRolesPermission;
@@ -211,7 +211,7 @@ describe('ChannelSettingsConfigurationTab', () => {
     });
 
     it('should call patchChannel with updated values when Save is clicked', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsConfigurationTab {...baseProps}/>);
@@ -336,7 +336,7 @@ describe('ChannelSettingsConfigurationTab', () => {
     });
 
     it('should show error when banner color is empty but banner is enabled', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsConfigurationTab {...baseProps}/>);
@@ -359,7 +359,7 @@ describe('ChannelSettingsConfigurationTab', () => {
     });
 
     it('should save valid colors in hex format', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsConfigurationTab {...baseProps}/>);
@@ -389,7 +389,7 @@ describe('ChannelSettingsConfigurationTab', () => {
     });
 
     it('only valid colors will make the save changes panel visible', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
         patchChannel.mockClear(); // Clear any previous calls
 
@@ -442,7 +442,7 @@ describe('ChannelSettingsConfigurationTab', () => {
     });
 
     it('should trim whitespace from banner text and color when saving', async () => {
-        const {patchChannel} = require('mattermost-redux/actions/channels');
+        const {patchChannel} = require('@hanzoteam/redux/actions/channels');
         patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
         renderWithContext(<ChannelSettingsConfigurationTab {...{...baseProps, channel: mockChannelWithBanner}}/>);
@@ -479,8 +479,8 @@ describe('ChannelSettingsConfigurationTab', () => {
 
     describe('Share channel with connected workspaces', () => {
         beforeEach(() => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
             getRemotesForChannel.mockReturnValue([]);
             fetchChannelRemotes.mockImplementation(() => ({type: 'MOCK_ACTION', data: []}));
         });
@@ -522,7 +522,7 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should disable sharing when saved with toggle on but no workspaces added', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
 
             getRemotesForChannel.mockReturnValue([]);
 
@@ -557,8 +557,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should show save again after adding a workspace when sharing was enabled and saved without workspaces', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
 
             getRemotesForChannel.mockReturnValue([]);
 
@@ -603,7 +603,7 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should preserve local workspace removals when server remotes refresh before save', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
 
             const remote = {
                 remote_id: 'remote1',
@@ -644,7 +644,7 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should preserve sharing toggle off when server remotes refresh before save', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
 
             const remote = {
                 remote_id: 'remote1',
@@ -688,9 +688,9 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when shared channel changes include only adding workspaces, save calls invite and fetchChannelRemotes', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             getRemotesForChannel.mockReturnValue([]);
 
@@ -724,8 +724,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should clear pending save status after workspace is saved', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
 
             const savedRemote = {
                 remote_id: 'remote1',
@@ -773,8 +773,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when shared channel changes include removing a connection, confirm modal is shown before save', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             const initialRemotes = [
                 {
@@ -810,9 +810,9 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when user confirms remove in modal, uninvite and fetchChannelRemotes are called', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             const initialRemotes = [
                 {
@@ -854,8 +854,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should disable sharing after toggling off and confirming unshare', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             const initialRemotes = [
                 {
@@ -905,8 +905,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('should clear unsaved changes after toggling off and confirming unshare', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             const initialRemotes = [
                 {
@@ -954,8 +954,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when user cancels remove modal, uninvite is not called', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             const initialRemotes = [
                 {
@@ -988,9 +988,9 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when one invite fails, handleServerError is called and fetchChannelRemotes is still called', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {fetchChannelRemotes} = require('mattermost-redux/actions/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {fetchChannelRemotes} = require('@hanzoteam/redux/actions/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             getRemotesForChannel.mockReturnValue([]);
             Client4.sharedChannelRemoteInvite.mockRejectedValueOnce({message: 'Invite failed for workspace'});
@@ -1026,8 +1026,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('when multiple invite/uninvite operations fail, shows sharing_errors message', async () => {
-            const {getRemotesForChannel} = require('mattermost-redux/selectors/entities/shared_channels');
-            const {Client4} = require('mattermost-redux/client');
+            const {getRemotesForChannel} = require('@hanzoteam/redux/selectors/entities/shared_channels');
+            const {Client4} = require('@hanzoteam/redux/client');
 
             getRemotesForChannel.mockReturnValue([]);
             Client4.sharedChannelRemoteInvite.mockRejectedValue(new Error('Network error'));
@@ -1149,8 +1149,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('auto-selects the lowest-rank level when classification is toggled on', async () => {
-            const {Client4} = require('mattermost-redux/client');
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {Client4} = require('@hanzoteam/redux/client');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
             Client4.patchPropertyValues.mockClear();
             enableClassification();
@@ -1174,7 +1174,7 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('saves banner_info via patchChannel when banner text is edited while classification is active', async () => {
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
             enableClassification({
@@ -1215,8 +1215,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('does not call patchPropertyValues when classification enabled/id has not changed', async () => {
-            const {Client4} = require('mattermost-redux/client');
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {Client4} = require('@hanzoteam/redux/client');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
 
             enableClassification({
@@ -1250,7 +1250,7 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('removes classification by patching value to null and dispatching PROPERTY_VALUE_DELETED', async () => {
-            const {Client4} = require('mattermost-redux/client');
+            const {Client4} = require('@hanzoteam/redux/client');
             Client4.patchPropertyValues.mockResolvedValueOnce([]);
             enableClassification({
                 hasClassification: true,
@@ -1289,8 +1289,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('preserves a saved regular banner color and shows Save when classification is re-enabled', async () => {
-            const {Client4} = require('mattermost-redux/client');
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {Client4} = require('@hanzoteam/redux/client');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
             Client4.patchPropertyValues.mockResolvedValueOnce([]);
             enableClassification({
@@ -1417,8 +1417,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('shows an error in the SaveChangesPanel when patchPropertyValues rejects', async () => {
-            const {Client4} = require('mattermost-redux/client');
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {Client4} = require('@hanzoteam/redux/client');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
             Client4.patchPropertyValues.mockRejectedValueOnce({message: 'Server boom'});
 
@@ -1448,8 +1448,8 @@ describe('ChannelSettingsConfigurationTab', () => {
         });
 
         it('shows an error when patchPropertyValues rejects with pre-existing classification', async () => {
-            const {Client4} = require('mattermost-redux/client');
-            const {patchChannel} = require('mattermost-redux/actions/channels');
+            const {Client4} = require('@hanzoteam/redux/client');
+            const {patchChannel} = require('@hanzoteam/redux/actions/channels');
             patchChannel.mockReturnValue({type: 'MOCK_ACTION', data: {}});
             Client4.patchPropertyValues.mockRejectedValueOnce({message: 'Server boom'});
 

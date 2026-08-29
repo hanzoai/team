@@ -7,7 +7,7 @@ jest.mock('components/channel_type_icon/compass_icon_resolver', () => ({
     compassIconForName: jest.fn(),
 }));
 
-import type {Channel} from '@mattermost/types/channels';
+import type {Channel} from '@hanzoteam/types/channels';
 
 import {compassIconForName} from 'components/channel_type_icon';
 import {SearchableChannelList} from 'components/searchable_channel_list';
@@ -18,8 +18,8 @@ import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {Filter} from './browse_channels/browse_channels';
 
 // Mock the compass-icons to make them identifiable in tests
-jest.mock('@mattermost/compass-icons/components', () => ({
-    ...jest.requireActual('@mattermost/compass-icons/components'),
+jest.mock('@hanzoteam/compass-icons/components', () => ({
+    ...jest.requireActual('@hanzoteam/compass-icons/components'),
     ArchiveOutlineIcon: (props: Record<string, unknown>) => (
         <svg
             data-testid='archiveOutlineIcon'

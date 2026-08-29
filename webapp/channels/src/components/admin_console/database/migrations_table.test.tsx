@@ -5,9 +5,9 @@ import {act, screen, waitFor} from '@testing-library/react';
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import type {SchemaMigration} from '@mattermost/types/admin';
+import type {SchemaMigration} from '@hanzoteam/types/admin';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import {renderWithContext} from 'tests/react_testing_utils';
 

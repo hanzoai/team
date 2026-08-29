@@ -5,17 +5,17 @@ import React, {useState, useEffect, useCallback, useMemo, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {AccessControlPolicyRule} from '@mattermost/types/access_control';
+import type {AccessControlPolicyRule} from '@hanzoteam/types/access_control';
 import {
     getMembershipRule,
     buildRulesWithMembership,
-} from '@mattermost/types/access_control';
-import type {Channel} from '@mattermost/types/channels';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+} from '@hanzoteam/types/access_control';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {getAccessControlSettings} from 'mattermost-redux/selectors/entities/access_control';
-import {getChannelMessageCount} from 'mattermost-redux/selectors/entities/channels';
-import {getCurrentUser, isCurrentUserSystemAdmin} from 'mattermost-redux/selectors/entities/users';
+import {getAccessControlSettings} from '@hanzoteam/redux/selectors/entities/access_control';
+import {getChannelMessageCount} from '@hanzoteam/redux/selectors/entities/channels';
+import {getCurrentUser, isCurrentUserSystemAdmin} from '@hanzoteam/redux/selectors/entities/users';
 
 import {excludeSessionAttributes} from 'components/admin_console/access_control/editors/shared';
 import TableEditor from 'components/admin_console/access_control/editors/table_editor/table_editor';

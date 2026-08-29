@@ -4,8 +4,8 @@
 import React from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {PlusIcon} from '@mattermost/compass-icons/components';
-import {Button} from '@mattermost/shared/components/button';
+import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import {Button} from '@hanzoteam/shared/components/button';
 
 import AdminHeader from 'components/widgets/admin_console/admin_header';
 

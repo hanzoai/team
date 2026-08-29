@@ -4,7 +4,7 @@
 import React from 'react';
 import {useIntl} from 'react-intl';
 
-import type {Audit} from '@mattermost/types/audits';
+import type {Audit} from '@hanzoteam/types/audits';
 
 import UserUpdateActiveSessionRow from './user_update_active_session_row';
 

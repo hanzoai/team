@@ -5,8 +5,8 @@ import React, {useCallback, useState, memo} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage} from 'react-intl';
 
-import {Button} from '@mattermost/shared/components/button';
-import type {LogObject} from '@mattermost/types/admin';
+import {Button} from '@hanzoteam/shared/components/button';
+import type {LogObject} from '@hanzoteam/types/admin';
 
 type Props = {
     log: LogObject | null;

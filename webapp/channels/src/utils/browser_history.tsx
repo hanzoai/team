@@ -4,7 +4,7 @@
 import {createBrowserHistory} from 'history';
 import type {History} from 'history';
 
-import {isDesktopApp, getDesktopVersion} from '@mattermost/shared/utils/user_agent';
+import {isDesktopApp, getDesktopVersion} from '@hanzoteam/shared/utils/user_agent';
 
 import {getModule} from 'module_registry';
 import DesktopApp from 'utils/desktop_api';

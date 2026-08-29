@@ -5,11 +5,11 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getMissingProfilesByIds, getMissingProfilesByUsernames} from 'mattermost-redux/actions/users';
-import {shouldShowJoinLeaveMessages} from 'mattermost-redux/selectors/entities/preferences';
-import {getCurrentUser, makeGetProfilesByIdsAndUsernames} from 'mattermost-redux/selectors/entities/users';
+import {getMissingProfilesByIds, getMissingProfilesByUsernames} from '@hanzoteam/redux/actions/users';
+import {shouldShowJoinLeaveMessages} from '@hanzoteam/redux/selectors/entities/preferences';
+import {getCurrentUser, makeGetProfilesByIdsAndUsernames} from '@hanzoteam/redux/selectors/entities/users';
 
 import CombinedSystemMessage from './combined_system_message';
 

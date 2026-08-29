@@ -4,9 +4,9 @@
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {isSearchTruncated} from 'mattermost-redux/selectors/entities/search';
+import {isSearchTruncated} from '@hanzoteam/redux/selectors/entities/search';
 
 import {getRhsState} from 'selectors/rhs';
 

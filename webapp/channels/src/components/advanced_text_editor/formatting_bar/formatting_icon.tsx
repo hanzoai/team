@@ -17,9 +17,9 @@ import {
     FormatQuoteOpenIcon,
     FormatListBulletedIcon,
     FormatListNumberedIcon,
-} from '@mattermost/compass-icons/components';
-import type IconProps from '@mattermost/compass-icons/components/props';
-import {WithTooltip} from '@mattermost/shared/components/tooltip';
+} from '@hanzoteam/compass-icons/components';
+import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import KeyboardShortcutSequence, {
     KEYBOARD_SHORTCUTS,

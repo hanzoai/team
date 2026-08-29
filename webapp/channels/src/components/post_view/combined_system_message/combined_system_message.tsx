@@ -5,11 +5,11 @@ import React from 'react';
 import {defineMessages, injectIntl} from 'react-intl';
 import type {IntlShape, MessageDescriptor} from 'react-intl';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {Posts} from 'mattermost-redux/constants';
-import type {MessageData} from 'mattermost-redux/utils/post_list';
-import {secureGetFromRecord} from 'mattermost-redux/utils/post_utils';
+import {Posts} from '@hanzoteam/redux/constants';
+import type {MessageData} from '@hanzoteam/redux/utils/post_list';
+import {secureGetFromRecord} from '@hanzoteam/redux/utils/post_utils';
 
 import Markdown from 'components/markdown';
 

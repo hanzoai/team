@@ -7,12 +7,12 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel, ChannelWithTeamData} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel, ChannelWithTeamData} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {searchAllChannels} from 'mattermost-redux/actions/channels';
-import {getChannel} from 'mattermost-redux/selectors/entities/channels';
+import {searchAllChannels} from '@hanzoteam/redux/actions/channels';
+import {getChannel} from '@hanzoteam/redux/selectors/entities/channels';
 
 import {ChannelIcon} from 'components/channel_type_icon';
 import SectionNotice from 'components/section_notice';

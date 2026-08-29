@@ -3,9 +3,9 @@
 
 import React from 'react';
 
-import type {ChannelType} from '@mattermost/types/channels';
+import type {ChannelType} from '@hanzoteam/types/channels';
 
-import {CategoryTypes} from 'mattermost-redux/constants/channel_categories';
+import {CategoryTypes} from '@hanzoteam/redux/constants/channel_categories';
 
 import {renderWithContext, screen, userEvent, waitFor, within} from 'tests/react_testing_utils';
 import Constants from 'utils/constants';
@@ -221,7 +221,7 @@ describe('components/sidebar/sidebar_channel/sidebar_channel_menu', () => {
     });
 
     test('should disable favorite menu item when channel is in a managed category', async () => {
-        const spy = jest.spyOn(require('mattermost-redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
+        const spy = jest.spyOn(require('@hanzoteam/redux/selectors/entities/channel_categories'), 'isChannelInManagedCategory').mockReturnValue(true);
 
         renderWithContext(
             <SidebarChannelMenu {...baseProps}/>,

@@ -4,7 +4,7 @@
 import {DateTime} from 'luxon';
 import React from 'react';
 
-import {getPreferenceKey} from 'mattermost-redux/utils/preference_utils';
+import {getPreferenceKey} from '@hanzoteam/redux/utils/preference_utils';
 
 import {fireEvent, renderWithContext, screen} from 'tests/react_testing_utils';
 import {scheduledPosts} from 'utils/constants';

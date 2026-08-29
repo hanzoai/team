@@ -3,10 +3,10 @@
 
 import {act} from '@testing-library/react';
 
-import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import {renderHookWithContext} from 'tests/react_testing_utils';
 

@@ -4,8 +4,8 @@
 import React from 'react';
 import styled from 'styled-components';
 
-import type {Channel} from '@mattermost/types/channels';
-import type {UserProfile} from '@mattermost/types/users';
+import type {Channel} from '@hanzoteam/types/channels';
+import type {UserProfile} from '@hanzoteam/types/users';
 
 import Constants from 'utils/constants';
 

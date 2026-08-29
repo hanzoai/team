@@ -4,10 +4,10 @@
 import React, {useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
-import type {Agent} from '@mattermost/types/agents';
+import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import type {Agent} from '@hanzoteam/types/agents';
 
-import {Client4} from 'mattermost-redux/client';
+import {Client4} from '@hanzoteam/redux/client';
 
 import * as Menu from 'components/menu';
 import Avatar from 'components/widgets/users/avatar';

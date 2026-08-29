@@ -5,11 +5,11 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {Channel} from '@mattermost/types/channels';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {Channel} from '@hanzoteam/types/channels';
 
-import {Permissions} from 'mattermost-redux/constants';
-import {getCurrentTeamId} from 'mattermost-redux/selectors/entities/teams';
+import {Permissions} from '@hanzoteam/redux/constants';
+import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 
 import AddGroupsToChannelModal from 'components/add_groups_to_channel_modal';
 import ChannelInviteModal from 'components/channel_invite_modal';

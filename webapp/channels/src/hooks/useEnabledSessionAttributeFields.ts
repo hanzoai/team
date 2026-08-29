@@ -4,11 +4,11 @@
 import {useEffect, useMemo} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@mattermost/types/properties_user';
-import type {UserPropertyField} from '@mattermost/types/properties_user';
+import {SESSION_ATTRIBUTES_GROUP_ID, SESSION_ATTRIBUTES_OBJECT_TYPE} from '@hanzoteam/types/properties_user';
+import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
-import {fetchPropertyFields} from 'mattermost-redux/actions/properties';
-import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from 'mattermost-redux/selectors/entities/properties';
+import {fetchPropertyFields} from '@hanzoteam/redux/actions/properties';
+import {getPropertyFieldsForObjectTypeAndGroup, getPropertyGroupByName} from '@hanzoteam/redux/selectors/entities/properties';
 
 import {getSessionAttrs, SESSION_ATTRIBUTES_TARGET_TYPE} from 'components/admin_console/session_attributes/utils';
 

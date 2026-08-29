@@ -5,10 +5,10 @@ import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import type {Dispatch} from 'redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {getOutgoingHook, updateOutgoingHook} from 'mattermost-redux/actions/integrations';
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
+import {getOutgoingHook, updateOutgoingHook} from '@hanzoteam/redux/actions/integrations';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
 
 import EditOutgoingWebhook from './edit_outgoing_webhook';
 

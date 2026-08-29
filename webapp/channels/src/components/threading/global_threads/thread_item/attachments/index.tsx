@@ -3,8 +3,8 @@
 
 import React from 'react';
 
-import {isMessageAttachmentArray} from '@mattermost/types/message_attachments';
-import type {Post} from '@mattermost/types/posts';
+import {isMessageAttachmentArray} from '@hanzoteam/types/message_attachments';
+import type {Post} from '@hanzoteam/types/posts';
 
 import AttachmentCard from './attachment_card';
 import FileCard from './file_card';

@@ -7,13 +7,13 @@ import type {Dispatch} from 'redux';
 import {batchActions} from 'redux-batched-actions';
 import type {MockStoreEnhanced} from 'redux-mock-store';
 
-import type {Post} from '@mattermost/types/posts';
-import type {UserProfile} from '@mattermost/types/users';
-import type {IDMappedObjects} from '@mattermost/types/utilities';
+import type {Post} from '@hanzoteam/types/posts';
+import type {UserProfile} from '@hanzoteam/types/users';
+import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 
-import {SearchTypes} from 'mattermost-redux/action_types';
-import * as SearchActions from 'mattermost-redux/actions/search';
-import {getCurrentTimezone} from 'mattermost-redux/selectors/entities/timezone';
+import {SearchTypes} from '@hanzoteam/redux/action_types';
+import * as SearchActions from '@hanzoteam/redux/actions/search';
+import {getCurrentTimezone} from '@hanzoteam/redux/selectors/entities/timezone';
 
 import {
     updateRhsState,
@@ -63,19 +63,19 @@ const previousSelectedPost = {
     root_id: 'root123',
 } as Post;
 
-const UserSelectors = require('mattermost-redux/selectors/entities/users');
+const UserSelectors = require('@hanzoteam/redux/selectors/entities/users');
 UserSelectors.getCurrentUserMentionKeys = jest.fn(() => [{key: '@here'}, {key: '@mattermost'}, {key: '@channel'}, {key: '@all'}]);
 
 // Mock Date.now() to return a constant value.
 const POST_CREATED_TIME = Date.now();
 global.Date.now = jest.fn(() => POST_CREATED_TIME);
 
-jest.mock('mattermost-redux/actions/posts', () => ({
+jest.mock('@hanzoteam/redux/actions/posts', () => ({
     getPostThread: (...args: any) => ({type: 'MOCK_GET_POST_THREAD', args}),
     getMentionsAndStatusesForPosts: (...args: any) => ({type: 'MOCK_GET_MENTIONS_AND_STATUSES_FOR_POSTS', args}),
 }));
 
-jest.mock('mattermost-redux/actions/search', () => ({
+jest.mock('@hanzoteam/redux/actions/search', () => ({
     searchPostsWithParams: (...args: any) => ({type: 'MOCK_SEARCH_POSTS', args}),
     searchFilesWithParams: (...args: any) => ({type: 'MOCK_SEARCH_FILES', args}),
     clearSearch: (...args: any) => ({type: 'MOCK_CLEAR_SEARCH', args}),

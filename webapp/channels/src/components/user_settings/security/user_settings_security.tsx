@@ -8,12 +8,12 @@ import type {IntlShape} from 'react-intl';
 import {FormattedDate, FormattedMessage, FormattedTime, injectIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 
-import {buttonClassNames} from '@mattermost/shared/components/button';
-import type {OAuthApp} from '@mattermost/types/integrations';
-import type {UserProfile} from '@mattermost/types/users';
+import {buttonClassNames} from '@hanzoteam/shared/components/button';
+import type {OAuthApp} from '@hanzoteam/types/integrations';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import type {PasswordConfig} from 'mattermost-redux/selectors/entities/general';
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {PasswordConfig} from '@hanzoteam/redux/selectors/entities/general';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import AccessHistoryModal from 'components/access_history_modal';
 import ActivityLogModal from 'components/activity_log_modal';

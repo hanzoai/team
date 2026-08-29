@@ -5,10 +5,10 @@ import type {Store} from 'redux';
 import {onCLS, onFCP, onINP, onLCP} from 'web-vitals/attribution';
 import type {INPMetricWithAttribution, LCPMetricWithAttribution, Metric} from 'web-vitals/attribution';
 
-import type {Client4} from '@mattermost/client';
+import type {Client4} from '@hanzoteam/client';
 
-import {getConfig} from 'mattermost-redux/selectors/entities/general';
-import {getCurrentUserId} from 'mattermost-redux/selectors/entities/users';
+import {getConfig} from '@hanzoteam/redux/selectors/entities/general';
+import {getCurrentUserId} from '@hanzoteam/redux/selectors/entities/users';
 
 import type {DesktopAppAPI} from 'utils/desktop_api';
 

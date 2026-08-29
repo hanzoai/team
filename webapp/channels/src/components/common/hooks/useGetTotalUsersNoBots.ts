@@ -4,7 +4,7 @@
 import {useEffect, useState} from 'react';
 import {useDispatch} from 'react-redux';
 
-import {getFilteredUsersStats} from 'mattermost-redux/actions/users';
+import {getFilteredUsersStats} from '@hanzoteam/redux/actions/users';
 
 const useGetTotalUsersNoBots = (includeInactive = false): number => {
     const dispatch = useDispatch();

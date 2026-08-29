@@ -4,8 +4,8 @@
 import {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {countPendingChannelJoinRequests} from 'mattermost-redux/actions/channels';
-import {getManageableDiscoverableChannelIds} from 'mattermost-redux/selectors/entities/channels';
+import {countPendingChannelJoinRequests} from '@hanzoteam/redux/actions/channels';
+import {getManageableDiscoverableChannelIds} from '@hanzoteam/redux/selectors/entities/channels';
 
 // Caps how many count requests are in flight at once so a user who manages many
 // discoverable channels doesn't fire an unbounded burst on mount.

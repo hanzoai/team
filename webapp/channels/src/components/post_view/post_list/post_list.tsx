@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type {ActionResult} from 'mattermost-redux/types/actions';
+import type {ActionResult} from '@hanzoteam/redux/types/actions';
 
 import type {updateNewMessagesAtInChannel} from 'actions/global_actions';
 import {clearMarks, mark} from 'actions/telemetry_actions';

@@ -5,8 +5,8 @@ import moment from 'moment';
 import React from 'react';
 import {FormattedMessage, injectIntl, type WrappedComponentProps} from 'react-intl';
 
-import {GenericModal} from '@mattermost/components';
-import type {UserStatus} from '@mattermost/types/users';
+import {GenericModal} from '@hanzoteam/components';
+import type {UserStatus} from '@hanzoteam/types/users';
 
 import DateTimeInput from 'components/datetime_input/datetime_input';
 

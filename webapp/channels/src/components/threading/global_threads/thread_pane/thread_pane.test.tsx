@@ -4,17 +4,17 @@
 import React from 'react';
 import type {ComponentProps} from 'react';
 
-import type {UserProfile} from '@mattermost/types/users';
+import type {UserProfile} from '@hanzoteam/types/users';
 
-import {setThreadFollow} from 'mattermost-redux/actions/threads';
+import {setThreadFollow} from '@hanzoteam/redux/actions/threads';
 
-import TestHelper from 'packages/mattermost-redux/test/test_helper';
+import TestHelper from 'packages/@hanzoteam/redux/test/test_helper';
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 
 import ThreadPane from './thread_pane';
 
-jest.mock('mattermost-redux/actions/threads', () => ({
-    ...jest.requireActual('mattermost-redux/actions/threads'),
+jest.mock('@hanzoteam/redux/actions/threads', () => ({
+    ...jest.requireActual('@hanzoteam/redux/actions/threads'),
     setThreadFollow: jest.fn(() => ({type: 'MOCK_SET_THREAD_FOLLOW'})),
 }));
 

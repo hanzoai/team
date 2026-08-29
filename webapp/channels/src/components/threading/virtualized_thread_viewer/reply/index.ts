@@ -3,8 +3,8 @@
 
 import {connect} from 'react-redux';
 
-import {getPost} from 'mattermost-redux/selectors/entities/posts';
-import {get, getBool} from 'mattermost-redux/selectors/entities/preferences';
+import {getPost} from '@hanzoteam/redux/selectors/entities/posts';
+import {get, getBool} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import {Preferences} from 'utils/constants';
 

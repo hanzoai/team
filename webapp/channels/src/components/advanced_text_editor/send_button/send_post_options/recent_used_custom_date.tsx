@@ -7,9 +7,9 @@ import React, {memo, useCallback, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import type {GlobalState} from '@mattermost/types/store';
+import type {GlobalState} from '@hanzoteam/types/store';
 
-import {get as getPreference} from 'mattermost-redux/selectors/entities/preferences';
+import {get as getPreference} from '@hanzoteam/redux/selectors/entities/preferences';
 
 import * as Menu from 'components/menu';
 import Timestamp, {RelativeRanges} from 'components/timestamp';

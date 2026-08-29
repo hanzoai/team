@@ -5,11 +5,11 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {GenericModal} from '@mattermost/components';
-import type {Channel, ChannelJoinRequest, ChannelJoinRequestApprovalResponse} from '@mattermost/types/channels';
-import type {ServerError} from '@mattermost/types/errors';
+import {GenericModal} from '@hanzoteam/components';
+import type {Channel, ChannelJoinRequest, ChannelJoinRequestApprovalResponse} from '@hanzoteam/types/channels';
+import type {ServerError} from '@hanzoteam/types/errors';
 
-import {requestJoinChannel as requestJoinChannelAction} from 'mattermost-redux/actions/channels';
+import {requestJoinChannel as requestJoinChannelAction} from '@hanzoteam/redux/actions/channels';
 
 import {getHistory} from 'utils/browser_history';
 import {getRelativeChannelURL} from 'utils/url';
