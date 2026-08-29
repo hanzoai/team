@@ -21,6 +21,15 @@ images:
     context: .
     dockerfile: Dockerfile
     repo: oci.hanzo.ai/hanzoteam/server
+    # The build number is per-build, so the Dockerfile has to be told it. Its
+    # `ARG BUILD_NUMBER=dev` is ldflagged into model.BuildNumber, and with nothing
+    # passed the default is what ships: the running server answered
+    # `BuildNumber=dev, BuildHash=""` on /v1/workspace/config/client, so the one
+    # question an image must be able to answer about itself — which build is this
+    # — had no answer from outside the cluster, and a rollout could not be
+    # confirmed. ${VERSION} is substituted by hanzoai/ci from the tag it builds.
+    args:
+      BUILD_NUMBER: '${VERSION}'
 
 # The Go and web app compiles both happen inside the Dockerfile, so a broken
 # tree already fails the image build. This gate covers the two things the image
