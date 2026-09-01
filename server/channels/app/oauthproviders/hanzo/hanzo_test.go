@@ -53,7 +53,7 @@ func TestUserFromIAMUser(t *testing.T) {
 			Email:             "Z@Hanzo.AI",
 			EmailVerified:     true,
 			PreferredUsername: "zeekay",
-			DisplayName:       "Zach Kelling",
+			DisplayName:       "Grace Hopper",
 			Owner:             "hanzo",
 		}, nil)
 
@@ -107,7 +107,7 @@ func TestProviderGetUserFromJSON(t *testing.T) {
 
 	t.Run("reads a UserInfo response", func(t *testing.T) {
 		body := `{"sub":"u-7","email":"z@hanzo.ai","email_verified":true,
-			"preferred_username":"zeekay","displayName":"Zach Kelling",
+			"preferred_username":"zeekay","displayName":"Grace Hopper",
 			"owner":"hanzo","organization":"Hanzo AI"}`
 
 		user, err := p.GetUserFromJSON(rctx, strings.NewReader(body), nil, nil)
