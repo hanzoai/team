@@ -14,7 +14,13 @@ WORKDIR /src/webapp
 COPY webapp .
 # `npm run build` is the repo's own build (scripts/build.mjs): subpackages first,
 # then channels. Naming the channels workspace directly would skip the first half.
-RUN npm ci --no-audit --no-fund && npm run build
+# `i18n-extract:check` between the two, because src/i18n/en.json is GENERATED
+# from the defaultMessage of every defineMessage in the tree, and 237 of its
+# strings are the rebrand. Edited by hand it agrees with nobody: the app reads
+# en.json and shows the new string, the extractor reads the source and puts the
+# old one back. Two keys were already in that state. It runs here rather than
+# as a gate because the check needs node_modules and this stage has them.
+RUN npm ci --no-audit --no-fund && npm run i18n-extract:check && npm run build
 
 FROM golang:1.26.6-bookworm AS server
 # Declared, or the expansion below is unset on every build and the server reports

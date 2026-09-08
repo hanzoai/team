@@ -22,6 +22,13 @@ images:
     # ${VERSION} from the tag it builds.
     args:
       BUILD_NUMBER: '${VERSION}'
+    # amd64 alone, and it is written down because hanzoai/ci builds both
+    # architectures unless a repo says otherwise. Every tag this image has ever
+    # published is amd64, so nothing pulls the other one — and it is not a cheap
+    # addition here: no builder stage names BUILDPLATFORM, so buildx would run a
+    # full npm ci, a webpack production bundle and a Go compile under QEMU to
+    # make it. Add linux/arm64 when a node runs it, with --platform first.
+    platforms: [linux/amd64]
 
 # The Go and web app compiles both happen inside the Dockerfile, so a broken
 # tree already fails the image build. This gate covers the two things the image
@@ -32,3 +39,28 @@ images:
 test:
   - name: iam-provider
     run: cd server && go test ./channels/app/oauthproviders/hanzo/...
+
+  - name: boots
+    # The one thing a compile cannot answer: does the program START.
+    #
+    # A renamed Go module put two copies of server/public in the binary, and
+    # public/plugin registers []*model.SlackAttachment with gob from each — a
+    # duplicate name, so the panic fires in init, before main. `go build ./...`
+    # and `go vet ./...` were both clean over it; `mattermost version` was not,
+    # and the deployment answered from an older build for a fortnight. Nothing
+    # else here reads that difference, and the image build least of all, since a
+    # Dockerfile that compiles is a Dockerfile that succeeds.
+    #
+    # `-tags production`, because that is how the image is built, and the tag
+    # selects a different service environment in server/public/model. A gate
+    # compiling the other one is testing a program we do not ship.
+    #
+    # GOWORK is left ALONE. The estate's other manifests export GOWORK=off, and
+    # here that resolves ./public from the proxy instead of this tree: the build
+    # then dies on go.sum entries no module in the graph can supply.
+    run: |
+      set -e
+      cd server
+      CGO_ENABLED=0 go build -tags production -o "${RUNNER_TEMP:-/tmp}/" ./cmd/mattermost ./cmd/mmctl
+      "${RUNNER_TEMP:-/tmp}/mattermost" version
+      "${RUNNER_TEMP:-/tmp}/mmctl" version
