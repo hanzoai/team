@@ -9,8 +9,8 @@ node_modules
 channels/dist
 playbooks/dist
 boards/dist
-platform/*/dist
-platform/*/lib
+platform/**/dist
+platform/**/lib
 
 config.override.mk
 build/test-results*.xml

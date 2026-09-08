@@ -16,23 +16,23 @@
         "jsx": "react",
         "preserveConstEnums": true,
         "outDir": "./lib",
-        "rootDir": "../../channels/src/packages/@hanzoteam/redux/src",
+        "rootDir": "../../../channels/src/packages/@hanzoteam/redux/src",
         "composite": true,
         "useUnknownInCatchVariables": false,
         "skipLibCheck": true,
         "tsBuildInfoFile": "tsconfig.tsbuildinfo",
         "paths": {
-            "@hanzoteam/redux/*": ["../../channels/src/packages/@hanzoteam/redux/src/*"]
+            "@hanzoteam/redux/*": ["../../../channels/src/packages/@hanzoteam/redux/src/*"]
         }
     },
     "include": [
-        "../../channels/src/packages/@hanzoteam/redux/src/**/*"
+        "../../../channels/src/packages/@hanzoteam/redux/src/**/*"
     ],
     "exclude": [
-        "../../**/*.test.*"
+        "../../../**/*.test.*"
     ],
     "references": [
-        {"path": "../types"},
-        {"path": "../client"}
+        {"path": "../../types"},
+        {"path": "../../client"}
     ]
 }
