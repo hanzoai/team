@@ -1,33 +1,25 @@
-# Canonical CI/CD config for hanzoteam/server — read by the hanzoai/ci reusable
-# workflow (.hanzo/workflows/cicd.yml) and by platform.hanzo.ai. One image: the
-# root Dockerfile builds the web app and the server from this tree and assembles
-# the runtime layout. app.hanzo.team runs it from a values file in hanzoai/universe.
-#
-# app.hanzo.team, not the hanzo.team apex: the apex serves the product's landing
-# page, and the workspace paths beside it (/v1, /collaborator, /_love) belong to
-# a different live service. The app gets a host of its own rather than a carve-out
-# of somebody else's.
+# CI/CD config for hanzoai/team, read by the hanzoai/ci reusable workflow
+# (.hanzo/workflows/cicd.yml) and by platform.hanzo.ai. One image: the root
+# Dockerfile builds the web app and the server from this tree and assembles the
+# runtime layout the binary looks for. hanzo.team runs it from a values file in
+# hanzoai/universe.
 #
 # No deploy: here. cd.hanzo.ai runs with selfHeal, so a tag written anywhere but
 # the universe pin is restored away on the next poll; recording it there is the
 # only durable path.
-# oci.hanzo.ai, not ghcr.io: the fleet registry is the native CI/CD home and
-# authenticates through Hanzo IAM, which mints a token scoped to ONE repository
-# per request instead of a long-lived org-wide credential. Publishing here takes
-# GitHub out of the build path -- the source mirror needs no packages scope, so
-# the org package grant and the org-scoped PATs stop being things anyone holds.
+#
+# The build door takes an owned registry -- ghcr.io/{hanzoai,luxfi,zooai} -- and
+# answers 403 for any other host, so the image name is where the org already
+# keeps its packages.
 images:
   - name: server
     context: .
     dockerfile: Dockerfile
-    repo: oci.hanzo.ai/hanzoteam/server
-    # The build number is per-build, so the Dockerfile has to be told it. Its
-    # `ARG BUILD_NUMBER=dev` is ldflagged into model.BuildNumber, and with nothing
-    # passed the default is what ships: the running server answered
-    # `BuildNumber=dev, BuildHash=""` on /v1/workspace/config/client, so the one
-    # question an image must be able to answer about itself — which build is this
-    # — had no answer from outside the cluster, and a rollout could not be
-    # confirmed. ${VERSION} is substituted by hanzoai/ci from the tag it builds.
+    repo: ghcr.io/hanzoai/team
+    # ARG BUILD_NUMBER is ldflagged into model.BuildNumber and reported on
+    # /v1/workspace/config/client. Unpassed it stays 'dev', and a rollout then
+    # has no answer to which build is serving. hanzoai/ci substitutes
+    # ${VERSION} from the tag it builds.
     args:
       BUILD_NUMBER: '${VERSION}'
 
