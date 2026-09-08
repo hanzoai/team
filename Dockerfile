@@ -108,4 +108,4 @@ WORKDIR /hanzo
 EXPOSE 8065 8067 8074
 VOLUME ["/hanzo/data", "/hanzo/logs", "/hanzo/config", "/hanzo/plugins", "/hanzo/client/plugins"]
 HEALTHCHECK --interval=30s --timeout=10s CMD ["/hanzo/bin/mmctl", "system", "status", "--local"]
-CMD ["/hanzo/bin/mattermost"]
+CMD ["/hanzo/bin/mattermost", "server"]
