@@ -29,7 +29,16 @@ COPY webapp .
 # en.json and shows the new string, the extractor reads the source and puts the
 # old one back. Two keys were already in that state. It runs here rather than
 # as a gate because the check needs node_modules and this stage has them.
-RUN npm ci --no-audit --no-fund && npm run i18n-extract:check && npm run build
+#
+# The install runs for ten minutes across thousands of requests, so one socket
+# going quiet is ordinary rather than exceptional. npm's default is a five-minute
+# read timeout and two retries, which spends fifteen minutes on a dead connection
+# and then fails the whole build; a minute and five retries abandons that socket
+# and asks again. Two builds died at the same 630-second mark on `read ETIMEDOUT`
+# before this.
+RUN npm ci --no-audit --no-fund \
+      --fetch-timeout=60000 --fetch-retries=5 --fetch-retry-maxtimeout=30000 \
+  && npm run i18n-extract:check && npm run build
 
 FROM --platform=$BUILDPLATFORM golang:1.26.6-bookworm AS server
 # Declared, or the expansion below is unset on every build and the server reports
