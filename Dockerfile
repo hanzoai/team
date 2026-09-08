@@ -30,14 +30,16 @@ COPY webapp .
 # old one back. Two keys were already in that state. It runs here rather than
 # as a gate because the check needs node_modules and this stage has them.
 #
-# The install runs for ten minutes across thousands of requests, so one socket
-# going quiet is ordinary rather than exceptional. npm's default is a five-minute
-# read timeout and two retries, which spends fifteen minutes on a dead connection
-# and then fails the whole build; a minute and five retries abandons that socket
-# and asks again. Two builds died at the same 630-second mark on `read ETIMEDOUT`
-# before this.
-RUN npm ci --no-audit --no-fund \
-      --fetch-timeout=60000 --fetch-retries=5 --fetch-retry-maxtimeout=30000 \
+# Two dependencies -- marked and react-bootstrap -- are `github:` specs, which npm
+# resolves to git+ssh and git then dials github.com:22. The build network answers
+# HTTPS and not 22: the connection neither completes nor refuses, so npm sat on it
+# for ten minutes and failed the install on `read ETIMEDOUT`. The rewrite asks for
+# the same two repositories over the port that answers. It changes the transport
+# and nothing else -- the lockfile still names the commit, and that commit is what
+# git checks out.
+RUN git config --global url.https://github.com/.insteadOf ssh://git@github.com/ \
+  && npm ci --no-audit --no-fund \
+       --fetch-timeout=60000 --fetch-retries=5 \
   && npm run i18n-extract:check && npm run build
 
 FROM --platform=$BUILDPLATFORM golang:1.26.6-bookworm AS server
