@@ -34,7 +34,12 @@ require (
 	github.com/gorilla/websocket v1.5.3
 	github.com/h2non/go-is-svg v0.0.0-20160927212452-35e8c4b0612c
 	github.com/hanzoai/authz v1.10.30
-	github.com/hanzoteam/agents/v2 v2.5.1
+	// Our fork of the agents plugin, whose imports are rebranded with ours — so no
+	// module named mattermost/mattermost is in the graph at all and public/model
+	// cannot be linked twice. A commit and not a tag, because the fork lives on
+	// hanzoteam/agents master and its newest tag, v2.5.1, declares the upstream
+	// module path.
+	github.com/hanzoteam/agents/v2 v2.5.2-0.20260829063651-2b3b0dd41a8d
 	github.com/hanzoteam/server/server/public v0.4.0
 	github.com/hashicorp/go-multierror v1.1.1
 	github.com/icrowley/fake v0.0.0-20240710202011-f797eb4a99c0
@@ -228,8 +233,3 @@ require (
 replace github.com/vmihailenco/msgpack/v5 => github.com/mattermost/msgpack/v5 v5.0.0-20260408165622-cadfad56a815
 
 replace github.com/hanzoteam/server/server/public => ./public
-
-// Our fork of the agents plugin, whose imports were rebranded with ours — so no
-// module named mattermost/mattermost is in the graph at all, and public/model
-// cannot be linked twice.
-replace github.com/hanzoteam/agents/v2 => /home/z/.cache/go-tmp/claude-1000/-home-z-work/35595cc2-3342-4bc6-a96c-381a55327190/scratchpad/agents

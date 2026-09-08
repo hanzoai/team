@@ -1,5 +1,7 @@
 github.com/golang/protobuf v1.5.0/go.mod h1:FsONVRAS9T7sI+LIUmWTfcYkHO4aIWwzhcaSAoJOfIk=
 github.com/grpc-ecosystem/grpc-gateway v1.5.0 h1:WcmKMm43DR7RdtlkEXQJyo5ws8iTp98CyhCCbOHMvNI=
+github.com/hanzoteam/agents/v2 v2.5.2-0.20260829063651-2b3b0dd41a8d h1:2MzXy1EcfGEunS8wiX9+k7NxaMjYKqAuTbhe3pZVQiM=
+github.com/hanzoteam/agents/v2 v2.5.2-0.20260829063651-2b3b0dd41a8d/go.mod h1:Qq6Hkv+9rtZZ1ybObDoK1aNvC38SAZjyVpdlNziizus=
 github.com/klauspost/cpuid v1.2.0 h1:NMpwD2G9JSFOE1/TJjGSo5zG7Yb2bTe7eq1jH+irmeE=
 github.com/mattermost/mattermost/server/public v0.1.22-0.20251105210629-8bf4a00724e2 h1:RJtCnj9nF/wb0Fb+O0qAPgUoWP5CTTDnHzHD5ciGlJ8=
 github.com/mattermost/mattermost/server/public v0.1.22-0.20251105210629-8bf4a00724e2/go.mod h1:X0RG3lk0XK0SFSH67JS/xporlz3TxItHEPlFIrsQIa8=
