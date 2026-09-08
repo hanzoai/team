@@ -60,8 +60,8 @@ func TestUserFromIAMUser(t *testing.T) {
 		require.Equal(t, "zeekay", user.Username)
 		require.Equal(t, "z@hanzo.ai", user.Email, "email should be lowercased")
 		require.True(t, user.EmailVerified)
-		require.Equal(t, "Zach", user.FirstName)
-		require.Equal(t, "Kelling", user.LastName)
+		require.Equal(t, "Grace", user.FirstName)
+		require.Equal(t, "Hopper", user.LastName)
 		require.Equal(t, "u-42", *user.AuthData, "sub is the stable identifier")
 		require.Equal(t, model.UserAuthServiceHanzo, user.AuthService)
 
