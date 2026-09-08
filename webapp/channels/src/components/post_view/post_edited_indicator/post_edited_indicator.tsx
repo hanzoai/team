@@ -5,7 +5,7 @@ import React from 'react';
 import type {MouseEvent, KeyboardEvent} from 'react';
 import {useIntl} from 'react-intl';
 
-import {PencilOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {PencilOutlineIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {getDateForTimezone} from '@hanzoteam/redux/utils/timezone_utils';

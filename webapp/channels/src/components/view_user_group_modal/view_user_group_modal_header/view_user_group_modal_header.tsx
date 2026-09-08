@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {ArchiveOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {ArchiveOutlineIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {Group} from '@hanzoteam/types/groups';
 

@@ -5,7 +5,7 @@ import React from 'react';
 import {useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {FileGenericOutlineIcon, BookOutlineIcon, ProductBoardsIcon} from '@hanzoteam/compass-icons/components';
+import {FileGenericOutlineIcon, BookOutlineIcon, ProductBoardsIcon} from '@mattermost/compass-icons/components';
 import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 import type {FileInfo} from '@hanzoteam/types/files';
 

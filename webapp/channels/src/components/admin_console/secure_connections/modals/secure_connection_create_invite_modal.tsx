@@ -4,7 +4,7 @@
 import React, {useEffect, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {CheckIcon, ContentCopyIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ContentCopyIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import type {RemoteCluster} from '@hanzoteam/types/remote_clusters';
 

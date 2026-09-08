@@ -7,7 +7,7 @@ import type {MouseEvent, KeyboardEvent} from 'react';
 import {FormattedDate, FormattedMessage, FormattedTime, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon, ChevronRightIcon, MinusCircleIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ChevronRightIcon, MinusCircleIcon} from '@mattermost/compass-icons/components';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {setStatus} from '@hanzoteam/redux/actions/users';

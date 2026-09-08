@@ -5,7 +5,7 @@ import React, {useState} from 'react';
 import {Modal} from 'react-bootstrap';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {InformationOutlineIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {AllowedIPRange} from '@hanzoteam/types/config';
 

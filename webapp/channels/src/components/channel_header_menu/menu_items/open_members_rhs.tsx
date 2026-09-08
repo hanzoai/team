@@ -4,7 +4,7 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AccountOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AccountOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {showChannelMembers} from 'actions/views/rhs';

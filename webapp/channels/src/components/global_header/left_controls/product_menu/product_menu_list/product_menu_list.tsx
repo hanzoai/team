@@ -12,7 +12,7 @@ import {
     InformationOutlineIcon,
     ViewGridPlusOutlineIcon,
     WebhookIncomingIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {isDesktopApp} from '@hanzoteam/shared/utils/user_agent';
 import type {UserProfile} from '@hanzoteam/types/users';
 

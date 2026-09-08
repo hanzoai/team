@@ -8,7 +8,7 @@ import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import {createPortal} from 'react-dom';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {DragVerticalIcon, PlusIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {DragVerticalIcon, PlusIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 import type {UserPropertyField} from '@hanzoteam/types/properties_user';

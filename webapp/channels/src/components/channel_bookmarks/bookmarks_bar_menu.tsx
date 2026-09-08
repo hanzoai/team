@@ -10,7 +10,7 @@ import {
     LinkVariantIcon,
     PaperclipIcon,
     PlusIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 import type {IDMappedObjects} from '@hanzoteam/types/utilities';
 

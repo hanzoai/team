@@ -7,8 +7,8 @@ jest.mock('components/channel_type_icon/compass_icon_resolver', () => ({
     compassIconForName: jest.fn(),
 }));
 
-jest.mock('@hanzoteam/compass-icons/components', () => ({
-    ...jest.requireActual('@hanzoteam/compass-icons/components'),
+jest.mock('@mattermost/compass-icons/components', () => ({
+    ...jest.requireActual('@mattermost/compass-icons/components'),
     GlobeIcon: () => <span data-testid='default-globe-icon'/>,
     LockOutlineIcon: () => <span data-testid='default-lock-icon'/>,
 }));

@@ -7,7 +7,7 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {PencilOutlineIcon, CheckIcon} from '@hanzoteam/compass-icons/components';
+import {PencilOutlineIcon, CheckIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import type {ChannelBookmark, ChannelBookmarkCreate, ChannelBookmarkPatch} from '@hanzoteam/types/channel_bookmarks';
 import type {FileInfo} from '@hanzoteam/types/files';

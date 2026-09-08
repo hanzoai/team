@@ -6,7 +6,7 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {Redirect, useHistory, useLocation} from 'react-router-dom';
 
-import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import {PlusIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 
 import {getAgents} from '@hanzoteam/redux/actions/agents';

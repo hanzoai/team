@@ -25,7 +25,7 @@ import {
     ReplyOutlineIcon,
     TranslateIcon,
     TrashCanOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {Post} from '@hanzoteam/types/posts';
 import type {UserThread} from '@hanzoteam/types/threads';
 

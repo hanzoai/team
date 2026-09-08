@@ -6,7 +6,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {

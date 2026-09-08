@@ -5,7 +5,7 @@ import type {ReactNode} from 'react';
 import React from 'react';
 import {useSelector} from 'react-redux';
 
-import {CogOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {CogOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 import type {UserProfile} from '@hanzoteam/types/users';
 

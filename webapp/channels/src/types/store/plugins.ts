@@ -6,7 +6,7 @@ import type {IntlShape} from 'react-intl';
 import type {RouteComponentProps} from 'react-router-dom';
 
 import type {WebSocketClient} from '@hanzoteam/client';
-import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
 import type {PluginAnalyticsRow} from '@hanzoteam/types/admin';
 import type {Board} from '@hanzoteam/types/boards';
 import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';

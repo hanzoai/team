@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 import {
     PencilOutlineIcon,
     TrashCanOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {AllowedIPRange} from '@hanzoteam/types/config';
 

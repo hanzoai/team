@@ -6,7 +6,7 @@ import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 
-import {ChevronLeftIcon, ChevronRightIcon} from '@hanzoteam/compass-icons/components';
+import {ChevronLeftIcon, ChevronRightIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {Channel} from '@hanzoteam/types/channels';

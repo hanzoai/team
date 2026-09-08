@@ -6,7 +6,7 @@ import React, {useCallback, useMemo, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {DownloadOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {DownloadOutlineIcon} from '@mattermost/compass-icons/components';
 import type {FileInfo} from '@hanzoteam/types/files';
 
 import {getConfig} from '@hanzoteam/redux/selectors/entities/general';

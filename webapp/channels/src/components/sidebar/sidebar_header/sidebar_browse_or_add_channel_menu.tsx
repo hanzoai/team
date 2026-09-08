@@ -12,7 +12,7 @@ import {
     AccountMultiplePlusOutlineIcon,
     GlobeIcon,
     AccountOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 
 import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';
 

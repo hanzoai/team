@@ -5,7 +5,7 @@ import React, {useCallback, useState, useEffect} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {RefreshIcon} from '@hanzoteam/compass-icons/components';
+import {RefreshIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {Team} from '@hanzoteam/types/teams';
 

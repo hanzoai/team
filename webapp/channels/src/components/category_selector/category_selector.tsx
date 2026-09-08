@@ -9,7 +9,7 @@ import {components} from 'react-select';
 import type {ClearIndicatorProps, GroupBase, OptionProps, Options, OptionsOrGroups} from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 
-import {FolderOutlineIcon, FolderPlusOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {FolderOutlineIcon, FolderPlusOutlineIcon} from '@mattermost/compass-icons/components';
 import type {GlobalState} from '@hanzoteam/types/store';
 
 import {getCurrentTeamId} from '@hanzoteam/redux/selectors/entities/teams';

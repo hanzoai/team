@@ -7,7 +7,7 @@ import React, {useCallback, useEffect, useMemo, useRef, useState} from 'react';
 import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import styled, {css} from 'styled-components';
 
-import {AlertOutlineIcon, InformationOutlineIcon, PlusIcon} from '@hanzoteam/compass-icons/components';
+import {AlertOutlineIcon, InformationOutlineIcon, PlusIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import {supportsOptions} from '@hanzoteam/types/properties';
 import {type UserPropertyField} from '@hanzoteam/types/properties_user';

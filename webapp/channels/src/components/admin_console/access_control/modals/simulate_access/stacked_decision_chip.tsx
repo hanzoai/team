@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type IconProps from '@hanzoteam/compass-icons/components/props';
+import type IconProps from '@mattermost/compass-icons/components/props';
 
 import type {AggregateDecisionState} from './decision_aggregate';
 import {ChipIcon} from './decision_chip';

@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AlertOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AlertOutlineIcon} from '@mattermost/compass-icons/components';
 import type {ClientLicense} from '@hanzoteam/types/config';
 import type {PreferenceType} from '@hanzoteam/types/preferences';
 

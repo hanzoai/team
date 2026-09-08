@@ -10,7 +10,7 @@ import type {KeyboardEvent, MouseEvent} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {ChevronRightIcon, CreationOutlineIcon, PencilOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {ChevronRightIcon, CreationOutlineIcon, PencilOutlineIcon} from '@mattermost/compass-icons/components';
 
 import * as Menu from 'components/menu';
 

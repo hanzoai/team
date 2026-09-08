@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {GlobeIcon, ShieldOutlineIcon, ArchiveLockOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {GlobeIcon, ShieldOutlineIcon, ArchiveLockOutlineIcon} from '@mattermost/compass-icons/components';
 
 import {compassIconForName} from './compass_icon_resolver';
 

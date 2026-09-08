@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {CheckAllIcon, RefreshIcon} from '@hanzoteam/compass-icons/components';
+import {CheckAllIcon, RefreshIcon} from '@mattermost/compass-icons/components';
 
 import {renderWithContext, screen, userEvent} from 'tests/react_testing_utils';
 

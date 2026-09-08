@@ -7,7 +7,7 @@ import {defineMessage, FormattedMessage, useIntl} from 'react-intl';
 import {shallowEqual, useSelector} from 'react-redux';
 import {Link, useLocation, matchPath, useRouteMatch} from 'react-router-dom';
 
-import {AlertOutlineIcon, CreationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AlertOutlineIcon, CreationOutlineIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {getUnreadFinishedRecapsBadge} from '@hanzoteam/redux/selectors/entities/recaps';

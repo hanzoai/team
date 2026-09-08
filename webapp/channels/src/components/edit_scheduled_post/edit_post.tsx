@@ -6,7 +6,7 @@ import React, {useCallback, useEffect, useRef, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {EmoticonPlusOutlineIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {EmoticonPlusOutlineIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
 import type {Post} from '@hanzoteam/types/posts';
 import type {ScheduledPost} from '@hanzoteam/types/schedule_post';

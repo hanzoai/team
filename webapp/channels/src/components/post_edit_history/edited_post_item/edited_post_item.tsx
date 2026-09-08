@@ -6,7 +6,7 @@ import React, {memo, useCallback, useMemo, useState} from 'react';
 import {defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {Post} from '@hanzoteam/types/posts';
 

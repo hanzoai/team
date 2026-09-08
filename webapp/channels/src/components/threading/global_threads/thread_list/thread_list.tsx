@@ -7,7 +7,7 @@ import type {PropsWithChildren} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {PlaylistCheckIcon} from '@hanzoteam/compass-icons/components';
+import {PlaylistCheckIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {UserThread} from '@hanzoteam/types/threads';
 

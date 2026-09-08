@@ -16,7 +16,7 @@ import {
     MessagePlusOutlineIcon,
     PlusIcon,
     MonitorAccountIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {buttonClassNames} from '@hanzoteam/shared/components/button';
 import type {Team} from '@hanzoteam/types/teams';
 

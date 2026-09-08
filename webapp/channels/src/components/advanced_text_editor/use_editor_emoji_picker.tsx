@@ -7,7 +7,7 @@ import React, {useCallback, useState} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {EmoticonHappyOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {EmoticonHappyOutlineIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {Emoji, SystemEmoji} from '@hanzoteam/types/emojis';
 

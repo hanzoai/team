@@ -6,7 +6,7 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector, useDispatch} from 'react-redux';
 
-import {GlobeIcon, PlusIcon} from '@hanzoteam/compass-icons/components';
+import {GlobeIcon, PlusIcon} from '@mattermost/compass-icons/components';
 
 import {savePreferences} from '@hanzoteam/redux/actions/preferences';
 import Permissions from '@hanzoteam/redux/constants/permissions';

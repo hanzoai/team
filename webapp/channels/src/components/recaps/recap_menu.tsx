@@ -4,7 +4,7 @@
 import React from 'react';
 import type {ReactNode} from 'react';
 
-import {DotsHorizontalIcon} from '@hanzoteam/compass-icons/components';
+import {DotsHorizontalIcon} from '@mattermost/compass-icons/components';
 
 import * as Menu from 'components/menu';
 

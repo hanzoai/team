@@ -9,7 +9,7 @@ import {useSelector} from 'react-redux';
 import {
     ChevronRightIcon,
     CogOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 import type {UserProfile} from '@hanzoteam/types/users';
 

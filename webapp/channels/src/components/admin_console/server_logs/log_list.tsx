@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {ArrowDownIcon, ArrowUpIcon} from '@hanzoteam/compass-icons/components';
+import {ArrowDownIcon, ArrowUpIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {LogFilter, LogLevelEnum, LogObject} from '@hanzoteam/types/admin';
 import type {ChannelSearchOpts} from '@hanzoteam/types/channels';

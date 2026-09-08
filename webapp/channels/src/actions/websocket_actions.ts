@@ -8,7 +8,7 @@ import {batchActions} from 'redux-batched-actions';
 
 import type {WebSocketMessage, WebSocketMessages} from '@hanzoteam/client';
 import {WebSocketEvents} from '@hanzoteam/client';
-import {AlertCircleOutlineIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AlertCircleOutlineIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
 import type {ChannelBookmarkWithFileInfo, UpdateChannelBookmarkResponse} from '@hanzoteam/types/channel_bookmarks';
 import type {Channel, ChannelJoinRequest, ChannelMembership} from '@hanzoteam/types/channels';
 import type {Draft} from '@hanzoteam/types/drafts';

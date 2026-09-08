@@ -6,7 +6,7 @@ import React from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {CheckIcon, ChevronDownIcon, MagnifyIcon as SearchIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ChevronDownIcon, MagnifyIcon as SearchIcon} from '@mattermost/compass-icons/components';
 
 import {get} from '@hanzoteam/redux/selectors/entities/preferences';
 import {getCurrentTeamId, getMyTeams} from '@hanzoteam/redux/selectors/entities/teams';

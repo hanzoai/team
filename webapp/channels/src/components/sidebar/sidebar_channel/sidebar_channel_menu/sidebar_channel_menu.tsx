@@ -15,7 +15,7 @@ import {
     AccountPlusOutlineIcon,
     DotsVerticalIcon,
     ExitToAppIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {isChannelInManagedCategory} from '@hanzoteam/redux/selectors/entities/channel_categories';

@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useEffect} from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {AlertCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';

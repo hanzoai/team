@@ -6,7 +6,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {PlaylistCheckIcon, CloseIcon} from '@hanzoteam/compass-icons/components';
+import {PlaylistCheckIcon, CloseIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {isAnyModalOpen} from 'selectors/views/modals';

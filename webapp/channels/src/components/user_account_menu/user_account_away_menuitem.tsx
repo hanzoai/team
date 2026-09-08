@@ -5,7 +5,7 @@ import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {CheckIcon, ClockIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ClockIcon} from '@mattermost/compass-icons/components';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {setStatus} from '@hanzoteam/redux/actions/users';

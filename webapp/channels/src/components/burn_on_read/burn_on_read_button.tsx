@@ -4,7 +4,7 @@
 import React, {memo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {FireIcon} from '@hanzoteam/compass-icons/components';
+import {FireIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {IconContainer} from 'components/advanced_text_editor/formatting_bar/formatting_icon';

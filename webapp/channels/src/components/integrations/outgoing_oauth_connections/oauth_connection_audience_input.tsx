@@ -7,7 +7,7 @@ import type {MessageDescriptor} from 'react-intl';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {OauthIcon, InformationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {OauthIcon, InformationOutlineIcon} from '@mattermost/compass-icons/components';
 import type {OutgoingOAuthConnection} from '@hanzoteam/types/integrations';
 
 import {

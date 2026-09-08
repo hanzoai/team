@@ -12,8 +12,8 @@ import type {ProductComponent} from 'types/store/plugins';
 
 import ProductBranding from './product_branding';
 
-jest.mock('@hanzoteam/compass-icons/components', () => {
-    const actual = jest.requireActual('@hanzoteam/compass-icons/components');
+jest.mock('@mattermost/compass-icons/components', () => {
+    const actual = jest.requireActual('@mattermost/compass-icons/components');
     return {
         ...actual,
         ProductChannelsIcon: (props: any) => (

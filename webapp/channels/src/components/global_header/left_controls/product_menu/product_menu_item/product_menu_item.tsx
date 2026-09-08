@@ -6,8 +6,8 @@ import {useIntl} from 'react-intl';
 import {Link} from 'react-router-dom';
 import styled from 'styled-components';
 
-import glyphMap, {CheckIcon, OpenInNewIcon} from '@hanzoteam/compass-icons/components';
-import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import glyphMap, {CheckIcon, OpenInNewIcon} from '@mattermost/compass-icons/components';
+import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 
 import {ProductMenuItemText, productMenuRowStyle} from '../menu_item_styles';

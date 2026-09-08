@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useRef, useState, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 
-import {ArchiveOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {ArchiveOutlineIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {FileInfo} from '@hanzoteam/types/files';
 

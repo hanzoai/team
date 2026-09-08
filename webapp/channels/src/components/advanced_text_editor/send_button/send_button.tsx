@@ -6,7 +6,7 @@ import React, {memo, useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {SendIcon} from '@hanzoteam/compass-icons/components';
+import {SendIcon} from '@mattermost/compass-icons/components';
 import {ShortcutKeys} from '@hanzoteam/shared/components/shortcut_key';
 import type {ShortcutDefinition} from '@hanzoteam/shared/components/tooltip';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';

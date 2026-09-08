@@ -10,7 +10,7 @@ import {components} from 'react-select';
 import type {CreatableProps} from 'react-select/creatable';
 import CreatableSelect from 'react-select/creatable';
 
-import {SyncIcon, PowerPlugOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {SyncIcon, PowerPlugOutlineIcon} from '@mattermost/compass-icons/components';
 import {supportsOptions, type PropertyFieldOption} from '@hanzoteam/types/properties';
 import {type UserPropertyField} from '@hanzoteam/types/properties_user';
 

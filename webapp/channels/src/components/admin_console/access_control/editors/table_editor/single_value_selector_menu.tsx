@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {useState, useMemo, useCallback} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import * as Menu from 'components/menu';

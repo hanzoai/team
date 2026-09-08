@@ -18,7 +18,7 @@ import {setCSRFFromCookie} from 'utils/utils';
 import './sass/styles.scss';
 import 'katex/dist/katex.min.css';
 
-import '@hanzoteam/compass-icons/css/compass-icons.css';
+import '@mattermost/compass-icons/css/compass-icons.css';
 import '@hanzoteam/components/dist/index.esm.css';
 
 declare global {

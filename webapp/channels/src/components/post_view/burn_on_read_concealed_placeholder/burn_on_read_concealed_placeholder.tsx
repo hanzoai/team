@@ -4,7 +4,7 @@
 import React, {memo, useCallback, useEffect, useState} from 'react';
 import {useIntl} from 'react-intl';
 
-import {EyeOutlineIcon, AlertCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {EyeOutlineIcon, AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
 
 import LoadingSpinner from 'components/widgets/loading/loading_spinner';
 

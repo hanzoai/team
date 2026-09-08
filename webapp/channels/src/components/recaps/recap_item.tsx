@@ -5,7 +5,7 @@ import React, {useState, useMemo, useCallback} from 'react';
 import {useIntl, FormattedDate, FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CheckAllIcon, RefreshIcon, TrashCanOutlineIcon, CheckCircleIcon} from '@hanzoteam/compass-icons/components';
+import {CheckAllIcon, RefreshIcon, TrashCanOutlineIcon, CheckCircleIcon} from '@mattermost/compass-icons/components';
 import type {Recap} from '@hanzoteam/types/recaps';
 import {RecapStatus} from '@hanzoteam/types/recaps';
 

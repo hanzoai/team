@@ -6,8 +6,8 @@ import type {ComponentType, CSSProperties} from 'react';
 import React, {useMemo} from 'react';
 import {FormattedMessage, defineMessages} from 'react-intl';
 
-import {CheckboxMarkedCircleOutlineIcon, ChevronDownCircleOutlineIcon, MenuVariantIcon} from '@hanzoteam/compass-icons/components';
-import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {CheckboxMarkedCircleOutlineIcon, ChevronDownCircleOutlineIcon, MenuVariantIcon} from '@mattermost/compass-icons/components';
+import type IconProps from '@mattermost/compass-icons/components/props';
 
 import PlatformIcons from './platform_icons';
 import SessionAttributesDotMenu from './session_attributes_dot_menu';

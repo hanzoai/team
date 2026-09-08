@@ -14,7 +14,7 @@ jest.mock('components/channel_type_icon/compass_icon_resolver', () => ({
     compassIconForName: jest.fn().mockReturnValue(null),
 }));
 
-jest.mock('@hanzoteam/compass-icons/components', () => ({
+jest.mock('@mattermost/compass-icons/components', () => ({
     ChevronDownIcon: () => <svg data-testid='chevron-down-icon'/>,
     GlobeIcon: () => <svg data-testid='globe-icon'/>,
     LockOutlineIcon: () => <svg data-testid='lock-outline-icon'/>,

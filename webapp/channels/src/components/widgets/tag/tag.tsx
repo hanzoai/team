@@ -6,8 +6,8 @@ import React, {memo, useMemo} from 'react';
 import type {MouseEventHandler} from 'react';
 import styled, {css} from 'styled-components';
 
-import glyphMap from '@hanzoteam/compass-icons/components';
-import type {IconGlyphTypes} from '@hanzoteam/compass-icons/IconGlyphs';
+import glyphMap from '@mattermost/compass-icons/components';
+import type {IconGlyphTypes} from '@mattermost/compass-icons/IconGlyphs';
 
 export type TagVariant = 'info' | 'success' | 'warning' | 'danger' | 'dangerDim' | 'default';
 

@@ -106,7 +106,7 @@ The following guidelines should be applied to both new and existing code. Howeve
     - **Tooltips**: Use `WithTooltip` from `@hanzoteam/shared` instead of React Bootstrap's `OverlayTrigger` and/or `Tooltip`.
 - **MUI**: Consult with the team before using MUI. If it is used, wrap the usage in another component to avoid leaking implementation details.
 - **Popovers**: Use `WithTooltip` for simple tooltips and Floating UI for more advanced usage.
-- **Icons**: Prefer using icon components from `@hanzoteam/compass-icons` for icons.
+- **Icons**: Prefer using icon components from `@mattermost/compass-icons` for icons.
 
 ### Redux & Data Fetching
 

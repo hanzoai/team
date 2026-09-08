@@ -5,7 +5,7 @@ import React, {memo, useCallback} from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {FireIcon} from '@hanzoteam/compass-icons/components';
+import {FireIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {Post} from '@hanzoteam/types/posts';
 

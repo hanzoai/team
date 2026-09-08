@@ -4,7 +4,7 @@
 import classNames from 'classnames';
 import React, {useMemo} from 'react';
 
-import glyphMap from '@hanzoteam/compass-icons/components';
+import glyphMap from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 
 import {useBooleanProp, useDropdownProp, useStringProp} from './hooks';

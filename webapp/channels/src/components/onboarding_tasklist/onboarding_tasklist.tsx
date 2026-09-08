@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 import {useLocation} from 'react-router-dom';
 import styled, {css} from 'styled-components';
 
-import {CloseIcon, PlaylistCheckIcon} from '@hanzoteam/compass-icons/components';
+import {CloseIcon, PlaylistCheckIcon} from '@mattermost/compass-icons/components';
 
 import {getPrevTrialLicense} from '@hanzoteam/redux/actions/admin';
 import {getMyPreferences, savePreferences} from '@hanzoteam/redux/actions/preferences';

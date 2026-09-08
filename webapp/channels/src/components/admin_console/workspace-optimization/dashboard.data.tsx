@@ -12,7 +12,7 @@ import {
     TuneIcon,
     LockOutlineIcon,
     AccountMultipleOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {AdminConfig} from '@hanzoteam/types/config';
 import type {GlobalState} from '@hanzoteam/types/store';
 

@@ -5,7 +5,7 @@ import React, {useCallback, useRef} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import styled from 'styled-components';
 
-import {ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {ChevronDownIcon} from '@mattermost/compass-icons/components';
 import type {ChannelBookmark} from '@hanzoteam/types/channel_bookmarks';
 import type {Emoji} from '@hanzoteam/types/emojis';
 import type {FileInfo} from '@hanzoteam/types/files';

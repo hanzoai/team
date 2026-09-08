@@ -6,7 +6,7 @@ import React, {useCallback, useState, memo, useMemo, useEffect} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {AlertCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AlertCircleOutlineIcon} from '@mattermost/compass-icons/components';
 import type {PostPriorityMetadata} from '@hanzoteam/types/posts';
 import {PostPriority} from '@hanzoteam/types/posts';
 

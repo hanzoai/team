@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {AccountOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {AccountOutlineIcon} from '@mattermost/compass-icons/components';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {savePreferences} from '@hanzoteam/redux/actions/preferences';

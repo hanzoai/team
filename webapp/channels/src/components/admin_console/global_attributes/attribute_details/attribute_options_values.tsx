@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 import {components} from 'react-select';
 import {css} from 'styled-components';
 
-import {CheckIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon} from '@mattermost/compass-icons/components';
 import type {PropertyFieldOption} from '@hanzoteam/types/properties';
 
 import * as Menu from 'components/menu';

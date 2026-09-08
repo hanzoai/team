@@ -5,7 +5,7 @@ import React, {useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {CheckIcon, RadioboxBlankIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, RadioboxBlankIcon} from '@mattermost/compass-icons/components';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {setStatus} from '@hanzoteam/redux/actions/users';

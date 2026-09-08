@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {CloseIcon} from '@hanzoteam/compass-icons/components';
+import {CloseIcon} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {savePreferences} from '@hanzoteam/redux/actions/preferences';

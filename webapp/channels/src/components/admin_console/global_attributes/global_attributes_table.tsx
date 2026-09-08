@@ -10,8 +10,8 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import {Link} from 'react-router-dom';
 
-import {ChevronDownCircleOutlineIcon, ContentCopyIcon, DotsHorizontalIcon, FormatListBulletedIcon, MenuVariantIcon, OpenInNewIcon, PencilOutlineIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
-import type IconProps from '@hanzoteam/compass-icons/components/props';
+import {ChevronDownCircleOutlineIcon, ContentCopyIcon, DotsHorizontalIcon, FormatListBulletedIcon, MenuVariantIcon, OpenInNewIcon, PencilOutlineIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
+import type IconProps from '@mattermost/compass-icons/components/props';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {FieldType, PropertyField, PropertyFieldOption} from '@hanzoteam/types/properties';
 import {supportsOptions} from '@hanzoteam/types/properties';

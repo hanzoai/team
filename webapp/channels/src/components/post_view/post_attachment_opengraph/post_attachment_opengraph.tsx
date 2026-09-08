@@ -5,7 +5,7 @@ import classNames from 'classnames';
 import React, {memo, useRef} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CloseIcon, MenuDownIcon, MenuRightIcon} from '@hanzoteam/compass-icons/components';
+import {CloseIcon, MenuDownIcon, MenuRightIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {
     OpenGraphMetadata,

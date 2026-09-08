@@ -11,7 +11,7 @@ import type {InputProps, OnChangeValue, StylesConfig} from 'react-select';
 import {components} from 'react-select';
 import CreatableReactSelect from 'react-select/creatable';
 
-import {LightbulbOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {LightbulbOutlineIcon} from '@mattermost/compass-icons/components';
 import type {UserNotifyProps, UserProfile} from '@hanzoteam/types/users';
 
 import ExternalLink from 'components/external_link';

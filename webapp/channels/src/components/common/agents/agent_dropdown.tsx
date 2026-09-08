@@ -4,7 +4,7 @@
 import React, {useCallback, useMemo} from 'react';
 import {useIntl} from 'react-intl';
 
-import {CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import type {Agent} from '@hanzoteam/types/agents';
 
 import {Client4} from '@hanzoteam/redux/client';

@@ -14,7 +14,7 @@ import {
     OpenInNewIcon,
     BookOutlineIcon,
     DownloadOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {ChannelBookmark, ChannelBookmarkPatch} from '@hanzoteam/types/channel_bookmarks';
 
 import {getFile} from '@hanzoteam/redux/selectors/entities/files';

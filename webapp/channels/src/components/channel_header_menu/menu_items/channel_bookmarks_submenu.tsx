@@ -11,7 +11,7 @@ import {
     LinkVariantIcon,
     PaperclipIcon,
     BookmarkOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {getChannelBookmarks} from '@hanzoteam/redux/selectors/entities/channel_bookmarks';

@@ -9,7 +9,7 @@ import type {CSSProperties, KeyboardEvent, MouseEvent, SyntheticEvent} from 'rea
 import {FormattedMessage, injectIntl} from 'react-intl';
 import type {WrappedComponentProps} from 'react-intl';
 
-import {DownloadOutlineIcon, LinkVariantIcon, CheckIcon} from '@hanzoteam/compass-icons/components';
+import {DownloadOutlineIcon, LinkVariantIcon, CheckIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {FileInfo} from '@hanzoteam/types/files';
 import type {PostImage} from '@hanzoteam/types/posts';

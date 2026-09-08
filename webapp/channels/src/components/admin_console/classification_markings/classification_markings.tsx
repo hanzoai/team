@@ -6,7 +6,7 @@ import {FormattedMessage, defineMessages, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
 import type {ClientError} from '@hanzoteam/client';
-import {PlusIcon} from '@hanzoteam/compass-icons/components';
+import {PlusIcon} from '@mattermost/compass-icons/components';
 import type {PropertyField} from '@hanzoteam/types/properties';
 
 import PropertyTypes from '@hanzoteam/redux/action_types/properties';

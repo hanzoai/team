@@ -5,7 +5,7 @@ import React, {useState, useCallback} from 'react';
 import {useIntl, FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {DotsHorizontalIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {DotsHorizontalIcon, PencilOutlineIcon, TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
 import type {ScheduledRecap} from '@hanzoteam/types/recaps';
 
 import {pauseScheduledRecap, resumeScheduledRecap, deleteScheduledRecap} from '@hanzoteam/redux/actions/recaps';

@@ -7,7 +7,7 @@ import React from 'react';
 import {useIntl} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import ChevronDownIcon from '@hanzoteam/compass-icons/components/chevron-down';
+import ChevronDownIcon from '@mattermost/compass-icons/components/chevron-down';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {

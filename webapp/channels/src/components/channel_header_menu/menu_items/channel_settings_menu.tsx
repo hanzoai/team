@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from 'react-redux';
 
 import {
     CogOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {openModal} from 'actions/views/modals';

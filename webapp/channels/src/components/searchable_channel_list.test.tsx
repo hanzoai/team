@@ -18,8 +18,8 @@ import {renderWithContext, screen} from 'tests/react_testing_utils';
 import {Filter} from './browse_channels/browse_channels';
 
 // Mock the compass-icons to make them identifiable in tests
-jest.mock('@hanzoteam/compass-icons/components', () => ({
-    ...jest.requireActual('@hanzoteam/compass-icons/components'),
+jest.mock('@mattermost/compass-icons/components', () => ({
+    ...jest.requireActual('@mattermost/compass-icons/components'),
     ArchiveOutlineIcon: (props: Record<string, unknown>) => (
         <svg
             data-testid='archiveOutlineIcon'

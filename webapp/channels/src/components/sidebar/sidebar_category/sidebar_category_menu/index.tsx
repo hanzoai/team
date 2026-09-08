@@ -14,7 +14,7 @@ import {
     ClockOutlineIcon,
     ChevronRightIcon,
     CheckIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
 import {CategorySorting} from '@hanzoteam/types/channel_categories';
 

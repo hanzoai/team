@@ -4,7 +4,7 @@
 import React from 'react';
 import {defineMessage} from 'react-intl';
 
-import {CreationOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {CreationOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Agent} from '@hanzoteam/types/agents';
 import type {Group} from '@hanzoteam/types/groups';
 import type {UserProfile} from '@hanzoteam/types/users';

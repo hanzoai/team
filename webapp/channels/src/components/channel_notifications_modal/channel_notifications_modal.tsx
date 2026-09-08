@@ -5,7 +5,7 @@ import React, {useCallback, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import type {OnChangeValue} from 'react-select';
 
-import {BellOffOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {BellOffOutlineIcon} from '@mattermost/compass-icons/components';
 import {GenericModal} from '@hanzoteam/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {Channel, ChannelMembership, ChannelNotifyProps} from '@hanzoteam/types/channels';

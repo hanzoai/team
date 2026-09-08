@@ -5,7 +5,7 @@ import React, {memo, useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {DotsVerticalIcon} from '@hanzoteam/compass-icons/components';
+import {DotsVerticalIcon} from '@mattermost/compass-icons/components';
 import type {UserThread} from '@hanzoteam/types/threads';
 
 import {setThreadFollow, updateThreadRead, markLastPostInThreadAsUnread} from '@hanzoteam/redux/actions/threads';

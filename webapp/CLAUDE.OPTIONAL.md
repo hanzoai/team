@@ -68,7 +68,7 @@ import Client4 from '../platform/client/src/client4.ts';
 - **React Intl**: Internationalization
 - **Floating UI**: Tooltips and popovers (prefer `WithTooltip` from `@hanzoteam/shared/components/tooltip`)
 - **@hanzoteam/shared**: Shared components and utilities (`Button`, `WithTooltip`, etc.) — prefer these over rolling your own
-- **@hanzoteam/compass-icons**: Icon library (prefer over font-awesome)
+- **@mattermost/compass-icons**: Icon library (prefer over font-awesome)
 - **Monaco Editor**: Code editor integration
 - **Styled Components**: Limited use (for MUI and some legacy components)
 

@@ -5,7 +5,7 @@ import React from 'react';
 import {defineMessage} from 'react-intl';
 import type {Store} from 'redux';
 
-import {DockWindowIcon} from '@hanzoteam/compass-icons/components';
+import {DockWindowIcon} from '@mattermost/compass-icons/components';
 import * as UserAgent from '@hanzoteam/shared/utils/user_agent';
 import type {AutocompleteSuggestion, CommandArgs} from '@hanzoteam/types/integrations';
 

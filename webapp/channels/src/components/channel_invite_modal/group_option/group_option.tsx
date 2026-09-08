@@ -5,7 +5,7 @@ import React, {useCallback, useEffect, useMemo} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {AccountMultipleOutlineIcon, ChevronRightIcon} from '@hanzoteam/compass-icons/components';
+import {AccountMultipleOutlineIcon, ChevronRightIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {Group} from '@hanzoteam/types/groups';
 import type {GlobalState} from '@hanzoteam/types/store';

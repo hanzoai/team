@@ -8,7 +8,7 @@ import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch, useSelector} from 'react-redux';
 import styled from 'styled-components';
 
-import {MagnifyIcon} from '@hanzoteam/compass-icons/components';
+import {MagnifyIcon} from '@mattermost/compass-icons/components';
 import type {Group} from '@hanzoteam/types/groups';
 
 import {searchProfiles} from '@hanzoteam/redux/actions/users';

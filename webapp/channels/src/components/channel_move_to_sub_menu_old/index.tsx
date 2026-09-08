@@ -10,7 +10,7 @@ import {
     FolderOutlineIcon,
     StarOutlineIcon,
     FolderMoveOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
 import type {Channel} from '@hanzoteam/types/channels';
 

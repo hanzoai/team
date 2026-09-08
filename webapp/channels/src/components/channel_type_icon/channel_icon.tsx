@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import type IconProps from '@hanzoteam/compass-icons/components/props';
+import type IconProps from '@mattermost/compass-icons/components/props';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {getChannelIconComponent} from 'utils/channel_utils';

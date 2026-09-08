@@ -5,7 +5,7 @@ import React, {useCallback} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {AlertCircleOutlineIcon, CancelIcon, CheckIcon, CheckCircleOutlineIcon, ChevronRightIcon, DotsVerticalIcon, UpdateIcon} from '@hanzoteam/compass-icons/components';
+import {AlertCircleOutlineIcon, CancelIcon, CheckIcon, CheckCircleOutlineIcon, ChevronRightIcon, DotsVerticalIcon, UpdateIcon} from '@mattermost/compass-icons/components';
 
 import {openModal} from 'actions/views/modals';
 

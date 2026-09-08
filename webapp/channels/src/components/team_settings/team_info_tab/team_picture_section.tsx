@@ -4,7 +4,7 @@
 import React, {type ChangeEvent, useRef, useState, useEffect, useCallback} from 'react';
 import {useIntl} from 'react-intl';
 
-import {TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Team} from '@hanzoteam/types/teams';
 
 import EditIcon from 'components/widgets/icons/fa_edit_icon';

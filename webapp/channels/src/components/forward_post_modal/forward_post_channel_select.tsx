@@ -13,7 +13,7 @@ import {
     GlobeIcon,
     LockOutlineIcon,
     MessageTextOutlineIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {Channel} from '@hanzoteam/types/channels';
 
 import {getDirectTeammate} from '@hanzoteam/redux/selectors/entities/channels';

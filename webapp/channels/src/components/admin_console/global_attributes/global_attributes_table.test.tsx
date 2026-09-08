@@ -4,7 +4,7 @@
 import {screen, waitFor} from '@testing-library/react';
 import React from 'react';
 
-import {ChevronDownCircleOutlineIcon, FormatListBulletedIcon, MenuVariantIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon} from '@hanzoteam/compass-icons/components';
+import {ChevronDownCircleOutlineIcon, FormatListBulletedIcon, MenuVariantIcon, PowerPlugOutlineIcon, SortAscendingIcon, SyncIcon} from '@mattermost/compass-icons/components';
 import type {PropertyField} from '@hanzoteam/types/properties';
 import type {DeepPartial} from '@hanzoteam/types/utilities';
 

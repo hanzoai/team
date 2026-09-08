@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {LinkVariantIcon, AccountMultipleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {LinkVariantIcon, AccountMultipleOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Group} from '@hanzoteam/types/groups';
 import type {Team} from '@hanzoteam/types/teams';
 

@@ -19,7 +19,7 @@ import React, {memo, useState} from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {CheckCircleOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {CheckCircleOutlineIcon} from '@mattermost/compass-icons/components';
 import type {Post, PostAcknowledgement} from '@hanzoteam/types/posts';
 import type {UserProfile} from '@hanzoteam/types/users';
 

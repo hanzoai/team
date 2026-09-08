@@ -12,7 +12,7 @@ import {useSelector} from 'react-redux';
 import type {RouteComponentProps} from 'react-router-dom';
 import ReactSelect from 'react-select';
 
-import {SyncIcon, PowerPlugOutlineIcon, CheckIcon, ChevronDownIcon} from '@hanzoteam/compass-icons/components';
+import {SyncIcon, PowerPlugOutlineIcon, CheckIcon, ChevronDownIcon} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {ServerError} from '@hanzoteam/types/errors';

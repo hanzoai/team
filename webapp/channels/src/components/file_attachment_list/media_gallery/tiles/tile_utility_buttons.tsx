@@ -10,7 +10,7 @@ import {useDispatch} from 'react-redux';
 import type {AnyAction} from 'redux';
 import type {ThunkDispatch} from 'redux-thunk';
 
-import {CheckIcon, DownloadOutlineIcon, LinkVariantIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon, DownloadOutlineIcon, LinkVariantIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {FileInfo} from '@hanzoteam/types/files';
 

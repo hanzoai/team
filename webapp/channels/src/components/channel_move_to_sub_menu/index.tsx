@@ -12,7 +12,7 @@ import {
     FolderMoveOutlineIcon,
     ChevronRightIcon,
     CheckIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {ChannelCategory} from '@hanzoteam/types/channel_categories';
 import type {Channel} from '@hanzoteam/types/channels';

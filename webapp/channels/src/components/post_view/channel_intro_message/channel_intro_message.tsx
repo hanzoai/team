@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedDate, FormattedMessage, defineMessages} from 'react-intl';
 import {useSelector} from 'react-redux';
 
-import {BellRingOutlineIcon, PencilOutlineIcon, StarOutlineIcon, StarIcon} from '@hanzoteam/compass-icons/components';
+import {BellRingOutlineIcon, PencilOutlineIcon, StarOutlineIcon, StarIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import type {Channel, ChannelMembership} from '@hanzoteam/types/channels';
 import type {UserProfile as UserProfileType} from '@hanzoteam/types/users';

@@ -11,7 +11,7 @@ import {
     LinkVariantIcon,
     PaperclipIcon,
     PlusIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import type {ChannelBookmarkCreate} from '@hanzoteam/types/channel_bookmarks';
 
 import {createBookmark} from 'actions/channel_bookmarks';

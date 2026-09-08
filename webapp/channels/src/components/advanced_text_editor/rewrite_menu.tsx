@@ -16,7 +16,7 @@ import {
     TextLongIcon,
     AutoFixIcon,
     SpellcheckIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 import {Button} from '@hanzoteam/shared/components/button';
 import type {Agent} from '@hanzoteam/types/agents';
 

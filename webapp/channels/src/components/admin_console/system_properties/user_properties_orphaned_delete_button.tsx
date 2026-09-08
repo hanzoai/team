@@ -3,7 +3,7 @@
 
 import React from 'react';
 
-import {TrashCanOutlineIcon} from '@hanzoteam/compass-icons/components';
+import {TrashCanOutlineIcon} from '@mattermost/compass-icons/components';
 import type {UserPropertyField} from '@hanzoteam/types/properties_user';
 
 import {useUserPropertyFieldDelete} from './user_properties_delete_modal';

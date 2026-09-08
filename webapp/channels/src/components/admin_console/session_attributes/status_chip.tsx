@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {CheckCircleIcon, CloseCircleIcon} from '@hanzoteam/compass-icons/components';
+import {CheckCircleIcon, CloseCircleIcon} from '@mattermost/compass-icons/components';
 
 import './session_attributes.scss';
 

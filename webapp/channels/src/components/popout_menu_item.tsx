@@ -4,7 +4,7 @@
 import React from 'react';
 import {FormattedMessage} from 'react-intl';
 
-import {DockWindowIcon} from '@hanzoteam/compass-icons/components';
+import {DockWindowIcon} from '@mattermost/compass-icons/components';
 
 import * as Menu from 'components/menu';
 import type {Props as MenuItemProps} from 'components/menu/menu_item';

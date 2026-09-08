@@ -5,7 +5,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import {useDispatch} from 'react-redux';
 
-import {CancelIcon, CheckIcon} from '@hanzoteam/compass-icons/components';
+import {CancelIcon, CheckIcon} from '@mattermost/compass-icons/components';
 import type {UserProfile} from '@hanzoteam/types/users';
 
 import {setStatus} from '@hanzoteam/redux/actions/users';

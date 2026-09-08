@@ -7,7 +7,7 @@ import {useIntl} from 'react-intl';
 
 import {
     DotsVerticalIcon,
-} from '@hanzoteam/compass-icons/components';
+} from '@mattermost/compass-icons/components';
 
 import * as Menu from 'components/menu';
 

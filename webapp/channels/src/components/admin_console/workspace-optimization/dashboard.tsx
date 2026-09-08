@@ -6,7 +6,7 @@ import React from 'react';
 import {FormattedMessage} from 'react-intl';
 import styled from 'styled-components';
 
-import {CheckIcon} from '@hanzoteam/compass-icons/components';
+import {CheckIcon} from '@mattermost/compass-icons/components';
 
 import Accordion from 'components/common/accordion/accordion';
 import type {AccordionItemType} from 'components/common/accordion/accordion';

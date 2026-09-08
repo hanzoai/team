@@ -7,7 +7,7 @@ import React, {useEffect, useMemo, useState} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
 import styled from 'styled-components';
 
-import {LockOutlineIcon, PlusIcon} from '@hanzoteam/compass-icons/components';
+import {LockOutlineIcon, PlusIcon} from '@mattermost/compass-icons/components';
 import {WithTooltip} from '@hanzoteam/shared/components/tooltip';
 import {supportsOptions} from '@hanzoteam/types/properties';
 import {type BoardsPropertyField} from '@hanzoteam/types/properties_board';
