@@ -7,6 +7,22 @@
 # Build output and installed dependencies are REPRODUCED by the build. Sending a
 # working tree's copies makes the image depend on the machine that built it —
 # and `npm ci` and `go build` would then be layering onto someone else's results.
+#
+# The platform workspaces are the half this used to miss, and it does not fail
+# quietly. `npm ci` runs the root postinstall, which builds all four of them, so
+# a stale .rollup.cache reaches rollup-plugin-ts and it hands rollup untouched
+# TSX:
+#
+#   src/index.tsx (5:7) Unexpected token
+#   (Note that you need plugins to import files that are not JavaScript)
+#
+# tsbuildinfo does the same to tsc more politely — "Project is up to date" over
+# sources the image has never compiled. Both only happen when the tree was built
+# in before the image was, so CI never sees either and a developer sees both.
 **/node_modules
 webapp/channels/dist
-
+webapp/platform/*/dist
+webapp/platform/*/lib
+webapp/**/.rollup.cache
+webapp/.parcel-cache
+webapp/**/*.tsbuildinfo
