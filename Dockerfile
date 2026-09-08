@@ -3,8 +3,17 @@
 # Upstream's server/build/Dockerfile downloads a released tarball, which cannot
 # work for a fork: the thing we changed is the source. This builds both halves
 # and assembles the same runtime layout the binary looks for.
+#
+# It builds for both architectures the fleet runs. BuildKit gives an unqualified
+# FROM the BUILDER's architecture, so the same commit built on an arm64 node and
+# an amd64 node yields images that differ in the one way a kubelet cannot
+# forgive. Every stage that emits architecture-independent files -- compiled
+# JavaScript, mime types, certificates, directory metadata -- names BUILDPLATFORM
+# and is therefore built ONCE and shared by both outputs; the Go compile
+# cross-compiles, which is free at CGO_ENABLED=0; and only the final stage
+# follows the target. Nothing is emulated.
 
-FROM node:24.11-bookworm AS webapp
+FROM --platform=$BUILDPLATFORM node:24.11-bookworm AS webapp
 WORKDIR /src/webapp
 # The whole tree BEFORE the install, not the manifests alone. `npm ci` runs the
 # root postinstall, which is `patch-package` followed by a BUILD of the platform
@@ -22,7 +31,7 @@ COPY webapp .
 # as a gate because the check needs node_modules and this stage has them.
 RUN npm ci --no-audit --no-fund && npm run i18n-extract:check && npm run build
 
-FROM golang:1.26.6-bookworm AS server
+FROM --platform=$BUILDPLATFORM golang:1.26.6-bookworm AS server
 # Declared, or the expansion below is unset on every build and the server reports
 # its version as the fallback for the life of the image.
 ARG BUILD_NUMBER=dev
@@ -31,17 +40,20 @@ WORKDIR /src/server
 # resolves to this tree rather than the published v0.4.0, which carries none of
 # the Hanzo model. Nothing is arranged here — the tree already states it.
 COPY server .
+# Supplied by buildx for each output; the compiler is told the target outright
+# rather than inheriting the builder's.
+ARG TARGETARCH
 # `production` is not decoration: without the tag the !production file in
 # server/public/model selects the DEV service environment, and a shipped binary
 # then points at dev telemetry and licensing.
-RUN CGO_ENABLED=0 go build -trimpath -tags production \
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=$TARGETARCH go build -trimpath -tags production \
       -ldflags "-X github.com/mattermost/mattermost/server/public/model.BuildNumber=${BUILD_NUMBER}" \
       -o /out/ ./cmd/mattermost ./cmd/mmctl
 
 # The writable tree and the mime table. Distroless has no shell, so directories
 # the server creates files in cannot be made in the final stage — and unmade, the
 # server has nowhere to write its config or its log and does not start.
-FROM ubuntu:noble AS tools
+FROM --platform=$BUILDPLATFORM ubuntu:noble AS tools
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install --no-install-recommends -y \
       ca-certificates media-types tzdata \
   && rm -rf /var/lib/apt/lists/*

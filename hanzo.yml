@@ -22,13 +22,13 @@ images:
     # ${VERSION} from the tag it builds.
     args:
       BUILD_NUMBER: '${VERSION}'
-    # amd64 alone, and it is written down because hanzoai/ci builds both
-    # architectures unless a repo says otherwise. Every tag this image has ever
-    # published is amd64, so nothing pulls the other one — and it is not a cheap
-    # addition here: no builder stage names BUILDPLATFORM, so buildx would run a
-    # full npm ci, a webpack production bundle and a Go compile under QEMU to
-    # make it. Add linux/arm64 when a node runs it, with --platform first.
-    platforms: [linux/amd64]
+    # Both, because the fleet runs both and a single-architecture image makes
+    # the values file carry a nodeSelector to keep the pod away from the node it
+    # cannot run on. It is nearly free: every builder stage in the Dockerfile
+    # names BUILDPLATFORM, so the npm install, the webpack bundle and the tools
+    # layer are built once and shared, and only the Go compile repeats — as a
+    # cross-compile, which costs nothing at CGO_ENABLED=0. Nothing runs emulated.
+    platforms: [linux/amd64, linux/arm64]
 
 # The Go and web app compiles both happen inside the Dockerfile, so a broken
 # tree already fails the image build. This gate covers the two things the image
