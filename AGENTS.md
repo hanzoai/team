@@ -6,7 +6,7 @@ Explicitly import subdirectory instruction files that must always be in context:
 ## Push to git.hanzo.ai. GitHub is a copy and builds nothing.
 
     git.hanzo.ai/hanzoteam/server    canonical — Actions build the image here
-    github.com/hanzoteam/server      a copy, with no push mirror keeping it current
+    github.com/hanzoai/team          a copy, with no push mirror keeping it current
 
 There is no mirror between them, so the GitHub copy drifts and has sat nine
 releases behind. A push there succeeds, reports success, and ships nothing; the
