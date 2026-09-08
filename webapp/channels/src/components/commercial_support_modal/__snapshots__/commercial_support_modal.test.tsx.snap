@@ -14,7 +14,7 @@ exports[`components/CommercialSupportModal should match snapshot 1`] = `
       >
         If you're experiencing issues, 
         <a
-          href="https://support.mattermost.com/hc/en-us/requests/new"
+          href="https://hanzo.ai/support"
         >
           submit a support ticket
         </a>

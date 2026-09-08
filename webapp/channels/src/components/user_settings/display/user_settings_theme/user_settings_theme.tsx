@@ -228,7 +228,7 @@ export default class ThemeSetting extends React.PureComponent<Props, State> {
                         <br/>
                         <ExternalLink
                             id='otherThemes'
-                            href='http://docs.mattermost.com/help/settings/theme-colors.html#custom-theme-examples'
+                            href='https://docs.hanzo.team/help/settings/theme-colors.html#custom-theme-examples'
                             location='user_settings_theme'
                         >
                             <FormattedMessage

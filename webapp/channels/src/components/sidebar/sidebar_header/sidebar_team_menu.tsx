@@ -429,7 +429,7 @@ function RestrictedIndicatorForCreateTeam({isFreeTrial}: {isFreeTrial: boolean})
     );
 }
 
-const MATTERMOST_ACADEMY_TEAM_TRAINING_LINK = 'https://docs.hanzo.team/mattermost-academy-team-training';
+const MATTERMOST_ACADEMY_TEAM_TRAINING_LINK = 'https://docs.hanzo.team/academy-team-training';
 
 function LearnAboutTeamsMenuItem() {
     const handleClick = useCallback(() => {

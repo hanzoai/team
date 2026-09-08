@@ -904,7 +904,7 @@ defineMessages({
     },
     socketError: {
         id: 'channel_loader.socketError',
-        defaultMessage: 'Please check connection, Hanzo Team unreachable. If issue persists, ask administrator to [check WebSocket port](!https://docs.hanzo.team/install/troubleshooting.html#please-check-connection-mattermost-unreachable-if-issue-persists-ask-administrator-to-check-websocket-port).',
+        defaultMessage: 'Please check connection, Hanzo Team unreachable. If issue persists, ask administrator to [check WebSocket port](!https://docs.hanzo.team/install/troubleshooting.html#please-check-connection-hanzo-team-unreachable-if-issue-persists-ask-administrator-to-check-websocket-port).',
     },
 });
 
@@ -1026,7 +1026,7 @@ export const AboutLinks = {
 export const CloudLinks = {
     BILLING_DOCS: 'https://docs.hanzo.team/product-overview/cloud-subscriptions.html',
     PRICING: 'https://docs.hanzo.team/pricing/',
-    PRORATED_PAYMENT: 'https://docs.hanzo.team/mattermost-cloud-prorate-documentation',
+    PRORATED_PAYMENT: 'https://docs.hanzo.team/cloud-prorate-documentation',
     DEPLOYMENT_OPTIONS: 'https://hanzo.ai/deploy/',
     DOWNLOAD_UPDATE: 'https://hanzo.ai/deploy/',
     CLOUD_SIGNUP_PAGE: 'https://hanzo.ai/sign-up/',
@@ -1041,7 +1041,6 @@ export const HostedCustomerLinks = {
     TERMS_AND_CONDITIONS: 'https://hanzo.ai/enterprise-edition-terms/',
     SECURITY_UPDATES: 'https://hanzo.ai/security-updates/',
     DOWNLOAD: 'https://hanzo.ai/download',
-    NEWSLETTER_UNSUBSCRIBE_LINK: 'https://forms.mattermost.com/UnsubscribePage.html',
     PRIVACY: AboutLinks.PRIVACY_POLICY,
 };
 
@@ -1078,7 +1077,7 @@ export const DocLinks = {
     SSL_CERTIFICATE: 'https://docs.hanzo.team/setup-ssl-client-certificate',
     TRUE_UP_REVIEW: 'https://docs.hanzo.team/true-up-documentation',
     TRUSTED_CONNECTION: 'https://docs.hanzo.team/default-allow-untrusted-internal-connections',
-    UPGRADE_SERVER: 'https://docs.hanzo.team/upgrade-mattermost',
+    UPGRADE_SERVER: 'https://docs.hanzo.team/upgrade-hanzo-team',
 };
 
 export const DeveloperLinks = {
@@ -1099,13 +1098,13 @@ export const DeveloperLinks = {
 
 export const LicenseLinks = {
     CONTACT_SALES: 'https://hanzo.ai/contact-sales/',
-    ENTRY_LIMITS_INFO: 'https://docs.hanzo.team/mattermost-entry-limits',
+    ENTRY_LIMITS_INFO: 'https://docs.hanzo.team/entry-limits',
     TRIAL_INFO_LINK: 'https://hanzo.ai/trial',
     EMBARGOED_COUNTRIES: 'https://docs.hanzo.team/limitations-for-embargoed-countries',
-    SOFTWARE_SERVICES_LICENSE_AGREEMENT: 'https://mattermost.com/pl/software-and-services-license-agreement',
+    SOFTWARE_SERVICES_LICENSE_AGREEMENT: 'https://hanzo.ai/legal',
     SOFTWARE_SERVICES_LICENSE_AGREEMENT_TEXT: 'Software Services and License Agreement',
     UNSUPPORTED: 'https://hanzo.ai/pricing/',
-    UNSUPPORTED_UPGRADE_LINK: 'https://docs.hanzo.team/administration-guide/upgrade/enterprise-install-upgrade.html#upgrading-to-enterprise-edition-from-mattermost-team-edition',
+    UNSUPPORTED_UPGRADE_LINK: 'https://docs.hanzo.team/administration-guide/upgrade/enterprise-install-upgrade.html#upgrading-to-enterprise-edition-from-team-edition',
 };
 
 // Where an administrator goes. One console runs the estate, so the menu's
@@ -1116,7 +1115,6 @@ export const Console = {
     URL: 'https://console.hanzo.ai',
 };
 
-export const MattermostLink = 'https://hanzo.ai/';
 
 export const BillingSchemes = {
     FLAT_FEE: 'flat_fee',

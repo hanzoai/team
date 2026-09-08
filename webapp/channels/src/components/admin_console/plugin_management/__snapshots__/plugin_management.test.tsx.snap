@@ -279,7 +279,7 @@ exports[`components/PluginManagement should match snapshot 1`] = `
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -693,7 +693,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Marketp
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1183,7 +1183,7 @@ exports[`components/PluginManagement should match snapshot when \`Enable Remote 
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -1600,7 +1600,7 @@ exports[`components/PluginManagement should match snapshot when \`Require Signat
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2014,7 +2014,7 @@ exports[`components/PluginManagement should match snapshot, No installed plugins
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2429,7 +2429,7 @@ exports[`components/PluginManagement should match snapshot, allow insecure URL e
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -2855,7 +2855,7 @@ exports[`components/PluginManagement should match snapshot, disabled 1`] = `
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3253,7 +3253,7 @@ exports[`components/PluginManagement should match snapshot, text entered into th
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -3669,7 +3669,7 @@ exports[`components/PluginManagement should match snapshot, upload disabled 1`] 
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4095,7 +4095,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -4792,7 +4792,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5287,7 +5287,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -5782,7 +5782,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"
@@ -6277,7 +6277,7 @@ exports[`components/PluginManagement should match snapshot, with installed plugi
                   >
                     When true, enables System Administrators to install plugins from the 
                     <a
-                      href="https://docs.hanzo.team/default-mattermost-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
+                      href="https://docs.hanzo.team/default-marketplace.html?utm_source=hanzoteam&utm_medium=in-product&utm_content=plugin_management&uid=&sid=&edition=team&server_version="
                       location="plugin_management"
                       rel="noopener noreferrer"
                       target="_blank"

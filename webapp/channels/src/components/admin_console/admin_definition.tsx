@@ -752,7 +752,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'ServiceSettings.SiteURL',
                             label: defineMessage({id: 'admin.service.siteURL', defaultMessage: 'Site URL:'}),
-                            help_text: defineMessage({id: 'admin.service.siteURLDescription', defaultMessage: 'The URL that users will use to access Hanzo Team. Standard ports, such as 80 and 443, can be omitted, but non-standard ports are required. For example: http://example.com:8065. This setting is required.\n \nHanzo Team may be hosted at a subpath. For example: http://example.com:8065/company/mattermost. A restart is required before the server will work correctly.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
+                            help_text: defineMessage({id: 'admin.service.siteURLDescription', defaultMessage: 'The URL that users will use to access Hanzo Team. Standard ports, such as 80 and 443, can be omitted, but non-standard ports are required. For example: http://example.com:8065. This setting is required.\n \nHanzo Team may be hosted at a subpath. For example: http://example.com:8065/company/team. A restart is required before the server will work correctly.'}), // eslint-disable-line formatjs/no-multiple-whitespaces
                             help_text_markdown: true,
                             placeholder: defineMessage({id: 'admin.service.siteURLExample', defaultMessage: 'E.g.: "http://example.com:8065"'}),
                             isDisabled: it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.WEB_SERVER)),
@@ -1091,7 +1091,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'FileSettings.AmazonS3Bucket',
                             label: defineMessage({id: 'admin.image.amazonS3BucketTitle', defaultMessage: 'Amazon S3 Bucket:'}),
                             help_text: defineMessage({id: 'admin.image.amazonS3BucketDescription', defaultMessage: 'Name you selected for your S3 bucket in AWS.'}),
-                            placeholder: defineMessage({id: 'admin.image.amazonS3BucketExample', defaultMessage: 'E.g.: "mattermost-media"'}),
+                            placeholder: defineMessage({id: 'admin.image.amazonS3BucketExample', defaultMessage: 'E.g.: "hanzo-team-media"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
                                 it.not(it.stateEquals('FileSettings.DriverName', FILE_STORAGE_DRIVER_S3)),
@@ -1258,7 +1258,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'FileSettings.AzureStorageAccount',
                             label: defineMessage({id: 'admin.image.azureStorageAccountTitle', defaultMessage: 'Azure Storage Account:'}),
                             help_text: defineMessage({id: 'admin.image.azureStorageAccountDescription', defaultMessage: 'The name of your Azure Storage account.'}),
-                            placeholder: defineMessage({id: 'admin.image.azureStorageAccountExample', defaultMessage: 'E.g.: "mattermoststorage"'}),
+                            placeholder: defineMessage({id: 'admin.image.azureStorageAccountExample', defaultMessage: 'E.g.: "hanzoteamstorage"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
                                 it.not(it.stateEquals('FileSettings.DriverName', FILE_STORAGE_DRIVER_AZURE)),
@@ -1270,7 +1270,7 @@ const AdminDefinition: AdminDefinitionType = {
                             key: 'FileSettings.AzureContainer',
                             label: defineMessage({id: 'admin.image.azureContainerTitle', defaultMessage: 'Azure Container:'}),
                             help_text: defineMessage({id: 'admin.image.azureContainerDescription', defaultMessage: 'Name of the container in your Azure Storage account.'}),
-                            placeholder: defineMessage({id: 'admin.image.azureContainerExample', defaultMessage: 'E.g.: "mattermost-media"'}),
+                            placeholder: defineMessage({id: 'admin.image.azureContainerExample', defaultMessage: 'E.g.: "hanzo-team-media"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
                                 it.not(it.stateEquals('FileSettings.DriverName', FILE_STORAGE_DRIVER_AZURE)),
@@ -1331,7 +1331,7 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'FileSettings.AzureEndpoint',
                             label: defineMessage({id: 'admin.image.azureEndpointTitle', defaultMessage: 'Custom Azure Endpoint:'}),
-                            help_text: defineMessage({id: 'admin.image.azureEndpointDescription', defaultMessage: 'Full Blob service URL, including scheme and storage account. Hanzo Team does not modify this URL, so the storage account must already be embedded in the hostname (vhost-style, e.g. "https://acmemattermost.blob.core.chinacloudapi.cn/") or in the path (path-style, e.g. "http://localhost:10000/devstoreaccount1/"). Shared-key auth signs against the host this URL points at, so make sure it actually serves the storage account named above.'}),
+                            help_text: defineMessage({id: 'admin.image.azureEndpointDescription', defaultMessage: 'Full Blob service URL, including scheme and storage account. Hanzo Team does not modify this URL, so the storage account must already be embedded in the hostname (vhost-style, e.g. "https://acmehanzoteam.blob.core.chinacloudapi.cn/") or in the path (path-style, e.g. "http://localhost:10000/devstoreaccount1/"). Shared-key auth signs against the host this URL points at, so make sure it actually serves the storage account named above.'}),
                             placeholder: defineMessage({id: 'admin.image.azureEndpointExample', defaultMessage: 'E.g.: "http://localhost:10000/devstoreaccount1/"'}),
                             isDisabled: it.any(
                                 it.not(it.userHasWritePermissionOnResource(RESOURCE_KEYS.ENVIRONMENT.FILE_STORAGE)),
@@ -3870,8 +3870,8 @@ const AdminDefinition: AdminDefinitionType = {
                             type: 'text',
                             key: 'TeamSettings.RestrictCreationToDomains',
                             label: defineMessage({id: 'admin.team.restrictTitle', defaultMessage: 'Restrict new system and team members to specified email domains:'}),
-                            help_text: defineMessage({id: 'admin.team.restrictGuestDescription', defaultMessage: 'New user accounts are restricted to the above specified email domain (e.g. "mattermost.com") or list of comma-separated domains (e.g. "corp.mattermost.com, mattermost.com"). New teams can only be created by users from the above domain(s). This setting affects email login for users. For Guest users, please add domains under Signup > Guest Access.'}),
-                            placeholder: defineMessage({id: 'admin.team.restrictExample', defaultMessage: 'E.g.: "corp.mattermost.com, mattermost.com"'}),
+                            help_text: defineMessage({id: 'admin.team.restrictGuestDescription', defaultMessage: 'New user accounts are restricted to the above specified email domain (e.g. "hanzo.ai") or list of comma-separated domains (e.g. "corp.hanzo.ai, hanzo.ai"). New teams can only be created by users from the above domain(s). This setting affects email login for users. For Guest users, please add domains under Signup > Guest Access.'}),
+                            placeholder: defineMessage({id: 'admin.team.restrictExample', defaultMessage: 'E.g.: "corp.hanzo.ai, hanzo.ai"'}),
                             isHidden: it.any(
                                 it.not(it.licensed),
                                 it.licensedForSku('starter'),
@@ -4045,7 +4045,7 @@ const AdminDefinition: AdminDefinitionType = {
                                 link: (msg: string) => (
                                     <ExternalLink
                                         location='admin_console'
-                                        href='http://docs.mattermost.com/deployment/sso-saml.html'
+                                        href='https://docs.hanzo.team/deployment/sso-saml.html'
                                     >
                                         {msg}
                                     </ExternalLink>

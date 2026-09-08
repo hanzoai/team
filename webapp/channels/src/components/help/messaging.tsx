@@ -127,11 +127,11 @@ const HelpMessaging = (): JSX.Element => {
                                 <td><code className='Help__inline-code'>{'In-line code'}</code></td>
                             </tr>
                             <tr>
-                                <td><code>{'[hyperlink](https://www.mattermost.com)'}</code></td>
-                                <td><a href='https://www.mattermost.com'>{'hyperlink'}</a></td>
+                                <td><code>{'[hyperlink](https://hanzo.ai)'}</code></td>
+                                <td><a href='https://hanzo.ai'>{'hyperlink'}</a></td>
                             </tr>
                             <tr>
-                                <td><code>{'![embedded image](travis-ci.org/mattermost/platform.svg)'}</code></td>
+                                <td><code>{'![embedded image](hanzo.ai/hanzo.svg)'}</code></td>
                                 <td>
                                     <span className='Help__badge'>{'build'}</span>
                                     <span className='Help__badge Help__badge--secondary'>{'unknown'}</span>

@@ -53,7 +53,7 @@ exports[`components/select_team/SelectTeam should match snapshot 1`] = `
             </h4>
             <a
               class="LearnAboutTeamsLink"
-              href="https://docs.hanzo.team/mattermost-academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
+              href="https://docs.hanzo.team/academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
               location="learn_about_teams"
               rel="noopener noreferrer"
               target="_blank"
@@ -167,7 +167,7 @@ exports[`components/select_team/SelectTeam should match snapshot, on create team
             </h4>
             <a
               class="LearnAboutTeamsLink"
-              href="https://docs.hanzo.team/mattermost-academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
+              href="https://docs.hanzo.team/academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
               location="learn_about_teams"
               rel="noopener noreferrer"
               target="_blank"
@@ -410,7 +410,7 @@ exports[`components/select_team/SelectTeam should match snapshot, on no joinable
             </h4>
             <a
               class="LearnAboutTeamsLink"
-              href="https://docs.hanzo.team/mattermost-academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
+              href="https://docs.hanzo.team/academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
               location="learn_about_teams"
               rel="noopener noreferrer"
               target="_blank"
@@ -553,7 +553,7 @@ exports[`components/select_team/SelectTeam should match snapshot, on no joinable
             </h4>
             <a
               class="LearnAboutTeamsLink"
-              href="https://docs.hanzo.team/mattermost-academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
+              href="https://docs.hanzo.team/academy-team-training?utm_source=hanzoteam&utm_medium=in-product&utm_content=learn_about_teams&uid=&sid=&edition=team&server_version="
               location="learn_about_teams"
               rel="noopener noreferrer"
               target="_blank"

@@ -16,9 +16,9 @@ import {ModalIdentifiers} from 'utils/constants';
 
 import type {PropsFromRedux} from './index';
 
-const mattermostUserGuideLink = 'https://docs.hanzo.team/guides/use-mattermost.html';
-const trainingResourcesLink = 'https://academy.mattermost.com/';
-const askTheCommunityUrl = 'https://docs.hanzo.team/default-ask-mattermost-community/';
+const mattermostUserGuideLink = 'https://docs.hanzo.team/guides/use-hanzo-team.html';
+const trainingResourcesLink = 'https://docs.hanzo.team/academy/';
+const askTheCommunityUrl = 'https://docs.hanzo.team/default-ask-community/';
 
 type Props = WrappedComponentProps & PropsFromRedux;
 

@@ -5,7 +5,7 @@ import {Buffer} from 'buffer';
 
 import {LicenseLinks} from './constants';
 
-const baseZendeskFormURL = 'https://support.mattermost.com/hc/en-us/requests/new';
+const baseZendeskFormURL = 'https://hanzo.ai/support';
 
 export enum ZendeskSupportForm {
     SELF_HOSTED_SUPPORT_FORM = '11184911962004',

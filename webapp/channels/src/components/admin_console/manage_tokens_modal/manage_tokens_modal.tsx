@@ -206,7 +206,7 @@ export default class ManageTokensModal extends React.PureComponent<Props, State>
                         values={{
                             linkAuthentication: (msg: React.ReactNode) => (
                                 <ExternalLink
-                                    href='https://api.mattermost.com/#tag/authentication'
+                                    href='https://docs.hanzo.team/api/#tag/authentication'
                                     location='manage_tokens_modal'
                                 >
                                     {msg}

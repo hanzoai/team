@@ -1198,7 +1198,7 @@ export class PluginManagement extends OLDAdminSettings<Props, State> {
                                             values={{
                                                 link: (msg: React.ReactNode) => (
                                                     <ExternalLink
-                                                        href='https://docs.hanzo.team/default-mattermost-marketplace.html'
+                                                        href='https://docs.hanzo.team/default-marketplace.html'
                                                         location='plugin_management'
                                                     >
                                                         {msg}

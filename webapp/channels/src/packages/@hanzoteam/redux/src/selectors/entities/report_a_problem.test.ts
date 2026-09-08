@@ -80,7 +80,7 @@ describe('getReportAProblemLink', () => {
         expect(link).toContain(encodeURIComponent('- Platform: macOS'));
     });
 
-    it('should return a mailto link to reportaproblem@mattermost.com if licensed with a paid SKU', () => {
+    it('should return a mailto link to support@hanzo.ai if licensed with a paid SKU', () => {
         const state = {
             entities: {
                 users: {
@@ -106,7 +106,7 @@ describe('getReportAProblemLink', () => {
         } as unknown as GlobalState;
 
         const link = getReportAProblemLink(state);
-        expect(link).toContain('mailto:reportaproblem@mattermost.com');
+        expect(link).toContain('mailto:support@hanzo.ai');
         expect(link).toContain(encodeURIComponent('Problem with Hanzo Team app'));
         expect(link).toContain(encodeURIComponent('Current User Id: user1'));
         expect(link).toContain(encodeURIComponent('Current Team Id: team1'));
@@ -174,7 +174,7 @@ describe('getDefaultReportAProblemMailtoLink', () => {
 
     it('should include correct metadata in the email body', () => {
         const link = getDefaultReportAProblemMailtoLink(baseState);
-        expect(link).toContain('mailto:reportaproblem@mattermost.com');
+        expect(link).toContain('mailto:support@hanzo.ai');
         expect(link).toContain(encodeURIComponent('Problem with Hanzo Team app'));
         expect(link).toContain(encodeURIComponent('Current User Id: user1'));
         expect(link).toContain(encodeURIComponent('Current Team Id: team1'));
@@ -184,7 +184,7 @@ describe('getDefaultReportAProblemMailtoLink', () => {
 
     it('should include a link to the browser console logs help article when not on desktop app', () => {
         const link = getDefaultReportAProblemMailtoLink(baseState);
-        expect(link).toContain(encodeURIComponent('browser console logs (https://support.mattermost.com/hc/en-us/articles/35971622382484)'));
+        expect(link).toContain(encodeURIComponent('browser console logs (https://docs.hanzo.team/browser-console-logs)'));
     });
 
     it('should include a link to the desktop logs help article when on desktop app', () => {
@@ -202,7 +202,7 @@ describe('getDefaultReportAProblemMailtoLink', () => {
         } as unknown as GlobalState;
 
         const link = getDefaultReportAProblemMailtoLink(desktopState);
-        expect(link).toContain(encodeURIComponent('desktop app logs (https://support.mattermost.com/hc/en-us/articles/37269786544916)'));
+        expect(link).toContain(encodeURIComponent('desktop app logs (https://docs.hanzo.team/desktop-app-logs)'));
 
         // Reset mock
         mockIsDesktopApp.mockReturnValue(false);
