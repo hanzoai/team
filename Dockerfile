@@ -37,7 +37,14 @@ COPY webapp .
 # the same two repositories over the port that answers. It changes the transport
 # and nothing else -- the lockfile still names the commit, and that commit is what
 # git checks out.
-RUN git config --global url.https://github.com/.insteadOf ssh://git@github.com/ \
+# The cache mount is not only speed. The daemon is rootless BuildKit, so a build
+# step's network is slirp4netns rather than the pod's: the identical `npm ci`
+# finishes in three and a half minutes in a pod on this node and stalls on `read
+# ETIMEDOUT` around the ten-minute mark inside a build step. Cached tarballs mean
+# an attempt resumes where the last one reached instead of asking for all 1954
+# packages again, so the install shrinks below the length that provokes it.
+RUN --mount=type=cache,target=/root/.npm,sharing=locked \
+    git config --global url.https://github.com/.insteadOf ssh://git@github.com/ \
   && npm ci --no-audit --no-fund \
        --fetch-timeout=60000 --fetch-retries=5 \
   && npm run i18n-extract:check && npm run build
