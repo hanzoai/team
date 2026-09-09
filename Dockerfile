@@ -55,7 +55,11 @@ RUN mkdir -p /hanzo/data /hanzo/logs /hanzo/config /hanzo/plugins /hanzo/client/
 # extraction means a base that can run it, which is a different decision than
 # this one and should be made on its own.
 
-FROM gcr.io/distroless/base-debian12
+# Both binaries are CGO_ENABLED=0, so glibc, gconv and the OpenSSL engines — the
+# whole of what `base` adds over `static` — are never opened. Certs, mime types
+# and the account database arrive by COPY below; zoneinfo, /tmp and nsswitch are
+# in this base already.
+FROM gcr.io/distroless/static-debian12:nonroot
 
 ENV PATH="/hanzo/bin:${PATH}"
 ENV MM_SERVICESETTINGS_ENABLELOCALMODE="true"
