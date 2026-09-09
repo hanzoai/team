@@ -16,5 +16,13 @@ on:
   workflow_dispatch:
 jobs:
   cicd:
-    uses: hanzoai/ci/.hanzo/workflows/build.yml@v1
+    # The pipeline's one address. hanzoai/ci keeps it under .github/workflows
+    # because github.com resolves a reusable workflow out of that path alone and
+    # the forge reads it there too, so one file serves both planes.
+    uses: hanzoai/ci/.github/workflows/build.yml@v2
+    # The git-runner image ships the docker CLI and no daemon on purpose, so an
+    # image is built by the door in-cluster, never on the runner. The gate runs
+    # ahead of this either way.
+    with:
+      mode: delegate
     secrets: inherit
