@@ -31,22 +31,16 @@ COPY webapp .
 # as a gate because the check needs node_modules and this stage has them.
 #
 # Two dependencies -- marked and react-bootstrap -- are `github:` specs, which npm
-# resolves to git+ssh and git then dials github.com:22. The build network answers
-# HTTPS and not 22: the connection neither completes nor refuses, so npm sat on it
-# for ten minutes and failed the install on `read ETIMEDOUT`. The rewrite asks for
-# the same two repositories over the port that answers. It changes the transport
-# and nothing else -- the lockfile still names the commit, and that commit is what
+# resolves to git+ssh. The rewrite fetches the same two repositories over HTTPS,
+# which is the transport this build has a credential for. It changes the transport
+# and nothing else: the lockfile still names the commit, and that commit is what
 # git checks out.
-# The cache mount is not only speed. The daemon is rootless BuildKit, so a build
-# step's network is slirp4netns rather than the pod's: the identical `npm ci`
-# finishes in three and a half minutes in a pod on this node and stalls on `read
-# ETIMEDOUT` around the ten-minute mark inside a build step. Cached tarballs mean
-# an attempt resumes where the last one reached instead of asking for all 1954
-# packages again, so the install shrinks below the length that provokes it.
+#
+# The cache mount holds the tarballs for the 1954 packages, so a rebuild reads them
+# from disk instead of the registry.
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
     git config --global url.https://github.com/.insteadOf ssh://git@github.com/ \
   && npm ci --no-audit --no-fund \
-       --fetch-timeout=60000 --fetch-retries=5 \
   && npm run i18n-extract:check && npm run build
 
 FROM --platform=$BUILDPLATFORM golang:1.26.6-bookworm AS server
