@@ -1,6 +1,6 @@
 module github.com/hanzoteam/server/server/v8
 
-go 1.26.5
+go 1.26.8
 
 require (
 	code.sajari.com/docconv/v2 v2.0.0-pre.4
