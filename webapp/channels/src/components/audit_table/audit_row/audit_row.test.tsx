@@ -12,7 +12,7 @@ import type {Props} from './audit_row';
 
 describe('components/audit_table/audit_row/AuditRow', () => {
     const audit: Audit = {
-        action: '/api/v4/channels',
+        action: '/v1/workspace/channels',
         create_at: 50778112674,
         extra_info: 'name=yeye',
         id: 'id_2',

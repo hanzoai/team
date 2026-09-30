@@ -14,8 +14,8 @@ func TestNewClientRoute(t *testing.T) {
 	}{
 		{
 			name:     "simple path",
-			input:    "api",
-			expected: "/api",
+			input:    "v1",
+			expected: "/v1",
 		},
 		{
 			name:     "path with special characters",
@@ -24,8 +24,8 @@ func TestNewClientRoute(t *testing.T) {
 		},
 		{
 			name:     "path with slashes",
-			input:    "api/v4",
-			expected: "/api%2Fv4",
+			input:    "v1/workspace",
+			expected: "/v1%2Fworkspace",
 		},
 		{
 			name:     "empty string",
@@ -54,9 +54,9 @@ func TestClientRouteJoinRoute(t *testing.T) {
 	}{
 		{
 			name:     "join two valid routes",
-			base:     newClientRoute("api"),
-			join:     newClientRoute("v4"),
-			expected: "/api/v4",
+			base:     newClientRoute("v1"),
+			join:     newClientRoute("workspace"),
+			expected: "/v1/workspace",
 			wantErr:  false,
 		},
 	}
@@ -85,30 +85,30 @@ func TestClientRouteJoinSegment(t *testing.T) {
 	}{
 		{
 			name:     "valid segment",
-			base:     newClientRoute("api"),
-			segment:  "v4",
-			expected: "/api/v4",
+			base:     newClientRoute("v1"),
+			segment:  "workspace",
+			expected: "/v1/workspace",
 			wantErr:  false,
 		},
 		{
 			name:     "segment with spaces",
-			base:     newClientRoute("api"),
+			base:     newClientRoute("v1"),
 			segment:  "hello world",
-			expected: "/api/hello%20world",
+			expected: "/v1/hello%20world",
 			wantErr:  false,
 		},
 		{
 			name:     "segment with slash - escaped",
-			base:     newClientRoute("api"),
-			segment:  "v4/users",
-			expected: "/api/v4%2Fusers",
+			base:     newClientRoute("v1"),
+			segment:  "workspace/users",
+			expected: "/v1/workspace%2Fusers",
 			wantErr:  false,
 		},
 		{
 			name:     "empty segment",
-			base:     newClientRoute("api"),
+			base:     newClientRoute("v1"),
 			segment:  "",
-			expected: "/api/",
+			expected: "/v1/",
 			wantErr:  false,
 		},
 	}
@@ -137,37 +137,37 @@ func TestClientRouteJoin(t *testing.T) {
 	}{
 		{
 			name:     "multiple valid segments",
-			base:     newClientRoute("api"),
-			segments: []any{"v4", "users", "me"},
-			expected: "/api/v4/users/me",
+			base:     newClientRoute("v1"),
+			segments: []any{"workspace", "users", "me"},
+			expected: "/v1/workspace/users/me",
 			wantErr:  false,
 		},
 		{
 			name:     "no segments",
-			base:     newClientRoute("api"),
+			base:     newClientRoute("v1"),
 			segments: []any{},
-			expected: "/api",
+			expected: "/v1",
 			wantErr:  false,
 		},
 		{
 			name:     "segment with slash - escaped",
-			base:     newClientRoute("api"),
-			segments: []any{"v4", "users/me"},
-			expected: "/api/v4/users%2Fme",
+			base:     newClientRoute("v1"),
+			segments: []any{"workspace", "users/me"},
+			expected: "/v1/workspace/users%2Fme",
 			wantErr:  false,
 		},
 		{
 			name:     "empty segment",
-			base:     newClientRoute("api"),
-			segments: []any{"v4", "users", "", "me"},
-			expected: "/api/v4/users/me",
+			base:     newClientRoute("v1"),
+			segments: []any{"workspace", "users", "", "me"},
+			expected: "/v1/workspace/users/me",
 			wantErr:  false,
 		},
 		{
 			name:     "empty segment at the end",
-			base:     newClientRoute("api"),
-			segments: []any{"v4", "users", ""},
-			expected: "/api/v4/users/",
+			base:     newClientRoute("v1"),
+			segments: []any{"workspace", "users", ""},
+			expected: "/v1/workspace/users/",
 			wantErr:  false,
 		},
 	}
@@ -195,8 +195,8 @@ func TestClientRouteURL(t *testing.T) {
 	}{
 		{
 			name:        "simple route",
-			route:       newClientRoute("api").Join(newClientRoute("v4")),
-			expectedURL: "/api/v4",
+			route:       newClientRoute("v1").Join(newClientRoute("workspace")),
+			expectedURL: "/v1/workspace",
 			wantErr:     false,
 		},
 		{
@@ -207,8 +207,8 @@ func TestClientRouteURL(t *testing.T) {
 		},
 		{
 			name:        "complex route",
-			route:       newClientRoute("api").Join(newClientRoute("v4"), "users"),
-			expectedURL: "/api/v4/users",
+			route:       newClientRoute("v1").Join(newClientRoute("workspace"), "users"),
+			expectedURL: "/v1/workspace/users",
 			wantErr:     false,
 		},
 	}
@@ -237,8 +237,8 @@ func TestClientRouteString(t *testing.T) {
 	}{
 		{
 			name:     "simple route",
-			route:    newClientRoute("api"),
-			expected: "/api",
+			route:    newClientRoute("v1"),
+			expected: "/v1",
 			wantErr:  false,
 		},
 		{
@@ -249,14 +249,14 @@ func TestClientRouteString(t *testing.T) {
 		},
 		{
 			name:     "complex route",
-			route:    newClientRoute("api").Join(newClientRoute("v4"), "users", "me"),
-			expected: "/api/v4/users/me",
+			route:    newClientRoute("v1").Join(newClientRoute("workspace"), "users", "me"),
+			expected: "/v1/workspace/users/me",
 			wantErr:  false,
 		},
 		{
 			name:     "route with special characters",
-			route:    newClientRoute("api").Join("hello world"),
-			expected: "/api/hello%20world",
+			route:    newClientRoute("v1").Join("hello world"),
+			expected: "/v1/hello%20world",
 			wantErr:  false,
 		},
 		{
@@ -294,11 +294,11 @@ func TestClientRouteLeadingSlash(t *testing.T) {
 	}{
 		{
 			name:  "single segment",
-			route: newClientRoute("api"),
+			route: newClientRoute("v1"),
 		},
 		{
 			name:  "multiple segments",
-			route: newClientRoute("api").Join("v4"),
+			route: newClientRoute("v1").Join("workspace"),
 		},
 	}
 
@@ -325,8 +325,8 @@ func TestClean(t *testing.T) {
 	}{
 		{
 			name:     "simple string",
-			input:    "api",
-			expected: "api",
+			input:    "v1",
+			expected: "v1",
 		},
 		{
 			name:     "string with spaces",
@@ -335,8 +335,8 @@ func TestClean(t *testing.T) {
 		},
 		{
 			name:     "string with slashes",
-			input:    "api/v4",
-			expected: "api%2Fv4",
+			input:    "v1/workspace",
+			expected: "v1%2Fworkspace",
 		},
 		{
 			name:     "just two dots",
@@ -396,4 +396,9 @@ func TestClean(t *testing.T) {
 			require.Equal(t, tt.expected, result)
 		})
 	}
+}
+
+// Every path this server serves is under /v1; /api is retired.
+func TestAPIURLSuffixIsV1(t *testing.T) {
+	require.Equal(t, "/v1/workspace", APIURLSuffix)
 }

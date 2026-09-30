@@ -29,9 +29,7 @@ export default function FormatAudit({
     showSession,
 }: Props) {
     const intl = useIntl();
-    // An audit row stores the request path as it stood when the row was written,
-    // so rows predating the move to /v1/workspace still carry an /api/vN base.
-    const actionURL = audit.action.replace(Client4.getUrlVersion(), '').replace(/^\/api\/v[1-9]/, '');
+    const actionURL = audit.action.replace(Client4.getUrlVersion(), '');
 
     if (actionURL.indexOf('/channels') === 0) {
         return (

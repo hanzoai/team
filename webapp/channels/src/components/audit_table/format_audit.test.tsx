@@ -69,11 +69,9 @@ describe('components/audit_table/audit_row/AuditRow', () => {
         expect(container.textContent).toContain(channelName);
     });
 
-    // Rows written before the API moved off /api/vN are still in the database,
-    // so the formatter has to keep describing them.
     test('should match snapshot with channel audit', () => {
         const audit: Audit = {
-            action: '/api/v4/channels',
+            action: '/v1/workspace/channels',
             create_at: 50778112674,
             extra_info: `name=${channelName}`,
             id: 'id_2',
@@ -89,7 +87,7 @@ describe('components/audit_table/audit_row/AuditRow', () => {
 
     test('should match snapshot with user audit', () => {
         const audit: Audit = {
-            action: '/api/v4/users/login',
+            action: '/v1/workspace/users/login',
             create_at: 51053522355,
             extra_info: 'success',
             id: 'id_1',
@@ -104,7 +102,7 @@ describe('components/audit_table/audit_row/AuditRow', () => {
 
     test('should match snapshot with user audit', () => {
         const audit: Audit = {
-            action: '/api/v4/oauth/register',
+            action: '/v1/workspace/oauth/register',
             create_at: 51053522355,
             extra_info: 'client_id=client_id',
             id: 'id_1',

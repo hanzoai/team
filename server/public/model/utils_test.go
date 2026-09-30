@@ -1241,7 +1241,7 @@ func TestIsValidHTTPURL(t *testing.T) {
 		},
 		{
 			"relative url",
-			"/api/test",
+			"/v1/test",
 			false,
 		},
 		{

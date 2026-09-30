@@ -1837,7 +1837,7 @@ func TestInterpluginPluginHTTP(t *testing.T) {
 
 		func (p *MyPlugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 			switch r.URL.Path {
-			case "/api/v2/test":
+			case "/v1/test":
 				if r.URL.Query().Get("abc") != "xyz" {
 					return
 				}
@@ -1851,7 +1851,7 @@ func TestInterpluginPluginHTTP(t *testing.T) {
 				resp := "we got:" + buf.String()
 				w.WriteHeader(598)
 				w.Write([]byte(resp))
-				if r.URL.Path != "/api/v2/test" {
+				if r.URL.Path != "/v1/test" {
 					return
 				}
 			case "/nobody":
@@ -1881,7 +1881,7 @@ func TestInterpluginPluginHTTP(t *testing.T) {
 		func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
 			buf := bytes.Buffer{}
 			buf.WriteString("This is the request")
-			req, err := http.NewRequest("GET", "/testplugininterserver/api/v2/test?abc=xyz", &buf)
+			req, err := http.NewRequest("GET", "/testplugininterserver/v1/test?abc=xyz", &buf)
 			if err != nil {
 				return nil, err.Error()
 			}
@@ -1966,7 +1966,7 @@ func TestInterpluginPluginHTTPWithBodyAfterWriteHeader(t *testing.T) {
 		}
 
 		func (p *MyPlugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
-			if r.URL.Path == "/api/v2/test" {
+			if r.URL.Path == "/v1/test" {
 				if r.URL.Query().Get("abc") != "xyz" {
 					return
 				}
@@ -2005,7 +2005,7 @@ func TestInterpluginPluginHTTPWithBodyAfterWriteHeader(t *testing.T) {
 		func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
 			buf := bytes.Buffer{}
 			buf.WriteString("This is the request body")
-			req, err := http.NewRequest("POST", "/testpluginbodyafterserver/api/v2/test?abc=xyz", &buf)
+			req, err := http.NewRequest("POST", "/testpluginbodyafterserver/v1/test?abc=xyz", &buf)
 			if err != nil {
 				return nil, err.Error()
 			}
@@ -2079,7 +2079,7 @@ func TestInterpluginPluginHTTPStreaming(t *testing.T) {
 
 			func (p *MyPlugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 				switch r.URL.Path {
-				case "/api/v2/largepayload":
+				case "/v1/largepayload":
 					// Generate 1MB payload in 64KB chunks
 					chunkSize := 64 * 1024
 					totalChunks := 16
@@ -2117,7 +2117,7 @@ func TestInterpluginPluginHTTPStreaming(t *testing.T) {
 			}
 
 			func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
-				req, err := http.NewRequest("GET", "/testpluginlargepayloadserver/api/v2/largepayload", nil)
+				req, err := http.NewRequest("GET", "/testpluginlargepayloadserver/v1/largepayload", nil)
 				if err != nil {
 					return nil, err.Error()
 				}
@@ -2199,7 +2199,7 @@ func TestInterpluginPluginHTTPStreaming(t *testing.T) {
 
 			func (p *MyPlugin) ServeHTTP(c *plugin.Context, w http.ResponseWriter, r *http.Request) {
 				switch r.URL.Path {
-				case "/api/v2/incremental":
+				case "/v1/incremental":
 					w.WriteHeader(http.StatusOK)
 
 					chunks := []string{
@@ -2247,7 +2247,7 @@ func TestInterpluginPluginHTTPStreaming(t *testing.T) {
 			}
 
 			func (p *MyPlugin) MessageWillBePosted(c *plugin.Context, post *model.Post) (*model.Post, string) {
-				req, err := http.NewRequest("GET", "/testpluginincrementalserver/api/v2/incremental", nil)
+				req, err := http.NewRequest("GET", "/testpluginincrementalserver/v1/incremental", nil)
 				if err != nil {
 					return nil, err.Error()
 				}

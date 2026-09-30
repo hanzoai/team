@@ -33,7 +33,7 @@ describe('components/audit_table/AuditTable', () => {
     test('should match snapshot with audits', () => {
         const audits = [
             {
-                action: '/api/v4/channels',
+                action: '/v1/workspace/channels',
                 create_at: 50778112674,
                 extra_info: 'name=yeye',
                 id: 'id_2',
@@ -42,7 +42,7 @@ describe('components/audit_table/AuditTable', () => {
                 user_id: 'user_id_1',
             },
             {
-                action: '/api/v4/users/login',
+                action: '/v1/workspace/users/login',
                 create_at: 51053522355,
                 extra_info: 'success',
                 id: 'id_1',
