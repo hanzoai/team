@@ -20,17 +20,33 @@
 import { useSyncExternalStore } from 'react'
 
 const KEY = 'team.aside'
+const KIND_KEY = 'team.aside.kind'
+
+export type AsideKind = 'inbox' | 'inspector'
 
 const remembered = (): boolean => {
   try {
-    return localStorage.getItem(KEY) !== 'no'
+    return localStorage.getItem(KEY) === 'yes'
   } catch {
-    return true
+    return false
+  }
+}
+
+const rememberedKind = (): AsideKind => {
+  try {
+    return localStorage.getItem(KIND_KEY) === 'inspector' ? 'inspector' : 'inbox'
+  } catch {
+    return 'inbox'
   }
 }
 
 let showing = remembered()
+let kind: AsideKind = rememberedKind()
 const readers = new Set<() => void>()
+
+const notify = () => {
+  for (const r of readers) r()
+}
 
 const set = (next: boolean) => {
   if (next === showing) return
@@ -40,7 +56,30 @@ const set = (next: boolean) => {
   } catch {
     // A browser that will not remember still obeys for this session.
   }
-  for (const r of readers) r()
+  notify()
+}
+
+export const setAsideKind = (next: AsideKind) => {
+  const changed = next !== kind
+  kind = next
+  try {
+    localStorage.setItem(KIND_KEY, next)
+  } catch {
+    // Ignore storage failures.
+  }
+  if (!showing) {
+    set(true)
+  } else if (changed) {
+    notify()
+  }
+}
+
+export const toggleAsideKind = (target: AsideKind) => {
+  if (showing && kind === target) {
+    set(false)
+  } else {
+    setAsideKind(target)
+  }
 }
 
 export const showAside = () => set(true)
@@ -54,5 +93,15 @@ export const useAside = (): boolean =>
       return () => readers.delete(r)
     },
     () => showing,
-    () => true,
+    () => false,
+  )
+
+export const useAsideKind = (): AsideKind =>
+  useSyncExternalStore(
+    (r) => {
+      readers.add(r)
+      return () => readers.delete(r)
+    },
+    () => kind,
+    () => 'inbox',
   )

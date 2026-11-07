@@ -57,9 +57,8 @@ export function List({
 /**
  * The conversation.
  *
- * `bottom` is the anchor: the content grows upward off the end, so a room with
- * two messages sits at the bottom of the panel like a room with two hundred,
- * and neither has a band of empty panel under it.
+ * Flows naturally from the top so short conversations do not leave a large
+ * empty void above the messages.
  */
 function Said({
   messages,
@@ -80,20 +79,9 @@ function Said({
     end.current?.scrollIntoView({ block: 'end' })
   }, [last])
 
-  /**
-   * The scroller is a stack that scrolls rather than `ScrollView`, because
-   * ScrollView interposes a content container this component cannot address —
-   * `contentContainerStyle` is omitted from its props — and that container does
-   * not fill the scroller, so a `min-height: 100%` on anything inside it
-   * resolves against the content's own height and means nothing.
-   *
-   * `margin-top: auto` is the anchor and needs no percentage: in a flex column
-   * with free space the content is pushed to the bottom, and when there is none
-   * the margin collapses and the conversation simply scrolls.
-   */
   return (
     <YStack flex={1} minH={0} style={{ overflowY: 'auto' }}>
-      <YStack style={{ marginTop: 'auto' }} pb={8}>
+      <YStack pt={4} pb={12}>
         {entries(messages).map((e) =>
           e.kind === 'day' ? (
             <Day key={e.id} at={e.at} />

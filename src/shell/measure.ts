@@ -26,46 +26,43 @@ export const SCALE = 1.5
 // of width — the reference proves it by cutting its fourth column mid-card
 // rather than reflowing, so the board scrolls sideways and never re-wraps.
 
-/** The icon rail. Image 124. Fixed at every width, including the narrowest: it
+/** The icon rail. Fixed at every width, including the narrowest: it
  *  is how you leave the screen you are on. */
-export const RAIL = 84
-/** The navigator. Image 314. Fixed, dragged by the grip, a drawer when there is
+export const RAIL = 64
+/** The navigator. Fixed, dragged by the grip, a drawer when there is
  *  no room for it. */
-export const NAV = 208
-export const NAV_MIN = 168
-export const NAV_MAX = 360
-/** The dismissible right panel. Image 1568..2040, so 472 — which puts its left
- *  edge at 1045 in CSS px, where the reference draws it. */
-export const ASIDE = 312
+export const NAV = 268
+export const NAV_MIN = 220
+export const NAV_MAX = 380
+/** The dismissible right panel. */
+export const ASIDE = 304
 
-/** Ground showing between the raised panels, and around them. The reference
- *  draws three widths there (8 between, 16 above, 20 outside); one value here,
- *  because a seam with three widths is three seams. */
-export const SEAM = 8
+/** Ground showing between the raised panels, and around them. */
+export const SEAM = 6
 
 // ── inside a region ──────────────────────────────────────────────────────────
 
-/** Panel padding: the navigator and the aside alike. Image 24–26. */
-export const PAD = 16
+/** Panel padding: the navigator and the aside alike. */
+export const PAD = 14
 
-/** A navigator row: a standing entry or a project. Image pitch 55 and 60. */
-export const ROW = 36
-/** A row under an expanded project. Image pitch 47. */
-export const LEAF = 32
-/** The rail's icon pitch, image 64, which is also the touch minimum. */
-export const STEP = 44
-/** Every glyph in the rail and the navigator. Image 24–32. */
-export const ICON = 20
-/** The search field. Image 52. */
-export const FIELD = 36
+/** A navigator row: a standing entry or a project. */
+export const ROW = 34
+/** A row under an expanded project. */
+export const LEAF = 30
+/** The rail's icon pitch, which is also the touch minimum. */
+export const STEP = 38
+/** Every glyph in the rail and the navigator. */
+export const ICON = 18
+/** The search field. */
+export const FIELD = 34
 
-/** The rail's mark. Image 66. */
-export const MARK = 44
-/** The rail's gauge. Image 90×225. */
-export const GAUGE = { width: 60, height: 150 }
-/** The rail's add control, and the glow behind the selected glyph. Image 56, ~100. */
-export const ADD = 36
-export const GLOW = 68
+/** The rail's mark. */
+export const MARK = 36
+/** The rail's gauge. */
+export const GAUGE = { width: 48, height: 64 }
+/** The rail's add control, and the glow behind the selected glyph. */
+export const ADD = 32
+export const GLOW = 52
 
 /** Where a row's label starts, and where the tree's spine runs. Padding, the
  *  icon box, then the gap — so a row with no glyph indents to the same place and

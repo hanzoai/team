@@ -30,7 +30,7 @@ import { useState, type ReactNode } from 'react'
 import { hideAside } from '~/shell/aside.ts'
 import { PAD } from '~/shell/measure.ts'
 import { gap, paint, ring, round, rung } from '~/theme/theme'
-import { see, useNotes } from './feed.ts'
+import { see, seeAll, useNotes, useUnseen } from './feed.ts'
 import { inTab, TABS, unseen, type Note, type Tab } from './note.ts'
 import { press } from '~/shell'
 import { Row } from './Row.tsx'
@@ -40,15 +40,21 @@ const HEAD = 12
 /** Measured 18.7 between the title's box and the tab row's; the ramp's 16 lands
  *  the rail at 90 against the reference's 90.7, and a rhythm off the ramp reads
  *  as no product at all. */
-const BAND = 16
-const TAB = 38
-const LIST = 10
-const MARK = 20
+const BAND = 12
+const TAB = 36
+const LIST = 6
+const MARK = 17
 const BADGE = 16
 const SHUT = 24
 
+type Filter = 'all' | 'unread' | 'mentions'
+
 const face = { all: ListMark, task: CopyCheck, chat: MessageCircleMore } as const
 const label = { all: 'All', task: 'Tasks', chat: 'Chat' } as const
+
+const hasMention = (note: Note): boolean =>
+  note.line.some((s) => s.mention || s.text.includes('mentioned')) ||
+  (note.quote?.some((s) => s.mention) ?? false)
 
 /** A quiet middle, for the states the reference never shows. */
 const Say = ({ children }: { children: ReactNode }) => (
@@ -57,7 +63,7 @@ const Say = ({ children }: { children: ReactNode }) => (
   </YStack>
 )
 
-const Feed = ({ tab }: { tab: Tab }) => {
+const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
   const feed = useNotes()
 
   if (feed.phase === 'loading')
@@ -85,13 +91,22 @@ const Feed = ({ tab }: { tab: Tab }) => {
       </Say>
     )
 
-  const notes: Note[] = inTab(feed.data ?? [], tab)
+  const baseNotes: Note[] = inTab(feed.data ?? [], tab)
+  const notes = baseNotes.filter((n) => {
+    if (filter === 'unread') return !n.seen
+    if (filter === 'mentions') return hasMention(n)
+    return true
+  })
 
   if (notes.length === 0)
     return (
       <Say>
         <SizableText size={rung.body} color={paint.dim}>
-          Nothing here.
+          {filter === 'unread'
+            ? 'All caught up — no unread notifications.'
+            : filter === 'mentions'
+              ? 'No mentions in this view.'
+              : 'Nothing here.'}
         </SizableText>
       </Say>
     )
@@ -109,27 +124,64 @@ const Feed = ({ tab }: { tab: Tab }) => {
 
 export const Inbox = () => {
   const [tab, setTab] = useState<Tab>('all')
+  const [filter, setFilter] = useState<Filter>('all')
   const feed = useNotes()
   const notes = feed.data ?? []
+  const unreadTotal = useUnseen()
+  const mentionCount = notes.filter(hasMention).length
 
   return (
     <YStack data-parity-key="inbox.panel" flex={1} minH={0}>
       <XStack px={PAD} pt={HEAD} items="center" justify="space-between">
-        <SizableText data-parity-key="inbox.title" size={rung.title} fontWeight="500" color={paint.ink}>
-          Inbox
-        </SizableText>
-        <XStack
-          data-parity-key="inbox.close"
-          {...press(hideAside, 'Close the inbox')}
-          width={SHUT}
-          height={SHUT}
-          items="center"
-          justify="center"
-          rounded={round.field}
-          hoverStyle={{ background: paint.card }}
-          focusVisibleStyle={ring}
-        >
-          <X size={14} color={paint.dim} />
+        <XStack items="center" gap={8}>
+          <SizableText data-parity-key="inbox.title" size={rung.row} fontWeight="600" color={paint.ink}>
+            Inbox
+          </SizableText>
+          {unreadTotal > 0 ? (
+            <XStack
+              px={7}
+              py={2}
+              rounded={round.pill}
+              items="center"
+              justify="center"
+              bg={paint.alert}
+            >
+              <SizableText size={rung.chip} fontWeight="700" color={paint.panel}>
+                {`${unreadTotal} unread`}
+              </SizableText>
+            </XStack>
+          ) : null}
+        </XStack>
+
+        <XStack items="center" gap={6}>
+          {unreadTotal > 0 ? (
+            <XStack
+              {...press(seeAll, 'Mark all notifications as read')}
+              px={7}
+              py={3}
+              rounded={round.field}
+              hoverStyle={{ background: paint.card }}
+              focusVisibleStyle={ring}
+            >
+              <SizableText size={rung.chip} fontWeight="500" color={paint.mute}>
+                Mark all read
+              </SizableText>
+            </XStack>
+          ) : null}
+
+          <XStack
+            data-parity-key="inbox.close"
+            {...press(hideAside, 'Close the inbox')}
+            width={SHUT}
+            height={SHUT}
+            items="center"
+            justify="center"
+            rounded={round.field}
+            hoverStyle={{ background: paint.card }}
+            focusVisibleStyle={ring}
+          >
+            <X size={14} color={paint.dim} />
+          </XStack>
         </XStack>
       </XStack>
 
@@ -142,10 +194,6 @@ export const Inbox = () => {
         gap={0}
         mt={BAND}
       >
-        {/* The rail is the WRAPPER's border rather than the list's, so it runs
-            edge to edge under a tab row that is inset by the panel padding.
-            That is the thing that makes this read as one component instead of a
-            row of buttons, and it is measured: 460 lit of a 460-wide panel. */}
         <YStack data-parity-key="inbox.rail" borderBottomWidth={1} borderColor={paint.rule}>
           <TabsList
             height={TAB}
@@ -161,9 +209,6 @@ export const Inbox = () => {
             {TABS.map((t) => {
               const on = t === tab
               const Mark = face[t]
-              // All is the union; its count is the sum of the other two and
-              // tells a reader nothing they cannot already see, which is why
-              // the reference badges Tasks and leaves All bare.
               const count = t === 'all' ? 0 : unseen(notes, t)
               return (
                 <TabsTrigger
@@ -171,9 +216,6 @@ export const Inbox = () => {
                   data-parity-key={`inbox.tab.${t}`}
                   value={t}
                   height="100%"
-                  // gui's tab frame stacks, because the segmented control it
-                  // dresses by default holds one word. This one holds a glyph,
-                  // a word and a count on one line.
                   flexDirection="row"
                   px={gap.tight}
                   gap="$1.5"
@@ -189,7 +231,7 @@ export const Inbox = () => {
                   focusVisibleStyle={ring}
                 >
                   <Mark size={MARK} color={on ? paint.ink : paint.dim} />
-                  <SizableText size={rung.row} color={on ? paint.ink : paint.dim}>
+                  <SizableText size={rung.small} fontWeight={on ? '600' : '500'} color={on ? paint.ink : paint.dim}>
                     {label[t]}
                   </SizableText>
                   {count > 0 ? (
@@ -214,9 +256,51 @@ export const Inbox = () => {
           </TabsList>
         </YStack>
 
+        {/* Notification Filter Bar: All · Unread · Mentions */}
+        <XStack
+          px={PAD}
+          py={8}
+          gap={6}
+          items="center"
+          borderBottomWidth={1}
+          borderColor={paint.rule}
+        >
+          {(
+            [
+              ['all', `All (${notes.length})`],
+              ['unread', `Unread (${unreadTotal})`],
+              ['mentions', `Mentions (${mentionCount})`],
+            ] as const
+          ).map(([key, text]) => {
+            const active = filter === key
+            return (
+              <XStack
+                key={key}
+                {...press(() => setFilter(key), `Filter ${text}`)}
+                px={8}
+                py={3}
+                rounded={round.pill}
+                bg={active ? paint.card : 'transparent'}
+                borderWidth={1}
+                borderColor={active ? paint.ink : paint.rule}
+                hoverStyle={{ background: paint.card }}
+                focusVisibleStyle={ring}
+              >
+                <SizableText
+                  size={rung.chip}
+                  fontWeight={active ? '600' : '500'}
+                  color={active ? paint.ink : paint.mute}
+                >
+                  {text}
+                </SizableText>
+              </XStack>
+            )
+          })}
+        </XStack>
+
         {TABS.map((t) => (
           <TabsContent key={t} value={t} flex={1} minH={0}>
-            {t === tab ? <Feed tab={t} /> : null}
+            {t === tab ? <Feed tab={t} filter={filter} /> : null}
           </TabsContent>
         ))}
       </Tabs>

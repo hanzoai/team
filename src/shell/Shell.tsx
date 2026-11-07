@@ -26,7 +26,7 @@ import { Screen, Sheet, SheetContent, XStack, YStack } from '@hanzo/ui'
 import { useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
-import { toggleAside, useAside } from './aside.ts'
+import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
 import { round } from '~/theme/theme'
@@ -59,6 +59,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
    */
   const [over, setOver] = useState(false)
   const showing = useAside()
+  const asideKind = useAsideKind()
 
   const wide = width >= INLINE_ASIDE
   const roomy = width >= INLINE_NAV
@@ -81,8 +82,15 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         }
       >
         <Rail
-          notices={!!aside && (wide ? showing : over)}
-          onNotices={() => (wide ? toggleAside() : setOver(!over))}
+          notices={!!aside && (wide ? showing && asideKind === 'inbox' : over)}
+          onNotices={() => {
+            if (wide) {
+              toggleAsideKind('inbox')
+            } else {
+              setAsideKind('inbox')
+              setOver(!over)
+            }
+          }}
           onSurface={reach}
         />
 

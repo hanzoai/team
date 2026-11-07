@@ -34,18 +34,29 @@ export const HANZO_AGENTS: readonly AgentPreset[] = [
   { id: 'cyber', name: 'Cyber', role: 'CISO', department: 'Security', lead: true, avatar: '/agents/cyber.png', schedule: '*/10 * * * *', triggers: ['git', 'webhook', 'watch'], status: 'Continuous KMS & supply-chain audit clean.' },
 
   // 11 Specialist 24/7 Bots
-  { id: 'rev', name: 'Rev', role: 'Revenue', department: 'Sales', avatar: '/agents/rev.png', schedule: '*/15 * * * *', triggers: ['channel', 'webhook', 'watch'], status: "You're right that it's a bug. The coding service is back up, but all three new runs failed with wallet holds 0." },
-  { id: 'lang', name: 'Lang', role: 'Languages & Translation', department: 'Engineering', avatar: '/agents/lang.png', schedule: '0 */2 * * *', triggers: ['git', 'webhook'], status: 'i18n is still stalled because the locale sync lease needs the dev wallet topped up.' },
-  { id: 'law', name: 'Law', role: 'Legal', department: 'Legal', avatar: '/agents/law.png', schedule: '0 9 * * 1-5', triggers: ['channel', 'webhook'], status: 'The updated motions and MSA/DPA templates are ready in Hanzo Sign.' },
-  { id: 'mo', name: 'Mo', role: 'Motion Pictures', department: 'Creative', avatar: '/agents/mo.png', schedule: '*/30 * * * *', triggers: ['git', 'webhook'], status: "I'm Mo now. I posted a hero reel and 4K loops in #hanzo-video." },
-  { id: 'mu', name: 'Mu', role: 'Music & Audio', department: 'Creative', avatar: '/agents/mu.png', schedule: '0 10 * * 1-5', triggers: ['channel', 'webhook'], status: "I'm set up in #hanzo-music with Omni Flash voice and sound design." },
-  { id: 'data', name: 'Data', role: 'Data & Analytics', department: 'Engineering', avatar: '/agents/data.png', schedule: '*/15 * * * *', triggers: ['git', 'webhook', 'watch'], status: "Today's #hanzo-data update: GA4 & ClickHouse funnels synced." },
-  { id: 'gov', name: 'Gov', role: 'Government Affairs', department: 'Legal', avatar: '/agents/gov.png', schedule: '0 8 * * 1-5', triggers: ['webhook', 'watch'], status: "I'm set up to run the gov policy & HIP/ZIP regulatory watch." },
-  { id: 'ed', name: 'Ed', role: 'Education', department: 'Marketing', avatar: '/agents/ed.png', schedule: '0 9 * * 1-5', triggers: ['git', 'channel', 'webhook'], status: 'Allowed: Launch docs feed and interactive courses on docs.hanzo.ai.' },
-  { id: 'doc', name: 'Doc', role: 'Documentation', department: 'Product', avatar: '/agents/doc.png', schedule: '0 */3 * * *', triggers: ['git', 'channel'], status: 'I posted a kickoff in #hanzo-docs for the OpenAPI & SDK reference.' },
-  { id: 'biz', name: 'Biz', role: 'Business Development', department: 'Sales', avatar: '/agents/biz.png', schedule: '*/30 * * * *', triggers: ['channel', 'webhook'], status: "I posted this morning's #hanzo-biz partner & co-selling brief." },
-  { id: 'art', name: 'Art', role: 'Visual Art', department: 'Design', avatar: '/agents/art.png', schedule: '0 10 * * 1-5', triggers: ['channel', 'webhook'], status: 'Expired: Start a Hanzo Design visual production pass.' },
+  { id: 'rev', name: 'Rev', role: 'Revenue Operations', department: 'Sales', avatar: '/agents/rev.png', schedule: '*/15 * * * *', triggers: ['channel', 'webhook', 'watch'], status: 'Synced org grants & prepaid balances' },
+  { id: 'lang', name: 'Lang', role: 'Localization & i18n', department: 'Engineering', avatar: '/agents/lang.png', schedule: '0 */2 * * *', triggers: ['git', 'webhook'], status: '36 locales verified across hanzo.ai' },
+  { id: 'law', name: 'Law', role: 'General Counsel', department: 'Legal', avatar: '/agents/law.png', schedule: '0 9 * * 1-5', triggers: ['channel', 'webhook'], status: 'MSA & DPA templates ready in Sign' },
+  { id: 'mo', name: 'Mo', role: 'Motion Pictures', department: 'Creative', avatar: '/agents/mo.png', schedule: '*/30 * * * *', triggers: ['git', 'webhook'], status: '4K hero reel & loops in #hanzo-video' },
+  { id: 'mu', name: 'Mu', role: 'Music & Audio', department: 'Creative', avatar: '/agents/mu.png', schedule: '0 10 * * 1-5', triggers: ['channel', 'webhook'], status: 'Omni Flash voice & sound in Studio' },
+  { id: 'data', name: 'Data', role: 'Data & Analytics', department: 'Engineering', avatar: '/agents/data.png', schedule: '*/15 * * * *', triggers: ['git', 'webhook', 'watch'], status: 'GA4 & ClickHouse funnels synced' },
+  { id: 'gov', name: 'Gov', role: 'Government Affairs', department: 'Legal', avatar: '/agents/gov.png', schedule: '0 8 * * 1-5', triggers: ['webhook', 'watch'], status: 'Policy & HIP/ZIP regulatory watch' },
+  { id: 'ed', name: 'Ed', role: 'Education', department: 'Marketing', avatar: '/agents/ed.png', schedule: '0 9 * * 1-5', triggers: ['git', 'channel', 'webhook'], status: 'Docs & interactive courses live' },
+  { id: 'doc', name: 'Doc', role: 'Documentation', department: 'Product', avatar: '/agents/doc.png', schedule: '0 */3 * * *', triggers: ['git', 'channel'], status: 'OpenAPI & SDK reference synced' },
+  { id: 'biz', name: 'Biz', role: 'Business Development', department: 'Sales', avatar: '/agents/biz.png', schedule: '*/30 * * * *', triggers: ['channel', 'webhook'], status: 'Partner & co-selling brief posted' },
+  { id: 'art', name: 'Art', role: 'Visual Art', department: 'Design', avatar: '/agents/art.png', schedule: '0 10 * * 1-5', triggers: ['channel', 'webhook'], status: '4K hero stills & visual assets ready' },
 ]
 
 export const LEAD_AGENTS = HANZO_AGENTS.filter((a) => a.lead)
 export const BOT_AGENTS = HANZO_AGENTS.filter((a) => !a.lead)
+
+/** Human-readable cadence for primary headers; raw cron stays in Technical Details. */
+export const humanSchedule = (cron: string): string => {
+  const m = /^\*\/(\d+) \* \* \* \*$/.exec(cron)
+  if (m) return `Every ${m[1]}m`
+  const h = /^0 \*\/(\d+) \* \* \*$/.exec(cron)
+  if (h) return `Every ${h[1]}h`
+  const d = /^0 (\d+) \* \* 1-5$/.exec(cron)
+  if (d) return `Weekdays ${d[1]}:00`
+  return '24/7 Proactive'
+}

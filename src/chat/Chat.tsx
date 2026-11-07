@@ -12,12 +12,15 @@
  */
 import { SizableText, XStack, YStack } from '@hanzo/ui'
 import { EmptyState } from '@hanzo/ui/product'
-import { Hash, Lock, MessagesSquare } from '@hanzogui/lucide-icons-2'
+import { Bell, Code, Hash, Lock, MessagesSquare, Monitor } from '@hanzogui/lucide-icons-2'
 import { useCallback, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 
+import { HANZO_AGENTS, humanSchedule, type AgentPreset } from '~/data/agents.ts'
 import { invalidate } from '~/data/query.ts'
 import { useSpace } from '~/data/space.tsx'
+import { press, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
+import { paint, ring, round, rung } from '~/theme/theme'
 import { react, reply, say, unreact, type Message, type Room } from './chat.ts'
 import { Composer } from './Composer.tsx'
 import { Failed, List, Middle, Waiting } from './List.tsx'
@@ -131,26 +134,260 @@ export function Chat() {
  * it with a placeholder.
  */
 function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeople>['data'] }) {
+  const [techOpen, setTechOpen] = useState(false)
+  const unread = useNotices()
+  const asideShowing = useAside()
+  const asideKind = useAsideKind()
+  const agent: AgentPreset | undefined = room.id.startsWith('dm-')
+    ? HANZO_AGENTS.find((a) => `dm-${a.id}` === room.id)
+    : undefined
+
   return (
-    <YStack px={24} pt={16} pb={12} gap={4} borderBottomWidth={1} borderBottomColor="$edge">
-      {room.topic ? (
-        <SizableText fontSize="$2" color="$dim" numberOfLines={1}>
-          {room.topic}
-        </SizableText>
-      ) : null}
-      <XStack items="center" gap={12}>
-        <XStack flex={1} minW={0} items="center" gap={7}>
-          {room.kind === 'direct' ? null : room.private ? (
-            <Lock size={17} color="$quiet" />
+    <YStack borderBottomWidth={1} borderBottomColor="$edge" bg="$panel">
+      <XStack px={20} py={10} items="center" justify="space-between" gap={12}>
+        {agent ? (
+          <XStack flex={1} minW={0} items="center" gap={12}>
+            <YStack position="relative" shrink={0}>
+              <YStack
+                width={34}
+                height={34}
+                rounded={round.pill}
+                overflow="hidden"
+                bg="$background"
+                borderWidth={1}
+                borderColor="$edge"
+                items="center"
+                justify="center"
+              >
+                <img
+                  src={agent.avatar}
+                  alt={agent.name}
+                  width={34}
+                  height={34}
+                  style={{ width: 34, height: 34, objectFit: 'cover', display: 'block' }}
+                />
+              </YStack>
+              <YStack
+                position="absolute"
+                b={-1}
+                r={-1}
+                width={9}
+                height={9}
+                rounded={round.pill}
+                bg="$ink"
+                borderWidth={1.5}
+                borderColor="$panel"
+              />
+            </YStack>
+
+            <YStack flex={1} minW={0} gap={2}>
+              <XStack items="center" gap={8} flexWrap="wrap">
+                <SizableText fontSize={rung.row} fontWeight="600" color="$ink">
+                  {agent.name}
+                </SizableText>
+                <XStack
+                  px={7}
+                  py={2}
+                  rounded={round.field}
+                  bg="$raised"
+                  borderWidth={1}
+                  borderColor="$edge"
+                >
+                  <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                    {agent.role}
+                  </SizableText>
+                </XStack>
+                <XStack
+                  px={7}
+                  py={2}
+                  rounded={round.pill}
+                  bg="$hover"
+                  items="center"
+                  gap={5}
+                >
+                  <YStack width={5} height={5} rounded={round.pill} bg="$ink" />
+                  <SizableText fontSize={rung.chip} fontWeight="500" color="$ink">
+                    {`Available 24/7 · ${humanSchedule(agent.schedule)}`}
+                  </SizableText>
+                </XStack>
+              </XStack>
+
+              <SizableText fontSize={rung.small} color="$dim" numberOfLines={1}>
+                {agent.status}
+              </SizableText>
+            </YStack>
+          </XStack>
+        ) : (
+          <XStack flex={1} minW={0} items="center" gap={10}>
+            <XStack items="center" gap={6} shrink={0}>
+              {room.kind === 'direct' ? null : room.private ? (
+                <Lock size={16} color="$quiet" />
+              ) : (
+                <Hash size={17} color="$quiet" />
+              )}
+              <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1}>
+                {room.name}
+              </SizableText>
+            </XStack>
+            {room.topic ? (
+              <>
+                <YStack width={1} height={14} bg="$edge" shrink={0} />
+                <SizableText fontSize={rung.small} color="$dim" numberOfLines={1} flex={1}>
+                  {room.topic}
+                </SizableText>
+              </>
+            ) : null}
+          </XStack>
+        )}
+
+        <XStack items="center" gap={8} shrink={0}>
+          {agent ? (
+            <>
+              <XStack
+                {...press(() => setTechOpen((v) => !v), 'Toggle technical details')}
+                aria-expanded={techOpen}
+                px={9}
+                py={5}
+                rounded={round.field}
+                bg={techOpen ? '$hover' : '$raised'}
+                borderWidth={1}
+                borderColor={techOpen ? '$bound' : '$edge'}
+                items="center"
+                gap={5}
+                hoverStyle={{ background: '$hover' }}
+                focusVisibleStyle={ring}
+              >
+                <Code size={13} color="$quiet" />
+                <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                  Technical details
+                </SizableText>
+              </XStack>
+
+              <XStack
+                {...press(() => toggleAsideKind('inspector'), 'Toggle agent sandbox & inspector')}
+                aria-pressed={asideShowing && asideKind === 'inspector'}
+                px={9}
+                py={5}
+                rounded={round.field}
+                bg={asideShowing && asideKind === 'inspector' ? '$hover' : '$raised'}
+                borderWidth={1}
+                borderColor={asideShowing && asideKind === 'inspector' ? '$bound' : '$edge'}
+                items="center"
+                gap={5}
+                hoverStyle={{ background: '$hover' }}
+                focusVisibleStyle={ring}
+              >
+                <Monitor size={13} color="$quiet" />
+                <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                  Computer
+                </SizableText>
+              </XStack>
+            </>
           ) : (
-            <Hash size={19} color="$quiet" />
+            <People members={room.members} people={people ?? []} />
           )}
-          <SizableText fontSize="$7" fontWeight="500" color="$ink" numberOfLines={1}>
-            {room.name}
-          </SizableText>
+
+          {/* Collapsible Inbox drawer trigger with unread count badge */}
+          <XStack
+            {...press(() => toggleAsideKind('inbox'), 'Toggle Inbox drawer')}
+            aria-pressed={asideShowing && asideKind === 'inbox'}
+            px={9}
+            py={5}
+            rounded={round.field}
+            bg={asideShowing && asideKind === 'inbox' ? '$hover' : '$raised'}
+            borderWidth={1}
+            borderColor={asideShowing && asideKind === 'inbox' ? '$bound' : '$edge'}
+            items="center"
+            gap={6}
+            hoverStyle={{ background: '$hover' }}
+            focusVisibleStyle={ring}
+          >
+            <Bell size={13} color={asideShowing && asideKind === 'inbox' ? '$ink' : '$quiet'} />
+            <SizableText
+              fontSize={rung.chip}
+              fontWeight="500"
+              color={asideShowing && asideKind === 'inbox' ? '$ink' : '$quiet'}
+            >
+              Inbox
+            </SizableText>
+            {unread > 0 ? (
+              <YStack
+                minW={16}
+                height={16}
+                px={4}
+                rounded={round.pill}
+                items="center"
+                justify="center"
+                style={{ background: paint.alert }}
+              >
+                <SizableText
+                  fontSize={10}
+                  lineHeight={12}
+                  fontWeight="700"
+                  style={{ color: paint.panel }}
+                >
+                  {unread}
+                </SizableText>
+              </YStack>
+            ) : null}
+          </XStack>
         </XStack>
-        <People members={room.members} people={people ?? []} />
       </XStack>
+
+      {/* Collapsible Technical Details View — keeps raw cron & triggers out of the primary header */}
+      {agent && techOpen ? (
+        <XStack
+          px={20}
+          py={8}
+          bg="$background"
+          borderTopWidth={1}
+          borderColor="$edge"
+          items="center"
+          justify="space-between"
+          flexWrap="wrap"
+          gap={12}
+        >
+          <XStack items="center" gap={16} flexWrap="wrap">
+            <XStack items="center" gap={6}>
+              <SizableText fontSize={rung.chip} color="$dim">
+                Cron Schedule:
+              </SizableText>
+              <XStack px={6} py={1} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                  {agent.schedule}
+                </SizableText>
+              </XStack>
+            </XStack>
+
+            <XStack items="center" gap={6}>
+              <SizableText fontSize={rung.chip} color="$dim">
+                Triggers:
+              </SizableText>
+              <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                {agent.triggers.join(', ')}
+              </SizableText>
+            </XStack>
+
+            <XStack items="center" gap={6}>
+              <SizableText fontSize={rung.chip} color="$dim">
+                Department:
+              </SizableText>
+              <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                {agent.department}
+              </SizableText>
+            </XStack>
+
+            <XStack items="center" gap={6}>
+              <SizableText fontSize={rung.chip} color="$dim">
+                Agent ID:
+              </SizableText>
+              <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                {`bot-${agent.id}`}
+              </SizableText>
+            </XStack>
+          </XStack>
+        </XStack>
+      ) : null}
     </YStack>
   )
 }

@@ -46,40 +46,47 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
   const activeOrg = current ?? orgs[0]
 
   return (
-    <YStack flex={1} minH={0} pt={16} pb={12}>
-      {/* Organization Switcher Header */}
-      <YStack px={PAD} pb={10} position="relative">
-        <XStack
-          {...press(() => setOrgMenuOpen((v) => !v), 'Switch organization')}
-          items="center"
-          justify="space-between"
-          px={10}
-          py={6}
-          rounded={round.field}
-          bg="$panel"
-          borderWidth={1}
-          borderColor="$edge"
-          hoverStyle={{ background: '$hover' }}
-          focusVisibleStyle={RING}
-        >
-          <XStack items="center" gap={8} minW={0} flex={1}>
+    <YStack flex={1} minH={0} pt={10} pb={8}>
+      {/* Compact Workspace & Surface Header */}
+      <YStack px={PAD} pb={8} position="relative">
+        <XStack items="center" justify="space-between" gap={8}>
+          <XStack
+            {...press(() => setOrgMenuOpen((v) => !v), 'Switch organization')}
+            items="center"
+            gap={7}
+            px={8}
+            py={5}
+            rounded={round.field}
+            bg="$panel"
+            borderWidth={1}
+            borderColor="$edge"
+            hoverStyle={{ background: '$hover' }}
+            focusVisibleStyle={RING}
+            flex={1}
+            minW={0}
+          >
             <YStack
-              width={20}
-              height={20}
+              width={18}
+              height={18}
               rounded="$2"
               bg="$hover"
               items="center"
               justify="center"
+              shrink={0}
             >
               <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
                 {(activeOrg?.name ?? 'H')[0]?.toUpperCase()}
               </SizableText>
             </YStack>
-            <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+            <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
               {activeOrg?.name ?? 'Hanzo AI'}
             </SizableText>
+            <ChevronDown size={13} color="$soft" />
           </XStack>
-          <ChevronDown size={14} color="$soft" />
+
+          <SizableText fontSize={rung.small} fontWeight="600" color="$quiet" shrink={0}>
+            {title}
+          </SizableText>
         </XStack>
 
         {orgMenuOpen ? (
@@ -122,16 +129,12 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
         ) : null}
       </YStack>
 
-      <SizableText px={PAD} fontSize={rung.title} fontWeight="500" color="$ink">
-        {title}
-      </SizableText>
-      <YStack height={14} />
       {children}
 
-      {/* Bottom user profile & Business Apps launcher (matching Hanzo Bot) */}
+      {/* Tightened native-app bottom account controls */}
       <XStack
         px={PAD}
-        pt={10}
+        pt={8}
         mt={4}
         borderTopWidth={1}
         borderColor="$edge"
@@ -139,35 +142,53 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
         justify="space-between"
       >
         <XStack items="center" gap={8} minW={0} flex={1}>
-          <YStack
-            width={28}
-            height={28}
-            rounded={round.pill}
-            bg="$panel"
-            borderWidth={1}
-            borderColor="$edge"
-            items="center"
-            justify="center"
-          >
-            <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
-              Z
+          <YStack position="relative" shrink={0}>
+            <YStack
+              width={26}
+              height={26}
+              rounded={round.pill}
+              bg="$panel"
+              borderWidth={1}
+              borderColor="$edge"
+              items="center"
+              justify="center"
+            >
+              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                ZK
+              </SizableText>
+            </YStack>
+            <YStack
+              position="absolute"
+              b={-1}
+              r={-1}
+              width={8}
+              height={8}
+              rounded={round.pill}
+              bg="$ink"
+              borderWidth={1.5}
+              borderColor="$background"
+            />
+          </YStack>
+          <YStack minW={0} flex={1}>
+            <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+              Zach Kelling
+            </SizableText>
+            <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
+              @zeekay · Online
             </SizableText>
           </YStack>
-          <SizableText fontSize={rung.small} fontWeight="500" color="$ink" numberOfLines={1}>
-            Zach Kelling
-          </SizableText>
         </XStack>
         <XStack
           {...press(() => navigate('/apps'), 'Open Business Apps')}
-          width={30}
-          height={30}
+          width={28}
+          height={28}
           rounded={round.field}
           items="center"
           justify="center"
           hoverStyle={{ background: '$hover' }}
           focusVisibleStyle={RING}
         >
-          <LayoutGrid size={16} color="$soft" />
+          <LayoutGrid size={15} color="$soft" />
         </XStack>
       </XStack>
     </YStack>
@@ -210,16 +231,39 @@ export const Find = ({ value, onChange }: { value: string; onChange: (q: string)
 )
 
 /** The hairline between groups of rows. */
-export const Rule = () => <Separator my={12} mx={PAD} borderColor="$edge" />
+export const Rule = () => <Separator my={6} mx={PAD} borderColor="$edge" />
 
-/** A group's name. Uppercase and tracked, which the navigator does here and
- *  nowhere else. */
-export const Group = ({ children }: { children: ReactNode }) => (
-  <XStack height={ROW} items="center" px={PAD} gap={8}>
-    <Chevron />
-    <SizableText {...caps} fontSize={rung.small} fontWeight="600" color="$quiet">
-      {children}
-    </SizableText>
+/** A group's name. Uppercase and tracked, with optional disclosure and count. */
+export const Group = ({
+  children,
+  count,
+  open = true,
+  onToggle,
+}: {
+  children: ReactNode
+  count?: number
+  open?: boolean
+  onToggle?: () => void
+}) => (
+  <XStack
+    {...(onToggle ? press(onToggle) : {})}
+    height={28}
+    items="center"
+    justify="space-between"
+    px={PAD}
+    gap={6}
+  >
+    <XStack items="center" gap={6} minW={0} flex={1}>
+      <Chevron open={open} />
+      <SizableText {...caps} fontSize={rung.chip} fontWeight="600" color="$quiet" numberOfLines={1}>
+        {children}
+      </SizableText>
+    </XStack>
+    {count !== undefined ? (
+      <SizableText fontSize={rung.chip} color="$faint">
+        {count}
+      </SizableText>
+    ) : null}
   </XStack>
 )
 

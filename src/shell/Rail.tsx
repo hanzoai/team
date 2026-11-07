@@ -20,7 +20,7 @@ import { useNotices, useTodo } from './counts.ts'
 import { press } from './press.ts'
 import { ADD, GAUGE, GLOW, ICON, MARK, PAD, RAIL, STEP } from './measure.ts'
 import { SURFACES } from './surfaces.ts'
-import { caps, chip, paint, round, rung } from '~/theme/theme'
+import { caps, paint, round, rung } from '~/theme/theme'
 
 const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
 
@@ -44,8 +44,8 @@ export type RailProps = {
 export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
   const { pathname } = useLocation()
   const waiting = useNotices()
-  const { all, current, choose } = useSpace()
-  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
+  const { current } = useSpace()
+  const orgName = current?.name ?? 'Hanzo AI'
 
   return (
     <YStack
@@ -53,94 +53,73 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
       shrink={0}
       height="100%"
       items="center"
-      pt={16}
-      pb={16}
+      justify="space-between"
+      pt={10}
+      pb={10}
       bg="$background"
       borderRightWidth={1}
       borderColor="$edge"
       data-parity-key="shell.rail"
     >
       <ScrollArea flex={1} minH={0} width="100%">
-        <YStack items="center" width="100%" pb={12}>
-          {/* Organization switcher tiles on the left rail */}
-          <YStack gap={8} items="center" width="100%">
-            {orgs.map((space) => {
-              const active = (current?.url ?? orgs[0]?.url) === space.url
-              const isHanzo = space.org === 'hanzo'
-              const badge = space.name
-                .split(/\s+/)
-                .filter((w) => w.toLowerCase() !== 'the')
-                .slice(0, 2)
-                .map((w) => w[0]?.toUpperCase() ?? '')
-                .join('')
-              return (
-                <Tooltip key={space.url}>
-                  <TooltipTrigger>
-                    <YStack
-                      {...press(() => choose(space.url), `Switch to ${space.name}`)}
-                      width="100%"
-                      items="center"
-                      justify="center"
-                      position="relative"
-                    >
-                      {active ? (
-                        <YStack
-                          position="absolute"
-                          l={0}
-                          t={8}
-                          b={8}
-                          width={3}
-                          rounded={round.pill}
-                          bg="$ink"
-                        />
-                      ) : null}
-                      <YStack
-                        width={MARK}
-                        height={MARK}
-                        rounded="$5"
-                        items="center"
-                        justify="center"
-                        bg={active ? '$hover' : '$panel'}
-                        borderWidth={1}
-                        borderColor={active ? '$ink' : '$edge'}
-                        hoverStyle={{ background: '$hover' }}
-                        style={isHanzo ? undefined : active ? chip(space.org ?? space.name) : undefined}
-                      >
-                        {isHanzo ? (
-                          <HanzoMark size={20} />
-                        ) : (
-                          <SizableText
-                            fontSize={rung.small}
-                            fontWeight="700"
-                            color={active ? '$ink' : '$soft'}
-                            style={active ? { color: chip(space.org ?? space.name).color } : undefined}
-                          >
-                            {badge}
-                          </SizableText>
-                        )}
-                      </YStack>
-                    </YStack>
-                  </TooltipTrigger>
-                  <TooltipContent>{`${space.name} (${space.org})`}</TooltipContent>
-                </Tooltip>
-              )
-            })}
-          </YStack>
+        <YStack items="center" width="100%" gap={2}>
+          {/* Single workspace mark at top of rail — org switching lives in the navigator header */}
+          <Tooltip>
+            <TooltipTrigger>
+              <YStack
+                {...press(() => onSurface('/chat'), orgName)}
+                width={MARK}
+                height={MARK}
+                rounded="$4"
+                items="center"
+                justify="center"
+                bg="$panel"
+                borderWidth={1}
+                borderColor="$edge"
+                hoverStyle={{ background: '$hover' }}
+              >
+                <HanzoMark size={18} />
+              </YStack>
+            </TooltipTrigger>
+            <TooltipContent>{orgName}</TooltipContent>
+          </Tooltip>
 
           <Rule />
 
-          <Slot label={notices ? 'Hide notices' : 'Show notices'} pressed={notices} onPress={onNotices}>
+          <Slot
+            label={
+              waiting > 0
+                ? `${notices ? 'Hide' : 'Show'} Inbox (${waiting} unread)`
+                : notices
+                  ? 'Hide Inbox'
+                  : 'Show Inbox'
+            }
+            pressed={notices}
+            onPress={onNotices}
+          >
             <Bell size={ICON} color={notices ? '$ink' : '$soft'} />
             {waiting > 0 ? (
               <YStack
                 position="absolute"
-                t={(STEP - ICON) / 2 - 1}
-                r={(STEP - ICON) / 2 - 1}
-                width={7}
-                height={7}
+                t={4}
+                r={3}
+                minW={15}
+                height={15}
+                px={3}
                 rounded={round.pill}
+                items="center"
+                justify="center"
                 style={DOT}
-              />
+              >
+                <SizableText
+                  fontSize={10}
+                  lineHeight={12}
+                  fontWeight="700"
+                  style={{ color: paint.panel }}
+                >
+                  {waiting}
+                </SizableText>
+              </YStack>
             ) : null}
           </Slot>
 
@@ -154,41 +133,38 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
               </Slot>
             )
           })}
-
-          <Rule />
-
-          <Gauge />
-
-          <YStack height={12} />
-
-          <Tooltip>
-            <TooltipTrigger>
-              <YStack
-                {...press(() => onSurface('/apps'), 'Open Business Apps')}
-                width={ADD}
-                height={ADD}
-                mt={4}
-                rounded={round.pill}
-                borderWidth={1}
-                borderStyle="dashed"
-                borderColor="$edge"
-                items="center"
-                justify="center"
-                hoverStyle={{ background: '$hover' }}
-                focusVisibleStyle={RING}
-              >
-                <Plus size={16} color="$soft" />
-              </YStack>
-            </TooltipTrigger>
-            <TooltipContent>All Hanzo Business Apps</TooltipContent>
-          </Tooltip>
         </YStack>
       </ScrollArea>
+
+      <YStack items="center" width="100%" gap={8} pt={6}>
+        <Gauge />
+
+        <Tooltip>
+          <TooltipTrigger>
+            <YStack
+              {...press(() => onSurface('/apps'), 'Open Business Apps')}
+              width={ADD}
+              height={ADD}
+              rounded={round.pill}
+              borderWidth={1}
+              borderStyle="dashed"
+              borderColor="$edge"
+              items="center"
+              justify="center"
+              hoverStyle={{ background: '$hover' }}
+              focusVisibleStyle={RING}
+            >
+              <Plus size={15} color="$soft" />
+            </YStack>
+          </TooltipTrigger>
+          <TooltipContent>All Hanzo Business Apps</TooltipContent>
+        </Tooltip>
+      </YStack>
     </YStack>
   )
 }
 
-const Rule = () => <Separator width={RAIL - PAD * 2} my={8} borderColor="$edge" />
+const Rule = () => <Separator width={RAIL - PAD * 2} my={6} borderColor="$edge" />
 
 /**
  * The value as a line. Two stacks rather than `Progress`, because that component
@@ -286,26 +262,23 @@ const Gauge = () => {
         style={{ backgroundColor: paint.accent }}
       />
 
-      <YStack flex={1} z={1} p={6}>
-        <YStack rounded="$4" bg="$panel" borderWidth={1} borderColor="$edge" px={8} py={6}>
-          <XStack items="flex-start" gap={1}>
-            <SizableText fontSize={rung.figure} lineHeight={24} fontWeight="500" color="$ink">
+      <YStack flex={1} z={1} p={4} items="center" justify="space-between">
+        <YStack width="100%" rounded="$3" bg="$panel" borderWidth={1} borderColor="$edge" px={5} py={4} items="center">
+          <XStack items="baseline" gap={1}>
+            <SizableText fontSize={rung.small} lineHeight={16} fontWeight="700" color="$ink">
               {todo ?? '—'}
             </SizableText>
             {todo === null ? null : (
-              <SizableText fontSize={rung.chip} lineHeight={13} color="$soft">
+              <SizableText fontSize={9} lineHeight={11} color="$soft">
                 %
               </SizableText>
             )}
           </XStack>
-
-          <YStack height={6} />
+          <YStack height={3} />
           <Bar value={todo ?? 0} />
         </YStack>
 
-        <YStack flex={1} />
-
-        <SizableText {...caps} text="center" fontSize={rung.chip} fontWeight="600" color="$ink">
+        <SizableText {...caps} text="center" fontSize={9} fontWeight="600" color="$quiet">
           To do
         </SizableText>
       </YStack>

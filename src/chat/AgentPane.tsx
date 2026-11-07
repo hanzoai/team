@@ -14,7 +14,7 @@ import { useParams } from 'react-router'
 
 import { HANZO_AGENTS, type AgentPreset } from '~/data/agents.ts'
 import { Inbox } from '~/inbox'
-import { press } from '~/shell'
+import { press, useAsideKind } from '~/shell'
 import { hideAside } from '~/shell/aside.ts'
 import { PAD } from '~/shell/measure.ts'
 import { paint, ring, round, rung } from '~/theme/theme'
@@ -33,11 +33,12 @@ const INITIAL_SCREEN_STATE: Record<string, ScreenState> = {
 
 export function AgentPane() {
   const { id } = useParams()
+  const asideKind = useAsideKind()
   const agent = id?.startsWith('dm-')
     ? HANZO_AGENTS.find((a) => `dm-${a.id}` === id)
     : undefined
 
-  if (!agent) {
+  if (!agent || asideKind === 'inbox') {
     return <Inbox />
   }
 
@@ -61,9 +62,11 @@ function AgentInspector({ agent }: { agent: AgentPreset }) {
   }
 
   return (
-    <YStack data-parity-key="agent.panel" flex={1} minH={0} px={PAD} pt={14} pb={PAD} gap={14}>
-      {/* Top close action */}
-      <XStack items="center" justify="flex-end">
+    <YStack data-parity-key="agent.panel" flex={1} minH={0} px={PAD} pt={12} pb={PAD} gap={14}>
+      <XStack items="center" justify="space-between">
+        <SizableText fontSize={rung.small} fontWeight="600" color="$quiet">
+          {`${agent.name} · Inspector`}
+        </SizableText>
         <XStack
           {...press(hideAside, 'Close inspector')}
           width={24}
@@ -79,7 +82,7 @@ function AgentInspector({ agent }: { agent: AgentPreset }) {
       </XStack>
 
       {/* Centered Agent Avatar & Name */}
-      <YStack items="center" gap={8} mt={-10}>
+      <YStack items="center" gap={6}>
         <YStack
           width={52}
           height={52}

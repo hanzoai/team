@@ -74,6 +74,21 @@ export const see = (id: string) => {
   void source.see(id).catch(() => hold(CELL, now))
 }
 
+/** Mark every unread notification in the feed as read. */
+export const seeAll = () => {
+  const now = held<Note[]>(CELL)
+  if (!now) return
+  const unread = now.filter((n) => !n.seen)
+  if (unread.length === 0) return
+  hold(
+    CELL,
+    now.map((n) => (n.seen ? n : { ...n, seen: true })),
+  )
+  for (const n of unread) {
+    void source.see(n.id).catch(() => {})
+  }
+}
+
 /**
  * A notification that arrived while the panel was open.
  *

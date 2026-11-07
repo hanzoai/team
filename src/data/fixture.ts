@@ -229,7 +229,7 @@ const DIRECT_CLASS = 'chunter:class:DirectMessage'
 const directs: Channel[] = HANZO_AGENTS.map((a) => ({
   ...base(`dm-${a.id}`, DIRECT_CLASS),
   name: a.name,
-  topic: `${a.name} — ${a.role} · 24/7 Proactive · ${a.schedule}`,
+  topic: `${a.role} · ${a.department} · ${a.status}`,
   members: [`bot-${a.id}`, 'p-zach'],
 }))
 
@@ -259,7 +259,7 @@ const messages: Message[] = [
 
   ...HANZO_AGENTS.filter((a) => a.id !== 'rev' && a.id !== 'dev' && a.id !== 'mark').map((a, idx): Message => ({
     ...base(`m-dm-${a.id}`, Class.message),
-    message: `${a.status} Running 24/7 on schedule (${a.schedule}) with ${a.triggers.join(', ')} triggers.`,
+    message: `${a.status} Watching ${a.triggers.join(', ')} events across ${a.department}.`,
     attachedTo: `dm-${a.id}`,
     modifiedOn: now - (idx + 1) * 120_000,
     modifiedBy: `bot-${a.id}`,
