@@ -58,56 +58,42 @@ export function Channels() {
           <Note>{`Nothing matches “${query.trim()}”.`}</Note>
         ) : null}
 
-        {channels.length > 0 ? (
-          <>
-            <Group>Channels</Group>
-            {channels.map((r) => (
-              <Line key={r.id} room={r} />
-            ))}
-          </>
-        ) : null}
-
         {shownLeads.length > 0 ? (
-          <>
-            <Rule />
-            <Group>Leads</Group>
-            <XStack px={PAD - 4} py={4} flexWrap="wrap" gap={6}>
-              {shownLeads.map((agent) => {
-                const to = `/chat/dm-${agent.id}`
-                const here = pathname === to
-                return (
-                  <YStack
-                    key={agent.id}
-                    {...press(() => navigate(to), `${agent.name} — ${agent.role}`)}
-                    width="47%"
-                    py={6}
-                    px={4}
-                    rounded={round.field}
-                    items="center"
-                    gap={4}
-                    bg={here ? '$hover' : 'transparent'}
-                    hoverStyle={{ background: '$hover' }}
+          <XStack px={PAD - 6} pt={4} pb={6} flexWrap="wrap" rowGap={8} columnGap={4} justify="space-between">
+            {shownLeads.map((agent) => {
+              const to = `/chat/dm-${agent.id}`
+              const here = pathname === to
+              return (
+                <YStack
+                  key={agent.id}
+                  {...press(() => navigate(to), `${agent.name} — ${agent.role}`)}
+                  width="48%"
+                  py={4}
+                  px={2}
+                  rounded={round.field}
+                  items="center"
+                  gap={3}
+                  bg={here ? '$hover' : 'transparent'}
+                  hoverStyle={{ background: '$hover' }}
+                >
+                  <AgentFace agent={agent} size={46} />
+                  <SizableText
+                    fontSize={rung.chip}
+                    fontWeight={here ? '600' : '500'}
+                    color={here ? '$ink' : '$quiet'}
+                    numberOfLines={1}
                   >
-                    <AgentFace agent={agent} size={40} />
-                    <SizableText
-                      fontSize={rung.small}
-                      fontWeight={here ? '600' : '500'}
-                      color={here ? '$ink' : '$quiet'}
-                      numberOfLines={1}
-                    >
-                      {agent.name}
-                    </SizableText>
-                  </YStack>
-                )
-              })}
-            </XStack>
-          </>
+                    {agent.name}
+                  </SizableText>
+                </YStack>
+              )
+            })}
+          </XStack>
         ) : null}
 
         {shownBots.length > 0 ? (
           <>
             <Rule />
-            <Group>Bots · 24/7</Group>
             {shownBots.map((agent) => {
               const to = `/chat/dm-${agent.id}`
               const here = pathname === to
@@ -115,8 +101,8 @@ export function Channels() {
                 <XStack
                   key={agent.id}
                   {...press(() => navigate(to), `${agent.name} — ${agent.role}`)}
-                  px={PAD}
-                  py={6}
+                  px={PAD - 4}
+                  py={5}
                   mx={4}
                   gap={10}
                   items="center"
@@ -126,19 +112,14 @@ export function Channels() {
                 >
                   <AgentFace agent={agent} size={28} />
                   <YStack flex={1} minW={0}>
-                    <XStack items="center" justify="space-between" gap={4}>
-                      <SizableText
-                        fontSize={rung.row}
-                        fontWeight={here ? '600' : '500'}
-                        color={here ? '$ink' : '$quiet'}
-                        numberOfLines={1}
-                      >
-                        {agent.name}
-                      </SizableText>
-                      <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
-                        {agent.role}
-                      </SizableText>
-                    </XStack>
+                    <SizableText
+                      fontSize={rung.small}
+                      fontWeight="600"
+                      color={here ? '$ink' : '$quiet'}
+                      numberOfLines={1}
+                    >
+                      {agent.name}
+                    </SizableText>
                     <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1}>
                       {agent.status}
                     </SizableText>
@@ -146,6 +127,16 @@ export function Channels() {
                 </XStack>
               )
             })}
+          </>
+        ) : null}
+
+        {channels.length > 0 ? (
+          <>
+            <Rule />
+            <Group>Channels</Group>
+            {channels.map((r) => (
+              <Line key={r.id} room={r} />
+            ))}
           </>
         ) : null}
 

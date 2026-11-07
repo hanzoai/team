@@ -25,7 +25,7 @@ import { Navigate, useParams } from 'react-router'
 import { useProjects } from '~/serve'
 
 import { AppsNav, AppsScreen, BotsNav, BotsScreen } from '~/apps/BusinessApps'
-import { Chat, Channels } from '~/chat'
+import { AgentPane, Chat, Channels } from '~/chat'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -56,7 +56,7 @@ const Landing = () => {
   const explicitState =
     typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('state')
   if (!explicitState) {
-    return <Navigate to={`/chat/c-general${window.location.search}`} replace />
+    return <Navigate to={`/chat/dm-rev${window.location.search}`} replace />
   }
   if (projects.phase === 'loading') return tracker(null)
   const first = [...(projects.data ?? [])].sort((a, b) => a.name.localeCompare(b.name))[0]
@@ -70,7 +70,7 @@ const tracker = (view: ReactNode) => (
 )
 
 const chat = (view: ReactNode) => (
-  <Shell nav={<Channels />} aside={<Inbox />}>
+  <Shell nav={<Channels />} aside={<AgentPane />}>
     {view}
   </Shell>
 )
