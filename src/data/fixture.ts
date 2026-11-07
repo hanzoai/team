@@ -25,6 +25,7 @@
 import { Category, Class, Priority, Tx, type Channel, type Component, type Doc, type Issue, type Message, type Notice, type Person, type Project, type Status, type Tag } from './model.ts'
 import { Socket, type Plane, type Standing, type Wire } from './socket.ts'
 import type { SpaceRow } from './account.ts'
+import { HANZO_AGENTS } from './agents.ts'
 
 const NAMES = ['live', 'loading', 'empty', 'failure', 'minimal', 'realistic'] as const
 type Name = (typeof NAMES)[number]
@@ -32,7 +33,9 @@ type Name = (typeof NAMES)[number]
 const chosen = (): Name => {
   if (typeof window === 'undefined') return 'live'
   const asked = new URLSearchParams(window.location.search).get('state')
-  return (NAMES as readonly string[]).includes(asked ?? '') ? (asked as Name) : 'live'
+  if ((NAMES as readonly string[]).includes(asked ?? '')) return asked as Name
+  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return 'realistic'
+  return 'live'
 }
 
 const name = chosen()
@@ -50,7 +53,7 @@ const now = Date.UTC(2026, 8, 8)
 const base = (id: string, cls: string): Doc => ({ _id: id, _class: cls, space: SPACE, modifiedOn: now, modifiedBy: 'p1' })
 
 /** Everyone in the space. `Last,First` is the platform's own sort key. */
-const people: Person[] = [
+const humans: Person[] = [
   'Reynolds,Elizabeth',
   'Wolf,Sonya',
   'Osinski,Kenny',
@@ -62,7 +65,18 @@ const people: Person[] = [
   'Okafor,Daniel',
 ].map((name, i) => ({ ...base(`p${i + 1}`, Class.person), name }))
 
-const everyone = people.map((p) => p._id)
+const agentPeople: Person[] = [
+  { ...base('p-zach', Class.person), name: 'Kelling,Zach' },
+  ...HANZO_AGENTS.map((a) => ({
+    ...base(`bot-${a.id}`, Class.person),
+    name: a.name,
+    avatar: a.avatar,
+  })),
+]
+
+const people: Person[] = [...humans, ...agentPeople]
+
+const everyone = humans.map((p) => p._id)
 
 const project = (id: string, name: string, sequence: number, members: string[]): Project => ({
   ...base(`proj-${id}`, Class.project),
@@ -200,14 +214,44 @@ const tags: Tag[] = WORK.flatMap((row, i) =>
 
 const channels: Channel[] = [
   { ...base('c-general', Class.channel), name: 'general', topic: 'Everything that has no better home' },
+  { ...base('c-hanzo-support', Class.channel), name: 'hanzo-support', topic: 'Customer support, triage & live escalations' },
+  { ...base('c-hanzo-ui', Class.channel), name: 'hanzo-ui', topic: 'Design system, @hanzo/gui & @hanzo/ui components' },
+  { ...base('c-hanzo-video', Class.channel), name: 'hanzo-video', topic: 'Studio, Omni Flash & video generation' },
+  { ...base('c-hanzo-revenue', Class.channel), name: 'hanzo-revenue', topic: 'Pipeline, enterprise deals & billing' },
   { ...base('c-tracker', Class.channel), name: 'tracker', topic: 'The board' },
   { ...base('c-design', Class.channel), name: 'design', topic: 'What it looks like and why' },
+  { ...base('c-lux-bank', Class.channel), name: 'lux-bank', topic: 'Lux banking, cards & settlement' },
+  { ...base('c-lux-bridge', Class.channel), name: 'lux-bridge', topic: 'Cross-chain bridge & MPC' },
 ]
+
+const DIRECT_CLASS = 'chunter:class:DirectMessage'
+
+const directs: Channel[] = HANZO_AGENTS.map((a) => ({
+  ...base(`dm-${a.id}`, DIRECT_CLASS),
+  name: a.name,
+  topic: `${a.name} — ${a.role} · 24/7 Proactive · ${a.schedule}`,
+  members: [`bot-${a.id}`, 'p-zach'],
+}))
 
 const messages: Message[] = [
   { ...base('m1', Class.message), message: 'Moved the estimate ring off the reference brand and onto our own accent.', attachedTo: 'c-general', modifiedOn: now - 3_600_000, modifiedBy: 'p2' },
   { ...base('m2', Class.message), message: 'Pushed the column headers flush with the card box — they were sitting on the panel padding.', attachedTo: 'c-general', modifiedOn: now - 1_800_000, modifiedBy: 'p3' },
   { ...base('m3', Class.message), message: '@everyone the tracker is on the real plane now.', attachedTo: 'c-general', modifiedOn: now - 600_000, modifiedBy: 'p1' },
+  { ...base('m4', Class.message), message: 'All 23 Hanzo AI agents and 24/7 bots are connected across Hanzo AI, The Foundation, Lux Network, and Zoo Labs.', attachedTo: 'c-general', modifiedOn: now - 300_000, modifiedBy: 'bot-vi' },
+  { ...base('m5', Class.message), message: 'Zero open P0/P1 escalations. Automated triage resolved 18 tickets in the last hour.', attachedTo: 'c-hanzo-support', modifiedOn: now - 900_000, modifiedBy: 'bot-su' },
+  { ...base('m6', Class.message), message: 'Updated @hanzo/gui monochrome tokens and BusinessHeader switcher across all workspace surfaces.', attachedTo: 'c-hanzo-ui', modifiedOn: now - 1_200_000, modifiedBy: 'bot-des' },
+  { ...base('m7', Class.message), message: 'Rendered 4K hero stills and agent portraits via Omni 1.2 Flash in Studio.', attachedTo: 'c-hanzo-video', modifiedOn: now - 1_500_000, modifiedBy: 'bot-art' },
+  { ...base('m8', Class.message), message: 'Synced org grants, prepaid balances, and enterprise seats with Commerce.', attachedTo: 'c-hanzo-revenue', modifiedOn: now - 450_000, modifiedBy: 'bot-rev' },
+  { ...base('m-rev-1', Class.message), message: 'Tell me when the grant is updated and I’ll re-send all six fixes and check them on the live site. I’ve posted the cause in #hanzo-revenue.', attachedTo: 'dm-rev', modifiedOn: now - 900_000, modifiedBy: 'bot-rev' },
+  { ...base('m-rev-2', Class.message), message: 'hanzo has a credit grant under z/hanzo — can you check the lease lookup?', attachedTo: 'dm-rev', modifiedOn: now - 780_000, modifiedBy: 'p-zach' },
+  { ...base('m-rev-3', Class.message), message: 'Noted, the account is z/hanzo. I’m tracing where the grant lives and opening a fix so leases charge the org’s grant or prepaid balance directly.', attachedTo: 'dm-rev', modifiedOn: now - 600_000, modifiedBy: 'bot-rev' },
+  ...HANZO_AGENTS.map((a, idx): Message => ({
+    ...base(`m-dm-${a.id}`, Class.message),
+    message: `${a.status} Running 24/7 on schedule (${a.schedule}) with ${a.triggers.join(', ')} triggers.`,
+    attachedTo: `dm-${a.id}`,
+    modifiedOn: now - (idx + 1) * 120_000,
+    modifiedBy: `bot-${a.id}`,
+  })),
 ]
 
 /** Seven notifications from seven different people, because one person's name
@@ -241,6 +285,7 @@ const world = (): Map<string, Doc[]> =>
     [Class.tag, structuredClone(tags)],
     [Class.person, structuredClone(people)],
     [Class.channel, structuredClone(channels)],
+    [DIRECT_CLASS, structuredClone(directs)],
     [Class.message, structuredClone(messages)],
     [Class.notice, structuredClone(notices)],
   ])
@@ -347,7 +392,12 @@ const matches = (row: Record<string, unknown>, query: Record<string, unknown>): 
     return has === want
   })
 
-const SPACES: SpaceRow[] = [{ uuid: 'fixture', name: 'Hanzo', url: SPACE, org: 'hanzo', isDisabled: false }]
+const SPACES: SpaceRow[] = [
+  { uuid: 'fixture', name: 'Hanzo AI', url: SPACE, org: 'hanzo', isDisabled: false },
+  { uuid: 'foundation', name: 'The Foundation', url: 'foundation', org: 'foundation', isDisabled: false },
+  { uuid: 'lux', name: 'Lux Network', url: 'lux', org: 'lux', isDisabled: false },
+  { uuid: 'zoo', name: 'Zoo Labs', url: 'zoo', org: 'zoo', isDisabled: false },
+]
 
 // ── the one knob ──────────────────────────────────────────────────────────────
 

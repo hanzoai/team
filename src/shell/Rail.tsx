@@ -9,17 +9,18 @@
  * reads as a different product, and it is the one thing about this column
  * somebody will get wrong.
  */
-import { Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, XStack, YStack } from '@hanzo/ui'
+import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, XStack, YStack } from '@hanzo/ui'
 import { HanzoMark } from '@hanzo/ui/product'
 import { Bell, Plus } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { useLocation } from 'react-router'
 
+import { useSpace } from '~/data/space.tsx'
 import { useNotices, useTodo } from './counts.ts'
 import { press } from './press.ts'
 import { ADD, GAUGE, GLOW, ICON, MARK, PAD, RAIL, STEP } from './measure.ts'
 import { SURFACES } from './surfaces.ts'
-import { caps, paint, round, rung } from '~/theme/theme'
+import { caps, chip, paint, round, rung } from '~/theme/theme'
 
 const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
 
@@ -43,6 +44,8 @@ export type RailProps = {
 export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
   const { pathname } = useLocation()
   const waiting = useNotices()
+  const { all, current, choose } = useSpace()
+  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
 
   return (
     <YStack
@@ -50,69 +53,137 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
       shrink={0}
       height="100%"
       items="center"
-      pt={20}
+      pt={16}
+      pb={16}
       bg="$background"
       borderRightWidth={1}
       borderColor="$edge"
       data-parity-key="shell.rail"
     >
-      <YStack width={MARK} height={MARK} rounded="$5" items="center" justify="center" bg="$hover">
-        <HanzoMark size={22} />
-      </YStack>
-
-      <YStack height={20} />
-      <Gauge />
-      <YStack height={16} />
-
-      <Slot label={notices ? 'Hide notices' : 'Show notices'} pressed={notices} onPress={onNotices}>
-        <Bell size={ICON} color={notices ? '$ink' : '$soft'} />
-        {waiting > 0 ? (
-          <YStack
-            position="absolute"
-            t={(STEP - ICON) / 2 - 1}
-            r={(STEP - ICON) / 2 - 1}
-            width={7}
-            height={7}
-            rounded={round.pill}
-            style={DOT}
-          />
-        ) : null}
-      </Slot>
-
-      <Rule />
-
-      {SURFACES.map((s) => {
-        const here = pathname === s.path || pathname.startsWith(`${s.path}/`)
-        return (
-          <Slot key={s.id} label={s.label} here={here} onPress={() => onSurface(s.path)}>
-            <s.icon size={ICON} color={here ? '$ink' : '$soft'} />
-          </Slot>
-        )
-      })}
-
-      <Rule />
-
-      <Tooltip>
-        <TooltipTrigger>
-          <YStack
-            width={ADD}
-            height={ADD}
-            mt={4}
-            rounded={round.pill}
-            borderWidth={1}
-            borderStyle="dashed"
-            borderColor="$edge"
-            items="center"
-            justify="center"
-            opacity={0.5}
-            aria-disabled
-            aria-label="Add an app"
-          >
-            <Plus size={16} color="$soft" />
+      <ScrollArea flex={1} minH={0} width="100%">
+        <YStack items="center" width="100%" pb={12}>
+          {/* Organization switcher tiles on the left rail */}
+          <YStack gap={8} items="center" width="100%">
+            {orgs.map((space) => {
+              const active = (current?.url ?? orgs[0]?.url) === space.url
+              const isHanzo = space.org === 'hanzo'
+              const badge = space.name
+                .split(/\s+/)
+                .filter((w) => w.toLowerCase() !== 'the')
+                .slice(0, 2)
+                .map((w) => w[0]?.toUpperCase() ?? '')
+                .join('')
+              return (
+                <Tooltip key={space.url}>
+                  <TooltipTrigger>
+                    <YStack
+                      {...press(() => choose(space.url), `Switch to ${space.name}`)}
+                      width="100%"
+                      items="center"
+                      justify="center"
+                      position="relative"
+                    >
+                      {active ? (
+                        <YStack
+                          position="absolute"
+                          l={0}
+                          t={8}
+                          b={8}
+                          width={3}
+                          rounded={round.pill}
+                          bg="$ink"
+                        />
+                      ) : null}
+                      <YStack
+                        width={MARK}
+                        height={MARK}
+                        rounded="$5"
+                        items="center"
+                        justify="center"
+                        bg={active ? '$hover' : '$panel'}
+                        borderWidth={1}
+                        borderColor={active ? '$ink' : '$edge'}
+                        hoverStyle={{ background: '$hover' }}
+                        style={isHanzo ? undefined : active ? chip(space.org ?? space.name) : undefined}
+                      >
+                        {isHanzo ? (
+                          <HanzoMark size={20} />
+                        ) : (
+                          <SizableText
+                            fontSize={rung.small}
+                            fontWeight="700"
+                            color={active ? '$ink' : '$soft'}
+                            style={active ? { color: chip(space.org ?? space.name).color } : undefined}
+                          >
+                            {badge}
+                          </SizableText>
+                        )}
+                      </YStack>
+                    </YStack>
+                  </TooltipTrigger>
+                  <TooltipContent>{`${space.name} (${space.org})`}</TooltipContent>
+                </Tooltip>
+              )
+            })}
           </YStack>
-        </TooltipTrigger>
-        <TooltipContent>There are no apps to add yet.</TooltipContent>
-      </Tooltip>
+
+          <Rule />
+
+          <Slot label={notices ? 'Hide notices' : 'Show notices'} pressed={notices} onPress={onNotices}>
+            <Bell size={ICON} color={notices ? '$ink' : '$soft'} />
+            {waiting > 0 ? (
+              <YStack
+                position="absolute"
+                t={(STEP - ICON) / 2 - 1}
+                r={(STEP - ICON) / 2 - 1}
+                width={7}
+                height={7}
+                rounded={round.pill}
+                style={DOT}
+              />
+            ) : null}
+          </Slot>
+
+          <Rule />
+
+          {SURFACES.map((s) => {
+            const here = pathname === s.path || pathname.startsWith(`${s.path}/`)
+            return (
+              <Slot key={s.id} label={s.label} here={here} onPress={() => onSurface(s.path)}>
+                <s.icon size={ICON} color={here ? '$ink' : '$soft'} />
+              </Slot>
+            )
+          })}
+
+          <Rule />
+
+          <Gauge />
+
+          <YStack height={12} />
+
+          <Tooltip>
+            <TooltipTrigger>
+              <YStack
+                {...press(() => onSurface('/apps'), 'Open Business Apps')}
+                width={ADD}
+                height={ADD}
+                mt={4}
+                rounded={round.pill}
+                borderWidth={1}
+                borderStyle="dashed"
+                borderColor="$edge"
+                items="center"
+                justify="center"
+                hoverStyle={{ background: '$hover' }}
+                focusVisibleStyle={RING}
+              >
+                <Plus size={16} color="$soft" />
+              </YStack>
+            </TooltipTrigger>
+            <TooltipContent>All Hanzo Business Apps</TooltipContent>
+          </Tooltip>
+        </YStack>
+      </ScrollArea>
     </YStack>
   )
 }

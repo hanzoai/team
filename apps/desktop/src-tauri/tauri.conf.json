@@ -1,0 +1,31 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Hanzo Team",
+  "version": "1.0.0",
+  "identifier": "com.hanzo.team",
+  "mainBinaryName": "hanzo-team",
+  "build": {
+    "frontendDist": "../../../dist"
+  },
+  "app": {
+    "withGlobalTauri": true,
+    "security": {
+      "csp": null
+    },
+    "windows": [
+      {
+        "label": "main",
+        "title": "Hanzo Team",
+        "url": "http://localhost:3095",
+        "width": 1440,
+        "height": 900,
+        "minWidth": 800,
+        "minHeight": 600,
+        "resizable": true,
+        "transparent": false,
+        "decorations": true,
+        "center": true
+      }
+    ]
+  }
+}

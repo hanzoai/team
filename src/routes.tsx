@@ -24,6 +24,7 @@ import { Navigate, useParams } from 'react-router'
 
 import { useProjects } from '~/serve'
 
+import { AppsNav, AppsScreen, BotsNav, BotsScreen } from '~/apps/BusinessApps'
 import { Chat, Channels } from '~/chat'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
@@ -46,15 +47,17 @@ const Page = () => {
 }
 
 /**
- * Where a visit starts: your first project's board.
- *
- * An issue is opened IN a project, so the board that can open one is a
- * project's — and that is the screen a person came here to work in. Until the
- * projects answer there is nothing to redirect to, so the shell stands with an
- * empty main rather than flashing a second screen on the way.
+ * Where a visit starts: your workspace chat with orgs, channels, leads and
+ * 24/7 bots on the sidebar (or the first project's board when `?state=` is set
+ * by fixture harnesses).
  */
 const Landing = () => {
   const projects = useProjects()
+  const explicitState =
+    typeof window !== 'undefined' && new URLSearchParams(window.location.search).has('state')
+  if (!explicitState) {
+    return <Navigate to={`/chat/c-general${window.location.search}`} replace />
+  }
   if (projects.phase === 'loading') return tracker(null)
   const first = [...(projects.data ?? [])].sort((a, b) => a.name.localeCompare(b.name))[0]
   return <Navigate to={first ? `/projects/${first._id}/issues` : '/issues'} replace />
@@ -68,6 +71,18 @@ const tracker = (view: ReactNode) => (
 
 const chat = (view: ReactNode) => (
   <Shell nav={<Channels />} aside={<Inbox />}>
+    {view}
+  </Shell>
+)
+
+const bots = (view: ReactNode) => (
+  <Shell nav={<BotsNav />} aside={<Inbox />}>
+    {view}
+  </Shell>
+)
+
+const apps = (view: ReactNode) => (
+  <Shell nav={<AppsNav />} aside={<Inbox />}>
     {view}
   </Shell>
 )
@@ -86,9 +101,13 @@ export const routes: RouteObject[] = [
   { path: '/chat', element: chat(<Chat />) },
   { path: '/chat/:id', element: chat(<Chat />) },
 
+  { path: '/bots', element: bots(<BotsScreen />) },
+  { path: '/apps', element: apps(<AppsScreen />) },
+  { path: '/apps/:appId', element: apps(<AppsScreen />) },
+
   { path: '/calendar', element: <Shell nav={null}>{soon('Calendar', 'Meetings, deadlines and the week beside the work.')}</Shell> },
   { path: '/time', element: <Shell nav={null}>{soon('Time', 'What the work took, against what it was estimated at.')}</Shell> },
   { path: '/meet', element: <Shell nav={null}>{soon('Meet', 'Calls and huddles, from the room you are already in.')}</Shell> },
 
-  { path: '*', element: <Navigate to="/issues" replace /> },
+  { path: '*', element: <Navigate to="/chat/c-general" replace /> },
 ]

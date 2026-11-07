@@ -14,7 +14,7 @@
  * The order is the rail's, and it is the reference's: calendar, chat, tracker,
  * time, meet, with the bell above them and the add control below.
  */
-import { Calendar, Clock, MessagesSquare, SquareCheck, Video } from '@hanzogui/lucide-icons-2'
+import { Bot, Calendar, Clock, LayoutGrid, MessagesSquare, SquareCheck, Video } from '@hanzogui/lucide-icons-2'
 
 /** Any glyph from the icon set. Named off one of them, because the set's own
  *  component type is not exported and restating it here would be a second
@@ -33,11 +33,13 @@ export type Surface = {
 }
 
 export const SURFACES: readonly Surface[] = [
-  { id: 'calendar', label: 'Calendar', icon: Calendar, path: '/calendar' },
   { id: 'chat', label: 'Chat', icon: MessagesSquare, path: '/chat' },
   { id: 'tracker', label: 'Tracker', icon: SquareCheck, path: '/issues' },
-  { id: 'time', label: 'Time', icon: Clock, path: '/time' },
+  { id: 'bots', label: 'Bots', icon: Bot, path: '/bots' },
+  { id: 'calendar', label: 'Calendar', icon: Calendar, path: '/calendar' },
   { id: 'meet', label: 'Meet', icon: Video, path: '/meet' },
+  { id: 'time', label: 'Time', icon: Clock, path: '/time' },
+  { id: 'apps', label: 'Business Apps', icon: LayoutGrid, path: '/apps' },
 ]
 
 /** Which surface an address is inside. */
