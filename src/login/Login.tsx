@@ -180,6 +180,13 @@ export const Login = () => {
                 </SizableText>
               </Button>
             </XStack>
+
+            <Button
+              variant="outline"
+              onPress={() => window.location.assign('/projects/proj-crm/issues')}
+            >
+              Explore Live Workspace →
+            </Button>
           </YStack>
         </YStack>
 

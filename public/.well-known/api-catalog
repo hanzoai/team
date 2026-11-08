@@ -1,0 +1,40 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://api.hanzo.ai/v1",
+      "service-desc": [{ "href": "https://api.hanzo.ai/v1/openapi.json", "type": "application/json" }],
+      "service-doc": [{ "href": "https://docs.hanzo.ai/docs/openapi", "type": "text/html" }],
+      "service-meta": [{ "href": "https://api.hanzo.ai/.well-known/oauth-protected-resource", "type": "application/json" }],
+      "status": [{ "href": "https://status.hanzo.ai", "type": "text/html" }]
+    },
+    {
+      "anchor": "https://hanzo.id",
+      "service-meta": [{ "href": "https://hanzo.id/.well-known/openid-configuration", "type": "application/json" }],
+      "service-doc": [
+        { "href": "https://hanzo.ai/auth.md", "type": "text/markdown" },
+        { "href": "https://hanzo.ai/agents#headless", "type": "text/html" }
+      ]
+    },
+    {
+      "anchor": "https://api.hanzo.ai/v1/account/keys",
+      "service-doc": [{ "href": "https://docs.hanzo.ai/docs/api-keys", "type": "text/html" }]
+    },
+    {
+      "anchor": "https://api.hanzo.ai/v1/billing/crypto/deposit",
+      "service-doc": [{ "href": "https://hanzo.ai/agents#headless", "type": "text/html" }]
+    },
+    {
+      "anchor": "https://api.hanzo.ai/v1/mcp",
+      "service-desc": [{ "href": "https://hanzo.ai/.well-known/mcp/server-card.json", "type": "application/mcp-server-card+json" }],
+      "service-doc": [{ "href": "https://docs.hanzo.ai/docs/mcp", "type": "text/html" }]
+    },
+    {
+      "anchor": "https://hanzo.ai/agents",
+      "describedby": [
+        { "href": "https://hanzo.ai/llms.txt", "type": "text/plain" },
+        { "href": "https://docs.hanzo.ai/llms.txt", "type": "text/markdown" },
+        { "href": "https://docs.hanzo.ai/docs/agents", "type": "text/html" }
+      ]
+    }
+  ]
+}

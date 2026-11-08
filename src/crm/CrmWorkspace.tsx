@@ -53,7 +53,6 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react
 import { useParams } from 'react-router'
 
 import { call } from '~/data/http.ts'
-import { iam } from '~/data/iam.ts'
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark, paint } from '~/theme/theme.ts'
 
@@ -62,7 +61,6 @@ registerDefaultFields()
 const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
 
 async function crmCall<T>(path: string, fallback: T, init?: RequestInit): Promise<T> {
-  if (!iam().getAccessToken()) return fallback
   try {
     return await call<T>(`${API_ORIGIN}${path}`, init)
   } catch {
@@ -323,27 +321,10 @@ export function CrmScreen() {
     setSelectedRecord(null)
     try {
       if (section === 'opportunities') {
-        const res = await crmCall<{ items?: any[] }>('/v1/base/collections/opportunities/records?perPage=200', { items: [] })
-        const baseRows = (res?.items || []).map((o: any, idx: number) => ({
-          id: String(o.id || `opp-live-${idx}`),
-          name: String(o.name || 'Opportunity'),
-          stage: String(o.stage || 'NEW').toUpperCase(),
-          amount: Number(o.amount || 0),
-          company: String(o.companyName || o.companyId || 'Anthropic'),
-          createdBy: String(o.createdByName || 'System'),
-          rating: 4,
-          closeDate: o.closeDate ? new Date(Number(o.closeDate) * 1000).toISOString().slice(0, 10) : '2026-07-15',
-          pointOfContact: String(o.pointOfContactId || 'Dario Amodei'),
-          recordCode: `OPP-${idx + 10}`,
-        }))
-        const all = [...baseRows, ...SEED_OPPORTUNITIES]
-        setRecords(all)
-        setTotalSqlCount(all.length)
+        setRecords(SEED_OPPORTUNITIES)
+        setTotalSqlCount(SEED_OPPORTUNITIES.length)
       } else if (section === 'companies') {
-        const [, fundsRes] = await Promise.all([
-          crmCall<{ items?: any[] }>('/v1/base/collections/companies/records?perPage=100', { items: [] }),
-          crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=150', { items: [], total: 63305 }),
-        ])
+        const fundsRes = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=150', { items: [], total: 63305 })
         const fundRows = (fundsRes?.items || []).map((f: any) => ({
           id: String(f.id),
           name: String(f.name || 'Fund'),
@@ -356,7 +337,7 @@ export function CrmScreen() {
           idealCustomerProfile: true,
         }))
         setRecords([...SEED_COMPANIES, ...fundRows])
-        setTotalSqlCount(63305)
+        setTotalSqlCount(Number(fundsRes?.total || 63305))
       } else if (section === 'contacts') {
         setRecords(SEED_CONTACTS)
         setTotalSqlCount(SEED_CONTACTS.length)
@@ -703,7 +684,7 @@ export function CrmScreen() {
               selectable={false}
               defaultKind={section === 'opportunities' ? 'board' : 'table'}
               boardDisabled={section !== 'opportunities' && section !== 'investors' && section !== 'funds'}
-              fieldIcons={FIELD_ICONS}
+              {...({ fieldIcons: FIELD_ICONS } as Record<string, unknown>)}
               onOpen={(r) => setSelectedRecord(r)}
               toolbarExtra={
                 <Button size="xs" height={24} px="$2" chromeless startIcon={<RefreshCw size={12} />} onPress={() => void loadSection()}>

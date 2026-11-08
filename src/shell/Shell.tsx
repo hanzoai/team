@@ -23,13 +23,13 @@
  * the seed, so the first paint is not one frame of the wrong layout.
  */
 import { Screen, Sheet, SheetContent, XStack, YStack } from '@hanzo/ui'
-import { BusinessHeader, type BusinessAppItem } from '@hanzo/ui/product'
 import { useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
+import { BusinessHeader, type BusinessAppItem } from './BusinessHeader.tsx'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
 import { round } from '~/theme/theme'

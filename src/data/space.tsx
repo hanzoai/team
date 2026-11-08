@@ -96,13 +96,22 @@ export const Space = ({ children }: { children: ReactNode }) => {
   const [refusal, setRefusal] = useState<Error | null>(null)
 
   const asked = useRef(false)
+  const prevSession = useRef(session)
   useEffect(() => {
+    if (prevSession.current !== session && !fixture.on) {
+      asked.current = false
+      invalidate()
+    }
+    prevSession.current = session
     // A fixture stands in for the whole plane, the session included, so it asks
-    // for a space list without one. Same knob, and the only one.
-    if ((session !== 'in' && !fixture.on) || asked.current) return
+    // for a space list without one. When signed out on a live visit, fallback
+    // workspace spaces are loaded so the full workspace can be explored immediately.
+    if ((session === 'unknown' && !fixture.on) || asked.current) return
     asked.current = true
     void (async () => {
-      const rows = await fixture.spaces(listSpaces).catch((e: unknown) => e as Error)
+      const rows = await fixture
+        .spaces(session === 'in' ? listSpaces : () => Promise.resolve([]))
+        .catch((e: unknown) => e as Error)
       if (rows instanceof Error) {
         setRefusal(rows)
         setStanding(rows instanceof Denied && rows.unauthorized ? 'stranger' : 'refused')
@@ -115,16 +124,6 @@ export const Space = ({ children }: { children: ReactNode }) => {
       }
       setSlug((held) => (held && rows.some((r) => r.url === held) ? held : rows[0].url))
     })()
-  }, [session])
-
-  // Signing out ends the plane and forgets the world. Without this the next
-  // person to sign in on this browser reads the previous one's cache.
-  useEffect(() => {
-    if (session !== 'out' || fixture.on) return
-    asked.current = false
-    setStanding('unknown')
-    setAll([])
-    invalidate()
   }, [session])
 
   useEffect(() => {

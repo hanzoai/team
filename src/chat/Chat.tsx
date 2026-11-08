@@ -29,8 +29,17 @@ import { useLive, useMessages, usePeople, useReactions, useReplies, useRooms } f
 import { Thread } from './Thread.tsx'
 import { tally } from './Run.tsx'
 
+const LEGACY_DM_ALIAS: Record<string, string> = {
+  'dm-algo': 'dm-sci',
+  'dm-cal': 'dm-mana',
+  'dm-core': 'dm-opera',
+  'dm-db': 'dm-data',
+  'dm-sec': 'dm-cyber',
+}
+
 export function Chat() {
-  const { id } = useParams()
+  const { id: rawId } = useParams()
+  const id = rawId ? (LEGACY_DM_ALIAS[rawId] ?? rawId) : rawId
   const { plane } = useSpace()
   const rooms = useRooms()
   const room = useMemo(() => (rooms.data ?? []).find((r) => r.id === id) ?? null, [rooms.data, id])

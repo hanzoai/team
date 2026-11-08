@@ -24,7 +24,7 @@ site:
   #
   # `on:` defaults to the empty list, and an unnamed branch runs the build,
   # reports success and ships nothing.
-  slug: team2
+  slug: hanzo-team
   dir: dist
   on: [main]
   build: pnpm build

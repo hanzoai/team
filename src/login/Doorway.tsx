@@ -37,7 +37,7 @@ export const Doorway = ({ children }: { children: ReactNode }) => {
   if (window.location.pathname === CALLBACK) return <Callback />
   if (fixture.on) return <>{children}</>
   if (session === 'unknown') return <Waiting />
-  if (session === 'out') return <Login />
+  if (session === 'out' && window.location.pathname === '/login') return <Login />
 
   // Signed in to Hanzo, and unknown to this workspace. The account and the
   // person's first space are made by the workspace's own sign-in, and nothing

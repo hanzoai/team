@@ -47,6 +47,26 @@ const Page = () => {
   return soon(name, `${name} for one project.`)
 }
 
+const ProjectRoot = () => {
+  const { id } = useParams()
+  return <Navigate to={id ? `/projects/${id}/issues` : '/projects'} replace />
+}
+
+const LEGACY_AGENT_ALIAS: Record<string, string> = {
+  algo: 'sci',
+  cal: 'mana',
+  core: 'opera',
+  db: 'data',
+  sec: 'cyber',
+}
+
+const AgentRedirect = () => {
+  const { id } = useParams()
+  const slug = (id ?? 'rev').replace(/^dm-/, '')
+  const target = LEGACY_AGENT_ALIAS[slug] ?? slug
+  return <Navigate to={`/chat/dm-${target}`} replace />
+}
+
 /**
  * Where a visit starts: your workspace chat with orgs, channels, leads and
  * 24/7 bots on the sidebar (or the first project's board when `?state=` is set
@@ -96,11 +116,15 @@ const crm = (view: ReactNode) => (
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Landing /> },
+  { path: '/login', element: <Landing /> },
+  { path: '/auth', element: <Landing /> },
+  { path: '/auth/callback', element: <Landing /> },
 
   { path: '/issues', element: tracker(<Tracker />) },
   { path: '/issues/:view', element: tracker(<Tracker />) },
   { path: '/mine', element: tracker(soon('My issues', 'Everything assigned to you, across every project.')) },
   { path: '/projects', element: tracker(soon('All projects', 'The projects you are in, and the ones you could join.')) },
+  { path: '/projects/:id', element: <ProjectRoot /> },
   { path: '/projects/:id/issues', element: tracker(<Tracker />) },
   { path: '/projects/:id/issues/:view', element: tracker(<Tracker />) },
   { path: '/projects/:id/:page', element: tracker(<Page />) },
@@ -112,12 +136,24 @@ export const routes: RouteObject[] = [
   { path: '/crm/:section', element: crm(<CrmScreen />) },
 
   { path: '/bots', element: bots(<BotsScreen />) },
+  { path: '/agents', element: <Navigate to="/bots" replace /> },
+  { path: '/agents/:id', element: <AgentRedirect /> },
+
   { path: '/apps', element: apps(<AppsScreen />) },
   { path: '/apps/:appId', element: apps(<AppsScreen />) },
 
   { path: '/calendar', element: <Shell nav={null}>{soon('Calendar', 'Meetings, deadlines and the week beside the work.')}</Shell> },
+  { path: '/cal', element: <Navigate to="/calendar" replace /> },
   { path: '/time', element: <Shell nav={null}>{soon('Time', 'What the work took, against what it was estimated at.')}</Shell> },
   { path: '/meet', element: <Shell nav={null}>{soon('Meet', 'Calls and huddles, from the room you are already in.')}</Shell> },
+
+  { path: '/inbox', element: <Navigate to="/chat/dm-rev" replace /> },
+  { path: '/docs', element: <Navigate to="/apps/cms" replace /> },
+  { path: '/files', element: <Navigate to="/apps/dataroom" replace /> },
+  { path: '/mail', element: <Navigate to="/apps/email" replace /> },
+  { path: '/admin', element: <Navigate to="/apps/console" replace /> },
+  { path: '/settings', element: <Navigate to="/bots" replace /> },
+  { path: '/people', element: <Navigate to="/crm/contacts" replace /> },
 
   { path: '*', element: <Navigate to="/chat/c-general" replace /> },
 ]

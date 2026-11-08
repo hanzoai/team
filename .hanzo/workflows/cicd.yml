@@ -1,15 +1,5 @@
 name: CI/CD
 
-# The caller, and deliberately nothing else: triggers plus the import. All real
-# config is the repo-root hanzo.yml, which platform.hanzo.ai reads too.
-#
-# `.hanzo/workflows`, NOT `.github/workflows`, on both sides of the `uses:`.
-# Gitea collects workflows from the first of WORKFLOW_DIRS present in the commit
-# and resolves a reusable through the same allowlist, and github.com has no
-# self-hosted runner for this org — so a job asking for hanzo-build-linux-amd64
-# there is never claimed, and an unclaimable job waits out its 24h timeout while
-# the next push queues behind it.
-
 on:
   push:
     branches: [main]
@@ -23,5 +13,5 @@ concurrency:
 
 jobs:
   cicd:
-    uses: hanzoai/ci/.hanzo/workflows/build.yml@v1
+    uses: hanzoai/ci/.github/workflows/build.yml@v2
     secrets: inherit
