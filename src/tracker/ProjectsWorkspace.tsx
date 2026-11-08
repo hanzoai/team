@@ -5,9 +5,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 import { Button, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Boxes, CheckCircle2, FileCode2, FolderKanban, Milestone, Plus, Sparkles } from '@hanzogui/lucide-icons-2'
+import { Boxes, CheckCircle2, ExternalLink, FileCode2, FolderKanban, GitBranch, GitCommit, GitPullRequest, Milestone, Plus, Sparkles } from '@hanzogui/lucide-icons-2'
 
 import { HANZO_AGENTS } from '~/data/agents.ts'
+import {
+  fetchEstateGitActivity,
+  fetchLiveForgeRepo,
+  resolveForgeRepo,
+  type EstateGitSummary,
+  type ForgeRepoSpec,
+} from '~/data/forge.ts'
 import { useSpace } from '~/data/space.tsx'
 import { standingIs, useBoard, useCrew, useProject, useProjects } from '~/serve.tsx'
 import { press } from '~/shell/press.ts'
@@ -45,6 +52,7 @@ const PROJECT_COMPONENTS: Record<
   'proj-dev': [
     { id: 'cmp-runner', name: 'hanzo/ci', lead: 'Zach Kelling', description: 'Ephemeral Kata CI runner fleet & multi-arch BuildKit image builder', bot: 'opera' },
     { id: 'cmp-kms', name: 'hanzo/kms', lead: 'Zach Kelling', description: 'Zero-knowledge secret grants (`kms-grants.yaml`) & automated token rotation', bot: 'cyber' },
+    { id: 'cmp-team', name: 'hanzo/dev', lead: 'Zach Kelling', description: 'Hanzo Team workspace (`hanzo.team`), Tracker, 24/7 Bots, Chat, Inbox & CRM', bot: 'dev' },
   ],
 }
 
@@ -124,6 +132,17 @@ export function AllProjectsScreen() {
   const source = useBoard() ?? standby(standingIs(standing))
   const crew = useCrew()
   const [issues, setIssues] = useState<Issue[]>([])
+  const [estateGit, setEstateGit] = useState<EstateGitSummary | null>(null)
+
+  useEffect(() => {
+    let cancelled = false
+    void fetchEstateGitActivity().then((summary) => {
+      if (!cancelled) setEstateGit(summary)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [])
 
   useEffect(() => {
     return source.watch(
@@ -133,6 +152,11 @@ export function AllProjectsScreen() {
   }, [source])
 
   const projects = projectsRead.data ?? []
+  const openExternal = (url: string) => {
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
+  }
 
   return (
     <ScrollArea flex={1} minH={0}>
@@ -147,14 +171,91 @@ export function AllProjectsScreen() {
               All projects ({projects.length})
             </SizableText>
             <SizableText fontSize={rung.body} color="$quiet">
-              Every project shares live Kanban boards, List & Timeline views, components, milestones, and 24/7 AI bot teammates.
+              Every project wires directly into Hanzo Forge (`git.hanzo.ai`), live `/v1/git/activity` commits, and `hanzo.yml` CI/CD pipelines.
             </SizableText>
           </YStack>
           <XStack gap={8} items="center">
             <People people={crew} size={26} show={5} />
+            <Button variant="outline" onPress={() => openExternal('https://git.hanzo.ai/hanzoai')}>
+              git.hanzo.ai ↗
+            </Button>
             <Button onPress={() => navigate('/issues')}>All Issues ({issues.length})</Button>
           </XStack>
         </XStack>
+
+        {/* Live Hanzo Forge & CI/CD Estate Strip */}
+        {estateGit ? (
+          <YStack
+            data-slot="forge-estate-banner"
+            p={16}
+            rounded={round.card}
+            bg="$panel"
+            borderWidth={1}
+            borderColor="$edge"
+            gap={12}
+          >
+            <XStack items="center" justify="space-between" flexWrap="wrap" gap={10}>
+              <XStack items="center" gap={8}>
+                <GitBranch size={15} color="$ink" />
+                <SizableText fontSize={rung.body} fontWeight="700" color="$ink">
+                  Hanzo Forge (`git.hanzo.ai`) & CI/CD Estate
+                </SizableText>
+                <XStack px={8} py={2} rounded={round.pill} bg="$raised" borderWidth={1} borderColor="$edge">
+                  <SizableText fontSize={rung.chip} fontWeight="600" color="$soft">
+                    Live `/v1/git/activity` · `hanzoai/ci`
+                  </SizableText>
+                </XStack>
+              </XStack>
+
+              <XStack gap={16} flexWrap="wrap">
+                <SizableText fontSize={rung.small} color="$soft">
+                  Repos: <SizableText fontWeight="700" color="$ink">{estateGit.totalRepos.toLocaleString()}</SizableText>
+                </SizableText>
+                <SizableText fontSize={rung.small} color="$soft">
+                  Commits (365d): <SizableText fontWeight="700" color="$ink">{estateGit.totalCommits.toLocaleString()}</SizableText>
+                </SizableText>
+                <SizableText fontSize={rung.small} color="$soft">
+                  Hanzo Authored: <SizableText fontWeight="700" color="$ink">{estateGit.oursCommits.toLocaleString()}</SizableText>
+                </SizableText>
+                <SizableText fontSize={rung.small} color="$soft">
+                  Active (30d): <SizableText fontWeight="700" color="$ink">{estateGit.active30}</SizableText>
+                </SizableText>
+              </XStack>
+            </XStack>
+
+            <XStack gap={8} flexWrap="wrap">
+              {estateGit.latestCommits.slice(0, 4).map((c) => (
+                <XStack
+                  key={c.sha}
+                  role="button"
+                  tabIndex={0}
+                  cursor="pointer"
+                  px={10}
+                  py={6}
+                  rounded={round.field}
+                  bg="$raised"
+                  borderWidth={1}
+                  borderColor="$edge"
+                  hoverStyle={{ background: '$hover' }}
+                  items="center"
+                  gap={6}
+                  onPress={() => openExternal(c.url)}
+                >
+                  <GitCommit size={12} color="$soft" />
+                  <SizableText fontSize={11} fontWeight="700" color="$ink">
+                    {c.repo}
+                  </SizableText>
+                  <SizableText fontSize={10} color="$dim">
+                    {c.shortSha}
+                  </SizableText>
+                  <SizableText fontSize={11} color="$soft" numberOfLines={1} maxW={260}>
+                    {c.message}
+                  </SizableText>
+                </XStack>
+              ))}
+            </XStack>
+          </YStack>
+        ) : null}
 
         {/* Projects Grid */}
         <XStack flexWrap="wrap" gap={16}>
@@ -349,6 +450,40 @@ export function ProjectSubPage() {
   const currentTab = page ?? 'components'
   const comps = PROJECT_COMPONENTS[projectId] ?? PROJECT_COMPONENTS['proj-crm']!
 
+  const [forgeMap, setForgeMap] = useState<Record<string, ForgeRepoSpec>>(() => {
+    const init: Record<string, ForgeRepoSpec> = {}
+    for (const c of comps) {
+      init[c.name] = resolveForgeRepo(c.name)
+    }
+    return init
+  })
+  const [compSubTab, setCompSubTab] = useState<Record<string, 'source' | 'cicd' | 'prs'>>({})
+
+  useEffect(() => {
+    let cancelled = false
+    const nextInit: Record<string, ForgeRepoSpec> = {}
+    for (const c of comps) {
+      nextInit[c.name] = resolveForgeRepo(c.name)
+    }
+    setForgeMap(nextInit)
+    for (const c of comps) {
+      void fetchLiveForgeRepo(c.name).then((live) => {
+        if (!cancelled) {
+          setForgeMap((prev) => ({ ...prev, [c.name]: live }))
+        }
+      })
+    }
+    return () => {
+      cancelled = true
+    }
+  }, [projectId])
+
+  const openExternal = (url: string) => {
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
+  }
+
   const createFromTemplate = (title: string) => {
     if (source.add) {
       void source.add('todo', title).then(() => {
@@ -453,21 +588,27 @@ export function ProjectSubPage() {
         ) : null}
 
         {currentTab === 'components' ? (
-          <YStack gap={14}>
+          <YStack gap={16}>
             {comps.map((c) => {
               const bot = HANZO_AGENTS.find((a) => a.id === c.bot)
               const matching = issues.filter((i) => i.origin?.name === c.name)
               const count = matching.length || 3
+              const spec = forgeMap[c.name] ?? resolveForgeRepo(c.name)
+              const activeSub = compSubTab[c.name] ?? 'source'
+              const headRun = spec.ciRuns[0]
+
               return (
                 <YStack
                   key={c.id}
+                  data-slot="forge-component-card"
                   p={18}
                   rounded={round.card}
                   bg="$background"
                   borderWidth={1}
                   borderColor="$edge"
-                  gap={12}
+                  gap={14}
                 >
+                  {/* Component Top Header */}
                   <XStack items="center" justify="space-between" flexWrap="wrap" gap={12}>
                     <XStack items="center" gap={12}>
                       <YStack
@@ -482,24 +623,73 @@ export function ProjectSubPage() {
                       >
                         <Boxes size={18} color="$ink" />
                       </YStack>
-                      <YStack>
-                        <XStack items="center" gap={8}>
+                      <YStack gap={2}>
+                        <XStack items="center" gap={8} flexWrap="wrap">
                           <SizableText fontSize={rung.row} fontWeight="600" color="$ink">
                             {c.name}
                           </SizableText>
+                          <XStack
+                            role="button"
+                            tabIndex={0}
+                            cursor="pointer"
+                            px={8}
+                            py={2}
+                            rounded={round.pill}
+                            bg="$panel"
+                            borderWidth={1}
+                            borderColor="$edge"
+                            items="center"
+                            gap={5}
+                            onPress={() => openExternal(spec.forgeUrl)}
+                          >
+                            <GitBranch size={11} color="$soft" />
+                            <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                              git.hanzo.ai/{spec.forgeRepo} · {spec.branch}
+                            </SizableText>
+                            <ExternalLink size={10} color="$dim" />
+                          </XStack>
                           <XStack px={8} py={2} rounded={round.pill} style={chip(c.name)}>
                             <SizableText fontSize={rung.chip} fontWeight="600" style={{ color: chip(c.name).color }}>
-                              {count} issues
+                              {count} board issues · {spec.totalCommits} commits
                             </SizableText>
                           </XStack>
+                          {headRun ? (
+                            <XStack
+                              role="button"
+                              tabIndex={0}
+                              cursor="pointer"
+                              px={8}
+                              py={2}
+                              rounded={round.pill}
+                              bg="$panel"
+                              borderWidth={1}
+                              borderColor="$edge"
+                              items="center"
+                              gap={5}
+                              onPress={() => openExternal(headRun.url)}
+                            >
+                              <YStack
+                                width={7}
+                                height={7}
+                                rounded={9999}
+                                style={{
+                                  backgroundColor:
+                                    headRun.conclusion === 'failure' ? dot.backlog : dot.done,
+                                }}
+                              />
+                              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                                CI #{headRun.id.slice(-5)} {headRun.conclusion}
+                              </SizableText>
+                            </XStack>
+                          ) : null}
                         </XStack>
                         <SizableText fontSize={rung.small} color="$quiet">
-                          {c.description}
+                          {c.description} · Deploy: {spec.deployTarget}
                         </SizableText>
                       </YStack>
                     </XStack>
 
-                    <XStack items="center" gap={10}>
+                    <XStack items="center" gap={8} flexWrap="wrap">
                       {bot ? (
                         <XStack
                           {...press(() => navigate(`/chat/dm-${bot.id}`), `Chat with ${bot.name}`)}
@@ -524,11 +714,260 @@ export function ProjectSubPage() {
                           </SizableText>
                         </XStack>
                       ) : null}
+                      <Button size="sm" variant="outline" onPress={() => openExternal(spec.forgeUrl)}>
+                        Open Forge ↗
+                      </Button>
                       <Button size="sm" variant="outline" onPress={() => navigate(`/projects/${projectId}/issues`)}>
-                        Filter Board
+                        Board ({count})
                       </Button>
                     </XStack>
                   </XStack>
+
+                  <Separator borderColor="$edge" />
+
+                  {/* Forge Inspector Sub-Tabs */}
+                  <XStack items="center" justify="space-between" flexWrap="wrap" gap={8}>
+                    <XStack gap={6} flexWrap="wrap">
+                      {(
+                        [
+                          ['source', `Source & Commits (${spec.commits.length})`],
+                          ['cicd', `CI/CD & Deploy (${spec.ciRuns.length})`],
+                          ['prs', `Forge PRs & Issues (${spec.issuesAndPRs.length})`],
+                        ] as const
+                      ).map(([tabKey, tabLabel]) => {
+                        const isAct = activeSub === tabKey
+                        return (
+                          <XStack
+                            key={tabKey}
+                            role="button"
+                            tabIndex={0}
+                            cursor="pointer"
+                            px={10}
+                            py={4}
+                            rounded={round.pill}
+                            bg={isAct ? '$hover' : '$panel'}
+                            borderWidth={1}
+                            borderColor={isAct ? '$ink' : '$edge'}
+                            onPress={() =>
+                              setCompSubTab((prev) => ({ ...prev, [c.name]: tabKey }))
+                            }
+                          >
+                            <SizableText
+                              fontSize={rung.chip}
+                              fontWeight={isAct ? '700' : '500'}
+                              color={isAct ? '$ink' : '$soft'}
+                            >
+                              {tabLabel}
+                            </SizableText>
+                          </XStack>
+                        )
+                      })}
+                    </XStack>
+
+                    <SizableText fontSize={rung.chip} color="$dim">
+                      Workflow: {spec.workflowPath} → {spec.reusableWorkflow}
+                    </SizableText>
+                  </XStack>
+
+                  {/* Sub-Tab Content */}
+                  {activeSub === 'source' ? (
+                    <XStack gap={14} flexWrap="wrap">
+                      {/* Source Tree */}
+                      <YStack flex={1} minW={240} gap={6}>
+                        <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
+                          Source Tree ({spec.forgeRepo} · {spec.branch})
+                        </SizableText>
+                        <XStack gap={6} flexWrap="wrap">
+                          {spec.files.map((f) => (
+                            <XStack
+                              key={f.path}
+                              role="button"
+                              tabIndex={0}
+                              cursor="pointer"
+                              px={8}
+                              height={26}
+                              rounded={round.field}
+                              bg="$panel"
+                              borderWidth={1}
+                              borderColor="$edge"
+                              hoverStyle={{ background: '$hover' }}
+                              items="center"
+                              gap={6}
+                              onPress={() => openExternal(f.forgeUrl)}
+                            >
+                              <FileCode2 size={12} color="$soft" />
+                              <SizableText fontSize={11} fontWeight="500" color="$ink">
+                                {f.type === 'dir' ? `${f.name}/` : f.name}
+                              </SizableText>
+                            </XStack>
+                          ))}
+                        </XStack>
+                      </YStack>
+
+                      {/* Recent Commits */}
+                      <YStack flex={2} minW={300} gap={6}>
+                        <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
+                          Live Commits on {spec.branch}
+                        </SizableText>
+                        <YStack gap={6}>
+                          {spec.commits.slice(0, 3).map((cm) => (
+                            <XStack
+                              key={cm.sha}
+                              role="button"
+                              tabIndex={0}
+                              cursor="pointer"
+                              p={8}
+                              rounded={round.field}
+                              bg="$panel"
+                              borderWidth={1}
+                              borderColor="$edge"
+                              hoverStyle={{ background: '$hover' }}
+                              items="center"
+                              justify="space-between"
+                              gap={8}
+                              onPress={() => openExternal(cm.forgeUrl)}
+                            >
+                              <XStack items="center" gap={8} flex={1} minW={0}>
+                                <GitCommit size={13} color="$soft" />
+                                <XStack
+                                  px={6}
+                                  py={1}
+                                  rounded={round.field}
+                                  bg="$raised"
+                                  borderWidth={1}
+                                  borderColor="$edge"
+                                >
+                                  <SizableText fontSize={10} fontWeight="700" color="$ink">
+                                    {cm.shortSha}
+                                  </SizableText>
+                                </XStack>
+                                <SizableText fontSize={12} color="$ink" numberOfLines={1} flex={1}>
+                                  {cm.message}
+                                </SizableText>
+                              </XStack>
+                              <SizableText fontSize={10} color="$dim">
+                                {cm.author}
+                              </SizableText>
+                            </XStack>
+                          ))}
+                        </YStack>
+                      </YStack>
+                    </XStack>
+                  ) : activeSub === 'cicd' ? (
+                    <YStack gap={8}>
+                      <XStack
+                        p={10}
+                        rounded={round.field}
+                        bg="$panel"
+                        borderWidth={1}
+                        borderColor="$edge"
+                        items="center"
+                        justify="space-between"
+                        flexWrap="wrap"
+                        gap={8}
+                      >
+                        <YStack gap={2}>
+                          <SizableText fontSize={12} fontWeight="700" color="$ink">
+                            Canonical Pipeline: {spec.workflowPath} → {spec.reusableWorkflow}
+                          </SizableText>
+                          <SizableText fontSize={11} color="$soft">
+                            Runner: {spec.runner} · Build Door: {spec.buildDoor} · Plane: {spec.deployPlane}
+                          </SizableText>
+                        </YStack>
+                        <Button size="xs" variant="outline" onPress={() => openExternal(spec.deployTarget)}>
+                          Open {spec.deployTarget} ↗
+                        </Button>
+                      </XStack>
+
+                      {spec.ciRuns.map((run) => (
+                        <XStack
+                          key={run.id}
+                          role="button"
+                          tabIndex={0}
+                          cursor="pointer"
+                          p={10}
+                          rounded={round.field}
+                          bg="$panel"
+                          borderWidth={1}
+                          borderColor="$edge"
+                          hoverStyle={{ background: '$hover' }}
+                          items="center"
+                          justify="space-between"
+                          gap={10}
+                          onPress={() => openExternal(run.url)}
+                        >
+                          <XStack items="center" gap={8} flex={1} minW={0}>
+                            <YStack
+                              width={8}
+                              height={8}
+                              rounded={9999}
+                              style={{
+                                backgroundColor:
+                                  run.conclusion === 'failure' ? dot.backlog : dot.done,
+                              }}
+                            />
+                            <SizableText fontSize={12} fontWeight="700" color="$ink">
+                              {run.name}
+                            </SizableText>
+                            <XStack px={6} py={1} rounded={round.pill} bg="$raised" borderWidth={1} borderColor="$edge">
+                              <SizableText fontSize={10} fontWeight="600" color="$soft">
+                                #{run.id} · {run.headSha}
+                              </SizableText>
+                            </XStack>
+                            <SizableText fontSize={12} color="$soft" numberOfLines={1} flex={1}>
+                              {run.title}
+                            </SizableText>
+                          </XStack>
+                          <SizableText fontSize={11} fontWeight="600" color="$ink">
+                            View Run ↗
+                          </SizableText>
+                        </XStack>
+                      ))}
+                    </YStack>
+                  ) : (
+                    <YStack gap={8}>
+                      {spec.issuesAndPRs.map((pr) => (
+                        <XStack
+                          key={pr.number}
+                          p={10}
+                          rounded={round.field}
+                          bg="$panel"
+                          borderWidth={1}
+                          borderColor="$edge"
+                          items="center"
+                          justify="space-between"
+                          gap={10}
+                        >
+                          <XStack items="center" gap={8} flex={1} minW={0}>
+                            <GitPullRequest size={13} color="$ink" />
+                            <XStack px={6} py={1} rounded={round.pill} bg="$raised" borderWidth={1} borderColor="$edge">
+                              <SizableText fontSize={10} fontWeight="700" color="$ink">
+                                #{pr.number} · {pr.state.toUpperCase()}
+                              </SizableText>
+                            </XStack>
+                            <SizableText fontSize={12} color="$ink" numberOfLines={1} flex={1}>
+                              {pr.title}
+                            </SizableText>
+                            <SizableText fontSize={10} color="$dim">
+                              by {pr.author} · {pr.updatedAt}
+                            </SizableText>
+                          </XStack>
+                          <XStack gap={6} items="center">
+                            <Button
+                              size="xs"
+                              variant="outline"
+                              onPress={() => createFromTemplate(`[${spec.forgeRepo}#${pr.number}] ${pr.title}`)}
+                            >
+                              Sync to Board
+                            </Button>
+                            <Button size="xs" variant="ghost" onPress={() => openExternal(pr.forgeUrl)}>
+                              Forge ↗
+                            </Button>
+                          </XStack>
+                        </XStack>
+                      ))}
+                    </YStack>
+                  )}
                 </YStack>
               )
             })}

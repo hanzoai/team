@@ -172,6 +172,7 @@ const fallback = {
  * `Access-Control-Allow-Credentials`.
  */
 const API = 'https://api.hanzo.ai'
+const FORGE = 'https://git.hanzo.ai'
 
 const config = hanzo(
   {
@@ -181,7 +182,14 @@ const config = hanzo(
       // Reachable by LAN name in dev; vite 8 refuses an unlisted Host by
       // default. Dev only — a built app is static and has no host allowlist.
       allowedHosts: true,
-      proxy: { '/v1': { target: API, changeOrigin: true } },
+      proxy: {
+        '/v1': { target: API, changeOrigin: true },
+        '/forge-api': {
+          target: FORGE,
+          changeOrigin: true,
+          rewrite: (path: string) => path.replace(/^\/forge-api/, ''),
+        },
+      },
     },
   },
   {

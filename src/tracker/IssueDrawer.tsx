@@ -8,8 +8,9 @@
  */
 import { useEffect, useState } from 'react'
 import { Badge, Button, Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Bot, Check, MessageSquare, Plus, Send, Sparkles, Tag, Trash2, User, X } from '@hanzogui/lucide-icons-2'
+import { Bot, Check, ExternalLink, FileCode2, GitBranch, GitCommit, MessageSquare, Plus, Send, Sparkles, Tag, Trash2, User, X } from '@hanzogui/lucide-icons-2'
 
+import { fetchLiveForgeRepo, resolveForgeRepo, type ForgeRepoSpec } from '~/data/forge.ts'
 import { caps, paint, ring, round, rung } from '~/theme/theme.ts'
 import { NAME, PRIORITY, STATUS, type Issue, type IssuePatch, type Person, type Priority, type Source, type Status } from './board/model.ts'
 import { People } from './board/People.tsx'
@@ -95,12 +96,24 @@ export function IssueDrawer({
   const [customTag, setCustomTag] = useState('')
   const [comments, setComments] = useState<IssueComment[]>(() => loadIssueComments(issue.id, issue))
   const [savedNotice, setSavedNotice] = useState(false)
+  const [forgeSpec, setForgeSpec] = useState<ForgeRepoSpec>(() =>
+    resolveForgeRepo(issue.origin?.name ?? issue.key),
+  )
 
   useEffect(() => {
     setTitle(issue.title)
     setDescription(issue.description ?? '')
     setComments(loadIssueComments(issue.id, issue))
-  }, [issue.id, issue.title, issue.description])
+    const initial = resolveForgeRepo(issue.origin?.name ?? issue.key)
+    setForgeSpec(initial)
+    let cancelled = false
+    void fetchLiveForgeRepo(issue.origin?.name ?? issue.key).then((live) => {
+      if (!cancelled) setForgeSpec(live)
+    })
+    return () => {
+      cancelled = true
+    }
+  }, [issue.id, issue.title, issue.description, issue.origin?.name, issue.key])
 
   const patchIssue = (patch: IssuePatch) => {
     if (source.update) {
@@ -157,13 +170,15 @@ export function IssueDrawer({
     const assignee = issue.people[0]
     const botName = assignee?.name ?? 'Dev (@dev)'
     const botFace = assignee?.face ?? '/team/portraits/Comparison_2_Grid_5.jpg'
+    const headCommit = forgeSpec.commits[0]
+    const headRun = forgeSpec.ciRuns[0]
     const next: IssueComment[] = [
       ...comments,
       {
         id: `c-bot-${Date.now()}`,
         author: botName,
         face: botFace,
-        body: `Triaged ${issue.key}: verified ${issue.origin?.name ?? 'hanzo/cloud'} dependencies and linked CI checks. Ready to advance from ${NAME[issue.status]}.`,
+        body: `Triaged ${issue.key} against git.hanzo.ai/${forgeSpec.forgeRepo} (${headCommit ? `HEAD ${headCommit.shortSha}` : 'main'} · CI ${headRun ? `#${headRun.id} ${headRun.conclusion}` : 'green'} → ${forgeSpec.deployTarget}). Ready to advance from ${NAME[issue.status]}.`,
         at: 'Just now · 24/7 Bot',
       },
     ]
@@ -171,8 +186,14 @@ export function IssueDrawer({
     saveIssueComments(issue.id, next)
     patchIssue({
       replies: (issue.replies ?? 0) + 1,
-      done: Math.min(1, Math.max(0.25, (issue.done ?? 0) + 0.25)),
+      done: Math.min(1, Math.max(0.25, (issue.done ?? 0) * 1 + 0.25)),
     })
+  }
+
+  const openExternal = (url: string) => {
+    if (typeof window !== 'undefined') {
+      window.open(url, '_blank', 'noopener,noreferrer')
+    }
   }
 
   const currentAssigneeId = issue.people[0]?.id ?? null
@@ -503,6 +524,171 @@ export function IssueDrawer({
                 <Plus size={12} />
               </Button>
             </XStack>
+          </YStack>
+
+          <Separator borderColor="$edge" />
+
+          {/* Forge · Source Code, Commits & CI/CD */}
+          <YStack gap={10} data-slot="issue-forge-panel">
+            <XStack items="center" justify="space-between">
+              <XStack items="center" gap={6}>
+                <GitBranch size={12} color="$dim" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                  Forge · Source, Commits & CI/CD
+                </SizableText>
+              </XStack>
+              <XStack items="center" gap={6}>
+                <Button
+                  size="xs"
+                  height={22}
+                  px={8}
+                  variant="outline"
+                  onPress={() => openExternal(forgeSpec.forgeUrl)}
+                >
+                  <XStack items="center" gap={4}>
+                    <SizableText fontSize={10} fontWeight="600" color="$ink">
+                      git.hanzo.ai/{forgeSpec.forgeRepo}
+                    </SizableText>
+                    <ExternalLink size={10} color="$soft" />
+                  </XStack>
+                </Button>
+              </XStack>
+            </XStack>
+
+            {/* CI/CD Pipeline & Deployment Card */}
+            {forgeSpec.ciRuns[0] ? (
+              <YStack
+                p={10}
+                rounded={round.card}
+                bg="$raised"
+                borderWidth={1}
+                borderColor="$edge"
+                gap={6}
+              >
+                <XStack items="center" justify="space-between" gap={8}>
+                  <XStack items="center" gap={6}>
+                    <YStack
+                      width={8}
+                      height={8}
+                      rounded={9999}
+                      style={{
+                        backgroundColor:
+                          forgeSpec.ciRuns[0].conclusion === 'failure' ? dot.backlog : dot.done,
+                      }}
+                    />
+                    <SizableText fontSize={rung.small} fontWeight="700" color="$ink">
+                      {forgeSpec.ciRuns[0].name}
+                    </SizableText>
+                    <XStack px={6} py={1} rounded={round.pill} bg="$panel" borderWidth={1} borderColor="$edge">
+                      <SizableText fontSize={10} fontWeight="600" color="$soft">
+                        #{forgeSpec.ciRuns[0].id.slice(-5)} · {forgeSpec.ciRuns[0].headSha}
+                      </SizableText>
+                    </XStack>
+                  </XStack>
+                  <Button
+                    size="xs"
+                    height={20}
+                    px={6}
+                    variant="ghost"
+                    onPress={() => openExternal(forgeSpec.ciRuns[0]!.url)}
+                  >
+                    <SizableText fontSize={10} color="$soft">
+                      Logs →
+                    </SizableText>
+                  </Button>
+                </XStack>
+
+                <SizableText fontSize={11} color="$soft" numberOfLines={1}>
+                  {forgeSpec.ciRuns[0].workflow} · {forgeSpec.runner}
+                </SizableText>
+
+                <XStack items="center" justify="space-between" pt={2}>
+                  <SizableText fontSize={10} color="$dim">
+                    Deploy: {forgeSpec.deployTarget}
+                  </SizableText>
+                  <XStack
+                    role="button"
+                    tabIndex={0}
+                    cursor="pointer"
+                    onPress={() => openExternal(forgeSpec.deployTarget)}
+                  >
+                    <SizableText fontSize={10} fontWeight="600" color="$ink">
+                      Open Live ↗
+                    </SizableText>
+                  </XStack>
+                </XStack>
+              </YStack>
+            ) : null}
+
+            {/* Recent Commits on main */}
+            <YStack gap={6}>
+              <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
+                Recent Commits ({forgeSpec.branch})
+              </SizableText>
+              {forgeSpec.commits.slice(0, 3).map((c) => (
+                <XStack
+                  key={c.sha}
+                  role="button"
+                  tabIndex={0}
+                  cursor="pointer"
+                  p={8}
+                  rounded={round.field}
+                  bg="$raised"
+                  borderWidth={1}
+                  borderColor="$edge"
+                  hoverStyle={{ background: '$hover' }}
+                  items="center"
+                  justify="space-between"
+                  gap={8}
+                  onPress={() => openExternal(c.forgeUrl)}
+                >
+                  <XStack items="center" gap={6} flex={1} minW={0}>
+                    <GitCommit size={12} color="$soft" />
+                    <XStack px={6} py={1} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                      <SizableText fontSize={10} fontWeight="700" color="$ink">
+                        {c.shortSha}
+                      </SizableText>
+                    </XStack>
+                    <SizableText fontSize={11} color="$soft" numberOfLines={1} flex={1}>
+                      {c.message}
+                    </SizableText>
+                  </XStack>
+                  <ExternalLink size={10} color="$dim" />
+                </XStack>
+              ))}
+            </YStack>
+
+            {/* Source Tree Quick Links */}
+            <YStack gap={6}>
+              <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
+                Source Files ({forgeSpec.forgeRepo})
+              </SizableText>
+              <XStack gap={6} flexWrap="wrap">
+                {forgeSpec.files.slice(0, 5).map((f) => (
+                  <XStack
+                    key={f.path}
+                    role="button"
+                    tabIndex={0}
+                    cursor="pointer"
+                    px={8}
+                    height={24}
+                    rounded={round.field}
+                    bg="$raised"
+                    borderWidth={1}
+                    borderColor="$edge"
+                    hoverStyle={{ background: '$hover' }}
+                    items="center"
+                    gap={5}
+                    onPress={() => openExternal(f.forgeUrl)}
+                  >
+                    <FileCode2 size={11} color="$soft" />
+                    <SizableText fontSize={10} fontWeight="500" color="$ink">
+                      {f.name}
+                    </SizableText>
+                  </XStack>
+                ))}
+              </XStack>
+            </YStack>
           </YStack>
 
           <Separator borderColor="$edge" />
