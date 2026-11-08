@@ -94,8 +94,9 @@ export const ALL_BUSINESS_APPS: readonly BusinessApp[] = [
     category: 'CRM & Growth',
     description: 'Enterprise pipeline, contacts, accounts, investor relations, and deal rooms.',
     href: 'https://crm.hanzo.ai',
+    internalPath: '/crm/opportunities',
     icon: Briefcase,
-    metrics: '$4.2M active pipeline · 142 enterprise accounts',
+    metrics: '$4.2M active pipeline · 346K investors · 13.5M leads',
     bots: ['sal', 'rev', 'biz', 'su'],
   },
   {

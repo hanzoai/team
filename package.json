@@ -13,10 +13,11 @@
     "test": "node --test --experimental-strip-types 'src/**/*.test.ts'"
   },
   "dependencies": {
+    "@hanzo/data": "^1.4.5",
     "@hanzo/font": "1.9.3",
     "@hanzo/gui": "8.3.1",
     "@hanzo/iam": "0.21.18",
-    "@hanzo/ui": "8.27.12",
+    "@hanzo/ui": "^8.29.45",
     "@hanzogui/lucide-icons-2": "8.3.1",
     "@hanzogui/next-theme": "8.3.1",
     "react": "19.2.8",

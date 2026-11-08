@@ -135,9 +135,24 @@ export const Session = ({ children }: { children: ReactNode }) => {
 
   const enter = useCallback(
     async (name: string, secret: string) => {
-      const url = await iam().loginWithPassword(name, secret)
-      await iam().handleCallback(url)
-      await adopt()
+      try {
+        const url = await iam().loginWithPassword(name, secret)
+        await iam().handleCallback(url)
+        await adopt()
+      } catch (e: unknown) {
+        const msg = e instanceof Error ? e.message : String(e)
+        if (
+          msg.includes('Failed to fetch') ||
+          msg.includes('NetworkError') ||
+          msg.includes('(404)') ||
+          msg.includes('(405)')
+        ) {
+          keepHere()
+          await iam().signinRedirect({ additionalParams: { login_hint: name } })
+          return
+        }
+        throw e
+      }
     },
     [adopt],
   )

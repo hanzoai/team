@@ -26,6 +26,7 @@ import { useProjects } from '~/serve'
 
 import { AppsNav, AppsScreen, BotsNav, BotsScreen } from '~/apps/BusinessApps'
 import { AgentPane, Chat, Channels } from '~/chat'
+import { CrmNav, CrmScreen } from '~/crm/CrmWorkspace'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -87,6 +88,12 @@ const apps = (view: ReactNode) => (
   </Shell>
 )
 
+const crm = (view: ReactNode) => (
+  <Shell nav={<CrmNav />}>
+    {view}
+  </Shell>
+)
+
 export const routes: RouteObject[] = [
   { path: '/', element: <Landing /> },
 
@@ -100,6 +107,9 @@ export const routes: RouteObject[] = [
 
   { path: '/chat', element: chat(<Chat />) },
   { path: '/chat/:id', element: chat(<Chat />) },
+
+  { path: '/crm', element: <Navigate to="/crm/opportunities" replace /> },
+  { path: '/crm/:section', element: crm(<CrmScreen />) },
 
   { path: '/bots', element: bots(<BotsScreen />) },
   { path: '/apps', element: apps(<AppsScreen />) },

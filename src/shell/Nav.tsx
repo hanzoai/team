@@ -13,11 +13,10 @@
  * ladder has a token for every rung this column needs.
  */
 import { Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { ChevronDown, LayoutGrid, Search } from '@hanzogui/lucide-icons-2'
-import { useState, type ReactNode } from 'react'
-import { Link, useLocation, useNavigate } from 'react-router'
+import { Search } from '@hanzogui/lucide-icons-2'
+import type { ReactNode } from 'react'
+import { Link, useLocation } from 'react-router'
 
-import { useSpace } from '~/data/space.tsx'
 import { FIELD, ICON, LABEL, LEAF, PAD, ROW, SPINE } from './measure.ts'
 import { press } from './press.ts'
 import { caps, round, rung } from '~/theme/theme'
@@ -37,163 +36,18 @@ const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'so
  */
 const ROW_AXIS = { flexDirection: 'row' } as const
 
-/** The navigator's own chrome: its org switcher, title, then whatever the surface puts in it, plus the user & Business Apps footer. */
-export const Nav = ({ title, children }: { title: string; children: ReactNode }) => {
-  const { all, current, choose } = useSpace()
-  const [orgMenuOpen, setOrgMenuOpen] = useState(false)
-  const navigate = useNavigate()
-  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
-  const activeOrg = current ?? orgs[0]
-
-  return (
-    <YStack flex={1} minH={0} pt={10} pb={8}>
-      {/* Compact Workspace & Surface Header */}
-      <YStack px={PAD} pb={8} position="relative">
-        <XStack items="center" justify="space-between" gap={8}>
-          <XStack
-            {...press(() => setOrgMenuOpen((v) => !v), 'Switch organization')}
-            items="center"
-            gap={7}
-            px={8}
-            py={5}
-            rounded={round.field}
-            bg="$panel"
-            borderWidth={1}
-            borderColor="$edge"
-            hoverStyle={{ background: '$hover' }}
-            focusVisibleStyle={RING}
-            flex={1}
-            minW={0}
-          >
-            <YStack
-              width={18}
-              height={18}
-              rounded="$2"
-              bg="$hover"
-              items="center"
-              justify="center"
-              shrink={0}
-            >
-              <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
-                {(activeOrg?.name ?? 'H')[0]?.toUpperCase()}
-              </SizableText>
-            </YStack>
-            <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
-              {activeOrg?.name ?? 'Hanzo AI'}
-            </SizableText>
-            <ChevronDown size={13} color="$soft" />
-          </XStack>
-
-          <SizableText fontSize={rung.small} fontWeight="600" color="$quiet" shrink={0}>
-            {title}
-          </SizableText>
-        </XStack>
-
-        {orgMenuOpen ? (
-          <YStack
-            mt={6}
-            p={4}
-            rounded={round.field}
-            bg="$panel"
-            borderWidth={1}
-            borderColor="$edge"
-            gap={2}
-          >
-            {orgs.map((space) => {
-              const selected = space.url === activeOrg?.url
-              return (
-                <XStack
-                  key={space.url}
-                  {...press(() => {
-                    choose(space.url)
-                    setOrgMenuOpen(false)
-                  }, `Select ${space.name}`)}
-                  px={8}
-                  py={6}
-                  rounded={round.field}
-                  items="center"
-                  justify="space-between"
-                  bg={selected ? '$hover' : 'transparent'}
-                  hoverStyle={{ background: '$hover' }}
-                >
-                  <SizableText fontSize={rung.small} fontWeight={selected ? '600' : '400'} color="$ink">
-                    {space.name}
-                  </SizableText>
-                  <SizableText fontSize={rung.chip} color="$soft">
-                    {space.org}
-                  </SizableText>
-                </XStack>
-              )
-            })}
-          </YStack>
-        ) : null}
-      </YStack>
-
-      {children}
-
-      {/* Tightened native-app bottom account controls */}
-      <XStack
-        px={PAD}
-        pt={8}
-        mt={4}
-        borderTopWidth={1}
-        borderColor="$edge"
-        items="center"
-        justify="space-between"
-      >
-        <XStack items="center" gap={8} minW={0} flex={1}>
-          <YStack position="relative" shrink={0}>
-            <YStack
-              width={26}
-              height={26}
-              rounded={round.pill}
-              bg="$panel"
-              borderWidth={1}
-              borderColor="$edge"
-              items="center"
-              justify="center"
-            >
-              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
-                ZK
-              </SizableText>
-            </YStack>
-            <YStack
-              position="absolute"
-              b={-1}
-              r={-1}
-              width={8}
-              height={8}
-              rounded={round.pill}
-              bg="$ink"
-              borderWidth={1.5}
-              borderColor="$background"
-            />
-          </YStack>
-          <YStack minW={0} flex={1}>
-            <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
-              Zach Kelling
-            </SizableText>
-            <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
-              @zeekay · Online
-            </SizableText>
-          </YStack>
-        </XStack>
-        <XStack
-          {...press(() => navigate('/apps'), 'Open Business Apps')}
-          width={28}
-          height={28}
-          rounded={round.field}
-          items="center"
-          justify="center"
-          hoverStyle={{ background: '$hover' }}
-          focusVisibleStyle={RING}
-        >
-          <LayoutGrid size={15} color="$soft" />
-        </XStack>
-      </XStack>
-    </YStack>
-  )
-}
+/** The navigator's own chrome: its surface title, then whatever the surface puts in it.
+ *  Organization switching and the user account menu live in the universal top BusinessHeader. */
+export const Nav = ({ title, children }: { title: string; children: ReactNode }) => (
+  <YStack flex={1} minH={0} pt={12} pb={8}>
+    <XStack px={PAD} pb={10} items="center" justify="space-between">
+      <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1}>
+        {title}
+      </SizableText>
+    </XStack>
+    {children}
+  </YStack>
+)
 
 /**
  * The search field. `$panel` over the ground, so it reads as a well rather than

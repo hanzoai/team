@@ -62,5 +62,26 @@ export const iam = (): IAM => {
     proxyBaseUrl: import.meta.env.DEV ? here : undefined,
   })
 
+  // On hanzo.team, `/v1/iam/login` and `/v1/iam/verification-codes` are served
+  // same-origin (avoiding cross-origin CORS preflight refusal on sessionRoutes),
+  // whereas `/v1/iam/oauth/token` and `/v1/iam/oauth/userinfo` live on the issuer
+  // (`https://hanzo.id`) with CORS enabled. Route the credential POSTs through
+  // `here` while keeping token and userinfo exchanges on `brand.issuer`.
+  const cfg = (engine as unknown as { config: { proxyBaseUrl?: string } }).config
+  const withSameOriginCredential = <A extends unknown[], R>(fn: (...args: A) => Promise<R>) =>
+    async (...args: A): Promise<R> => {
+      const prev = cfg.proxyBaseUrl
+      cfg.proxyBaseUrl = here
+      try {
+        return await fn(...args)
+      } finally {
+        cfg.proxyBaseUrl = prev
+      }
+    }
+
+  engine.loginWithPassword = withSameOriginCredential(engine.loginWithPassword.bind(engine))
+  engine.loginWithCode = withSameOriginCredential(engine.loginWithCode.bind(engine))
+  engine.sendLoginCode = withSameOriginCredential(engine.sendLoginCode.bind(engine))
+
   return engine
 }

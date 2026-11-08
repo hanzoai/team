@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Button, Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
-import { Navigate } from 'react-router'
 
 import { brand } from '~/data/brand.ts'
 import { useSession } from '~/data/session.tsx'
@@ -30,7 +29,7 @@ export const Login = () => {
   const [busy, setBusy] = useState(false)
   const [refusal, setRefusal] = useState<string | null>(null)
 
-  if (standing === 'in') return <Navigate to="/" replace />
+  if (standing === 'in') return null
 
   const attempt = (work: () => Promise<void>) => {
     setRefusal(null)

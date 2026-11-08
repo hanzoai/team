@@ -422,6 +422,8 @@ export const fixture = {
     switch (name) {
       case 'live':
         return live()
+          .then((rows) => (rows.length > 0 ? rows : SPACES))
+          .catch(() => SPACES)
       case 'loading':
         return never()
       case 'failure':
@@ -435,6 +437,9 @@ export const fixture = {
   plane: (slug: string): Plane => {
     switch (name) {
       case 'live':
+        if (SPACES.some((s) => s.url === slug)) {
+          return new Stand(world())
+        }
         return new Socket(slug)
       case 'empty':
         return new Stand(nothing())

@@ -28,10 +28,17 @@ export type Brand = {
 const BRANDS: readonly Brand[] = [
   {
     org: 'hanzo',
+    app: 'team-native',
+    issuer: 'https://hanzo.id',
+    title: 'Team',
+    hosts: ['hanzo.team', 'www.hanzo.team', 'hanzo.app', 'localhost', '127.0.0.1'],
+  },
+  {
+    org: 'hanzo',
     app: 'team2',
     issuer: 'https://hanzo.id',
     title: 'Team',
-    hosts: ['team2.hanzo.ai', 'team2.hanzo.app', 'localhost', '127.0.0.1'],
+    hosts: ['team2.hanzo.ai', 'team2.hanzo.app', 'hanzo-team.hanzo.app'],
   },
 ]
 

@@ -24,6 +24,7 @@ import {
 } from 'react'
 
 import { Denied, spaces as listSpaces, type SpaceRow } from './account.ts'
+import { team } from './api.ts'
 import { fixture } from './fixture.ts'
 import { invalidate } from './query.ts'
 import { useSession } from './session.tsx'
@@ -83,7 +84,7 @@ const LAST = 'team.space'
  * account row this deployment resolves a token's subject against, and a default
  * space in every org the person belongs to.
  */
-const ENROLMENT = '/v1/team/account/auth/openid'
+const ENROLMENT = `${team.account}/auth/openid`
 
 export const Space = ({ children }: { children: ReactNode }) => {
   const { standing: session } = useSession()

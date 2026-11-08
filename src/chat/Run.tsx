@@ -157,7 +157,7 @@ function Said({
           pt={4}
           {...press(() => onOpen(message))}
         >
-          <MessageSquare size={13} style={{ color: paint.accent }} />
+          <MessageSquare size={13} color={paint.accent} />
           <SizableText fontSize="$1" style={{ color: paint.accent }}>
             {message.replies === 1 ? '1 reply' : `${message.replies} replies`}
           </SizableText>

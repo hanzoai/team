@@ -23,9 +23,12 @@
  * the seed, so the first paint is not one frame of the wrong layout.
  */
 import { Screen, Sheet, SheetContent, XStack, YStack } from '@hanzo/ui'
+import { BusinessHeader, type BusinessAppItem } from '@hanzo/ui/product'
 import { useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
+import { useSession } from '~/data/session.tsx'
+import { useSpace } from '~/data/space.tsx'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
@@ -43,20 +46,14 @@ export type ShellProps = {
 export const Shell = ({ nav, children, aside }: ShellProps) => {
   const { pathname } = useLocation()
   const go = useNavigate()
+  const { who, leave, depart } = useSession()
+  const { all, current, choose } = useSpace()
 
   const [width, setWidth] = useState(() =>
     typeof window === 'undefined' ? INLINE_ASIDE : window.innerWidth,
   )
   const [span, setSpan] = useState(NAV)
   const [drawer, setDrawer] = useState(false)
-  /**
-   * An overlay has to be ASKED FOR. The remembered `showing` is about the panel
-   * beside main; inheriting it at a width where the panel is an overlay opened a
-   * modal over the whole app on arrival — measured: the scrim swallowed every
-   * click on the rail, so the way out of a screen nobody had asked for was
-   * covered by the screen itself. So the overlay has its own answer, it starts
-   * closed, and only the bell opens it.
-   */
   const [over, setOver] = useState(false)
   const showing = useAside()
   const asideKind = useAsideKind()
@@ -64,16 +61,65 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const wide = width >= INLINE_ASIDE
   const roomy = width >= INLINE_NAV
 
-  /** What a rail tap means. On a narrow window the surface you are already on
-   *  has no column beside it, so its glyph opens the drawer instead of
-   *  navigating to where you already are. */
   const reach = (path: string) => {
     if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
     go(path)
   }
 
+  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
+  const activeOrg = current ?? orgs[0]
+  const currentAppId = pathname.startsWith('/crm')
+    ? 'crm'
+    : pathname.startsWith('/bots')
+      ? 'bots'
+      : pathname.startsWith('/calendar')
+        ? 'cal'
+        : 'team'
+
+  const handleSelectApp = (app: BusinessAppItem) => {
+    if (app.id === 'crm') {
+      go('/crm/opportunities')
+    } else if (app.id === 'team' || app.id === 'work') {
+      go('/issues')
+    } else if (app.id === 'chat') {
+      go('/chat/c-general')
+    } else if (app.id === 'bots') {
+      go('/bots')
+    } else if (app.id === 'cal') {
+      go('/calendar')
+    } else if (typeof window !== 'undefined') {
+      window.location.href = app.href
+    }
+  }
+
   return (
     <Screen bg="$background">
+      <BusinessHeader
+        appId={currentAppId}
+        showAppTitle={pathname.startsWith('/crm')}
+        currentOrg={{ name: activeOrg?.url ?? 'hanzo', displayName: activeOrg?.name ?? 'Hanzo AI' }}
+        orgs={orgs.map((s) => ({ name: s.url, displayName: s.name }))}
+        onSelectOrg={(url: string) => choose(url)}
+        onSelectApp={handleSelectApp}
+        user={
+          who
+            ? {
+                sub: who.id,
+                name: who.label || who.name,
+                email: who.email,
+                avatar: who.avatar,
+                owner: activeOrg?.org ?? 'hanzo',
+              }
+            : {
+                sub: 'zeekay',
+                name: 'Zach Kelling',
+                email: 'z@hanzo.ai',
+                owner: 'hanzo',
+              }
+        }
+        onAddAccount={() => depart()}
+        onSignOut={() => leave()}
+      />
       <XStack
         flex={1}
         minH={0}
