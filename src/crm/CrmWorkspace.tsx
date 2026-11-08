@@ -53,12 +53,22 @@ import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react
 import { useParams } from 'react-router'
 
 import { call } from '~/data/http.ts'
+import { iam } from '~/data/iam.ts'
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark, paint } from '~/theme/theme.ts'
 
 registerDefaultFields()
 
 const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
+
+async function crmCall<T>(path: string, fallback: T, init?: RequestInit): Promise<T> {
+  if (!iam().getAccessToken()) return fallback
+  try {
+    return await call<T>(`${API_ORIGIN}${path}`, init)
+  } catch {
+    return fallback
+  }
+}
 
 export type CrmSection =
   | 'opportunities'
@@ -313,7 +323,7 @@ export function CrmScreen() {
     setSelectedRecord(null)
     try {
       if (section === 'opportunities') {
-        const res = await call<{ items?: any[] }>(`${API_ORIGIN}/v1/base/collections/opportunities/records?perPage=200`).catch(() => ({ items: [] }))
+        const res = await crmCall<{ items?: any[] }>('/v1/base/collections/opportunities/records?perPage=200', { items: [] })
         const baseRows = (res?.items || []).map((o: any, idx: number) => ({
           id: String(o.id || `opp-live-${idx}`),
           name: String(o.name || 'Opportunity'),
@@ -331,8 +341,8 @@ export function CrmScreen() {
         setTotalSqlCount(all.length)
       } else if (section === 'companies') {
         const [, fundsRes] = await Promise.all([
-          call<{ items?: any[] }>(`${API_ORIGIN}/v1/base/collections/companies/records?perPage=100`).catch(() => ({ items: [] })),
-          call<{ items?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/funds?limit=150`).catch(() => ({ items: [], total: 63305 })),
+          crmCall<{ items?: any[] }>('/v1/base/collections/companies/records?perPage=100', { items: [] }),
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=150', { items: [], total: 63305 }),
         ])
         const fundRows = (fundsRes?.items || []).map((f: any) => ({
           id: String(f.id),
@@ -353,7 +363,7 @@ export function CrmScreen() {
       } else if (section === 'investors') {
         const qs = new URLSearchParams({ limit: '250' })
         if (investorCat !== 'all') qs.set('category', investorCat)
-        const res = await call<{ items?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/investors?${qs.toString()}`).catch(() => ({ items: [], total: 346009 }))
+        const res = await crmCall<{ items?: any[]; total?: number }>(`/v1/crm/investors?${qs.toString()}`, { items: [], total: 346009 })
         const rows = (res?.items || []).map((inv: any) => ({
           id: String(inv.id),
           name: String(inv.name || inv.email || 'Investor'),
@@ -368,7 +378,7 @@ export function CrmScreen() {
         setRecords(rows)
         setTotalSqlCount(Number(res?.total || 346009))
       } else if (section === 'funds') {
-        const res = await call<{ items?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/funds?limit=250`).catch(() => ({ items: [], total: 10250 }))
+        const res = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=250', { items: [], total: 10250 })
         const rows = (res?.items || []).map((f: any) => ({
           id: String(f.id),
           name: String(f.name || 'Fund'),
@@ -382,7 +392,7 @@ export function CrmScreen() {
         setRecords(rows)
         setTotalSqlCount(Number(res?.total || 10250))
       } else if (section === 'customers') {
-        const res = await call<{ items?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/customers?limit=250`).catch(() => ({ items: [], total: 422490 }))
+        const res = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/customers?limit=250', { items: [], total: 422490 })
         const rows = (res?.items || []).map((c: any) => ({
           id: String(c.id),
           name: String(c.name || c.email || 'Customer'),
@@ -402,7 +412,7 @@ export function CrmScreen() {
         else if (starBucket === '1000-5000') { qs.set('min_stars', '1000'); qs.set('max_stars', '5000') }
         else if (starBucket === '5000-15000') { qs.set('min_stars', '5000'); qs.set('max_stars', '15000') }
         else if (starBucket === '15000+') { qs.set('min_stars', '15000') }
-        const res = await call<{ leads?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/leads?${qs.toString()}`).catch(() => ({ leads: [], total: 13467851 }))
+        const res = await crmCall<{ leads?: any[]; total?: number }>(`/v1/crm/leads?${qs.toString()}`, { leads: [], total: 13467851 })
         const rows = (res?.leads || []).map((l: any, idx: number) => ({
           id: String(l.id || l.github_login || `lead-${idx}`),
           name: String(l.name || l.github_login || l.email || 'Developer'),
@@ -416,7 +426,7 @@ export function CrmScreen() {
         setRecords(rows)
         setTotalSqlCount(Number(res?.total || 13467851))
       } else if (section === 'lists' || section === 'campaigns' || section === 'deliverability') {
-        const res = await call<{ items?: any[]; total?: number }>(`${API_ORIGIN}/v1/crm/lists`).catch(() => ({ items: [], total: 28 }))
+        const res = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/lists', { items: [], total: 28 })
         const rows = (res?.items || []).map((item: any) => ({
           id: String(item.id),
           name: String(item.name || 'Audience Segment'),

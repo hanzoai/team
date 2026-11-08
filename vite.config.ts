@@ -20,13 +20,45 @@ import react from '@vitejs/plugin-react'
  * takes the address from there, while a crawler still reads "not a page I
  * publish", which is true of every address except the ones the router invents.
  */
+const SPA_ROUTES = [
+  'crm',
+  'crm/opportunities',
+  'crm/companies',
+  'crm/contacts',
+  'crm/investors',
+  'crm/funds',
+  'crm/customers',
+  'crm/leads',
+  'crm/lists',
+  'crm/campaigns',
+  'crm/deliverability',
+  'chat',
+  'issues',
+  'bots',
+  'apps',
+  'inbox',
+  'docs',
+  'files',
+  'cal',
+  'mail',
+  'admin',
+  'settings',
+  'people',
+]
+
 const fallback = {
   name: 'fallback',
   async writeBundle(options: { dir?: string }) {
-    const { copyFile } = await import('node:fs/promises')
+    const { copyFile, mkdir } = await import('node:fs/promises')
     const { join } = await import('node:path')
     const dir = options.dir ?? 'dist'
-    await copyFile(join(dir, 'index.html'), join(dir, '404.html'))
+    const src = join(dir, 'index.html')
+    await copyFile(src, join(dir, '404.html'))
+    for (const route of SPA_ROUTES) {
+      const targetDir = join(dir, route)
+      await mkdir(targetDir, { recursive: true })
+      await copyFile(src, join(targetDir, 'index.html'))
+    }
   },
 }
 
@@ -53,7 +85,20 @@ const config = hanzo(
       proxy: { '/v1': { target: API, changeOrigin: true } },
     },
   },
-  { root: import.meta.dirname },
+  {
+    root: import.meta.dirname,
+    dedupe: [
+      '@hanzogui/web',
+      '@hanzogui/core',
+      '@hanzogui/config',
+      '@hanzogui/create-theme',
+      '@hanzogui/themes',
+      '@hanzogui/lucide-icons-2',
+      '@hanzogui/next-theme',
+      '@hanzogui/telemetry',
+      '@hanzogui/toast',
+    ],
+  },
 )
 
 /**
