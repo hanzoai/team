@@ -37,10 +37,12 @@ const PAD = 24
  * is cut with no way to reach it. Refusing to shrink is the whole fix.
  */
 
-export const Board = ({ source, only }: {
+export const Board = ({ source, only, onOpen, onCreateIn }: {
   source: Source
   /** The priorities showing. Empty is every one of them. */
   only?: readonly Priority[]
+  onOpen?: (issue: Issue) => void
+  onCreateIn?: (status: Status) => void
 }) => {
   const [issues, setIssues] = useState<Issue[] | null>(null)
   const [failed, setFailed] = useState<Error | null>(null)
@@ -71,7 +73,7 @@ export const Board = ({ source, only }: {
 
   // The source says whether this board can open an issue; nothing else does.
   const add = source.add?.bind(source)
-  const open = add ? (status: Status) => { add(status, NEW).catch(setFailed) } : undefined
+  const open = onCreateIn ?? (add ? (status: Status) => { add(status, NEW).catch(setFailed) } : undefined)
 
   if (failed) return <Failed why={failed.message} onRetry={() => setAgain((n) => n + 1)} />
   if (!issues) return <Loading />
@@ -90,6 +92,7 @@ export const Board = ({ source, only }: {
           onOver={(status, before) => setOver({ status, before })}
           onDrop={drop}
           onAdd={open}
+          onOpen={onOpen}
           onLift={setDrag}
           onLand={() => { setDrag(null); setOver(null) }}
         />

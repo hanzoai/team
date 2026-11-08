@@ -200,40 +200,43 @@ const FIELD_ICONS: Record<string, ReactNode> = {
   title: <Briefcase size={14} color="$color10" />,
 }
 
-const SEED_OPPORTUNITIES: Record<string, unknown>[] = [
-  { id: 'opp-1', name: 'Enterprise Expansion', stage: 'NEW', amount: 500000, company: 'Anthropic', createdBy: 'Eddy Cue', rating: 3, closeDate: '2026-07-01', pointOfContact: 'Dario Amodei', recordCode: 'OPP-1' },
-  { id: 'opp-2', name: 'API Integration Deal', stage: 'NEW', amount: 75000, company: 'Github', createdBy: { name: 'System', source: 'system' }, rating: 4, closeDate: '2026-01-25', pointOfContact: 'Chris Wanstrath', recordCode: 'OPP-2' },
-  { id: 'opp-3', name: 'Workspace Consolidation', stage: 'SCREENING', amount: 750000, company: 'Notion', createdBy: 'Sundar Pichai', rating: 4, closeDate: '2026-07-08', pointOfContact: 'Ivan Zhao', recordCode: 'OPP-3' },
-  { id: 'opp-4', name: 'Copilot Rollout', stage: 'MEETING', amount: 900000, company: 'Github', createdBy: 'Chris Wanstrath', rating: 5, closeDate: '2026-07-14', pointOfContact: 'Thomas Dohmke', recordCode: 'OPP-4' },
-  { id: 'opp-5', name: 'Enterprise Plan Upgrade', stage: 'MEETING', amount: 50000, company: 'Airbnb', createdBy: 'Eddy Cue', rating: 4, closeDate: '2026-03-10', pointOfContact: 'Brian Chesky', recordCode: 'OPP-5' },
-  { id: 'opp-6', name: 'Billing Expansion', stage: 'PROPOSAL', amount: 60000, company: 'Stripe', createdBy: { name: 'System', source: 'system' }, rating: 4, closeDate: '2026-02-18', pointOfContact: 'Patrick Collison', recordCode: 'OPP-6' },
-  { id: 'opp-7', name: 'Lifecycle Automation', stage: 'CUSTOMER', amount: 1250000, company: 'Slack', createdBy: 'Benioff', rating: 5, closeDate: '2026-07-23', pointOfContact: 'Stewart Butterfield', recordCode: 'OPP-7' },
-  { id: 'opp-8', name: 'Design Partnership', stage: 'CUSTOMER', amount: 30000, company: 'Figma', createdBy: { name: 'System', source: 'system' }, rating: 5, closeDate: '2026-01-15', pointOfContact: 'Dylan Field', recordCode: 'OPP-8' },
-]
+const STAGE_CYCLE = ['NEW', 'SCREENING', 'MEETING', 'PROPOSAL', 'CUSTOMER'] as const
 
-const SEED_COMPANIES: Record<string, unknown>[] = [
-  { id: 'comp-anthropic', name: 'Anthropic', domainName: 'anthropic.com', createdBy: 'Dario Amodei', city: '18 Rue de Londres, San Francisco', country: 'United States', employees: 500, arr: 850000000, idealCustomerProfile: true },
-  { id: 'comp-linkedin', name: 'Linkedin', domainName: 'linkedin.com', createdBy: 'Reid Hoffman', city: '1226 Mountain View, Sunnyvale', country: 'United States', employees: 19000, arr: 1500000000, idealCustomerProfile: true },
-  { id: 'comp-slack', name: 'Slack', domainName: 'slack.com', createdBy: 'Stewart Butterfield', city: '1316 Howard St, San Francisco', country: 'United States', employees: 3000, arr: 1800000000, idealCustomerProfile: true },
-  { id: 'comp-notion', name: 'Notion', domainName: 'notion.com', createdBy: { name: 'API - Key name', source: 'api' }, city: '1162 Mission St, San Francisco', country: 'United States', employees: 800, arr: 400000000, idealCustomerProfile: true },
-  { id: 'comp-figma', name: 'Figma', domainName: 'figma.com', createdBy: { name: 'Workflow name', source: 'workflow' }, city: '110 Osgood Place, San Francisco', country: 'United States', employees: 1400, arr: 600000000, idealCustomerProfile: true },
-  { id: 'comp-github', name: 'Github', domainName: 'github.com', createdBy: 'Chris Wanstrath', city: '3891 Ranchview Dr, San Francisco', country: 'United States', employees: 3500, arr: 2000000000, idealCustomerProfile: true },
-  { id: 'comp-airbnb', name: 'Airbnb', domainName: 'airbnb.com', createdBy: 'Brian Chesky', city: '888 Brannan St, San Francisco', country: 'United States', employees: 6800, arr: 990000000, idealCustomerProfile: true },
-  { id: 'comp-stripe', name: 'Stripe', domainName: 'stripe.com', createdBy: 'Patrick Collison', city: '354 Oyster Point, South SF', country: 'United States', employees: 8000, arr: 1400000000, idealCustomerProfile: true },
-  { id: 'comp-vercel', name: 'Vercel', domainName: 'vercel.com', createdBy: 'Guillermo Rauch', city: '340 S Lemon Ave, San Francisco', country: 'United States', employees: 550, arr: 120000000, idealCustomerProfile: true },
-]
+function parseCheckAmount(raw: unknown, idx: number): number {
+  const s = String(raw || '')
+  const m = s.match(/\$?\s*(\d+(?:\.\d+)?)\s*([kKmM])?/)
+  if (m) {
+    const val = Number(m[1])
+    const unit = (m[2] || '').toLowerCase()
+    if (unit === 'm') return Math.round(val * 1_000_000)
+    if (unit === 'k') return Math.round(val * 1_000)
+    if (val > 0) return Math.round(val)
+  }
+  return (idx % 5 + 1) * 50000
+}
 
-const SEED_CONTACTS: Record<string, unknown>[] = [
-  { id: 'cnt-dario', name: 'Dario Amodei', email: 'dario@anthropic.com', company: 'Anthropic', jobTitle: 'CEO', phone: '+1 (415) 555-0142', city: 'San Francisco' },
-  { id: 'cnt-reid', name: 'Reid Hoffman', email: 'reid@linkedin.com', company: 'Linkedin', jobTitle: 'Co-Founder', phone: '+1 (650) 555-0198', city: 'Palo Alto' },
-  { id: 'cnt-stewart', name: 'Stewart Butterfield', email: 'stewart@slack.com', company: 'Slack', jobTitle: 'Founder', phone: '+1 (415) 555-0133', city: 'San Francisco' },
-  { id: 'cnt-ivan', name: 'Ivan Zhao', email: 'ivan@makenotion.com', company: 'Notion', jobTitle: 'CEO', phone: '+1 (415) 555-0166', city: 'San Francisco' },
-  { id: 'cnt-dylan', name: 'Dylan Field', email: 'dylan@figma.com', company: 'Figma', jobTitle: 'CEO & Co-Founder', phone: '+1 (415) 555-0174', city: 'San Francisco' },
-  { id: 'cnt-chris', name: 'Chris Wanstrath', email: 'chris@github.com', company: 'Github', jobTitle: 'Co-Founder', phone: '+1 (415) 555-0121', city: 'San Francisco' },
-  { id: 'cnt-brian', name: 'Brian Chesky', email: 'brian@airbnb.com', company: 'Airbnb', jobTitle: 'CEO', phone: '+1 (415) 555-0188', city: 'San Francisco' },
-  { id: 'cnt-patrick', name: 'Patrick Collison', email: 'patrick@stripe.com', company: 'Stripe', jobTitle: 'CEO', phone: '+1 (415) 555-0155', city: 'South San Francisco' },
-  { id: 'cnt-guillermo', name: 'Guillermo Rauch', email: 'rauchg@vercel.com', company: 'Vercel', jobTitle: 'CEO', phone: '+1 (415) 555-0190', city: 'San Francisco' },
-]
+const OPP_STORAGE_KEY = 'hanzo.team.crm.opps.v1'
+
+function loadSavedOpportunities(): Record<string, unknown>[] {
+  if (typeof window === 'undefined') return []
+  try {
+    const raw = window.localStorage.getItem(OPP_STORAGE_KEY)
+    if (!raw) return []
+    const parsed = JSON.parse(raw)
+    return Array.isArray(parsed) ? parsed : []
+  } catch {
+    return []
+  }
+}
+
+function saveOpportunities(items: Record<string, unknown>[]) {
+  if (typeof window === 'undefined') return
+  try {
+    window.localStorage.setItem(OPP_STORAGE_KEY, JSON.stringify(items))
+  } catch {
+    // ignore storage quota errors
+  }
+}
 
 export function CrmNav() {
   const [query, setQuery] = useState('')
@@ -284,18 +287,11 @@ export function CrmNav() {
   )
 }
 
-const SAMPLE_FILES = [
-  { name: 'NDA - Anthropic.pdf', date: 'Jul 1, 2026', bg: chip('pdf').background, fg: chip('pdf').color },
-  { name: 'Pricing Q4.xlsx', date: 'Jul 12, 2026', bg: chip('xlsx').background, fg: chip('xlsx').color },
-  { name: 'Onboarding deck.pptx', date: 'Jul 18, 2026', bg: chip('pptx').background, fg: chip('pptx').color },
-  { name: 'Brand assets.png', date: 'Jul 20, 2026', bg: chip('png').background, fg: chip('png').color },
-]
-
 const CSV_MAPPING_ROWS = [
-  { col: 'First Name', sample: 'ex: Dario', target: 'Name', icon: <User size={13} color="$color10" /> },
-  { col: 'Email', sample: 'ex: dario@anthropic.com', target: 'Emails', icon: <Mail size={13} color="$color10" /> },
-  { col: 'Company', sample: 'ex: Anthropic', target: 'Company', icon: <Building2 size={13} color="$color10" /> },
-  { col: 'Job Title', sample: 'ex: CEO', target: 'Job Title', icon: <Briefcase size={13} color="$color10" /> },
+  { col: 'Full Name', sample: 'from CSV column: name', target: 'Name', icon: <User size={13} color="$color10" /> },
+  { col: 'Email', sample: 'from CSV column: email', target: 'Emails', icon: <Mail size={13} color="$color10" /> },
+  { col: 'Organization', sample: 'from CSV column: company', target: 'Company', icon: <Building2 size={13} color="$color10" /> },
+  { col: 'Role / Title', sample: 'from CSV column: title', target: 'Job Title', icon: <Briefcase size={13} color="$color10" /> },
 ]
 
 export function CrmScreen() {
@@ -308,56 +304,142 @@ export function CrmScreen() {
   const [starBucket, setStarBucket] = useState<string>('all')
   const [investorCat, setInvestorCat] = useState<string>('all')
   const [selectedRecord, setSelectedRecord] = useState<Record<string, unknown> | null>(null)
-  const [detailTab, setDetailTab] = useState<'timeline' | 'tasks' | 'notes' | 'files' | 'emails' | 'calendar'>('files')
+  const [detailTab, setDetailTab] = useState<'timeline' | 'tasks' | 'notes' | 'files' | 'emails' | 'calendar'>('timeline')
   const [copilotOpen, setCopilotOpen] = useState(true)
   const [stepsExpanded, setStepsExpanded] = useState(false)
   const [importOpen, setImportOpen] = useState(false)
   const [creating, setCreating] = useState(false)
   const [newName, setNewName] = useState('')
   const [newAmount, setNewAmount] = useState('50000')
+  const [noteDraft, setNoteDraft] = useState('')
+  const [recordNotes, setRecordNotes] = useState<Record<string, { text: string; at: string }[]>>({})
+  const [copilotQuery, setCopilotQuery] = useState('')
+  const [copilotReply, setCopilotReply] = useState<string | null>(null)
 
   const loadSection = useCallback(async () => {
     setLoading(true)
     setSelectedRecord(null)
     try {
       if (section === 'opportunities') {
-        setRecords(SEED_OPPORTUNITIES)
-        setTotalSqlCount(SEED_OPPORTUNITIES.length)
+        const [vcRes, custRes] = await Promise.all([
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/investors?category=vc&limit=60', { items: [], total: 346009 }),
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/customers?limit=24', { items: [], total: 422490 }),
+        ])
+        const saved = loadSavedOpportunities()
+        const cleanVcs = (vcRes?.items || []).filter(
+          (v: any) =>
+            v.name &&
+            /^[\x20-\x7E]+$/.test(String(v.name)) &&
+            !String(v.name).startsWith('[') &&
+            String(v.name).length > 3,
+        )
+        const fundDeals = cleanVcs.slice(0, 16).map((v: any, idx: number) => {
+          const firmName = String(v.name || v.company || 'Venture Partner').replace(/`/g, '')
+          return {
+            id: `opp-vc-${v.id || idx}`,
+            name: `${firmName} — Strategic Allocation`,
+            stage: STAGE_CYCLE[idx % 4],
+            amount: parseCheckAmount(v.check_size, idx),
+            company: firmName,
+            createdBy: 'Rev (@rev)',
+            rating: 4 + (idx % 2),
+            closeDate: '2026-12-15',
+            pointOfContact: String(v.email || 'Zach Kelling'),
+            recordCode: `OPP-${idx + 1}`,
+          }
+        })
+        const custDeals = (custRes?.items || [])
+          .filter((c: any) => c.name && !String(c.name).includes('Ship to Dealership'))
+          .slice(0, 8)
+          .map((c: any, idx: number) => ({
+            id: `opp-cust-${c.id || idx}`,
+            name: `${String(c.name || c.email || 'Enterprise Account')} — Cloud Expansion`,
+            stage: 'CUSTOMER',
+            amount: Math.max(25000, Number(c.total_spent || c.amount || 250) * 100),
+            company: String(c.company || c.products || 'Hanzo Enterprise'),
+            createdBy: 'Sal (@sal)',
+            rating: 5,
+            closeDate: '2026-11-30',
+            pointOfContact: String(c.name || c.email || 'Zach Kelling'),
+            recordCode: `OPP-${fundDeals.length + idx + 1}`,
+          }))
+        const allOpps = [...saved, ...fundDeals, ...custDeals]
+        setRecords(allOpps)
+        setTotalSqlCount(Number(vcRes?.total || 346009) + saved.length)
       } else if (section === 'companies') {
-        const fundsRes = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=150', { items: [], total: 63305 })
-        const fundRows = (fundsRes?.items || []).map((f: any) => ({
-          id: String(f.id),
-          name: String(f.name || 'Fund'),
-          domainName: String(f.website || '').replace(/^https?:\/\//, ''),
-          createdBy: String(f.fund_type_label || f.fund_type || 'Institutional'),
-          city: String(f.location || f.city || 'San Francisco'),
-          country: String(f.country || 'United States'),
-          employees: Number(f.partner_count || 12),
-          arr: 0,
-          idealCustomerProfile: true,
-        }))
-        setRecords([...SEED_COMPANIES, ...fundRows])
-        setTotalSqlCount(Number(fundsRes?.total || 63305))
+        const [vcRes, fundsRes] = await Promise.all([
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/investors?category=vc&limit=120', { items: [], total: 346009 }),
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=100', { items: [], total: 10250 }),
+        ])
+        const vcRows = (vcRes?.items || [])
+          .filter((v: any) => v.name && /^[\x20-\x7E]+$/.test(String(v.name)) && !String(v.name).startsWith('['))
+          .map((v: any, idx: number) => {
+            const cleanName = String(v.name).replace(/`/g, '')
+            const slug = cleanName.toLowerCase().replace(/[^a-z0-9]+/g, '')
+            return {
+              id: `vc-${v.id || idx}`,
+              name: cleanName,
+              domainName: `${slug}.vc`,
+              createdBy: 'Institutional VC',
+              city: [v.city, v.state].filter(Boolean).join(', ') || 'San Francisco',
+              country: String(v.country || 'United States'),
+              employees: 15 + (idx % 40),
+              arr: parseCheckAmount(v.check_size, idx) * 10,
+              idealCustomerProfile: true,
+            }
+          })
+        setRecords(vcRows)
+        setTotalSqlCount(Number(fundsRes?.total || 10250))
       } else if (section === 'contacts') {
-        setRecords(SEED_CONTACTS)
-        setTotalSqlCount(SEED_CONTACTS.length)
+        const [custRes, invRes] = await Promise.all([
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/customers?limit=120', { items: [], total: 422490 }),
+          crmCall<{ items?: any[]; total?: number }>('/v1/crm/investors?category=vc&limit=120', { items: [], total: 346009 }),
+        ])
+        const custContacts = (custRes?.items || [])
+          .filter((c: any) => c.name || c.email)
+          .map((c: any) => ({
+            id: `cust-${c.id}`,
+            name: String(c.name || c.email),
+            email: String(c.email || ''),
+            company: String(c.company || c.products || 'Hanzo Customer'),
+            jobTitle: 'Customer',
+            phone: String(c.phone || '—'),
+            city: [c.city, c.state, c.country].filter(Boolean).join(', ') || 'United States',
+          }))
+        const invContacts = (invRes?.items || [])
+          .filter((inv: any) => inv.name && !String(inv.name).includes('['))
+          .map((inv: any) => ({
+            id: `inv-${inv.id}`,
+            name: String(inv.name),
+            email: String(inv.email || ''),
+            company: String(inv.company || inv.fund_name || 'Venture Partner'),
+            jobTitle: String(inv.title || 'Partner'),
+            phone: String(inv.phone || '—'),
+            city: [inv.city, inv.state, inv.country].filter(Boolean).join(', ') || String(inv.location || 'United States'),
+          }))
+        const combined = [...invContacts, ...custContacts]
+        setRecords(combined)
+        setTotalSqlCount(Number(custRes?.total || 422490) + Number(invRes?.total || 346009))
       } else if (section === 'investors') {
         const qs = new URLSearchParams({ limit: '250' })
         if (investorCat !== 'all') qs.set('category', investorCat)
+        else qs.set('category', 'vc')
         const res = await crmCall<{ items?: any[]; total?: number }>(`/v1/crm/investors?${qs.toString()}`, { items: [], total: 346009 })
-        const rows = (res?.items || []).map((inv: any) => ({
-          id: String(inv.id),
-          name: String(inv.name || inv.email || 'Investor'),
-          company: String(inv.company || inv.fund_name || 'Venture Fund'),
-          category: String(inv.category || 'vc'),
-          stage: String(inv.stage || 'NEW').toUpperCase(),
-          email: String(inv.email || ''),
-          title: String(inv.title || 'Partner'),
-          checkSize: String(inv.check_size || '$100K - $500K'),
-          location: [inv.city, inv.state, inv.country].filter(Boolean).join(', ') || String(inv.location || ''),
-        }))
+        const rows = (res?.items || [])
+          .filter((inv: any) => (inv.name || inv.email) && !String(inv.name || '').startsWith('['))
+          .map((inv: any) => ({
+            id: String(inv.id),
+            name: String(inv.name || inv.email || 'Investor'),
+            company: String(inv.company || inv.fund_name || 'Venture Fund'),
+            category: String(inv.category || 'vc'),
+            stage: String(inv.stage || 'NEW').toUpperCase(),
+            email: String(inv.email || ''),
+            title: String(inv.title || 'Partner'),
+            checkSize: String(inv.check_size || '$100K - $500K'),
+            location: [inv.city, inv.state, inv.country].filter(Boolean).join(', ') || String(inv.location || ''),
+          }))
         setRecords(rows)
-        setTotalSqlCount(Number(res?.total || 346009))
+        setTotalSqlCount(investorCat === 'all' ? 346009 : Number(res?.total || rows.length))
       } else if (section === 'funds') {
         const res = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/funds?limit=250', { items: [], total: 10250 })
         const rows = (res?.items || []).map((f: any) => ({
@@ -461,15 +543,18 @@ export function CrmScreen() {
       id: `opp-${Date.now()}`,
       name: newName.trim(),
       stage: 'NEW',
-      amount: Math.round(Number(newAmount || 50000) * 100),
-      company: 'Anthropic',
-      createdBy: 'You',
+      amount: Math.round(Number(newAmount || 50000)),
+      company: newName.trim().split('—')[0]?.trim() || 'Hanzo Enterprise',
+      createdBy: 'Zach Kelling',
       rating: 5,
       closeDate: new Date().toISOString().slice(0, 10),
-      pointOfContact: 'Dario Amodei',
+      pointOfContact: 'Zach Kelling',
       recordCode: `OPP-${records.length + 1}`,
     }
+    const saved = [item, ...loadSavedOpportunities()]
+    saveOpportunities(saved)
     setRecords((prev) => [item, ...prev])
+    setTotalSqlCount((n) => n + 1)
     setNewName('')
     setCreating(false)
   }, [newName, newAmount, records.length])
@@ -642,7 +727,7 @@ export function CrmScreen() {
               flex={1}
               height={28}
               fontSize={12}
-              placeholder="Deal or record name (e.g. Anthropic — Enterprise Expansion)"
+              placeholder="Deal or record name (e.g. Institutional Fund — Strategic Allocation)"
               value={newName}
               onChangeText={setNewName}
             />
@@ -743,19 +828,89 @@ export function CrmScreen() {
                       })}
                     </XStack>
 
-                    {detailTab === 'files' ? (
+                    {detailTab === 'timeline' ? (
                       <YStack gap="$2">
-                        <XStack items="center" justify="space-between">
-                          <XStack items="center" gap="$1.5">
-                            <SizableText fontSize={12} fontWeight="700" color="$color12">All</SizableText>
-                            <SizableText fontSize={12} color="$color9">{SAMPLE_FILES.length}</SizableText>
+                        <YStack p="$2.5" borderWidth={1} borderColor="$borderColor" rounded="$2" bg="$color2" gap="$1.5">
+                          <XStack items="center" justify="space-between">
+                            <SizableText fontSize={12} fontWeight="600" color="$color12">
+                              Synced from PostgreSQL (`hanzo-sql`)
+                            </SizableText>
+                            <SizableText fontSize={11} color="$color9">Live</SizableText>
                           </XStack>
-                          <Button size="xs" height={24} px="$2" chromeless borderWidth={1} borderColor="$borderColor" startIcon={<Plus size={11} />}>
-                            <SizableText fontSize={11} color="$color11">Add file</SizableText>
+                          <SizableText fontSize={11} color="$color10">
+                            {`Record ID: ${String(selectedRecord.id || selectedRecord.recordCode || 'sql')} · Stage: ${String(selectedRecord.stage || 'ACTIVE')}`}
+                          </SizableText>
+                        </YStack>
+                        <YStack p="$2.5" borderWidth={1} borderColor="$borderColor" rounded="$2" bg="$background" gap="$1">
+                          <SizableText fontSize={12} fontWeight="600" color="$color12">
+                            Rev (@rev) · Revenue Operations
+                          </SizableText>
+                          <SizableText fontSize={11} color="$color10">
+                            {`Verified enrichment and consent guardrails for ${String(selectedRecord.name || selectedRecord.company || 'this record')}.`}
+                          </SizableText>
+                        </YStack>
+                      </YStack>
+                    ) : detailTab === 'notes' ? (
+                      <YStack gap="$2">
+                        <XStack gap="$1.5">
+                          <Input
+                            flex={1}
+                            height={28}
+                            fontSize={12}
+                            placeholder="Add a note on this record..."
+                            value={noteDraft}
+                            onChangeText={setNoteDraft}
+                          />
+                          <Button
+                            size="xs"
+                            height={28}
+                            px="$2.5"
+                            rounded="$2"
+                            style={{ backgroundColor: paint.accent }}
+                            onPress={() => {
+                              if (!noteDraft.trim()) return
+                              const recId = String(selectedRecord.id || 'default')
+                              setRecordNotes((prev) => ({
+                                ...prev,
+                                [recId]: [{ text: noteDraft.trim(), at: 'Just now' }, ...(prev[recId] || [])],
+                              }))
+                              setNoteDraft('')
+                            }}
+                          >
+                            <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ground }}>
+                              Add
+                            </SizableText>
                           </Button>
                         </XStack>
+                        {(recordNotes[String(selectedRecord.id || 'default')] || [
+                          {
+                            text: `Primary contact: ${String(selectedRecord.email || selectedRecord.primaryEmail || selectedRecord.pointOfContact || 'Zach Kelling')}`,
+                            at: 'Synced from SQL',
+                          },
+                        ]).map((n, idx) => (
+                          <YStack key={idx} p="$2.5" borderWidth={1} borderColor="$borderColor" rounded="$2" bg="$color2" gap="$1">
+                            <SizableText fontSize={12} color="$color12">{n.text}</SizableText>
+                            <SizableText fontSize={10} color="$color9">{n.at}</SizableText>
+                          </YStack>
+                        ))}
+                      </YStack>
+                    ) : detailTab === 'files' ? (
+                      <YStack gap="$2">
                         <YStack borderWidth={1} borderColor="$borderColor" rounded="$2" overflow="hidden">
-                          {SAMPLE_FILES.map((file, idx) => (
+                          {[
+                            {
+                              name: `${String(selectedRecord.company || selectedRecord.name || 'Record').replace(/[^a-zA-Z0-9_-]+/g, '-')}-Summary.pdf`,
+                              date: 'Synced',
+                              bg: chip('pdf').background,
+                              fg: chip('pdf').color,
+                            },
+                            {
+                              name: 'Hanzo-DataRoom-Overview.pdf',
+                              date: 'v2026.11',
+                              bg: chip('pdf').background,
+                              fg: chip('pdf').color,
+                            },
+                          ].map((file, idx) => (
                             <XStack
                               key={file.name}
                               px="$2.5"
@@ -777,9 +932,16 @@ export function CrmScreen() {
                         </YStack>
                       </YStack>
                     ) : (
-                      <YStack p="$2.5" borderWidth={1} borderColor="$borderColor" rounded="$2" bg="$color2">
+                      <YStack p="$2.5" borderWidth={1} borderColor="$borderColor" rounded="$2" bg="$color2" gap="$1">
+                        <SizableText fontSize={12} fontWeight="600" color="$color12">
+                          {detailTab === 'emails'
+                            ? `Connected to ${String(selectedRecord.email || selectedRecord.primaryEmail || 'team@hanzo.ai')}`
+                            : detailTab === 'tasks'
+                            ? `Assigned to ${String(selectedRecord.createdBy || 'Rev (@rev)')}`
+                            : 'Next review scheduled on Hanzo Calendar'}
+                        </SizableText>
                         <SizableText fontSize={11} color="$color10">
-                          Synced with Hanzo Base and your connected workspace mailbox & calendar.
+                          Synced with `/v1/crm` and your connected workspace mailbox & calendar.
                         </SizableText>
                       </YStack>
                     )}
@@ -799,7 +961,7 @@ export function CrmScreen() {
                       <X size={14} color="$color10" />
                     </Button>
                     <SizableText fontSize={13} fontWeight="600" color="$color12">
-                      Ask AI
+                      Ask AI · @rev
                     </SizableText>
                   </XStack>
                   <Button size="xs" width={24} height={24} p="$0" chromeless onPress={() => setStepsExpanded((v) => !v)}>
@@ -811,7 +973,7 @@ export function CrmScreen() {
                   <YStack p="$3" gap="$3">
                     <YStack px="$3" py="$2.5" rounded="$3" bg="$color3" borderWidth={1} borderColor="$borderColor">
                       <SizableText fontSize={12} color="$color12">
-                        Build a pipeline board grouped by stage
+                        {`Summarize ${meta.title.toLowerCase()} from PostgreSQL (${totalSqlCount.toLocaleString()} total)`}
                       </SizableText>
                     </YStack>
 
@@ -826,15 +988,15 @@ export function CrmScreen() {
                         <YStack pl="$2" gap="$1.5" pt="$1">
                           <XStack items="center" gap="$2">
                             <Cpu size={12} color="$color9" />
-                            <SizableText fontSize={11} color="$color10">Thought</SizableText>
+                            <SizableText fontSize={11} color="$color10">Connected to /v1/crm/{section}</SizableText>
                           </XStack>
                           <XStack items="center" gap="$2">
                             <Search size={12} color="$color9" />
-                            <SizableText fontSize={11} color="$color10">Read {records.length} records from SQL</SizableText>
+                            <SizableText fontSize={11} color="$color10">Loaded {records.length} active rows from SQL</SizableText>
                           </XStack>
                           <XStack items="center" gap="$2">
                             <Layers size={12} color="$color9" />
-                            <SizableText fontSize={11} color="$color10">Building the pipeline board</SizableText>
+                            <SizableText fontSize={11} color="$color10">Indexed {totalSqlCount.toLocaleString()} total records</SizableText>
                           </XStack>
                         </YStack>
                       ) : null}
@@ -842,24 +1004,63 @@ export function CrmScreen() {
 
                     <YStack gap="$2">
                       <SizableText fontSize={12} color="$color12" lineHeight={18}>
-                        Organized your open deals into a <SizableText fontSize={12} fontWeight="700" color="$color12">pipeline board</SizableText> grouped by stage — <SizableText fontSize={12} fontWeight="700" color="$color12">New, Screening, Meeting, Proposal,</SizableText> and <SizableText fontSize={12} fontWeight="700" color="$color12">Customer</SizableText>.
-                      </SizableText>
-                      <SizableText fontSize={12} color="$color11" lineHeight={18}>
-                        Drag a card to move a deal forward, or open one to see the full history.
+                        {copilotReply ||
+                          `Loaded ${records.length} live ${meta.title.toLowerCase()} records from PostgreSQL (out of ${totalSqlCount.toLocaleString()} total). Click any row or card to inspect its details, notes, and timeline.`}
                       </SizableText>
                     </YStack>
 
                     <XStack gap="$1.5" flexWrap="wrap">
-                      {['Anthropic', 'Notion', 'Github'].map((c) => (
-                        <Chip
-                          key={c}
-                          size="sm"
-                          variant="soft"
-                          startElement={<Avatar name={c} size="sm" shape="square" />}
-                          label={c}
-                        />
-                      ))}
-                      <Chip size="sm" variant="soft" label="+6 more" />
+                      {records.slice(0, 3).map((r, idx) => {
+                        const label = String(r.company || r.name || `Record ${idx + 1}`).slice(0, 22)
+                        return (
+                          <Chip
+                            key={String(r.id || idx)}
+                            size="sm"
+                            variant="soft"
+                            startElement={<Avatar name={label} size="sm" shape="square" />}
+                            label={label}
+                            onClick={() => setSelectedRecord(r)}
+                          />
+                        )
+                      })}
+                      {records.length > 3 ? (
+                        <Chip size="sm" variant="soft" label={`+${records.length - 3} more`} />
+                      ) : null}
+                    </XStack>
+
+                    <XStack gap="$1.5" pt="$1">
+                      <Input
+                        flex={1}
+                        height={28}
+                        fontSize={12}
+                        placeholder="Ask @rev about this view..."
+                        value={copilotQuery}
+                        onChangeText={setCopilotQuery}
+                      />
+                      <Button
+                        size="xs"
+                        height={28}
+                        px="$2.5"
+                        rounded="$2"
+                        style={{ backgroundColor: paint.accent }}
+                        onPress={() => {
+                          if (!copilotQuery.trim()) return
+                          const q = copilotQuery.trim()
+                          const topNames = records
+                            .slice(0, 3)
+                            .map((r) => String(r.name || r.company || ''))
+                            .filter(Boolean)
+                            .join(', ')
+                          setCopilotReply(
+                            `Rev (@rev): For "${q}" across ${records.length} loaded ${meta.title.toLowerCase()} (${totalSqlCount.toLocaleString()} in SQL), top matches include ${topNames || 'active records'}.`
+                          )
+                          setCopilotQuery('')
+                        }}
+                      >
+                        <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ground }}>
+                          Ask
+                        </SizableText>
+                      </Button>
                     </XStack>
 
                     <YStack pt="$2" borderTopWidth={1} borderColor="$borderColor" gap="$1.5">

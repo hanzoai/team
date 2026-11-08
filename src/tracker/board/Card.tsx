@@ -25,9 +25,10 @@ import { tone } from './tone.ts'
 const PAD = 12 // gap.inset, as a number: padding takes a value, not a token here
 const FOOT = 48
 
-export const Card = ({ issue, dragging, ...drag }: {
+export const Card = ({ issue, dragging, onOpen, ...drag }: {
   issue: Issue
   dragging?: boolean
+  onOpen?: (issue: Issue) => void
   onDragStart?: (e: DragEvent) => void
   onDragEnd?: (e: DragEvent) => void
 }) => {
@@ -41,15 +42,24 @@ export const Card = ({ issue, dragging, ...drag }: {
       rounded={round.card}
       overflow="hidden"
       opacity={dragging ? 0.4 : 1}
-      cursor="grab"
+      cursor={onOpen ? 'pointer' : 'grab'}
+      hoverStyle={{ background: '$hover' }}
       role="article"
+      tabIndex={0}
       aria-label={`${issue.key} ${issue.title}`}
+      onPress={() => onOpen?.(issue)}
       {...lift(drag)}
     >
       <YStack p={PAD} gap={gap.tight}>
         {issue.cover ? (
           <Image src={issue.cover} alt="" width="100%" aspectRatio={1.44} rounded="$1" mb={4} />
         ) : null}
+
+        <XStack items="center" justify="space-between" gap={6}>
+          <SizableText fontSize={rung.small} fontWeight="600" color="$dim">
+            {issue.key}
+          </SizableText>
+        </XStack>
 
         <SizableText fontSize={rung.body} lineHeight={20} color="$ink" style={CLAMP}>
           {issue.title}

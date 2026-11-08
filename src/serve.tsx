@@ -13,17 +13,18 @@
  */
 import { useEffect, useMemo } from 'react'
 
-import { Category, nameOf, ref, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
+import { Category, Class, Priority as PriorityNum, nameOf, ref, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
 import { see as seeNotice, notices, places } from '~/data/notice.ts'
 import { useRead, type Read } from '~/data/query.ts'
 import type { Plane } from '~/data/socket.ts'
 import { useSpace, type Standing } from '~/data/space.tsx'
-import { components, issues, keys, move, open, people, project as readProject, projects, statuses, tags } from '~/data/tracker.ts'
+import { amend, components, issues, keys, move, open, people, project as readProject, projects, statuses, tags } from '~/data/tracker.ts'
+import { create, remove as removeDoc } from '~/data/write.ts'
 import { serve, useUnseen } from '~/inbox/feed.ts'
 import type { Note, Span } from '~/inbox/note.ts'
 import { setNotices, setTodo } from '~/shell'
 import type { Standby } from '~/tracker/board/fixture.ts'
-import type { Issue, Person, Source as Board, Status as Column } from '~/tracker/board/model.ts'
+import type { Issue, IssuePatch, Person, Priority, Source as Board, Status as Column } from '~/tracker/board/model.ts'
 
 /** A platform category, as the board spells it. */
 const COLUMN: Record<string, Column> = {
@@ -36,6 +37,13 @@ const COLUMN: Record<string, Column> = {
 
 /** The platform ranks priority 0..4; the board names the four it draws. */
 const RANK = [undefined, 'urgent', 'high', 'medium', 'low'] as const
+
+const PRIORITY_CODE: Record<Priority, number> = {
+  urgent: PriorityNum.urgent,
+  high: PriorityNum.high,
+  medium: PriorityNum.medium,
+  low: PriorityNum.low,
+}
 
 /**
  * Completion, 0..1.
@@ -82,12 +90,15 @@ type World = {
   words: Map<string, string[]>
   parts: Map<string, string>
   project: Project | undefined
+  projects: Map<string, Project>
 }
 
 const card = (issue: Doc, world: World): Issue => ({
   id: issue._id,
-  key: ref(world.project, issue),
+  key: ref(world.project ?? world.projects.get(issue.space), issue),
   title: issue.title,
+  description: issue.description,
+  projectId: issue.space,
   status: world.columns.get(issue.status) ?? 'backlog',
   priority: RANK[issue.priority] ?? undefined,
   labels: world.words.get(issue._id) ?? [],
@@ -115,22 +126,49 @@ const columnsOf = (rows: Status[]) =>
  * optimistic and the server is the authority. A collision shows up as two cards
  * sharing an identifier — visible, and recoverable, unlike a lost card.
  */
-const adder = (plane: Plane, space: string) => async (to: Column, title: string) => {
+const adder = (plane: Plane, space?: string) => async (to: Column, title: string, patch?: IssuePatch) => {
+  const targetSpace = space ?? 'proj-crm'
   const [work, columns, project] = await Promise.all([
-    issues(plane, space),
-    statuses(plane, space),
-    readProject(plane, space),
+    issues(plane, targetSpace),
+    statuses(plane, targetSpace),
+    readProject(plane, targetSpace),
   ])
-  const target = columns.find((c) => (COLUMN[c.category] ?? 'backlog') === to)
+  const target = columns.find((c) => (COLUMN[c.category] ?? 'backlog') === to) ?? columns[0]
   if (!target) throw new Error(`this project has no ${to} column`)
   const number = Math.max(project?.sequence ?? 0, ...work.map((i) => i.number)) + 1
-  await open(plane, plane.account ?? '', space, {
+  const priority = patch?.priority ? PRIORITY_CODE[patch.priority] : 0
+  await open(plane, plane.account ?? '', targetSpace, {
     title,
     status: target._id,
-    priority: 0,
+    priority,
     number,
     after: work.find((i) => i.status === target._id),
   })
+  if (patch && (patch.description || patch.assigneeId || (patch.labels && patch.labels.length > 0))) {
+    const fresh = await issues(plane, targetSpace)
+    const created = fresh.find((i) => i.number === number && i.title === title)
+    if (created) {
+      await amend(plane, plane.account ?? '', created, {
+        ...(patch.description !== undefined ? { description: patch.description } : {}),
+        ...(patch.assigneeId !== undefined
+          ? { assignee: patch.assigneeId, collaborators: patch.assigneeId ? [patch.assigneeId] : [] }
+          : {}),
+      })
+      if (patch.labels && patch.labels.length > 0) {
+        for (const label of patch.labels) {
+          await plane.write(
+            create(targetSpace, plane.account ?? '', Class.tag, {
+              attachedTo: created._id,
+              attachedToClass: Class.issue,
+              collection: 'labels',
+              tag: `tag-${label.toLowerCase()}`,
+              title: label,
+            }),
+          )
+        }
+      }
+    }
+  }
 }
 
 /**
@@ -151,8 +189,9 @@ const board = (plane: Plane, space?: string): Board => ({
         people(plane),
         tags(plane),
         components(plane),
+        projects(plane),
       ])
-        .then(async ([columns, work, crowd, marks, parts]) => {
+        .then(async ([columns, work, crowd, marks, parts, allProjects]) => {
           if (!live) return
           const project = space && work.length ? await readProject(plane, space) : undefined
           if (!live) return
@@ -168,6 +207,7 @@ const board = (plane: Plane, space?: string): Board => ({
             words,
             parts: new Map((parts as Component[]).map((c) => [c._id, c.label])),
             project,
+            projects: new Map((allProjects as Project[]).map((p) => [p._id, p])),
           }
           next(work.map((issue) => card(issue, world)))
         })
@@ -180,15 +220,14 @@ const board = (plane: Plane, space?: string): Board => ({
       stop()
     }
   },
-  // An issue is opened IN a project, so a board across all of them has no
-  // `add` at all and the board reads that rather than being told twice.
-  ...(space ? { add: adder(plane, space) } : {}),
+  add: adder(plane, space),
   async move(id, to, before) {
     const work = await issues(plane, space)
-    const columns = await statuses(plane, space)
     const held = work.find((i) => i._id === id)
+    if (!held) throw new Error('no issue to move')
+    const columns = await statuses(plane, held.space)
     const target = columns.find((c) => (COLUMN[c.category] ?? 'backlog') === to)
-    if (!held || !target) throw new Error(`no ${held ? 'column' : 'issue'} to move ${held ? 'into' : ''}`)
+    if (!target) throw new Error('no column to move into')
     const column = work.filter((i) => i.status === target._id && i._id !== id)
     const at = before ? column.findIndex((i) => i._id === before) : column.length
     const cut = at < 0 ? column.length : at
@@ -196,6 +235,61 @@ const board = (plane: Plane, space?: string): Board => ({
       before: column[cut - 1],
       after: column[cut],
     })
+  },
+  async update(id, patch) {
+    const work = await issues(plane, space)
+    const held = work.find((i) => i._id === id)
+    if (!held) return
+    const fields: Partial<Doc> = {}
+    if (patch.title !== undefined) fields.title = patch.title
+    if (patch.description !== undefined) fields.description = patch.description
+    if (patch.priority !== undefined) {
+      fields.priority = patch.priority ? PRIORITY_CODE[patch.priority] : 0
+    }
+    if (patch.done !== undefined) {
+      const est = held.estimation && held.estimation > 0 ? held.estimation : 100
+      fields.estimation = est
+      fields.reportedTime = Math.round(Math.max(0, Math.min(1, patch.done)) * est)
+    }
+    if (patch.assigneeId !== undefined) {
+      fields.assignee = patch.assigneeId
+      const rest = (held.collaborators ?? []).filter((c) => c !== patch.assigneeId)
+      fields.collaborators = patch.assigneeId ? [patch.assigneeId, ...rest] : rest
+    }
+    if (patch.replies !== undefined) {
+      fields.comments = patch.replies
+    }
+    if (patch.status !== undefined) {
+      const cols = await statuses(plane, held.space)
+      const target = cols.find((c) => (COLUMN[c.category] ?? 'backlog') === patch.status)
+      if (target) fields.status = target._id
+    }
+    if (Object.keys(fields).length > 0) {
+      await amend(plane, plane.account ?? '', held, fields)
+    }
+    if (patch.labels !== undefined) {
+      const existing = (await tags(plane)).filter((t) => t.attachedTo === id)
+      for (const old of existing) {
+        await plane.write(removeDoc(old, plane.account ?? ''))
+      }
+      for (const label of patch.labels) {
+        await plane.write(
+          create(held.space, plane.account ?? '', Class.tag, {
+            attachedTo: id,
+            attachedToClass: Class.issue,
+            collection: 'labels',
+            tag: `tag-${label.toLowerCase()}`,
+            title: label,
+          }),
+        )
+      }
+    }
+  },
+  async remove(id) {
+    const work = await issues(plane, space)
+    const held = work.find((i) => i._id === id)
+    if (!held) return
+    await plane.write(removeDoc(held, plane.account ?? ''))
   },
 })
 

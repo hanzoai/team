@@ -1,15 +1,5 @@
 /**
- * The feed with no backend behind it, and why that is not a demo.
- *
- * A panel scored from whatever the server happened to return is a panel scored
- * from nothing: an Inbox that looks right because the request 404'd looks
- * exactly like an Inbox that is genuinely empty. So every state a reader can
- * reach is a `Source` you can mount deliberately — `still(sample())`,
- * `still([])`, `waiting`, `broken` — and each is judged on its own.
- *
- * `sample` carries one row of every shape the reference paints, and three the
- * reference does not: a row minutes old, one hours old and one DAYS old, so the
- * elapsed line is exercised at every scale it has to be right at.
+ * Deterministic Inbox notifications for Hanzo Team & unit tests (`note.test.ts`).
  */
 import { by, type Note, type Source } from './note.ts'
 
@@ -17,122 +7,103 @@ const MIN = 60_000
 const HOUR = 60 * MIN
 const DAY = 24 * HOUR
 
-const elizabeth = { name: 'Elizabeth Reynolds' }
-const sonya = { name: 'Sonya Wolf' }
-const kenny = { name: 'Kenny Osinski' }
-const alexey = { name: 'Alexey Zinovyev' }
-const billy = { name: 'Billy Christiansen' }
-const warren = { name: 'Warren Thompson' }
-const shelia = { name: 'Shelia Price' }
+const rev = { name: 'Rev (@rev)', face: '/team/portraits/lead-08.jpg' }
+const dev = { name: 'Dev (@dev)', face: '/team/portraits/lead-04.jpg' }
+const zach = { name: 'Zach Kelling' }
+const des = { name: 'Des (@des)', face: '/team/portraits/lead-05.jpg' }
+const mana = { name: 'Mana (@mana)', face: '/team/portraits/lead-03.jpg' }
+const opera = { name: 'Opera (@opera)', face: '/team/portraits/lead-02.jpg' }
+const antje = { name: 'Antje Worring' }
 
-/**
- * Every row shape, newest first.
- *
- * Offsets rather than instants: the elapsed line reads from the clock, so a
- * fixed timestamp would say "3 months ago" a quarter after it was written and
- * the one thing this fixture exists to exercise would stop being exercised.
- */
 export const sample = (now: number = Date.now()): Note[] => [
   {
     id: 'n1',
     kind: 'task',
-    actor: elizabeth,
-    line: [by(elizabeth), { text: ' mentioned you in a page' }],
+    actor: rev,
+    line: [by(rev), { text: ' reconciled $156.6K org grant on z/hanzo' }],
     at: now - 10 * MIN,
-    place: 'Marketing and PM',
+    place: 'CRM & Revenue',
     seen: false,
   },
   {
     id: 'n2',
     kind: 'task',
-    actor: sonya,
-    line: [by(sonya), { text: ' joined to ' }, { text: 'Next Platform', strong: true }, { text: ' project' }],
+    actor: dev,
+    line: [by(dev), { text: ' merged ' }, { text: 'Cloud & Platform', strong: true }, { text: ' transactor PR' }],
     at: now - 16 * MIN,
-    place: 'Next Platform',
+    place: 'Cloud & Platform',
     seen: false,
   },
   {
-    // The chat shape: a headline, then the message itself on its own line with
-    // the mention that put it here. Nothing else in the panel has two blocks.
     id: 'n3',
     kind: 'chat',
-    actor: kenny,
-    line: [by(kenny), { text: ' in ' }, { text: '#General', strong: true }],
-    quote: [{ text: '@everyone', mention: true }, { text: " Hi there! Let's discuss the release" }],
+    actor: zach,
+    line: [by(zach), { text: ' in ' }, { text: '#general', strong: true }],
+    quote: [{ text: '@everyone', mention: true }, { text: ' Hanzo Team is live on hanzo.team and desktop' }],
     at: now - HOUR,
-    place: 'General',
+    place: 'general',
     seen: true,
   },
   {
     id: 'n4',
     kind: 'task',
-    actor: alexey,
-    line: [by(alexey), { text: ' added new tag to the ' }, { text: 'Issues', strong: true }, { text: ' page' }],
+    actor: des,
+    line: [by(des), { text: ' pinned @hanzogui/* to 8.3.5 on the ' }, { text: 'Issues', strong: true }, { text: ' board' }],
     at: now - 3 * HOUR,
-    place: 'CRM',
+    place: 'CRM & Revenue',
     seen: true,
   },
   {
-    // An entity that is neither a person nor a page: a workflow status. The
-    // issue identifier beside it is deliberately NOT emphasised — the status is
-    // the news, and the reference draws exactly that split.
     id: 'n5',
     kind: 'task',
-    actor: billy,
-    line: [by(billy), { text: ' changed status UBER-5671 to ' }, { text: 'In Progress', strong: true }],
+    actor: mana,
+    line: [by(mana), { text: ' changed status CRM-16 to ' }, { text: 'In Progress', strong: true }],
     at: now - 4 * HOUR,
-    place: 'Marketing and PM',
+    place: 'CRM & Revenue',
     seen: true,
   },
   {
     id: 'n6',
     kind: 'task',
-    actor: warren,
-    line: [by(warren), { text: ' added new task to the ' }, { text: 'Issues', strong: true }, { text: ' page' }],
+    actor: opera,
+    line: [by(opera), { text: ' scaled Kata CI runners for ' }, { text: 'Issues', strong: true }, { text: ' gate' }],
     at: now - 8 * HOUR,
-    place: 'CRM',
+    place: 'Hanzo Dev & AI',
     seen: true,
   },
   {
     id: 'n7',
     kind: 'task',
-    actor: shelia,
-    line: [by(shelia), { text: ' mentioned you in a page' }],
+    actor: antje,
+    line: [by(antje), { text: ' mentioned you in Enterprise Deal Desk' }],
     at: now - 9 * HOUR,
-    place: 'CRM',
+    place: 'CRM & Revenue',
     seen: true,
   },
   {
-    // One line, no wrap. Every row in the capture happens to run to two, so
-    // this shape is ours — and it is here because a feed that never produced
-    // one would be a feed nobody had asked.
     id: 'n8',
     kind: 'chat',
-    actor: sonya,
-    line: [by(sonya), { text: ' replied' }],
-    quote: [{ text: 'Shipping it' }],
+    actor: dev,
+    line: [by(dev), { text: ' replied' }],
+    quote: [{ text: 'All 46 unit and token checks passing — shipping it' }],
     at: now - DAY,
-    place: 'Design',
+    place: 'hanzo-ui',
     seen: true,
   },
   {
-    // Days, so the elapsed line is exercised past its hour boundary.
     id: 'n9',
     kind: 'task',
-    actor: kenny,
-    line: [by(kenny), { text: ' assigned ' }, { text: 'UBER-4102', strong: true }, { text: ' to you' }],
+    actor: zach,
+    line: [by(zach), { text: ' assigned ' }, { text: 'DEV-26', strong: true }, { text: ' to you' }],
     at: now - 3 * DAY,
-    place: 'Next Platform',
+    place: 'Hanzo Dev & AI',
     seen: true,
   },
   {
-    // NO PLACE. Not every notification happens somewhere nameable, and the live
-    // mapping cannot name one yet — so the meta line has to be a time alone
-    // rather than a time, a bullet and a gap.
     id: 'n10',
     kind: 'task',
-    actor: warren,
-    line: [by(warren), { text: ' invited you to the workspace' }],
+    actor: opera,
+    line: [by(opera), { text: ' verified all 23 autonomous 24/7 bot sandboxes' }],
     at: now - 9 * DAY,
     seen: true,
   },

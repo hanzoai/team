@@ -10,16 +10,17 @@
  * in what the source is scoped to and in what the trail says, and in nothing
  * else.
  */
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
-import { YStack } from '@hanzo/ui'
+import { XStack, YStack } from '@hanzo/ui'
 
 import { useSpace } from '~/data/space.tsx'
 import { standingIs, useBoard, useCrew, useProject } from '~/serve'
-import { Board, NEW } from './board/Board.tsx'
+import { Board } from './board/Board.tsx'
 import { standby } from './board/fixture.ts'
-import type { Priority } from './board/model.ts'
+import type { Issue, Priority, Status } from './board/model.ts'
 import { Head, VIEWS, type Step, type View } from './Head.tsx'
+import { IssueDrawer, NewIssueModal } from './IssueDrawer.tsx'
 import { IssueList, IssueTimeline } from './Views.tsx'
 
 /** The view in the address, or Kanban — the default view. */
@@ -34,7 +35,19 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const add = source.add?.bind(source)
   const people = useCrew(id)
   const [only, setOnly] = useState<Priority[]>([])
+  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [liveIssues, setLiveIssues] = useState<Issue[]>([])
+  const [createStatus, setCreateStatus] = useState<Status | null>(null)
   const here = viewOf(view)
+
+  useEffect(() => {
+    return source.watch(
+      (next) => setLiveIssues(next),
+      () => {},
+    )
+  }, [source])
+
+  const selectedIssue = selectedId ? liveIssues.find((i) => i.id === selectedId) ?? null : null
 
   const base = mine ? '/mine' : id ? `/projects/${id}/issues` : '/issues'
   const trail: Step[] = [
@@ -53,15 +66,53 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
         people={people}
         only={only}
         onOnly={setOnly}
-        onAdd={add && (() => void add('backlog', NEW))}
+        onAdd={add ? () => setCreateStatus('backlog') : undefined}
       />
-      {here === 'kanban' ? (
-        <Board source={source} only={only} />
-      ) : here === 'list' ? (
-        <IssueList source={source} only={only} mine={mine} />
-      ) : (
-        <IssueTimeline source={source} only={only} mine={mine} />
-      )}
+      <XStack flex={1} minH={0} minW={0}>
+        <YStack flex={1} minH={0} minW={0}>
+          {here === 'kanban' ? (
+            <Board
+              source={source}
+              only={only}
+              onOpen={(issue) => setSelectedId(issue.id)}
+              onCreateIn={add ? (status) => setCreateStatus(status) : undefined}
+            />
+          ) : here === 'list' ? (
+            <IssueList
+              source={source}
+              only={only}
+              mine={mine}
+              onOpen={(issue) => setSelectedId(issue.id)}
+              onCreateIn={add ? (status) => setCreateStatus(status) : undefined}
+            />
+          ) : (
+            <IssueTimeline
+              source={source}
+              only={only}
+              mine={mine}
+              onOpen={(issue) => setSelectedId(issue.id)}
+            />
+          )}
+        </YStack>
+        {selectedIssue ? (
+          <IssueDrawer
+            issue={selectedIssue}
+            source={source}
+            people={people}
+            onClose={() => setSelectedId(null)}
+          />
+        ) : null}
+      </XStack>
+      {createStatus && add ? (
+        <NewIssueModal
+          initialStatus={createStatus}
+          people={people}
+          onCreate={async (status, title, patch) => {
+            await add(status, title, patch)
+          }}
+          onClose={() => setCreateStatus(null)}
+        />
+      ) : null}
     </YStack>
   )
 }

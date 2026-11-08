@@ -15,7 +15,7 @@ import {
   DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger,
   Separator, SizableText, XStack, YStack,
 } from '@hanzo/ui'
-import { CalendarDays, EllipsisVertical, Kanban, List, SlidersHorizontal } from '@hanzogui/lucide-icons-2'
+import { CalendarDays, EllipsisVertical, Kanban, List, Plus, SlidersHorizontal } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { Link } from 'react-router'
 
@@ -97,6 +97,28 @@ export const Head = ({ trail, title, base, here, people, only, onOnly, onAdd }: 
       ))}
       <XStack flex={1} minW={0} />
       <Filter only={only} onOnly={onOnly} />
+      {onAdd ? (
+        <XStack
+          role="button"
+          tabIndex={0}
+          cursor="pointer"
+          height={TABS - 8}
+          mb={3}
+          px={10}
+          items="center"
+          gap={6}
+          rounded={round.field}
+          style={{ backgroundColor: paint.accent }}
+          focusVisibleStyle={ring}
+          aria-label="New issue"
+          onPress={onAdd}
+        >
+          <Plus size={14} color={paint.ground} />
+          <SizableText fontSize={rung.small} fontWeight="600" style={{ color: paint.ground }}>
+            New issue
+          </SizableText>
+        </XStack>
+      ) : null}
     </XStack>
 
     <Separator borderColor="$edge" />

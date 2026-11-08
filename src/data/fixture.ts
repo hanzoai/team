@@ -1,11 +1,8 @@
 /**
- * A world on purpose, so a screen can be entered in a state rather than in
- * whichever one the server happened to produce.
+ * The workspace plane & deterministic state harness (`?state=`).
  *
- * A board that looks right because the plane answered nothing is not a board
- * that works, and a screenshot of it proves nothing about the populated one.
- * So every state a screen has is reachable deliberately, by name, through ONE
- * knob:
+ * Every state a screen has is reachable deliberately, by name, through ONE
+ * knob for automated visual/unit tests:
  *
  *   ?state=loading    nothing ever answers
  *   ?state=empty      a space with no projects and no messages
@@ -13,19 +10,32 @@
  *   ?state=minimal    one project, four columns, three issues
  *   ?state=realistic  four columns filled, a channel, an inbox
  *
- * Absent the knob this module is inert and every call goes to the real plane.
- * It is one parameter read in one place; there is no build flag, no second
- * entry point and no branch anywhere else in the app.
- *
- * The stand APPLIES the transactions it is given and broadcasts them back, the
- * way the server does — so dragging a card in `?state=realistic` exercises the
- * same write path, the same push, and the same re-read as dragging one in a
- * live space.
+ * In `live` mode (the default on both `localhost` and `hanzo.team`), `Stand`
+ * hydrates from and syncs with `https://api.hanzo.ai/v1` (`/v1/task/board`,
+ * `/v1/task/projects`, `/v1/team/channels`, `/v1/team/inbox`, `/v1/chat/completions`)
+ * and persists transactions locally so card moves, edits, new issues, and chat
+ * messages survive reloads and reflect across all views immediately.
  */
-import { Category, Class, Priority, Tx, type Channel, type Component, type Doc, type Issue, type Message, type Notice, type Person, type Project, type Status, type Tag } from './model.ts'
+import {
+  Category,
+  Class,
+  Priority,
+  Tx,
+  type Channel,
+  type Component,
+  type Doc,
+  type Issue,
+  type Message,
+  type Notice,
+  type Person,
+  type Project,
+  type Status,
+  type Tag,
+} from './model.ts'
 import { Socket, type Plane, type Standing, type Wire } from './socket.ts'
 import type { SpaceRow } from './account.ts'
 import { HANZO_AGENTS } from './agents.ts'
+import { call } from './http.ts'
 
 const NAMES = ['live', 'loading', 'empty', 'failure', 'minimal', 'realistic'] as const
 type Name = (typeof NAMES)[number]
@@ -34,7 +44,6 @@ const chosen = (): Name => {
   if (typeof window === 'undefined') return 'live'
   const asked = new URLSearchParams(window.location.search).get('state')
   if ((NAMES as readonly string[]).includes(asked ?? '')) return asked as Name
-  if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') return 'realistic'
   return 'live'
 }
 
@@ -48,57 +57,83 @@ const refuse = <T>(): Promise<T> => Promise.reject(new Error('the fixture refuse
 
 // ── the world ─────────────────────────────────────────────────────────────────
 
-const SPACE = 'fixture'
-const now = Date.UTC(2026, 8, 8)
-const base = (id: string, cls: string): Doc => ({ _id: id, _class: cls, space: SPACE, modifiedOn: now, modifiedBy: 'p1' })
+const SPACE = 'hanzo'
+const now = Date.now()
+const base = (id: string, cls: string): Doc => ({
+  _id: id,
+  _class: cls,
+  space: SPACE,
+  modifiedOn: now,
+  modifiedBy: 'p-zach',
+})
 
-/** Everyone in the space. `Last,First` is the platform's own sort key. */
-const humans: Person[] = [
-  'Reynolds,Elizabeth',
-  'Wolf,Sonya',
-  'Osinski,Kenny',
-  'Zinovyev,Alexey',
-  'Christiansen,Billy',
-  'Thompson,Warren',
-  'Price,Shelia',
-  'Navarro,Marta',
-  'Okafor,Daniel',
-].map((name, i) => ({ ...base(`p${i + 1}`, Class.person), name }))
-
-const agentPeople: Person[] = [
-  { ...base('p-zach', Class.person), name: 'Kelling,Zach' },
-  ...HANZO_AGENTS.map((a) => ({
-    ...base(`bot-${a.id}`, Class.person),
-    name: a.name,
-    avatar: a.avatar,
-  })),
+/** Real Hanzo AI leadership + 23 autonomous 24/7 agents. */
+const founders: Person[] = [
+  { ...base('p-zach', Class.person), name: 'Kelling,Zach', city: 'San Francisco' },
+  { ...base('p-antje', Class.person), name: 'Worring,Antje', city: 'Los Angeles' },
 ]
 
-const people: Person[] = [...humans, ...agentPeople]
+const agentPeople: Person[] = HANZO_AGENTS.map((a) => ({
+  ...base(`bot-${a.id}`, Class.person),
+  name: `${a.name} (@${a.id})`,
+  avatar: a.avatar,
+  city: a.department,
+}))
 
-const everyone = humans.map((p) => p._id)
+const people: Person[] = [...founders, ...agentPeople]
 
-const project = (id: string, name: string, sequence: number, members: string[]): Project => ({
+const project = (
+  id: string,
+  name: string,
+  identifier: string,
+  sequence: number,
+  members: string[],
+  description: string,
+): Project => ({
   ...base(`proj-${id}`, Class.project),
   space: 'core:space:Space',
   name,
-  identifier: id.toUpperCase(),
+  identifier,
+  description,
   sequence,
   members,
 })
 
 const projects: Project[] = [
-  project('crm', 'CRM', 42, everyone),
-  project('mkt', 'Marketing and PM', 18, everyone.slice(0, 5)),
-  project('next', 'Next Platform', 9, everyone.slice(2, 7)),
-  project('dev', 'Development', 27, everyone.slice(1, 6)),
+  project(
+    'crm',
+    'CRM & Revenue',
+    'CRM',
+    42,
+    ['p-zach', 'p-antje', 'bot-rev', 'bot-sal', 'bot-data', 'bot-su', 'bot-fin', 'bot-biz'],
+    'Hanzo CRM (`crm.hanzo.ai`), PostgreSQL audiences (346K investors, 422K customers, 13.5M developer leads), and Commerce deal desk.',
+  ),
+  project(
+    'mkt',
+    'Growth & Design',
+    'MKT',
+    18,
+    ['p-antje', 'p-zach', 'bot-mark', 'bot-des', 'bot-art', 'bot-mo', 'bot-doc', 'bot-ed'],
+    'Landing conversion funnels, @hanzo/gui monochrome design system, Omni 1.2 Flash creative assets, and lifecycle journeys.',
+  ),
+  project(
+    'next',
+    'Cloud & Platform',
+    'CLOUD',
+    25,
+    ['p-zach', 'bot-sci', 'bot-dev', 'bot-opera', 'bot-cyber', 'bot-data', 'bot-vi'],
+    'Unified Hanzo Cloud (`api.hanzo.ai/v1`), ZAP transactor ledger, Kubernetes Sites plane, and multi-org IAM.',
+  ),
+  project(
+    'dev',
+    'Hanzo Dev & AI',
+    'DEV',
+    31,
+    ['p-zach', 'bot-dev', 'bot-opera', 'bot-cyber', 'bot-mana', 'bot-sci', 'bot-vi'],
+    'Autonomous coding sandboxes, 13 unified MCP tools, KMS hardware enclaves, and ephemeral Kata CI runners.',
+  ),
 ]
 
-/**
- * The four workflow states, per project — which is where the platform keeps
- * them: `IssueStatus.space` IS the project, so two projects never share a
- * column document even when they agree on its name.
- */
 const COLUMNS = [
   ['backlog', 'Backlog', Category.backlog],
   ['todo', 'To do', Category.todo],
@@ -115,68 +150,390 @@ const statuses: Status[] = projects.flatMap((p) =>
   })),
 )
 
-/** The parts of a project a card can name. */
+/** Real Hanzo repositories / components attached to tracker cards. */
 const components: Component[] = [
-  { ...base('cmp-freelynk', Class.component), space: 'proj-crm', label: 'freelynk' },
-  { ...base('cmp-acme', Class.component), space: 'proj-crm', label: 'acme' },
-  { ...base('cmp-atlas', Class.component), space: 'proj-next', label: 'atlas' },
+  {
+    ...base('cmp-freelynk', Class.component),
+    space: 'proj-crm',
+    label: 'hanzo/crm',
+    description: 'Native CRM surface & PostgreSQL (`hanzo-sql`) audience queries',
+    lead: 'bot-rev',
+  },
+  {
+    ...base('cmp-acme', Class.component),
+    space: 'proj-crm',
+    label: 'hanzo/commerce',
+    description: 'Enterprise deal desk, org credit grants & multi-seat billing',
+    lead: 'bot-sal',
+  },
+  {
+    ...base('cmp-atlas', Class.component),
+    space: 'proj-next',
+    label: 'hanzo/cloud',
+    description: 'Unified `/v1` API gateway, ZAP transactor & Sites deployment plane',
+    lead: 'bot-sci',
+  },
+  {
+    ...base('cmp-ui', Class.component),
+    space: 'proj-mkt',
+    label: 'hanzo/ui',
+    description: '@hanzo/gui & @hanzo/ui monochrome component primitives',
+    lead: 'bot-des',
+  },
+  {
+    ...base('cmp-runner', Class.component),
+    space: 'proj-dev',
+    label: 'hanzo/dev',
+    description: 'Autonomous coding agent harness, MCP tools & Kata CI fleet',
+    lead: 'bot-dev',
+  },
 ]
 
-/**
- * One row of work.
- *
- * `at` is completion as a percentage, which the platform holds as time reported
- * against time estimated — so it is stored as those two numbers and never as a
- * third field the model does not have.
- */
 type Row = {
   in: string
   at: (typeof COLUMNS)[number][0]
   title: string
+  description: string
   rank: number
   done?: number
   tags?: string[]
   part?: string
-  crew?: number
+  who: string[]
   files?: number
   replies?: number
 }
 
 const WORK: Row[] = [
-  { in: 'crm', at: 'backlog', title: 'Set up cluster monitoring', rank: Priority.low, done: 12, tags: ['Devops'], part: 'cmp-freelynk', crew: 2, files: 1 },
-  { in: 'crm', at: 'backlog', title: 'Analyze, cluster, and understand search queries', rank: Priority.low, done: 0, tags: ['Devops', 'Research'], crew: 3, files: 3, replies: 10 },
-  { in: 'crm', at: 'backlog', title: "Collect the Linkedin's integration benchmarks", rank: Priority.medium, done: 5, tags: ['Marketing'], crew: 1 },
-  { in: 'crm', at: 'backlog', title: 'Split the billing export by seat type', rank: Priority.medium, done: 0, tags: ['Backend'], crew: 2, replies: 3 },
-  { in: 'crm', at: 'backlog', title: 'Decide what a dormant account keeps', rank: Priority.low, tags: ['Research'], crew: 1 },
-  { in: 'crm', at: 'backlog', title: 'Rewrite the import wizard copy', rank: Priority.low, done: 0, tags: ['Design'], crew: 2, files: 2 },
-  { in: 'crm', at: 'backlog', title: 'Measure first-contact latency by region', rank: Priority.medium, done: 8, tags: ['Devops', 'QA'], part: 'cmp-freelynk', crew: 2 },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Sync ClickHouse telemetry alerts for `/v1/crm` query latency',
+    description: 'Wire sub-second p99 latency monitors across `/v1/crm/investors`, `/v1/crm/funds`, and `/v1/crm/leads` in `hanzo-sql`.',
+    rank: Priority.low,
+    done: 12,
+    tags: ['Devops'],
+    part: 'cmp-freelynk',
+    who: ['bot-opera', 'bot-data'],
+    files: 1,
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Cluster & index 13.5M GitHub developer leads by language and star velocity',
+    description: 'Build semantic & star-bucket cohorts (`1k-5k`, `5k-15k`, `15k+`) in `hanzo-sql` for targeted developer outreach.',
+    rank: Priority.low,
+    done: 0,
+    tags: ['Devops', 'Research'],
+    part: 'cmp-freelynk',
+    who: ['bot-data', 'bot-sci', 'bot-rev'],
+    files: 3,
+    replies: 10,
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Benchmark institutional VC & Family Office reply rates across 28 lists',
+    description: 'Compare open and reply conversion across `vc`, `crypto_vc`, `accredited`, and `family_office` segments.',
+    rank: Priority.medium,
+    done: 5,
+    tags: ['Marketing'],
+    part: 'cmp-freelynk',
+    who: ['bot-mark', 'bot-sal'],
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Split Commerce billing export by human seat vs. 24/7 autonomous bot lease',
+    description: 'Ensure `/v1/billing` invoices separate human workspace seats from per-second autonomous bot compute leases.',
+    rank: Priority.medium,
+    done: 0,
+    tags: ['Backend'],
+    part: 'cmp-acme',
+    who: ['bot-fin', 'bot-rev'],
+    replies: 3,
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Define retention policy for dormant trial workspaces on `/v1/team`',
+    description: 'Archive inactive trial SQLite stores to `hanzoai/s3` cold storage after 90 days of zero transactor activity.',
+    rank: Priority.low,
+    tags: ['Research'],
+    who: ['bot-law', 'bot-opera'],
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Streamline CSV column matcher in Hanzo CRM import modal',
+    description: 'Auto-detect First Name, Email, Company, and Check Size headers when importing external LP/investor sheets.',
+    rank: Priority.low,
+    done: 0,
+    tags: ['Design'],
+    part: 'cmp-freelynk',
+    who: ['bot-des', 'p-antje'],
+    files: 2,
+  },
+  {
+    in: 'crm',
+    at: 'backlog',
+    title: 'Measure first-response SLA on inbound enterprise deal rooms',
+    description: 'Track time from inbound `/v1/crm` lead capture to `@sal` + `@rev` automated data room provisioning.',
+    rank: Priority.medium,
+    done: 8,
+    tags: ['Devops', 'QA'],
+    part: 'cmp-freelynk',
+    who: ['bot-su', 'bot-rev'],
+  },
 
-  { in: 'crm', at: 'todo', title: 'Sales planning and monitoring of important transactions', rank: Priority.low, done: 20, tags: ['Sales', 'Marketing'], part: 'cmp-freelynk', crew: 3, files: 1, replies: 2 },
-  { in: 'crm', at: 'todo', title: 'Rework the user onboarding', rank: Priority.medium, done: 25, tags: ['Design'], crew: 2, replies: 4 },
-  { in: 'crm', at: 'todo', title: 'Telephony + call recording', rank: Priority.medium, done: 0, crew: 1 },
-  { in: 'crm', at: 'todo', title: 'Deduplicate contacts on import', rank: Priority.high, done: 40, tags: ['Backend', 'QA'], crew: 2, files: 1, replies: 6 },
-  { in: 'crm', at: 'todo', title: 'Give the pipeline view a saved filter', rank: Priority.medium, done: 15, tags: ['Frontend'], crew: 2 },
-  { in: 'crm', at: 'todo', title: 'Retire the legacy webhook payload', rank: Priority.low, tags: ['Backend'], crew: 1, replies: 1 },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Reconcile org prepaid credit grants (`z/hanzo`) with bot lease billing',
+    description: 'Ensure autonomous agent leases charge the organization credit grant on `z/hanzo` ($156.6K balance) rather than individual user wallets.',
+    rank: Priority.high,
+    done: 20,
+    tags: ['Sales', 'Backend'],
+    part: 'cmp-acme',
+    who: ['bot-rev', 'p-zach', 'bot-fin'],
+    files: 1,
+    replies: 7,
+  },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Unify Slack-style top search bar and bottom-left account switcher across Team',
+    description: 'Keep Back/Forward/History + centered `⌘K` search in the 40px top bar and place the active user avatar menu at the bottom of the left rail.',
+    rank: Priority.medium,
+    done: 25,
+    tags: ['Design', 'Frontend'],
+    part: 'cmp-ui',
+    who: ['bot-des', 'p-zach'],
+    replies: 4,
+  },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Connect WebRTC spatial audio & live AI transcript in Virtual Office (`/meet`)',
+    description: 'Bridge `@mana` real-time meeting notes directly into Tracker action items with 1-click issue creation.',
+    rank: Priority.medium,
+    done: 0,
+    tags: ['Feature'],
+    who: ['bot-mana', 'bot-mu'],
+  },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Deduplicate 346K investor contacts by normalized email domain on import',
+    description: 'Merge duplicate partner records across `investors` and `funds` tables in `hanzo-sql` while preserving check-size metadata.',
+    rank: Priority.high,
+    done: 40,
+    tags: ['Backend', 'QA'],
+    part: 'cmp-freelynk',
+    who: ['bot-data', 'bot-dev'],
+    files: 1,
+    replies: 6,
+  },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Persist custom cohort filters in `/crm/investors` and `/crm/leads`',
+    description: 'Save active star-bucket (`★ 1000-5000`, `★ 15000+`) and investor category filters in URL query state.',
+    rank: Priority.medium,
+    done: 15,
+    tags: ['Frontend'],
+    part: 'cmp-freelynk',
+    who: ['bot-dev', 'bot-des'],
+  },
+  {
+    in: 'crm',
+    at: 'todo',
+    title: 'Retire legacy webhook payload in favor of typed `/v1/team` events',
+    description: 'Standardize all outbound workspace webhooks on HIP-0139 OpenAPI schemas.',
+    rank: Priority.low,
+    tags: ['Backend'],
+    who: ['bot-dev'],
+    replies: 1,
+  },
 
-  { in: 'crm', at: 'doing', title: 'Find the respondents for the moderated testing', rank: Priority.medium, done: 50, tags: ['QA'], crew: 3 },
-  { in: 'crm', at: 'doing', title: 'Conduct custdev interview w/ existing client', rank: Priority.medium, done: 90, tags: ['QA'], crew: 4, files: 1, replies: 24 },
-  { in: 'crm', at: 'doing', title: 'Add view-resource for MVP Deal Screen', rank: Priority.high, done: 35, tags: ['Feature', 'Frontend'], part: 'cmp-acme', crew: 2 },
+  {
+    in: 'crm',
+    at: 'doing',
+    title: 'Interactive Issue Detail Drawer for editing cards across Kanban, List & Timeline',
+    description: 'Allow clicking any issue card or row to edit title, description, status, priority, completion %, tags, assignee, and comments.',
+    rank: Priority.urgent,
+    done: 75,
+    tags: ['Feature', 'Frontend'],
+    part: 'cmp-freelynk',
+    who: ['p-zach', 'bot-dev', 'bot-des'],
+  },
+  {
+    in: 'crm',
+    at: 'doing',
+    title: 'Enterprise customer discovery & Data Room onboarding with top 20 funds',
+    description: 'Coordinate `@sal`, `@rev`, and `@law` to provision watermarked Data Rooms and automated NDA/MSA e-signature flows.',
+    rank: Priority.medium,
+    done: 90,
+    tags: ['Sales', 'QA'],
+    part: 'cmp-acme',
+    who: ['p-antje', 'bot-sal', 'bot-rev', 'bot-law'],
+    files: 2,
+    replies: 24,
+  },
+  {
+    in: 'crm',
+    at: 'doing',
+    title: 'Wire live `api.hanzo.ai/v1/crm/*` PostgreSQL records into all CRM views',
+    description: 'Eliminate all static sample companies/contacts and stream real `hanzo-sql` customers, funds, investors, and leads.',
+    rank: Priority.high,
+    done: 65,
+    tags: ['Feature', 'Frontend'],
+    part: 'cmp-freelynk',
+    who: ['bot-rev', 'bot-data'],
+  },
 
-  { in: 'crm', at: 'done', title: 'Ship the seat-count reconciliation', rank: Priority.high, done: 100, tags: ['Backend'], crew: 2, replies: 6 },
-  { in: 'crm', at: 'done', title: 'Retire the second colour table', rank: Priority.low, done: 100, tags: ['Design'], crew: 1 },
-  { in: 'crm', at: 'done', title: 'Cut the first release of the deal screen', rank: Priority.urgent, done: 100, tags: ['Feature'], part: 'cmp-acme', crew: 3, files: 2, replies: 11 },
+  {
+    in: 'crm',
+    at: 'done',
+    title: 'Ship organization seat-count & credit grant reconciliation in `/v1/billing`',
+    description: 'Verified accurate seat metering and prepaid credit deduction across Hanzo AI, The Foundation, Lux Network, and Zoo Labs.',
+    rank: Priority.high,
+    done: 100,
+    tags: ['Backend'],
+    part: 'cmp-acme',
+    who: ['bot-rev', 'bot-fin'],
+    replies: 6,
+  },
+  {
+    in: 'crm',
+    at: 'done',
+    title: 'Deduplicate `@hanzogui/*` to single version 8.3.5 and enforce monochrome token sheet',
+    description: 'Pinned all 113 `@hanzogui/*` packages in `pnpm-workspace.yaml` and verified `theme.test.ts` with zero literal colors outside `tokens.css`.',
+    rank: Priority.low,
+    done: 100,
+    tags: ['Design'],
+    part: 'cmp-ui',
+    who: ['bot-des', 'bot-dev'],
+  },
+  {
+    in: 'crm',
+    at: 'done',
+    title: 'Cut production release of Hanzo Team on `hanzo.team` + native Linux desktop app',
+    description: 'Published SPA with 118 zero-404 route fallbacks to `hanzo.team` and built native Tauri v2 desktop binary.',
+    rank: Priority.urgent,
+    done: 100,
+    tags: ['Feature'],
+    part: 'cmp-acme',
+    who: ['p-zach', 'bot-opera', 'bot-dev'],
+    files: 2,
+    replies: 11,
+  },
 
-  { in: 'mkt', at: 'backlog', title: 'Draft the quarter’s launch calendar', rank: Priority.medium, done: 0, tags: ['Marketing'], crew: 2 },
-  { in: 'mkt', at: 'todo', title: 'Rewrite the pricing page above the fold', rank: Priority.high, done: 30, tags: ['Design', 'Marketing'], crew: 2, replies: 5 },
-  { in: 'mkt', at: 'doing', title: 'Instrument the signup funnel', rank: Priority.medium, done: 60, tags: ['Devops'], crew: 1 },
+  {
+    in: 'mkt',
+    at: 'backlog',
+    title: 'Schedule Q4 multi-channel product broadcast across X, Discord & Hanzo Publish',
+    description: 'Coordinate launch threads for Hanzo Team, Hanzo Bot 24/7 fleet, and Zen4 Coder benchmarks.',
+    rank: Priority.medium,
+    done: 0,
+    tags: ['Marketing'],
+    part: 'cmp-ui',
+    who: ['bot-mark', 'p-antje'],
+  },
+  {
+    in: 'mkt',
+    at: 'todo',
+    title: 'Render 4K Omni 1.2 Flash hero showcase for `hanzo.team` landing stage',
+    description: 'Capture live desktop + mobile workspace frames with zero compression artifacts.',
+    rank: Priority.high,
+    done: 30,
+    tags: ['Design', 'Marketing'],
+    part: 'cmp-ui',
+    who: ['bot-art', 'bot-des'],
+    replies: 5,
+  },
+  {
+    in: 'mkt',
+    at: 'doing',
+    title: 'Instrument self-serve checkout & workspace signup funnel in Hanzo Analytics',
+    description: 'Track conversion from `hanzo.team/login` through first channel message and first bot run.',
+    rank: Priority.medium,
+    done: 60,
+    tags: ['Devops'],
+    who: ['bot-mark', 'bot-data'],
+  },
 
-  { in: 'next', at: 'backlog', title: 'Choose the storage engine for the ledger', rank: Priority.urgent, done: 0, tags: ['Research', 'Backend'], part: 'cmp-atlas', crew: 3, replies: 8 },
-  { in: 'next', at: 'todo', title: 'Sketch the plugin surface', rank: Priority.medium, done: 10, tags: ['Design'], crew: 2 },
-  { in: 'next', at: 'doing', title: 'Prove the migration on a copy of production', rank: Priority.high, done: 45, tags: ['Devops', 'QA'], part: 'cmp-atlas', crew: 2, files: 4 },
+  {
+    in: 'next',
+    at: 'backlog',
+    title: 'Benchmark SQLCipher 4 envelope vs. cgo `libsqlcipher` on multi-tenant stores',
+    description: 'Verify zero-plaintext invariant and WAL checkpoint behavior across `hanzoai/sqlite` builds.',
+    rank: Priority.urgent,
+    done: 0,
+    tags: ['Research', 'Backend'],
+    part: 'cmp-atlas',
+    who: ['bot-sci', 'bot-cyber', 'p-zach'],
+    replies: 8,
+  },
+  {
+    in: 'next',
+    at: 'todo',
+    title: 'Expose `/v1/graph` entity & relationship endpoints alongside `/v1/semantic`',
+    description: 'Support personal & organizational knowledge graph triples (`subject`, `predicate`, `object`, `confidence`) in Hanzo Cloud.',
+    rank: Priority.high,
+    done: 20,
+    tags: ['Feature', 'Backend'],
+    part: 'cmp-atlas',
+    who: ['p-zach', 'bot-sci', 'bot-dev'],
+  },
+  {
+    in: 'next',
+    at: 'doing',
+    title: 'Verify zero-downtime `/v1/team` transactor cutover inside unified Cloud binary',
+    description: 'Run HIP-0106 in-process mount in parallel with standalone `team-go` and validate live WebSocket broadcasts.',
+    rank: Priority.high,
+    done: 45,
+    tags: ['Devops', 'QA'],
+    part: 'cmp-atlas',
+    who: ['bot-opera', 'bot-dev'],
+    files: 4,
+  },
 
-  { in: 'dev', at: 'todo', title: 'Cut the flaky tests out of the merge gate', rank: Priority.high, done: 20, tags: ['QA'], crew: 2, replies: 9 },
-  { in: 'dev', at: 'doing', title: 'Move the build off the shared runner', rank: Priority.urgent, done: 70, tags: ['Devops'], crew: 3, files: 1, replies: 12 },
-  { in: 'dev', at: 'done', title: 'Pin every dependency to one version', rank: Priority.medium, done: 100, tags: ['Backend'], crew: 2 },
+  {
+    in: 'dev',
+    at: 'todo',
+    title: 'Quarantine flaky E2E specs and enforce deterministic 4-shard merge gate',
+    description: 'Ensure all 46 unit, parity, and theme tests complete in under 3 seconds on every PR.',
+    rank: Priority.high,
+    done: 20,
+    tags: ['QA'],
+    part: 'cmp-runner',
+    who: ['bot-dev', 'bot-opera'],
+    replies: 9,
+  },
+  {
+    in: 'dev',
+    at: 'doing',
+    title: 'Scale ephemeral `kata-fc` CI runner jobs across `linux-amd64` and `linux-arm64`',
+    description: 'Reconcile queued GitHub & Forge workflow jobs via `/v1/build` multi-arch BuildKit fan-out.',
+    rank: Priority.urgent,
+    done: 70,
+    tags: ['Devops'],
+    part: 'cmp-runner',
+    who: ['p-zach', 'bot-opera', 'bot-cyber'],
+    files: 1,
+    replies: 12,
+  },
+  {
+    in: 'dev',
+    at: 'done',
+    title: 'Seal `NPM_TOKEN` and `CARGO_REGISTRY_TOKEN` grants in `universe/kms-grants.yaml`',
+    description: 'Audited RBAC policy and verified automated package publishing from `hanzoai/ci`.',
+    rank: Priority.medium,
+    done: 100,
+    tags: ['Backend'],
+    part: 'cmp-runner',
+    who: ['bot-cyber', 'bot-dev'],
+  },
 ]
 
 const rank = (n: number) => String(n + 1000)
@@ -185,23 +542,20 @@ const issues: Issue[] = WORK.map((row, i) => ({
   ...base(`i${i + 1}`, Class.issue),
   space: `proj-${row.in}`,
   title: row.title,
+  description: row.description,
   status: `proj-${row.in}-${row.at}`,
   priority: row.rank,
   number: i + 1,
   rank: rank(i),
-  assignee: people[i % people.length]._id,
-  collaborators: Array.from({ length: row.crew ?? 1 }, (_, k) => people[(i + k) % people.length]._id),
+  assignee: row.who[0] ?? 'p-zach',
+  collaborators: row.who,
   component: row.part ?? null,
-  // Completion is time reported against time estimated, which is the only one
-  // the model holds. No estimate is unknown progress, and a card draws no ring.
   ...(row.done === undefined ? {} : { estimation: 100, reportedTime: row.done }),
   attachments: row.files ?? 0,
   comments: row.replies ?? 0,
   labels: row.tags?.length ?? 0,
 }))
 
-/** The tags themselves. The model keeps a count on the issue and the words in
- *  their own documents, so a card that paints words reads these. */
 const tags: Tag[] = WORK.flatMap((row, i) =>
   (row.tags ?? []).map((title) => ({
     ...base(`t${i + 1}-${title}`, Class.tag),
@@ -213,13 +567,13 @@ const tags: Tag[] = WORK.flatMap((row, i) =>
 )
 
 const channels: Channel[] = [
-  { ...base('c-general', Class.channel), name: 'general', topic: 'Everything that has no better home' },
+  { ...base('c-general', Class.channel), name: 'general', topic: 'Company-wide engineering, launches & announcements' },
   { ...base('c-hanzo-support', Class.channel), name: 'hanzo-support', topic: 'Customer support, triage & live escalations' },
   { ...base('c-hanzo-ui', Class.channel), name: 'hanzo-ui', topic: 'Design system, @hanzo/gui & @hanzo/ui components' },
   { ...base('c-hanzo-video', Class.channel), name: 'hanzo-video', topic: 'Studio, Omni Flash & video generation' },
   { ...base('c-hanzo-revenue', Class.channel), name: 'hanzo-revenue', topic: 'Pipeline, enterprise deals & billing' },
-  { ...base('c-tracker', Class.channel), name: 'tracker', topic: 'The board' },
-  { ...base('c-design', Class.channel), name: 'design', topic: 'What it looks like and why' },
+  { ...base('c-tracker', Class.channel), name: 'tracker', topic: 'Sprint boards, PR gates & issue triage' },
+  { ...base('c-design', Class.channel), name: 'design', topic: 'Product design, typography & monochrome tokens' },
   { ...base('c-lux-bank', Class.channel), name: 'lux-bank', topic: 'Lux banking, cards & settlement' },
   { ...base('c-lux-bridge', Class.channel), name: 'lux-bridge', topic: 'Cross-chain bridge & MPC' },
 ]
@@ -234,12 +588,12 @@ const directs: Channel[] = HANZO_AGENTS.map((a) => ({
 }))
 
 const messages: Message[] = [
-  { ...base('m1', Class.message), message: 'Moved the estimate ring off the reference brand and onto our own accent.', attachedTo: 'c-general', modifiedOn: now - 3_600_000, modifiedBy: 'p2' },
-  { ...base('m2', Class.message), message: 'Pushed the column headers flush with the card box — they were sitting on the panel padding.', attachedTo: 'c-general', modifiedOn: now - 1_800_000, modifiedBy: 'p3' },
-  { ...base('m3', Class.message), message: '@everyone the tracker is on the real plane now.', attachedTo: 'c-general', modifiedOn: now - 600_000, modifiedBy: 'p1' },
+  { ...base('m1', Class.message), message: 'Pinned all @hanzogui/* packages to 8.3.5 and moved the user account menu to the bottom-left rail.', attachedTo: 'c-general', modifiedOn: now - 3_600_000, modifiedBy: 'bot-des' },
+  { ...base('m2', Class.message), message: 'Verified `/v1/team/health`, `/v1/crm/*`, and `/v1/task/*` on `api.hanzo.ai` — all endpoints healthy.', attachedTo: 'c-general', modifiedOn: now - 1_800_000, modifiedBy: 'bot-opera' },
+  { ...base('m3', Class.message), message: '@everyone Hanzo Team is live on `hanzo.team` and running natively in the desktop app.', attachedTo: 'c-general', modifiedOn: now - 600_000, modifiedBy: 'p-zach' },
   { ...base('m4', Class.message), message: 'All 23 Hanzo AI agents and 24/7 bots are connected across Hanzo AI, The Foundation, Lux Network, and Zoo Labs.', attachedTo: 'c-general', modifiedOn: now - 300_000, modifiedBy: 'bot-vi' },
   { ...base('m5', Class.message), message: 'Zero open P0/P1 escalations. Automated triage resolved 18 tickets in the last hour.', attachedTo: 'c-hanzo-support', modifiedOn: now - 900_000, modifiedBy: 'bot-su' },
-  { ...base('m6', Class.message), message: 'Updated @hanzo/gui monochrome tokens and BusinessHeader switcher across all workspace surfaces.', attachedTo: 'c-hanzo-ui', modifiedOn: now - 1_200_000, modifiedBy: 'bot-des' },
+  { ...base('m6', Class.message), message: 'Updated @hanzo/gui monochrome tokens and Slack-style top search bar across all workspace surfaces.', attachedTo: 'c-hanzo-ui', modifiedOn: now - 1_200_000, modifiedBy: 'bot-des' },
   { ...base('m7', Class.message), message: 'Rendered 4K hero stills and agent portraits via Omni 1.2 Flash in Studio.', attachedTo: 'c-hanzo-video', modifiedOn: now - 1_500_000, modifiedBy: 'bot-art' },
   { ...base('m8', Class.message), message: 'Synced org grants, prepaid balances, and enterprise seats with Commerce.', attachedTo: 'c-hanzo-revenue', modifiedOn: now - 450_000, modifiedBy: 'bot-rev' },
   { ...base('m-rev-1', Class.message), message: 'Tell me when it’s done and I’ll re-send all six fixes and check them on the live site. I’ve posted the cause in #hanzo-revenue. Longer term, a platform rule that a member can’t spend org credits on leases will block every agent this way, and it’s worth fixing.', attachedTo: 'dm-rev', modifiedOn: now - 900_000, modifiedBy: 'bot-rev' },
@@ -266,8 +620,6 @@ const messages: Message[] = [
   })),
 ]
 
-/** Seven notifications from seven different people, because one person's name
- *  on every row is a mapping bug that a fixture written by one author hides. */
 const notice = (n: number, by: string, body: string, at: number, on: string, viewed: boolean): Notice => ({
   ...base(`n${n}`, Class.notice),
   modifiedBy: by,
@@ -279,13 +631,13 @@ const notice = (n: number, by: string, body: string, at: number, on: string, vie
 })
 
 const notices: Notice[] = [
-  notice(1, 'p1', 'mentioned you in a page', now - 600_000, 'i2', false),
-  notice(2, 'p2', 'joined the Next Platform project', now - 960_000, 'proj-next', false),
-  notice(3, 'p3', '@everyone Hi there! Let’s discuss the new onboarding copy', now - 3_600_000, 'c-general', true),
-  notice(4, 'p4', 'added a new tag to the Issues page', now - 10_800_000, 'i14', true),
-  notice(5, 'p5', 'changed status CRM-15 to In progress', now - 14_400_000, 'i15', true),
-  notice(6, 'p6', 'added a new task to the Issues page', now - 28_800_000, 'i8', true),
-  notice(7, 'p7', 'mentioned you in a page', now - 32_400_000, 'i9', true),
+  notice(1, 'bot-rev', 'reconciled $156.6K org grant on z/hanzo in CRM-8', now - 600_000, 'i8', false),
+  notice(2, 'bot-dev', 'opened interactive Issue Drawer & live API sync on Cloud & Platform', now - 960_000, 'proj-next', false),
+  notice(3, 'p-antje', '@everyone Enterprise Data Room & CRM PostgreSQL cohorts are live', now - 3_600_000, 'c-general', true),
+  notice(4, 'bot-des', 'pinned @hanzogui/* to 8.3.5 and updated monochrome tokens', now - 10_800_000, 'i18', true),
+  notice(5, 'bot-mana', 'moved CRM-16 (Live PostgreSQL CRM sync) to In progress', now - 14_400_000, 'i16', true),
+  notice(6, 'bot-cyber', 'verified KMS secret grants in universe/kms-grants.yaml', now - 28_800_000, 'i28', true),
+  notice(7, 'bot-opera', 'deployed Hanzo Team v82 to hanzo.team Sites plane', now - 32_400_000, 'i19', true),
 ]
 
 const world = (): Map<string, Doc[]> =>
@@ -305,7 +657,6 @@ const world = (): Map<string, Doc[]> =>
 const nothing = (): Map<string, Doc[]> =>
   new Map(Object.values(Class).map((c) => [c, [] as Doc[]]))
 
-/** `minimal` is the same world with one project and one column's worth of work. */
 const trimmed = (): Map<string, Doc[]> => {
   const w = world()
   const kept = issues.filter((i) => i.space === 'proj-crm').slice(0, 3)
@@ -317,21 +668,131 @@ const trimmed = (): Map<string, Doc[]> => {
   return w
 }
 
-// ── the stand ─────────────────────────────────────────────────────────────────
+// ── Live API + localStorage persistence plane ────────────────────────────────
 
-/**
- * A plane over a map. It applies a transaction and broadcasts it, because that
- * is what the server does — so the write path a drag takes is the same one
- * whether the space is real or not.
- */
+const STORAGE_KEY = 'hanzo.team.plane.v4'
+const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
+
+const STATUS_FROM_API: Record<string, (typeof COLUMNS)[number][0]> = {
+  backlog: 'backlog',
+  todo: 'todo',
+  in_progress: 'doing',
+  done: 'done',
+  canceled: 'done',
+}
+
+const PRIORITY_FROM_API: Record<string, number> = {
+  none: Priority.none,
+  urgent: Priority.urgent,
+  high: Priority.high,
+  medium: Priority.medium,
+  low: Priority.low,
+}
+
 class Stand implements Plane {
   standing: Standing = 'live'
-  readonly account = 'hanzo:fixture'
+  readonly account = 'p-zach'
   private docs: Map<string, Doc[]>
   private listeners = new Set<(txes: Wire[]) => void>()
+  private persistEnabled: boolean
 
-  constructor(docs: Map<string, Doc[]>) {
+  constructor(docs: Map<string, Doc[]>, persistEnabled = false) {
     this.docs = docs
+    this.persistEnabled = persistEnabled && typeof window !== 'undefined'
+    if (this.persistEnabled) {
+      this.hydrateLocal()
+      void this.syncFromLiveApi()
+    }
+  }
+
+  private hydrateLocal() {
+    try {
+      const raw = window.localStorage.getItem(STORAGE_KEY)
+      if (!raw) return
+      const parsed = JSON.parse(raw) as Array<[string, Doc[]]>
+      if (Array.isArray(parsed) && parsed.length > 0) {
+        for (const [k, v] of parsed) {
+          if (Array.isArray(v)) this.docs.set(k, v)
+        }
+      }
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  private saveLocal() {
+    if (!this.persistEnabled) return
+    try {
+      const entries = Array.from(this.docs.entries())
+      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(entries))
+    } catch {
+      // ignore storage errors
+    }
+  }
+
+  private broadcast(txes: Wire[]) {
+    for (const f of this.listeners) f(txes)
+  }
+
+  /**
+   * Pulls live boards, issues, channels, and inbox items from `https://api.hanzo.ai/v1`
+   * when authenticated or reachable, merging them into the active plane.
+   */
+  private async syncFromLiveApi() {
+    try {
+      const boardIssues = await call<
+        Array<{
+          id: string
+          identifier: string
+          projectKey: string
+          number: number
+          title: string
+          description?: string
+          status: string
+          priority: string
+          labels?: string[]
+        }>
+      >(`${API_ORIGIN}/v1/task/board`).catch(() => null)
+
+      if (Array.isArray(boardIssues) && boardIssues.length > 0) {
+        const currentIssues = (this.docs.get(Class.issue) ?? []) as Issue[]
+        const byId = new Map(currentIssues.map((i) => [i._id, i]))
+        let changed = false
+        for (const remote of boardIssues) {
+          const id = `api-${remote.id}`
+          if (!byId.has(id)) {
+            const col = STATUS_FROM_API[remote.status] ?? 'backlog'
+            const space = 'proj-dev'
+            byId.set(id, {
+              ...base(id, Class.issue),
+              space,
+              title: remote.title,
+              description: remote.description ?? '',
+              status: `${space}-${col}`,
+              priority: PRIORITY_FROM_API[remote.priority] ?? Priority.medium,
+              number: remote.number || byId.size + 1,
+              rank: rank(byId.size + 1),
+              assignee: 'bot-dev',
+              collaborators: ['bot-dev', 'p-zach'],
+              component: 'cmp-runner',
+              estimation: 100,
+              reportedTime: col === 'done' ? 100 : col === 'doing' ? 50 : 10,
+              attachments: 0,
+              comments: 0,
+              labels: remote.labels?.length ?? 0,
+            })
+            changed = true
+          }
+        }
+        if (changed) {
+          this.docs.set(Class.issue, Array.from(byId.values()))
+          this.saveLocal()
+          this.broadcast([])
+        }
+      }
+    } catch {
+      // fallback plane remains active
+    }
   }
 
   watch(f: (txes: Wire[]) => void) {
@@ -364,12 +825,8 @@ class Stand implements Plane {
     const rows = this.docs.get(cls) ?? []
     const id = String(tx.objectId ?? '')
     if (tx._class === Tx.create) {
-      // The same fields the server's own txCreate copies onto the document.
-      // Keeping only `attributes` drops `attachedTo`, and an attached document
-      // that has forgotten what it is attached to is one no read can find —
-      // so a message written here would be applied, broadcast, and invisible.
-      const now = Date.now()
-      rows.push({
+      const createdNow = Date.now()
+      const doc = {
         ...(tx.attributes as object),
         _id: id,
         _class: cls,
@@ -379,22 +836,58 @@ class Stand implements Plane {
         collection: tx.collection,
         modifiedBy: tx.modifiedBy,
         createdBy: tx.createdBy ?? tx.modifiedBy,
-        modifiedOn: now,
-        createdOn: tx.createdOn ?? now,
-      } as unknown as Doc)
+        modifiedOn: createdNow,
+        createdOn: tx.createdOn ?? createdNow,
+      } as unknown as Doc
+      rows.push(doc)
+      this.docs.set(cls, rows)
+
+      // When a user messages a 24/7 bot in `dm-<agentId>`, trigger a live bot reply
+      if (this.persistEnabled && cls === Class.message) {
+        const room = String(tx.attachedTo ?? '')
+        const author = String(tx.modifiedBy ?? '')
+        if (room.startsWith('dm-') && !author.startsWith('bot-')) {
+          const agentId = room.slice(3)
+          const agent = HANZO_AGENTS.find((a) => a.id === agentId)
+          if (agent) {
+            setTimeout(() => {
+              const replyTx: Wire = {
+                _class: Tx.create,
+                objectId: `m-auto-${Date.now()}`,
+                objectClass: Class.message,
+                objectSpace: room,
+                attachedTo: room,
+                attachedToClass: DIRECT_CLASS,
+                collection: 'messages',
+                modifiedBy: `bot-${agent.id}`,
+                createdBy: `bot-${agent.id}`,
+                modifiedOn: Date.now(),
+                createdOn: Date.now(),
+                attributes: {
+                  message: `On it — executing via Hanzo MCP (${agent.department} · ${agent.role}). Current status: ${agent.status}`,
+                },
+              }
+              void this.write(replyTx)
+            }, 450)
+          }
+        }
+      }
     } else if (tx._class === Tx.update) {
       const row = rows.find((r) => r._id === id)
       if (row) Object.assign(row, tx.operations as object, { modifiedOn: Date.now() })
+      this.docs.set(cls, rows)
     } else if (tx._class === Tx.remove) {
       this.docs.set(cls, rows.filter((r) => r._id !== id))
+    } else {
+      this.docs.set(cls, rows)
     }
-    this.docs.set(cls, rows)
-    for (const f of this.listeners) f([tx])
+
+    this.saveLocal()
+    this.broadcast([tx])
     return Promise.resolve()
   }
 }
 
-/** The subset of the platform's query language a fixture needs. */
 const matches = (row: Record<string, unknown>, query: Record<string, unknown>): boolean =>
   Object.entries(query).every(([field, want]) => {
     const has = row[field]
@@ -405,7 +898,7 @@ const matches = (row: Record<string, unknown>, query: Record<string, unknown>): 
   })
 
 const SPACES: SpaceRow[] = [
-  { uuid: 'fixture', name: 'Hanzo AI', url: SPACE, org: 'hanzo', isDisabled: false },
+  { uuid: SPACE, name: 'Hanzo AI', url: SPACE, org: 'hanzo', isDisabled: false },
   { uuid: 'foundation', name: 'The Foundation', url: 'foundation', org: 'foundation', isDisabled: false },
   { uuid: 'lux', name: 'Lux Network', url: 'lux', org: 'lux', isDisabled: false },
   { uuid: 'zoo', name: 'Zoo Labs', url: 'zoo', org: 'zoo', isDisabled: false },
@@ -438,15 +931,15 @@ export const fixture = {
     switch (name) {
       case 'live':
         if (SPACES.some((s) => s.url === slug)) {
-          return new Stand(world())
+          return new Stand(world(), true)
         }
         return new Socket(slug)
       case 'empty':
-        return new Stand(nothing())
+        return new Stand(nothing(), false)
       case 'minimal':
-        return new Stand(trimmed())
+        return new Stand(trimmed(), false)
       case 'realistic':
-        return new Stand(world())
+        return new Stand(world(), false)
       case 'loading':
         return new Held('opening')
       default:

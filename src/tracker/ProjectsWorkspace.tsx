@@ -30,21 +30,21 @@ const PROJECT_COMPONENTS: Record<
   Array<{ id: string; name: string; lead: string; description: string; bot: string }>
 > = {
   'proj-crm': [
-    { id: 'cmp-freelynk', name: 'freelynk', lead: 'Reynolds,Elizabeth', description: 'Realtime customer portal, inbound lead routing & telemetry sync', bot: 'rev' },
-    { id: 'cmp-acme', name: 'acme', lead: 'Wolf,Sonya', description: 'Enterprise deal room, multi-seat billing & contract automation', bot: 'sal' },
-    { id: 'cmp-pipeline', name: 'pipeline-core', lead: 'Osinski,Kenny', description: 'Deduplication engine, webhook ingest & CRM graph indexer', bot: 'data' },
+    { id: 'cmp-freelynk', name: 'hanzo/crm', lead: 'Zach Kelling', description: 'Native CRM surface, PostgreSQL (`hanzo-sql`) cohorts & inbound lead routing', bot: 'rev' },
+    { id: 'cmp-acme', name: 'hanzo/commerce', lead: 'Antje Worring', description: 'Enterprise deal room, org credit grants, multi-seat billing & MSA automation', bot: 'sal' },
+    { id: 'cmp-pipeline', name: 'hanzo/marketing', lead: 'Zach Kelling', description: 'Lifecycle journeys, deliverability guardrails & 28 segmented audiences', bot: 'data' },
   ],
   'proj-mkt': [
-    { id: 'cmp-funnel', name: 'signup-funnel', lead: 'Wolf,Sonya', description: 'Landing conversion tracking, attribution & checkout analytics', bot: 'mark' },
-    { id: 'cmp-brand', name: 'design-system', lead: 'Zinovyev,Alexey', description: '@hanzo/gui monochrome tokens, hero stage & Omni Flash assets', bot: 'des' },
+    { id: 'cmp-funnel', name: 'hanzo/app', lead: 'Antje Worring', description: 'Landing conversion tracking, attribution & checkout analytics', bot: 'mark' },
+    { id: 'cmp-brand', name: 'hanzo/ui', lead: 'Zach Kelling', description: '@hanzo/gui monochrome tokens, hero stage & Omni Flash assets', bot: 'des' },
   ],
   'proj-next': [
-    { id: 'cmp-atlas', name: 'atlas', lead: 'Osinski,Kenny', description: 'Distributed ZAP transactor ledger & multi-region state replication', bot: 'sci' },
-    { id: 'cmp-plugin', name: 'plugin-host', lead: 'Christiansen,Billy', description: 'Sandboxed extension runtime & MCP tool bridge', bot: 'dev' },
+    { id: 'cmp-atlas', name: 'hanzo/cloud', lead: 'Zach Kelling', description: 'Unified `/v1` API gateway, ZAP transactor ledger & multi-org state replication', bot: 'sci' },
+    { id: 'cmp-plugin', name: 'hanzo/mcp', lead: 'Zach Kelling', description: 'Sandboxed extension runtime & 13 unified MCP tools', bot: 'dev' },
   ],
   'proj-dev': [
-    { id: 'cmp-runner', name: 'ci-runner', lead: 'Thompson,Warren', description: 'Dedicated 31-worker build fleet & deterministic E2E shard gate', bot: 'opera' },
-    { id: 'cmp-kms', name: 'kms-enclave', lead: 'Navarro,Marta', description: 'Zero-knowledge secret grants & automated token rotation', bot: 'cyber' },
+    { id: 'cmp-runner', name: 'hanzo/ci', lead: 'Zach Kelling', description: 'Ephemeral Kata CI runner fleet & multi-arch BuildKit image builder', bot: 'opera' },
+    { id: 'cmp-kms', name: 'hanzo/kms', lead: 'Zach Kelling', description: 'Zero-knowledge secret grants (`kms-grants.yaml`) & automated token rotation', bot: 'cyber' },
   ],
 }
 

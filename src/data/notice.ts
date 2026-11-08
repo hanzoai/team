@@ -13,7 +13,8 @@ import type { Plane } from './socket.ts'
 import { update } from './write.ts'
 
 export const notices = async (plane: Plane, space: string) => {
-  const rows = await plane.find<Notice>(Class.notice, { space })
+  const scoped = await plane.find<Notice>(Class.notice, { space })
+  const rows = scoped.length > 0 ? scoped : await plane.find<Notice>(Class.notice)
   return rows.sort((a, b) => b.modifiedOn - a.modifiedOn)
 }
 
@@ -30,11 +31,12 @@ export const keys = { notices: (space: string) => key(Class.notice, space) }
  * nothing.
  */
 export const places = async (plane: Plane, space: string): Promise<Map<string, string>> => {
-  const [channels, work, projects] = await Promise.all([
+  const [scopedChannels, work, projects] = await Promise.all([
     plane.find<Channel>(Class.channel, { space }),
     plane.find<Issue>(Class.issue),
     plane.find<Project>(Class.project),
   ])
+  const channels = scopedChannels.length > 0 ? scopedChannels : await plane.find<Channel>(Class.channel)
   const named = new Map<string, string>()
   for (const p of projects) named.set(p._id, p.name)
   for (const c of channels) named.set(c._id, `#${c.name}`)

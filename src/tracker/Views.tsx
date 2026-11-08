@@ -32,10 +32,14 @@ export const IssueList = ({
   source,
   only,
   mine,
+  onOpen,
+  onCreateIn,
 }: {
   source: Source
   only?: readonly Priority[]
   mine?: boolean
+  onOpen?: (issue: Issue) => void
+  onCreateIn?: (status: Status) => void
 }) => {
   const [issues, setIssues] = useState<Issue[] | null>(null)
   const [failed, setFailed] = useState<Error | null>(null)
@@ -54,7 +58,7 @@ export const IssueList = ({
   }, [source, again])
 
   const add = source.add?.bind(source)
-  const openIn = add ? (status: Status) => void add(status, NEW).catch(setFailed) : undefined
+  const openIn = onCreateIn ?? (add ? (status: Status) => void add(status, NEW).catch(setFailed) : undefined)
 
   const advance = (issue: Issue) => {
     if (!issues) return
@@ -165,11 +169,16 @@ export const IssueList = ({
                     py={10}
                     items="center"
                     gap={12}
+                    cursor={onOpen ? 'pointer' : 'default'}
                     hoverStyle={{ background: '$hover' }}
+                    onPress={() => onOpen?.(issue)}
                   >
                     {/* Clickable status dot to cycle status */}
                     <XStack
-                      {...press(() => advance(issue), `Advance ${issue.key} status`)}
+                      {...press((e?: { stopPropagation?: () => void }) => {
+                        e?.stopPropagation?.()
+                        advance(issue)
+                      }, `Advance ${issue.key} status`)}
                       width={20}
                       height={20}
                       rounded={9999}
@@ -298,10 +307,12 @@ export const IssueTimeline = ({
   source,
   only,
   mine,
+  onOpen,
 }: {
   source: Source
   only?: readonly Priority[]
   mine?: boolean
+  onOpen?: (issue: Issue) => void
 }) => {
   const [issues, setIssues] = useState<Issue[] | null>(null)
   const [failed, setFailed] = useState<Error | null>(null)
@@ -432,6 +443,8 @@ export const IssueTimeline = ({
                     borderRightWidth={1}
                     borderColor="$edge"
                     height="100%"
+                    cursor={onOpen ? 'pointer' : 'default'}
+                    onPress={() => onOpen?.(issue)}
                   >
                     <YStack
                       width={8}

@@ -24,7 +24,7 @@ import { dot } from './tone.ts'
 export const WIDTH = 208
 
 export const Column = ({
-  column, drag, over, onOver, onDrop, onAdd, onLift, onLand,
+  column, drag, over, onOver, onDrop, onAdd, onOpen, onLift, onLand,
 }: {
   column: Model
   /** The issue in flight, from anywhere on the board. */
@@ -35,6 +35,7 @@ export const Column = ({
   onDrop: (status: Status, before?: string) => void
   /** Absent on a board with no project to open an issue in. */
   onAdd?: (status: Status) => void
+  onOpen?: (issue: Issue) => void
   onLift: (issue: Issue) => void
   onLand: () => void
 }) => {
@@ -105,6 +106,7 @@ export const Column = ({
           <Card
             issue={issue}
             dragging={drag?.id === issue.id}
+            onOpen={onOpen}
             onDragStart={() => onLift(issue)}
             onDragEnd={onLand}
           />

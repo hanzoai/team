@@ -52,13 +52,11 @@ const VIRTUAL_ROOMS: readonly VirtualRoom[] = [
     name: 'Engineering War Room',
     floor: 'Floor 1 · Core Engineering',
     topic: 'ZAP Transactor latency, KMS grants & PR 464 merge gate',
-    screenShare: '@dev sharing: Ubuntu 24.04 · go test ./pkg/kms/... (PASS 0.42s)',
+    screenShare: '@dev sharing: Ubuntu 24.04 · go test ./apps/team/... (PASS 0.42s)',
     humans: [
-      { name: 'Zach Kelling', role: 'Founder & Architecture', speaking: true },
-      { name: 'Alexey Zinovyev', role: 'Platform Lead' },
-      { name: 'Kenny Osinski', role: 'Distributed Systems' },
+      { name: 'Zach Kelling', role: 'CTO & Founder', speaking: true },
     ],
-    bots: ['dev', 'cyber', 'opera'],
+    bots: ['dev', 'cyber', 'opera', 'sci'],
     notes: [
       {
         who: '@dev',
@@ -82,7 +80,7 @@ const VIRTUAL_ROOMS: readonly VirtualRoom[] = [
     floor: 'Floor 1 · Autonomous Fleet',
     topic: 'Continuous 24/7 cron routines, lease budgets & sandbox telemetry',
     screenShare: '@vi sharing: 23/23 active agent sandboxes · 99.98% SLA',
-    humans: [{ name: 'Warren Thompson', role: 'Infra & Fleet SRE' }],
+    humans: [{ name: 'Zach Kelling', role: 'Fleet Architecture' }],
     bots: ['vi', 'mana', 'sci', 'data'],
     notes: [
       {
@@ -101,16 +99,16 @@ const VIRTUAL_ROOMS: readonly VirtualRoom[] = [
     name: 'Product & Design Studio',
     floor: 'Floor 2 · Design & Brand',
     topic: 'Huly-style workspace polish, Gallery live previews & Omni 1.2 Flash stills',
-    screenShare: '@des sharing: Figma + @hanzo/gui monochrome token sheet',
+    screenShare: '@des sharing: @hanzo/gui monochrome token sheet & Slack-style top bar',
     humans: [
-      { name: 'Sonya Wolf', role: 'Product Design', speaking: true },
-      { name: 'Marta Navarro', role: 'Frontend Systems' },
+      { name: 'Antje Worring', role: 'CEO & Founder', speaking: true },
+      { name: 'Zach Kelling', role: 'Design Systems' },
     ],
-    bots: ['des', 'art', 'mark'],
+    bots: ['des', 'art', 'mark', 'mo'],
     notes: [
       {
         who: '@des',
-        text: 'Unified translucent frosted header and 84px radial-glow rail across desktop and mobile.',
+        text: 'Unified Slack-style top bar and bottom-left account switcher across desktop and web.',
         actionIssue: 'Add 4K mobile handset frame to product showcase',
       },
     ],
@@ -121,8 +119,7 @@ const VIRTUAL_ROOMS: readonly VirtualRoom[] = [
     floor: 'Floor 2 · Growth & CRM',
     topic: 'Enterprise seat reconciliation, org credit grants & Q4 pipeline',
     humans: [
-      { name: 'Elizabeth Reynolds', role: 'VP Revenue' },
-      { name: 'Shelia Price', role: 'Enterprise AE' },
+      { name: 'Antje Worring', role: 'CEO & Enterprise Growth' },
     ],
     bots: ['rev', 'sal', 'fin', 'su'],
     notes: [

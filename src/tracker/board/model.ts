@@ -32,6 +32,8 @@ export interface Issue {
   /** The human identifier, `CRM-412`. */
   key: string
   title: string
+  description?: string
+  projectId?: string
   status: Status
   priority?: Priority
   /** Free tags. Colour comes from `tone()`, never from the tag itself. */
@@ -49,6 +51,17 @@ export interface Issue {
   replies: number
   /** A cover image, above the title. */
   cover?: string
+}
+
+export interface IssuePatch {
+  title?: string
+  description?: string
+  status?: Status
+  priority?: Priority | null
+  done?: number
+  assigneeId?: string | null
+  labels?: string[]
+  replies?: number
 }
 
 export interface Column {
@@ -77,10 +90,8 @@ export interface Source {
   /**
    * Open one in `status`. The new issue arrives through `watch`, like any
    * other.
-   *
-   * ABSENT where this board has no project to open an issue in — the All-issues
-   * board across projects is the case. The board reads that and draws no add
-   * control, rather than offering one that refuses when pressed.
    */
-  add?(status: Status, title: string): Promise<void>
+  add?(status: Status, title: string, patch?: IssuePatch): Promise<void>
+  update?(id: string, patch: IssuePatch): Promise<void>
+  remove?(id: string): Promise<void>
 }
