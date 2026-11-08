@@ -1,33 +1,24 @@
 'use client'
 
 /**
- * BusinessHeader — the universal global header for every Hanzo Business application
- * (`hanzo.team`, `crm.hanzo.ai`, `cms.hanzo.ai`, `marketing.hanzo.ai`, `ads.hanzo.ai`,
- * `social.hanzo.ai`, `console.hanzo.ai`, `platform.hanzo.ai`, etc.).
+ * BusinessHeader — Slack-style top navigation bar + AccountMenuPopover for the
+ * bottom-left rail (matching Slack, Hanzo Desktop, and Hanzo Bot).
  *
- * Layout & Behavior:
- *  - Top Left:
- *      1. Product identity + App Switcher trigger (`Hanzo CRM ▾`, `Hanzo Team ▾`, etc.)
- *         Opening the App Switcher lists CRM, Work (Team), CMS, Email, Ads, Cal, Bots,
- *         Social, Chat, Dev, Commerce, Analytics, Data Room, Sign, Billing, Console, Platform.
- *      2. Current organization beneath the product identity (e.g. `Hanzo AI`), clickable
- *         to switch organizations.
- *  - Center:
- *      Breadcrumbs / Command Search (`children`).
- *  - Top Right:
- *      Signed-in user's avatar + display name + Account Menu:
- *        - Identity card showing Display Name, Email, and `Current account` indicator
- *        - Switch account (choose between authenticated identities on this browser,
- *          never confused with organizations)
- *        - Add another account (`prompt=login` without ending existing sessions)
- *        - Switch organization (choose between organizations the user belongs to)
- *        - Settings & Theme
- *        - Sign out
+ * Layout:
+ *  - Top Bar (40px):
+ *      - Left: App Switcher (H ▾) + Organization Switcher (Hanzo AI ▾)
+ *      - Center: Back (←) · Forward (→) · History (⏱) + Centered Search / Jump Bar (⌘K)
+ *      - Right: Optional quick actions (`rightSlot`, e.g. ThemeToggle)
+ *  - Bottom-Left Rail (`AccountMenuPopover`):
+ *      - User Avatar + online status dot -> opens Account Menu Popover (`Switch account`,
+ *        `Add another account`, `Switch organization`, `Theme`, `Settings`, `Sign out`)
  */
-import { useState, type ReactNode } from 'react'
-import { Popover, Separator, Text, XStack, YStack } from '@hanzo/gui'
+import { useEffect, useMemo, useState, type ReactNode } from 'react'
+import { Input, Popover, Separator, Text, XStack, YStack } from '@hanzo/gui'
 import {
   AppWindow,
+  ArrowLeft,
+  ArrowRight,
   BarChart3,
   Bot,
   Briefcase,
@@ -35,28 +26,32 @@ import {
   Calendar,
   Check,
   ChevronDown,
+  Clock,
   CreditCard,
   FileSignature,
   FolderLock,
   Globe,
+  Hash,
   LayoutGrid,
   LogOut,
   Mail,
   Megaphone,
   MessageCircle,
   Plus,
+  Search,
   Settings,
   Share2,
   ShoppingBag,
   Sparkles,
+  SquareCheck,
   Terminal,
   UserPlus,
   UserRound,
   Users,
 } from '@hanzogui/lucide-icons-2'
-
-import { BrandMark, OrgMark } from '@hanzo/ui/product'
-import { paint, state } from '~/theme/theme.ts'
+import { BrandMark, OrgMark, ThemeToggle } from '@hanzo/ui/product'
+import { HANZO_AGENTS } from '~/data/agents.ts'
+import { paint, round, state } from '~/theme/theme.ts'
 
 function displayName(name?: string, email?: string): string {
   if (name?.trim()) return name.trim()
@@ -87,15 +82,10 @@ export type BusinessAppId =
 
 export type BusinessAppItem = {
   id: BusinessAppId
-  /** Short name in the app switcher grid/list, e.g. 'CRM', 'CMS', 'Email', 'Work'. */
   label: string
-  /** Full product title when active at top-left, e.g. 'Hanzo CRM', 'Hanzo Team'. */
   productTitle: string
-  /** Subtitle explaining what the app does. */
   description: string
-  /** Canonical destination URL. */
   href: string
-  /** Whether the surface supports `/auth/fresh?next=/&who=<sub>` session handoff. */
   supportsFreshAuth?: boolean
 }
 
@@ -253,35 +243,21 @@ export type BusinessHeaderOrg = {
 }
 
 export type BusinessHeaderProps = {
-  /** Current application ID (`'crm'`, `'team'`, `'cms'`, `'email'`, `'ads'`, `'console'`, etc.). */
   appId?: BusinessAppId
-  /** Explicit product title override, e.g. `'Hanzo CRM'`. */
   appTitle?: string
-  /** Whether to show the product title text next to the brand mark when in the app (default: `false`). */
   showAppTitle?: boolean
-  /** Available business apps in the app switcher. Defaults to `BUSINESS_APPS`. */
   apps?: readonly BusinessAppItem[]
-  /** Custom handler when an app is selected from the switcher. */
   onSelectApp?: (app: BusinessAppItem) => void
-  /** Custom brand mark icon at the far left. */
   brandMark?: ReactNode
-  /** Current organization shown beneath the product title and in Switch organization. */
   currentOrg?: BusinessHeaderOrg
-  /** All organizations the user can switch between. */
   orgs?: readonly BusinessHeaderOrg[]
-  /** Called when the user selects an organization. */
   onSelectOrg?: (orgName: string) => void
-  /** Called when the user clicks "All organizations" / "Switch organization" modal. */
   onAllOrgs?: () => void
-  /** Called when the user clicks "Create organization". */
   onCreateOrg?: () => void
-  /** Optional left-side slot before the app identity (e.g. mobile drawer hamburger). */
   leftSlot?: ReactNode
-  /** Center slot (e.g. breadcrumbs, global search `⌘K`). */
   children?: ReactNode
-  /** Optional right-side slot before the user account menu. */
   rightSlot?: ReactNode
-  /** Currently signed-in user identity. */
+  onNavigate?: (path: string) => void
   user?: {
     sub?: string
     name?: string
@@ -289,21 +265,13 @@ export type BusinessHeaderProps = {
     avatar?: string
     owner?: string
   } | null
-  /** Authenticated identities available in this browser session (`Switch account`). */
   accounts?: readonly BusinessHeaderAccount[]
-  /** Switch to another authenticated identity (`login_hint: account.sub`). */
   onSwitchAccount?: (account: BusinessHeaderAccount) => void
-  /** Authenticate an additional identity (`prompt=login`). */
   onAddAccount?: () => void
-  /** Open user/account settings. */
   onSettings?: () => void
-  /** Open organization settings. */
   onOrgSettings?: () => void
-  /** Open billing. */
   onBilling?: () => void
-  /** Theme toggle control rendered inside the account menu. */
   theme?: ReactNode
-  /** Sign out of the session. */
   onSignOut?: () => void
 }
 
@@ -350,7 +318,6 @@ function AppIcon({ id, size = 16 }: { id: BusinessAppId; size?: number }) {
   }
 }
 
-/** Build a session-preserving destination URL when switching between Hanzo Business apps. */
 export function buildSeamlessAppUrl(
   app: BusinessAppItem,
   opts?: { who?: string; org?: string },
@@ -370,8 +337,26 @@ export function buildSeamlessAppUrl(
   }
 }
 
+const JUMP_CHANNELS = [
+  { id: 'c-general', label: '#general', desc: 'Company-wide announcements & updates', path: '/chat/c-general' },
+  { id: 'c-revenue', label: '#hanzo-revenue', desc: 'Revenue ops, grants & billing sync', path: '/chat/c-revenue' },
+  { id: 'c-support', label: '#support', desc: 'Customer support & triage', path: '/chat/c-support' },
+  { id: 'c-tracker', label: '#tracker', desc: 'Engineering & product issue feed', path: '/chat/c-tracker' },
+  { id: 'c-ui', label: '#hanzo-ui', desc: 'Design system & GUI components', path: '/chat/c-ui' },
+  { id: 'c-design', label: '#design', desc: 'Brand, product design & review', path: '/chat/c-design' },
+]
+
+const JUMP_SURFACES = [
+  { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
+  { id: 'crm-opp', label: 'CRM — Opportunities', desc: 'Pipeline deals & revenue stages', path: '/crm/opportunities' },
+  { id: 'crm-inv', label: 'CRM — Investors (346K)', desc: 'Institutional VCs, angels & funds', path: '/crm/investors' },
+  { id: 'crm-leads', label: 'CRM — Developer Leads (13.48M)', desc: 'GitHub developer cohorts by stars', path: '/crm/leads' },
+  { id: 'bots', label: 'Bots — 24/7 Autonomous Agents', desc: 'Configure schedules, models & triggers', path: '/bots' },
+  { id: 'apps', label: 'Apps — Hanzo Business Suite', desc: 'All connected Hanzo applications', path: '/apps' },
+]
+
 export function BusinessHeader({
-  appId = 'crm',
+  appId = 'team',
   appTitle,
   showAppTitle = false,
   apps = BUSINESS_APPS,
@@ -385,50 +370,47 @@ export function BusinessHeader({
   leftSlot,
   children,
   rightSlot,
+  onNavigate,
   user,
-  accounts = [],
-  onSwitchAccount,
-  onAddAccount,
-  onSettings,
-  onOrgSettings,
-  onBilling,
-  theme,
-  onSignOut,
 }: BusinessHeaderProps) {
   const [appMenuOpen, setAppMenuOpen] = useState(false)
   const [orgMenuOpen, setOrgMenuOpen] = useState(false)
-  const [accountMenuOpen, setAccountMenuOpen] = useState(false)
+  const [searchOpen, setSearchOpen] = useState(false)
+  const [query, setQuery] = useState('')
 
   const activeApp = apps.find((a) => a.id === appId) ?? apps[0]
-  const resolvedAppTitle = appTitle || activeApp?.productTitle || 'Hanzo CRM'
+  const resolvedAppTitle = appTitle || activeApp?.productTitle || 'Hanzo Team'
   const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
-
-  const userName = displayName(user?.name, user?.email) || 'Account'
-  const userEmail = user?.email || ''
   const userSub = user?.sub || ''
 
-  // Deduplicate accounts list while keeping current user identifiable
-  const knownAccounts: BusinessHeaderAccount[] = (() => {
-    const list: BusinessHeaderAccount[] = []
-    const seen = new Set<string>()
-    if (userSub) {
-      seen.add(userSub)
-      list.push({
-        sub: userSub,
-        owner: user?.owner || currentOrg?.name || 'hanzo',
-        name: userName,
-        email: userEmail || undefined,
-        avatar: user?.avatar,
-      })
-    }
-    for (const acc of accounts) {
-      if (acc.sub && !seen.has(acc.sub)) {
-        seen.add(acc.sub)
-        list.push(acc)
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault()
+        setSearchOpen((v) => !v)
       }
     }
-    return list
-  })()
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [])
+
+  const filteredResults = useMemo(() => {
+    const q = query.trim().toLowerCase()
+    const botItems = HANZO_AGENTS.map((a) => ({
+      id: `bot-${a.id}`,
+      kind: 'bot' as const,
+      label: `${a.name} — ${a.role}`,
+      desc: a.status,
+      path: `/chat/dm-${a.id}`,
+    }))
+    const channelItems = JUMP_CHANNELS.map((c) => ({ ...c, kind: 'channel' as const }))
+    const surfaceItems = JUMP_SURFACES.map((s) => ({ ...s, kind: 'surface' as const }))
+    const all = [...surfaceItems, ...channelItems, ...botItems]
+    if (!q) return all.slice(0, 12)
+    return all
+      .filter((item) => item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q))
+      .slice(0, 14)
+  }, [query])
 
   const handleLaunchApp = (app: BusinessAppItem) => {
     setAppMenuOpen(false)
@@ -445,12 +427,22 @@ export function BusinessHeader({
     }
   }
 
+  const jumpTo = (path: string) => {
+    setSearchOpen(false)
+    setQuery('')
+    if (onNavigate) {
+      onNavigate(path)
+    } else if (typeof window !== 'undefined') {
+      window.location.assign(path)
+    }
+  }
+
   return (
     <XStack
       render="header"
-      height={52}
-      px="$3"
-      gap="$3"
+      height={40}
+      px="$2.5"
+      gap="$2"
       items="center"
       justify="space-between"
       borderBottomWidth={1}
@@ -459,11 +451,10 @@ export function BusinessHeader({
       shrink={0}
       data-testid="hanzo-business-header"
     >
-      {/* TOP LEFT: App Switcher (BrandMark) + Current Organization Switcher (no redundant product title in org switcher) */}
-      <XStack items="center" gap="$2" minW={0} shrink={0}>
+      {/* TOP LEFT: App Switcher (H ▾) + Organization Switcher (Hanzo AI ▾) */}
+      <XStack items="center" gap="$1.5" minW={0} shrink={0}>
         {leftSlot}
 
-        {/* App Switcher Trigger */}
         <Popover open={appMenuOpen} onOpenChange={setAppMenuOpen} placement="bottom-start" allowFlip stayInFrame>
           <Popover.Trigger asChild>
             <XStack
@@ -471,33 +462,25 @@ export function BusinessHeader({
               tabIndex={0}
               cursor="pointer"
               items="center"
-              gap="$1.5"
-              height={34}
+              gap="$1"
+              height={30}
               px="$2"
               rounded="$3"
-              borderWidth={0}
-              outlineWidth={0}
               hoverStyle={{ bg: '$color3' }}
               aria-label={`${resolvedAppTitle} — Switch application`}
               aria-haspopup="menu"
               aria-expanded={appMenuOpen}
               data-testid="business-app-switcher-trigger"
-              onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-                if (e?.key === 'Enter' || e?.key === ' ') {
-                  e.preventDefault?.()
-                  setAppMenuOpen(!appMenuOpen)
-                }
-              }}
             >
-              <YStack items="center" justify="center" width={24} height={24} shrink={0}>
-                {brandMark ?? <BrandMark size={20} wordmark="" />}
+              <YStack items="center" justify="center" width={20} height={20} shrink={0}>
+                {brandMark ?? <BrandMark size={17} wordmark="" />}
               </YStack>
               {showAppTitle ? (
-                <Text fontSize="$3" fontWeight="700" color="$color12" numberOfLines={1}>
+                <Text fontSize="$2" fontWeight="700" color="$color12" numberOfLines={1}>
                   {resolvedAppTitle}
                 </Text>
               ) : null}
-              <ChevronDown size={13} color="$color10" />
+              <ChevronDown size={12} color="$color10" />
             </XStack>
           </Popover.Trigger>
 
@@ -507,7 +490,7 @@ export function BusinessHeader({
             borderWidth={1}
             elevation="$4"
             p="$2.5"
-            width={360}
+            width={350}
             bg="$background"
             borderColor="$borderColor"
             rounded="$4"
@@ -543,15 +526,15 @@ export function BusinessHeader({
                       data-testid={`app-switcher-item-${app.id}`}
                     >
                       <YStack
-                        width={32}
-                        height={32}
+                        width={30}
+                        height={30}
                         rounded="$3"
                         bg={isCurrent ? '$color4' : '$color2'}
                         items="center"
                         justify="center"
                         shrink={0}
                       >
-                        <AppIcon id={app.id} size={16} />
+                        <AppIcon id={app.id} size={15} />
                       </YStack>
                       <YStack flex={1} minW={0} gap={1}>
                         <XStack items="center" gap="$1.5">
@@ -577,7 +560,7 @@ export function BusinessHeader({
           </Popover.Content>
         </Popover>
 
-        {/* Current Organization Switcher (shows ONLY the organization, never 'Hanzo CRM') */}
+        {/* Organization Switcher */}
         <Popover open={orgMenuOpen} onOpenChange={setOrgMenuOpen} placement="bottom-start" allowFlip stayInFrame>
           <Popover.Trigger asChild>
             <XStack
@@ -585,275 +568,49 @@ export function BusinessHeader({
               tabIndex={0}
               cursor="pointer"
               items="center"
-              gap="$2"
-              height={34}
-              px="$2.5"
+              gap="$1.5"
+              height={30}
+              px="$2"
               rounded="$3"
-              borderWidth={0}
-              outlineWidth={0}
               hoverStyle={{ bg: '$color3' }}
               aria-label={`Current organization: ${orgDisplay}. Click to switch organization.`}
               data-testid="business-org-subtitle-trigger"
-              onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-                if (e?.key === 'Enter' || e?.key === ' ') {
-                  e.preventDefault?.()
-                  setOrgMenuOpen(!orgMenuOpen)
-                }
-              }}
             >
-              <OrgMark org={{ name: orgDisplay, logo: currentOrg?.logo }} size={22} />
-              <Text fontSize="$2" fontWeight="600" color="$color12" numberOfLines={1} maxW={220}>
+              <OrgMark org={{ name: orgDisplay, logo: currentOrg?.logo }} size={20} />
+              <Text fontSize="$2" fontWeight="600" color="$color12" numberOfLines={1} maxW={180}>
                 {orgDisplay}
               </Text>
-              <ChevronDown size={13} color="$color10" />
-            </XStack>
-          </Popover.Trigger>
-
-              <Popover.Content
-                role="menu"
-                aria-label="Switch organization"
-                borderWidth={1}
-                elevation="$4"
-                p="$2"
-                width={280}
-                bg="$background"
-                borderColor="$borderColor"
-                rounded="$4"
-                style={{ zIndex: 100000 }}
-              >
-                <YStack gap="$1" width="100%">
-                  <XStack px="$2" py="$1" items="center" justify="space-between">
-                    <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
-                      Switch organization
-                    </Text>
-                  </XStack>
-
-                  {orgs.map((o) => {
-                    const active = o.name === currentOrg?.name
-                    const label = o.displayName?.trim() || o.name
-                    return (
-                      <XStack
-                        key={o.name}
-                        role="menuitem"
-                        aria-checked={active}
-                        tabIndex={0}
-                        cursor="pointer"
-                        items="center"
-                        gap="$2.5"
-                        px="$2"
-                        py="$1.5"
-                        rounded="$3"
-                        bg={active ? '$color3' : 'transparent'}
-                        hoverStyle={{ bg: '$color3' }}
-                        onPress={() => {
-                          setOrgMenuOpen(false)
-                          onSelectOrg?.(o.name)
-                        }}
-                      >
-                        <OrgMark org={{ name: label, logo: o.logo }} size={22} />
-                        <YStack flex={1} minW={0}>
-                          <Text fontSize="$2" fontWeight={active ? '600' : '500'} color="$color12" numberOfLines={1}>
-                            {label}
-                          </Text>
-                          {o.displayName && o.displayName !== o.name ? (
-                            <Text fontSize="$1" color="$color10" numberOfLines={1}>
-                              {o.name}
-                            </Text>
-                          ) : null}
-                        </YStack>
-                        {active ? <Check size={14} color="$color12" /> : null}
-                      </XStack>
-                    )
-                  })}
-
-                  {(onAllOrgs || onCreateOrg) ? <Separator borderColor="$borderColor" my="$1" /> : null}
-
-                  {onAllOrgs ? (
-                    <XStack
-                      role="menuitem"
-                      tabIndex={0}
-                      cursor="pointer"
-                      items="center"
-                      gap="$2"
-                      px="$2"
-                      py="$1.5"
-                      rounded="$3"
-                      hoverStyle={{ bg: '$color3' }}
-                      onPress={() => {
-                        setOrgMenuOpen(false)
-                        onAllOrgs()
-                      }}
-                    >
-                      <Building2 size={15} color="$color10" />
-                      <Text fontSize="$2" color="$color12">
-                        All organizations…
-                      </Text>
-                    </XStack>
-                  ) : null}
-
-                  {onCreateOrg ? (
-                    <XStack
-                      role="menuitem"
-                      tabIndex={0}
-                      cursor="pointer"
-                      items="center"
-                      gap="$2"
-                      px="$2"
-                      py="$1.5"
-                      rounded="$3"
-                      hoverStyle={{ bg: '$color3' }}
-                      onPress={() => {
-                        setOrgMenuOpen(false)
-                        onCreateOrg()
-                      }}
-                    >
-                      <Plus size={15} color="$color10" />
-                      <Text fontSize="$2" color="$color12">
-                        Create organization
-                      </Text>
-                    </XStack>
-                  ) : null}
-                </YStack>
-              </Popover.Content>
-            </Popover>
-      </XStack>
-
-      {/* CENTER: Breadcrumbs / Global Search (`⌘K`) */}
-      <XStack flex={1} items="center" justify="center" minW={0} px="$2">
-        {children}
-      </XStack>
-
-      {/* TOP RIGHT: Extra actions + Signed-in User Avatar, Name & Account Menu */}
-      <XStack items="center" gap="$2" shrink={0}>
-        {rightSlot}
-
-        <Popover open={accountMenuOpen} onOpenChange={setAccountMenuOpen} placement="bottom-end" allowFlip stayInFrame>
-          <Popover.Trigger asChild>
-            <XStack
-              role="button"
-              tabIndex={0}
-              cursor="pointer"
-              items="center"
-              gap="$2"
-              height={40}
-              px="$2.5"
-              rounded="$3"
-              hoverStyle={{ bg: '$color3' }}
-              aria-label={`${userName} · Account menu`}
-              aria-haspopup="menu"
-              aria-expanded={accountMenuOpen}
-              data-testid="business-account-menu-trigger"
-              onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-                if (e?.key === 'Enter' || e?.key === ' ') {
-                  e.preventDefault?.()
-                  setAccountMenuOpen(!accountMenuOpen)
-                }
-              }}
-            >
-              {user?.avatar || userName ? (
-                <OrgMark org={{ name: userName, logo: user?.avatar }} size={28} />
-              ) : (
-                <UserRound size={18} />
-              )}
-              <YStack minW={0} justify="center" display="none" $sm={{ display: 'flex' }}>
-                <Text fontSize="$2" fontWeight="600" color="$color12" numberOfLines={1} maxW={160} style={{ lineHeight: '16px' }}>
-                  {userName}
-                </Text>
-                <Text fontSize={11} color="$color10" numberOfLines={1} maxW={160} style={{ lineHeight: '13px' }}>
-                  Current account
-                </Text>
-              </YStack>
-              <ChevronDown size={14} color="$color10" />
+              <ChevronDown size={12} color="$color10" />
             </XStack>
           </Popover.Trigger>
 
           <Popover.Content
             role="menu"
-            aria-label="Account menu"
+            aria-label="Switch organization"
             borderWidth={1}
             elevation="$4"
             p="$2"
-            width={310}
+            width={260}
             bg="$background"
             borderColor="$borderColor"
             rounded="$4"
             style={{ zIndex: 100000 }}
           >
             <YStack gap="$1" width="100%">
-              {/* Active Identity Header */}
-              <XStack items="center" gap="$2.5" px="$2" py="$2" rounded="$3" bg="$color2">
-                <OrgMark org={{ name: userName, logo: user?.avatar }} size={36} />
-                <YStack flex={1} minW={0} gap={1}>
-                  <Text fontSize="$3" fontWeight="700" color="$color12" numberOfLines={1}>
-                    {userName}
-                  </Text>
-                  {userEmail && userEmail !== userName ? (
-                    <Text fontSize="$1" color="$color10" numberOfLines={1}>
-                      {userEmail}
-                    </Text>
-                  ) : null}
-                  <XStack items="center" gap="$1.5" mt={2}>
-                    <YStack width={6} height={6} rounded={999} style={{ backgroundColor: state.done }} />
-                    <Text fontSize={11} fontWeight="600" color="$color10">
-                      Current account
-                    </Text>
-                  </XStack>
-                </YStack>
+              <XStack px="$2" py="$1" items="center" justify="space-between">
+                <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
+                  Switch organization
+                </Text>
               </XStack>
 
-              <Separator borderColor="$borderColor" my="$1" />
-
-              {/* SECTION 1: Switch account (Authenticated identities on this browser) */}
-              <YStack gap="$0.5">
-                <XStack px="$2" py="$1" items="center" justify="space-between">
-                  <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
-                    Switch account
-                  </Text>
-                  <Text fontSize={11} color="$color9">
-                    Identities
-                  </Text>
-                </XStack>
-
-                {knownAccounts.map((acc) => {
-                  const isCurrent = Boolean(userSub && acc.sub === userSub)
-                  const accName = acc.name || acc.email || acc.sub
-                  return (
-                    <XStack
-                      key={acc.sub}
-                      role="menuitem"
-                      aria-checked={isCurrent}
-                      tabIndex={0}
-                      cursor="pointer"
-                      items="center"
-                      gap="$2.5"
-                      px="$2"
-                      py="$1.5"
-                      rounded="$3"
-                      bg={isCurrent ? '$color3' : 'transparent'}
-                      hoverStyle={{ bg: '$color3' }}
-                      onPress={() => {
-                        setAccountMenuOpen(false)
-                        if (!isCurrent) onSwitchAccount?.(acc)
-                      }}
-                      data-testid={`switch-account-${acc.sub}`}
-                    >
-                      <OrgMark org={{ name: accName, logo: acc.avatar }} size={24} />
-                      <YStack flex={1} minW={0}>
-                        <Text fontSize="$2" fontWeight={isCurrent ? '600' : '500'} color="$color12" numberOfLines={1}>
-                          {accName}
-                        </Text>
-                        <Text fontSize="$1" color="$color10" numberOfLines={1}>
-                          {acc.email && acc.email !== accName ? acc.email : isCurrent ? 'Current account' : `Identity · ${acc.owner}`}
-                        </Text>
-                      </YStack>
-                      {isCurrent ? <Check size={14} color="$color12" /> : null}
-                    </XStack>
-                  )
-                })}
-
-                {onAddAccount ? (
+              {orgs.map((o) => {
+                const active = o.name === currentOrg?.name
+                const label = o.displayName?.trim() || o.name
+                return (
                   <XStack
+                    key={o.name}
                     role="menuitem"
+                    aria-checked={active}
                     tabIndex={0}
                     cursor="pointer"
                     items="center"
@@ -861,208 +618,588 @@ export function BusinessHeader({
                     px="$2"
                     py="$1.5"
                     rounded="$3"
+                    bg={active ? '$color3' : 'transparent'}
                     hoverStyle={{ bg: '$color3' }}
                     onPress={() => {
-                      setAccountMenuOpen(false)
-                      onAddAccount()
+                      setOrgMenuOpen(false)
+                      onSelectOrg?.(o.name)
                     }}
-                    data-testid="add-another-account"
                   >
-                    <YStack width={24} height={24} rounded={999} bg="$color3" items="center" justify="center">
-                      <UserPlus size={13} color="$color11" />
-                    </YStack>
-                    <Text fontSize="$2" fontWeight="500" color="$color12">
-                      Add another account
+                    <OrgMark org={{ name: label, logo: o.logo }} size={20} />
+                    <Text flex={1} fontSize="$2" fontWeight={active ? '600' : '500'} color="$color12" numberOfLines={1}>
+                      {label}
                     </Text>
+                    {active ? <Check size={14} color="$color12" /> : null}
                   </XStack>
-                ) : null}
-              </YStack>
+                )
+              })}
 
-              <Separator borderColor="$borderColor" my="$1" />
+              {(onAllOrgs || onCreateOrg) ? <Separator borderColor="$borderColor" my="$1" /> : null}
 
-              {/* SECTION 2: Switch organization (Workspaces / Tenancies) */}
-              <YStack gap="$0.5">
-                <XStack px="$2" py="$1" items="center" justify="space-between">
-                  <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
-                    Switch organization
-                  </Text>
-                  <Text fontSize={11} color="$color9">
-                    {orgDisplay}
+              {onAllOrgs ? (
+                <XStack
+                  role="menuitem"
+                  tabIndex={0}
+                  cursor="pointer"
+                  items="center"
+                  gap="$2"
+                  px="$2"
+                  py="$1.5"
+                  rounded="$3"
+                  hoverStyle={{ bg: '$color3' }}
+                  onPress={() => {
+                    setOrgMenuOpen(false)
+                    onAllOrgs()
+                  }}
+                >
+                  <Building2 size={14} color="$color10" />
+                  <Text fontSize="$2" color="$color12">
+                    All organizations…
                   </Text>
                 </XStack>
+              ) : null}
 
-                {orgs.slice(0, 5).map((o) => {
-                  const active = o.name === currentOrg?.name
-                  const label = o.displayName?.trim() || o.name
-                  return (
-                    <XStack
-                      key={o.name}
-                      role="menuitem"
-                      aria-checked={active}
-                      tabIndex={0}
-                      cursor="pointer"
-                      items="center"
-                      gap="$2.5"
-                      px="$2"
-                      py="$1.5"
-                      rounded="$3"
-                      bg={active ? '$color3' : 'transparent'}
-                      hoverStyle={{ bg: '$color3' }}
-                      onPress={() => {
-                        setAccountMenuOpen(false)
-                        if (!active) onSelectOrg?.(o.name)
-                      }}
-                      data-testid={`switch-org-${o.name}`}
-                    >
-                      <OrgMark org={{ name: label, logo: o.logo }} size={22} />
-                      <Text flex={1} fontSize="$2" fontWeight={active ? '600' : '500'} color="$color12" numberOfLines={1}>
-                        {label}
-                      </Text>
-                      {active ? <Check size={14} color="$color12" /> : null}
-                    </XStack>
-                  )
-                })}
-
-                {onAllOrgs ? (
-                  <XStack
-                    role="menuitem"
-                    tabIndex={0}
-                    cursor="pointer"
-                    items="center"
-                    gap="$2.5"
-                    px="$2"
-                    py="$1.5"
-                    rounded="$3"
-                    hoverStyle={{ bg: '$color3' }}
-                    onPress={() => {
-                      setAccountMenuOpen(false)
-                      onAllOrgs()
-                    }}
-                    data-testid="switch-org-all"
-                  >
-                    <Building2 size={15} color="$color10" />
-                    <Text fontSize="$2" color="$color12">
-                      Switch organization…
-                    </Text>
-                  </XStack>
-                ) : null}
-              </YStack>
-
-              <Separator borderColor="$borderColor" my="$1" />
-
-              {/* SECTION 3: Settings, Billing & Theme */}
-              <YStack gap="$0.5">
-                {onSettings ? (
-                  <XStack
-                    role="menuitem"
-                    tabIndex={0}
-                    cursor="pointer"
-                    items="center"
-                    gap="$2.5"
-                    px="$2"
-                    py="$1.5"
-                    rounded="$3"
-                    hoverStyle={{ bg: '$color3' }}
-                    onPress={() => {
-                      setAccountMenuOpen(false)
-                      onSettings()
-                    }}
-                    data-testid="account-menu-settings"
-                  >
-                    <Settings size={15} color="$color10" />
-                    <Text fontSize="$2" color="$color12">
-                      Settings
-                    </Text>
-                  </XStack>
-                ) : null}
-
-                {onOrgSettings && onOrgSettings !== onSettings ? (
-                  <XStack
-                    role="menuitem"
-                    tabIndex={0}
-                    cursor="pointer"
-                    items="center"
-                    gap="$2.5"
-                    px="$2"
-                    py="$1.5"
-                    rounded="$3"
-                    hoverStyle={{ bg: '$color3' }}
-                    onPress={() => {
-                      setAccountMenuOpen(false)
-                      onOrgSettings()
-                    }}
-                  >
-                    <Building2 size={15} color="$color10" />
-                    <Text fontSize="$2" color="$color12">
-                      Organization settings
-                    </Text>
-                  </XStack>
-                ) : null}
-
-                {onBilling ? (
-                  <XStack
-                    role="menuitem"
-                    tabIndex={0}
-                    cursor="pointer"
-                    items="center"
-                    gap="$2.5"
-                    px="$2"
-                    py="$1.5"
-                    rounded="$3"
-                    hoverStyle={{ bg: '$color3' }}
-                    onPress={() => {
-                      setAccountMenuOpen(false)
-                      onBilling()
-                    }}
-                  >
-                    <CreditCard size={15} color="$color10" />
-                    <Text fontSize="$2" color="$color12">
-                      Billing
-                    </Text>
-                  </XStack>
-                ) : null}
-
-                {theme != null ? (
-                  <XStack items="center" justify="space-between" px="$2" py="$1.5" rounded="$3">
-                    <Text fontSize="$2" color="$color12">
-                      Theme
-                    </Text>
-                    {theme}
-                  </XStack>
-                ) : null}
-              </YStack>
-
-              {/* SECTION 4: Sign out */}
-              {onSignOut ? (
-                <>
-                  <Separator borderColor="$borderColor" my="$1" />
-                  <XStack
-                    role="menuitem"
-                    tabIndex={0}
-                    cursor="pointer"
-                    items="center"
-                    gap="$2.5"
-                    px="$2"
-                    py="$1.5"
-                    rounded="$3"
-                    hoverStyle={{ bg: '$color3' }}
-                    onPress={() => {
-                      setAccountMenuOpen(false)
-                      onSignOut()
-                    }}
-                    data-testid="account-menu-signout"
-                  >
-                    <LogOut size={15} color={paint.alert} />
-                    <Text fontSize="$2" fontWeight="500" style={{ color: paint.alert }}>
-                      Sign out
-                    </Text>
-                  </XStack>
-                </>
+              {onCreateOrg ? (
+                <XStack
+                  role="menuitem"
+                  tabIndex={0}
+                  cursor="pointer"
+                  items="center"
+                  gap="$2"
+                  px="$2"
+                  py="$1.5"
+                  rounded="$3"
+                  hoverStyle={{ bg: '$color3' }}
+                  onPress={() => {
+                    setOrgMenuOpen(false)
+                    onCreateOrg()
+                  }}
+                >
+                  <Plus size={14} color="$color10" />
+                  <Text fontSize="$2" color="$color12">
+                    Create organization
+                  </Text>
+                </XStack>
               ) : null}
             </YStack>
           </Popover.Content>
         </Popover>
       </XStack>
+
+      {/* CENTER: Slack-style Back / Forward / History + Search Omnibar (⌘K) */}
+      <XStack flex={1} items="center" justify="center" gap="$1.5" minW={0} px="$2">
+        {children ?? (
+          <>
+            <XStack items="center" gap={2} shrink={0}>
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                width={26}
+                height={26}
+                rounded="$2"
+                items="center"
+                justify="center"
+                hoverStyle={{ bg: '$color3' }}
+                aria-label="Go back"
+                onPress={() => {
+                  if (typeof window !== 'undefined') window.history.back()
+                }}
+              >
+                <ArrowLeft size={14} color="$color10" />
+              </XStack>
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                width={26}
+                height={26}
+                rounded="$2"
+                items="center"
+                justify="center"
+                hoverStyle={{ bg: '$color3' }}
+                aria-label="Go forward"
+                onPress={() => {
+                  if (typeof window !== 'undefined') window.history.forward()
+                }}
+              >
+                <ArrowRight size={14} color="$color10" />
+              </XStack>
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                width={26}
+                height={26}
+                rounded="$2"
+                items="center"
+                justify="center"
+                hoverStyle={{ bg: '$color3' }}
+                aria-label="Recent activity"
+                onPress={() => setSearchOpen(true)}
+              >
+                <Clock size={13} color="$color10" />
+              </XStack>
+            </XStack>
+
+            <Popover open={searchOpen} onOpenChange={setSearchOpen} placement="bottom" allowFlip stayInFrame>
+              <Popover.Trigger asChild>
+                <XStack
+                  role="button"
+                  tabIndex={0}
+                  cursor="pointer"
+                  flex={1}
+                  maxW={460}
+                  height={28}
+                  px="$2.5"
+                  rounded="$3"
+                  bg="$color2"
+                  borderWidth={1}
+                  borderColor="$borderColor"
+                  items="center"
+                  justify="space-between"
+                  hoverStyle={{ bg: '$color3' }}
+                  aria-label={`Search ${orgDisplay}`}
+                  data-testid="slack-top-search-trigger"
+                >
+                  <XStack items="center" gap="$2" minW={0} flex={1}>
+                    <Search size={13} color="$color10" />
+                    <Text fontSize={12} color="$color10" numberOfLines={1}>
+                      {`Search ${orgDisplay}…`}
+                    </Text>
+                  </XStack>
+                  <Text
+                    fontSize={10}
+                    fontWeight="600"
+                    color="$color9"
+                    px="$1.5"
+                    py={1}
+                    rounded="$2"
+                    bg="$color3"
+                  >
+                    ⌘K
+                  </Text>
+                </XStack>
+              </Popover.Trigger>
+
+              <Popover.Content
+                role="dialog"
+                aria-label="Jump to channel, bot, or surface"
+                borderWidth={1}
+                elevation="$4"
+                p="$2"
+                width={460}
+                bg="$background"
+                borderColor="$borderColor"
+                rounded="$4"
+                style={{ zIndex: 100000 }}
+              >
+                <YStack gap="$2" width="100%">
+                  <XStack
+                    height={34}
+                    px="$2.5"
+                    items="center"
+                    gap="$2"
+                    rounded="$3"
+                    bg="$color2"
+                    borderWidth={1}
+                    borderColor="$borderColor"
+                  >
+                    <Search size={14} color="$color10" />
+                    <Input
+                      flex={1}
+                      height={30}
+                      fontSize={13}
+                      borderWidth={0}
+                      bg="transparent"
+                      placeholder="Jump to a channel, 24/7 bot, issue board, or CRM view…"
+                      value={query}
+                      onChangeText={setQuery}
+                      autoFocus
+                    />
+                  </XStack>
+
+                  <YStack gap="$0.5" maxH={340} style={{ overflowY: 'auto' }}>
+                    {filteredResults.map((item) => (
+                      <XStack
+                        key={item.id}
+                        role="menuitem"
+                        tabIndex={0}
+                        cursor="pointer"
+                        items="center"
+                        gap="$2.5"
+                        px="$2.5"
+                        py="$1.5"
+                        rounded="$3"
+                        hoverStyle={{ bg: '$color3' }}
+                        onPress={() => jumpTo(item.path)}
+                      >
+                        <YStack
+                          width={24}
+                          height={24}
+                          rounded="$2"
+                          bg="$color3"
+                          items="center"
+                          justify="center"
+                          shrink={0}
+                        >
+                          {item.kind === 'bot' ? (
+                            <Bot size={13} color="$color11" />
+                          ) : item.kind === 'channel' ? (
+                            <Hash size={13} color="$color11" />
+                          ) : (
+                            <SquareCheck size={13} color="$color11" />
+                          )}
+                        </YStack>
+                        <YStack flex={1} minW={0}>
+                          <Text fontSize={12} fontWeight="600" color="$color12" numberOfLines={1}>
+                            {item.label}
+                          </Text>
+                          <Text fontSize={11} color="$color10" numberOfLines={1}>
+                            {item.desc}
+                          </Text>
+                        </YStack>
+                      </XStack>
+                    ))}
+                  </YStack>
+                </YStack>
+              </Popover.Content>
+            </Popover>
+          </>
+        )}
+      </XStack>
+
+      {/* TOP RIGHT: Minimal utility slot (no account menu — account lives bottom-left in the rail) */}
+      <XStack items="center" gap="$1.5" shrink={0}>
+        {rightSlot ?? <ThemeToggle />}
+      </XStack>
     </XStack>
+  )
+}
+
+export type RailAccountMenuProps = {
+  user?: {
+    sub?: string
+    name?: string
+    email?: string
+    avatar?: string
+    owner?: string
+  } | null
+  currentOrg?: BusinessHeaderOrg
+  orgs?: readonly BusinessHeaderOrg[]
+  onSelectOrg?: (orgName: string) => void
+  accounts?: readonly BusinessHeaderAccount[]
+  onSwitchAccount?: (account: BusinessHeaderAccount) => void
+  onAddAccount?: () => void
+  onSettings?: () => void
+  onSignOut?: () => void
+}
+
+/**
+ * Bottom-left user account avatar + popover menu (matching Slack, Hanzo Desktop & Hanzo Bot).
+ */
+export function RailAccountMenu({
+  user,
+  currentOrg,
+  orgs = [],
+  onSelectOrg,
+  accounts = [],
+  onSwitchAccount,
+  onAddAccount,
+  onSettings,
+  onSignOut,
+}: RailAccountMenuProps) {
+  const [open, setOpen] = useState(false)
+
+  const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
+  const userName = displayName(user?.name, user?.email) || 'Account'
+  const userEmail = user?.email || ''
+  const userSub = user?.sub || ''
+
+  const knownAccounts: BusinessHeaderAccount[] = (() => {
+    const list: BusinessHeaderAccount[] = []
+    const seen = new Set<string>()
+    if (userSub) {
+      seen.add(userSub)
+      list.push({
+        sub: userSub,
+        owner: user?.owner || currentOrg?.name || 'hanzo',
+        name: userName,
+        email: userEmail || undefined,
+        avatar: user?.avatar,
+      })
+    }
+    for (const acc of accounts) {
+      if (acc.sub && !seen.has(acc.sub)) {
+        seen.add(acc.sub)
+        list.push(acc)
+      }
+    }
+    return list
+  })()
+
+  return (
+    <Popover open={open} onOpenChange={setOpen} placement="right-end" allowFlip stayInFrame>
+      <Popover.Trigger asChild>
+        <YStack
+          role="button"
+          tabIndex={0}
+          cursor="pointer"
+          width={36}
+          height={36}
+          rounded={round.field}
+          items="center"
+          justify="center"
+          position="relative"
+          hoverStyle={{ bg: '$color3' }}
+          aria-label={`${userName} · Account & settings`}
+          aria-haspopup="menu"
+          aria-expanded={open}
+          data-testid="rail-account-menu-trigger"
+          onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
+            if (e?.key === 'Enter' || e?.key === ' ') {
+              e.preventDefault?.()
+              setOpen(!open)
+            }
+          }}
+        >
+          {user?.avatar || userName ? (
+            <OrgMark org={{ name: userName, logo: user?.avatar }} size={30} />
+          ) : (
+            <UserRound size={18} />
+          )}
+          {/* Active presence indicator dot */}
+          <YStack
+            position="absolute"
+            b={1}
+            r={1}
+            width={9}
+            height={9}
+            rounded={round.pill}
+            borderWidth={1.5}
+            borderColor="$background"
+            style={{ backgroundColor: state.done }}
+          />
+        </YStack>
+      </Popover.Trigger>
+
+      <Popover.Content
+        role="menu"
+        aria-label="Account menu"
+        borderWidth={1}
+        elevation="$4"
+        p="$2"
+        width={300}
+        bg="$background"
+        borderColor="$borderColor"
+        rounded="$4"
+        style={{ zIndex: 100000 }}
+      >
+        <YStack gap="$1" width="100%">
+          {/* Active Identity Header */}
+          <XStack items="center" gap="$2.5" px="$2" py="$2" rounded="$3" bg="$color2">
+            <OrgMark org={{ name: userName, logo: user?.avatar }} size={36} />
+            <YStack flex={1} minW={0} gap={1}>
+              <Text fontSize="$3" fontWeight="700" color="$color12" numberOfLines={1}>
+                {userName}
+              </Text>
+              {userEmail && userEmail !== userName ? (
+                <Text fontSize="$1" color="$color10" numberOfLines={1}>
+                  {userEmail}
+                </Text>
+              ) : null}
+              <XStack items="center" gap="$1.5" mt={2}>
+                <YStack width={6} height={6} rounded={round.pill} style={{ backgroundColor: state.done }} />
+                <Text fontSize={11} fontWeight="600" color="$color10">
+                  Active · {orgDisplay}
+                </Text>
+              </XStack>
+            </YStack>
+          </XStack>
+
+          <Separator borderColor="$borderColor" my="$1" />
+
+          {/* Switch account */}
+          <YStack gap="$0.5">
+            <XStack px="$2" py="$1" items="center" justify="space-between">
+              <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
+                Switch account
+              </Text>
+              <Text fontSize={11} color="$color9">
+                Identities
+              </Text>
+            </XStack>
+
+            {knownAccounts.map((acc) => {
+              const isCurrent = Boolean(userSub && acc.sub === userSub)
+              const accName = acc.name || acc.email || acc.sub
+              return (
+                <XStack
+                  key={acc.sub}
+                  role="menuitem"
+                  aria-checked={isCurrent}
+                  tabIndex={0}
+                  cursor="pointer"
+                  items="center"
+                  gap="$2.5"
+                  px="$2"
+                  py="$1.5"
+                  rounded="$3"
+                  bg={isCurrent ? '$color3' : 'transparent'}
+                  hoverStyle={{ bg: '$color3' }}
+                  onPress={() => {
+                    setOpen(false)
+                    if (!isCurrent) onSwitchAccount?.(acc)
+                  }}
+                >
+                  <OrgMark org={{ name: accName, logo: acc.avatar }} size={24} />
+                  <YStack flex={1} minW={0}>
+                    <Text fontSize="$2" fontWeight={isCurrent ? '600' : '500'} color="$color12" numberOfLines={1}>
+                      {accName}
+                    </Text>
+                    <Text fontSize="$1" color="$color10" numberOfLines={1}>
+                      {acc.email && acc.email !== accName ? acc.email : isCurrent ? 'Current account' : `Identity · ${acc.owner}`}
+                    </Text>
+                  </YStack>
+                  {isCurrent ? <Check size={14} color="$color12" /> : null}
+                </XStack>
+              )
+            })}
+
+            {onAddAccount ? (
+              <XStack
+                role="menuitem"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap="$2.5"
+                px="$2"
+                py="$1.5"
+                rounded="$3"
+                hoverStyle={{ bg: '$color3' }}
+                onPress={() => {
+                  setOpen(false)
+                  onAddAccount()
+                }}
+              >
+                <YStack width={24} height={24} rounded={round.pill} bg="$color3" items="center" justify="center">
+                  <UserPlus size={13} color="$color11" />
+                </YStack>
+                <Text fontSize="$2" fontWeight="500" color="$color12">
+                  Add another account
+                </Text>
+              </XStack>
+            ) : null}
+          </YStack>
+
+          <Separator borderColor="$borderColor" my="$1" />
+
+          {/* Switch organization */}
+          <YStack gap="$0.5">
+            <XStack px="$2" py="$1" items="center" justify="space-between">
+              <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
+                Switch organization
+              </Text>
+              <Text fontSize={11} color="$color9">
+                {orgDisplay}
+              </Text>
+            </XStack>
+
+            {orgs.slice(0, 5).map((o) => {
+              const active = o.name === currentOrg?.name
+              const label = o.displayName?.trim() || o.name
+              return (
+                <XStack
+                  key={o.name}
+                  role="menuitem"
+                  aria-checked={active}
+                  tabIndex={0}
+                  cursor="pointer"
+                  items="center"
+                  gap="$2.5"
+                  px="$2"
+                  py="$1.5"
+                  rounded="$3"
+                  bg={active ? '$color3' : 'transparent'}
+                  hoverStyle={{ bg: '$color3' }}
+                  onPress={() => {
+                    setOpen(false)
+                    if (!active) onSelectOrg?.(o.name)
+                  }}
+                >
+                  <OrgMark org={{ name: label, logo: o.logo }} size={20} />
+                  <Text flex={1} fontSize="$2" fontWeight={active ? '600' : '500'} color="$color12" numberOfLines={1}>
+                    {label}
+                  </Text>
+                  {active ? <Check size={14} color="$color12" /> : null}
+                </XStack>
+              )
+            })}
+          </YStack>
+
+          <Separator borderColor="$borderColor" my="$1" />
+
+          {/* Preferences & Theme */}
+          <YStack gap="$0.5">
+            <XStack items="center" justify="space-between" px="$2" py="$1.5" rounded="$3">
+              <Text fontSize="$2" color="$color12">
+                Theme
+              </Text>
+              <ThemeToggle />
+            </XStack>
+
+            {onSettings ? (
+              <XStack
+                role="menuitem"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap="$2.5"
+                px="$2"
+                py="$1.5"
+                rounded="$3"
+                hoverStyle={{ bg: '$color3' }}
+                onPress={() => {
+                  setOpen(false)
+                  onSettings()
+                }}
+              >
+                <Settings size={15} color="$color10" />
+                <Text fontSize="$2" color="$color12">
+                  Preferences & Bots
+                </Text>
+              </XStack>
+            ) : null}
+          </YStack>
+
+          {/* Sign out */}
+          {onSignOut ? (
+            <>
+              <Separator borderColor="$borderColor" my="$1" />
+              <XStack
+                role="menuitem"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap="$2.5"
+                px="$2"
+                py="$1.5"
+                rounded="$3"
+                hoverStyle={{ bg: '$color3' }}
+                onPress={() => {
+                  setOpen(false)
+                  onSignOut()
+                }}
+              >
+                <LogOut size={15} color={paint.alert} />
+                <Text fontSize="$2" fontWeight="500" style={{ color: paint.alert }}>
+                  Sign out
+                </Text>
+              </XStack>
+            </>
+          ) : null}
+        </YStack>
+      </Popover.Content>
+    </Popover>
   )
 }

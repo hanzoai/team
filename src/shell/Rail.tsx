@@ -1,26 +1,22 @@
 /**
- * THE RAIL — the app's spine: the mark, the gauge, the bell, one glyph per
- * surface, and the control that would add another.
+ * THE RAIL — the app's spine: the inbox bell, one glyph per surface, the quick
+ * launcher, and the user account menu anchored at the bottom-left corner (matching
+ * Slack, Hanzo Desktop, and Hanzo Bot).
  *
  * The selected surface is a SOFT GLOW behind its glyph and a brighter glyph, not
- * a plate and not a pill. Measured: across the rail's whole width the luminance
- * rises smoothly out of the ground over ~35px on every side of the icon, with no
- * edge anywhere, which is a radial gradient and not a rectangle. A plate here
- * reads as a different product, and it is the one thing about this column
- * somebody will get wrong.
+ * a plate and not a pill.
  */
-import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, XStack, YStack } from '@hanzo/ui'
-import { HanzoMark } from '@hanzo/ui/product'
+import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
 import { Bell, Plus } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { useLocation } from 'react-router'
 
-import { useSpace } from '~/data/space.tsx'
-import { useNotices, useTodo } from './counts.ts'
+import { RailAccountMenu, type RailAccountMenuProps } from './BusinessHeader.tsx'
+import { useNotices } from './counts.ts'
+import { ADD, GLOW, ICON, PAD, RAIL, STEP } from './measure.ts'
 import { press } from './press.ts'
-import { ADD, GAUGE, GLOW, ICON, MARK, PAD, RAIL, STEP } from './measure.ts'
 import { surfaceAt, SURFACES } from './surfaces.ts'
-import { caps, paint, round, rung } from '~/theme/theme'
+import { paint, round } from '~/theme/theme'
 
 const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
 
@@ -39,13 +35,13 @@ export type RailProps = {
   /** The shell decides what a surface tap means: at this width it may open the
    *  navigator's drawer rather than go where you already are. */
   onSurface: (path: string) => void
+  /** Account menu props rendered at the bottom-left corner of the rail. */
+  account?: RailAccountMenuProps
 }
 
-export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
+export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
   const { pathname } = useLocation()
   const waiting = useNotices()
-  const { current } = useSpace()
-  const orgName = current?.name ?? 'Hanzo AI'
 
   return (
     <YStack
@@ -54,8 +50,8 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
       height="100%"
       items="center"
       justify="space-between"
-      pt={10}
-      pb={10}
+      pt={8}
+      pb={12}
       bg="$background"
       borderRightWidth={1}
       borderColor="$edge"
@@ -63,36 +59,13 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
     >
       <ScrollArea flex={1} minH={0} width="100%">
         <YStack items="center" width="100%" gap={2}>
-          {/* Single workspace mark at top of rail — org switching lives in the navigator header */}
-          <Tooltip>
-            <TooltipTrigger>
-              <YStack
-                {...press(() => onSurface('/chat'), orgName)}
-                width={MARK}
-                height={MARK}
-                rounded="$4"
-                items="center"
-                justify="center"
-                bg="$panel"
-                borderWidth={1}
-                borderColor="$edge"
-                hoverStyle={{ background: '$hover' }}
-              >
-                <HanzoMark size={18} />
-              </YStack>
-            </TooltipTrigger>
-            <TooltipContent>{orgName}</TooltipContent>
-          </Tooltip>
-
-          <Rule />
-
           <Slot
             label={
               waiting > 0
-                ? `${notices ? 'Hide' : 'Show'} Inbox (${waiting} unread)`
+                ? `${notices ? 'Hide' : 'Show'} Activity (${waiting} unread)`
                 : notices
-                  ? 'Hide Inbox'
-                  : 'Show Inbox'
+                  ? 'Hide Activity'
+                  : 'Show Activity'
             }
             pressed={notices}
             onPress={onNotices}
@@ -136,9 +109,7 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
         </YStack>
       </ScrollArea>
 
-      <YStack items="center" width="100%" gap={8} pt={6}>
-        <Gauge />
-
+      <YStack items="center" width="100%" gap={10} pt={6}>
         <Tooltip>
           <TooltipTrigger>
             <YStack
@@ -159,6 +130,8 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
           </TooltipTrigger>
           <TooltipContent>All Hanzo Business Apps</TooltipContent>
         </Tooltip>
+
+        <RailAccountMenu {...account} />
       </YStack>
     </YStack>
   )
@@ -166,25 +139,6 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
 
 const Rule = () => <Separator width={RAIL - PAD * 2} my={6} borderColor="$edge" />
 
-/**
- * The value as a line. Two stacks rather than `Progress`, because that component
- * is a full-width control: it states `width="100%"` and lets its indicator run
- * past the track, which inside a 60px capsule paints a slab across the rail.
- */
-const Bar = ({ value }: { value: number }) => (
-  <YStack width="100%" height={4} rounded={round.pill} bg="$edge" overflow="hidden">
-    <YStack width={`${value}%`} height="100%" bg="$ink" />
-  </YStack>
-)
-
-/**
- * One place in the icon column: the touch target, the glow, and the glyph.
- *
- * `here` is a PLACE and `pressed` is a SWITCH, and they are separate because the
- * bell is not a surface: it turns the aside on and off without going anywhere,
- * so it announces itself pressed rather than current and it does not take the
- * glow. The reference agrees — only the surface you are on is lit.
- */
 const Slot = ({ label, here = false, pressed, onPress, children }: {
   label: string
   here?: boolean
@@ -215,73 +169,3 @@ const Slot = ({ label, here = false, pressed, onPress, children }: {
     <TooltipContent>{label}</TooltipContent>
   </Tooltip>
 )
-
-/**
- * THE GAUGE — how much of the work is still to do, as one figure.
- *
- * The reference draws it in the source brand's coral over a halftone field. The
- * texture is that brand's and does not come; the METER does, because it is what
- * the widget IS — a capsule that fills to the value with the figure over it.
- *
- * `null` is an em-dash, not a zero. Nothing to measure is not "0% to do", and a
- * gauge that invents a number is the one thing a gauge may not do. The number
- * arrives through `setTodo` from whoever holds the work; the rail has no data of
- * its own and cannot answer for a region it does not own.
- */
-const Gauge = () => {
-  const todo = useTodo()
-  return (
-    <YStack
-      width={GAUGE.width}
-      height={GAUGE.height}
-      rounded="$5"
-      borderWidth={1}
-      borderColor="$edge"
-      bg="$background"
-      overflow="hidden"
-      position="relative"
-      aria-label={todo === null ? 'Nothing to do' : `${todo}% to do`}
-    >
-      {/* The value, as a level rising from the bottom. It is positioned, and
-          everything else is not, so it paints UNDER the whole face — a
-          positioned sibling paints above static ones whatever the order, which
-          is how this covered the number, the bar and the label at once.
-
-          The accent, held back to a wash: "how many" is what the accent is for,
-          and at full strength a level this size is the loudest thing in a
-          column of glyphs. A neutral surface rung is not an option — measured,
-          one step over the ground is invisible at this size. */}
-      <YStack
-        position="absolute"
-        l={0}
-        r={0}
-        b={0}
-        height={`${todo ?? 0}%`}
-        opacity={0.12}
-        pointerEvents="none"
-        style={{ backgroundColor: paint.accent }}
-      />
-
-      <YStack flex={1} z={1} p={4} items="center" justify="space-between">
-        <YStack width="100%" rounded="$3" bg="$panel" borderWidth={1} borderColor="$edge" px={5} py={4} items="center">
-          <XStack items="baseline" gap={1}>
-            <SizableText fontSize={rung.small} lineHeight={16} fontWeight="700" color="$ink">
-              {todo ?? '—'}
-            </SizableText>
-            {todo === null ? null : (
-              <SizableText fontSize={9} lineHeight={11} color="$soft">
-                %
-              </SizableText>
-            )}
-          </XStack>
-          <YStack height={3} />
-          <Bar value={todo ?? 0} />
-        </YStack>
-
-        <SizableText {...caps} text="center" fontSize={9} fontWeight="600" color="$quiet">
-          To do
-        </SizableText>
-      </YStack>
-    </YStack>
-  )
-}

@@ -92,33 +92,38 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     }
   }
 
+  const userIdentity = who
+    ? {
+        sub: who.id,
+        name: who.label || who.name,
+        email: who.email,
+        avatar: who.avatar,
+        owner: activeOrg?.org ?? 'hanzo',
+      }
+    : {
+        sub: 'zeekay',
+        name: 'Zach Kelling',
+        email: 'z@hanzo.ai',
+        owner: 'hanzo',
+      }
+
+  const currentOrgInfo = {
+    name: activeOrg?.url ?? 'hanzo',
+    displayName: activeOrg?.name ?? 'Hanzo AI',
+  }
+  const orgList = orgs.map((s) => ({ name: s.url, displayName: s.name }))
+
   return (
     <Screen bg="$background">
       <BusinessHeader
         appId={currentAppId}
         showAppTitle={pathname.startsWith('/crm')}
-        currentOrg={{ name: activeOrg?.url ?? 'hanzo', displayName: activeOrg?.name ?? 'Hanzo AI' }}
-        orgs={orgs.map((s) => ({ name: s.url, displayName: s.name }))}
+        currentOrg={currentOrgInfo}
+        orgs={orgList}
         onSelectOrg={(url: string) => choose(url)}
         onSelectApp={handleSelectApp}
-        user={
-          who
-            ? {
-                sub: who.id,
-                name: who.label || who.name,
-                email: who.email,
-                avatar: who.avatar,
-                owner: activeOrg?.org ?? 'hanzo',
-              }
-            : {
-                sub: 'zeekay',
-                name: 'Zach Kelling',
-                email: 'z@hanzo.ai',
-                owner: 'hanzo',
-              }
-        }
-        onAddAccount={() => depart()}
-        onSignOut={() => leave()}
+        onNavigate={reach}
+        user={userIdentity}
       />
       <XStack
         flex={1}
@@ -138,6 +143,15 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             }
           }}
           onSurface={reach}
+          account={{
+            user: userIdentity,
+            currentOrg: currentOrgInfo,
+            orgs: orgList,
+            onSelectOrg: (url: string) => choose(url),
+            onAddAccount: () => depart(),
+            onSettings: () => reach('/bots'),
+            onSignOut: () => leave(),
+          }}
         />
 
         {roomy && nav ? (
