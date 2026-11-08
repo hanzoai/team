@@ -19,7 +19,7 @@ import { useSpace } from '~/data/space.tsx'
 import { useNotices, useTodo } from './counts.ts'
 import { press } from './press.ts'
 import { ADD, GAUGE, GLOW, ICON, MARK, PAD, RAIL, STEP } from './measure.ts'
-import { SURFACES } from './surfaces.ts'
+import { surfaceAt, SURFACES } from './surfaces.ts'
 import { caps, paint, round, rung } from '~/theme/theme'
 
 const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
@@ -126,7 +126,7 @@ export const Rail = ({ notices, onNotices, onSurface }: RailProps) => {
           <Rule />
 
           {SURFACES.map((s) => {
-            const here = pathname === s.path || pathname.startsWith(`${s.path}/`)
+            const here = surfaceAt(pathname)?.id === s.id
             return (
               <Slot key={s.id} label={s.label} here={here} onPress={() => onSurface(s.path)}>
                 <s.icon size={ICON} color={here ? '$ink' : '$soft'} />

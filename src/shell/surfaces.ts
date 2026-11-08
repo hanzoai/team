@@ -45,4 +45,9 @@ export const SURFACES: readonly Surface[] = [
 
 /** Which surface an address is inside. */
 export const surfaceAt = (pathname: string): Surface | undefined =>
-  SURFACES.find((s) => pathname === s.path || pathname.startsWith(`${s.path}/`))
+  SURFACES.find(
+    (s) =>
+      pathname === s.path ||
+      pathname.startsWith(`${s.path}/`) ||
+      (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname.startsWith('/projects/'))),
+  )
