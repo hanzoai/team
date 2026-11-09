@@ -1,8 +1,8 @@
 /**
- * All 23 core Hanzo AI teammates and 24/7 autonomous bots (@hanzo/personas).
+ * All 24 core Hanzo AI teammates and 24/7 autonomous bots (@hanzo/personas).
  *
  * The 12 department leads appear in the top 2-column grid of the sidebar (matching
- * Hanzo Bot), and all 23 agents can operate as persistent 24/7 proactive and
+ * Hanzo Bot), and all 24 agents can operate as persistent 24/7 proactive and
  * event-driven bots across channels, boards, and direct messages.
  */
 
@@ -33,7 +33,7 @@ export const HANZO_AGENTS: readonly AgentPreset[] = [
   { id: 'su', name: 'Su', role: 'Support Lead', department: 'Support', lead: true, avatar: '/agents/su.png', schedule: '*/5 * * * *', triggers: ['channel', 'webhook', 'watch'], status: 'Zero open P0/P1 tickets in #hanzo-support.' },
   { id: 'cyber', name: 'Cyber', role: 'CISO', department: 'Security', lead: true, avatar: '/agents/cyber.png', schedule: '*/10 * * * *', triggers: ['git', 'webhook', 'watch'], status: 'Continuous KMS & supply-chain audit clean.' },
 
-  // 11 Specialist 24/7 Bots
+  // 12 Specialist 24/7 Bots
   { id: 'rev', name: 'Rev', role: 'Revenue Operations', department: 'Sales', avatar: '/agents/rev.png', schedule: '*/15 * * * *', triggers: ['channel', 'webhook', 'watch'], status: 'Synced org grants & prepaid balances' },
   { id: 'lang', name: 'Lang', role: 'Localization & i18n', department: 'Engineering', avatar: '/agents/lang.png', schedule: '0 */2 * * *', triggers: ['git', 'webhook'], status: '36 locales verified across hanzo.ai' },
   { id: 'law', name: 'Law', role: 'General Counsel', department: 'Legal', avatar: '/agents/law.png', schedule: '0 9 * * 1-5', triggers: ['channel', 'webhook'], status: 'MSA & DPA templates ready in Sign' },
@@ -45,6 +45,7 @@ export const HANZO_AGENTS: readonly AgentPreset[] = [
   { id: 'doc', name: 'Doc', role: 'Documentation', department: 'Product', avatar: '/agents/doc.png', schedule: '0 */3 * * *', triggers: ['git', 'channel'], status: 'OpenAPI & SDK reference synced' },
   { id: 'biz', name: 'Biz', role: 'Business Development', department: 'Sales', avatar: '/agents/biz.png', schedule: '*/30 * * * *', triggers: ['channel', 'webhook'], status: 'Partner & co-selling brief posted' },
   { id: 'art', name: 'Art', role: 'Visual Art', department: 'Design', avatar: '/agents/art.png', schedule: '0 10 * * 1-5', triggers: ['channel', 'webhook'], status: '4K hero stills & visual assets ready' },
+  { id: 'grant', name: 'Grant', role: 'Grants & Funding', department: 'Finance', avatar: '/agents/grant.png', schedule: '0 */4 * * *', triggers: ['channel', 'webhook', 'watch'], status: 'Tracking 14 open AI, crypto & SBIR grant RFPs' },
 ]
 
 export const LEAD_AGENTS = HANZO_AGENTS.filter((a) => a.lead)
