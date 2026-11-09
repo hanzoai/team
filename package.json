@@ -1,9 +1,19 @@
 {
   "name": "@hanzo/team",
   "version": "0.1.0",
-  "private": true,
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hanzoai/team.git"
+  },
   "packageManager": "pnpm@11.24.0",
   "scripts": {
     "dev": "vite",
