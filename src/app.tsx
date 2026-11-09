@@ -1,5 +1,6 @@
 import { BrowserRouter, useRoutes } from 'react-router'
 import { Hanzo, Toaster, TooltipProvider } from '@hanzo/ui'
+import { Consent } from '@hanzo/ui/consent'
 import { Session } from '~/data/session.tsx'
 import { Space } from '~/data/space.tsx'
 import { routes } from '~/routes'
@@ -34,6 +35,11 @@ const HINT = 200
  * paints into, mounted once, here, because a second one renders every message
  * twice. Its theme is forced rather than `system`: the product is dark, and
  * `system` paints a light toast over a dark page for anyone whose OS disagrees.
+ *
+ * `Consent` is the cookie banner and the preference sheet, @hanzo/ui's one
+ * component: where cloud's rule asks first (the EU, the UK and the rest of the
+ * opt-in regions), the ad tags wait on it (main.tsx `startTags`). It draws no
+ * floating button: the rail's account menu holds "Your Privacy Choices".
  */
 export const App = () => (
   <Hanzo>
@@ -50,5 +56,6 @@ export const App = () => (
       </Session>
     </TooltipProvider>
     <Toaster theme="dark" position="top-center" />
+    <Consent floating={false} />
   </Hanzo>
 )

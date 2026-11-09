@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@hanzo/data": "1.4.5",
+    "@hanzo/event": "0.3.66",
     "@hanzo/font": "1.9.3",
     "@hanzo/gui": "8.3.5",
     "@hanzo/iam": "0.21.18",
