@@ -128,7 +128,7 @@ const REPO_SPECS: Record<string, ForgeRepoSpec> = {
       {
         sha: '133b27bc191ef6a7e4a87fa0404c0ec4bbbc4fd2',
         shortSha: '133b27b',
-        message: 'feat(team): open full Huly-style workspace by default and implement Linear/Slack UI polish',
+        message: 'feat(team): open full workspace by default and implement Linear/Slack UI polish',
         author: 'Zach Kelling',
         at: '2026-11-08T06:45:31Z',
         forgeUrl: `${FORGE_HOST}/hanzoai/team/commit/133b27bc191ef6a7e4a87fa0404c0ec4bbbc4fd2`,
@@ -166,7 +166,7 @@ const REPO_SPECS: Record<string, ForgeRepoSpec> = {
       },
       {
         number: 17,
-        title: 'Remove Huly/Twenty placeholder fixtures and connect live /v1/crm + /v1/task/board',
+        title: 'Connect live /v1/crm + /v1/task/board across workspace surfaces',
         state: 'merged',
         kind: 'pr',
         author: 'zeekay',

@@ -1,5 +1,5 @@
 /**
- * Huly-style Projects Directory (`/projects`) and Project Sub-Pages
+ * Projects Directory (`/projects`) and Project Sub-Pages
  * (`/projects/:id/:page` — `components`, `milestones`, `templates`).
  */
 import { useEffect, useState } from 'react'

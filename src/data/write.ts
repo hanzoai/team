@@ -20,7 +20,7 @@ export const mint = (): string => {
 
 const stamp = (space: string, by: string) => ({
   _id: mint(),
-  space: 'core:space:Tx',
+  space: 'team:space:Tx',
   objectSpace: space,
   modifiedBy: by,
   modifiedOn: Date.now(),

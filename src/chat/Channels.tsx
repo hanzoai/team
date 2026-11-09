@@ -3,11 +3,12 @@
  * Hanzo Bot), and the 22 specialist 24/7 autonomous bots.
  */
 import { SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
-import { Hash, Lock } from '@hanzogui/lucide-icons-2'
+import { Hash, Lock, Plus, Share2 } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { BOT_AGENTS, HANZO_AGENTS, LEAD_AGENTS, type AgentPreset } from '~/data/agents.ts'
+import { openConnectModal } from '~/shell/ConnectOrgModal.tsx'
 import { PAD } from '~/shell/measure.ts'
 import { Find, Group, Nav as Column, press, Roll, Row, Rule, surfaceAt } from '~/shell'
 import { round, rung } from '~/theme/theme'
@@ -19,6 +20,7 @@ export function Channels() {
   const navigate = useNavigate()
   const [query, setQuery] = useState('')
   const [channelsOpen, setChannelsOpen] = useState(true)
+  const [connectOpen, setConnectOpen] = useState(true)
   const [botsOpen, setBotsOpen] = useState(true)
   const [leadsOpen, setLeadsOpen] = useState(true)
   const load = useRooms()
@@ -26,6 +28,8 @@ export function Channels() {
   const q = query.trim().toLowerCase()
   const shown = q ? all.filter((r) => r.name.toLowerCase().includes(q)) : all
   const channels = shown.filter((r) => r.kind === 'channel')
+  const internalChannels = channels.filter((r) => !r.connectedOrgs || r.connectedOrgs.length === 0)
+  const connectChannels = channels.filter((r) => r.connectedOrgs && r.connectedOrgs.length > 0)
   const directs = shown.filter((r) => r.kind === 'direct' && !r.id.startsWith('dm-'))
   const shownLeads = q
     ? LEAD_AGENTS.filter((a) => `${a.name} ${a.role} ${a.department}`.toLowerCase().includes(q))
@@ -61,18 +65,54 @@ export function Channels() {
           <Note>{`Nothing matches “${query.trim()}”.`}</Note>
         ) : null}
 
-        {channels.length > 0 ? (
+        {internalChannels.length > 0 ? (
           <>
             <Group
-              count={channels.length}
+              count={internalChannels.length}
               open={channelsOpen}
               onToggle={() => setChannelsOpen((v) => !v)}
             >
               Channels
             </Group>
             {channelsOpen
-              ? channels.map((r) => <Line key={r.id} room={r} />)
+              ? internalChannels.map((r) => <Line key={r.id} room={r} />)
               : null}
+          </>
+        ) : null}
+
+        {load.phase === 'ready' && (!q || connectChannels.length > 0) ? (
+          <>
+            <Rule />
+            <Group
+              count={connectChannels.length}
+              open={connectOpen}
+              onToggle={() => setConnectOpen((v) => !v)}
+            >
+              Hanzo Connect
+            </Group>
+            {connectOpen ? (
+              <>
+                {connectChannels.map((r) => (
+                  <Line key={r.id} room={r} />
+                ))}
+                <XStack
+                  {...press(() => openConnectModal('connect'), 'Connect external organization channel')}
+                  px={PAD}
+                  py={6}
+                  mx={4}
+                  gap={8}
+                  items="center"
+                  rounded={round.field}
+                  hoverStyle={{ background: '$hover' }}
+                  data-testid="hanzo-connect-add-trigger"
+                >
+                  <Plus size={14} color="$soft" />
+                  <SizableText fontSize={rung.body} color="$quiet" fontWeight="500">
+                    Connect organization…
+                  </SizableText>
+                </XStack>
+              </>
+            ) : null}
           </>
         ) : null}
 
@@ -233,18 +273,24 @@ const Line = ({ room }: { room: Room }) => {
   const agent = room.id.startsWith('dm-')
     ? HANZO_AGENTS.find((a) => `dm-${a.id}` === room.id)
     : undefined
+  const label =
+    room.connectedOrgs && room.connectedOrgs.length > 0
+      ? `${room.name} · ${room.connectedOrgs.join(', ')}`
+      : room.name
   return (
     <Row
       to={`/chat/${room.id}`}
       icon={agent ? <AgentFace agent={agent} size={18} /> : <Glyph room={room} />}
     >
-      {room.name}
+      {label}
     </Row>
   )
 }
 
 const Glyph = ({ room }: { room: Room }) =>
-  room.kind === 'direct' ? null : room.private ? (
+  room.kind === 'direct' ? null : room.connectedOrgs && room.connectedOrgs.length > 0 ? (
+    <Share2 size={14} color="$soft" />
+  ) : room.private ? (
     <Lock size={14} color="$soft" />
   ) : (
     <Hash size={16} color="$soft" />

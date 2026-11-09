@@ -54,6 +54,8 @@ export type Space = {
   org: string | null
   /** Open a space by slug. Tears down the previous plane. */
   choose: (slug: string) => void
+  /** Create a new organization workspace and add it to the tenant list. */
+  createOrg: (slug: string, displayName: string) => SpaceRow
   /** The data plane for `current`, or null when none is open. */
   plane: Plane | null
   /** Whether that plane is live, for a screen that has to say so. */
@@ -170,6 +172,12 @@ export const Space = ({ children }: { children: ReactNode }) => {
     setSlug(next)
   }, [])
 
+  const createOrg = useCallback((orgSlug: string, displayName: string): SpaceRow => {
+    const row = fixture.addSpace(orgSlug, displayName)
+    setAll((prev) => (prev.some((s) => s.url === row.url) ? prev : [...prev, row]))
+    return row
+  }, [])
+
   const current = useMemo(() => all.find((s) => s.url === slug) ?? null, [all, slug])
 
   const value = useMemo<Space>(
@@ -179,12 +187,13 @@ export const Space = ({ children }: { children: ReactNode }) => {
       current,
       org: current?.org ?? null,
       choose,
+      createOrg,
       plane,
       connection,
       refusal,
       enrolment: ENROLMENT,
     }),
-    [standing, all, current, choose, plane, connection, refusal],
+    [standing, all, current, choose, createOrg, plane, connection, refusal],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>

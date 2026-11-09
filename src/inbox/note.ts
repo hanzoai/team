@@ -61,10 +61,9 @@ export const by = (actor: Person): Span => ({ text: actor.name, strong: true })
  * Where notes come from, and the whole obligation on a backend.
  *
  *   list()    every notification addressed to the signed-in principal in the
- *             current space, NEWEST FIRST. On the transactor that is
- *             `findAll(notification:class:InboxNotification, {user})` sorted by
- *             `modifiedOn`: `isViewed` becomes `seen`, `modifiedOn` becomes
- *             `at`, and the message's own text becomes `quote`.
+ *             current space, NEWEST FIRST, sorted by `modifiedOn`: `isViewed`
+ *             becomes `seen`, `modifiedOn` becomes `at`, and the message's own
+ *             text becomes `quote`.
  *   see(id)   one `TxUpdateDoc` setting `isViewed` true. It must be idempotent
  *             — a row already seen is not an error — because the panel clears
  *             optimistically and only then writes.

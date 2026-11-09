@@ -67,8 +67,7 @@ const face = (who: Human): Person => ({ id: who._id, name: nameOf(who), face: wh
  * Everyone on a card: the assignee first, then the rest of the collaborators.
  *
  * Order is the whole point — the assignee is the one face that must survive
- * being the only one shown, and a set with no order would put whoever the
- * mixin listed first in front of them.
+ * being the only one shown.
  */
 const crew = (issue: Doc, crowd: Map<string, Human>): Person[] => {
   const ids = [issue.assignee, ...(issue.collaborators ?? [])].filter((id): id is string => !!id)
@@ -386,7 +385,12 @@ const note = (
   const place = where.get(String(row.attachedTo ?? ''))
   return {
     id: row._id,
-    kind: String(row.attachedToClass ?? '').startsWith('chunter:') ? 'chat' : 'task',
+    kind:
+      row.attachedToClass === Class.channel ||
+      row.attachedToClass === Class.direct ||
+      row.attachedToClass === Class.message
+        ? 'chat'
+        : 'task',
     actor: { name, face: actor?.avatar ?? undefined },
     line: sentence(name, row.body ?? row.title ?? '', place),
     at: row.modifiedOn,

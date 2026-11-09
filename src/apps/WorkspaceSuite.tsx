@@ -1,5 +1,5 @@
 /**
- * Huly-style Virtual Office (`Meet`), Calendar & Bot Cron Routines (`Calendar`),
+ * Virtual Office (`Meet`), Calendar & Bot Cron Routines (`Calendar`),
  * and Time & Sprint Velocity (`Time`) surfaces.
  */
 import { useEffect, useState } from 'react'
@@ -98,7 +98,7 @@ const VIRTUAL_ROOMS: readonly VirtualRoom[] = [
     id: 'design-crit',
     name: 'Product & Design Studio',
     floor: 'Floor 2 · Design & Brand',
-    topic: 'Huly-style workspace polish, Gallery live previews & Omni 1.2 Flash stills',
+    topic: 'Workspace polish, Gallery live previews & Omni 1.2 Flash stills',
     screenShare: '@des sharing: @hanzo/gui monochrome token sheet & Slack-style top bar',
     humans: [
       { name: 'Antje Worring', role: 'CEO & Founder', speaking: true },

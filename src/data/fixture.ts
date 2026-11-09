@@ -91,7 +91,7 @@ const project = (
   description: string,
 ): Project => ({
   ...base(`proj-${id}`, Class.project),
-  space: 'core:space:Space',
+  space: SPACE,
   name,
   identifier,
   description,
@@ -574,11 +574,13 @@ const channels: Channel[] = [
   { ...base('c-hanzo-revenue', Class.channel), name: 'hanzo-revenue', topic: 'Pipeline, enterprise deals & billing' },
   { ...base('c-tracker', Class.channel), name: 'tracker', topic: 'Sprint boards, PR gates & issue triage' },
   { ...base('c-design', Class.channel), name: 'design', topic: 'Product design, typography & monochrome tokens' },
-  { ...base('c-lux-bank', Class.channel), name: 'lux-bank', topic: 'Lux banking, cards & settlement' },
-  { ...base('c-lux-bridge', Class.channel), name: 'lux-bridge', topic: 'Cross-chain bridge & MPC' },
+  { ...base('c-hanzo-x-lux', Class.channel), name: 'hanzo-x-lux', topic: 'Hanzo Connect shared channel · Cross-org engineering & MPC settlement', bindings: ['connect:lux'] },
+  { ...base('c-hanzo-x-zoo', Class.channel), name: 'hanzo-x-zoo', topic: 'Hanzo Connect shared channel · Decentralized AI & DeSci research', bindings: ['connect:zoo'] },
+  { ...base('c-lux-bank', Class.channel), name: 'lux-bank', topic: 'Lux banking, cards & settlement', bindings: ['connect:lux'] },
+  { ...base('c-lux-bridge', Class.channel), name: 'lux-bridge', topic: 'Cross-chain bridge & MPC', bindings: ['connect:lux'] },
 ]
 
-const DIRECT_CLASS = 'chunter:class:DirectMessage'
+const DIRECT_CLASS = Class.direct
 
 const directs: Channel[] = HANZO_AGENTS.map((a) => ({
   ...base(`dm-${a.id}`, DIRECT_CLASS),
@@ -596,6 +598,13 @@ const messages: Message[] = [
   { ...base('m6', Class.message), message: 'Updated @hanzo/gui monochrome tokens and Slack-style top search bar across all workspace surfaces.', attachedTo: 'c-hanzo-ui', modifiedOn: now - 1_200_000, modifiedBy: 'bot-des' },
   { ...base('m7', Class.message), message: 'Rendered 4K hero stills and agent portraits via Omni 1.2 Flash in Studio.', attachedTo: 'c-hanzo-video', modifiedOn: now - 1_500_000, modifiedBy: 'bot-art' },
   { ...base('m8', Class.message), message: 'Synced org grants, prepaid balances, and enterprise seats with Commerce.', attachedTo: 'c-hanzo-revenue', modifiedOn: now - 450_000, modifiedBy: 'bot-rev' },
+  { ...base('m-connect-lux-1', Class.message), message: 'Connected `hanzo` ↔ `lux` via Hanzo Connect (`connect:lux`). Both organizations retain isolated IAM, KMS secrets, and billing while sharing this channel.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 1_200_000, modifiedBy: 'bot-vi' },
+  { ...base('m-connect-lux-2', Class.message), message: 'Lux MPC threshold signers and GPU settlement hooks are live on `api.hanzo.ai/v1/commerce`. Ready for joint end-to-end testing.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 600_000, modifiedBy: 'p-zach' },
+  { ...base('m-connect-lux-3', Class.message), message: 'Verified cross-org webhook signatures and KMS boundary checks between `hanzo` and `lux` — zero cross-tenant secret access.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 240_000, modifiedBy: 'bot-cyber' },
+  { ...base('m-connect-zoo-1', Class.message), message: 'Connected `hanzo` ↔ `zoo` via Hanzo Connect (`connect:zoo`). Decentralized AI & DeSci benchmark runs are streaming into this shared channel.', attachedTo: 'c-hanzo-x-zoo', modifiedOn: now - 900_000, modifiedBy: 'bot-scien' },
+  { ...base('m-connect-zoo-2', Class.message), message: 'Published Zen-4 and Kai decision harness evaluation results for Zoo Labs foundation fellows.', attachedTo: 'c-hanzo-x-zoo', modifiedOn: now - 360_000, modifiedBy: 'bot-dev' },
+  { ...base('m-connect-bank-1', Class.message), message: 'Card settlement rails and USD/LUX treasury sweeps reconciled across Hanzo Commerce and Lux Bank.', attachedTo: 'c-lux-bank', modifiedOn: now - 720_000, modifiedBy: 'bot-rev' },
+  { ...base('m-connect-bridge-1', Class.message), message: 'Teleport bridge proof verification passing on C-Chain and Hanzo enclave signers.', attachedTo: 'c-lux-bridge', modifiedOn: now - 500_000, modifiedBy: 'bot-opera' },
   { ...base('m-rev-1', Class.message), message: 'Tell me when it’s done and I’ll re-send all six fixes and check them on the live site. I’ve posted the cause in #hanzo-revenue. Longer term, a platform rule that a member can’t spend org credits on leases will block every agent this way, and it’s worth fixing.', attachedTo: 'dm-rev', modifiedOn: now - 900_000, modifiedBy: 'bot-rev' },
   { ...base('m-rev-2', Class.message), message: 'hanzo has a credit grant this is some kind of bug?', attachedTo: 'dm-rev', modifiedOn: now - 780_000, modifiedBy: 'p-zach' },
   { ...base('m-rev-3', Class.message), message: 'Probably, yes. If the org has a grant but the lease reads $0, it’s likely looking up the wrong account, under user ID "hanzo" instead of the org’s ID. I’m checking the grant and the account the lease charges now.', attachedTo: 'dm-rev', modifiedOn: now - 700_000, modifiedBy: 'bot-rev' },
@@ -670,7 +679,8 @@ const trimmed = (): Map<string, Doc[]> => {
 
 // ── Live API + localStorage persistence plane ────────────────────────────────
 
-const STORAGE_KEY = 'hanzo.team.plane.v4'
+const STORAGE_KEY = 'hanzo.team.plane.v6'
+const ORGS_STORAGE_KEY = 'hanzo.team.orgs.v1'
 const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
 
 const STATUS_FROM_API: Record<string, (typeof COLUMNS)[number][0]> = {
@@ -897,12 +907,33 @@ const matches = (row: Record<string, unknown>, query: Record<string, unknown>): 
     return has === want
   })
 
-const SPACES: SpaceRow[] = [
+const DEFAULT_SPACES: SpaceRow[] = [
   { uuid: SPACE, name: 'Hanzo AI', url: SPACE, org: 'hanzo', isDisabled: false },
   { uuid: 'foundation', name: 'The Foundation', url: 'foundation', org: 'foundation', isDisabled: false },
   { uuid: 'lux', name: 'Lux Network', url: 'lux', org: 'lux', isDisabled: false },
   { uuid: 'zoo', name: 'Zoo Labs', url: 'zoo', org: 'zoo', isDisabled: false },
 ]
+
+const loadSavedSpaces = (): SpaceRow[] => {
+  if (typeof window === 'undefined') return [...DEFAULT_SPACES]
+  try {
+    const raw = window.localStorage.getItem(ORGS_STORAGE_KEY)
+    if (!raw) return [...DEFAULT_SPACES]
+    const extra = JSON.parse(raw) as SpaceRow[]
+    if (!Array.isArray(extra)) return [...DEFAULT_SPACES]
+    const merged = [...DEFAULT_SPACES]
+    for (const item of extra) {
+      if (item && item.url && !merged.some((s) => s.url === item.url)) {
+        merged.push(item)
+      }
+    }
+    return merged
+  } catch {
+    return [...DEFAULT_SPACES]
+  }
+}
+
+const SPACES: SpaceRow[] = loadSavedSpaces()
 
 // ── the one knob ──────────────────────────────────────────────────────────────
 
@@ -910,19 +941,47 @@ export const fixture = {
   /** Whether anything below is standing in for the real plane. */
   on: name !== 'live',
 
+  /** Register a newly created organization workspace locally and in memory. */
+  addSpace: (slug: string, displayName: string): SpaceRow => {
+    const cleanSlug = slug
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9-]+/g, '-')
+      .replace(/^-|-$/g, '') || 'org'
+    const existing = SPACES.find((s) => s.url === cleanSlug)
+    if (existing) return existing
+    const row: SpaceRow = {
+      uuid: cleanSlug,
+      name: displayName.trim() || cleanSlug,
+      url: cleanSlug,
+      org: cleanSlug,
+      isDisabled: false,
+    }
+    SPACES.push(row)
+    if (typeof window !== 'undefined') {
+      try {
+        const custom = SPACES.filter((s) => !DEFAULT_SPACES.some((d) => d.url === s.url))
+        window.localStorage.setItem(ORGS_STORAGE_KEY, JSON.stringify(custom))
+      } catch {
+        // ignore storage quota errors
+      }
+    }
+    return row
+  },
+
   /** The space list, or the real one. */
   spaces: (live: () => Promise<SpaceRow[]>): Promise<SpaceRow[]> => {
     switch (name) {
       case 'live':
         return live()
-          .then((rows) => (rows.length > 0 ? rows : SPACES))
-          .catch(() => SPACES)
+          .then((rows) => (rows.length > 0 ? rows : [...SPACES]))
+          .catch(() => [...SPACES])
       case 'loading':
         return never()
       case 'failure':
         return refuse()
       default:
-        return Promise.resolve(SPACES)
+        return Promise.resolve([...SPACES])
     }
   },
 

@@ -888,6 +888,8 @@ export type RailAccountMenuProps = {
   currentOrg?: BusinessHeaderOrg
   orgs?: readonly BusinessHeaderOrg[]
   onSelectOrg?: (orgName: string) => void
+  onCreateOrg?: () => void
+  onConnectOrg?: () => void
   accounts?: readonly BusinessHeaderAccount[]
   onSwitchAccount?: (account: BusinessHeaderAccount) => void
   onAddAccount?: () => void
@@ -903,6 +905,8 @@ export function RailAccountMenu({
   currentOrg,
   orgs = [],
   onSelectOrg,
+  onCreateOrg,
+  onConnectOrg,
   accounts = [],
   onSwitchAccount,
   onAddAccount,
@@ -1135,6 +1139,56 @@ export function RailAccountMenu({
                 </XStack>
               )
             })}
+
+            {onCreateOrg ? (
+              <XStack
+                role="menuitem"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap="$2.5"
+                px="$2"
+                py="$1.5"
+                rounded="$3"
+                hoverStyle={{ bg: '$color3' }}
+                onPress={() => {
+                  setOpen(false)
+                  onCreateOrg()
+                }}
+              >
+                <YStack width={20} height={20} rounded={round.field} bg="$color3" items="center" justify="center">
+                  <Plus size={12} color="$color11" />
+                </YStack>
+                <Text fontSize="$2" fontWeight="500" color="$color12">
+                  Create new organization…
+                </Text>
+              </XStack>
+            ) : null}
+
+            {onConnectOrg ? (
+              <XStack
+                role="menuitem"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap="$2.5"
+                px="$2"
+                py="$1.5"
+                rounded="$3"
+                hoverStyle={{ bg: '$color3' }}
+                onPress={() => {
+                  setOpen(false)
+                  onConnectOrg()
+                }}
+              >
+                <YStack width={20} height={20} rounded={round.field} bg="$color3" items="center" justify="center">
+                  <Share2 size={12} color="$color11" />
+                </YStack>
+                <Text fontSize="$2" fontWeight="500" color="$color12">
+                  Hanzo Connect (share channel)…
+                </Text>
+              </XStack>
+            ) : null}
           </YStack>
 
           <Separator borderColor="$borderColor" my="$1" />

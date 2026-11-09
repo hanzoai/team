@@ -1,5 +1,5 @@
 /**
- * Huly-style Issue List & Sprint/Roadmap Timeline views for the Tracker.
+ * Issue List & Sprint/Roadmap Timeline views for the Tracker.
  *
  * Uses the exact same reactive `Source` (`source.watch`, `source.move`, `source.add`)
  * as `Board.tsx`, so status changes and new issues reflect immediately across

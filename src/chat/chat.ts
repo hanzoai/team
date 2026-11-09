@@ -1,28 +1,23 @@
 /**
  * What a conversation is made of, and how it is read and written.
  *
- * Everything here goes through the space's plane — one socket, `src/data`. The
- * REST surface at `/v1/team/rooms/:id/messages` reads the SAME documents, but
- * it projects them to plain text and drops the reactions and the thread with
- * them, and it cannot say when somebody else writes. So the plane is the door,
- * and the classes below are the platform's own — a message IS a
- * `chunter:class:ChatMessage`, and calling it something else here would put two
- * words on one concept for no gain.
+ * Everything here goes through the space's plane — one socket, `src/data`.
  */
+import { Class as ModelClass, Tx } from '~/data/model.ts'
 import type { Plane, Wire } from '~/data/socket.ts'
 import { lines, markup } from './text.ts'
 
 export const Class = {
-  channel: 'chunter:class:Channel',
-  direct: 'chunter:class:DirectMessage',
-  message: 'chunter:class:ChatMessage',
-  reply: 'chunter:class:ThreadMessage',
-  reaction: 'activity:class:Reaction',
-  person: 'contact:class:Person',
+  channel: ModelClass.channel,
+  direct: ModelClass.direct,
+  message: ModelClass.message,
+  reply: ModelClass.reply,
+  reaction: ModelClass.reaction,
+  person: ModelClass.person,
 } as const
 
-const TX_CREATE = 'core:class:TxCreateDoc'
-const TX_REMOVE = 'core:class:TxRemoveDoc'
+const TX_CREATE = Tx.create
+const TX_REMOVE = Tx.remove
 
 /** A place people talk. A channel has a name; a direct message has members. */
 export type Room = {
@@ -33,6 +28,8 @@ export type Room = {
   private?: boolean
   archived?: boolean
   members: string[]
+  /** External organizations connected to this channel via Hanzo Connect. */
+  connectedOrgs?: string[]
 }
 
 /** One thing somebody said. */
@@ -80,6 +77,25 @@ export const rooms = async (plane: Plane): Promise<Room[]> => {
   ].filter((r) => !r.archived)
 }
 
+const extractConnectedOrgs = (d: Doc): string[] | undefined => {
+  const orgs = new Set<string>()
+  if (Array.isArray(d.bindings)) {
+    for (const b of d.bindings) {
+      if (typeof b === 'string' && b.startsWith('connect:')) {
+        orgs.add(b.slice('connect:'.length))
+      }
+    }
+  }
+  const topic = str(d.topic) || str(d.description)
+  for (const m of topic.matchAll(/connect:([a-z0-9_-]+)/gi)) {
+    if (m[1]) orgs.add(m[1].toLowerCase())
+  }
+  const name = str(d.name)
+  const cross = name.match(/^[a-z0-9]+-x-([a-z0-9_-]+)$/i)
+  if (cross?.[1]) orgs.add(cross[1].toLowerCase())
+  return orgs.size > 0 ? [...orgs] : undefined
+}
+
 const room = (d: Doc, kind: Room['kind']): Room => ({
   id: str(d._id),
   kind,
@@ -88,6 +104,7 @@ const room = (d: Doc, kind: Room['kind']): Room => ({
   private: d.private === true,
   archived: d.archived === true,
   members: Array.isArray(d.members) ? d.members.filter((m): m is string => typeof m === 'string') : [],
+  connectedOrgs: extractConnectedOrgs(d),
 })
 
 /**
@@ -208,6 +225,48 @@ export const unreact = (plane: Plane, room: Room, reaction: Reaction): Promise<v
     modifiedBy: by(plane),
     modifiedOn: Date.now(),
   })
+
+/**
+ * Create a Hanzo Connect shared channel between the current org and one or more
+ * partner organizations.
+ */
+export const createConnectChannel = async (
+  plane: Plane,
+  name: string,
+  partnerOrgs: string[],
+  topic?: string,
+): Promise<string> => {
+  const cleanName = name.trim().replace(/^#+/, '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-')
+  const orgTags = partnerOrgs.map((o) => o.trim().toLowerCase().replace(/[^a-z0-9_-]+/g, '')).filter(Boolean)
+  const roomId = `connect-${cleanName}-${id().slice(0, 8)}`
+  const now = Date.now()
+  const author = by(plane)
+  const bindings = orgTags.map((o) => `connect:${o}`)
+  const fullTopic = [topic?.trim(), ...bindings].filter(Boolean).join(' · ')
+
+  await plane.write({
+    _class: TX_CREATE,
+    objectId: roomId,
+    objectClass: Class.channel,
+    objectSpace: 'hanzo',
+    modifiedBy: author,
+    modifiedOn: now,
+    createdBy: author,
+    createdOn: now,
+    attributes: {
+      name: cleanName,
+      topic: fullTopic,
+      description: fullTopic,
+      private: false,
+      archived: false,
+      members: author ? [author] : [],
+      owners: author ? [author] : [],
+      life: 'standing',
+      bindings,
+    },
+  })
+  return roomId
+}
 
 const classOf = (r: Room): string => (r.kind === 'direct' ? Class.direct : Class.channel)
 

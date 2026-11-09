@@ -30,6 +30,7 @@ import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { BusinessHeader, type BusinessAppItem } from './BusinessHeader.tsx'
+import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
 import { round } from '~/theme/theme'
@@ -121,6 +122,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         currentOrg={currentOrgInfo}
         orgs={orgList}
         onSelectOrg={(url: string) => choose(url)}
+        onCreateOrg={() => openConnectModal('create-org')}
         onSelectApp={handleSelectApp}
         onNavigate={reach}
         user={userIdentity}
@@ -148,6 +150,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             currentOrg: currentOrgInfo,
             orgs: orgList,
             onSelectOrg: (url: string) => choose(url),
+            onCreateOrg: () => openConnectModal('create-org'),
+            onConnectOrg: () => openConnectModal('connect'),
             onAddAccount: () => depart(),
             onSettings: () => reach('/bots'),
             onSignOut: () => leave(),
@@ -193,6 +197,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
           {nav}
         </SheetContent>
       </Sheet>
+
+      <ConnectOrgModal />
     </Screen>
   )
 }

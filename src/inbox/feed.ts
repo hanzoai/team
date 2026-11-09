@@ -1,17 +1,8 @@
 /**
  * The running feed, and the one seam a backend fills.
  *
- * There is no REST for notifications. The estate's team plugin publishes rooms,
- * messages, files and billing over `/v1/team/*` and nothing else; the feed the
- * reference paints is generated server-side into the platform model's
- * `notification:*` objects, and every one of those arrives over the transactor
- * socket. So this region states the shape it needs (`note.ts`) and takes it
- * from a `Source`. Fixtures satisfy that interface today; whoever lands the
- * transactor client satisfies it with one call to `serve`, and nothing else in
- * this region moves.
- *
- * Live arrivals are a `KindPush` on that same socket: a source that has one
- * calls `arrive`. Nothing here polls.
+ * The inbox region states the shape it needs (`note.ts`) and takes it from a
+ * `Source`. Live arrivals push through `arrive` so nothing here polls.
  */
 import { held, hold, invalidate, useRead, type Read } from '~/data/query'
 

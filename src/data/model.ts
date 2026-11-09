@@ -1,35 +1,31 @@
 /**
- * The platform's vocabulary, as this client needs it.
+ * The workspace domain vocabulary.
  *
- * These ids are the server's — every one appears in cloud `apps/team/model.json`,
- * which is the model the transactor loads and the only authority on them. They
- * are strings on the wire, so they are `const` here and nothing derives them.
- *
- * A document is a bag with four fields the platform puts on all of them; the
- * rest is the class's own. The shapes below carry the fields this product
- * paints and nothing more — a class has dozens, and copying all of them would
- * be a second model to keep in step with the first.
+ * Every document carries the four core metadata fields (`_id`, `_class`,
+ * `space`, `modifiedOn`); the remaining fields are specific to each entity.
  */
 
 export const Class = {
-  project: 'tracker:class:Project',
-  issue: 'tracker:class:Issue',
-  status: 'tracker:class:IssueStatus',
-  milestone: 'tracker:class:Milestone',
-  component: 'tracker:class:Component',
-  person: 'contact:class:Person',
-  channel: 'chunter:class:Channel',
-  message: 'chunter:class:ChatMessage',
-  notice: 'notification:class:ActivityInboxNotification',
-  context: 'notification:class:DocNotifyContext',
-  tag: 'tags:class:TagReference',
+  project: 'team:class:Project',
+  issue: 'team:class:Issue',
+  status: 'team:class:IssueStatus',
+  milestone: 'team:class:Milestone',
+  component: 'team:class:Component',
+  person: 'team:class:Person',
+  channel: 'team:class:Channel',
+  direct: 'team:class:DirectMessage',
+  message: 'team:class:ChatMessage',
+  reply: 'team:class:ThreadMessage',
+  reaction: 'team:class:Reaction',
+  notice: 'team:class:ActivityInboxNotification',
+  context: 'team:class:DocNotifyContext',
+  tag: 'team:class:TagReference',
 } as const
 
 export const Tx = {
-  create: 'core:class:TxCreateDoc',
-  update: 'core:class:TxUpdateDoc',
-  remove: 'core:class:TxRemoveDoc',
-  mixin: 'core:class:TxMixin',
+  create: 'team:tx:CreateDoc',
+  update: 'team:tx:UpdateDoc',
+  remove: 'team:tx:RemoveDoc',
 } as const
 
 /** The four fields the platform puts on every document. */
@@ -51,11 +47,11 @@ export type Doc = {
  * which is why the theme has four state colours and not one per status.
  */
 export const Category = {
-  backlog: 'tracker:issueStatusCategory:Backlog',
-  todo: 'tracker:issueStatusCategory:Unstarted',
-  doing: 'tracker:issueStatusCategory:Started',
-  done: 'tracker:issueStatusCategory:Completed',
-  cancelled: 'tracker:issueStatusCategory:Cancelled',
+  backlog: 'team:statusCategory:Backlog',
+  todo: 'team:statusCategory:Unstarted',
+  doing: 'team:statusCategory:Started',
+  done: 'team:statusCategory:Completed',
+  cancelled: 'team:statusCategory:Cancelled',
 } as const
 
 /**
@@ -111,7 +107,7 @@ export type Issue = Doc & {
   attachments?: number
   labels?: number
   /**
-   * Everyone following this issue, from `notification:mixin:Collaborators`.
+   * Everyone following this issue.
    * The assignee is one of them; a card draws the set and the assignee first.
    */
   collaborators?: string[]
@@ -149,6 +145,8 @@ export type Channel = Doc & {
   private?: boolean
   archived?: boolean
   members?: string[]
+  life?: string
+  bindings?: string[]
 }
 
 export type Message = Doc & {

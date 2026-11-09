@@ -23,7 +23,7 @@ import { Navigate, useParams } from 'react-router'
 import { useProjects } from '~/serve'
 
 import { AppsNav, AppsScreen, BotsNav, BotsScreen } from '~/apps/BusinessApps'
-import { CalendarNav, CalendarScreen, MeetNav, MeetScreen, TimeNav, TimeScreen } from '~/apps/HulySuite'
+import { CalendarNav, CalendarScreen, MeetNav, MeetScreen, TimeNav, TimeScreen } from '~/apps/WorkspaceSuite'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen } from '~/crm/CrmWorkspace'
 import { Inbox } from '~/inbox'
@@ -53,7 +53,7 @@ const AgentRedirect = () => {
 }
 
 /**
- * Where a visit starts: the first project's Huly-style Tracker board
+ * Where a visit starts: the first project's Tracker board
  * (`/projects/proj-crm/issues` with the 84px Rail, Project Navigator, 4 Kanban
  * columns with completion rings, and Inbox aside).
  */
