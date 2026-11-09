@@ -153,20 +153,13 @@ export const reactions = async (plane: Plane, ids: string[]): Promise<Reaction[]
     id: str(d._id),
     message: str(d.attachedTo),
     emoji: str(d.emoji),
-    by: str(d.createBy) || str(d.createdBy),
+    by: str(d.createdBy),
   }))
 }
 
-/**
- * A name as it is SAID, from the way the platform stores one.
- *
- * Contact names are held `Last,First` — a sort key, not a greeting. Printed
- * verbatim it reads "Wolf Sonya", which is a person nobody has met.
- */
-export const spoken = (stored: string): string => {
-  const [last, first] = stored.split(',')
-  return (first ? `${first.trim()} ${last.trim()}` : last.trim()).replace(/\s+/g, ' ')
-}
+/** Normalize whitespace on a stored display name. */
+export const spoken = (stored: string): string =>
+  stored.trim().replace(/\s+/g, ' ')
 
 /** The roster, so a message can be drawn with a name instead of a uuid. */
 export const people = async (plane: Plane): Promise<Person[]> => {
@@ -211,7 +204,6 @@ export const react = (plane: Plane, room: Room, message: Message, emoji: string)
   plane.write(
     attached(id(), Class.reaction, room.id, message.id, Class.message, 'reactions', by(plane), {
       emoji,
-      createBy: by(plane),
     }),
   )
 

@@ -5,6 +5,7 @@
   "identifier": "com.hanzo.team",
   "mainBinaryName": "hanzo-team",
   "build": {
+    "devUrl": "http://localhost:3095",
     "frontendDist": "../../../dist"
   },
   "app": {
@@ -16,7 +17,6 @@
       {
         "label": "main",
         "title": "Hanzo Team",
-        "url": "http://localhost:3095",
         "width": 1440,
         "height": 900,
         "minWidth": 800,

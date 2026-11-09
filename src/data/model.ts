@@ -18,7 +18,6 @@ export const Class = {
   reply: 'team:class:ThreadMessage',
   reaction: 'team:class:Reaction',
   notice: 'team:class:ActivityInboxNotification',
-  context: 'team:class:DocNotifyContext',
   tag: 'team:class:TagReference',
 } as const
 
@@ -162,23 +161,15 @@ export type Notice = Doc & {
   title?: string
   body?: string
   isViewed: boolean
-  docNotifyContext?: string
   attachedTo?: string
   attachedToClass?: string
   /** The platform's own type id — a mention, an assignment, a reply. */
   types?: string[]
 }
 
-/**
- * The platform stores a person's display name as `Last,First`, which is a sort
- * key rather than a name. One place turns it back into one.
- */
-export const nameOf = (person: { name?: string } | undefined | null): string => {
-  const raw = person?.name ?? ''
-  if (!raw.includes(',')) return raw
-  const [last, first] = raw.split(',')
-  return [first, last].filter(Boolean).join(' ').trim()
-}
+/** A person's display name. */
+export const nameOf = (person: { name?: string } | undefined | null): string =>
+  (person?.name ?? '').trim()
 
 /** `PROJ-42`, the id a person actually quotes. */
 export const ref = (project: Pick<Project, 'identifier'> | undefined, issue: Pick<Issue, 'number'>) =>

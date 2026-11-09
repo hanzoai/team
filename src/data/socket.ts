@@ -114,11 +114,7 @@ export class Socket implements Plane {
   }
 
   async find<T>(cls: string, query: Record<string, unknown> = {}, options: Record<string, unknown> = {}) {
-    const result = await this.call<{ value?: T[]; total?: number } | T[]>('findAll', [cls, query, options])
-    // findAll answers a TotalArray — `{dataType, total, value}` — which the
-    // platform's own client revives into an array carrying `.total`. Reading
-    // both shapes costs one line and survives either.
-    return Array.isArray(result) ? result : (result.value ?? [])
+    return (await this.call<T[]>('findAll', [cls, query, options])) ?? []
   }
 
   async one<T>(cls: string, query: Record<string, unknown>) {

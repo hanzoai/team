@@ -21,8 +21,8 @@ const origin = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
 export const team = {
   /** The account JSON-RPC: spaces, space selection, memberships, people. */
   account: `${origin}/v1/team/account`,
-  /** Rooms and their messages — the REST half of the chat surface. */
-  rooms: `${origin}/v1/team/rooms`,
+  /** Channels and their messages — the REST half of the chat surface. */
+  channels: `${origin}/v1/team/channels`,
   /** Per-space file storage. */
   files: `${origin}/v1/team/files`,
   /** The plan, the seats and the guest cap. */

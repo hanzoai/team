@@ -41,7 +41,6 @@ import {
   Search,
   Settings,
   Share2,
-  ShieldCheck,
   ShoppingBag,
   Sparkles,
   SquareCheck,
@@ -50,7 +49,6 @@ import {
   UserRound,
   Users,
 } from '@hanzogui/lucide-icons-2'
-import { openConsent } from '@hanzo/ui/consent'
 import { BrandMark, OrgMark, ThemeToggle } from '@hanzo/ui/product'
 import { HANZO_AGENTS } from '~/data/agents.ts'
 import { paint, round, state } from '~/theme/theme.ts'
@@ -66,6 +64,7 @@ export type BusinessAppId =
   | 'team'
   | 'work'
   | 'cms'
+  | 'post'
   | 'email'
   | 'marketing'
   | 'ads'
@@ -146,6 +145,14 @@ export const BUSINESS_APPS: readonly BusinessAppItem[] = [
     productTitle: 'Hanzo Bots',
     description: 'Autonomous AI agents & workflows',
     href: 'https://hanzo.bot',
+    supportsFreshAuth: false,
+  },
+  {
+    id: 'post',
+    label: 'Post',
+    productTitle: 'Hanzo Post',
+    description: 'AI social & blog publishing across 28+ channels',
+    href: 'https://post.hanzo.ai',
     supportsFreshAuth: false,
   },
   {
@@ -295,6 +302,7 @@ function AppIcon({ id, size = 16 }: { id: BusinessAppId; size?: number }) {
       return <Calendar size={size} />
     case 'bots':
       return <Bot size={size} />
+    case 'post':
     case 'social':
       return <Share2 size={size} />
     case 'chat':
@@ -1226,29 +1234,6 @@ export function RailAccountMenu({
                 </Text>
               </XStack>
             ) : null}
-
-            {/* The cookie choices (@hanzo/ui `Consent`, mounted in app.tsx with no
-                floating button: at the window's foot it covered this menu's trigger). */}
-            <XStack
-              role="menuitem"
-              tabIndex={0}
-              cursor="pointer"
-              items="center"
-              gap="$2.5"
-              px="$2"
-              py="$1.5"
-              rounded="$3"
-              hoverStyle={{ bg: '$color3' }}
-              onPress={() => {
-                setOpen(false)
-                openConsent()
-              }}
-            >
-              <ShieldCheck size={15} color="$color10" />
-              <Text fontSize="$2" color="$color12">
-                Your Privacy Choices
-              </Text>
-            </XStack>
           </YStack>
 
           {/* Sign out */}
