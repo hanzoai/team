@@ -17,13 +17,16 @@ test:
       test -s dist/index.html
 
 site:
-  # hanzo.team, and this repository is the only thing that publishes it: the
-  # earlier Next.js workspace (hanzo-apps/team) also wrote this slug, so the
-  # host served whichever pushed last, and it is archived.
+  # hanzo.team is published by hanzo-inc/team, which pins a version of this
+  # app's npm package (@hanzo/team, .github/workflows/publish.yml) and ships its
+  # dist/. So nothing here publishes a site: one publisher per host. This stays
+  # the open-source app; the build and test above still run.
+  # hanzo/hanzo-team keeps this repository's last build, which is the way back:
+  # drop `namespace: hanzo-inc` from universe's hanzo-team site and sync.
   #
   # `on:` defaults to the empty list, and an unnamed branch runs the build,
   # reports success and ships nothing.
   slug: hanzo-team
   dir: dist
-  on: [main]
+  on: []
   build: pnpm build
