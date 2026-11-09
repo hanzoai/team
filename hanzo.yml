@@ -1,4 +1,4 @@
-# Hanzo CI/CD — team2. All real config is here; .hanzo/workflows/cicd.yml is
+# Hanzo CI/CD — hanzo.team. All real config is here; .hanzo/workflows/cicd.yml is
 # triggers and an import of hanzoai/ci.
 
 test:
@@ -17,10 +17,9 @@ test:
       test -s dist/index.html
 
 site:
-  # team2.hanzo.ai. The host resolves today through the proxied *.hanzo.ai
-  # record and Cloudflare terminates TLS on the shared edge certificate, so
-  # claiming it is one Middleware plus one IngressRoute in universe
-  # charts/app/values/hanzo/static-sites.yaml and touches nothing live.
+  # hanzo.team, and this repository is the only thing that publishes it: the
+  # earlier Next.js workspace (hanzo-apps/team) also wrote this slug, so the
+  # host served whichever pushed last, and it is archived.
   #
   # `on:` defaults to the empty list, and an unnamed branch runs the build,
   # reports success and ships nothing.

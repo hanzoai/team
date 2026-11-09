@@ -1,5 +1,5 @@
 import { Button, SizableText, Spinner, YStack } from '@hanzo/ui'
-import type { ReactNode } from 'react'
+import { useEffect, type ReactNode } from 'react'
 
 import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
@@ -8,6 +8,7 @@ import { gap, paint, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
 import { Login } from './Login.tsx'
+import { cart, START } from './start.ts'
 
 /** Where the issuer returns a browser. Registered at IAM, so it is fixed. */
 const CALLBACK = '/auth/callback'
@@ -22,6 +23,8 @@ const CALLBACK = '/auth/callback'
  *
  * It answers the callback address HERE, above the router, because that renders
  * while the browser still has no identity and every route below expects one.
+ * /start is answered here for the same reason: it forwards to the checkout,
+ * which signs a stranger in itself (./start.ts).
  * And `unknown` draws neither door: a flash of the sign-in screen in front of
  * somebody who is already signed in is worse than a moment of nothing.
  *
@@ -35,6 +38,7 @@ export const Doorway = ({ children }: { children: ReactNode }) => {
   const { standing: space, refusal, enrolment } = useSpace()
 
   if (window.location.pathname === CALLBACK) return <Callback />
+  if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
   if (fixture.on) return <>{children}</>
   if (session === 'unknown') return <Waiting />
   if (session === 'out' && window.location.pathname === '/login') return <Login />
@@ -61,6 +65,12 @@ export const Doorway = ({ children }: { children: ReactNode }) => {
   if (space === 'unknown') return <Waiting />
 
   return <>{children}</>
+}
+
+/** Leaves for `to`, replacing this entry so Back does not return to a forward. */
+const Forward = ({ to }: { to: string }) => {
+  useEffect(() => window.location.replace(to), [to])
+  return <Waiting />
 }
 
 const Waiting = () => (
