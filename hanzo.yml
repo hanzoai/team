@@ -21,8 +21,8 @@ site:
   # app's npm package (@hanzo/team, .github/workflows/publish.yml) and ships its
   # dist/. So nothing here publishes a site: one publisher per host. This stays
   # the open-source app; the build and test above still run.
-  # hanzo/hanzo-team keeps this repository's last build, which is the way back:
-  # drop `namespace: hanzo-inc` from universe's hanzo-team site and sync.
+  # Both repositories write the same prefix, hanzo/hanzo-team. A bad release is
+  # rolled back in hanzo-inc/team by reverting its version bump.
   #
   # `on:` defaults to the empty list, and an unnamed branch runs the build,
   # reports success and ships nothing.
