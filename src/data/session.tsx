@@ -102,12 +102,24 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * screen would simply stay empty. Adopting a principal re-reads the world.
    */
   const adopt = useCallback(async () => {
-    const user = await iam()
-      .getUser()
-      .catch(() => null)
-    setWho(user ? person(user) : null)
-    setStanding('in')
-    invalidate()
+    try {
+      const user = await iam().getUser()
+      setWho(user ? person(user) : null)
+      setStanding('in')
+      invalidate()
+    } catch (e: unknown) {
+      const msg = e instanceof Error ? e.message : String(e)
+      if (msg.includes('(401)') || msg.includes('(403)')) {
+        iam().clearTokens()
+        setWho(null)
+        setStanding('out')
+        invalidate()
+        return
+      }
+      setWho(null)
+      setStanding('in')
+      invalidate()
+    }
   }, [])
 
   const drop = useCallback(() => {
@@ -125,6 +137,11 @@ export const Session = ({ children }: { children: ReactNode }) => {
       // would run on top of a code that is being redeemed. Stand down and let
       // `land` own that outcome.
       if (window.location.pathname.startsWith('/auth/')) return
+      if (new URLSearchParams(window.location.search).get('from') === 'logout') {
+        iam().clearTokens()
+        drop()
+        return
+      }
       const token = await iam()
         .getValidAccessToken()
         .catch(() => null)
