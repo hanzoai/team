@@ -850,7 +850,7 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
   if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
   if (fixture.on) return <>{children}</>
   if (session === 'unknown') return <Waiting />
-  if (session === 'out' && (window.location.pathname === '/' || window.location.pathname === '/login')) return <Login />
+  if (session === 'out') return <Login />
 
   if (space === 'stranger') {
     return (

@@ -184,8 +184,48 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * next sign-in is silent.
    */
   const leave = useCallback(() => {
-    void iam().logout()
-  }, [])
+    const client = iam()
+    const access = client.getAccessToken()
+    const refresh = client.getRefreshToken()
+    const idToken = client.getIdToken()
+    client.clearTokens()
+    drop()
+    void (async () => {
+      try {
+        const revoke = async (token: string | null, hint: string) => {
+          if (!token) return
+          await fetch('/v1/iam/oauth/revoke', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/x-www-form-urlencoded',
+              ...(access ? { Authorization: `Bearer ${access}` } : {}),
+            },
+            body: new URLSearchParams({ token, token_type_hint: hint, client_id: 'hanzo-team' }).toString(),
+          }).catch(() => undefined)
+        }
+        await revoke(refresh, 'refresh_token')
+        await revoke(access, 'access_token')
+        await fetch('/v1/iam/oauth/logout', {
+          method: 'POST',
+          credentials: 'include',
+          redirect: 'manual',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            client_id: 'hanzo-team',
+            everywhere: 'true',
+            ...(idToken ? { id_token_hint: idToken } : {}),
+          }).toString(),
+        }).catch(() => undefined)
+      } finally {
+        const back = `${window.location.origin}/login?from=logout`
+        if (window.location.hostname === 'hanzo.team' || window.location.hostname.endsWith('.hanzo.team')) {
+          window.location.assign(`https://hanzo.ai/auth/logout?${new URLSearchParams({ to: back })}`)
+        } else {
+          window.location.assign('/login?from=logout')
+        }
+      }
+    })()
+  }, [drop])
 
   const land = useCallback(async () => {
     const where = take()
