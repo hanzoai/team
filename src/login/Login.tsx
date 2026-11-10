@@ -1,11 +1,11 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Button, Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 
 import { brand } from '~/data/brand.ts'
 import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
-import { gap, paint, round, rung, state } from '~/theme/theme.ts'
+import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
 import { cart, START } from './start.ts'
@@ -13,7 +13,15 @@ import { cart, START } from './start.ts'
 /** Where the issuer returns a browser. Registered at IAM, so it is fixed. */
 const CALLBACK = '/auth/callback'
 
+const SITE = 'https://hanzo.ai'
+const DOCS = 'https://docs.hanzo.ai'
+const GITHUB = 'https://github.com/hanzoai'
+const STATUS = 'https://status.hanzo.ai'
+const AGENCY = 'https://hanzo.agency'
+const UNIVERSITY = 'https://hanzo.university'
+
 const HEADER_LINKS = [
+  { label: 'Features', href: 'https://hanzo.ai/team' },
   { label: 'Docs', href: 'https://docs.hanzo.ai' },
   { label: 'Hanzo Bot', href: 'https://hanzo.bot' },
   { label: 'Hanzo App', href: 'https://hanzo.app' },
@@ -21,61 +29,394 @@ const HEADER_LINKS = [
   { label: 'Hanzo AI', href: 'https://hanzo.ai' },
 ] as const
 
-const FOOTER_COLUMNS = [
-  {
-    title: 'Products',
-    links: [
-      { label: 'Hanzo Team', href: 'https://hanzo.team' },
-      { label: 'Hanzo Bot', href: 'https://hanzo.bot' },
-      { label: 'Hanzo App', href: 'https://hanzo.app' },
-      { label: 'Hanzo Dev', href: 'https://hanzo.ai/dev' },
-      { label: 'API Platform', href: 'https://platform.hanzo.ai' },
-      { label: 'Download App', href: 'https://hanzo.ai/download' },
-      { label: 'Pricing', href: 'https://hanzo.ai/pricing' },
-    ],
-  },
-  {
-    title: 'Models & AI',
-    links: [
-      { label: 'All Models', href: 'https://hanzo.ai/models' },
-      { label: 'Enso', href: 'https://hanzo.ai/enso' },
-      { label: 'Zen', href: 'https://hanzo.ai/zen' },
-      { label: 'Kai', href: 'https://hanzo.ai/kai' },
-      { label: 'MCP Tools', href: 'https://hanzo.ai/mcp' },
-      { label: 'Agent Skills', href: 'https://hanzo.ai/skills' },
-      { label: 'Benchmarks', href: 'https://hanzo.ai/benchmarks' },
-    ],
-  },
-  {
-    title: 'Developers & Cloud',
-    links: [
-      { label: 'Documentation', href: 'https://docs.hanzo.ai' },
-      { label: 'Hanzo CLI', href: 'https://hanzo.ai/cli' },
-      { label: 'Hanzo Base', href: 'https://hanzo.ai/base' },
-      { label: 'Hanzo IAM', href: 'https://hanzo.id' },
-      { label: 'Hanzo KMS', href: 'https://kms.hanzo.ai' },
-      { label: 'Open Source', href: 'https://github.com/hanzoai' },
-      { label: 'System Status', href: 'https://status.hanzo.ai' },
-    ],
-  },
-  {
-    title: 'Company & Legal',
-    links: [
-      { label: 'Hanzo AI', href: 'https://hanzo.ai' },
-      { label: 'Enterprise', href: 'https://hanzo.ai/enterprise' },
-      { label: 'Customer Stories', href: 'https://hanzo.ai/customers' },
-      { label: 'Contact Sales', href: 'https://hanzo.ai/contact-sales' },
-      { label: 'Security & Trust', href: 'https://hanzo.ai/security' },
-      { label: 'Privacy Policy', href: 'https://hanzo.ai/privacy' },
-      { label: 'Terms of Service', href: 'https://hanzo.ai/terms' },
-    ],
-  },
+const CUSTOMERS = [
+  { id: 'damon', name: 'Damon Motorcycles', logo: '/logos/customers/damon-motorcycles.svg', href: `${SITE}/customers/damon-motorcycles` },
+  { id: 'kanoa', name: 'KANOA', logo: '/logos/customers/kanoa.png', href: `${SITE}/customers/kanoa` },
+  { id: 'skully', name: 'SKULLY', logo: '/logos/customers/skully.png', href: `${SITE}/customers#skully` },
+  { id: 'bellabeat', name: 'Bellabeat', logo: '/logos/customers/bellabeat.svg', href: `${SITE}/customers#bellabeat` },
+  { id: 'stoned', name: 'STONED Audio', logo: '/logos/customers/stoned.svg', href: `${SITE}/customers#stoned` },
+  { id: 'unikrn', name: 'Unikrn', logo: '/logos/customers/unikoin-gold.svg', href: `${SITE}/customers#unikoin-gold` },
+  { id: 'arca', name: 'Arca', logo: '/logos/customers/arca.png', href: `${SITE}/customers#arca` },
+  { id: 'casper', name: 'Casper Labs', logo: '/logos/customers/casper-blockchain.svg', href: `${SITE}/customers#casper-blockchain` },
+  { id: 'triller', name: 'Triller', logo: '/logos/customers/trillerfest.png', href: `${SITE}/customers#trillerfest` },
+  { id: 'cover', name: 'Cover Build', logo: '/logos/customers/cover-build.svg', href: `${SITE}/customers#cover-build` },
+  { id: 'myle', name: 'Myle Tap', logo: '/logos/customers/myle-tap.png', href: `${SITE}/customers#myle-tap` },
+  { id: 'keek', name: 'Personas Social', logo: '/logos/customers/keek-social.svg', href: `${SITE}/customers#keek-social` },
 ] as const
+
+interface FooterLink {
+  label: string
+  href: string
+}
+
+interface FooterGroup {
+  title: string
+  href?: string
+  links: readonly FooterLink[]
+}
+
+const FOOTER_COLUMNS: readonly (readonly FooterGroup[])[] = [
+  [
+    {
+      title: 'Products',
+      href: `${SITE}/products`,
+      links: [
+        { label: 'Hanzo App', href: 'https://hanzo.app' },
+        { label: 'Hanzo Dev', href: `${SITE}/dev` },
+        { label: 'Hanzo Bot', href: 'https://hanzo.bot' },
+        { label: 'Hanzo Team', href: 'https://hanzo.team' },
+        { label: 'Hanzo Science', href: `${SITE}/science` },
+        { label: 'Hanzo Security', href: `${SITE}/security` },
+        { label: 'Download app', href: `${SITE}/download` },
+        { label: 'Pricing', href: `${SITE}/pricing` },
+        { label: 'Log in', href: '/login' },
+      ],
+    },
+    {
+      title: 'Capabilities',
+      links: [
+        { label: 'Hanzo Design', href: `${SITE}/design` },
+        { label: 'MCP', href: `${SITE}/mcp` },
+        { label: 'Skills', href: `${SITE}/skills` },
+        { label: 'Integrations', href: `${SITE}/integrations` },
+        { label: 'Hanzo CLI', href: `${SITE}/cli` },
+      ],
+    },
+    {
+      title: 'Extensions',
+      links: [
+        { label: 'Hanzo in Chrome', href: `${SITE}/extension` },
+        { label: 'Desktop app', href: `${SITE}/desktop` },
+        { label: 'Hanzo IDE', href: `${SITE}/ide` },
+      ],
+    },
+    {
+      title: 'Models',
+      href: `${SITE}/models`,
+      links: [
+        { label: 'All models', href: `${SITE}/models` },
+        { label: 'Zen', href: `${SITE}/zen` },
+        { label: 'Enso', href: `${SITE}/enso` },
+        { label: 'Kai', href: `${SITE}/kai` },
+        { label: 'Video · Koma', href: `${SITE}/koma` },
+        { label: 'Images · Iro', href: `${SITE}/iro` },
+        { label: '3D · Mori', href: `${SITE}/mori` },
+        { label: 'Voice · Koe', href: `${SITE}/koe` },
+        { label: 'Benchmarks', href: `${SITE}/benchmarks` },
+      ],
+    },
+  ],
+  [
+    {
+      title: 'Enterprise',
+      href: `${SITE}/enterprise`,
+      links: [
+        { label: 'Overview', href: `${SITE}/enterprise` },
+        { label: 'All solutions', href: `${SITE}/solutions` },
+        { label: 'Customer stories', href: `${SITE}/customers` },
+        { label: 'Contact sales', href: `${SITE}/contact-sales` },
+      ],
+    },
+    {
+      title: 'Teams',
+      href: `${SITE}/solutions`,
+      links: [
+        { label: 'Engineering', href: `${SITE}/solutions/engineering` },
+        { label: 'Operations', href: `${SITE}/solutions/operations` },
+        { label: 'Finance', href: `${SITE}/solutions/finance` },
+        { label: 'Data', href: `${SITE}/solutions/data` },
+        { label: 'Sales', href: `${SITE}/solutions/sales` },
+        { label: 'Marketing', href: `${SITE}/solutions/marketing` },
+        { label: 'Design', href: `${SITE}/solutions/design` },
+      ],
+    },
+    {
+      title: 'Industries',
+      href: `${SITE}/solutions`,
+      links: [
+        { label: 'Cybersecurity', href: `${SITE}/solutions/cybersecurity` },
+        { label: 'Financial services', href: `${SITE}/solutions/financial-services` },
+        { label: 'Government', href: `${SITE}/solutions/government` },
+        { label: 'Healthcare', href: `${SITE}/solutions/healthcare` },
+        { label: 'Education', href: `${SITE}/solutions/education` },
+        { label: 'Law', href: `${SITE}/solutions/law` },
+        { label: 'Retail', href: `${SITE}/solutions/retail` },
+      ],
+    },
+    {
+      title: 'Programs',
+      href: `${SITE}/startups`,
+      links: [
+        { label: 'Startups', href: `${SITE}/startups` },
+        { label: 'Affiliate program', href: `${SITE}/affiliate` },
+        { label: 'Referral program', href: `${SITE}/referral` },
+        { label: 'Reserved tier', href: `${SITE}/solutions/reserved` },
+        { label: 'OSS grants', href: `${SITE}/open-source` },
+      ],
+    },
+  ],
+  [
+    {
+      title: 'Developers',
+      href: DOCS,
+      links: [
+        { label: 'Developer docs', href: DOCS },
+        { label: 'API reference', href: `${DOCS}/docs/openapi/` },
+        { label: 'Quickstart', href: `${DOCS}/docs/quickstart/` },
+        { label: 'SDKs', href: `${SITE}/sdks` },
+        { label: 'Console', href: 'https://platform.hanzo.ai' },
+        { label: 'GitHub', href: GITHUB },
+      ],
+    },
+    {
+      title: 'API Platform',
+      href: `${SITE}/platform`,
+      links: [
+        { label: 'Overview', href: `${SITE}/platform` },
+        { label: 'API keys', href: 'https://platform.hanzo.ai/settings/organization/keys' },
+        { label: 'Gateway', href: `${SITE}/gateway` },
+        { label: 'Agents', href: `${SITE}/agents` },
+        { label: 'Playground', href: `${SITE}/playground` },
+      ],
+    },
+    {
+      title: 'Cloud',
+      href: `${SITE}/products`,
+      links: [
+        { label: 'Base', href: `${SITE}/base` },
+        { label: 'Machines', href: `${SITE}/machines` },
+        { label: 'Search', href: `${SITE}/search` },
+        { label: 'Datastore', href: `${SITE}/datastore` },
+        { label: 'Memory', href: `${SITE}/products/memory` },
+        { label: 'Realtime', href: `${SITE}/realtime` },
+        { label: 'Observability', href: `${SITE}/o11y` },
+        { label: 'Insights', href: `${SITE}/insights` },
+        { label: 'Commerce', href: `${SITE}/commerce` },
+      ],
+    },
+    {
+      title: 'Help and security',
+      links: [
+        { label: 'Availability', href: STATUS },
+        { label: 'Help center', href: `${SITE}/support` },
+        { label: 'Security and compliance', href: `${SITE}/security` },
+        { label: 'Trust & transparency', href: `${SITE}/trust` },
+      ],
+    },
+  ],
+  [
+    {
+      title: 'Company',
+      href: `${SITE}/about`,
+      links: [
+        { label: 'Hanzo AI', href: `${SITE}/about` },
+        { label: 'Careers', href: `${SITE}/careers` },
+        { label: 'Philosophy', href: `${SITE}/philosophy` },
+        { label: 'Research', href: `${SITE}/research` },
+        { label: 'News', href: `${SITE}/press` },
+        { label: 'Investors', href: `${SITE}/investors` },
+        { label: 'Brand', href: `${SITE}/brand` },
+        { label: 'Open source', href: `${SITE}/open-source` },
+        { label: 'Contact', href: `${SITE}/contact` },
+      ],
+    },
+    {
+      title: 'Resources',
+      href: `${SITE}/learn`,
+      links: [
+        { label: 'Blog', href: `${SITE}/blog` },
+        { label: 'Guides', href: `${DOCS}/docs/guides/` },
+        { label: 'Cookbook', href: `${DOCS}/docs/guides/cookbook/` },
+        { label: 'Hanzo University', href: UNIVERSITY },
+        { label: 'Hanzo Agency', href: AGENCY },
+        { label: 'Cost calculator', href: `${SITE}/calculator` },
+      ],
+    },
+    {
+      title: 'Terms and policies',
+      href: `${SITE}/legal`,
+      links: [
+        { label: 'Privacy choices', href: `${SITE}/privacy#choices` },
+        { label: 'Privacy policy', href: `${SITE}/privacy` },
+        { label: 'Terms of service', href: `${SITE}/terms` },
+        { label: 'Usage policy', href: `${SITE}/aup` },
+        { label: 'Cookie policy', href: `${SITE}/cookies` },
+        { label: 'Other policies', href: `${SITE}/legal` },
+      ],
+    },
+  ],
+] as const
+
+const SOCIALS = [
+  { label: 'Discord', href: 'https://discord.gg/XthHQQj' },
+  { label: 'Telegram', href: 'https://t.me/hanzoai' },
+  { label: 'X', href: 'https://x.com/hanzoai' },
+  { label: 'GitHub', href: 'https://github.com/hanzoai' },
+  { label: 'LinkedIn', href: 'https://linkedin.com/company/hanzo-ai' },
+  { label: 'Facebook', href: 'https://facebook.com/hanzoinc' },
+  { label: 'Bluesky', href: 'https://bsky.app/profile/hanzoai.bsky.social' },
+  { label: 'Reddit', href: 'https://www.reddit.com/r/HanzoAI/' },
+  { label: 'TikTok', href: 'https://www.tiktok.com/@hanzoinc' },
+  { label: 'Instagram', href: 'https://www.instagram.com/hanzoinc' },
+] as const
+
+/**
+ * Interactive halftone dot-field with ambient organic wave + pointer lens swell.
+ */
+function HeroDots() {
+  const cvRef = useRef<HTMLCanvasElement | null>(null)
+
+  useEffect(() => {
+    const cv = cvRef.current
+    const host = cv?.parentElement
+    if (!cv || !host) return
+    const ctx = cv.getContext('2d')
+    if (!ctx) return
+
+    const STEP = 14
+    const LENS = 190
+    const LENS2 = LENS * LENS
+    const LERP = 0.14
+    let w = 0
+    let h = 0
+    let dpr = 1
+    let raf = 0
+    const cur = { x: -9999, y: -9999 }
+    const tgt = { x: -9999, y: -9999 }
+
+    const measure = () => {
+      const r = host.getBoundingClientRect()
+      dpr = Math.min(window.devicePixelRatio || 1, 2)
+      w = r.width
+      h = r.height
+      cv.width = Math.max(1, Math.round(w * dpr))
+      cv.height = Math.max(1, Math.round(h * dpr))
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+    }
+
+    const draw = (ts: number) => {
+      const t = (ts || 0) * 0.001
+      ctx.clearRect(0, 0, w, h)
+      ctx.fillStyle = 'white'
+      const cols = Math.ceil(w / STEP)
+      const rows = Math.ceil(h / STEP)
+      const ox = (w - (cols - 1) * STEP) * 0.5
+      const oy = (h - (rows - 1) * STEP) * 0.5
+      const cx = w * 0.5
+      const cy = h * 0.45
+      const rx = w * 0.56
+      const ry = h * 0.58
+      const px = cur.x
+      const py = cur.y
+      const hasPtr = px > -999
+
+      const w1x = w * (0.5 + 0.28 * Math.cos(t * 0.42))
+      const w1y = h * (0.45 + 0.22 * Math.sin(t * 0.31))
+      const w2x = w * (0.5 + 0.32 * Math.sin(t * 0.27 + 1.8))
+      const w2y = h * (0.48 + 0.24 * Math.cos(t * 0.36 + 0.9))
+      const wellR2 = Math.max(w, h) * 0.28
+      const invWell = 1 / (wellR2 * wellR2)
+
+      for (let r = 0; r < rows; r++) {
+        const y = oy + r * STEP
+        const ny = (y - cy) / ry
+        for (let c = 0; c < cols; c++) {
+          const x = ox + c * STEP
+          const nx = (x - cx) / rx
+          const d = Math.hypot(nx, ny)
+          const edge = Math.max(0, Math.min(1, (d - 0.16) / 0.88))
+          const vig = Math.max(0, 1 - Math.max(0, d - 0.72) * 1.45)
+
+          const wave =
+            0.5 +
+            0.5 *
+              Math.sin(c * 0.18 + r * 0.14 - t * 1.15 + Math.cos(c * 0.09 - r * 0.11 + t * 0.65) * 1.3)
+          const d1 = (x - w1x) * (x - w1x) + (y - w1y) * (y - w1y)
+          const d2 = (x - w2x) * (x - w2x) + (y - w2y) * (y - w2y)
+          const well = Math.exp(-d1 * invWell) * 0.65 + Math.exp(-d2 * invWell) * 0.55
+
+          let rad = (0.7 + edge * 2.1 + wave * 0.42 + well * 0.95) * (0.45 + vig * 0.55)
+          let a = (0.045 + edge * 0.18 + wave * 0.035 + well * 0.11) * vig
+
+          if (hasPtr) {
+            const dx = x - px
+            const dy = y - py
+            const d2p = dx * dx + dy * dy
+            if (d2p < LENS2) {
+              const k = 1 - Math.sqrt(d2p) / LENS
+              const s = k * k * (3 - 2 * k)
+              rad += s * 1.9
+              a = Math.min(0.68, a + s * 0.34)
+            }
+          }
+          if (a < 0.01 || rad < 0.3) continue
+          ctx.globalAlpha = a
+          ctx.beginPath()
+          ctx.arc(x, y, rad, 0, Math.PI * 2)
+          ctx.fill()
+        }
+      }
+      ctx.globalAlpha = 1
+    }
+
+    const step = (ts: number) => {
+      cur.x += (tgt.x - cur.x) * LERP
+      cur.y += (tgt.y - cur.y) * LERP
+      draw(ts)
+      raf = requestAnimationFrame(step)
+    }
+
+    const onMove = (e: PointerEvent) => {
+      const r = host.getBoundingClientRect()
+      tgt.x = e.clientX - r.left
+      tgt.y = e.clientY - r.top
+      if (cur.x < -999) {
+        cur.x = tgt.x
+        cur.y = tgt.y
+      }
+    }
+
+    const onLeave = () => {
+      tgt.x = -9999
+      tgt.y = -9999
+    }
+
+    measure()
+    raf = requestAnimationFrame(step)
+    const ro = new ResizeObserver(() => measure())
+    ro.observe(host)
+    host.addEventListener('pointermove', onMove, { passive: true })
+    host.addEventListener('pointerleave', onLeave, { passive: true })
+
+    return () => {
+      cancelAnimationFrame(raf)
+      ro.disconnect()
+      host.removeEventListener('pointermove', onMove)
+      host.removeEventListener('pointerleave', onLeave)
+    }
+  }, [])
+
+  return (
+    <canvas
+      ref={cvRef}
+      aria-hidden="true"
+      style={{
+        position: 'absolute',
+        inset: 0,
+        width: '100%',
+        height: '100%',
+        pointerEvents: 'none',
+        zIndex: 0,
+      }}
+    />
+  )
+}
 
 /**
  * Sign-in page for Hanzo Team (`hanzo.team`), matching `platform.hanzo.ai`:
  * top bar with `Hanzo Team` + quick links + `Contact sales` / `Log in`,
- * centered dot-grid hero + dark sign-in card, and shared multi-column Hanzo footer.
+ * centered dynamic dot-grid hero + dark sign-in card, customer logo scroller,
+ * and shared multi-column Hanzo footer.
  */
 export const Login = () => {
   const { standing, enter, post, confirm, depart } = useSession()
@@ -121,18 +462,6 @@ export const Login = () => {
           cursor="pointer"
           onPress={() => window.location.assign('/')}
         >
-          <YStack
-            width={24}
-            height={24}
-            rounded={round.field}
-            bg={paint.ink}
-            items="center"
-            justify="center"
-          >
-            <SizableText size={rung.small} color={paint.ground} fontWeight="700">
-              H
-            </SizableText>
-          </YStack>
           <SizableText size={rung.row} color={paint.ink} fontWeight="600">
             {brand.title}
           </SizableText>
@@ -170,7 +499,7 @@ export const Login = () => {
         </XStack>
       </XStack>
 
-      {/* Centered Dot-Grid Hero + Sign-In Card matching platform.hanzo.ai */}
+      {/* Centered Dynamic Halftone Hero + Sign-In Card matching platform.hanzo.ai */}
       <YStack
         width="100%"
         grow={1}
@@ -179,12 +508,22 @@ export const Login = () => {
         px={gap.wide}
         py={gap.edge}
         bg={paint.ground}
+        borderBottomWidth={1}
+        borderColor={paint.rule}
         style={{
-          backgroundImage: `radial-gradient(${paint.rule} 1px, transparent 1px)`,
-          backgroundSize: '16px 16px',
+          position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <YStack width="100%" maxW={520} items="center" gap={gap.inset} py={gap.edge}>
+        <HeroDots />
+        <YStack
+          width="100%"
+          maxW={520}
+          items="center"
+          gap={gap.inset}
+          py={gap.edge}
+          style={{ position: 'relative', zIndex: 1 }}
+        >
           <SizableText
             size={rung.title}
             color={paint.ink}
@@ -319,33 +658,51 @@ export const Login = () => {
               By continuing, you agree to Hanzo’s Terms of Service and Privacy Policy.
             </SizableText>
           </YStack>
-
-          {/* Compact Quick Links Row */}
-          <XStack
-            gap={gap.inset}
-            flexWrap="wrap"
-            justify="center"
-            mt={gap.tight}
-          >
-            {[
-              ['Hanzo Bot', 'https://hanzo.bot'],
-              ['Hanzo App', 'https://hanzo.app'],
-              ['API Platform', 'https://platform.hanzo.ai'],
-              ['Hanzo AI', 'https://hanzo.ai'],
-              ['Docs', 'https://docs.hanzo.ai'],
-            ].map(([label, href]) => (
-              <SizableText
-                key={label}
-                size={rung.small}
-                color={paint.mute}
-                cursor="pointer"
-                onPress={() => window.location.assign(href)}
-              >
-                {label} ↗
-              </SizableText>
-            ))}
-          </XStack>
         </YStack>
+      </YStack>
+
+      {/* Companies building with the Hanzo API — Animated Marquee Scroller */}
+      <YStack
+        width="100%"
+        items="center"
+        px={gap.wide}
+        py={gap.edge}
+        gap={gap.inset}
+        bg={paint.ground}
+      >
+        <SizableText
+          size={rung.small}
+          color={paint.mute}
+          fontWeight="500"
+          style={{ textAlign: 'center' }}
+        >
+          Companies building with the Hanzo API
+        </SizableText>
+
+        <div className="hz-mq-view">
+          <div className="hz-mq-track">
+            {[0, 1].map((copy) =>
+              CUSTOMERS.map((company) => {
+                const hidden = copy > 0
+                return (
+                  <a
+                    key={`${copy}-${company.id}`}
+                    href={company.href}
+                    className="hz-logo"
+                    aria-label={hidden ? undefined : company.name}
+                    aria-hidden={hidden || undefined}
+                    tabIndex={hidden ? -1 : undefined}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    title={company.name}
+                  >
+                    <img src={company.logo} alt={hidden ? '' : company.name} loading="lazy" />
+                  </a>
+                )
+              })
+            )}
+          </div>
+        </div>
       </YStack>
 
       {/* Shared Multi-Column Hanzo Footer matching platform.hanzo.ai & hanzo.ai */}
@@ -357,13 +714,18 @@ export const Login = () => {
         px={gap.wide}
         py={gap.edge}
       >
-        <YStack width="100%" maxW={1280} mx="auto" gap={gap.edge}>
+        <YStack width="100%" maxW={1240} mx="auto" gap={gap.edge}>
           <XStack justify="space-between" items="flex-start" gap={gap.edge} flexWrap="wrap">
-            <YStack maxW={280} gap={gap.inset}>
-              <XStack items="center" gap={gap.tight}>
+            <YStack minW={160} gap={gap.tight}>
+              <XStack
+                items="center"
+                gap={gap.tight}
+                cursor="pointer"
+                onPress={() => window.location.assign(SITE)}
+              >
                 <YStack
-                  width={24}
-                  height={24}
+                  width={22}
+                  height={22}
                   rounded={round.field}
                   bg={paint.ink}
                   items="center"
@@ -374,55 +736,73 @@ export const Login = () => {
                   </SizableText>
                 </YStack>
                 <SizableText size={rung.row} color={paint.ink} fontWeight="600">
-                  Hanzo AI
-                </SizableText>
-              </XStack>
-              <SizableText size={rung.small} color={paint.mute}>
-                Sovereign AI cloud, developer platform, autonomous bots, and business workspace.
-              </SizableText>
-              <XStack
-                items="center"
-                gap={gap.tight}
-                px={gap.inset}
-                py={gap.tight}
-                rounded={round.pill}
-                borderWidth={1}
-                borderColor={paint.rule}
-                self="flex-start"
-                cursor="pointer"
-                onPress={() => window.location.assign('https://status.hanzo.ai')}
-              >
-                <YStack width={8} height={8} rounded={round.pill} bg={state.done} />
-                <SizableText size={rung.chip} color={paint.ink}>
-                  All systems operational
+                  Hanzo
                 </SizableText>
               </XStack>
             </YStack>
 
             <XStack gap={gap.edge} flexWrap="wrap" grow={1} justify="space-between">
-              {FOOTER_COLUMNS.map((col) => (
-                <YStack key={col.title} minW={150} gap={gap.tight}>
-                  <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-                    {col.title}
-                  </SizableText>
-                  {col.links.map((link) => (
-                    <SizableText
-                      key={link.label}
-                      size={rung.small}
-                      color={paint.mute}
-                      cursor="pointer"
-                      onPress={() => window.location.assign(link.href)}
-                    >
-                      {link.label}
-                    </SizableText>
+              {FOOTER_COLUMNS.map((col, idx) => (
+                <YStack key={idx} minW={150} gap={gap.inset}>
+                  {col.map((group) => (
+                    <YStack key={group.title} gap={gap.tight}>
+                      <SizableText
+                        size={rung.small}
+                        color={paint.ink}
+                        fontWeight="600"
+                        cursor={group.href ? 'pointer' : undefined}
+                        onPress={group.href ? () => window.location.assign(group.href!) : undefined}
+                        style={{ lineHeight: '1.35' }}
+                      >
+                        {group.title}
+                      </SizableText>
+                      <YStack style={{ gap: '2.5px' }}>
+                        {group.links.map((link) => (
+                          <SizableText
+                            key={link.href + link.label}
+                            size={rung.small}
+                            color={paint.mute}
+                            cursor="pointer"
+                            onPress={() => window.location.assign(link.href)}
+                            style={{ lineHeight: '1.32' }}
+                          >
+                            {link.label}
+                          </SizableText>
+                        ))}
+                      </YStack>
+                    </YStack>
                   ))}
                 </YStack>
               ))}
             </XStack>
           </XStack>
 
+          {/* Social Links Row */}
           <XStack
-            pt={gap.wide}
+            pt={gap.inset}
+            borderTopWidth={1}
+            borderColor={paint.rule}
+            items="center"
+            flexWrap="wrap"
+            style={{ columnGap: '24px', rowGap: '8px' }}
+          >
+            {SOCIALS.map((s) => (
+              <SizableText
+                key={s.label}
+                size={rung.small}
+                color={paint.mute}
+                cursor="pointer"
+                onPress={() => window.location.assign(s.href)}
+                style={{ lineHeight: '1.35' }}
+              >
+                {s.label} ↗
+              </SizableText>
+            ))}
+          </XStack>
+
+          {/* Copyright & Terms/Policies Row */}
+          <XStack
+            pt={gap.inset}
             borderTopWidth={1}
             borderColor={paint.rule}
             items="center"
@@ -431,21 +811,19 @@ export const Login = () => {
             gap={gap.tight}
           >
             <SizableText size={rung.chip} color={paint.dim}>
-              © 2016–2026 Hanzo AI, Inc. (Techstars ’17). All rights reserved.
+              © 2026 Hanzo AI, Inc. All rights reserved.
             </SizableText>
-            <XStack gap={gap.wide} flexWrap="wrap">
+            <XStack gap={gap.inset} flexWrap="wrap">
               {[
-                ['hanzo.ai', 'https://hanzo.ai'],
-                ['hanzo.app', 'https://hanzo.app'],
-                ['hanzo.bot', 'https://hanzo.bot'],
-                ['platform.hanzo.ai', 'https://platform.hanzo.ai'],
-                ['docs.hanzo.ai', 'https://docs.hanzo.ai'],
-                ['GitHub', 'https://github.com/hanzoai'],
+                ['Terms', `${SITE}/terms`],
+                ['Privacy', `${SITE}/privacy`],
+                ['Usage policy', `${SITE}/aup`],
+                ['Privacy choices', `${SITE}/privacy#choices`],
               ].map(([label, href]) => (
                 <SizableText
                   key={label}
                   size={rung.chip}
-                  color={paint.mute}
+                  color={paint.dim}
                   cursor="pointer"
                   onPress={() => window.location.assign(href)}
                 >
