@@ -10,7 +10,7 @@
  */
 export const START = '/start'
 
-const CART = 'https://hanzo.ai/pay/cart'
+const CART = 'https://pay.hanzo.ai/cart'
 
 export const cart = (search: string, origin: string): string => {
   const url = new URL(CART)

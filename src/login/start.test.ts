@@ -7,7 +7,7 @@ const HERE = 'https://hanzo.team'
 
 test('a bare /start sells Team and comes back', () => {
   const url = new URL(cart('', HERE))
-  assert.equal(url.origin + url.pathname, 'https://hanzo.ai/pay/cart')
+  assert.equal(url.origin + url.pathname, 'https://pay.hanzo.ai/cart')
   assert.equal(url.searchParams.get('plan'), 'team')
   assert.equal(url.searchParams.get('returnUrl'), 'https://hanzo.team/')
 })

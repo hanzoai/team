@@ -217,7 +217,7 @@ export const Login = () => {
           >
             <Button onPress={depart} rounded={round.field}>
               <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-                Continue with Hanzo ID ({new URL(brand.issuer).hostname})
+                Continue with Hanzo
               </SizableText>
             </Button>
 
@@ -303,7 +303,7 @@ export const Login = () => {
               </Button>
               <Button
                 chromeless
-                onPress={() => window.location.assign('https://hanzo.id/signup')}
+                onPress={() => window.location.assign('https://hanzo.ai/signup')}
               >
                 <SizableText size={rung.small} color={paint.mute}>
                   Create account
