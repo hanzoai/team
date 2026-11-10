@@ -80,6 +80,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const handleSelectApp = (app: BusinessAppItem) => {
     if (app.id === 'crm') {
       go('/crm/opportunities')
+    } else if (app.id === 'social') {
+      go('/operations/accounts')
     } else if (app.id === 'team' || app.id === 'work') {
       go('/issues')
     } else if (app.id === 'chat') {

@@ -282,6 +282,12 @@ export function CrmNav() {
         <Row to="/crm/deliverability" icon={<ShieldCheck size={15} color="$soft" />}>
           Deliverability & Consent
         </Row>
+      <Rule />
+        <Group>Operations</Group>
+        <Row to="/operations/segments">Lead segments</Row>
+        <Row to="/operations/consent">Consent</Row>
+        <Row to="/operations/suppressions">Suppressions</Row>
+        <Row to="/operations/outreach">Outreach tasks</Row>
       </Roll>
     </Column>
   )

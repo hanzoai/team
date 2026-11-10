@@ -26,6 +26,7 @@ import { AppsNav, AppsScreen, BotsNav, BotsScreen } from '~/apps/BusinessApps'
 import { CalendarNav, CalendarScreen, MeetNav, MeetScreen, TimeNav, TimeScreen } from '~/apps/WorkspaceSuite'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen } from '~/crm/CrmWorkspace'
+import { Operations, OperationsNav } from '~/operations/Workspace'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -133,6 +134,9 @@ export const routes: RouteObject[] = [
 
   { path: '/crm', element: <Navigate to="/crm/opportunities" replace /> },
   { path: '/crm/:section', element: crm(<CrmScreen />) },
+
+  { path: '/operations', element: <Navigate to="/operations/actions" replace /> },
+  { path: '/operations/:view', element: <Shell nav={<OperationsNav />}><Operations /></Shell> },
 
   { path: '/bots', element: bots(<BotsScreen />) },
   { path: '/agents', element: <Navigate to="/bots" replace /> },

@@ -1,3 +1,4 @@
+import { views as operations } from './src/operations/catalog'
 import { hanzo } from '@hanzo/vite'
 import react from '@vitejs/plugin-react'
 
@@ -88,6 +89,8 @@ const APP_IDS = [
 ]
 
 const SPA_ROUTES = [
+  'operations',
+  ...operations.map(v => 'operations/' + v.id),
   'login',
   'auth',
   'auth/callback',
