@@ -178,7 +178,7 @@ const adder = (plane: Plane, space?: string) => async (to: Column, title: string
  * because the server echoes a write back to the session that made it. One path,
  * so the two cannot disagree.
  */
-const board = (plane: Plane, space?: string): Board => ({
+export const board = (plane: Plane, space?: string): Board => ({
   watch(next, fail) {
     let live = true
     const read = () => {

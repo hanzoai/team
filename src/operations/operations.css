@@ -1,0 +1,402 @@
+.ops {
+  flex: 1;
+  min-height: 0;
+  overflow: auto;
+  color: var(--team-ink);
+  font: inherit;
+  padding: clamp(16px, 3vw, 42px);
+}
+.ops * {
+  box-sizing: border-box;
+}
+.ops h1,
+.ops h2,
+.ops h3,
+.ops p {
+  margin: 0;
+}
+.ops h1 {
+  font: inherit;
+  font-weight: 620;
+  font-size: clamp(28px, 3vw, 44px);
+  line-height: 1.12;
+  letter-spacing: -0.048em;
+}
+.ops h2 {
+  font: inherit;
+  font-weight: 600;
+  font-size: 18px;
+  letter-spacing: -0.025em;
+}
+.ops h3 {
+  font: inherit;
+  font-weight: 600;
+  font-size: 14px;
+}
+.ops p,
+.ops dd {
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+}
+.ops a {
+  color: inherit;
+  text-decoration: none;
+}
+.ops a:hover,
+.ops button.record:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ops-trail,
+.ops-source,
+.ops-controls,
+.ops-links,
+.ops-count,
+.ops-toolbar,
+.ops-button,
+.ops-shortcut span,
+.ops-workflows a,
+.ops-agents a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.ops-trail,
+.ops-count,
+.ops dt,
+.ops-source,
+.ops-foot,
+.ops-sample {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.ops-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin: 24px 0 20px;
+}
+.ops-heading p {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-top: 9px;
+}
+.ops button,
+.ops select,
+.ops input,
+.ops textarea,
+.ops-button {
+  background: var(--team-panel);
+  color: inherit;
+  border: 1px solid var(--team-rule);
+  border-radius: 7px;
+  font: inherit;
+  font-size: 13px;
+  line-height: 1.4;
+  padding: 8px 12px;
+}
+.ops button,
+.ops select,
+.ops summary {
+  cursor: pointer;
+}
+.ops button:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
+.ops .primary {
+  background: var(--team-ink);
+  color: var(--team-ground);
+  font-weight: 600;
+}
+.ops-sample {
+  display: block;
+  margin-bottom: 15px;
+}
+.ops-source {
+  margin: 0 0 18px;
+  flex-wrap: wrap;
+}
+.ops code,
+.ops-task small,
+.ops-count {
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+}
+.ops-source code {
+  border-left: 1px solid var(--team-rule);
+  padding-left: 10px;
+}
+.ops-shortcuts,
+.ops-workflows {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.ops-shortcut,
+.ops-section,
+.ops-workflows section,
+.ops-agents {
+  background: var(--team-ground);
+  border: 1px solid var(--team-rule);
+  border-radius: 10px;
+}
+.ops-shortcut {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 9px;
+}
+.ops-shortcut strong {
+  font-size: 17px;
+  margin-top: 9px;
+}
+.ops-shortcut span {
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+.ops-section {
+  padding: 18px;
+  margin: 18px 0;
+}
+.ops-toolbar {
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+.ops-search {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  flex: 1;
+  color: var(--text-secondary);
+}
+.ops-search input {
+  width: min(230px, 100%);
+  border: none;
+  background: transparent;
+}
+.ops-table {
+  width: 100%;
+  overflow: auto;
+}
+.ops table {
+  width: 100%;
+  text-align: left;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.ops th {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+.ops td,
+.ops th {
+  border-block-end: 1px solid var(--team-rule);
+  padding: 12px 10px;
+  vertical-align: middle;
+}
+.ops td {
+  max-width: 360px;
+  overflow-wrap: anywhere;
+}
+.ops button.record {
+  padding: 0;
+  font-weight: 550;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.ops-count {
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+.ops-list {
+  max-height: 360px;
+  overflow: auto;
+}
+.ops-task {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 0;
+  border-top: 1px solid var(--team-rule);
+}
+.ops-task button {
+  border: none;
+  background: transparent;
+  font-size: 20px;
+  padding: 3px;
+}
+.ops-task a {
+  flex: 1;
+  font-size: 14px;
+}
+.ops-task small {
+  display: block;
+  font-size: 10px;
+  margin-bottom: 4px;
+}
+.ops-task span,
+.ops-task small,
+.ops-foot,
+.ops-detail dt {
+  color: var(--text-secondary);
+  font-size: 12px;
+}
+.ops-detail {
+  margin-top: 15px;
+  border-top: 1px solid var(--team-rule);
+  padding-top: 18px;
+}
+.ops-detail dl {
+  display: grid;
+  gap: 12px;
+}
+.ops dd {
+  margin: 2px 0;
+  white-space: pre-wrap;
+}
+.ops-form {
+  display: grid;
+  gap: 12px;
+  margin: 14px 0 0;
+  padding: 14px;
+  background: var(--team-panel);
+  border-radius: 8px;
+}
+.ops-form label {
+  display: grid;
+  gap: 6px;
+  font-size: 13px;
+}
+.ops-form input,
+.ops-form textarea {
+  width: 100%;
+}
+.ops-controls,
+.ops-links {
+  flex-wrap: wrap;
+}
+.ops-workflows {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 18px;
+}
+.ops-workflows section {
+  padding: 18px;
+}
+.ops-workflows a {
+  justify-content: space-between;
+  padding: 10px 0;
+  font-size: 13px;
+  border-bottom: 1px solid var(--team-rule);
+}
+.ops-workflows a:last-child {
+  border: none;
+}
+.ops-links {
+  gap: 18px;
+  margin: 15px 0;
+}
+.ops-links a {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 13px;
+}
+.ops-agents {
+  margin: 18px 0;
+  padding: 14px 18px;
+  font-size: 13px;
+}
+.ops-agents code {
+  overflow-wrap: anywhere;
+}
+.ops-state {
+  padding: 18px 0;
+  font-size: 14px;
+}
+@media (max-width: 850px) {
+  .ops-shortcuts {
+    grid-template-columns: 1fr;
+  }
+  .ops-shortcut {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    padding: 12px;
+  }
+  .ops-shortcut strong {
+    margin: 0;
+    font-size: 14px;
+  }
+}
+@media (max-width: 590px) {
+  .ops-workflows {
+    grid-template-columns: 1fr;
+  }
+  .ops-section {
+    padding: 12px;
+  }
+  .ops-heading {
+    margin: 16px 0;
+  }
+  .ops-task span {
+    display: none;
+  }
+  .ops-shortcut span {
+    display: none;
+  }
+  .ops select {
+    max-width: 100%;
+  }
+}
+.ops-month {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 1px;
+  background: var(--team-rule);
+  border: 1px solid var(--team-rule);
+  margin-bottom: 18px;
+}
+.ops-month > strong,
+.ops-month > span,
+.ops-day {
+  padding: 6px;
+  background: var(--team-panel);
+}
+.ops-month > strong,
+.ops-day small {
+  font-size: 11px;
+  color: var(--text-secondary);
+}
+.ops-day {
+  min-height: 62px;
+  overflow: hidden;
+}
+.ops-day button {
+  display: block;
+  width: 100%;
+  padding: 2px 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  background: var(--team-card);
+  text-align: left;
+  font-size: 11px;
+}
+.ops-agents > p {
+  margin-top: 14px;
+}
+.ops-reply {
+  white-space: pre-wrap;
+}

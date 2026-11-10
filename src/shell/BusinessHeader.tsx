@@ -120,7 +120,7 @@ export const BUSINESS_APPS: readonly BusinessAppItem[] = [
     label: 'Email',
     productTitle: 'Hanzo Email',
     description: 'Campaigns, journeys & broadcasts',
-    href: 'https://marketing.hanzo.ai',
+    href: 'https://crm.hanzo.ai/sequences',
     supportsFreshAuth: true,
   },
   {
@@ -159,8 +159,8 @@ export const BUSINESS_APPS: readonly BusinessAppItem[] = [
     id: 'social',
     label: 'Social',
     productTitle: 'Hanzo Publish',
-    description: 'Social scheduling, inbox & listening',
-    href: 'https://social.hanzo.ai',
+    description: 'Accounts, calendar & publishing',
+    href: 'https://cms.hanzo.ai/admin',
     supportsFreshAuth: true,
   },
   {
@@ -357,6 +357,7 @@ const JUMP_CHANNELS = [
 ]
 
 const JUMP_SURFACES = [
+  { id: 'operations', label: 'Operations', desc: 'Publishing, CRM and follow-up', path: '/operations/actions' },
   { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
   { id: 'crm-opp', label: 'CRM — Opportunities', desc: 'Pipeline deals & revenue stages', path: '/crm/opportunities' },
   { id: 'crm-inv', label: 'CRM — Investors (346K)', desc: 'Institutional VCs, angels & funds', path: '/crm/investors' },
