@@ -13,7 +13,7 @@
  * mistake this shape exists to prevent, so each says its own sentence.
  */
 import { SizableText, Spinner, YStack } from '@hanzo/ui'
-import { Archive, Folder, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { Activity, Archive, Folder, SquareCheck } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useLocation, useParams } from 'react-router'
 
@@ -49,6 +49,7 @@ export const Nav = () => {
       <Row to="/mine" icon={<Folder size={16} color="$soft" />}>My issues</Row>
       <Row to="/issues" icon={<SquareCheck size={16} color="$soft" />}>All issues</Row>
       <Rule />
+      <Row to="/overview" icon={<Activity size={16} color="$soft" />}>AI Business Cockpit</Row>
       <Row to="/projects" icon={<Archive size={16} color="$soft" />}>All projects</Row>
       <Rule />
 

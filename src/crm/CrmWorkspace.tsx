@@ -55,6 +55,7 @@ import { useParams } from 'react-router'
 import { call } from '~/data/http.ts'
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark, paint } from '~/theme/theme.ts'
+import { OverviewScreen } from './OverviewScreen.tsx'
 
 registerDefaultFields()
 
@@ -69,6 +70,7 @@ async function crmCall<T>(path: string, fallback: T, init?: RequestInit): Promis
 }
 
 export type CrmSection =
+  | 'overview'
   | 'opportunities'
   | 'companies'
   | 'contacts'
@@ -76,6 +78,8 @@ export type CrmSection =
   | 'funds'
   | 'customers'
   | 'leads'
+  | 'feedback'
+  | 'errors'
   | 'lists'
   | 'campaigns'
   | 'deliverability'
@@ -177,6 +181,26 @@ const LIST_FIELDS: FieldDefinition[] = [
   { name: 'description', label: 'Description', type: 'text' },
 ]
 
+const FEEDBACK_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Subject / Summary', type: 'text', metadata: { avatar: 'square' } as never },
+  { name: 'program', label: 'Kind', type: 'text' },
+  { name: 'email', label: 'Submitter', type: 'email' },
+  { name: 'company', label: 'Organization', type: 'text' },
+  { name: 'source', label: 'Source', type: 'text' },
+  { name: 'recordCode', label: 'Ref / Report ID', type: 'text', readOnly: true },
+  { name: 'closeDate', label: 'Submitted At', type: 'date' },
+]
+
+const ERROR_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Exception / Fault', type: 'text', metadata: { avatar: 'square' } as never },
+  { name: 'program', label: 'Class / Type', type: 'text' },
+  { name: 'company', label: 'Service / App', type: 'text' },
+  { name: 'location', label: 'Origin / File', type: 'text' },
+  { name: 'source', label: 'Env & Release', type: 'text' },
+  { name: 'recordCode', label: 'Event / Issue ID', type: 'text', readOnly: true },
+  { name: 'closeDate', label: 'Occurred At', type: 'date' },
+]
+
 const FIELD_ICONS: Record<string, ReactNode> = {
   name: <Building2 size={14} color="$color10" />,
   domainName: <Link2 size={14} color="$color10" />,
@@ -245,6 +269,12 @@ export function CrmNav() {
       <Find value={query} onChange={setQuery} />
       <YStack height={12} />
       <Roll>
+        <Group>AI Cockpit</Group>
+        <Row to="/crm/overview" icon={<Activity size={15} color={mark('overview')} />}>
+          AI Business Cockpit
+        </Row>
+
+        <Rule />
         <Group>Workspace Objects</Group>
         <Row to="/crm/opportunities" icon={<Target size={15} color={mark('opportunities')} />}>
           Opportunities
@@ -269,6 +299,15 @@ export function CrmNav() {
         </Row>
         <Row to="/crm/leads" icon={<Zap size={15} color={mark('leads')} />}>
           Developer Leads · 13.5M
+        </Row>
+
+        <Rule />
+        <Group>Live Feedback & Telemetry</Group>
+        <Row to="/crm/feedback" icon={<FileText size={15} color={mark('feedback')} />}>
+          Feedback, Bugs & Forms
+        </Row>
+        <Row to="/crm/errors" icon={<Activity size={15} color={mark('errors')} />}>
+          Runtime & CLI Errors
         </Row>
 
         <Rule />
@@ -317,6 +356,7 @@ export function CrmScreen() {
   const [copilotReply, setCopilotReply] = useState<string | null>(null)
 
   const loadSection = useCallback(async () => {
+    if (section === 'overview') return
     setLoading(true)
     setSelectedRecord(null)
     try {
@@ -488,6 +528,74 @@ export function CrmScreen() {
         }))
         setRecords(rows)
         setTotalSqlCount(Number(res?.total || 13467851))
+      } else if (section === 'feedback') {
+        const [actRes, peopleRes] = await Promise.all([
+          crmCall<{ items?: any[]; totalItems?: number }>(
+            '/v1/base/collections/activities/records?perPage=150&sort=-at,-created',
+            { items: [], totalItems: 0 },
+          ),
+          crmCall<{ items?: any[] }>('/v1/base/collections/people/records?perPage=250', { items: [] }),
+        ])
+        const peopleById = new Map<string, any>((peopleRes?.items || []).map((p: any) => [String(p.id), p]))
+        const rows = (actRes?.items || [])
+          .filter((a: any) => a.kind === 'form' || a.data?.program)
+          .map((a: any, idx: number) => {
+            const data = (a.data || {}) as Record<string, any>
+            const p = peopleById.get(String(a.person_id || '')) || {}
+            const program = String(data.program || data.kind || 'feedback')
+            const source = String(data.source || a.channel || 'web')
+            const subject = String(a.subject || data.need || data.description || 'Inbound submission')
+            const atRaw = String(a.at || a.created || new Date().toISOString())
+            return {
+              id: String(a.id || `fb-${idx}`),
+              name: subject,
+              program:
+                program === 'feedback' || source.includes('hanzo-dev')
+                  ? 'Bug Report / Feedback'
+                  : program === 'support'
+                    ? 'Support Ticket'
+                    : program,
+              email: String(p.email || data.email || ''),
+              company: String(p.company || p.name || data.company || 'Hanzo Community'),
+              source,
+              recordCode: String(data.public_ref || a.source_id || a.id || ''),
+              closeDate: atRaw.slice(0, 10),
+            }
+          })
+        setRecords(rows)
+        setTotalSqlCount(Number(actRes?.totalItems || rows.length))
+      } else if (section === 'errors') {
+        const errRes = await crmCall<{ items?: any[]; errors?: any[]; total?: number } | any[]>(
+          '/v1/event/errors?limit=100',
+          { items: [], total: 0 },
+        )
+        const rawList = Array.isArray(errRes)
+          ? errRes
+          : Array.isArray(errRes?.items)
+            ? errRes.items
+            : Array.isArray(errRes?.errors)
+              ? errRes.errors
+              : []
+        const rows = rawList.map((e: any, idx: number) => {
+          const kind = String(e.type || e.class || e.name || 'Error')
+          const msg = String(e.value || e.message || e.title || 'Runtime exception')
+          const app = String(e.app || e.service || e.product || 'hanzo')
+          const env = String(e.environment || e.env || 'production')
+          const rel = String(e.release || '')
+          const atRaw = String(e.timestamp || e.time || e.created_at || new Date().toISOString())
+          return {
+            id: String(e.id || e.event_id || `err-${idx}`),
+            name: msg,
+            program: kind,
+            company: app,
+            location: String(e.culprit || e.origin || e.path || '—'),
+            source: rel ? `${env} · ${rel}` : env,
+            recordCode: String(e.issue || e.id || e.event_id || `ERR-${idx + 1}`),
+            closeDate: atRaw.slice(0, 10),
+          }
+        })
+        setRecords(rows)
+        setTotalSqlCount(rows.length)
       } else if (section === 'lists' || section === 'campaigns' || section === 'deliverability') {
         const res = await crmCall<{ items?: any[]; total?: number }>('/v1/crm/lists', { items: [], total: 28 })
         const rows = (res?.items || []).map((item: any) => ({
@@ -519,6 +627,8 @@ export function CrmScreen() {
       case 'funds': return FUND_FIELDS
       case 'customers': return CUSTOMER_FIELDS
       case 'leads': return LEAD_FIELDS
+      case 'feedback': return FEEDBACK_FIELDS
+      case 'errors': return ERROR_FIELDS
       default: return LIST_FIELDS
     }
   }, [section])
@@ -533,6 +643,8 @@ export function CrmScreen() {
       case 'funds': return { title: 'Funds', bg: tone.background, fg: tone.color, icon: <Briefcase size={14} /> }
       case 'customers': return { title: 'Customers', bg: tone.background, fg: tone.color, icon: <Users size={14} /> }
       case 'leads': return { title: 'Developer Leads', bg: tone.background, fg: tone.color, icon: <Zap size={14} /> }
+      case 'feedback': return { title: 'Feedback, Bugs & Forms', bg: tone.background, fg: tone.color, icon: <FileText size={14} /> }
+      case 'errors': return { title: 'Runtime & CLI Errors', bg: tone.background, fg: tone.color, icon: <Activity size={14} /> }
       default: return { title: 'Lists & Segments', bg: tone.background, fg: tone.color, icon: <Layers size={14} /> }
     }
   }, [section])
@@ -558,6 +670,10 @@ export function CrmScreen() {
     setNewName('')
     setCreating(false)
   }, [newName, newAmount, records.length])
+
+  if (section === 'overview') {
+    return <OverviewScreen />
+  }
 
   return (
     <Density value="compact">

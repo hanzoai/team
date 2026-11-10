@@ -4,7 +4,7 @@ import { Consent } from '@hanzo/ui/consent'
 import { Session } from '~/data/session.tsx'
 import { Space } from '~/data/space.tsx'
 import { routes } from '~/routes'
-import { Doorway } from '~/login/Doorway.tsx'
+import { AuthGate } from '~/login/Login.tsx'
 import { Serve } from '~/serve.tsx'
 
 const Routed = () => useRoutes(routes)
@@ -19,10 +19,8 @@ const HINT = 200
  * rather than sitting inside a route: a theme that mounts per route re-mounts
  * every provider under it on every navigation.
  *
- * `Doorway` is the one place a stranger is turned around, and it is above the
- * router rather than inside it — and below `Space`, because the last thing it
- * has to answer for is a session this workspace has no account for: a check per screen is a check a new screen
- * forgets, and the screen it forgets on renders somebody else's board.
+ * `AuthGate` renders the sign-in screen above the router and below `Space`,
+ * handling `/auth/callback`, `/start`, and workspace enrolment in one place.
  *
  * `Session` and `Space` are LOAD-BEARING and not decoration: every region reads
  * one of them, and a tree without them throws `useSpace outside <Space>` on the
@@ -47,11 +45,11 @@ export const App = () => (
       <Session>
         <Space>
           <Serve />
-          <Doorway>
+          <AuthGate>
             <BrowserRouter>
               <Routed />
             </BrowserRouter>
-          </Doorway>
+          </AuthGate>
         </Space>
       </Session>
     </TooltipProvider>

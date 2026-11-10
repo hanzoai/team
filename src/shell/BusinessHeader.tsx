@@ -349,14 +349,15 @@ export function buildSeamlessAppUrl(
 
 const JUMP_CHANNELS = [
   { id: 'c-general', label: '#general', desc: 'Company-wide announcements & updates', path: '/chat/c-general' },
-  { id: 'c-revenue', label: '#hanzo-revenue', desc: 'Revenue ops, grants & billing sync', path: '/chat/c-revenue' },
-  { id: 'c-support', label: '#support', desc: 'Customer support & triage', path: '/chat/c-support' },
-  { id: 'c-tracker', label: '#tracker', desc: 'Engineering & product issue feed', path: '/chat/c-tracker' },
-  { id: 'c-ui', label: '#hanzo-ui', desc: 'Design system & GUI components', path: '/chat/c-ui' },
-  { id: 'c-design', label: '#design', desc: 'Brand, product design & review', path: '/chat/c-design' },
+  { id: 'c-hanzo-revenue', label: '#hanzo-revenue', desc: 'Live checkouts, orders, subscriptions & deals', path: '/chat/c-hanzo-revenue' },
+  { id: 'c-feedback', label: '#feedback', desc: 'Inbound leads, form submits, feedback & bug reports', path: '/chat/c-feedback' },
+  { id: 'c-hanzo-support', label: '#hanzo-support', desc: 'Customer support & triage', path: '/chat/c-hanzo-support' },
+  { id: 'c-errors', label: '#errors', desc: 'Runtime faults, Sentry exceptions & CLI errors', path: '/chat/c-errors' },
+  { id: 'c-hanzo-ui', label: '#hanzo-ui', desc: 'Design system & GUI components', path: '/chat/c-hanzo-ui' },
 ]
 
 const JUMP_SURFACES = [
+  { id: 'overview', label: 'AI Cockpit — Live Business Command Center', desc: '24/7 AI C-Suite + realtime checkouts, leads, form submits & telemetry', path: '/overview' },
   { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
   { id: 'crm-opp', label: 'CRM — Opportunities', desc: 'Pipeline deals & revenue stages', path: '/crm/opportunities' },
   { id: 'crm-inv', label: 'CRM — Investors (346K)', desc: 'Institutional VCs, angels & funds', path: '/crm/investors' },

@@ -1,53 +1,81 @@
-import { useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import { Button, Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 
 import { brand } from '~/data/brand.ts'
+import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
-import { caps, chip, gap, mark, paint, rank, round, rung, state } from '~/theme/theme.ts'
+import { useSpace } from '~/data/space.tsx'
+import { gap, paint, round, rung, state } from '~/theme/theme.ts'
 
-type StageTab = 'board' | 'bot' | 'chat'
+import { Callback } from './Callback.tsx'
+import { cart, START } from './start.ts'
 
-const DEMO_ISSUES = [
-  {
-    id: 'TEAM-142',
-    title: 'Wire crypto top-up webhook & billing ledger receipts',
-    status: 'doing' as const,
-    priority: 1,
-    tag: 'Billing',
-    assignee: '@dev',
-    summary: 'Bot @dev opened PR-418 (+184 -12) · 14/14 e2e checks green.',
-  },
-  {
-    id: 'TEAM-145',
-    title: 'Launch post & interactive Web + Mobile product stage',
-    status: 'doing' as const,
-    priority: 2,
-    tag: 'Marketing',
-    assignee: '@mark',
-    summary: 'Bot @mark drafted launch thread and requested header asset from @des.',
-  },
-  {
-    id: 'TEAM-149',
-    title: 'Zero-downtime edge cutover for gallery.hanzo.ai & hanzo.team',
-    status: 'done' as const,
-    priority: 2,
-    tag: 'Infra',
-    assignee: '@ops',
-    summary: 'Bot @ops verified CDN invalidation across all edge regions.',
-  },
+/** Where the issuer returns a browser. Registered at IAM, so it is fixed. */
+const CALLBACK = '/auth/callback'
+
+const HEADER_LINKS = [
+  { label: 'Docs', href: 'https://docs.hanzo.ai' },
+  { label: 'Hanzo Bot', href: 'https://hanzo.bot' },
+  { label: 'Hanzo App', href: 'https://hanzo.app' },
+  { label: 'API Platform', href: 'https://platform.hanzo.ai' },
+  { label: 'Hanzo AI', href: 'https://hanzo.ai' },
 ] as const
 
-const BOT_LOGS = [
-  '$ pnpm test && npx vite build',
-  '✓ 42 unit & theme tests passed (0.48s)',
-  '✓ Built production bundle -> dist/ (229 kB gzip)',
-  '→ Opened PR-418 · awaiting 1-click approval',
+const FOOTER_COLUMNS = [
+  {
+    title: 'Products',
+    links: [
+      { label: 'Hanzo Team', href: 'https://hanzo.team' },
+      { label: 'Hanzo Bot', href: 'https://hanzo.bot' },
+      { label: 'Hanzo App', href: 'https://hanzo.app' },
+      { label: 'Hanzo Dev', href: 'https://hanzo.ai/dev' },
+      { label: 'API Platform', href: 'https://platform.hanzo.ai' },
+      { label: 'Download App', href: 'https://hanzo.ai/download' },
+      { label: 'Pricing', href: 'https://hanzo.ai/pricing' },
+    ],
+  },
+  {
+    title: 'Models & AI',
+    links: [
+      { label: 'All Models', href: 'https://hanzo.ai/models' },
+      { label: 'Enso', href: 'https://hanzo.ai/enso' },
+      { label: 'Zen', href: 'https://hanzo.ai/zen' },
+      { label: 'Kai', href: 'https://hanzo.ai/kai' },
+      { label: 'MCP Tools', href: 'https://hanzo.ai/mcp' },
+      { label: 'Agent Skills', href: 'https://hanzo.ai/skills' },
+      { label: 'Benchmarks', href: 'https://hanzo.ai/benchmarks' },
+    ],
+  },
+  {
+    title: 'Developers & Cloud',
+    links: [
+      { label: 'Documentation', href: 'https://docs.hanzo.ai' },
+      { label: 'Hanzo CLI', href: 'https://hanzo.ai/cli' },
+      { label: 'Hanzo Base', href: 'https://hanzo.ai/base' },
+      { label: 'Hanzo IAM', href: 'https://hanzo.id' },
+      { label: 'Hanzo KMS', href: 'https://kms.hanzo.ai' },
+      { label: 'Open Source', href: 'https://github.com/hanzoai' },
+      { label: 'System Status', href: 'https://status.hanzo.ai' },
+    ],
+  },
+  {
+    title: 'Company & Legal',
+    links: [
+      { label: 'Hanzo AI', href: 'https://hanzo.ai' },
+      { label: 'Enterprise', href: 'https://hanzo.ai/enterprise' },
+      { label: 'Customer Stories', href: 'https://hanzo.ai/customers' },
+      { label: 'Contact Sales', href: 'https://hanzo.ai/contact-sales' },
+      { label: 'Security & Trust', href: 'https://hanzo.ai/security' },
+      { label: 'Privacy Policy', href: 'https://hanzo.ai/privacy' },
+      { label: 'Terms of Service', href: 'https://hanzo.ai/terms' },
+    ],
+  },
 ] as const
 
 /**
- * The way in, on this app's own page, paired with an interactive Web + Mobile
- * preview stage of the Hanzo Team & Hanzo Bot workspace so visitors on
- * hanzo.team see the live product on both desktop and mobile viewports.
+ * Sign-in page for Hanzo Team (`hanzo.team`), matching `platform.hanzo.ai`:
+ * top bar with `Hanzo Team` + quick links + `Contact sales` / `Log in`,
+ * centered dot-grid hero + dark sign-in card, and shared multi-column Hanzo footer.
  */
 export const Login = () => {
   const { standing, enter, post, confirm, depart } = useSession()
@@ -57,13 +85,8 @@ export const Login = () => {
   const [sent, setSent] = useState(false)
   const [busy, setBusy] = useState(false)
   const [refusal, setRefusal] = useState<string | null>(null)
-  const [tab, setTab] = useState<StageTab>('board')
-  const [selectedId, setSelectedId] = useState<string>('TEAM-142')
-  const [approved, setApproved] = useState(false)
 
   if (standing === 'in') return null
-
-  const activeIssue = DEMO_ISSUES.find((i) => i.id === selectedId) ?? DEMO_ISSUES[0]
 
   const attempt = (work: () => Promise<void>) => {
     setRefusal(null)
@@ -74,37 +97,117 @@ export const Login = () => {
   }
 
   return (
-    <YStack flex={1} bg={paint.ground} p={gap.wide} overflow="scroll">
+    <YStack flex={1} bg={paint.ground} overflow="scroll">
+      {/* Top 68px Bar matching platform.hanzo.ai */}
       <XStack
         width="100%"
-        maxW={1280}
-        mx="auto"
-        my="auto"
-        py={gap.edge}
-        gap={gap.edge}
-        items="flex-start"
+        minH={68}
+        px={gap.wide}
+        py={gap.tight}
+        items="center"
         justify="space-between"
-        flexWrap="wrap"
+        borderBottomWidth={1}
+        borderColor={paint.rule}
+        bg={paint.panel}
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 40,
+        }}
       >
-        {/* Left column: Hero + Embedded @hanzo/iam Sign-In */}
-        <YStack width="100%" maxW={400} gap={gap.wide} grow={1} shrink={1}>
-          <XStack items="center" gap={gap.tight}>
-            <YStack width={10} height={10} rounded={round.pill} bg={state.done} />
-            <SizableText size={rung.chip} color={paint.mute} {...caps}>
-              HANZO TEAM · HUMAN + AI WORKSPACE
-            </SizableText>
-          </XStack>
-
-          <YStack gap={gap.tight}>
-            <SizableText size={rung.title} color={paint.ink} fontWeight="600">
-              {brand.title} — Ship with your team and AI bots.
-            </SizableText>
-            <SizableText size={rung.body} color={paint.mute}>
-              Issues, real-time channels, and autonomous Hanzo Bots with their own cloud computers — unified in one workspace across Web and Mobile.
+        <XStack
+          items="center"
+          gap={gap.tight}
+          cursor="pointer"
+          onPress={() => window.location.assign('/')}
+        >
+          <YStack
+            width={24}
+            height={24}
+            rounded={round.field}
+            bg={paint.ink}
+            items="center"
+            justify="center"
+          >
+            <SizableText size={rung.small} color={paint.ground} fontWeight="700">
+              H
             </SizableText>
           </YStack>
+          <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+            {brand.title}
+          </SizableText>
+        </XStack>
 
+        <XStack items="center" gap={gap.tight} flexWrap="wrap">
+          {HEADER_LINKS.map((item) => (
+            <Button
+              key={item.label}
+              size="sm"
+              chromeless
+              rounded={round.pill}
+              onPress={() => window.location.assign(item.href)}
+            >
+              <SizableText size={rung.small} color={paint.mute}>
+                {item.label}
+              </SizableText>
+            </Button>
+          ))}
+          <Button
+            size="sm"
+            variant="outline"
+            rounded={round.field}
+            onPress={() => window.location.assign('https://hanzo.ai/contact-sales')}
+          >
+            <SizableText size={rung.small} color={paint.ink}>
+              Contact sales
+            </SizableText>
+          </Button>
+          <Button size="sm" rounded={round.field} onPress={depart}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+              Log in
+            </SizableText>
+          </Button>
+        </XStack>
+      </XStack>
+
+      {/* Centered Dot-Grid Hero + Sign-In Card matching platform.hanzo.ai */}
+      <YStack
+        width="100%"
+        grow={1}
+        items="center"
+        justify="center"
+        px={gap.wide}
+        py={gap.edge}
+        bg={paint.ground}
+        style={{
+          backgroundImage: `radial-gradient(${paint.rule} 1px, transparent 1px)`,
+          backgroundSize: '16px 16px',
+        }}
+      >
+        <YStack width="100%" maxW={520} items="center" gap={gap.inset} py={gap.edge}>
+          <SizableText
+            size={rung.title}
+            color={paint.ink}
+            fontWeight="600"
+            style={{ textAlign: 'center' }}
+          >
+            Sign in to {brand.title}
+          </SizableText>
+
+          <SizableText
+            size={rung.body}
+            color={paint.mute}
+            maxW={400}
+            style={{ textAlign: 'center' }}
+          >
+            AI cockpit, live streams, issue boards, channels, and bots for your team.
+          </SizableText>
+
+          {/* Centered Dark Sign-In Card */}
           <YStack
+            width="100%"
+            maxW={396}
+            mt={gap.inset}
             p={gap.wide}
             rounded={round.panel}
             bg={paint.panel}
@@ -112,35 +215,58 @@ export const Login = () => {
             borderColor={paint.rule}
             gap={gap.inset}
           >
-            <SizableText size={rung.row} color={paint.ink} fontWeight="600">
-              Sign in to your workspace
-            </SizableText>
+            <Button onPress={depart} rounded={round.field}>
+              <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+                Continue with Hanzo ID ({new URL(brand.issuer).hostname})
+              </SizableText>
+            </Button>
+
+            <XStack items="center" gap={gap.tight}>
+              <YStack flex={1} height={1} bg={paint.rule} />
+              <SizableText size={rung.chip} color={paint.dim}>
+                OR
+              </SizableText>
+              <YStack flex={1} height={1} bg={paint.rule} />
+            </XStack>
 
             <YStack gap={gap.tight}>
+              <SizableText size={rung.small} color={paint.mute}>
+                Email
+              </SizableText>
               <Input
                 value={name}
                 onChangeText={setName}
-                placeholder="Email"
+                placeholder="name@company.com"
                 autoComplete="username"
                 rounded={round.field}
               />
               {sent ? (
-                <Input
-                  value={code}
-                  onChangeText={setCode}
-                  placeholder="The code we sent you"
-                  autoComplete="one-time-code"
-                  rounded={round.field}
-                />
+                <>
+                  <SizableText size={rung.small} color={paint.mute}>
+                    Verification code
+                  </SizableText>
+                  <Input
+                    value={code}
+                    onChangeText={setCode}
+                    placeholder="Enter the code sent to your email"
+                    autoComplete="one-time-code"
+                    rounded={round.field}
+                  />
+                </>
               ) : (
-                <Input
-                  value={secret}
-                  onChangeText={setSecret}
-                  placeholder="Password"
-                  secureTextEntry
-                  autoComplete="current-password"
-                  rounded={round.field}
-                />
+                <>
+                  <SizableText size={rung.small} color={paint.mute}>
+                    Password
+                  </SizableText>
+                  <Input
+                    value={secret}
+                    onChangeText={setSecret}
+                    placeholder="Password"
+                    secureTextEntry
+                    autoComplete="current-password"
+                    rounded={round.field}
+                  />
+                </>
               )}
             </YStack>
 
@@ -152,6 +278,7 @@ export const Login = () => {
 
             <Button
               disabled={busy || !name}
+              rounded={round.field}
               onPress={() =>
                 attempt(() => (sent ? confirm(name, code) : enter(name, secret)))
               }
@@ -171,317 +298,224 @@ export const Login = () => {
                 }
               >
                 <SizableText size={rung.small} color={paint.mute}>
-                  Email me a code
+                  Email me a sign-in code instead
                 </SizableText>
               </Button>
-              <Button chromeless onPress={depart}>
+              <Button
+                chromeless
+                onPress={() => window.location.assign('https://hanzo.id/signup')}
+              >
                 <SizableText size={rung.small} color={paint.mute}>
-                  Sign in at {new URL(brand.issuer).hostname}
+                  Create account
                 </SizableText>
               </Button>
             </XStack>
 
-            <Button
-              variant="outline"
-              onPress={() => window.location.assign('/projects/proj-crm/issues')}
+            <SizableText
+              size={rung.chip}
+              color={paint.dim}
+              style={{ textAlign: 'center' }}
             >
-              Explore Live Workspace →
-            </Button>
-          </YStack>
-        </YStack>
-
-        {/* Right column: Interactive Web + Mobile Hanzo Team & Bot App Stage */}
-        <YStack width="100%" maxW={820} grow={2} shrink={1} gap={gap.wide}>
-          {/* Stage Mode Switcher */}
-          <XStack items="center" justify="space-between" gap={gap.tight} flexWrap="wrap">
-            <SizableText size={rung.small} color={paint.mute} {...caps}>
-              LIVE WORKSPACE PREVIEW · WEB APP + MOBILE HANDSET
+              By continuing, you agree to Hanzo’s Terms of Service and Privacy Policy.
             </SizableText>
-            <XStack gap={gap.tight} p={gap.tight} rounded={round.pill} bg={paint.panel} borderWidth={1} borderColor={paint.rule}>
-              {(
-                [
-                  ['board', 'Tracker & Bots'],
-                  ['bot', 'Hanzo Bot Computer'],
-                  ['chat', 'Team Channels'],
-                ] as const
-              ).map(([id, label]) => (
-                <Button
-                  key={id}
-                  size="sm"
-                  chromeless={tab !== id}
-                  onPress={() => setTab(id)}
-                  rounded={round.pill}
+          </YStack>
+
+          {/* Compact Quick Links Row */}
+          <XStack
+            gap={gap.inset}
+            flexWrap="wrap"
+            justify="center"
+            mt={gap.tight}
+          >
+            {[
+              ['Hanzo Bot', 'https://hanzo.bot'],
+              ['Hanzo App', 'https://hanzo.app'],
+              ['API Platform', 'https://platform.hanzo.ai'],
+              ['Hanzo AI', 'https://hanzo.ai'],
+              ['Docs', 'https://docs.hanzo.ai'],
+            ].map(([label, href]) => (
+              <SizableText
+                key={label}
+                size={rung.small}
+                color={paint.mute}
+                cursor="pointer"
+                onPress={() => window.location.assign(href)}
+              >
+                {label} ↗
+              </SizableText>
+            ))}
+          </XStack>
+        </YStack>
+      </YStack>
+
+      {/* Shared Multi-Column Hanzo Footer matching platform.hanzo.ai & hanzo.ai */}
+      <YStack
+        width="100%"
+        borderTopWidth={1}
+        borderColor={paint.rule}
+        bg={paint.panel}
+        px={gap.wide}
+        py={gap.edge}
+      >
+        <YStack width="100%" maxW={1280} mx="auto" gap={gap.edge}>
+          <XStack justify="space-between" items="flex-start" gap={gap.edge} flexWrap="wrap">
+            <YStack maxW={280} gap={gap.inset}>
+              <XStack items="center" gap={gap.tight}>
+                <YStack
+                  width={24}
+                  height={24}
+                  rounded={round.field}
+                  bg={paint.ink}
+                  items="center"
+                  justify="center"
                 >
-                  <SizableText size={rung.chip} color={tab === id ? paint.ink : paint.mute}>
-                    {label}
+                  <SizableText size={rung.small} color={paint.ground} fontWeight="700">
+                    H
                   </SizableText>
-                </Button>
+                </YStack>
+                <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+                  Hanzo AI
+                </SizableText>
+              </XStack>
+              <SizableText size={rung.small} color={paint.mute}>
+                Sovereign AI cloud, developer platform, autonomous bots, and business workspace.
+              </SizableText>
+              <XStack
+                items="center"
+                gap={gap.tight}
+                px={gap.inset}
+                py={gap.tight}
+                rounded={round.pill}
+                borderWidth={1}
+                borderColor={paint.rule}
+                self="flex-start"
+                cursor="pointer"
+                onPress={() => window.location.assign('https://status.hanzo.ai')}
+              >
+                <YStack width={8} height={8} rounded={round.pill} bg={state.done} />
+                <SizableText size={rung.chip} color={paint.ink}>
+                  All systems operational
+                </SizableText>
+              </XStack>
+            </YStack>
+
+            <XStack gap={gap.edge} flexWrap="wrap" grow={1} justify="space-between">
+              {FOOTER_COLUMNS.map((col) => (
+                <YStack key={col.title} minW={150} gap={gap.tight}>
+                  <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+                    {col.title}
+                  </SizableText>
+                  {col.links.map((link) => (
+                    <SizableText
+                      key={link.label}
+                      size={rung.small}
+                      color={paint.mute}
+                      cursor="pointer"
+                      onPress={() => window.location.assign(link.href)}
+                    >
+                      {link.label}
+                    </SizableText>
+                  ))}
+                </YStack>
               ))}
             </XStack>
           </XStack>
 
-          {/* Desktop / Web Workspace Window */}
-          <YStack
-            rounded={round.panel}
-            bg={paint.panel}
-            borderWidth={1}
+          <XStack
+            pt={gap.wide}
+            borderTopWidth={1}
             borderColor={paint.rule}
-            overflow="hidden"
+            items="center"
+            justify="space-between"
+            flexWrap="wrap"
+            gap={gap.tight}
           >
-            {/* Window Title Bar */}
-            <XStack
-              px={gap.wide}
-              py={gap.tight}
-              items="center"
-              justify="space-between"
-              borderBottomWidth={1}
-              borderColor={paint.rule}
-              bg={paint.card}
-            >
-              <XStack items="center" gap={gap.tight}>
-                <YStack width={8} height={8} rounded={round.pill} bg={paint.alert} />
-                <YStack width={8} height={8} rounded={round.pill} bg={state.doing} />
-                <YStack width={8} height={8} rounded={round.pill} bg={state.done} />
-                <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-                  hanzo.team · Web App
-                </SizableText>
-              </XStack>
-              <SizableText size={rung.chip} color={paint.mute}>
-                4 bots online · @dev @mark @ops @des
-              </SizableText>
-            </XStack>
-
-            {/* 3-Pane Web App Body */}
-            <XStack flexWrap="wrap">
-              {/* Left Sidebar */}
-              <YStack
-                width={180}
-                p={gap.inset}
-                gap={gap.tight}
-                borderRightWidth={1}
-                borderColor={paint.rule}
-                grow={1}
-              >
-                <SizableText size={rung.chip} color={paint.dim} {...caps}>
-                  WORKSPACE
-                </SizableText>
-                <XStack justify="space-between" items="center" p={gap.tight} rounded={round.card} bg={tab === 'board' ? paint.card : undefined}>
-                  <SizableText size={rung.small} color={paint.ink}>
-                    Active Issues
-                  </SizableText>
-                  <SizableText size={rung.chip} color={paint.accent}>
-                    3
-                  </SizableText>
-                </XStack>
-                <XStack justify="space-between" items="center" p={gap.tight} rounded={round.card} bg={tab === 'bot' ? paint.card : undefined}>
-                  <SizableText size={rung.small} color={paint.ink}>
-                    Hanzo Bot Runs
-                  </SizableText>
-                  <SizableText size={rung.chip} color={state.done}>
-                    Live
-                  </SizableText>
-                </XStack>
-                <XStack justify="space-between" items="center" p={gap.tight} rounded={round.card} bg={tab === 'chat' ? paint.card : undefined}>
-                  <SizableText size={rung.small} color={paint.ink}>
-                    #launch-ops
-                  </SizableText>
-                  <SizableText size={rung.chip} color={paint.mute}>
-                    12
-                  </SizableText>
-                </XStack>
-
-                <SizableText size={rung.chip} color={paint.dim} mt={gap.tight} {...caps}>
-                  AI TEAMMATES
-                </SizableText>
-                {(['@dev · Engineer', '@mark · Growth', '@ops · Infra', '@des · Design'] as const).map((bot) => (
-                  <XStack key={bot} items="center" gap={gap.tight}>
-                    <YStack width={6} height={6} rounded={round.pill} bg={ mark(bot) } />
-                    <SizableText size={rung.small} color={paint.mute}>
-                      {bot}
-                    </SizableText>
-                  </XStack>
-                ))}
-              </YStack>
-
-              {/* Center Issue / Bot Stream */}
-              <YStack width={340} p={gap.inset} gap={gap.tight} grow={2} shrink={1}>
-                <SizableText size={rung.chip} color={paint.dim} {...caps}>
-                  {tab === 'board' ? 'ACTIVE SPRINT ISSUES' : tab === 'bot' ? 'HANZO BOT EXECUTION STREAM' : 'CHANNEL · #LAUNCH-OPS'}
-                </SizableText>
-                {DEMO_ISSUES.map((item) => {
-                  const selected = item.id === activeIssue.id
-                  const badgeTone = chip(item.tag)
-                  const prioTone = rank(item.priority)
-                  return (
-                    <YStack
-                      key={item.id}
-                      p={gap.inset}
-                      rounded={round.card}
-                      bg={selected ? paint.card : paint.ground}
-                      borderWidth={1}
-                      borderColor={selected ? paint.accent : paint.rule}
-                      gap={gap.tight}
-                      cursor="pointer"
-                      onPress={() => setSelectedId(item.id)}
-                    >
-                      <XStack items="center" justify="space-between" gap={gap.tight} flexWrap="wrap">
-                        <XStack items="center" gap={gap.tight}>
-                          <YStack
-                            width={8}
-                            height={8}
-                            rounded={round.pill}
-                            bg={item.status === 'done' ? state.done : state.doing}
-                          />
-                          <SizableText size={rung.small} color={paint.mute}>
-                            {item.id}
-                          </SizableText>
-                        </XStack>
-                        <XStack gap={gap.tight}>
-                          <YStack px={gap.tight} rounded={round.pill} style={prioTone}>
-                            <SizableText size={rung.chip} color={prioTone.color}>
-                              P{item.priority}
-                            </SizableText>
-                          </YStack>
-                          <YStack px={gap.tight} rounded={round.pill} style={badgeTone}>
-                            <SizableText size={rung.chip} color={badgeTone.color}>
-                              {item.tag}
-                            </SizableText>
-                          </YStack>
-                        </XStack>
-                      </XStack>
-                      <SizableText size={rung.body} color={paint.ink} fontWeight="500">
-                        {item.title}
-                      </SizableText>
-                      <SizableText size={rung.small} color={paint.mute}>
-                        {item.summary}
-                      </SizableText>
-                    </YStack>
-                  )
-                })}
-              </YStack>
-
-              {/* Right Inspector: Hanzo Bot Cloud Computer */}
-              <YStack
-                width={240}
-                p={gap.inset}
-                gap={gap.tight}
-                borderLeftWidth={1}
-                borderColor={paint.rule}
-                bg={paint.ground}
-                grow={1}
-              >
-                <XStack items="center" justify="space-between">
-                  <SizableText size={rung.chip} color={paint.dim} {...caps}>
-                    BOT COMPUTER · {activeIssue.assignee}
-                  </SizableText>
-                  <YStack width={7} height={7} rounded={round.pill} bg={state.done} />
-                </XStack>
-                <SizableText size={rung.small} color={paint.ink} fontWeight="500">
-                  {activeIssue.id} · {activeIssue.tag} Sandbox
-                </SizableText>
-                <YStack
-                  p={gap.tight}
-                  rounded={round.card}
-                  bg={paint.panel}
-                  borderWidth={1}
-                  borderColor={paint.rule}
-                  gap={gap.tight}
+            <SizableText size={rung.chip} color={paint.dim}>
+              © 2016–2026 Hanzo AI, Inc. (Techstars ’17). All rights reserved.
+            </SizableText>
+            <XStack gap={gap.wide} flexWrap="wrap">
+              {[
+                ['hanzo.ai', 'https://hanzo.ai'],
+                ['hanzo.app', 'https://hanzo.app'],
+                ['hanzo.bot', 'https://hanzo.bot'],
+                ['platform.hanzo.ai', 'https://platform.hanzo.ai'],
+                ['docs.hanzo.ai', 'https://docs.hanzo.ai'],
+                ['GitHub', 'https://github.com/hanzoai'],
+              ].map(([label, href]) => (
+                <SizableText
+                  key={label}
+                  size={rung.chip}
+                  color={paint.mute}
+                  cursor="pointer"
+                  onPress={() => window.location.assign(href)}
                 >
-                  {BOT_LOGS.map((line) => (
-                    <SizableText key={line} size={rung.chip} color={paint.mute}>
-                      {line}
-                    </SizableText>
-                  ))}
-                </YStack>
-              </YStack>
+                  {label}
+                </SizableText>
+              ))}
             </XStack>
-          </YStack>
-
-          {/* Mobile App Handset (iPhone · hanzo.team & hanzo.bot Mobile) */}
-          <XStack items="stretch" gap={gap.wide} flexWrap="wrap">
-            <YStack
-              width="100%"
-              maxW={360}
-              p={gap.inset}
-              rounded={round.panel}
-              bg={paint.panel}
-              borderWidth={1}
-              borderColor={paint.rule}
-              gap={gap.tight}
-            >
-              <XStack items="center" justify="space-between">
-                <SizableText size={rung.chip} color={paint.dim} {...caps}>
-                  IPHONE · HANZO.TEAM MOBILE APP
-                </SizableText>
-                <SizableText size={rung.chip} color={state.done}>
-                  9:41 · 5G
-                </SizableText>
-              </XStack>
-              <YStack
-                p={gap.inset}
-                rounded={round.card}
-                bg={paint.card}
-                borderWidth={1}
-                borderColor={paint.rule}
-                gap={gap.tight}
-              >
-                <XStack items="center" justify="space-between">
-                  <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-                    {activeIssue.assignee} · Approval Request
-                  </SizableText>
-                  <SizableText size={rung.chip} color={approved ? state.done : state.doing}>
-                    {approved ? 'Shipped ✓' : 'Needs Review'}
-                  </SizableText>
-                </XStack>
-                <SizableText size={rung.small} color={paint.mute}>
-                  {activeIssue.summary}
-                </SizableText>
-                <Button size="sm" onPress={() => setApproved((prev) => !prev)}>
-                  <SizableText size={rung.chip} color={paint.ink}>
-                    {approved ? 'Approved & Deployed ✓' : 'Approve & Merge from Mobile'}
-                  </SizableText>
-                </Button>
-              </YStack>
-            </YStack>
-
-            <YStack
-              flex={1}
-              minW={240}
-              p={gap.inset}
-              rounded={round.panel}
-              bg={paint.panel}
-              borderWidth={1}
-              borderColor={paint.rule}
-              justify="space-between"
-              gap={gap.tight}
-            >
-              <YStack gap={gap.tight}>
-                <SizableText size={rung.chip} color={paint.dim} {...caps}>
-                  WEB + MOBILE PARITY
-                </SizableText>
-                <SizableText size={rung.body} color={paint.ink} fontWeight="500">
-                  Every bot thread, issue board, and routine approval stays in sync across Web and Mobile.
-                </SizableText>
-                <SizableText size={rung.small} color={paint.mute}>
-                  Start a task on desktop at hanzo.team, watch live terminal progress, and approve the deploy from your phone.
-                </SizableText>
-              </YStack>
-              <XStack gap={gap.tight} flexWrap="wrap">
-                {(['Issues', 'Channels', 'Bot Computers', 'Routines'] as const).map((pill) => {
-                  const style = chip(pill)
-                  return (
-                    <YStack key={pill} px={gap.tight} py={gap.tight} rounded={round.pill} style={style}>
-                      <SizableText size={rung.chip} color={style.color}>
-                        {pill}
-                      </SizableText>
-                    </YStack>
-                  )
-                })}
-              </XStack>
-            </YStack>
           </XStack>
         </YStack>
-      </XStack>
+      </YStack>
     </YStack>
   )
 }
+
+/**
+ * AuthGate wraps the router and renders the Login page when signed out,
+ * handles `/auth/callback` and `/start`, and checks workspace enrolment.
+ */
+export const AuthGate = ({ children }: { children: ReactNode }) => {
+  const { standing: session } = useSession()
+  const { standing: space, refusal, enrolment } = useSpace()
+
+  if (window.location.pathname === CALLBACK) return <Callback />
+  if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
+  if (fixture.on) return <>{children}</>
+  if (session === 'unknown') return <Waiting />
+  if (session === 'out' && (window.location.pathname === '/' || window.location.pathname === '/login')) return <Login />
+
+  if (space === 'stranger') {
+    return (
+      <Word title="One more step" body="Set up your workspace to see your projects.">
+        <Button onPress={() => window.location.assign(enrolment)}>Set up</Button>
+      </Word>
+    )
+  }
+
+  if (space === 'refused') {
+    return (
+      <Word title="Your workspace is not answering" body={refusal?.message ?? ''}>
+        <Button onPress={() => window.location.reload()}>Try again</Button>
+      </Word>
+    )
+  }
+
+  if (space === 'unknown') return <Waiting />
+
+  return <>{children}</>
+}
+
+const Forward = ({ to }: { to: string }) => {
+  useEffect(() => window.location.replace(to), [to])
+  return <Waiting />
+}
+
+const Waiting = () => (
+  <YStack flex={1} items="center" justify="center" bg={paint.ground}>
+    <Spinner />
+  </YStack>
+)
+
+const Word = ({ title, body, children }: { title: string; body: string; children: ReactNode }) => (
+  <YStack flex={1} items="center" justify="center" gap={gap.inset} bg={paint.ground} p={gap.wide}>
+    <SizableText size={rung.title} color={paint.ink}>
+      {title}
+    </SizableText>
+    {body ? (
+      <SizableText size={rung.body} color={paint.mute}>
+        {body}
+      </SizableText>
+    ) : null}
+    {children}
+  </YStack>
+)

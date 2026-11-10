@@ -568,10 +568,12 @@ const tags: Tag[] = WORK.flatMap((row, i) =>
 
 const channels: Channel[] = [
   { ...base('c-general', Class.channel), name: 'general', topic: 'Company-wide engineering, launches & announcements' },
+  { ...base('c-errors', Class.channel), name: 'errors', topic: 'Live runtime exceptions, Sentry faults & CLI crash reports (/v1/event/errors)' },
+  { ...base('c-feedback', Class.channel), name: 'feedback', topic: 'User feedback, hanzo doctor --share bundles, support tickets & inbound forms' },
   { ...base('c-hanzo-support', Class.channel), name: 'hanzo-support', topic: 'Customer support, triage & live escalations' },
   { ...base('c-hanzo-ui', Class.channel), name: 'hanzo-ui', topic: 'Design system, @hanzo/gui & @hanzo/ui components' },
   { ...base('c-hanzo-video', Class.channel), name: 'hanzo-video', topic: 'Studio, Omni Flash & video generation' },
-  { ...base('c-hanzo-revenue', Class.channel), name: 'hanzo-revenue', topic: 'Pipeline, enterprise deals & billing' },
+  { ...base('c-hanzo-revenue', Class.channel), name: 'hanzo-revenue', topic: 'Live checkouts, orders, subscriptions, enterprise deals & pipeline (/v1/event)' },
   { ...base('c-tracker', Class.channel), name: 'tracker', topic: 'Sprint boards, PR gates & issue triage' },
   { ...base('c-design', Class.channel), name: 'design', topic: 'Product design, typography & monochrome tokens' },
   { ...base('c-hanzo-x-lux', Class.channel), name: 'hanzo-x-lux', topic: 'Hanzo Connect shared channel · Cross-org engineering & MPC settlement', bindings: ['connect:lux'] },
@@ -595,9 +597,12 @@ const messages: Message[] = [
   { ...base('m3', Class.message), message: '@everyone Hanzo Team is live on `hanzo.team` and running natively in the desktop app.', attachedTo: 'c-general', modifiedOn: now - 600_000, modifiedBy: 'p-zach' },
   { ...base('m4', Class.message), message: 'All 23 Hanzo AI agents and 24/7 bots are connected across Hanzo AI, The Foundation, Lux Network, and Zoo Labs.', attachedTo: 'c-general', modifiedOn: now - 300_000, modifiedBy: 'bot-vi' },
   { ...base('m5', Class.message), message: 'Zero open P0/P1 escalations. Automated triage resolved 18 tickets in the last hour.', attachedTo: 'c-hanzo-support', modifiedOn: now - 900_000, modifiedBy: 'bot-su' },
+  { ...base('m-err-seed-1', Class.message), message: 'Streaming live runtime faults, Sentry exceptions, and CLI premature_stop diagnostics from `api.hanzo.ai/v1/event/errors` into this channel.', attachedTo: 'c-errors', modifiedOn: now - 420_000, modifiedBy: 'bot-cyber' },
+  { ...base('m-fb-seed-1', Class.message), message: 'Streaming inbound user feedback, `hanzo doctor --share` / `dev report` bundles, support tickets, and website form submissions from `api.hanzo.ai/v1/base/collections/activities` and `/v1/event` into this channel.', attachedTo: 'c-feedback', modifiedOn: now - 380_000, modifiedBy: 'bot-su' },
   { ...base('m6', Class.message), message: 'Updated @hanzo/gui monochrome tokens and Slack-style top search bar across all workspace surfaces.', attachedTo: 'c-hanzo-ui', modifiedOn: now - 1_200_000, modifiedBy: 'bot-des' },
   { ...base('m7', Class.message), message: 'Rendered 4K hero stills and agent portraits via Omni 1.2 Flash in Studio.', attachedTo: 'c-hanzo-video', modifiedOn: now - 1_500_000, modifiedBy: 'bot-art' },
   { ...base('m8', Class.message), message: 'Synced org grants, prepaid balances, and enterprise seats with Commerce.', attachedTo: 'c-hanzo-revenue', modifiedOn: now - 450_000, modifiedBy: 'bot-rev' },
+  { ...base('m-rev-seed-stream', Class.message), message: 'Streaming live checkouts (`order_completed`, `checkout_started`, `payment_info_added`, `checkout_failed`, `subscription_changed`, `invoice_requested`) and enterprise/sales leads in real time from `api.hanzo.ai/v1/event` into this channel and `/overview`.', attachedTo: 'c-hanzo-revenue', modifiedOn: now - 340_000, modifiedBy: 'bot-rev' },
   { ...base('m-connect-lux-1', Class.message), message: 'Connected `hanzo` ↔ `lux` via Hanzo Connect (`connect:lux`). Both organizations retain isolated IAM, KMS secrets, and billing while sharing this channel.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 1_200_000, modifiedBy: 'bot-vi' },
   { ...base('m-connect-lux-2', Class.message), message: 'Lux MPC threshold signers and GPU settlement hooks are live on `api.hanzo.ai/v1/commerce`. Ready for joint end-to-end testing.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 600_000, modifiedBy: 'p-zach' },
   { ...base('m-connect-lux-3', Class.message), message: 'Verified cross-org webhook signatures and KMS boundary checks between `hanzo` and `lux` — zero cross-tenant secret access.', attachedTo: 'c-hanzo-x-lux', modifiedOn: now - 240_000, modifiedBy: 'bot-cyber' },
@@ -679,7 +684,7 @@ const trimmed = (): Map<string, Doc[]> => {
 
 // ── Live API + localStorage persistence plane ────────────────────────────────
 
-const STORAGE_KEY = 'hanzo.team.plane.v6'
+const STORAGE_KEY = 'hanzo.team.plane.v7'
 const ORGS_STORAGE_KEY = 'hanzo.team.orgs.v1'
 const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
 
@@ -712,6 +717,9 @@ class Stand implements Plane {
     if (this.persistEnabled) {
       this.hydrateLocal()
       void this.syncFromLiveApi()
+      window.setInterval(() => {
+        void this.syncFromLiveApi()
+      }, 30_000)
     }
   }
 
@@ -800,8 +808,300 @@ class Stand implements Plane {
           this.broadcast([])
         }
       }
+
+      // Sync live runtime errors & CLI diagnostic bug reports from `/v1/event/errors`
+      // and inbound user feedback / support tickets from `/v1/base/collections/activities/records`
+      await this.syncLiveSignals()
     } catch {
       // fallback plane remains active
+    }
+  }
+
+  private async syncLiveSignals() {
+    try {
+      const [errRes, actRes, evtRes] = await Promise.all([
+        call<{ items?: Array<Record<string, unknown>>; errors?: Array<Record<string, unknown>> } | Array<Record<string, unknown>>>(
+          `${API_ORIGIN}/v1/event/errors?limit=25`,
+        ).catch(() => null),
+        call<{ items?: Array<Record<string, unknown>> }>(
+          `${API_ORIGIN}/v1/base/collections/activities/records?perPage=30&sort=-at,-created`,
+        ).catch(() => null),
+        call<{ items?: Array<Record<string, unknown>> } | Array<Record<string, unknown>>>(
+          `${API_ORIGIN}/v1/event/insights/events?limit=40`,
+        ).catch(() => null),
+      ])
+
+      const currentMsgs = (this.docs.get(Class.message) ?? []) as Message[]
+      const msgById = new Map(currentMsgs.map((m) => [m._id, m]))
+      const currentNotices = (this.docs.get(Class.notice) ?? []) as Notice[]
+      const noticeById = new Map(currentNotices.map((n) => [n._id, n]))
+      let changed = false
+
+      const errList = Array.isArray(errRes)
+        ? errRes
+        : Array.isArray(errRes?.items)
+          ? errRes.items
+          : Array.isArray(errRes?.errors)
+            ? errRes.errors
+            : []
+
+      for (const err of errList) {
+        const rawId = String(err.id ?? err.event_id ?? err.issue ?? '').trim()
+        if (!rawId) continue
+        const msgId = `m-live-err-${rawId}`
+        if (msgById.has(msgId)) continue
+
+        const kind = String(err.type ?? err.class ?? err.name ?? 'Error')
+        const value = String(err.value ?? err.message ?? err.title ?? '(no message)')
+        const app = String(err.app ?? err.service ?? err.product ?? 'hanzo')
+        const env = String(err.environment ?? err.env ?? 'production')
+        const culprit = String(err.culprit ?? err.origin ?? err.path ?? '')
+        const tsRaw = err.timestamp ?? err.time ?? err.created_at
+        const atMs = typeof tsRaw === 'number'
+          ? (tsRaw > 1e12 ? tsRaw : tsRaw * 1000)
+          : typeof tsRaw === 'string' && Date.parse(tsRaw)
+            ? Date.parse(tsRaw)
+            : Date.now()
+
+        const tags = (err.tags ?? err.attributes ?? {}) as Record<string, unknown>
+        const reportId = String(tags.report_id ?? '')
+        const isCliReport =
+          kind === 'premature_stop' ||
+          kind === 'user_report' ||
+          err.name === 'feedback' ||
+          Boolean(reportId)
+
+        const summary = [
+          isCliReport
+            ? `[CLI Bug Report] ${kind}: ${value}`
+            : `[ERROR] ${kind}: ${value}`,
+          `app=${app} · env=${env}${culprit ? ` · at ${culprit}` : ''}${reportId ? ` · report_id=${reportId}` : ''}`,
+        ].join('\n')
+
+        msgById.set(msgId, {
+          ...base(msgId, Class.message),
+          message: summary,
+          attachedTo: 'c-errors',
+          modifiedOn: atMs,
+          modifiedBy: 'bot-cyber',
+        })
+        if (isCliReport) {
+          const fbMsgId = `m-live-fb-${rawId}`
+          msgById.set(fbMsgId, {
+            ...base(fbMsgId, Class.message),
+            message: summary,
+            attachedTo: 'c-feedback',
+            modifiedOn: atMs,
+            modifiedBy: 'bot-su',
+          })
+        }
+        const nId = `n-live-err-${rawId}`
+        if (!noticeById.has(nId)) {
+          noticeById.set(nId, {
+            ...base(nId, Class.notice),
+            modifiedBy: isCliReport ? 'bot-su' : 'bot-cyber',
+            modifiedOn: atMs,
+            body: `${isCliReport ? 'reported CLI bug' : 'captured runtime fault'} in ${app}: ${kind}: ${value.slice(0, 90)}`,
+            attachedTo: isCliReport ? 'c-feedback' : 'c-errors',
+            attachedToClass: Class.message,
+            isViewed: false,
+          })
+        }
+        changed = true
+      }
+
+      const actList = Array.isArray(actRes?.items) ? actRes.items : []
+      for (const act of actList) {
+        const rawId = String(act.id ?? '').trim()
+        if (!rawId) continue
+        const data = (act.data ?? {}) as Record<string, unknown>
+        const actKind = String(act.kind ?? data.kind ?? '')
+        const program = String(data.program ?? '').toLowerCase()
+        if (actKind !== 'form' && !program) continue
+
+        const msgId = `m-live-act-${rawId}`
+        if (msgById.has(msgId)) continue
+
+        const subject = String(act.subject ?? data.need ?? data.description ?? 'Inbound submission')
+        const source = String(data.source ?? act.channel ?? 'web')
+        const publicRef = String(data.public_ref ?? '')
+        const tsRaw = act.at ?? act.created ?? act.updated
+        const atMs = typeof tsRaw === 'string' && Date.parse(tsRaw) ? Date.parse(tsRaw) : Date.now()
+
+        const label =
+          program === 'feedback' || source.includes('hanzo-dev')
+            ? 'Feedback & Bug Report'
+            : program === 'support'
+              ? 'Support Ticket'
+              : program === 'chat'
+                ? 'Sales / Support Chat'
+                : program
+                  ? `Inbound Form (${program})`
+                  : 'Inbound Form'
+
+        const text = [
+          `[${label}] ${subject}`,
+          `source=${source}${program ? ` · program=${program}` : ''}${publicRef ? ` · ref=${publicRef}` : ''}`,
+        ].join('\n')
+
+        msgById.set(msgId, {
+          ...base(msgId, Class.message),
+          message: text,
+          attachedTo: 'c-feedback',
+          modifiedOn: atMs,
+          modifiedBy: 'bot-su',
+        })
+
+        if (program === 'support' || program === 'chat') {
+          const supMsgId = `m-live-sup-${rawId}`
+          msgById.set(supMsgId, {
+            ...base(supMsgId, Class.message),
+            message: text,
+            attachedTo: 'c-hanzo-support',
+            modifiedOn: atMs,
+            modifiedBy: 'bot-su',
+          })
+        }
+
+        if (program === 'sales' || program === 'enterprise' || program === 'investor' || program === 'partner') {
+          const revMsgId = `m-live-rev-act-${rawId}`
+          msgById.set(revMsgId, {
+            ...base(revMsgId, Class.message),
+            message: text,
+            attachedTo: 'c-hanzo-revenue',
+            modifiedOn: atMs,
+            modifiedBy: 'bot-sal',
+          })
+        }
+
+        const nId = `n-live-act-${rawId}`
+        if (!noticeById.has(nId)) {
+          noticeById.set(nId, {
+            ...base(nId, Class.notice),
+            modifiedBy: 'bot-su',
+            modifiedOn: atMs,
+            body: `received ${label.toLowerCase()}: ${subject.slice(0, 90)}`,
+            attachedTo: program === 'support' ? 'c-hanzo-support' : 'c-feedback',
+            attachedToClass: Class.message,
+            isViewed: false,
+          })
+        }
+        changed = true
+      }
+
+      const evtList = Array.isArray(evtRes)
+        ? evtRes
+        : Array.isArray(evtRes?.items)
+          ? evtRes.items
+          : []
+
+      for (const evt of evtList) {
+        const name = String(evt.name ?? '').toLowerCase()
+        const product = String(evt.product ?? evt.app ?? 'hanzo').toLowerCase()
+        const isCheckout =
+          name === 'order_completed' ||
+          name === 'checkout_started' ||
+          name === 'payment_info_added' ||
+          name === 'checkout_failed' ||
+          name === 'subscription_changed' ||
+          name === 'subscription_canceled' ||
+          name === 'order_refunded' ||
+          name === 'invoice_requested' ||
+          name === 'plan_selected' ||
+          name === 'upgrade_clicked'
+        const isLeadOrForm =
+          name === 'generate_lead' ||
+          name === 'sales_contacted' ||
+          name === 'waitlist_joined' ||
+          name === 'newsletter_subscribed' ||
+          name === 'beta_submitted' ||
+          name === 'research_access_applied' ||
+          name === 'signup_submitted' ||
+          name === 'signup_completed' ||
+          name === 'form_submitted' ||
+          name === 'response_completed' ||
+          name === 'response_submitted' ||
+          product === 'form'
+
+        if (!isCheckout && !isLeadOrForm) continue
+
+        const attrs = (evt.attributes ?? evt.properties ?? {}) as Record<string, unknown>
+        const tsRaw = evt.at ?? evt.timestamp ?? evt.time
+        const atMs = typeof tsRaw === 'string' && Date.parse(tsRaw) ? Date.parse(tsRaw) : Date.now()
+        const rawId = String(evt.id ?? attrs.order_id ?? attrs.response_id ?? `${name}-${atMs}`)
+        const msgId = `m-live-evt-${rawId}`
+        if (msgById.has(msgId)) continue
+
+        const who = String(attrs.email ?? attrs.payer ?? attrs.name ?? evt.user ?? 'Anonymous')
+        const company = String(attrs.company ?? '')
+        const plan = String(attrs.plan ?? attrs.item_id ?? '')
+        const orderId = String(attrs.order_id ?? '')
+        const revRaw = evt.value ?? attrs.revenue ?? attrs.amount
+        const cur = String(attrs.currency ?? 'USD').toUpperCase()
+        const amtText =
+          typeof revRaw === 'number' && revRaw > 0
+            ? `${cur === 'USD' ? '$' : `${cur} `}${revRaw.toLocaleString(undefined, { maximumFractionDigits: 2 })}`
+            : ''
+
+        const label = isCheckout
+          ? name === 'order_completed'
+            ? 'Order Completed'
+            : name === 'checkout_started'
+              ? 'Checkout Started'
+              : name === 'payment_info_added'
+                ? 'Payment Info Added'
+                : name === 'checkout_failed'
+                  ? 'Checkout Failed'
+                  : name === 'invoice_requested'
+                    ? 'Enterprise Invoice Requested'
+                    : `Commerce (${name})`
+          : name === 'response_completed' || name === 'form_submitted' || product === 'form'
+            ? 'Form Submitted'
+            : name === 'beta_submitted'
+              ? 'Beta Application'
+              : name === 'generate_lead' || name === 'sales_contacted'
+                ? 'Inbound Lead'
+                : `Lead / Signup (${name})`
+
+        const text = [
+          `[${label}] ${who}${company ? ` · ${company}` : ''}${amtText ? ` — ${amtText}` : ''}${plan ? ` (${plan})` : ''}`,
+          `event=${name} · app=${product}${orderId ? ` · order=${orderId}` : ''}`,
+        ].join('\n')
+
+        const targetChannel = isCheckout ? 'c-hanzo-revenue' : 'c-feedback'
+        const author = isCheckout ? 'bot-rev' : 'bot-su'
+
+        msgById.set(msgId, {
+          ...base(msgId, Class.message),
+          message: text,
+          attachedTo: targetChannel,
+          modifiedOn: atMs,
+          modifiedBy: author,
+        })
+
+        const nId = `n-live-evt-${rawId}`
+        if (!noticeById.has(nId)) {
+          noticeById.set(nId, {
+            ...base(nId, Class.notice),
+            modifiedBy: author,
+            modifiedOn: atMs,
+            body: `${label.toLowerCase()}: ${who}${amtText ? ` (${amtText})` : ''}`,
+            attachedTo: targetChannel,
+            attachedToClass: Class.message,
+            isViewed: false,
+          })
+        }
+        changed = true
+      }
+
+      if (changed) {
+        this.docs.set(Class.message, Array.from(msgById.values()))
+        this.docs.set(Class.notice, Array.from(noticeById.values()))
+        this.saveLocal()
+        this.broadcast([])
+      }
+    } catch {
+      // ignore transient network errors
     }
   }
 

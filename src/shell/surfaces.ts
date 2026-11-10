@@ -14,7 +14,7 @@
  * The order is the rail's, and it is the reference's: calendar, chat, tracker,
  * time, meet, with the bell above them and the add control below.
  */
-import { Bot, Briefcase, Calendar, Clock, LayoutGrid, MessagesSquare, SquareCheck, Video } from '@hanzogui/lucide-icons-2'
+import { Activity, Bot, Briefcase, Calendar, Clock, LayoutGrid, MessagesSquare, SquareCheck, Video } from '@hanzogui/lucide-icons-2'
 
 /** Any glyph from the icon set. Named off one of them, because the set's own
  *  component type is not exported and restating it here would be a second
@@ -33,6 +33,7 @@ export type Surface = {
 }
 
 export const SURFACES: readonly Surface[] = [
+  { id: 'overview', label: 'AI Cockpit', icon: Activity, path: '/overview' },
   { id: 'chat', label: 'Chat', icon: MessagesSquare, path: '/chat' },
   { id: 'tracker', label: 'Tracker', icon: SquareCheck, path: '/issues' },
   { id: 'crm', label: 'CRM', icon: Briefcase, path: '/crm' },
@@ -49,5 +50,6 @@ export const surfaceAt = (pathname: string): Surface | undefined =>
     (s) =>
       pathname === s.path ||
       pathname.startsWith(`${s.path}/`) ||
-      (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname.startsWith('/projects/'))),
+      (s.id === 'overview' && pathname === '/crm/overview') ||
+      (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname === '/projects/' || pathname.startsWith('/projects/'))),
   )
