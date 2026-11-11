@@ -139,5 +139,5 @@ overrides:
   '@hanzogui/web': '8.3.5'
   '@hanzogui/z-index-stack': '8.3.5'
 minimumReleaseAgeExclude:
-  - '@hanzo/ui@8.29.45'
+  - '@hanzo/ui@8.32.1'
   - '@hanzo/data@1.4.5'
