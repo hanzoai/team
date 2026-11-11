@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/team",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
   "license": "Apache-2.0 OR MIT",
@@ -31,7 +31,7 @@
     "@hanzo/font": "1.9.3",
     "@hanzo/gui": "8.3.5",
     "@hanzo/iam": "0.21.18",
-    "@hanzo/ui": "8.32.2",
+    "@hanzo/ui": "8.32.3",
     "@hanzogui/lucide-icons-2": "8.3.5",
     "@hanzogui/next-theme": "8.3.5",
     "react": "19.2.8",
