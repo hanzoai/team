@@ -58,6 +58,12 @@ export type Session = {
    * such as a browser that keeps no storage for the PKCE verifier.
    */
   depart: (way?: Way, how?: How) => Promise<void>
+  /**
+   * This app's own authorize request, for the shared sign-in panel
+   * (@hanzo/ui/auth `SignInPanel` `request`): the page to come back to is kept
+   * first, as `depart` keeps it, and the SDK keeps the PKCE verifier and state.
+   */
+  request: (params?: { additionalParams?: Record<string, string> }) => Promise<string>
   /** End the session where it lives. */
   leave: () => void
   /** Complete a redirect sign-in on the callback route; answers where to go. */
@@ -165,6 +171,11 @@ export const Session = ({ children }: { children: ReactNode }) => {
     window.location.replace(away(own, way, provider))
   }, [])
 
+  const request = useCallback((params?: { additionalParams?: Record<string, string> }) => {
+    keepHere()
+    return iam().getSigninUrl(params)
+  }, [])
+
   /**
    * Sign out where the session actually lives, and come back here.
    *
@@ -216,8 +227,8 @@ export const Session = ({ children }: { children: ReactNode }) => {
   }, [adopt])
 
   const value = useMemo<Session>(
-    () => ({ standing, who, depart, leave, land }),
-    [standing, who, depart, leave, land],
+    () => ({ standing, who, depart, request, leave, land }),
+    [standing, who, depart, request, leave, land],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>
