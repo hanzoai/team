@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { address, away, hinted, logout } from './away.ts'
+import { address, away, hinted, logout, silent } from './away.ts'
 
 /** What @hanzo/iam `getSigninUrl` answers on hanzo.team: the issuer's address, this app's request. */
 const OWN =
@@ -89,4 +89,14 @@ test('only an address-shaped entry is taken, trimmed', () => {
   for (const typed of ['', '   ', 'ana', 'ana@', '@hanzo.ai', 'ana@hanzo', 'a na@hanzo.ai', 'ana@@hanzo.ai']) {
     assert.equal(address(typed), null, typed)
   }
+})
+
+test("the silent ask is this app's own request with no page allowed, at IAM's authorize on hanzo.ai", () => {
+  const url = new URL(silent(OWN))
+  assert.equal(url.origin + url.pathname, 'https://hanzo.ai/v1/iam/oauth/authorize')
+  assert.equal(url.searchParams.get('prompt'), 'none')
+  const { prompt: _, ...rest } = request(url)
+  assert.deepEqual(rest, request(new URL(OWN)))
+  assert.equal(url.searchParams.get('redirect_uri'), 'https://hanzo.team/auth/callback')
+  assert.equal(url.searchParams.get('code_challenge'), 'c1')
 })
