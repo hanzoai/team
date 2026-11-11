@@ -194,12 +194,13 @@
   padding: var(--space-12) var(--page-gutter);
 }
 
+/* 464px: @hanzo/ui's SignInPanel card, hanzo.app's 400px measure inside 32px of padding. */
 .hz-signin-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  width: 400px;
+  width: 464px;
   flex-shrink: 0;
 }
 
@@ -420,7 +421,7 @@
 
   .hz-signin-copy {
     width: 100%;
-    max-width: 400px;
+    max-width: 464px;
   }
 
   .hz-signin-figure {
