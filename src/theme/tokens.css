@@ -157,3 +157,292 @@
   filter: brightness(0) invert(1);
 }
 
+/* The logo strip's marks are drawn in the ink of whichever scheme is showing:
+   white on the dark ground, black on the light one. */
+.light .hz-logo img,
+[data-theme='light'] .hz-logo img {
+  filter: brightness(0);
+}
+
+/* ——— the signed-out page's first screen: hanzo.app's sign-in hero (hanzo-inc/app
+       components/chat/ChatLanding.tsx and components/auth/steps.tsx HERO_STYLE),
+       restated here because this app draws it with its own elements. Same
+       measure, gutter, breakpoints (gui `md` 768, `max-xl` under 1280, `max-sm`
+       under 640), type and buttons, on the scheme's own ground, so the two pages
+       read as one product's. ——— */
+.hz-signin {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+  min-height: calc(100svh - 68px); /* the window under the 68px bar */
+  background-color: var(--background);
+}
+
+.hz-signin-row {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: max(32px, min(4vw, 64px));
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding: var(--space-12) var(--page-gutter);
+}
+
+.hz-signin-copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 400px;
+  flex-shrink: 0;
+}
+
+.hz-signin-title {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  line-height: var(--leading-4xl);
+  font-weight: 400;
+  letter-spacing: -0.015em;
+  text-wrap: balance;
+  color: var(--foreground);
+}
+
+.hz-signin-line {
+  margin: 0;
+  width: 100%;
+  text-align: center;
+  font-size: var(--text-lg);
+  line-height: var(--leading-lg);
+  text-wrap: balance;
+  color: var(--muted-foreground);
+}
+
+.hz-signin-panel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  max-width: 400px;
+  margin-top: var(--space-3);
+}
+
+.hz-signin-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  max-width: 400px;
+  margin: 0;
+}
+
+.hz-signin-pair {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  width: 100%;
+}
+
+.hz-signin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+}
+
+.hz-signin-btn {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  width: 100%;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background: var(--popover);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.2s, background-color 0.2s, opacity 0.2s;
+}
+
+.hz-signin-btn:hover:not(:disabled) {
+  border-color: var(--border-strong);
+  transform: translateY(-2px);
+}
+
+.hz-signin-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.hz-signin-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.hz-signin-btn[data-solid] {
+  background: var(--foreground);
+  color: var(--background);
+  border-color: var(--foreground);
+}
+
+.hz-signin-btn[data-solid]:hover:not(:disabled) {
+  opacity: 0.92;
+  transform: none;
+}
+
+.hz-signin-btn svg {
+  width: 17px;
+  height: 17px;
+  flex-shrink: 0;
+  fill: currentColor;
+}
+
+.hz-signin-field {
+  box-sizing: border-box;
+  width: 100%;
+  height: 46px;
+  padding: 0 16px;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  background-color: var(--popover);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  font-size: 14px;
+  outline: none;
+}
+
+.hz-signin-field::placeholder {
+  color: var(--muted-foreground);
+}
+
+.hz-signin-field:focus-visible {
+  border-color: var(--border-strong);
+  box-shadow: 0 0 0 2px var(--ring);
+}
+
+.hz-signin-or {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: 12.5px;
+  color: var(--muted-foreground);
+}
+
+.hz-signin-or::before,
+.hz-signin-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
+.hz-signin-wrong {
+  margin: 0;
+  font-size: 13px;
+  color: var(--team-alert);
+}
+
+.hz-signin-quiet {
+  align-self: center;
+  padding: 4px 8px;
+  border: 0;
+  background: none;
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.hz-signin-quiet:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.hz-signin-quiet:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.hz-signin-terms {
+  margin: 0;
+  max-width: 400px;
+  text-align: center;
+  font-size: var(--text-xs);
+  line-height: var(--leading-xs);
+  color: var(--muted-foreground);
+}
+
+.hz-signin-terms a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.hz-signin-figure {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6);
+  flex: 1;
+  min-width: 0;
+  max-width: 780px;
+}
+
+@media (min-width: 768px) {
+  .hz-signin-row {
+    padding-block: var(--space-16);
+  }
+}
+
+@media (max-width: 1279.98px) {
+  .hz-signin-row {
+    flex-direction: column;
+    gap: 40px;
+  }
+
+  .hz-signin-copy {
+    width: 100%;
+    max-width: 400px;
+  }
+
+  .hz-signin-figure {
+    flex-basis: auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 639.98px) {
+  .hz-signin-row {
+    padding-block: var(--space-8);
+    gap: 32px;
+  }
+
+  .hz-signin-title {
+    font-size: var(--text-3xl);
+    line-height: var(--leading-3xl);
+  }
+}
+
+@media (max-width: 420px) {
+  .hz-signin-pair {
+    grid-template-columns: 1fr;
+  }
+}

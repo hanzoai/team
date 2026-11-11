@@ -34,54 +34,27 @@ export const iam = (): IAM => {
   // is right for one port and silently wrong for every other.
   const here = window.location.origin
 
+  // No `organization`: the SDK reads it only for a credential posted from this
+  // page, and nobody signs in on this page. The way in is hanzo.ai's
+  // (./away.ts), and this client only mints the request it carries and
+  // redeems the code that comes back.
   engine = new IAM({
     serverUrl: brand.issuer,
     clientId,
-    // Required for the credential path, and the quiet failure when it is left
-    // out: the redirect flow works and an embedded sign-in answers nothing.
-    organization: brand.org,
     redirectUri: `${here}${callbackPath}`,
     postLogoutRedirectUri: `${here}${loginPath}`,
     scope,
     /**
-     * Where the credential POST and the token exchange go.
+     * Where the token exchange and userinfo go.
      *
-     * Signing in without leaving the page means a cross-origin POST to the
-     * issuer carrying `credentials: include`, and a browser drops such a
-     * response unless the issuer answers `Access-Control-Allow-Credentials`.
-     * Measured at hanzo.id: `https://hanzo.team` is answered with it and
-     * `https://team2.hanzo.ai` and `http://localhost` are answered without —
-     * so on those two the embedded form fails and the redirect is the only way
-     * in.
-     *
-     * The dev server proxies `/v1`, which makes the whole exchange same-origin
-     * and takes CORS out of it entirely. In a published build there is nothing
-     * to proxy through, so it addresses the issuer directly and the host has to
-     * be one the issuer trusts with credentials.
+     * The dev server proxies `/v1`, which makes the exchange same-origin and
+     * takes CORS out of it on a loopback host. In a published build there is
+     * nothing to proxy through, so it addresses the issuer directly. Neither
+     * call carries a cookie, so the issuer needs only to answer this origin,
+     * not to trust it with credentials.
      */
     proxyBaseUrl: import.meta.env.DEV ? here : undefined,
   })
-
-  // On hanzo.team, `/v1/iam/login` and `/v1/iam/verification-codes` are served
-  // same-origin (avoiding cross-origin CORS preflight refusal on sessionRoutes),
-  // whereas `/v1/iam/oauth/token` and `/v1/iam/oauth/userinfo` live on the issuer
-  // (`https://hanzo.id`) with CORS enabled. Route the credential POSTs through
-  // `here` while keeping token and userinfo exchanges on `brand.issuer`.
-  const cfg = (engine as unknown as { config: { proxyBaseUrl?: string } }).config
-  const withSameOriginCredential = <A extends unknown[], R>(fn: (...args: A) => Promise<R>) =>
-    async (...args: A): Promise<R> => {
-      const prev = cfg.proxyBaseUrl
-      cfg.proxyBaseUrl = here
-      try {
-        return await fn(...args)
-      } finally {
-        cfg.proxyBaseUrl = prev
-      }
-    }
-
-  engine.loginWithPassword = withSameOriginCredential(engine.loginWithPassword.bind(engine))
-  engine.loginWithCode = withSameOriginCredential(engine.loginWithCode.bind(engine))
-  engine.sendLoginCode = withSameOriginCredential(engine.sendLoginCode.bind(engine))
 
   return engine
 }
