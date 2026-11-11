@@ -152,7 +152,9 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             onSelectOrg: (url: string) => choose(url),
             onCreateOrg: () => openConnectModal('create-org'),
             onConnectOrg: () => openConnectModal('connect'),
-            onAddAccount: () => depart(),
+            // hanzo.ai's account chooser, for this app's request: the person
+            // picks one of the accounts signed in there, or signs in as another.
+            onAddAccount: () => void depart('another'),
             onSettings: () => reach('/bots'),
             onSignOut: () => leave(),
           }}

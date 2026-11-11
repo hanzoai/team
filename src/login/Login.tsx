@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Button, Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
+import { useEffect, useRef, useState, type FormEvent, type ReactNode } from 'react'
+import { Button, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 
+import { address, type How, type Provider, type Way } from '~/data/away.ts'
 import { brand } from '~/data/brand.ts'
 import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
@@ -8,6 +9,7 @@ import { useSpace } from '~/data/space.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
+import { Points, Preview } from './Preview.tsx'
 import { cart, START } from './start.ts'
 
 /** Where the issuer returns a browser. Registered at IAM, so it is fixed. */
@@ -43,6 +45,24 @@ const CUSTOMERS = [
   { id: 'myle', name: 'Myle Tap', logo: '/logos/customers/myle-tap.png', href: `${SITE}/customers#myle-tap` },
   { id: 'keek', name: 'Personas Social', logo: '/logos/customers/keek-social.svg', href: `${SITE}/customers#keek-social` },
 ] as const
+
+/**
+ * The two providers the panel names, in hanzo.app's order, with their marks:
+ * simple-icons' paths (CC0), the same ones hanzo.app draws, filled in the
+ * button's own ink.
+ */
+const PROVIDERS: readonly (readonly [Provider, string, string])[] = [
+  [
+    'google',
+    'Google',
+    'M12.48 10.92v3.28h7.84c-.24 1.84-.853 3.187-1.787 4.133-1.147 1.147-2.933 2.4-6.053 2.4-4.827 0-8.6-3.893-8.6-8.72s3.773-8.72 8.6-8.72c2.6 0 4.507 1.027 5.907 2.347l2.307-2.307C18.747 1.44 16.133 0 12.48 0 5.867 0 .307 5.387.307 12s5.56 12 12.173 12c3.573 0 6.267-1.173 8.373-3.36 2.16-2.16 2.84-5.213 2.84-7.667 0-.76-.053-1.467-.173-2.053H12.48z',
+  ],
+  [
+    'github',
+    'GitHub',
+    'M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12',
+  ],
+]
 
 interface FooterLink {
   label: string
@@ -297,7 +317,9 @@ function HeroDots() {
     const draw = (ts: number) => {
       const t = (ts || 0) * 0.001
       ctx.clearRect(0, 0, w, h)
-      ctx.fillStyle = 'white'
+      // The scheme's ink, read off the canvas (its `color` is the foreground
+      // token), so the field is light dots on the dark ground and dark on the light.
+      ctx.fillStyle = getComputedStyle(cv).color
       const cols = Math.ceil(w / STEP)
       const rows = Math.ceil(h / STEP)
       const ox = (w - (cols - 1) * STEP) * 0.5
@@ -407,35 +429,57 @@ function HeroDots() {
         height: '100%',
         pointerEvents: 'none',
         zIndex: 0,
+        color: 'var(--foreground)',
       }}
     />
   )
 }
 
+/** Which control was pressed, so that one says it is working while the browser leaves. */
+type Press = 'nav' | 'open' | Provider | 'email' | 'signup'
+
 /**
- * Sign-in page for Hanzo Team (`hanzo.team`), matching `platform.hanzo.ai`:
- * top bar with `Hanzo Team` + quick links + `Contact sales` / `Log in`,
- * centered dynamic dot-grid hero + dark sign-in card, customer logo scroller,
- * and shared multi-column Hanzo footer.
+ * The signed-out page for Hanzo Team (`hanzo.team`), in hanzo.app's shape
+ * (hanzo-inc/app components/chat/ChatLanding.tsx): the top bar, then a first
+ * screen with the sign-in on the left (title, one line, the panel, the terms)
+ * and a picture of Team on the right with three lines about it, stacked into
+ * one column under 1280px; then the customer logo strip and the shared footer.
+ *
+ * Every signed-out visit lands here, the page a sign-out returns to included,
+ * and nothing leaves by itself. The panel LOOKS like a sign-in and takes no
+ * credential: signing in is hanzo.ai's, so every press leaves for hanzo.ai/login
+ * (or /signup) carrying this app's own request (`depart`, ~/data/away.ts), with
+ * the provider pressed or the address typed, and the person comes back signed
+ * in on /auth/callback. A password typed here would start a session only this
+ * host knows, which is the one thing this page exists not to do.
  */
 export const Login = () => {
-  const { standing, enter, post, confirm, depart } = useSession()
-  const [name, setName] = useState('')
-  const [secret, setSecret] = useState('')
-  const [code, setCode] = useState('')
-  const [sent, setSent] = useState(false)
-  const [busy, setBusy] = useState(false)
+  const { standing, depart } = useSession()
+  const [email, setEmail] = useState('')
+  const [busy, setBusy] = useState<Press | null>(null)
   const [refusal, setRefusal] = useState<string | null>(null)
 
   if (standing === 'in') return null
 
-  const attempt = (work: () => Promise<void>) => {
+  // Settles only when the request could not be made; otherwise the page is gone.
+  const go = (press: Press, way: Way, how?: How) => {
     setRefusal(null)
-    setBusy(true)
-    void work()
-      .catch((e: unknown) => setRefusal(e instanceof Error ? e.message : String(e)))
-      .finally(() => setBusy(false))
+    setBusy(press)
+    depart(way, how).catch((e: unknown) => {
+      setBusy(null)
+      setRefusal(e instanceof Error ? e.message : String(e))
+    })
   }
+
+  const withEmail = (e: FormEvent) => {
+    e.preventDefault()
+    const hint = address(email)
+    if (hint) go('email', 'login', { hint })
+    else setRefusal('Enter your email address.')
+  }
+
+  const working = busy !== null
+  const label = (press: Press, idle: string) => (busy === press ? 'One moment…' : idle)
 
   return (
     <YStack flex={1} bg={paint.ground} overflow="scroll">
@@ -491,175 +535,94 @@ export const Login = () => {
               Contact sales
             </SizableText>
           </Button>
-          <Button size="sm" rounded={round.field} onPress={depart}>
-            <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+          <Button size="sm" chromeless rounded={round.field} disabled={working} onPress={() => go('nav', 'login')}>
+            <SizableText size={rung.small} color={paint.ink}>
               Log in
+            </SizableText>
+          </Button>
+          <Button size="sm" rounded={round.field} disabled={working} onPress={() => go('open', 'login')}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+              {label('open', 'Open Hanzo Team')}
             </SizableText>
           </Button>
         </XStack>
       </XStack>
 
-      {/* Centered Dynamic Halftone Hero + Sign-In Card matching platform.hanzo.ai */}
-      <YStack
-        width="100%"
-        grow={1}
-        items="center"
-        justify="center"
-        px={gap.wide}
-        py={gap.edge}
-        bg={paint.ground}
-        borderBottomWidth={1}
-        borderColor={paint.rule}
-        style={{
-          position: 'relative',
-          overflow: 'hidden',
-        }}
-      >
+      {/* The first screen, as hanzo.app's: the sign-in on the left, Team on the right (tokens.css `.hz-signin`). */}
+      <main className="hz-signin">
         <HeroDots />
-        <YStack
-          width="100%"
-          maxW={520}
-          items="center"
-          gap={gap.inset}
-          py={gap.edge}
-          style={{ position: 'relative', zIndex: 1 }}
-        >
-          <SizableText
-            size={rung.title}
-            color={paint.ink}
-            fontWeight="600"
-            style={{ textAlign: 'center' }}
-          >
-            Sign in to {brand.title}
-          </SizableText>
+        <div className="hz-signin-row">
+          <div className="hz-signin-copy">
+            <h1 className="hz-signin-title">Sign in to Hanzo {brand.title}</h1>
+            <p className="hz-signin-line">AI cockpit, live streams, issue boards, channels, and bots for your team.</p>
 
-          <SizableText
-            size={rung.body}
-            color={paint.mute}
-            maxW={400}
-            style={{ textAlign: 'center' }}
-          >
-            AI cockpit, live streams, issue boards, channels, and bots for your team.
-          </SizableText>
+            <div className="hz-signin-panel">
+              <section className="hz-signin-sheet" data-slot="signin" aria-label="Log in">
+                <div className="hz-signin-pair">
+                  {PROVIDERS.map(([provider, name, path]) => (
+                    <button
+                      key={provider}
+                      type="button"
+                      className="hz-signin-btn"
+                      disabled={working}
+                      onClick={() => go(provider, 'login', { provider })}
+                    >
+                      <svg viewBox="0 0 24 24" aria-hidden="true">
+                        <path d={path} />
+                      </svg>
+                      {label(provider, `Continue with ${name}`)}
+                    </button>
+                  ))}
+                </div>
 
-          {/* Centered Dark Sign-In Card */}
-          <YStack
-            width="100%"
-            maxW={396}
-            mt={gap.inset}
-            p={gap.wide}
-            rounded={round.panel}
-            bg={paint.panel}
-            borderWidth={1}
-            borderColor={paint.rule}
-            gap={gap.inset}
-          >
-            <Button onPress={depart} rounded={round.field}>
-              <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-                Continue with Hanzo
-              </SizableText>
-            </Button>
+                <div className="hz-signin-or">or</div>
 
-            <XStack items="center" gap={gap.tight}>
-              <YStack flex={1} height={1} bg={paint.rule} />
-              <SizableText size={rung.chip} color={paint.dim}>
-                OR
-              </SizableText>
-              <YStack flex={1} height={1} bg={paint.rule} />
-            </XStack>
-
-            <YStack gap={gap.tight}>
-              <SizableText size={rung.small} color={paint.mute}>
-                Email
-              </SizableText>
-              <Input
-                value={name}
-                onChangeText={setName}
-                placeholder="name@company.com"
-                autoComplete="username"
-                rounded={round.field}
-              />
-              {sent ? (
-                <>
-                  <SizableText size={rung.small} color={paint.mute}>
-                    Verification code
-                  </SizableText>
-                  <Input
-                    value={code}
-                    onChangeText={setCode}
-                    placeholder="Enter the code sent to your email"
-                    autoComplete="one-time-code"
-                    rounded={round.field}
+                {/* The address goes to hanzo.ai as the request's `login_hint`; nothing is posted here. */}
+                <form className="hz-signin-form" onSubmit={withEmail} noValidate>
+                  <input
+                    className="hz-signin-field"
+                    type="email"
+                    aria-label="Email"
+                    autoComplete="username"
+                    placeholder="you@company.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    disabled={working}
+                    aria-invalid={refusal ? true : undefined}
                   />
-                </>
-              ) : (
-                <>
-                  <SizableText size={rung.small} color={paint.mute}>
-                    Password
-                  </SizableText>
-                  <Input
-                    value={secret}
-                    onChangeText={setSecret}
-                    placeholder="Password"
-                    secureTextEntry
-                    autoComplete="current-password"
-                    rounded={round.field}
-                  />
-                </>
-              )}
-            </YStack>
+                  {refusal ? (
+                    <p className="hz-signin-wrong" role="alert">
+                      {refusal}
+                    </p>
+                  ) : null}
+                  <button type="submit" className="hz-signin-btn" data-solid="" disabled={working}>
+                    {label('email', 'Continue with email')}
+                  </button>
+                </form>
 
-            {refusal ? (
-              <SizableText size={rung.small} color={paint.alert}>
-                {refusal}
-              </SizableText>
-            ) : null}
+                <button
+                  type="button"
+                  className="hz-signin-quiet"
+                  disabled={working}
+                  onClick={() => go('signup', 'signup')}
+                >
+                  {label('signup', 'New to Hanzo? Create account')}
+                </button>
+              </section>
 
-            <Button
-              disabled={busy || !name}
-              rounded={round.field}
-              onPress={() =>
-                attempt(() => (sent ? confirm(name, code) : enter(name, secret)))
-              }
-            >
-              {busy ? <Spinner /> : sent ? 'Sign in' : 'Continue'}
-            </Button>
+              <p className="hz-signin-terms">
+                By continuing, you agree to Hanzo’s <a href={`${SITE}/terms`}>Terms</a> and{' '}
+                <a href={`${SITE}/privacy`}>Privacy Policy</a>.
+              </p>
+            </div>
+          </div>
 
-            <XStack gap={gap.tight} justify="space-between" flexWrap="wrap">
-              <Button
-                chromeless
-                disabled={busy || !name}
-                onPress={() =>
-                  attempt(async () => {
-                    await post(name)
-                    setSent(true)
-                  })
-                }
-              >
-                <SizableText size={rung.small} color={paint.mute}>
-                  Email me a sign-in code instead
-                </SizableText>
-              </Button>
-              <Button
-                chromeless
-                onPress={() => window.location.assign('https://hanzo.ai/signup')}
-              >
-                <SizableText size={rung.small} color={paint.mute}>
-                  Create account
-                </SizableText>
-              </Button>
-            </XStack>
-
-            <SizableText
-              size={rung.chip}
-              color={paint.dim}
-              style={{ textAlign: 'center' }}
-            >
-              By continuing, you agree to Hanzo’s Terms of Service and Privacy Policy.
-            </SizableText>
-          </YStack>
-        </YStack>
-      </YStack>
+          <div className="hz-signin-figure">
+            <Preview />
+            <Points />
+          </div>
+        </div>
+      </main>
 
       {/* Companies building with the Hanzo API — Animated Marquee Scroller */}
       <YStack

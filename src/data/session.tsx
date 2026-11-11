@@ -11,16 +11,13 @@
  * which owns the PKCE round trip, the token store and the refresh. There is no
  * password check, no session of our own, no cookie we mint, and no second gate.
  *
- * Two ways in, and both end at the same exchange:
- *
- *   in place   `enter(name, secret)` posts the credential to IAM's login
- *              endpoint, which answers with a PKCE-BOUND authorization code on
- *              this app's own callback URL. `handleCallback(url)` then performs
- *              the ordinary RFC 7636 exchange against it. The password never
- *              reaches the token endpoint and the window never leaves.
- *   redirect   `depart()` hands the whole browser to the issuer. This is what
- *              runs when somebody would rather sign in at hanzo.id, and it is
- *              the fallback if the embedded endpoint is ever unavailable.
+ * One way in, and it is not on this origin. `depart()` sends the browser to
+ * hanzo.ai/login, the page everybody signs in on, carrying this app's own
+ * authorize request (./away.ts). hanzo.ai signs the person in, or answers from
+ * the session it already holds, and IAM returns the code to this app's
+ * /auth/callback, where `land()` performs the ordinary RFC 7636 exchange. No
+ * credential is typed here, so a session is only ever started on hanzo.ai and
+ * every Hanzo site on the web is answered by that one.
  */
 import {
   createContext,
@@ -33,6 +30,8 @@ import {
   type ReactNode,
 } from 'react'
 
+import { away, hinted, logout, type How, type Way } from './away.ts'
+import { brand, clientId } from './brand.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
 
@@ -53,14 +52,12 @@ export type Person = {
 export type Session = {
   standing: Standing
   who: Person | null
-  /** Sign in where the browser already is. Rejects with the issuer's reason. */
-  enter: (name: string, secret: string) => Promise<void>
-  /** Send a one-time code to an email or phone, for the passwordless way in. */
-  post: (destination: string) => Promise<void>
-  /** Finish the passwordless way in. */
-  confirm: (destination: string, code: string) => Promise<void>
-  /** Hand the browser to the issuer instead. */
-  depart: () => void
+  /**
+   * Leave for hanzo.ai to sign in (or make an account, or choose another one)
+   * with this app's own request. Rejects only when the request cannot be made,
+   * such as a browser that keeps no storage for the PKCE verifier.
+   */
+  depart: (way?: Way, how?: How) => Promise<void>
   /** End the session where it lives. */
   leave: () => void
   /** Complete a redirect sign-in on the callback route; answers where to go. */
@@ -150,61 +147,43 @@ export const Session = ({ children }: { children: ReactNode }) => {
     })()
   }, [adopt, drop])
 
-  const enter = useCallback(
-    async (name: string, secret: string) => {
-      try {
-        const url = await iam().loginWithPassword(name, secret)
-        await iam().handleCallback(url)
-        await adopt()
-      } catch (e: unknown) {
-        const msg = e instanceof Error ? e.message : String(e)
-        if (
-          msg.includes('Failed to fetch') ||
-          msg.includes('NetworkError') ||
-          msg.includes('(404)') ||
-          msg.includes('(405)')
-        ) {
-          keepHere()
-          await iam().signinRedirect({ additionalParams: { login_hint: name } })
-          return
-        }
-        throw e
-      }
-    },
-    [adopt],
-  )
-
-  const post = useCallback((destination: string) => iam().sendLoginCode(destination), [])
-
-  const confirm = useCallback(
-    async (destination: string, code: string) => {
-      const url = await iam().loginWithCode(destination, code)
-      await iam().handleCallback(url)
-      await adopt()
-    },
-    [adopt],
-  )
-
-  const depart = useCallback(() => {
+  /**
+   * The SDK builds the authorize address and keeps the PKCE verifier and state
+   * in this origin's storage, exactly as its own redirect would, so `land`
+   * redeems the code hanzo.ai sends back like any other. Only the query leaves
+   * (./away.ts). REPLACE, as the SDK's redirect does, so the trip occupies the
+   * one history entry the page that started it had.
+   *
+   * An address typed on the panel goes INTO the request (`login_hint`), where
+   * the SDK puts any parameter of its own; a provider pressed there rides beside
+   * it for hanzo.ai's page, as one named in this page's own address does.
+   */
+  const depart = useCallback(async (way: Way = 'login', how: How = {}) => {
     keepHere()
-    void iam().signinRedirect()
+    const own = await iam().getSigninUrl(hinted(how.hint))
+    const provider = how.provider ?? new URLSearchParams(window.location.search).get('provider')
+    window.location.replace(away(own, way, provider))
   }, [])
 
   /**
-   * Sign out where the session actually lives.
+   * Sign out where the session actually lives, and come back here.
    *
-   * The issuer holds it — its own cookie, plus the refresh token this browser
-   * stores — so ending it means handing the whole browser back. The navigation
-   * is the point: the issuer's cookie is `SameSite=Lax` and rides a document
-   * navigation while being withheld from a cross-site fetch, so clearing only
-   * the local copy leaves the issuer still recognising this browser and the
-   * next sign-in is silent.
+   * Not on this origin: this app signed in on hanzo.ai, so what answers it is
+   * IAM's session there and on hanzo.id, plus the tokens this browser stores.
+   * The tokens go back first, naming the client they were minted for (this
+   * brand's, `clientId`), since a revocation is checked against the client
+   * that asks (RFC 7009 §2.1). Then the whole browser visits the issuer's
+   * logout (./away.ts `logout`), which ends the session on every origin IAM
+   * signs in on and returns to this app's front page, signed out. The
+   * navigation is the point: the session cookie is `SameSite=Lax` and rides a
+   * document navigation while being withheld from a cross-site fetch, so
+   * clearing only the local copy leaves IAM still recognising this browser and
+   * the next sign-in is silent.
    */
   const leave = useCallback(() => {
     const client = iam()
     const access = client.getAccessToken()
     const refresh = client.getRefreshToken()
-    const idToken = client.getIdToken()
     client.clearTokens()
     drop()
     void (async () => {
@@ -217,29 +196,13 @@ export const Session = ({ children }: { children: ReactNode }) => {
               'Content-Type': 'application/x-www-form-urlencoded',
               ...(access ? { Authorization: `Bearer ${access}` } : {}),
             },
-            body: new URLSearchParams({ token, token_type_hint: hint, client_id: 'hanzo-team' }).toString(),
+            body: new URLSearchParams({ token, token_type_hint: hint, client_id: clientId }).toString(),
           }).catch(() => undefined)
         }
         await revoke(refresh, 'refresh_token')
         await revoke(access, 'access_token')
-        await fetch('/v1/iam/oauth/logout', {
-          method: 'POST',
-          credentials: 'include',
-          redirect: 'manual',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({
-            client_id: 'hanzo-team',
-            everywhere: 'true',
-            ...(idToken ? { id_token_hint: idToken } : {}),
-          }).toString(),
-        }).catch(() => undefined)
       } finally {
-        const back = `${window.location.origin}/login?from=logout`
-        if (window.location.hostname === 'hanzo.team' || window.location.hostname.endsWith('.hanzo.team')) {
-          window.location.assign(`https://hanzo.ai/auth/logout?${new URLSearchParams({ to: back })}`)
-        } else {
-          window.location.assign('/login?from=logout')
-        }
+        window.location.assign(logout(brand.issuer, clientId, window.location.origin))
       }
     })()
   }, [drop])
@@ -253,8 +216,8 @@ export const Session = ({ children }: { children: ReactNode }) => {
   }, [adopt])
 
   const value = useMemo<Session>(
-    () => ({ standing, who, enter, post, confirm, depart, leave, land }),
-    [standing, who, enter, post, confirm, depart, leave, land],
+    () => ({ standing, who, depart, leave, land }),
+    [standing, who, depart, leave, land],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>
