@@ -31,7 +31,7 @@
     "@hanzo/font": "1.9.3",
     "@hanzo/gui": "8.3.5",
     "@hanzo/iam": "0.21.18",
-    "@hanzo/ui": "8.32.1",
+    "@hanzo/ui": "8.32.2",
     "@hanzogui/lucide-icons-2": "8.3.5",
     "@hanzogui/next-theme": "8.3.5",
     "react": "19.2.8",
