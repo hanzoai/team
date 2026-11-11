@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { Button, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
-import { SignInPanel } from '@hanzo/ui/auth'
+import { SignInPanel } from '@hanzo/ui/auth/panel'
 
 import { type Way } from '~/data/away.ts'
 import { brand } from '~/data/brand.ts'
