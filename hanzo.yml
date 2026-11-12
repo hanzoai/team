@@ -1,4 +1,4 @@
-# Hanzo CI/CD — hanzo.team. All real config is here; .hanzo/workflows/cicd.yml is
+# Hanzo CI/CD — hanzo.team. All real config is here; .github/workflows/cicd.yml is
 # triggers and an import of hanzoai/ci.
 
 test:
@@ -7,6 +7,14 @@ test:
       set -e
       corepack enable
       pnpm install --frozen-lockfile
+
+  # The unit suite (src/**/*.test.ts) used to run only in publish.yml, after a
+  # merge to main and only when the version was ahead of npm, so a PR could
+  # break it and stay green here. It is 65 tests in about a second.
+  - name: test
+    run: |
+      set -e
+      pnpm test
 
   # `pnpm build` is `tsc --noEmit && vite build`. A vite build that emits
   # nothing still exits 0, hence the file test.
