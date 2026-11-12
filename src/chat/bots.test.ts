@@ -1,7 +1,7 @@
 import { deepEqual, equal } from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { botIn, botsOf, withId, withPath } from './bots.ts'
+import { botIn, botPath, botsOf, withId, withPath } from './bots.ts'
 import { lines, markup } from './text.ts'
 
 const roster = [
@@ -17,8 +17,17 @@ test('a conversation with somebody has an address and the address names them', (
   equal(withId(undefined), undefined)
 })
 
+test('a bot is talked to in the Bots app, open on it by name', () => {
+  equal(botPath(roster[1]!), '/bots?bot=Dev')
+  equal(botPath({ name: 'Inbox Manager' }), '/bots?bot=Inbox%20Manager')
+})
+
 test('bots are the agents on the roster, by name', () => {
   deepEqual(botsOf(roster).map((p) => p.name), ['Cyber', 'Dev'])
+})
+
+test('a deleted agent is not offered as a bot', () => {
+  deepEqual(botsOf([...roster, { id: 'u-5', name: 'Gone', bot: true, gone: true }]).map((p) => p.name), ['Cyber', 'Dev'])
 })
 
 test('the agent in a direct message is the member who is one', () => {

@@ -11,10 +11,10 @@
  * being a place you go, so it has no address and no slot of its own — the bell
  * toggles it.
  *
- * The order is the rail's: chat, tracker, CRM, with the bell above them and the
+ * The order is the rail's: chat, bots, tracker, CRM, with the bell above them and the
  * add control below.
  */
-import { Briefcase, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { Bot, Briefcase, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
 
 /** Any glyph from the icon set. Named off one of them, because the set's own
  *  component type is not exported and restating it here would be a second
@@ -34,6 +34,7 @@ export type Surface = {
 
 export const SURFACES: readonly Surface[] = [
   { id: 'chat', label: 'Chat', icon: MessagesSquare, path: '/chat' },
+  { id: 'bots', label: 'Bots', icon: Bot, path: '/bots' },
   { id: 'tracker', label: 'Tracker', icon: SquareCheck, path: '/issues' },
   { id: 'crm', label: 'CRM', icon: Briefcase, path: '/crm' },
 ]

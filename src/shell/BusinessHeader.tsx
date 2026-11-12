@@ -50,7 +50,7 @@ import {
   Users,
 } from '@hanzogui/lucide-icons-2'
 import { BrandMark, OrgMark, ThemeToggle } from '@hanzo/ui/product'
-import { botsOf, withPath } from '~/chat/bots.ts'
+import { botPath, botsOf } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, round, state } from '~/theme/theme.ts'
 
@@ -402,7 +402,7 @@ export function BusinessHeader({
       kind: 'bot' as const,
       label: p.name,
       desc: 'Agent',
-      path: withPath(p),
+      path: botPath(p),
     }))
     const channelItems = rooms
       .filter((r) => r.kind === 'channel')

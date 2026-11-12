@@ -171,7 +171,7 @@ const fallback = {
  * in place on a loopback host that hanzo.id does not answer with
  * `Access-Control-Allow-Credentials`.
  */
-const API = 'https://api.hanzo.ai'
+const API = process.env.HANZO_API_ORIGIN || 'https://api.hanzo.ai'
 const FORGE = 'https://git.hanzo.ai'
 
 const config = hanzo(
