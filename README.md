@@ -17,6 +17,7 @@ Regions, and who owns which:
 | `src/tracker` | the head — trail, title, views, filter — and the board under it |
 | `src/inbox` | the notification panel's contents |
 | `src/chat` | the channel surface |
+| `src/bots` | the Bots surface: @hanzo/app's Bots, the app hanzo.bot draws |
 
 `src/shell/surfaces.ts` is the one declaration of what the product contains: a
 surface is one entry there and is thereafter a rail icon, a navigator and a set

@@ -1,10 +1,11 @@
 /**
  * Which org a person is acting in, and which space they are looking at.
  *
- * The org is NEVER something this app decides or sends. `X-Org-Id` is stripped
- * at the gateway, so a header would be discarded even if one were set; the
- * tenant is read on the server from the token's signed membership set. What
- * the client holds is the org that came BACK with a space — `SpaceRow.org` —
+ * The org is NEVER something this app decides on its own. The tenant is read on
+ * the server from the token's signed membership set: the gateway honours an
+ * `X-Org-Id` only when it names an org the caller belongs to, and the Bots
+ * surface sends the open space's org that way (src/bots). What the client
+ * holds is the org that came BACK with a space — `SpaceRow.org` —
  * so choosing a space is how a person changes org, and there is no second way
  * to do it. Somebody in two orgs sees both orgs' spaces in one list, and the
  * one they open decides who they are acting as.

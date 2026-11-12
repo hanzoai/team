@@ -11,7 +11,7 @@ import { openConnectModal } from '~/shell/ConnectOrgModal.tsx'
 import { PAD } from '~/shell/measure.ts'
 import { Find, Group, Nav as Column, press, Roll, Row, Rule, surfaceAt } from '~/shell'
 import { round, rung } from '~/theme/theme'
-import { botIn, botsOf, withPath } from './bots.ts'
+import { botPath, botsOf } from './bots.ts'
 import { titled, type Person, type Room } from './chat.ts'
 import { Face } from './Face.tsx'
 import { usePeople, useRooms } from './read.ts'
@@ -31,7 +31,8 @@ export function Channels() {
   const channels = shown.filter((r) => r.kind === 'channel')
   const internalChannels = channels.filter((r) => !r.connectedOrgs || r.connectedOrgs.length === 0)
   const connectChannels = channels.filter((r) => r.connectedOrgs && r.connectedOrgs.length > 0)
-  const directs = shown.filter((r) => r.kind === 'direct' && !botIn(r, roster))
+  // A conversation with a bot from before the Bots app keeps its place here.
+  const directs = shown.filter((r) => r.kind === 'direct')
   const shownBots = botsOf(roster).filter((p) => !q || p.name.toLowerCase().includes(q))
 
   return (
@@ -119,8 +120,7 @@ export function Channels() {
             </Group>
             {botsOpen
               ? shownBots.map((bot) => {
-                  const to = withPath(bot)
-                  const here = pathname === to
+                  const to = botPath(bot)
                   return (
                     <XStack
                       key={bot.id}
@@ -131,7 +131,7 @@ export function Channels() {
                       gap={10}
                       items="center"
                       rounded={round.field}
-                      bg={here ? '$hover' : 'transparent'}
+                      bg="transparent"
                       hoverStyle={{ background: '$hover' }}
                     >
                       <Face person={bot} size={26} />

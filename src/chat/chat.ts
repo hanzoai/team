@@ -60,7 +60,7 @@ export type Message = {
 export type Reaction = { id: string; message: string; emoji: string; by: string }
 
 /** What to call somebody, and what to draw for them. */
-export type Person = { id: string; name: string; avatar?: string; bot?: boolean }
+export type Person = { id: string; name: string; avatar?: string; bot?: boolean; gone?: boolean }
 
 type Doc = Record<string, unknown>
 
@@ -180,6 +180,13 @@ const positionOf = (d: Doc): string => {
   return str(d.position) || (mixin && typeof mixin === 'object' ? str((mixin as Doc).position) : '')
 }
 
+/** The Employee mixin's `active`, wherever the store put the mixin; undefined where none is stated. */
+const activeOf = (d: Doc): boolean | undefined => {
+  const mixin = d['contact:mixin:Employee']
+  const v = mixin && typeof mixin === 'object' ? (mixin as Doc).active : d.active
+  return typeof v === 'boolean' ? v : undefined
+}
+
 /** The roster, so a message can be drawn with a name instead of a uuid. */
 export const people = async (plane: Plane): Promise<Person[]> => {
   const docs = await plane.find<Doc>(Class.person)
@@ -189,6 +196,8 @@ export const people = async (plane: Plane): Promise<Person[]> => {
     avatar: str(d.avatar) || undefined,
     // The server projects an agent member with the position `Agent` (cloud apps/team projections.go).
     bot: positionOf(d) === 'Agent' || undefined,
+    // A member the server deactivated: a deleted agent stays a Person, marked inactive.
+    gone: activeOf(d) === false || undefined,
   }))
 }
 

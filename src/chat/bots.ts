@@ -13,13 +13,20 @@ const WITH = 'with-'
 /** The address of a conversation with somebody on the roster. */
 export const withPath = (person: Pick<Person, 'id'>): string => `/chat/${WITH}${person.id}`
 
+/**
+ * Where a bot is talked to: the Bots app, the same one hanzo.bot draws, open on
+ * it. A bot on the roster is a cloud agent under the same name (the server
+ * folds `/v1/agents` into the roster), so its conversation is that agent's.
+ */
+export const botPath = (bot: Pick<Person, 'name'>): string => `/bots?bot=${encodeURIComponent(bot.name)}`
+
 /** The person a `with-<uuid>` address names, if it names one. */
 export const withId = (id: string | undefined): string | undefined =>
   id?.startsWith(WITH) ? id.slice(WITH.length) : undefined
 
-/** Every agent on the roster, by name. */
+/** Every agent on the roster that is still one, by name. A deleted agent stays a Person, marked gone. */
 export const botsOf = (roster: readonly Person[]): Person[] =>
-  roster.filter((p) => p.bot).sort((a, b) => a.name.localeCompare(b.name))
+  roster.filter((p) => p.bot && !p.gone).sort((a, b) => a.name.localeCompare(b.name))
 
 /** The agent in a direct message, if one of its members is an agent. */
 export const botIn = (room: Pick<Room, 'kind' | 'members'>, roster: readonly Person[]): Person | undefined =>
