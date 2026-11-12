@@ -17,6 +17,7 @@
  */
 import { body, decode, encode, frame, Kind } from './zap.ts'
 import { enter, type Entry } from './account.ts'
+import { rows } from './rows.ts'
 
 /** What the plane is doing, so a screen can say so rather than look empty. */
 export type Standing = 'idle' | 'opening' | 'live' | 'lost'
@@ -114,12 +115,11 @@ export class Socket implements Plane {
   }
 
   async find<T>(cls: string, query: Record<string, unknown> = {}, options: Record<string, unknown> = {}) {
-    return (await this.call<T[]>('findAll', [cls, query, options])) ?? []
+    return rows<T>(await this.call<unknown>('findAll', [cls, query, options]))
   }
 
   async one<T>(cls: string, query: Record<string, unknown>) {
-    const rows = await this.find<T>(cls, query, { limit: 1 })
-    return rows[0]
+    return (await this.find<T>(cls, query, { limit: 1 }))[0]
   }
 
   async write(tx: Wire): Promise<void> {
