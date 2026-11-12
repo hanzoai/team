@@ -67,27 +67,17 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     go(path)
   }
 
-  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
+  const orgs = all
   const activeOrg = current ?? orgs[0]
-  const currentAppId = pathname.startsWith('/crm')
-    ? 'crm'
-    : pathname.startsWith('/bots')
-      ? 'bots'
-      : pathname.startsWith('/calendar')
-        ? 'cal'
-        : 'team'
+  const currentAppId = pathname.startsWith('/crm') ? 'crm' : 'team'
 
   const handleSelectApp = (app: BusinessAppItem) => {
     if (app.id === 'crm') {
-      go('/crm/opportunities')
+      go('/crm/investors')
     } else if (app.id === 'team' || app.id === 'work') {
       go('/issues')
     } else if (app.id === 'chat') {
-      go('/chat/c-general')
-    } else if (app.id === 'bots') {
-      go('/bots')
-    } else if (app.id === 'cal') {
-      go('/calendar')
+      go('/chat')
     } else if (typeof window !== 'undefined') {
       window.location.href = app.href
     }
@@ -99,18 +89,18 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         name: who.label || who.name,
         email: who.email,
         avatar: who.avatar,
-        owner: activeOrg?.org ?? 'hanzo',
+        owner: activeOrg?.org ?? '',
       }
     : {
-        sub: 'zeekay',
-        name: 'Zach Kelling',
-        email: 'z@hanzo.ai',
-        owner: 'hanzo',
+        sub: '',
+        name: '',
+        email: '',
+        owner: '',
       }
 
   const currentOrgInfo = {
-    name: activeOrg?.url ?? 'hanzo',
-    displayName: activeOrg?.name ?? 'Hanzo AI',
+    name: activeOrg?.url ?? '',
+    displayName: activeOrg?.name ?? '',
   }
   const orgList = orgs.map((s) => ({ name: s.url, displayName: s.name }))
 
@@ -122,7 +112,6 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         currentOrg={currentOrgInfo}
         orgs={orgList}
         onSelectOrg={(url: string) => choose(url)}
-        onCreateOrg={() => openConnectModal('create-org')}
         onSelectApp={handleSelectApp}
         onNavigate={reach}
         user={userIdentity}
@@ -150,12 +139,10 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             currentOrg: currentOrgInfo,
             orgs: orgList,
             onSelectOrg: (url: string) => choose(url),
-            onCreateOrg: () => openConnectModal('create-org'),
             onConnectOrg: () => openConnectModal('connect'),
             // hanzo.ai's account chooser, for this app's request: the person
             // picks one of the accounts signed in there, or signs in as another.
             onAddAccount: () => void depart('another'),
-            onSettings: () => reach('/bots'),
             onSignOut: () => leave(),
           }}
         />

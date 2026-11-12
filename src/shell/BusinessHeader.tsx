@@ -50,7 +50,8 @@ import {
   Users,
 } from '@hanzogui/lucide-icons-2'
 import { BrandMark, OrgMark, ThemeToggle } from '@hanzo/ui/product'
-import { HANZO_AGENTS } from '~/data/agents.ts'
+import { botsOf, withPath } from '~/chat/bots.ts'
+import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, round, state } from '~/theme/theme.ts'
 
 function displayName(name?: string, email?: string): string {
@@ -347,23 +348,10 @@ export function buildSeamlessAppUrl(
   }
 }
 
-const JUMP_CHANNELS = [
-  { id: 'c-general', label: '#general', desc: 'Company-wide announcements & updates', path: '/chat/c-general' },
-  { id: 'c-hanzo-revenue', label: '#hanzo-revenue', desc: 'Live checkouts, orders, subscriptions & deals', path: '/chat/c-hanzo-revenue' },
-  { id: 'c-feedback', label: '#feedback', desc: 'Inbound leads, form submits, feedback & bug reports', path: '/chat/c-feedback' },
-  { id: 'c-hanzo-support', label: '#hanzo-support', desc: 'Customer support & triage', path: '/chat/c-hanzo-support' },
-  { id: 'c-errors', label: '#errors', desc: 'Runtime faults, Sentry exceptions & CLI errors', path: '/chat/c-errors' },
-  { id: 'c-hanzo-ui', label: '#hanzo-ui', desc: 'Design system & GUI components', path: '/chat/c-hanzo-ui' },
-]
-
+/** What the omnibar can open besides rooms and bots: surfaces that have real data. */
 const JUMP_SURFACES = [
-  { id: 'overview', label: 'AI Cockpit — Live Business Command Center', desc: '24/7 AI C-Suite + realtime checkouts, leads, form submits & telemetry', path: '/overview' },
   { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
-  { id: 'crm-opp', label: 'CRM — Opportunities', desc: 'Pipeline deals & revenue stages', path: '/crm/opportunities' },
-  { id: 'crm-inv', label: 'CRM — Investors (346K)', desc: 'Institutional VCs, angels & funds', path: '/crm/investors' },
-  { id: 'crm-leads', label: 'CRM — Developer Leads (13.48M)', desc: 'GitHub developer cohorts by stars', path: '/crm/leads' },
-  { id: 'bots', label: 'Bots — 24/7 Autonomous Agents', desc: 'Configure schedules, models & triggers', path: '/bots' },
-  { id: 'apps', label: 'Apps — Hanzo Business Suite', desc: 'All connected Hanzo applications', path: '/apps' },
+  { id: 'projects', label: 'Projects', desc: 'Every project in this space', path: '/projects' },
 ]
 
 export function BusinessHeader({
@@ -405,23 +393,27 @@ export function BusinessHeader({
     return () => window.removeEventListener('keydown', onKey)
   }, [])
 
+  const roster = usePeople().data ?? []
+  const rooms = useRooms().data ?? []
   const filteredResults = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const botItems = HANZO_AGENTS.map((a) => ({
-      id: `bot-${a.id}`,
+    const botItems = botsOf(roster).map((p) => ({
+      id: `bot-${p.id}`,
       kind: 'bot' as const,
-      label: `${a.name} — ${a.role}`,
-      desc: a.status,
-      path: `/chat/dm-${a.id}`,
+      label: p.name,
+      desc: 'Agent',
+      path: withPath(p),
     }))
-    const channelItems = JUMP_CHANNELS.map((c) => ({ ...c, kind: 'channel' as const }))
+    const channelItems = rooms
+      .filter((r) => r.kind === 'channel')
+      .map((r) => ({ id: r.id, kind: 'channel' as const, label: `#${r.name}`, desc: r.topic ?? '', path: `/chat/${r.id}` }))
     const surfaceItems = JUMP_SURFACES.map((s) => ({ ...s, kind: 'surface' as const }))
     const all = [...surfaceItems, ...channelItems, ...botItems]
     if (!q) return all.slice(0, 12)
     return all
       .filter((item) => item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q))
       .slice(0, 14)
-  }, [query])
+  }, [query, roster, rooms])
 
   const handleLaunchApp = (app: BusinessAppItem) => {
     setAppMenuOpen(false)
@@ -823,7 +815,7 @@ export function BusinessHeader({
                       fontSize={13}
                       borderWidth={0}
                       bg="transparent"
-                      placeholder="Jump to a channel, 24/7 bot, issue board, or CRM view…"
+                      placeholder="Jump to a channel, bot or issue board…"
                       value={query}
                       onChangeText={setQuery}
                       autoFocus

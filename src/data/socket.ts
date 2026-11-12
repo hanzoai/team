@@ -33,11 +33,8 @@ const BACKOFF = [500, 1_000, 2_000, 5_000, 10_000, 20_000]
 /**
  * The space's data plane, as everything above it sees one.
  *
- * Two things implement it: `Socket`, which is the real connection, and the
- * stand in `fixture.ts`, which answers a fixed world so every screen can be
- * entered in a state on purpose rather than in whichever one the server
- * happened to produce. Naming the concept is what lets those two be the same
- * shape without either knowing about the other.
+ * `Socket` is the one implementation: the real connection. Naming the concept
+ * keeps the screens ignorant of the transport.
  */
 export interface Plane {
   readonly standing: Standing

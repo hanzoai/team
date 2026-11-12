@@ -4,7 +4,6 @@ import { SignInPanel } from '@hanzo/ui/auth/panel'
 
 import { type Way } from '~/data/away.ts'
 import { brand } from '~/data/brand.ts'
-import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
@@ -727,7 +726,6 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
 
   if (window.location.pathname === CALLBACK) return <Callback />
   if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
-  if (fixture.on) return <>{children}</>
   if (session === 'unknown') return <Waiting />
   if (session === 'out') return <Login />
 

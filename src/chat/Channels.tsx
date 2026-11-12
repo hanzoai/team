@@ -1,19 +1,20 @@
 /**
- * THE CHAT NAVIGATOR — channels, the 12 lead agents in a 2-column grid (matching
- * Hanzo Bot), and the 22 specialist 24/7 autonomous bots.
+ * THE CHAT NAVIGATOR — channels, the space's bots, and direct messages. The
+ * bots are the agents on the roster the server returns, nothing else.
  */
 import { SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 import { Hash, Lock, Plus, Share2 } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
-import { BOT_AGENTS, HANZO_AGENTS, LEAD_AGENTS, type AgentPreset } from '~/data/agents.ts'
 import { openConnectModal } from '~/shell/ConnectOrgModal.tsx'
 import { PAD } from '~/shell/measure.ts'
 import { Find, Group, Nav as Column, press, Roll, Row, Rule, surfaceAt } from '~/shell'
 import { round, rung } from '~/theme/theme'
-import type { Room } from './chat.ts'
-import { useRooms } from './read.ts'
+import { botIn, botsOf, withPath } from './bots.ts'
+import { titled, type Person, type Room } from './chat.ts'
+import { Face } from './Face.tsx'
+import { usePeople, useRooms } from './read.ts'
 
 export function Channels() {
   const { pathname } = useLocation()
@@ -22,21 +23,16 @@ export function Channels() {
   const [channelsOpen, setChannelsOpen] = useState(true)
   const [connectOpen, setConnectOpen] = useState(true)
   const [botsOpen, setBotsOpen] = useState(true)
-  const [leadsOpen, setLeadsOpen] = useState(true)
   const load = useRooms()
+  const roster = usePeople().data ?? []
   const all = load.data ?? []
   const q = query.trim().toLowerCase()
   const shown = q ? all.filter((r) => r.name.toLowerCase().includes(q)) : all
   const channels = shown.filter((r) => r.kind === 'channel')
   const internalChannels = channels.filter((r) => !r.connectedOrgs || r.connectedOrgs.length === 0)
   const connectChannels = channels.filter((r) => r.connectedOrgs && r.connectedOrgs.length > 0)
-  const directs = shown.filter((r) => r.kind === 'direct' && !r.id.startsWith('dm-'))
-  const shownLeads = q
-    ? LEAD_AGENTS.filter((a) => `${a.name} ${a.role} ${a.department}`.toLowerCase().includes(q))
-    : LEAD_AGENTS
-  const shownBots = q
-    ? BOT_AGENTS.filter((a) => `${a.name} ${a.role} ${a.department} ${a.status}`.toLowerCase().includes(q))
-    : BOT_AGENTS
+  const directs = shown.filter((r) => r.kind === 'direct' && !botIn(r, roster))
+  const shownBots = botsOf(roster).filter((p) => !q || p.name.toLowerCase().includes(q))
 
   return (
     <Column title={surfaceAt(pathname)?.label ?? 'Chat'}>
@@ -53,14 +49,13 @@ export function Channels() {
 
         {load.phase === 'failure' ? <Note>Your rooms could not be read.</Note> : null}
 
-        {load.phase === 'ready' && all.length === 0 && shownLeads.length === 0 ? (
+        {load.phase === 'ready' && all.length === 0 && shownBots.length === 0 ? (
           <Note>No rooms yet.</Note>
         ) : null}
 
         {load.phase === 'ready' &&
         all.length > 0 &&
         shown.length === 0 &&
-        shownLeads.length === 0 &&
         shownBots.length === 0 ? (
           <Note>{`Nothing matches “${query.trim()}”.`}</Note>
         ) : null}
@@ -75,7 +70,7 @@ export function Channels() {
               Channels
             </Group>
             {channelsOpen
-              ? internalChannels.map((r) => <Line key={r.id} room={r} />)
+              ? internalChannels.map((r) => <Line key={r.id} room={r} roster={roster} />)
               : null}
           </>
         ) : null}
@@ -93,7 +88,7 @@ export function Channels() {
             {connectOpen ? (
               <>
                 {connectChannels.map((r) => (
-                  <Line key={r.id} room={r} />
+                  <Line key={r.id} room={r} roster={roster} />
                 ))}
                 <XStack
                   {...press(() => openConnectModal('connect'), 'Connect external organization channel')}
@@ -119,21 +114,17 @@ export function Channels() {
         {shownBots.length > 0 ? (
           <>
             <Rule />
-            <Group
-              count={shownBots.length}
-              open={botsOpen}
-              onToggle={() => setBotsOpen((v) => !v)}
-            >
-              Bots · 24/7
+            <Group count={shownBots.length} open={botsOpen} onToggle={() => setBotsOpen((v) => !v)}>
+              Bots
             </Group>
             {botsOpen
-              ? shownBots.map((agent) => {
-                  const to = `/chat/dm-${agent.id}`
+              ? shownBots.map((bot) => {
+                  const to = withPath(bot)
                   const here = pathname === to
                   return (
                     <XStack
-                      key={agent.id}
-                      {...press(() => navigate(to), `${agent.name} — ${agent.role}`)}
+                      key={bot.id}
+                      {...press(() => navigate(to), bot.name)}
                       px={PAD - 2}
                       py={6}
                       mx={4}
@@ -143,92 +134,14 @@ export function Channels() {
                       bg={here ? '$hover' : 'transparent'}
                       hoverStyle={{ background: '$hover' }}
                     >
-                      <YStack position="relative" shrink={0}>
-                        <AgentFace agent={agent} size={30} />
-                        <YStack
-                          position="absolute"
-                          b={-1}
-                          r={-1}
-                          width={8}
-                          height={8}
-                          rounded={round.pill}
-                          bg="$ink"
-                          borderWidth={1.5}
-                          borderColor="$background"
-                        />
-                      </YStack>
-                      <YStack flex={1} minW={0} gap={1}>
-                        <XStack items="baseline" gap={6} minW={0}>
-                          <SizableText
-                            fontSize={rung.body}
-                            fontWeight="600"
-                            color={here ? '$ink' : '$ink'}
-                            shrink={0}
-                          >
-                            {agent.name}
-                          </SizableText>
-                          <SizableText
-                            fontSize={rung.chip}
-                            color="$soft"
-                            numberOfLines={1}
-                            flex={1}
-                          >
-                            {agent.role}
-                          </SizableText>
-                        </XStack>
-                        <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
-                          {agent.status}
-                        </SizableText>
-                      </YStack>
+                      <Face person={bot} size={26} />
+                      <SizableText fontSize={rung.body} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
+                        {bot.name}
+                      </SizableText>
                     </XStack>
                   )
                 })
               : null}
-          </>
-        ) : null}
-
-        {shownLeads.length > 0 ? (
-          <>
-            <Rule />
-            <Group
-              count={shownLeads.length}
-              open={leadsOpen}
-              onToggle={() => setLeadsOpen((v) => !v)}
-            >
-              Team Leads
-            </Group>
-            {leadsOpen ? (
-              <XStack px={PAD - 4} pt={4} pb={6} flexWrap="wrap" rowGap={6} columnGap={4}>
-                {shownLeads.map((agent) => {
-                  const to = `/chat/dm-${agent.id}`
-                  const here = pathname === to
-                  return (
-                    <YStack
-                      key={agent.id}
-                      {...press(() => navigate(to), `${agent.name} — ${agent.role}`)}
-                      width="31%"
-                      py={5}
-                      px={4}
-                      rounded={round.field}
-                      items="center"
-                      gap={3}
-                      bg={here ? '$hover' : 'transparent'}
-                      hoverStyle={{ background: '$hover' }}
-                    >
-                      <AgentFace agent={agent} size={34} />
-                      <SizableText
-                        fontSize={rung.chip}
-                        fontWeight={here ? '600' : '500'}
-                        color={here ? '$ink' : '$quiet'}
-                        numberOfLines={1}
-                      >
-                        {agent.name}
-                      </SizableText>
-                    </YStack>
-                  )
-                })}
-              </XStack>
-            ) : null}
           </>
         ) : null}
 
@@ -237,7 +150,7 @@ export function Channels() {
             <Rule />
             <Group count={directs.length}>Direct</Group>
             {directs.map((r) => (
-              <Line key={r.id} room={r} />
+              <Line key={r.id} room={r} roster={roster} />
             ))}
           </>
         ) : null}
@@ -246,41 +159,15 @@ export function Channels() {
   )
 }
 
-const AgentFace = ({ agent, size }: { agent: AgentPreset; size: number }) => (
-  <YStack
-    width={size}
-    height={size}
-    rounded={round.pill}
-    overflow="hidden"
-    bg="$panel"
-    borderWidth={1}
-    borderColor="$edge"
-    items="center"
-    justify="center"
-    shrink={0}
-  >
-    <img
-      src={agent.avatar}
-      alt={agent.name}
-      width={size}
-      height={size}
-      style={{ width: size, height: size, objectFit: 'cover', display: 'block' }}
-    />
-  </YStack>
-)
-
-const Line = ({ room }: { room: Room }) => {
-  const agent = room.id.startsWith('dm-')
-    ? HANZO_AGENTS.find((a) => `dm-${a.id}` === room.id)
-    : undefined
+const Line = ({ room, roster }: { room: Room; roster: readonly Person[] }) => {
   const label =
     room.connectedOrgs && room.connectedOrgs.length > 0
       ? `${room.name} · ${room.connectedOrgs.join(', ')}`
-      : room.name
+      : titled(room, roster)
   return (
     <Row
       to={`/chat/${room.id}`}
-      icon={agent ? <AgentFace agent={agent} size={18} /> : <Glyph room={room} />}
+      icon={<Glyph room={room} />}
     >
       {label}
     </Row>
