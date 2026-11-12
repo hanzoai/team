@@ -30,7 +30,7 @@ const SECTIONS: readonly CrmSection[] = ['investors', 'funds', 'customers', 'lea
 
 const STAGE_OPTIONS: SelectOption[] = [
   { value: 'NEW', label: 'New', color: 'pink' },
-  { value: 'SCREENING', label: 'Screening', color: 'purple' },
+  { value: 'SCREENING', label: 'Screening', color: 'cyan' },
   { value: 'MEETING', label: 'Meeting', color: 'blue' },
   { value: 'PROPOSAL', label: 'Proposal', color: 'amber' },
   { value: 'CUSTOMER', label: 'Customer', color: 'green' },
@@ -38,7 +38,7 @@ const STAGE_OPTIONS: SelectOption[] = [
 
 const INVESTOR_CAT_OPTIONS: SelectOption[] = [
   { value: 'vc', label: 'Institutional VC', color: 'blue' },
-  { value: 'crypto_vc', label: 'Crypto / Web3 VC', color: 'purple' },
+  { value: 'crypto_vc', label: 'Crypto / Web3 VC', color: 'cyan' },
   { value: 'accredited', label: 'Accredited High-Check', color: 'green' },
   { value: 'angel', label: 'Angel Investor', color: 'amber' },
   { value: 'family_office', label: 'Family Office', color: 'cyan' },

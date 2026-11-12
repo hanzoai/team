@@ -30,6 +30,12 @@
   --surface-2: #2a2a2a;
   --surface-3: #333333;
   --border: #2e2e2e;
+  --primary: #fafafa !important;
+  --primary-foreground: #09090b !important;
+  --primary-hover: #e4e4e7 !important;
+  --accent: #27272a !important;
+  --accent-foreground: #fafafa !important;
+  --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
   --shell-bar-bg: #141414;
@@ -103,7 +109,7 @@
          enough to be a dot on the ground, and light enough to take near-black
          ink as a chip fill. Two values would be two things to keep in step. ——— */
   --team-hue-1: oklch(0.78 0.11 258); /* indigo */
-  --team-hue-2: oklch(0.78 0.11 300); /* violet */
+  --team-hue-2: oklch(0.78 0.11 215); /* sky    */
   --team-hue-3: oklch(0.78 0.11 350); /* rose   */
   --team-hue-4: oklch(0.78 0.11 40);  /* coral  */
   --team-hue-5: oklch(0.78 0.11 90);  /* gold   */
@@ -153,6 +159,12 @@
   --surface-2: #fbfbfa;
   --surface-3: #f3f3f2;
   --border: #e4e4e2;
+  --primary: #0a0a0a !important;
+  --primary-foreground: #fafafa !important;
+  --primary-hover: #262626 !important;
+  --accent: #f4f4f5 !important;
+  --accent-foreground: #18181b !important;
+  --highlight: #0a0a0a !important;
 
   --shell-bar-bg: #ededec;
   --shell-bar-border: #dedede;
@@ -177,7 +189,7 @@
   --chat-user-fg: #1e3a8a;
 
   --team-hue-1: oklch(0.62 0.14 258);
-  --team-hue-2: oklch(0.62 0.14 300);
+  --team-hue-2: oklch(0.62 0.14 215);
   --team-hue-3: oklch(0.62 0.14 350);
   --team-hue-4: oklch(0.65 0.14 40);
   --team-hue-5: oklch(0.68 0.14 90);

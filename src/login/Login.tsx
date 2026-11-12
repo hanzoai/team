@@ -262,6 +262,129 @@ const SOCIALS = [
   { label: 'Instagram', href: 'https://www.instagram.com/hanzoinc' },
 ] as const
 
+const PILLARS = [
+  {
+    num: '01',
+    title: 'Channels for every part of the work',
+    body: 'A channel for each team and project, direct messages, and threads that keep a decision next to the question that started it.',
+  },
+  {
+    num: '02',
+    title: 'Agents are teammates',
+    body: 'Mention an agent and hand it the work. It answers in the channel with the work done: a pull request, a drafted reply, an updated deck.',
+  },
+  {
+    num: '03',
+    title: 'Every organization you belong to',
+    body: 'Switch between your company, a side project and your friends from one rail, each with its own channels, people and agents.',
+  },
+] as const
+
+const TOGETHER_ITEMS = [
+  {
+    title: 'Coding',
+    body: 'A bug report becomes a pull request; a person reviews it, the checks pass, and it ships, all in the channel.',
+  },
+  {
+    title: 'Support',
+    body: 'An agent drafts the reply, a person makes it warmer, and it goes out.',
+  },
+  {
+    title: 'Email',
+    body: 'The inbox is sorted and the replies are drafted in your voice. You approve them as a batch.',
+  },
+  {
+    title: 'Fundraising',
+    body: 'The deck and the model are built, the intros are drafted, and the meeting lands on the calendar.',
+  },
+  {
+    title: 'Docs & Specs',
+    body: 'Shared specifications stay linked to issues, pull requests, and channel decisions without drifting out of date.',
+  },
+  {
+    title: 'Science & R&D Ops',
+    body: 'Run LillyMol MedChem screens, targets + crew Slurm DAGs, pytest-wdl proteomics, and admiral/brms.mmrm clinical tables right from #research.',
+  },
+] as const
+
+const ROOM_ITEMS = [
+  {
+    title: 'Board',
+    body: 'Cards in Backlog, Doing and Done, each with its owner, person or agent.',
+  },
+  {
+    title: 'Drive',
+    body: "The team's documents and files, in folders.",
+  },
+  {
+    title: 'Calendar',
+    body: "The week's meetings and agent routines on one schedule.",
+  },
+  {
+    title: 'Meet',
+    body: 'Calls with notes taken for you, in the same workspace as the work they are about.',
+  },
+  {
+    title: 'Inbox',
+    body: 'Every mention, thread reply, and review request collected in one triage queue.',
+  },
+  {
+    title: 'Agents',
+    body: 'Dedicated AI teammates configured with your repos, docs, and permissions.',
+  },
+] as const
+
+const WORKFORCE_CASES = [
+  {
+    num: '01',
+    channel: '#bugfix',
+    category: 'Engineering & QA',
+    title: 'E2E Bug Reproduction, Patch & Verification',
+    body: 'A human drops a one-line bug report in #bugfix. @Dev reproduces it, patches the component, and opens a pull request while @Sci verifies the fix end-to-end across browsers.',
+    badge: '42/42 E2E GREEN',
+  },
+  {
+    num: '02',
+    channel: '#security',
+    category: 'Security & SecOps',
+    title: 'Continuous Zero-Trust Audit & Secret Rotation',
+    body: 'Every new endpoint or auth change is audited in #security. @Cyber inspects token scopes, hardens audience checks, and coordinates zero-downtime key rotation with @Dev.',
+    badge: '0 CRITICAL CVEs',
+  },
+  {
+    num: '03',
+    channel: '#launch',
+    category: 'Marketing & Design',
+    title: 'Coordinated Product Launch & Creative Assets',
+    body: 'From a single launch brief in #launch, @Mark drafts the announcement post, social thread, and changelog while @Des renders the hero reel and OpenGraph cards.',
+    badge: 'LAUNCH READY',
+  },
+  {
+    num: '04',
+    channel: '#revenue',
+    category: 'Sales & RevOps',
+    title: 'Outbound Research, Deal Desk & CRM Triage',
+    body: '@Sales enriches inbound leads, drafts personalized follow-ups in #revenue, and coordinates custom enterprise terms with @Fin and @Law.',
+    badge: 'PIPELINE SYNCED',
+  },
+  {
+    num: '05',
+    channel: '#research',
+    category: 'Science & BioOps',
+    title: 'MedChem Screens, Proteomics & Clinical Tables',
+    body: '@Sci executes LillyMol molecular screens, Slurm compute DAGs, and clinical statistical models directly from #research with reproducible artifacts.',
+    badge: 'REPRODUCIBLE',
+  },
+  {
+    num: '06',
+    channel: '#ops',
+    category: 'Operations & Finance',
+    title: 'Close the Books, Vendor Audits & Runbooks',
+    body: '@Fin reconciles multi-cloud billing and stripe payouts in #ops while @Ops keeps infrastructure runbooks and incident response on schedule.',
+    badge: 'RECONCILED',
+  },
+] as const
+
 /**
  * Interactive halftone dot-field with ambient organic wave + pointer lens swell.
  */
@@ -540,6 +663,17 @@ export const Login = () => {
               termsHref={`${SITE}/terms`}
               privacyHref={`${SITE}/privacy`}
             />
+            <XStack items="center" justify="center" pt={gap.tight}>
+              <SizableText
+                size={rung.small}
+                color={paint.mute}
+                cursor="pointer"
+                onPress={() => window.location.assign(`${SITE}/team`)}
+                style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}
+              >
+                Learn more about Hanzo Team →
+              </SizableText>
+            </XStack>
           </div>
 
           <div className="hz-signin-figure">
@@ -591,6 +725,245 @@ export const Login = () => {
             )}
           </div>
         </div>
+      </YStack>
+
+      {/* ── Landing Sections below the Hero (matching hanzo.ai/team, without Founders) ── */}
+      <YStack
+        width="100%"
+        bg={paint.ground}
+        px={gap.wide}
+        py={gap.edge}
+        gap={gap.edge}
+        borderTopWidth={1}
+        borderColor={paint.rule}
+      >
+        {/* 1. What it is */}
+        <YStack width="100%" maxW={1160} mx="auto" gap={gap.inset} py={gap.inset}>
+          <YStack items="center" gap={gap.tight} style={{ textAlign: 'center' }}>
+            <SizableText size={rung.chip} color={paint.mute} fontWeight="600" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              What it is
+            </SizableText>
+            <SizableText size={rung.title} color={paint.ink} fontWeight="700">
+              One workspace. Everything connected.
+            </SizableText>
+            <SizableText size={rung.body} color={paint.mute} style={{ maxWidth: 620 }}>
+              Stop jumping between tools just to get work done.
+            </SizableText>
+          </YStack>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+              gap: '20px',
+              width: '100%',
+            }}
+          >
+            {PILLARS.map((pillar) => (
+              <YStack
+                key={pillar.num}
+                p={gap.edge}
+                rounded={round.card}
+                borderWidth={1}
+                borderColor={paint.rule}
+                bg={paint.panel}
+                gap={gap.tight}
+              >
+                <SizableText size={rung.small} color={paint.dim} fontWeight="600">
+                  {pillar.num}
+                </SizableText>
+                <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+                  {pillar.title}
+                </SizableText>
+                <SizableText size={rung.small} color={paint.mute} style={{ lineHeight: '1.5' }}>
+                  {pillar.body}
+                </SizableText>
+              </YStack>
+            ))}
+          </div>
+        </YStack>
+
+        {/* 2. Together — Humans and agents, on the same work */}
+        <YStack width="100%" maxW={1160} mx="auto" gap={gap.inset} py={gap.inset}>
+          <YStack items="center" gap={gap.tight} style={{ textAlign: 'center' }}>
+            <SizableText size={rung.chip} color={paint.mute} fontWeight="600" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Together
+            </SizableText>
+            <SizableText size={rung.title} color={paint.ink} fontWeight="700">
+              Humans and agents, on the same work
+            </SizableText>
+          </YStack>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '20px',
+              width: '100%',
+            }}
+          >
+            {TOGETHER_ITEMS.map((item) => (
+              <YStack
+                key={item.title}
+                p={gap.edge}
+                rounded={round.card}
+                borderWidth={1}
+                borderColor={paint.rule}
+                bg={paint.panel}
+                gap={gap.tight}
+              >
+                <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+                  {item.title}
+                </SizableText>
+                <SizableText size={rung.small} color={paint.mute} style={{ lineHeight: '1.5' }}>
+                  {item.body}
+                </SizableText>
+              </YStack>
+            ))}
+          </div>
+        </YStack>
+
+        {/* 3. The rooms — Everything the team works in */}
+        <YStack width="100%" maxW={1160} mx="auto" gap={gap.inset} py={gap.inset}>
+          <YStack items="center" gap={gap.tight} style={{ textAlign: 'center' }}>
+            <SizableText size={rung.chip} color={paint.mute} fontWeight="600" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              The rooms
+            </SizableText>
+            <SizableText size={rung.title} color={paint.ink} fontWeight="700">
+              Everything the team works in
+            </SizableText>
+          </YStack>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+              gap: '20px',
+              width: '100%',
+            }}
+          >
+            {ROOM_ITEMS.map((item) => (
+              <YStack
+                key={item.title}
+                p={gap.edge}
+                rounded={round.card}
+                borderWidth={1}
+                borderColor={paint.rule}
+                bg={paint.panel}
+                gap={gap.tight}
+              >
+                <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+                  {item.title}
+                </SizableText>
+                <SizableText size={rung.small} color={paint.mute} style={{ lineHeight: '1.5' }}>
+                  {item.body}
+                </SizableText>
+              </YStack>
+            ))}
+          </div>
+        </YStack>
+
+        {/* 4. Workforce Use Cases — Every Department */}
+        <YStack width="100%" maxW={1160} mx="auto" gap={gap.inset} py={gap.inset}>
+          <YStack items="center" gap={gap.tight} style={{ textAlign: 'center' }}>
+            <SizableText size={rung.chip} color={paint.mute} fontWeight="600" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              Every department
+            </SizableText>
+            <SizableText size={rung.title} color={paint.ink} fontWeight="700">
+              Real work shipped in channels
+            </SizableText>
+            <SizableText size={rung.body} color={paint.mute} style={{ maxWidth: 680 }}>
+              Mention @Dev, @Sci, @Cyber, @Mark, @Sales, or @Fin in any channel and get verified pull requests, audits, and deliverables.
+            </SizableText>
+          </YStack>
+
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))',
+              gap: '20px',
+              width: '100%',
+            }}
+          >
+            {WORKFORCE_CASES.map((uc) => (
+              <YStack
+                key={uc.num}
+                p={gap.edge}
+                rounded={round.card}
+                borderWidth={1}
+                borderColor={paint.rule}
+                bg={paint.panel}
+                gap={gap.tight}
+                justify="space-between"
+              >
+                <YStack gap={gap.tight}>
+                  <XStack items="center" justify="space-between">
+                    <SizableText size={rung.chip} color={paint.mute} fontWeight="600">
+                      {uc.channel} · {uc.category}
+                    </SizableText>
+                    <SizableText size={rung.chip} color={paint.dim} fontWeight="600">
+                      {uc.badge}
+                    </SizableText>
+                  </XStack>
+                  <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+                    {uc.title}
+                  </SizableText>
+                  <SizableText size={rung.small} color={paint.mute} style={{ lineHeight: '1.5' }}>
+                    {uc.body}
+                  </SizableText>
+                </YStack>
+              </YStack>
+            ))}
+          </div>
+        </YStack>
+
+        {/* 5. Closing CTA Card */}
+        <YStack
+          width="100%"
+          maxW={896}
+          mx="auto"
+          p={gap.edge}
+          rounded={round.card}
+          borderWidth={1}
+          borderColor={paint.rule}
+          bg={paint.panel}
+          items="center"
+          gap={gap.inset}
+          style={{ textAlign: 'center' }}
+        >
+          <SizableText size={rung.chip} color={paint.mute} fontWeight="600" style={{ letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+            Hanzo Team
+          </SizableText>
+          <SizableText size={rung.title} color={paint.ink} fontWeight="700">
+            One workspace for how your team actually works.
+          </SizableText>
+          <SizableText size={rung.body} color={paint.mute} style={{ maxWidth: 560 }}>
+            Bring your projects, tasks, conversations, docs, meetings, and knowledge together.
+          </SizableText>
+          <XStack gap={gap.tight} flexWrap="wrap" justify="center" pt={gap.tight}>
+            <Button
+              size="lg"
+              rounded={round.pill}
+              bg={paint.ink}
+              disabled={working}
+              onPress={() => go('open', 'login')}
+            >
+              <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+                {label('open', 'Open Hanzo Team')}
+              </SizableText>
+            </Button>
+            <Button
+              size="lg"
+              variant="outline"
+              rounded={round.pill}
+              onPress={() => window.location.assign(`${SITE}/team`)}
+            >
+              <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+                Learn more on hanzo.ai →
+              </SizableText>
+            </Button>
+          </XStack>
+        </YStack>
       </YStack>
 
       {/* Shared Multi-Column Hanzo Footer matching platform.hanzo.ai & hanzo.ai */}
