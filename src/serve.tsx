@@ -23,7 +23,7 @@ import { create, remove as removeDoc } from '~/data/write.ts'
 import { serve, useUnseen } from '~/inbox/feed.ts'
 import type { Note, Span } from '~/inbox/note.ts'
 import { setNotices, setTodo } from '~/shell'
-import type { Standby } from '~/tracker/board/fixture.ts'
+import type { Standby } from '~/tracker/board/standby.ts'
 import type { Issue, IssuePatch, Person, Priority, Source as Board, Status as Column } from '~/tracker/board/model.ts'
 
 /** A platform category, as the board spells it. */
@@ -409,12 +409,8 @@ const note = (
 export const Serve = () => {
   const { plane, current, standing } = useSpace()
   useEffect(() => {
-    // Always serve, even with nothing to serve from. The feed keeps a fixture
-    // as its own default so the region can be developed alone, and a live build
-    // that left it installed would paint five invented notifications beside a
-    // real board — a mock presented as working, which is worse than an empty
-    // panel. What it is handed instead says which of the three it is, from the
-    // same mapping the board reads.
+    // Always serve, even with nothing to serve from: what it is handed says
+    // which of the three states it is, from the same mapping the board reads.
     if (!plane || !current) {
       const held = standingIs(standing)
       const answer =

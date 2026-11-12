@@ -25,10 +25,9 @@ import {
 
 import { Denied, spaces as listSpaces, type SpaceRow } from './account.ts'
 import { team } from './api.ts'
-import { fixture } from './fixture.ts'
 import { invalidate } from './query.ts'
 import { useSession } from './session.tsx'
-import { type Plane, type Standing as Plane_ } from './socket.ts'
+import { Socket, type Plane, type Standing as Plane_ } from './socket.ts'
 
 /**
  * Where this browser stands with the team plane.
@@ -55,7 +54,6 @@ export type Space = {
   /** Open a space by slug. Tears down the previous plane. */
   choose: (slug: string) => void
   /** Create a new organization workspace and add it to the tenant list. */
-  createOrg: (slug: string, displayName: string) => SpaceRow
   /** The data plane for `current`, or null when none is open. */
   plane: Plane | null
   /** Whether that plane is live, for a screen that has to say so. */
@@ -100,20 +98,18 @@ export const Space = ({ children }: { children: ReactNode }) => {
   const asked = useRef(false)
   const prevSession = useRef(session)
   useEffect(() => {
-    if (prevSession.current !== session && !fixture.on) {
+    if (prevSession.current !== session) {
       asked.current = false
       invalidate()
     }
     prevSession.current = session
-    // A fixture stands in for the whole plane, the session included, so it asks
-    // for a space list without one. When signed out on a live visit, fallback
-    // workspace spaces are loaded so the full workspace can be explored immediately.
-    if ((session === 'unknown' && !fixture.on) || asked.current) return
+    if (session === 'unknown' || asked.current) return
     asked.current = true
     void (async () => {
-      const rows = await fixture
-        .spaces(session === 'in' ? listSpaces : () => Promise.resolve([]))
-        .catch((e: unknown) => e as Error)
+      // Signed out has no spaces. Nothing stands in for them: a failed read is a refusal.
+      const rows = await (session === 'in' ? listSpaces() : Promise.resolve([] as SpaceRow[])).catch(
+        (e: unknown) => e as Error,
+      )
       if (rows instanceof Error) {
         setRefusal(rows)
         setStanding(rows instanceof Denied && rows.unauthorized ? 'stranger' : 'refused')
@@ -131,7 +127,7 @@ export const Space = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     if (!slug) return
     localStorage.setItem(LAST, slug)
-    const next = fixture.plane(slug)
+    const next = new Socket(slug)
     setPlane(next)
     const stop = next.observe(setConnection)
     next
@@ -172,12 +168,6 @@ export const Space = ({ children }: { children: ReactNode }) => {
     setSlug(next)
   }, [])
 
-  const createOrg = useCallback((orgSlug: string, displayName: string): SpaceRow => {
-    const row = fixture.addSpace(orgSlug, displayName)
-    setAll((prev) => (prev.some((s) => s.url === row.url) ? prev : [...prev, row]))
-    return row
-  }, [])
-
   const current = useMemo(() => all.find((s) => s.url === slug) ?? null, [all, slug])
 
   const value = useMemo<Space>(
@@ -187,13 +177,12 @@ export const Space = ({ children }: { children: ReactNode }) => {
       current,
       org: current?.org ?? null,
       choose,
-      createOrg,
       plane,
       connection,
       refusal,
       enrolment: ENROLMENT,
     }),
-    [standing, all, current, choose, createOrg, plane, connection, refusal],
+    [standing, all, current, choose, plane, connection, refusal],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>

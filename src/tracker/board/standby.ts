@@ -8,11 +8,6 @@ import type { Source } from './model.ts'
  * one of the others draws an endless skeleton over a refusal, or an empty board
  * over a space nobody has finished opening — and each of those is a screen that
  * says something untrue about the state it is in.
- *
- * The fixture WORLD — the issues, the people, the five named states behind
- * `?state=` — lives in `src/data` and is shared with every other region, so the
- * board and the inbox beside it are never two different fictions. This is the
- * part that world cannot express, because it is about not having reached it.
  */
 export type Standby = 'opening' | 'refused' | 'nowhere'
 

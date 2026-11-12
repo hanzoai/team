@@ -7,13 +7,13 @@
  * a plate and not a pill.
  */
 import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
-import { Bell, Plus } from '@hanzogui/lucide-icons-2'
+import { Bell } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { useLocation } from 'react-router'
 
 import { RailAccountMenu, type RailAccountMenuProps } from './BusinessHeader.tsx'
 import { useNotices } from './counts.ts'
-import { ADD, GLOW, ICON, PAD, RAIL, STEP } from './measure.ts'
+import { GLOW, ICON, PAD, RAIL, STEP } from './measure.ts'
 import { press } from './press.ts'
 import { surfaceAt, SURFACES } from './surfaces.ts'
 import { paint, round } from '~/theme/theme'
@@ -110,27 +110,6 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
       </ScrollArea>
 
       <YStack items="center" width="100%" gap={10} pt={6}>
-        <Tooltip>
-          <TooltipTrigger>
-            <YStack
-              {...press(() => onSurface('/apps'), 'Open Business Apps')}
-              width={ADD}
-              height={ADD}
-              rounded={round.pill}
-              borderWidth={1}
-              borderStyle="dashed"
-              borderColor="$edge"
-              items="center"
-              justify="center"
-              hoverStyle={{ background: '$hover' }}
-              focusVisibleStyle={RING}
-            >
-              <Plus size={15} color="$soft" />
-            </YStack>
-          </TooltipTrigger>
-          <TooltipContent>All Hanzo Business Apps</TooltipContent>
-        </Tooltip>
-
         <RailAccountMenu {...account} />
       </YStack>
     </YStack>

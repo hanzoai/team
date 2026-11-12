@@ -6,25 +6,25 @@
  */
 
 export const Class = {
-  project: 'team:class:Project',
-  issue: 'team:class:Issue',
-  status: 'team:class:IssueStatus',
-  milestone: 'team:class:Milestone',
-  component: 'team:class:Component',
-  person: 'team:class:Person',
-  channel: 'team:class:Channel',
-  direct: 'team:class:DirectMessage',
-  message: 'team:class:ChatMessage',
-  reply: 'team:class:ThreadMessage',
-  reaction: 'team:class:Reaction',
-  notice: 'team:class:ActivityInboxNotification',
-  tag: 'team:class:TagReference',
+  project: 'tracker:class:Project',
+  issue: 'tracker:class:Issue',
+  status: 'tracker:class:IssueStatus',
+  milestone: 'tracker:class:Milestone',
+  component: 'tracker:class:Component',
+  person: 'contact:class:Person',
+  channel: 'chunter:class:Channel',
+  direct: 'chunter:class:DirectMessage',
+  message: 'chunter:class:ChatMessage',
+  reply: 'chunter:class:ThreadMessage',
+  reaction: 'activity:class:Reaction',
+  notice: 'notification:class:ActivityInboxNotification',
+  tag: 'tags:class:TagReference',
 } as const
 
 export const Tx = {
-  create: 'team:tx:CreateDoc',
-  update: 'team:tx:UpdateDoc',
-  remove: 'team:tx:RemoveDoc',
+  create: 'core:class:TxCreateDoc',
+  update: 'core:class:TxUpdateDoc',
+  remove: 'core:class:TxRemoveDoc',
 } as const
 
 /** The four fields the platform puts on every document. */
@@ -46,11 +46,11 @@ export type Doc = {
  * which is why the theme has four state colours and not one per status.
  */
 export const Category = {
-  backlog: 'team:statusCategory:Backlog',
-  todo: 'team:statusCategory:Unstarted',
-  doing: 'team:statusCategory:Started',
-  done: 'team:statusCategory:Completed',
-  cancelled: 'team:statusCategory:Cancelled',
+  backlog: 'tracker:issueStatusCategory:Backlog',
+  todo: 'tracker:issueStatusCategory:Unstarted',
+  doing: 'tracker:issueStatusCategory:Started',
+  done: 'tracker:issueStatusCategory:Completed',
+  cancelled: 'tracker:issueStatusCategory:Cancelled',
 } as const
 
 /**
