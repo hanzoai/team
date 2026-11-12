@@ -23,6 +23,8 @@ export const team = {
   account: `${origin}/v1/team/account`,
   /** Channels and their messages — the REST half of the chat surface. */
   channels: `${origin}/v1/team/channels`,
+  /** Open, or find, a direct message. */
+  dms: `${origin}/v1/team/dms`,
   /** Per-space file storage. */
   files: `${origin}/v1/team/files`,
   /** The plan, the seats and the guest cap. */

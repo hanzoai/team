@@ -1,4 +1,5 @@
 /** Opening the real direct message with somebody on the roster. */
+import { team } from '~/data/api.ts'
 import { post } from '~/data/http.ts'
 import type { Person, Room } from './chat.ts'
 
@@ -7,7 +8,7 @@ type Opened = { channel: { id: string; members?: string[]; archived?: boolean };
 
 /** Open, or find, the DM with a person; the server answers 201 or 200. */
 export const openDm = async (space: string, who: Person): Promise<Room> => {
-  const out = await post<Opened>('/v1/team/dms', { space, members: [who.id] })
+  const out = await post<Opened>(team.dms, { space, members: [who.id] })
   return {
     id: out.channel.id,
     kind: 'direct',
