@@ -3,7 +3,7 @@
  *
  * Everything here goes through the space's plane — one socket, `src/data`.
  */
-import { Class as ModelClass, Tx } from '~/data/model.ts'
+import { Class as ModelClass, Tx, nameOf } from '~/data/model.ts'
 import type { Plane, Wire } from '~/data/socket.ts'
 import { lines, markup } from './text.ts'
 
@@ -153,13 +153,15 @@ export const reactions = async (plane: Plane, ids: string[]): Promise<Reaction[]
     id: str(d._id),
     message: str(d.attachedTo),
     emoji: str(d.emoji),
-    by: str(d.createdBy),
+    by: str(d.createBy) || str(d.createdBy),
   }))
 }
 
-/** Normalize whitespace on a stored display name. */
-export const spoken = (stored: string): string =>
-  stored.trim().replace(/\s+/g, ' ')
+/**
+ * A name as it is SAID. The server stores `Last,First` (`personName` in
+ * apps/team/projections.go; a one-token bot is `,name`).
+ */
+export const spoken = (stored: string): string => nameOf({ name: stored }).replace(/\s+/g, ' ')
 
 /** The roster, so a message can be drawn with a name instead of a uuid. */
 export const people = async (plane: Plane): Promise<Person[]> => {

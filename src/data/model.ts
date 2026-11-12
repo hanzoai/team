@@ -167,9 +167,13 @@ export type Notice = Doc & {
   types?: string[]
 }
 
-/** A person's display name. */
-export const nameOf = (person: { name?: string } | undefined | null): string =>
-  (person?.name ?? '').trim()
+/** A person's name as said: the server stores `Last,First` (`,name` for a bot). */
+export const nameOf = (person: { name?: string } | undefined | null): string => {
+  const raw = person?.name ?? ''
+  if (!raw.includes(',')) return raw.trim()
+  const [last, first] = raw.split(',')
+  return [first, last].map((x) => x?.trim()).filter(Boolean).join(' ')
+}
 
 /** `PROJ-42`, the id a person actually quotes. */
 export const ref = (project: Pick<Project, 'identifier'> | undefined, issue: Pick<Issue, 'number'>) =>
