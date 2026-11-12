@@ -453,7 +453,7 @@ export const Login = () => {
 
   return (
     <YStack flex={1} bg={paint.ground} overflow="scroll">
-      {/* Top 68px Bar matching platform.hanzo.ai */}
+      {/* Top 68px Bar matching hanzo.app & hanzo.bot */}
       <XStack
         width="100%"
         minH={68}
@@ -463,7 +463,7 @@ export const Login = () => {
         justify="space-between"
         borderBottomWidth={1}
         borderColor={paint.rule}
-        bg={paint.panel}
+        bg={paint.ground}
         style={{
           position: 'sticky',
           top: 0,
@@ -474,44 +474,53 @@ export const Login = () => {
           items="center"
           gap={gap.tight}
           cursor="pointer"
+          shrink={0}
           onPress={() => window.location.assign('/')}
         >
           <SizableText size={rung.row} color={paint.ink} fontWeight="600">
-            {brand.title}
+            {`Hanzo ${brand.title}`}
           </SizableText>
         </XStack>
 
-        <XStack items="center" gap={gap.tight} flexWrap="wrap">
-          {HEADER_LINKS.map((item) => (
+        <XStack items="center" gap={gap.tight} shrink={0}>
+          <div className="hz-landing-nav-links">
+            {HEADER_LINKS.map((item) => (
+              <Button
+                key={item.label}
+                size="sm"
+                chromeless
+                rounded={round.pill}
+                onPress={() => window.location.assign(item.href)}
+              >
+                <SizableText size={rung.small} color={paint.mute}>
+                  {item.label}
+                </SizableText>
+              </Button>
+            ))}
             <Button
-              key={item.label}
               size="sm"
-              chromeless
+              variant="outline"
               rounded={round.pill}
-              onPress={() => window.location.assign(item.href)}
+              onPress={() => window.location.assign('https://hanzo.ai/contact-sales')}
             >
-              <SizableText size={rung.small} color={paint.mute}>
-                {item.label}
+              <SizableText size={rung.small} color={paint.ink}>
+                Contact sales
               </SizableText>
             </Button>
-          ))}
-          <Button
-            size="sm"
-            variant="outline"
-            rounded={round.field}
-            onPress={() => window.location.assign('https://hanzo.ai/contact-sales')}
-          >
-            <SizableText size={rung.small} color={paint.ink}>
-              Contact sales
-            </SizableText>
-          </Button>
-          <Button size="sm" chromeless rounded={round.field} disabled={working} onPress={() => go('nav', 'login')}>
-            <SizableText size={rung.small} color={paint.ink}>
+          </div>
+          <Button size="sm" chromeless rounded={round.pill} disabled={working} onPress={() => go('nav', 'login')}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
               Log in
             </SizableText>
           </Button>
-          <Button size="sm" rounded={round.field} disabled={working} onPress={() => go('open', 'login')}>
-            <SizableText size={rung.small} color={paint.ink} fontWeight="600">
+          <Button
+            size="sm"
+            rounded={round.pill}
+            bg={paint.ink}
+            disabled={working}
+            onPress={() => go('open', 'login')}
+          >
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
               {label('open', 'Open Hanzo Team')}
             </SizableText>
           </Button>
@@ -524,6 +533,7 @@ export const Login = () => {
         <div className="hz-signin-row">
           <div className="hz-signin-copy">
             <SignInPanel
+              bare
               title={`Sign in to Hanzo ${brand.title}`}
               line="AI cockpit, live streams, issue boards, channels, and bots for your team."
               request={request}
@@ -588,7 +598,7 @@ export const Login = () => {
         width="100%"
         borderTopWidth={1}
         borderColor={paint.rule}
-        bg={paint.panel}
+        bg={paint.ground}
         px={gap.wide}
         py={gap.edge}
       >

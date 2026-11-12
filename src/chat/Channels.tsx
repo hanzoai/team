@@ -127,10 +127,10 @@ export function Channels() {
                       {...press(() => navigate(to), bot.name)}
                       px={PAD - 2}
                       py={6}
-                      mx={4}
+                      mx={6}
                       gap={10}
                       items="center"
-                      rounded={round.field}
+                      rounded={8}
                       bg="transparent"
                       hoverStyle={{ background: '$hover' }}
                     >

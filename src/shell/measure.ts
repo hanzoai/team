@@ -28,41 +28,41 @@ export const SCALE = 1.5
 
 /** The icon rail. Fixed at every width, including the narrowest: it
  *  is how you leave the screen you are on. */
-export const RAIL = 64
+export const RAIL = 44
 /** The navigator. Fixed, dragged by the grip, a drawer when there is
  *  no room for it. */
-export const NAV = 268
-export const NAV_MIN = 220
+export const NAV = 240
+export const NAV_MIN = 200
 export const NAV_MAX = 380
 /** The dismissible right panel. */
 export const ASIDE = 304
 
-/** Ground showing between the raised panels, and around them. */
-export const SEAM = 6
+/** Flush edge-to-edge canvas with crisp 1px hairlines. */
+export const SEAM = 0
 
 // ── inside a region ──────────────────────────────────────────────────────────
 
 /** Panel padding: the navigator and the aside alike. */
-export const PAD = 14
+export const PAD = 12
 
 /** A navigator row: a standing entry or a project. */
-export const ROW = 34
+export const ROW = 29
 /** A row under an expanded project. */
-export const LEAF = 30
-/** The rail's icon pitch, which is also the touch minimum. */
-export const STEP = 38
+export const LEAF = 27
+/** The rail's icon pitch, which is also the 32x32 active pill. */
+export const STEP = 32
 /** Every glyph in the rail and the navigator. */
 export const ICON = 18
 /** The search field. */
-export const FIELD = 34
+export const FIELD = 30
 
 /** The rail's mark. */
-export const MARK = 36
+export const MARK = 32
 /** The rail's gauge. */
-export const GAUGE = { width: 48, height: 64 }
-/** The rail's add control, and the glow behind the selected glyph. */
-export const ADD = 32
-export const GLOW = 52
+export const GAUGE = { width: 36, height: 52 }
+/** The rail's add control, and the pill behind the selected glyph. */
+export const ADD = 28
+export const GLOW = 32
 
 /** Where a row's label starts, and where the tree's spine runs. Padding, the
  *  icon box, then the gap — so a row with no glyph indents to the same place and

@@ -15,14 +15,36 @@
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** The app. The rail and the navigator sit directly on it. */
+  /** The app. The main canvas sits directly on it (#171717 dark / #ffffff light). */
   ground: role('ground'),
-  /** The board and the inbox — one lift off the ground. */
+  /** The board, chat, and inbox canvas. */
   panel: role('panel'),
   /** A card, and an unread row: the same rung, because both are objects. */
   card: role('card'),
   /** The one hairline, at a fixed alpha so it lifts with its surface. */
   rule: role('rule'),
+
+  /** Unified outer L-frame chrome (38px top bar + 44px icon rail + 240px sidebar). */
+  bar: role('bar'),
+  barRule: role('bar-rule'),
+  rail: role('rail'),
+  railRule: role('rail-rule'),
+  railActive: role('rail-active'),
+  railFg: role('rail-fg'),
+  railFgActive: role('rail-fg-active'),
+  sidebar: role('sidebar'),
+  sidebarRule: role('sidebar-rule'),
+  rowActive: role('row-active'),
+  rowHover: role('row-hover'),
+  avatar: role('avatar'),
+  avatarInk: role('avatar-ink'),
+  composer: role('composer'),
+  composerRule: role('composer-rule'),
+  composerAccent: role('composer-accent'),
+  composerAccentInk: role('composer-accent-ink'),
+  composerWarn: role('composer-warn'),
+  chatUser: role('chat-user'),
+  chatUserInk: role('chat-user-ink'),
 
   ink: role('ink'),
   mute: role('mute'),

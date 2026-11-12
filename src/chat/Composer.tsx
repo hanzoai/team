@@ -11,9 +11,10 @@
  * the third line of what somebody is about to send.
  */
 import { SizableText, Textarea, XStack, YStack } from '@hanzo/ui'
-import { ArrowUp } from '@hanzogui/lucide-icons-2'
+import { AlertCircle, ArrowUp, Plus, ShieldCheck } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 
+import { useHanzoPreferences } from '~/settings/preferences.ts'
 import { press } from '~/shell'
 import { paint } from '~/theme/theme.ts'
 
@@ -48,6 +49,8 @@ export function Composer({
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
+  const { chat, setChat } = useHanzoPreferences()
+  const fullAccess = chat.approvalMode === 'auto'
 
   const ready = text.trim() !== '' && !sending && !disabled
 
@@ -79,31 +82,33 @@ export function Composer({
         </SizableText>
       ) : null}
 
-      <XStack
-        items="flex-end"
-        gap={8}
-        pl={16}
-        pr={6}
-        py={5}
-        rounded={MAX}
-        bg="$raised"
+      <YStack
+        gap={4}
+        px={12}
+        pt={8}
+        pb={8}
+        rounded={18}
         borderWidth={1}
-        borderColor="$edge"
         opacity={disabled ? 0.6 : 1}
+        style={{
+          backgroundColor: paint.composer,
+          borderTopColor: paint.composerRule,
+          borderRightColor: paint.composerRule,
+          borderBottomColor: paint.composerRule,
+          borderLeftColor: paint.composerRule,
+        }}
         focusWithinStyle={{ borderColor: '$bound' }}
+        data-testid="team-composer"
       >
         <Textarea
           flex={1}
           unstyled
-          // The primitive defaults to three rows, which outgrew every height
-          // this component asked for. One row, and the height below decides.
           rows={1}
-          height={height}
-          // `Textarea` carries its own `min-height: 64px`, which outranks a
-          // height and made every composer two lines tall whatever was in it.
-          minH={height}
+          height={height - 12}
+          minH={height - 12}
           maxH={MAX}
-          py={PAD}
+          py={4}
+          px={2}
           borderWidth={0}
           bg="transparent"
           fontSize="$3"
@@ -115,13 +120,6 @@ export function Composer({
           disabled={Boolean(disabled)}
           aria-label={placeholder}
           onChangeText={setText}
-          // Enter sends and Shift+Enter breaks the line, which is what every
-          // conversation surface does and therefore what fingers expect.
-          //
-          // `keydown`, not `keypress`. Measured: a `keypress` handler on this
-          // control never ran for Enter, so the key fell through to the
-          // textarea's own default and typed a newline into the field somebody
-          // had just tried to send.
           onKeyDown={(e: Key) => {
             if (e.nativeEvent.key !== 'Enter' || e.shiftKey) return
             e.preventDefault?.()
@@ -129,23 +127,65 @@ export function Composer({
           }}
         />
 
-        <YStack
-          aria-disabled={!ready}
-          {...press(() => void send(), 'Send')}
-          cursor={ready ? 'pointer' : 'default'}
-          width={32}
-          height={32}
-          items="center"
-          justify="center"
-          rounded={16}
-          style={{ background: ready ? paint.accent : undefined }}
-          bg={ready ? undefined : '$hover'}
-          opacity={ready ? 1 : 0.5}
-          focusVisibleStyle={{ outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' }}
-        >
-          <ArrowUp size={17} color={ready ? '$background' : '$soft'} />
-        </YStack>
-      </XStack>
+        <XStack items="center" justify="space-between" pt={2}>
+          <XStack items="center" gap={6}>
+            <YStack
+              width={26}
+              height={26}
+              rounded={13}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$hover' }}
+            >
+              <Plus size={15} color="$soft" />
+            </YStack>
+
+            <XStack
+              {...press(
+                () => setChat({ approvalMode: fullAccess ? 'manual' : 'auto' }),
+                fullAccess ? 'Switch to manual approval' : 'Switch to full access',
+              )}
+              height={24}
+              px={7}
+              gap={5}
+              rounded={7}
+              items="center"
+              hoverStyle={{ bg: '$hover' }}
+              data-testid="composer-approval-toggle"
+            >
+              {fullAccess ? (
+                <AlertCircle size={13} color={paint.composerWarn} />
+              ) : (
+                <ShieldCheck size={13} color="$soft" />
+              )}
+              <SizableText
+                fontSize={12}
+                fontWeight="500"
+                style={{ color: fullAccess ? paint.composerWarn : undefined }}
+                color={fullAccess ? undefined : '$soft'}
+              >
+                {fullAccess ? 'Full access' : 'Manual approval'}
+              </SizableText>
+            </XStack>
+          </XStack>
+
+          <YStack
+            aria-disabled={!ready}
+            {...press(() => void send(), 'Send')}
+            cursor={ready ? 'pointer' : 'default'}
+            width={30}
+            height={30}
+            items="center"
+            justify="center"
+            rounded={15}
+            style={{ backgroundColor: paint.composerAccent }}
+            opacity={ready ? 1 : 0.92}
+            focusVisibleStyle={{ outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' }}
+          >
+            <ArrowUp size={16} color={paint.composerAccentInk} />
+          </YStack>
+        </XStack>
+      </YStack>
     </YStack>
   )
 }

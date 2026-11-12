@@ -20,11 +20,64 @@
  * whole difference between a categorical palette and six colours somebody liked.
  */
 
-:root {
-  /* ——— surfaces: three rungs, and there is no fourth ——— */
-  --team-ground: var(--background);   /* the app: rail and navigator sit on it */
-  --team-panel: var(--surface-1);     /* the board and the inbox */
-  --team-card: var(--surface-2);      /* a card; an unread row is the same rung */
+:root,
+.t_dark {
+  /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
+  --background: #141414;
+  --popover: #1b1b1b;
+  --card: #1b1b1b;
+  --surface-1: #212121;
+  --surface-2: #2a2a2a;
+  --surface-3: #333333;
+  --border: #2e2e2e;
+
+  --shell-bar-h: 38px;
+  --shell-bar-bg: #141414;
+  --shell-bar-border: #262626;
+  --shell-rail-bg: #141414;
+  --shell-rail-border: #262626;
+  --shell-rail-active: #2a2a2a;
+  --shell-rail-fg: #9e9e9e;
+  --shell-rail-fg-active: #ffffff;
+  --shell-sidebar-bg: #1b1b1b;
+  --shell-sidebar-border: #2a2a2a;
+  --shell-row-active: #2b2b2b;
+  --shell-row-hover: #242424;
+  --shell-canvas-bg: #212121;
+  --shell-avatar-bg: #df8173;
+  --shell-avatar-fg: #ffffff;
+  --composer-fill: #353535;
+  --composer-edge: #424242;
+  --composer-accent: #2850a7;
+  --composer-accent-fg: #ffffff;
+  --composer-warn: #d98254;
+  --chat-user-bg: #213c71;
+  --chat-user-fg: #f3f6fc;
+
+  /* ——— surfaces: three rungs + unified outer chrome ——— */
+  --team-ground: var(--background);      /* outer shell & signed-out ground (#141414) */
+  --team-panel: var(--shell-canvas-bg);  /* main workspace canvas (#212121, flush) */
+  --team-card: var(--surface-2);         /* elevated card / unread row (#2a2a2a) */
+  --team-bar: var(--shell-bar-bg);
+  --team-bar-rule: var(--shell-bar-border);
+  --team-rail: var(--shell-rail-bg);
+  --team-rail-rule: var(--shell-rail-border);
+  --team-rail-active: var(--shell-rail-active);
+  --team-rail-fg: var(--shell-rail-fg);
+  --team-rail-fg-active: var(--shell-rail-fg-active);
+  --team-sidebar: var(--shell-sidebar-bg);
+  --team-sidebar-rule: var(--shell-sidebar-border);
+  --team-row-active: var(--shell-row-active);
+  --team-row-hover: var(--shell-row-hover);
+  --team-avatar: var(--shell-avatar-bg);
+  --team-avatar-ink: var(--shell-avatar-fg);
+  --team-composer: var(--composer-fill);
+  --team-composer-rule: var(--composer-edge);
+  --team-composer-accent: var(--composer-accent);
+  --team-composer-accent-ink: var(--composer-accent-fg);
+  --team-composer-warn: var(--composer-warn);
+  --team-chat-user: var(--chat-user-bg);
+  --team-chat-user-ink: var(--chat-user-fg);
 
   /* ——— the hairline. ONE, at a fixed alpha, so it lifts with whatever it
          lands on. A solid line stops being a lighter line and becomes an
@@ -92,7 +145,37 @@
 /* Light. The references invert on their own; the minted ramp does not, so it
    states its own column — a touch darker and a touch stronger, which is what a
    hue needs to hold against white rather than against near-black. */
-.light {
+.light,
+[data-theme='light'],
+.t_light {
+  --background: #ffffff;
+  --surface-1: #ffffff;
+  --surface-2: #fbfbfa;
+  --surface-3: #f3f3f2;
+  --border: #e4e4e2;
+
+  --shell-bar-bg: #ededec;
+  --shell-bar-border: #dedede;
+  --shell-rail-bg: #ededec;
+  --shell-rail-border: #dedede;
+  --shell-rail-active: #dcdcdb;
+  --shell-rail-fg: #52525b;
+  --shell-rail-fg-active: #18181b;
+  --shell-sidebar-bg: #f5f5f4;
+  --shell-sidebar-border: #e4e4e2;
+  --shell-row-active: #e7e5e4;
+  --shell-row-hover: #eceae8;
+  --shell-canvas-bg: #ffffff;
+  --shell-avatar-bg: #df8173;
+  --shell-avatar-fg: #ffffff;
+  --composer-fill: #f4f4f5;
+  --composer-edge: #d4d4d8;
+  --composer-accent: #2850a7;
+  --composer-accent-fg: #ffffff;
+  --composer-warn: #b45309;
+  --chat-user-bg: #dbeafe;
+  --chat-user-fg: #1e3a8a;
+
   --team-hue-1: oklch(0.62 0.14 258);
   --team-hue-2: oklch(0.62 0.14 300);
   --team-hue-3: oklch(0.62 0.14 350);
@@ -100,6 +183,10 @@
   --team-hue-5: oklch(0.68 0.14 90);
   --team-hue-6: oklch(0.62 0.14 165);
   --team-chip-ink: var(--pure-white);
+}
+
+html {
+  font-size: calc(16px * var(--hanzo-font-scale, 1));
 }
 
 @keyframes hz-marquee-scroll {
@@ -194,13 +281,13 @@
   padding: var(--space-12) var(--page-gutter);
 }
 
-/* 464px: @hanzo/ui's SignInPanel card, hanzo.app's 400px measure inside 32px of padding. */
+/* 420px: bare SignInPanel (400px measure) floating cleanly over the dot field. */
 .hz-signin-copy {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--space-3);
-  width: 464px;
+  width: 420px;
   flex-shrink: 0;
 }
 
@@ -401,39 +488,52 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: var(--space-6);
+  gap: 20px;
   flex: 1;
   min-width: 0;
-  max-width: 780px;
+  max-width: 740px;
+}
+
+.hz-landing-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+@media (max-width: 920px) {
+  .hz-landing-nav-links {
+    display: none;
+  }
 }
 
 @media (min-width: 768px) {
   .hz-signin-row {
-    padding-block: var(--space-16);
+    padding-block: var(--space-12);
   }
 }
 
 @media (max-width: 1279.98px) {
   .hz-signin-row {
     flex-direction: column;
-    gap: 40px;
+    gap: 36px;
   }
 
   .hz-signin-copy {
     width: 100%;
-    max-width: 464px;
+    max-width: 420px;
   }
 
   .hz-signin-figure {
     flex-basis: auto;
     width: 100%;
+    max-width: 700px;
   }
 }
 
 @media (max-width: 639.98px) {
   .hz-signin-row {
-    padding-block: var(--space-8);
-    gap: 32px;
+    padding-block: var(--space-6);
+    gap: 28px;
   }
 
   .hz-signin-title {
@@ -446,4 +546,458 @@
   .hz-signin-pair {
     grid-template-columns: 1fr;
   }
+}
+
+/* ——— Dual-Device Animated Preview Stage (Desktop 16:9 + iPhone 9:16) ——— */
+@keyframes hz-pv-pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.92);
+  }
+}
+
+@keyframes hz-pv-blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+@keyframes hz-pv-rise {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hz-pv-host {
+  --pv-bar: #141414;
+  --pv-rail: #141414;
+  --pv-sidebar: #1b1b1b;
+  --pv-canvas: #212121;
+  --pv-card: #292929;
+  --pv-card-hi: #303030;
+  --pv-rule: #2c2c2c;
+  --pv-rule-strong: #3a3a3a;
+  --pv-ink: #f2f2f3;
+  --pv-mute: #a1a1aa;
+  --pv-dim: #71717a;
+  --pv-active: #2e2e2e;
+  --pv-bubble: #213c71;
+  --pv-bubble-ink: #f3f6fc;
+  --pv-composer: #353535;
+  --pv-composer-rule: #444444;
+  --pv-send: #2850a7;
+  --pv-warn: #d98254;
+  --pv-green: #22c55e;
+  --pv-green-bg: rgba(34, 197, 94, 0.14);
+  --pv-green-edge: rgba(34, 197, 94, 0.34);
+  --pv-blue: #60a5fa;
+  --pv-blue-bg: rgba(96, 165, 250, 0.14);
+  --pv-amber: #f59e0b;
+  --pv-violet: #a78bfa;
+  --pv-rose: #f472b6;
+  --pv-bezel: #262626;
+  --pv-bezel-rim: rgba(255, 255, 255, 0.18);
+  --pv-island: #050505;
+  --pv-dot-red: #ff5f57;
+  --pv-dot-yellow: #febc2e;
+  --pv-dot-green: #28c840;
+
+  position: relative;
+  width: 100%;
+  max-width: 740px;
+  overflow: hidden;
+  user-select: none;
+  font-family: var(--font-sans, system-ui, -apple-system, sans-serif);
+  color: var(--pv-ink);
+}
+
+.hz-pv-stage {
+  position: relative;
+  transform-origin: top left;
+  will-change: transform;
+}
+
+.hz-pv-desk {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  background: var(--pv-canvas);
+  border: 1px solid var(--pv-rule-strong);
+  box-shadow:
+    0 24px 60px rgba(0, 0, 0, 0.46),
+    0 4px 16px rgba(0, 0, 0, 0.28),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: hidden;
+}
+
+.hz-pv-topbar {
+  height: 34px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 10px;
+  gap: 8px;
+  background: var(--pv-bar);
+  border-bottom: 1px solid var(--pv-rule);
+}
+
+.hz-pv-traffic {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.hz-pv-dot {
+  width: 7.5px;
+  height: 7.5px;
+  border-radius: 999px;
+}
+
+.hz-pv-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: #1e1e1e;
+  border: 1px solid var(--pv-rule);
+  font-size: 9.5px;
+  font-weight: 600;
+  color: var(--pv-ink);
+  letter-spacing: -0.01em;
+}
+
+.hz-pv-tabs {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  background: #1a1a1a;
+  padding: 2px;
+  border-radius: 7px;
+  border: 1px solid var(--pv-rule);
+}
+
+.hz-pv-tab {
+  appearance: none;
+  border: 0;
+  background: transparent;
+  color: var(--pv-mute);
+  font-family: inherit;
+  font-size: 9px;
+  font-weight: 500;
+  line-height: 1;
+  padding: 4px 7px;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.16s ease, color 0.16s ease;
+}
+
+.hz-pv-tab:hover {
+  color: var(--pv-ink);
+}
+
+.hz-pv-tab[data-active='true'] {
+  background: var(--pv-active);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.hz-pv-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+}
+
+.hz-pv-rail {
+  width: 36px;
+  flex-shrink: 0;
+  background: var(--pv-rail);
+  border-right: 1px solid var(--pv-rule);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+}
+
+.hz-pv-rail-btn {
+  appearance: none;
+  border: 0;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--pv-mute);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 0;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.hz-pv-rail-btn:hover {
+  background: #232323;
+  color: var(--pv-ink);
+}
+
+.hz-pv-rail-btn[data-active='true'] {
+  background: var(--pv-active);
+  color: #ffffff;
+}
+
+.hz-pv-sidebar {
+  width: 124px;
+  flex-shrink: 0;
+  background: var(--pv-sidebar);
+  border-right: 1px solid var(--pv-rule);
+  padding: 8px 7px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  overflow: hidden;
+}
+
+.hz-pv-sec-head {
+  font-size: 8px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--pv-dim);
+  padding: 0 5px;
+}
+
+.hz-pv-nav-row {
+  appearance: none;
+  border: 0;
+  width: 100%;
+  text-align: left;
+  background: transparent;
+  color: var(--pv-mute);
+  font-family: inherit;
+  font-size: 9.5px;
+  font-weight: 500;
+  padding: 3.5px 6px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+  cursor: pointer;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.hz-pv-nav-row:hover {
+  background: #242424;
+  color: var(--pv-ink);
+}
+
+.hz-pv-nav-row[data-active='true'] {
+  background: var(--pv-active);
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.hz-pv-live-dot {
+  width: 5.5px;
+  height: 5.5px;
+  border-radius: 999px;
+  background: var(--pv-green);
+  flex-shrink: 0;
+  animation: hz-pv-pulse 2.2s ease-in-out infinite;
+}
+
+.hz-pv-main {
+  flex: 1;
+  min-width: 0;
+  min-height: 0;
+  background: var(--pv-canvas);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+.hz-pv-pane-head {
+  height: 29px;
+  flex-shrink: 0;
+  padding: 0 12px;
+  border-bottom: 1px solid var(--pv-rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.hz-pv-rise {
+  animation: hz-pv-rise 0.28s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.hz-pv-caret {
+  display: inline-block;
+  width: 1.5px;
+  height: 10px;
+  margin-left: 1.5px;
+  vertical-align: -1px;
+  background: var(--pv-ink);
+  animation: hz-pv-blink 1s steps(1) infinite;
+}
+
+.hz-pv-composer {
+  margin: 0 10px 8px;
+  padding: 5px 6px 5px 10px;
+  border-radius: 12px;
+  background: var(--pv-composer);
+  border: 1px solid var(--pv-composer-rule);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 6px;
+}
+
+.hz-pv-send {
+  width: 20px;
+  height: 20px;
+  border-radius: 999px;
+  background: var(--pv-send);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* 9:16 Overlapping Titanium iPhone Handset */
+.hz-pv-phone {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  border-radius: 28px;
+  padding: 6px;
+  background: linear-gradient(155deg, #353538 0%, var(--pv-bezel) 48%, #1c1c1e 100%);
+  border: 1px solid var(--pv-bezel-rim);
+  box-shadow:
+    -14px 18px 44px rgba(0, 0, 0, 0.62),
+    0 6px 20px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.22);
+  display: flex;
+  flex-direction: column;
+  z-index: 4;
+}
+
+.hz-pv-phone-screen {
+  flex: 1;
+  min-height: 0;
+  border-radius: 22px;
+  background: var(--pv-bar);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.hz-pv-phone-status {
+  height: 21px;
+  padding: 3px 11px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 8.5px;
+  font-weight: 600;
+  color: #f4f4f5;
+  flex-shrink: 0;
+}
+
+.hz-pv-island {
+  width: 48px;
+  height: 13px;
+  border-radius: 999px;
+  background: var(--pv-island);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 4px;
+}
+
+.hz-pv-island-lens {
+  width: 5px;
+  height: 5px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 35% 35%, #253b6e 0%, #0b1020 75%);
+}
+
+.hz-pv-cursor {
+  position: absolute;
+  z-index: 6;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  transition: transform 0.68s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.25s ease;
+}
+
+.hz-pv-cursor-tag {
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: var(--pv-send);
+  color: #ffffff;
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  white-space: nowrap;
+}
+
+.hz-pv-scene-pills {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.hz-pv-scene-pill {
+  appearance: none;
+  border: 1px solid var(--border);
+  background: var(--popover);
+  color: var(--muted-foreground);
+  font-family: var(--font-sans);
+  font-size: 11.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  padding: 4px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: border-color 0.16s ease, color 0.16s ease, background-color 0.16s ease;
+}
+
+.hz-pv-scene-pill:hover {
+  color: var(--foreground);
+  border-color: var(--border-strong, var(--foreground));
+}
+
+.hz-pv-scene-pill[data-active='true'] {
+  color: var(--foreground);
+  border-color: var(--foreground);
 }

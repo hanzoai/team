@@ -28,12 +28,14 @@ import { useLocation, useNavigate } from 'react-router'
 
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
+import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
+import { paint } from '~/theme/theme.ts'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { BusinessHeader, type BusinessAppItem } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
-import { round } from '~/theme/theme'
+import { surfaceAt } from './surfaces.ts'
 
 export type ShellProps = {
   /** The navigator region: a panel title, a search, a list. */
@@ -54,6 +56,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     typeof window === 'undefined' ? INLINE_ASIDE : window.innerWidth,
   )
   const [span, setSpan] = useState(NAV)
+  const [navCollapsed, setNavCollapsed] = useState(false)
   const [drawer, setDrawer] = useState(false)
   const [over, setOver] = useState(false)
   const showing = useAside()
@@ -61,9 +64,14 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
 
   const wide = width >= INLINE_ASIDE
   const roomy = width >= INLINE_NAV
+  const inlineNavOpen = Boolean(roomy && nav && !navCollapsed)
 
   const reach = (path: string) => {
     if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
+    if (roomy && nav && navCollapsed && (pathname === path || pathname.startsWith(`${path}/`))) {
+      setNavCollapsed(false)
+      return
+    }
     go(path)
   }
 
@@ -114,6 +122,18 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         onSelectOrg={(url: string) => choose(url)}
         onSelectApp={handleSelectApp}
         onNavigate={reach}
+        onSettings={() => openSettingsModal('general')}
+        navSpan={span + 1}
+        navOpen={inlineNavOpen}
+        onToggleNav={
+          nav
+            ? () => {
+                if (roomy) setNavCollapsed((v) => !v)
+                else setDrawer((v) => !v)
+              }
+            : undefined
+        }
+        surfaceTitle={surfaceAt(pathname)?.label}
         user={userIdentity}
       />
       <XStack
@@ -140,31 +160,37 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             orgs: orgList,
             onSelectOrg: (url: string) => choose(url),
             onConnectOrg: () => openConnectModal('connect'),
-            // hanzo.ai's account chooser, for this app's request: the person
-            // picks one of the accounts signed in there, or signs in as another.
             onAddAccount: () => void depart('another'),
+            onSettings: () => openSettingsModal('general'),
             onSignOut: () => leave(),
           }}
         />
 
-        {roomy && nav ? (
+        {inlineNavOpen ? (
           <>
-            <YStack width={span} shrink={0} minH={0} data-parity-key="shell.nav">
+            <YStack
+              width={span}
+              shrink={0}
+              minH={0}
+              style={{ backgroundColor: paint.sidebar }}
+              data-parity-key="shell.nav"
+            >
               {nav}
             </YStack>
             <Grip value={span} onChange={setSpan} />
           </>
         ) : null}
 
-        {/* Ground above, below, right and between — and NOT on the left, where
-            main butts the navigator. That is what the reference draws (its
-            navigator ends at 439 and its board begins at 440), and it is what
-            gives main its width back. */}
         <XStack flex={1} minW={0} minH={0} pt={SEAM} pb={SEAM} pr={SEAM} gap={SEAM}>
           <Panel parity="shell.main">{children}</Panel>
 
           {aside && showing && wide ? (
-            <YStack width={ASIDE} shrink={0}>
+            <YStack
+              width={ASIDE}
+              shrink={0}
+              borderLeftWidth={1}
+              style={{ borderLeftColor: paint.sidebarRule }}
+            >
               <Panel parity="shell.aside">{aside}</Panel>
             </YStack>
           ) : null}
@@ -182,25 +208,26 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
       {/* No room for the column: the navigator comes over the ground it would
           have sat on, at the width it would have had. */}
       <Sheet open={!!nav && drawer && !roomy} onOpenChange={setDrawer}>
-        <SheetContent side="left" width={NAV} p={0} bg="$background">
+        <SheetContent side="left" width={NAV} p={0} style={{ backgroundColor: paint.sidebar }}>
           {nav}
         </SheetContent>
       </Sheet>
 
       <ConnectOrgModal />
+      <SettingsModal user={userIdentity} orgName={currentOrgInfo.displayName} />
     </Screen>
   )
 }
 
-/** A raised panel on the ground. Main and the aside are the same shape. */
+/** Flush main / aside canvas (#171717 dark / #ffffff light). */
 const Panel = ({ parity, children }: { parity: string; children: ReactNode }) => (
   <YStack
     flex={1}
     minW={0}
     minH={0}
-    bg="$panel"
-    rounded={round.panel}
+    rounded={0}
     overflow="hidden"
+    style={{ backgroundColor: paint.panel }}
     data-parity-key={parity}
   >
     {children}
@@ -238,9 +265,9 @@ const Grip = ({ value, onChange }: { value: number; onChange: (n: number) => voi
       tabIndex={0}
       width={1}
       shrink={0}
-      bg="$edge"
       position="relative"
       cursor="col-resize"
+      style={{ backgroundColor: paint.sidebarRule }}
       hoverStyle={{ bg: '$soft' }}
       focusVisibleStyle={{ bg: '$outlineColor' }}
       onPointerDown={(e: React.PointerEvent<HTMLElement>) => {

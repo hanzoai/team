@@ -102,6 +102,7 @@ function Said({
   open: boolean
 }) {
   const groups = tally(reactions)
+  const own = Boolean(me) && message.author === me
 
   return (
     <YStack
@@ -113,28 +114,50 @@ function Said({
       bg={open ? '$hover' : 'transparent'}
       hoverStyle={{ background: '$hover' }}
     >
-      {message.lines.map((line, i) => (
-        <SizableText key={i} fontSize="$3" lineHeight={22} color="$ink">
-          {tokens(line).map((t, j) =>
-            t.kind === 'text' ? (
-              <SizableText key={j} fontSize="$3" lineHeight={22} color="$ink">{t.value}</SizableText>
-            ) : (
-              <SizableText
-                key={j}
-                fontSize="$3"
-                lineHeight={22}
-                style={{ color: t.kind === 'mention' ? paint.alert : paint.accent }}
-                fontWeight={t.kind === 'mention' ? '500' : '400'}
-                {...(t.kind === 'link'
-                  ? { tag: 'a', href: t.value, target: '_blank', rel: 'noreferrer' }
-                  : {})}
-              >
-                {t.value}
-              </SizableText>
-            ),
-          )}
-        </SizableText>
-      ))}
+      <YStack
+        self={own ? 'flex-start' : undefined}
+        px={own ? 12 : 0}
+        py={own ? 6 : 0}
+        rounded={own ? 12 : 0}
+        style={own ? { backgroundColor: paint.chatUser } : undefined}
+      >
+        {message.lines.map((line, i) => (
+          <SizableText
+            key={i}
+            fontSize="$3"
+            lineHeight={22}
+            color={own ? undefined : '$ink'}
+            style={own ? { color: paint.chatUserInk } : undefined}
+          >
+            {tokens(line).map((t, j) =>
+              t.kind === 'text' ? (
+                <SizableText
+                  key={j}
+                  fontSize="$3"
+                  lineHeight={22}
+                  color={own ? undefined : '$ink'}
+                  style={own ? { color: paint.chatUserInk } : undefined}
+                >
+                  {t.value}
+                </SizableText>
+              ) : (
+                <SizableText
+                  key={j}
+                  fontSize="$3"
+                  lineHeight={22}
+                  style={{ color: t.kind === 'mention' ? paint.alert : paint.accent }}
+                  fontWeight={t.kind === 'mention' ? '500' : '400'}
+                  {...(t.kind === 'link'
+                    ? { tag: 'a', href: t.value, target: '_blank', rel: 'noreferrer' }
+                    : {})}
+                >
+                  {t.value}
+                </SizableText>
+              ),
+            )}
+          </SizableText>
+        ))}
+      </YStack>
 
       {groups.length > 0 ? (
         <XStack gap={4} pt={4} flexWrap="wrap">

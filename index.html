@@ -4,11 +4,32 @@
     <meta charset="utf-8" />
     <base href="/" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#141414" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/manifest.json" />
-    <title>Team</title>
+    <title>Hanzo Team</title>
+    <script>
+      ;(function () {
+        try {
+          var raw = localStorage.getItem('hanzo.appearance')
+          var parsed = raw ? JSON.parse(raw) : null
+          var pref = parsed && (parsed.theme === 'light' || parsed.theme === 'dark' || parsed.theme === 'system') ? parsed.theme : 'dark'
+          var resolved = pref === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : pref
+          var root = document.documentElement
+          root.dataset.theme = resolved
+          root.classList.toggle('dark', resolved === 'dark')
+          root.classList.toggle('light', resolved === 'light')
+          if (parsed && (parsed.font === 'compact' || parsed.font === 'default' || parsed.font === 'large')) {
+            root.style.setProperty('--hanzo-font-scale', parsed.font === 'compact' ? '0.92' : parsed.font === 'large' ? '1.08' : '1')
+          }
+          if (parsed && (parsed.density === 'compact' || parsed.density === 'default' || parsed.density === 'spacious')) {
+            root.dataset.density = parsed.density
+          }
+        } catch (_e) {}
+      })()
+    </script>
     <style>
       /* The two facts only the host document can answer: how tall the app is,
          and that its one child is a flex item. @hanzo/ui's stylesheet resets and

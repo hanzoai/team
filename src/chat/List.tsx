@@ -16,6 +16,7 @@ import { SizableText, Spinner, YStack } from '@hanzo/ui'
 import { BackendStateCard, classifyBackend } from '@hanzo/ui/product'
 import { useEffect, useRef } from 'react'
 
+import { paint } from '~/theme/theme.ts'
 import type { Message, Person, Reaction, Room } from './chat.ts'
 import { dayName, entries } from './group.ts'
 import { Run } from './Run.tsx'
@@ -114,7 +115,7 @@ const Day = ({ at }: { at: number }) => (
         position="absolute"
         self="center"
         px={10}
-        bg="$panel"
+        style={{ backgroundColor: paint.panel }}
         fontSize="$1"
         color="$dim"
       >

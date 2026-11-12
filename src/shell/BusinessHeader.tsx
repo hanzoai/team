@@ -26,7 +26,6 @@ import {
   Calendar,
   Check,
   ChevronDown,
-  Clock,
   CreditCard,
   FileSignature,
   FolderLock,
@@ -37,6 +36,7 @@ import {
   Mail,
   Megaphone,
   MessageCircle,
+  PanelLeft,
   Plus,
   Search,
   Settings,
@@ -46,7 +46,6 @@ import {
   SquareCheck,
   Terminal,
   UserPlus,
-  UserRound,
   Users,
 } from '@hanzogui/lucide-icons-2'
 import { BrandMark, OrgMark, ThemeToggle } from '@hanzo/ui/product'
@@ -58,6 +57,16 @@ function displayName(name?: string, email?: string): string {
   if (name?.trim()) return name.trim()
   const local = email?.split('@')[0]
   return local?.trim() || ''
+}
+
+function avatarInitials(name?: string, email?: string): string {
+  const clean = displayName(name, email).replace(/,/g, ' ').trim()
+  if (!clean) return 'HZ'
+  const parts = clean.split(/\s+/).filter(Boolean)
+  if (parts.length >= 2) {
+    return `${parts[0][0] ?? ''}${parts[parts.length - 1][0] ?? ''}`.toUpperCase()
+  }
+  return clean.slice(0, 2).toUpperCase()
 }
 
 export type BusinessAppId =
@@ -264,6 +273,10 @@ export type BusinessHeaderProps = {
   onSelectOrg?: (orgName: string) => void
   onAllOrgs?: () => void
   onCreateOrg?: () => void
+  navSpan?: number
+  navOpen?: boolean
+  onToggleNav?: () => void
+  surfaceTitle?: string
   leftSlot?: ReactNode
   children?: ReactNode
   rightSlot?: ReactNode
@@ -366,16 +379,23 @@ export function BusinessHeader({
   onSelectOrg,
   onAllOrgs,
   onCreateOrg,
+  navSpan,
+  navOpen = false,
+  onToggleNav,
+  surfaceTitle,
   leftSlot,
   children,
   rightSlot,
   onNavigate,
+  onSettings,
   user,
 }: BusinessHeaderProps) {
   const [appMenuOpen, setAppMenuOpen] = useState(false)
   const [orgMenuOpen, setOrgMenuOpen] = useState(false)
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
+  const [barW, setBarW] = useState(() => (typeof window === 'undefined' ? 1200 : window.innerWidth))
+  const compact = barW < 680
 
   const activeApp = apps.find((a) => a.id === appId) ?? apps[0]
   const resolvedAppTitle = appTitle || activeApp?.productTitle || 'Hanzo Team'
@@ -443,20 +463,89 @@ export function BusinessHeader({
   return (
     <XStack
       render="header"
-      height={40}
-      px="$2.5"
-      gap="$2"
+      height={38}
       items="center"
-      justify="space-between"
       borderBottomWidth={1}
-      borderColor="$borderColor"
-      bg="$background"
       shrink={0}
+      style={{ backgroundColor: paint.bar, borderBottomColor: paint.barRule }}
+      onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
       data-testid="hanzo-business-header"
     >
-      {/* TOP LEFT: App Switcher (H ▾) + Organization Switcher (Hanzo AI ▾) */}
-      <XStack items="center" gap="$1.5" minW={0} shrink={0}>
+      {/* LEFT FRAME SEGMENT: aligns pixel-for-pixel with 44px rail + secondary sidebar */}
+      <XStack
+        height="100%"
+        width={navOpen && navSpan ? 44 + navSpan : undefined}
+        minW={navOpen && navSpan ? 44 + navSpan : undefined}
+        px="$2.5"
+        gap={2}
+        items="center"
+        borderRightWidth={navOpen && navSpan ? 1 : 0}
+        shrink={0}
+        style={{ borderRightColor: paint.barRule }}
+      >
         {leftSlot}
+        {!compact ? (
+          <>
+            <XStack
+              role="button"
+              tabIndex={0}
+              cursor="pointer"
+              width={26}
+              height={26}
+              rounded={6}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$color3' }}
+              aria-label="Go back"
+              onPress={() => {
+                if (typeof window !== 'undefined') window.history.back()
+              }}
+            >
+              <ArrowLeft size={15} color="$color10" />
+            </XStack>
+            <XStack
+              role="button"
+              tabIndex={0}
+              cursor="pointer"
+              width={26}
+              height={26}
+              rounded={6}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$color3' }}
+              aria-label="Go forward"
+              onPress={() => {
+                if (typeof window !== 'undefined') window.history.forward()
+              }}
+            >
+              <ArrowRight size={15} color="$color10" />
+            </XStack>
+          </>
+        ) : null}
+        {onToggleNav ? (
+          <XStack
+            role="button"
+            tabIndex={0}
+            cursor="pointer"
+            width={26}
+            height={26}
+            rounded={6}
+            items="center"
+            justify="center"
+            hoverStyle={{ bg: '$color3' }}
+            aria-label={navOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+            data-testid="toggle-team-sidebar"
+            onPress={onToggleNav}
+          >
+            <PanelLeft size={15} color="$color10" />
+          </XStack>
+        ) : null}
+      </XStack>
+
+      {/* RIGHT CANVAS HEADER SEGMENT: App/Org/Surface breadcrumb on left, Search ⌘K & actions on right */}
+      <XStack flex={1} height="100%" pl={12} pr={10} gap="$2" items="center" justify="space-between" minW={0}>
+      {/* App Switcher (H ▾) + Organization Switcher (Hanzo AI ▾) + Surface Title */}
+      <XStack items="center" gap="$1" minW={0} shrink={1}>
 
         <Popover open={appMenuOpen} onOpenChange={setAppMenuOpen} placement="bottom-start" allowFlip stayInFrame>
           <Popover.Trigger asChild>
@@ -687,101 +776,64 @@ export function BusinessHeader({
             </YStack>
           </Popover.Content>
         </Popover>
+
+        {surfaceTitle && !compact ? (
+          <XStack items="center" gap={6} minW={0} shrink={1} pl={2}>
+            <Text fontSize={12} color="$color9">
+              /
+            </Text>
+            <Text fontSize={13} fontWeight="500" color="$color12" numberOfLines={1}>
+              {surfaceTitle}
+            </Text>
+          </XStack>
+        ) : null}
       </XStack>
 
-      {/* CENTER: Slack-style Back / Forward / History + Search Omnibar (⌘K) */}
-      <XStack flex={1} items="center" justify="center" gap="$1.5" minW={0} px="$2">
+      {/* RIGHT: Compact Search Omnibar (⌘K) + utility actions */}
+      <XStack items="center" justify="flex-end" gap="$1.5" minW={0} shrink={0}>
         {children ?? (
           <>
-            <XStack items="center" gap={2} shrink={0}>
-              <XStack
-                role="button"
-                tabIndex={0}
-                cursor="pointer"
-                width={26}
-                height={26}
-                rounded="$2"
-                items="center"
-                justify="center"
-                hoverStyle={{ bg: '$color3' }}
-                aria-label="Go back"
-                onPress={() => {
-                  if (typeof window !== 'undefined') window.history.back()
-                }}
-              >
-                <ArrowLeft size={14} color="$color10" />
-              </XStack>
-              <XStack
-                role="button"
-                tabIndex={0}
-                cursor="pointer"
-                width={26}
-                height={26}
-                rounded="$2"
-                items="center"
-                justify="center"
-                hoverStyle={{ bg: '$color3' }}
-                aria-label="Go forward"
-                onPress={() => {
-                  if (typeof window !== 'undefined') window.history.forward()
-                }}
-              >
-                <ArrowRight size={14} color="$color10" />
-              </XStack>
-              <XStack
-                role="button"
-                tabIndex={0}
-                cursor="pointer"
-                width={26}
-                height={26}
-                rounded="$2"
-                items="center"
-                justify="center"
-                hoverStyle={{ bg: '$color3' }}
-                aria-label="Recent activity"
-                onPress={() => setSearchOpen(true)}
-              >
-                <Clock size={13} color="$color10" />
-              </XStack>
-            </XStack>
-
-            <Popover open={searchOpen} onOpenChange={setSearchOpen} placement="bottom" allowFlip stayInFrame>
+            <Popover open={searchOpen} onOpenChange={setSearchOpen} placement="bottom-end" allowFlip stayInFrame>
               <Popover.Trigger asChild>
                 <XStack
                   role="button"
                   tabIndex={0}
                   cursor="pointer"
-                  flex={1}
-                  maxW={460}
-                  height={28}
-                  px="$2.5"
-                  rounded="$3"
-                  bg="$color2"
+                  width={compact ? 28 : 220}
+                  maxW={compact ? 28 : '38vw'}
+                  height={26}
+                  px={compact ? 0 : '$2'}
+                  rounded={7}
                   borderWidth={1}
-                  borderColor="$borderColor"
                   items="center"
-                  justify="space-between"
+                  justify={compact ? 'center' : 'space-between'}
+                  style={{ backgroundColor: paint.sidebar, borderColor: paint.sidebarRule }}
                   hoverStyle={{ bg: '$color3' }}
                   aria-label={`Search ${orgDisplay}`}
                   data-testid="slack-top-search-trigger"
                 >
-                  <XStack items="center" gap="$2" minW={0} flex={1}>
+                  {compact ? (
                     <Search size={13} color="$color10" />
-                    <Text fontSize={12} color="$color10" numberOfLines={1}>
-                      {`Search ${orgDisplay}…`}
-                    </Text>
-                  </XStack>
-                  <Text
-                    fontSize={10}
-                    fontWeight="600"
-                    color="$color9"
-                    px="$1.5"
-                    py={1}
-                    rounded="$2"
-                    bg="$color3"
-                  >
-                    ⌘K
-                  </Text>
+                  ) : (
+                    <>
+                      <XStack items="center" gap="$1.5" minW={0} flex={1}>
+                        <Search size={12} color="$color10" />
+                        <Text fontSize={12} color="$color10" numberOfLines={1}>
+                          {`Search ${orgDisplay}…`}
+                        </Text>
+                      </XStack>
+                      <Text
+                        fontSize={10}
+                        fontWeight="600"
+                        color="$color9"
+                        px="$1"
+                        py={1}
+                        rounded="$1"
+                      >
+                        ⌘K
+                      </Text>
+                    </>
+                  )}
                 </XStack>
               </Popover.Trigger>
 
@@ -870,11 +922,26 @@ export function BusinessHeader({
             </Popover>
           </>
         )}
+        {onSettings ? (
+          <XStack
+            role="button"
+            tabIndex={0}
+            cursor="pointer"
+            width={26}
+            height={26}
+            rounded={6}
+            items="center"
+            justify="center"
+            hoverStyle={{ bg: '$color3' }}
+            aria-label="Settings"
+            data-testid="header-settings-trigger"
+            onPress={onSettings}
+          >
+            <Settings size={14} color="$color10" />
+          </XStack>
+        ) : null}
+        {rightSlot}
       </XStack>
-
-      {/* TOP RIGHT: Minimal utility slot (no account menu — account lives bottom-left in the rail) */}
-      <XStack items="center" gap="$1.5" shrink={0}>
-        {rightSlot ?? <ThemeToggle />}
       </XStack>
     </XStack>
   )
@@ -952,9 +1019,9 @@ export function RailAccountMenu({
           role="button"
           tabIndex={0}
           cursor="pointer"
-          width={36}
-          height={36}
-          rounded={round.field}
+          width={32}
+          height={32}
+          rounded={round.pill}
           items="center"
           justify="center"
           position="relative"
@@ -970,23 +1037,22 @@ export function RailAccountMenu({
             }
           }}
         >
-          {user?.avatar || userName ? (
-            <OrgMark org={{ name: userName, logo: user?.avatar }} size={30} />
+          {user?.avatar ? (
+            <OrgMark org={{ name: userName, logo: user.avatar }} size={28} />
           ) : (
-            <UserRound size={18} />
+            <YStack
+              width={28}
+              height={28}
+              rounded={round.pill}
+              items="center"
+              justify="center"
+              style={{ backgroundColor: paint.avatar }}
+            >
+              <Text fontSize={11} fontWeight="600" style={{ color: paint.avatarInk }}>
+                {avatarInitials(user?.name, user?.email)}
+              </Text>
+            </YStack>
           )}
-          {/* Active presence indicator dot */}
-          <YStack
-            position="absolute"
-            b={1}
-            r={1}
-            width={9}
-            height={9}
-            rounded={round.pill}
-            borderWidth={1.5}
-            borderColor="$background"
-            style={{ backgroundColor: state.done }}
-          />
         </YStack>
       </Popover.Trigger>
 
@@ -1222,8 +1288,11 @@ export function RailAccountMenu({
                 }}
               >
                 <Settings size={15} color="$color10" />
-                <Text fontSize="$2" color="$color12">
-                  Preferences & Bots
+                <Text flex={1} fontSize="$2" color="$color12">
+                  Settings & Preferences
+                </Text>
+                <Text fontSize={11} color="$color9">
+                  ⌘,
                 </Text>
               </XStack>
             ) : null}
