@@ -64,6 +64,19 @@ export const away =(authorize: string, way: Way = 'login', provider?: string | n
 }
 
 /** A dev server on this machine, which IAM will not return a sign-out to. */
+/**
+ * The silent ask: this app's own authorize request with `prompt=none`, at IAM's
+ * authorize on hanzo.ai, where the session cookie lives. Signed in on any Hanzo
+ * site, the person comes back to /auth/callback with a code and no page shown;
+ * nobody signed in comes back with `login_required` (session.tsx `SILENT`). IAM
+ * answers it for the platform's own apps (hanzoai/iam `silentAtSigninOrigin`, D6).
+ */
+export const silent = (authorize: string): string => {
+  const own = new URL(authorize)
+  own.searchParams.set('prompt', 'none')
+  return `${SIGNIN}/v1/iam/oauth/authorize${own.search}`
+}
+
 export const loopback = (hostname: string): boolean =>
   hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]'
 

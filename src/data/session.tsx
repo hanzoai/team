@@ -30,7 +30,7 @@ import {
   type ReactNode,
 } from 'react'
 
-import { away, hinted, logout, type How, type Way } from './away.ts'
+import { away, hinted, logout, loopback, silent, type How, type Way } from './away.ts'
 import { brand, clientId } from './brand.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
@@ -92,6 +92,49 @@ const take = (): string => {
   return where ?? '/'
 }
 
+/**
+ * ONE ASK OF hanzo.ai PER TAB. A tab with no tokens asks hanzo.ai whether the
+ * person is signed in there (./away.ts `silent`), once, and never from a
+ * crawler or an automated browser, which hold no session to find. Written down
+ * before it is made, so it is made once; a browser that keeps no storage cannot
+ * remember asking, so it never asks.
+ */
+const ASKED = 'team.silent'
+const AUTOMATED = /bot|crawl|spider|slurp|preview|lighthouse|headless/i
+
+const unasked = (): boolean => {
+  if (navigator.webdriver || AUTOMATED.test(navigator.userAgent) || loopback(window.location.hostname)) return false
+  try {
+    return !sessionStorage.getItem(ASKED)
+  } catch {
+    return false
+  }
+}
+
+const asked = () => {
+  try {
+    sessionStorage.setItem(ASKED, '1')
+  } catch {
+    /* unasked() already answered no for a browser with no store */
+  }
+}
+
+/**
+ * IAM's answers to a request that allowed no page (`prompt=none`, OIDC Core
+ * §3.1.2.6): the silent ask found nobody it could sign in without them. Nothing
+ * failed; the visitor goes back to the page they were on, signed out as before.
+ */
+const SILENT = new Set(['login_required', 'interaction_required', 'consent_required', 'account_selection_required'])
+
+/** How long a tab is looked away from before its session is asked about again. */
+const RECHECK = 60_000
+
+/** Whether IAM refused the token outright: the SDK's userinfo read names the status it got. */
+const refused = (e: unknown): boolean => {
+  const msg = e instanceof Error ? e.message : String(e)
+  return msg.includes('(401)') || msg.includes('(403)')
+}
+
 export const Session = ({ children }: { children: ReactNode }) => {
   const [standing, setStanding] = useState<Standing>('unknown')
   const [who, setWho] = useState<Person | null>(null)
@@ -111,8 +154,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
       setStanding('in')
       invalidate()
     } catch (e: unknown) {
-      const msg = e instanceof Error ? e.message : String(e)
-      if (msg.includes('(401)') || msg.includes('(403)')) {
+      if (refused(e)) {
         iam().clearTokens()
         setWho(null)
         setStanding('out')
@@ -141,6 +183,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
       // `land` own that outcome.
       if (window.location.pathname.startsWith('/auth/')) return
       if (new URLSearchParams(window.location.search).get('from') === 'logout') {
+        asked()
         iam().clearTokens()
         drop()
         return
@@ -148,10 +191,49 @@ export const Session = ({ children }: { children: ReactNode }) => {
       const token = await iam()
         .getValidAccessToken()
         .catch(() => null)
-      if (token) await adopt()
-      else drop()
+      if (token) return adopt()
+      // No tokens here, and maybe a session on hanzo.ai from any Hanzo site: ask
+      // it once, with no page (./away.ts `silent`). Signed in, `land` redeems the
+      // code; not, the callback brings the visitor back here signed out.
+      if (unasked()) {
+        asked()
+        keepHere()
+        try {
+          window.location.replace(silent(await iam().getSigninUrl({ additionalParams: { prompt: 'none' } })))
+          return
+        } catch {
+          /* no request could be made (no storage for the verifier): signed out */
+        }
+      }
+      drop()
     })()
   }, [adopt, drop])
+
+  /**
+   * A SIGN-OUT ON ANY HANZO SITE SIGNS THIS TAB OUT. Leaving any first-party
+   * site deletes the person's grant to all of them (hanzoai/iam `revokeShared`),
+   * and IAM's userinfo then refuses this app's token. A tab already open read it
+   * only when it loaded, so it is read again when the tab is looked at after a
+   * minute or more; a refusal drops the tokens and the tab is signed out. A
+   * network fault or a 5xx signs nobody out.
+   */
+  useEffect(() => {
+    if (standing !== 'in') return
+    let last = Date.now()
+    const seen = () => {
+      if (document.visibilityState !== 'visible' || Date.now() - last < RECHECK) return
+      last = Date.now()
+      void iam()
+        .getUserInfo()
+        .catch((e: unknown) => {
+          if (!refused(e)) return
+          iam().clearTokens()
+          drop()
+        })
+    }
+    document.addEventListener('visibilitychange', seen)
+    return () => document.removeEventListener('visibilitychange', seen)
+  }, [standing, drop])
 
   /**
    * The SDK builds the authorize address and keeps the PKCE verifier and state
@@ -220,6 +302,8 @@ export const Session = ({ children }: { children: ReactNode }) => {
 
   const land = useCallback(async () => {
     const where = take()
+    // The silent ask found nobody signed in on hanzo.ai: back to the page it left.
+    if (SILENT.has(new URLSearchParams(window.location.search).get('error') ?? '')) return where
     const token = await iam().handleCallback()
     if (!token.accessToken) throw new Error('the issuer returned no access token')
     await adopt()
