@@ -49,20 +49,20 @@ export const PAD = 10
 export const ROW = 29
 /** A row under an expanded project. */
 export const LEAF = 27
-/** The rail's icon pitch, which is also the 32x32 active pill. */
-export const STEP = 32
+/** The rail's icon pitch, which is also the 36x36 rounded-10 active/hover square (6px inset inside 48px rail). */
+export const STEP = 36
 /** Every glyph in the rail and the navigator. */
 export const ICON = 18
 /** The search field. */
 export const FIELD = 30
 
 /** The rail's mark. */
-export const MARK = 32
+export const MARK = 36
 /** The rail's gauge. */
 export const GAUGE = { width: 36, height: 52 }
 /** The rail's add control, and the pill behind the selected glyph. */
 export const ADD = 28
-export const GLOW = 32
+export const GLOW = 36
 
 /** Where a row's label starts, and where the tree's spine runs. Padding, the
  *  icon box, then the gap — so a row with no glyph indents to the same place and

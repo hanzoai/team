@@ -57,7 +57,7 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
       items="center"
       justify="space-between"
       pt={6}
-      pb={8}
+      pb={6}
       borderRightWidth={1}
       style={{ backgroundColor: paint.rail, borderRightColor: paint.railRule }}
       data-parity-key="shell.rail"
@@ -77,7 +77,7 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
                           {...press(() => account?.onSelectOrg?.(org.name), `${label} organization`)}
                           width={STEP}
                           height={STEP}
-                          rounded={9}
+                          rounded={10}
                           items="center"
                           justify="center"
                           position="relative"
@@ -211,7 +211,7 @@ const Slot = ({ label, here = false, pressed, onPress, children }: {
           items="center"
           justify="center"
           position="relative"
-          rounded={8}
+          rounded={10}
           style={active ? ACTIVE_PILL : undefined}
           hoverStyle={active ? undefined : { background: '$hover' }}
           focusVisibleStyle={RING}

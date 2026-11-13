@@ -28,8 +28,8 @@ import {
 import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
 import { botPath, botsOf } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
-import { paint, round, state } from '~/theme/theme.ts'
-import { RAIL } from './measure.ts'
+import { paint, ring, round, state } from '~/theme/theme.ts'
+import { RAIL, STEP } from './measure.ts'
 
 function displayName(name?: string, email?: string): string {
   if (name?.trim()) return name.trim()
@@ -445,13 +445,15 @@ export function RailAccountMenu({
           role="button"
           tabIndex={0}
           cursor="pointer"
-          width={32}
-          height={32}
-          rounded={round.pill}
+          width={STEP}
+          height={STEP}
+          rounded={10}
           items="center"
           justify="center"
           position="relative"
-          hoverStyle={{ bg: '$color3' }}
+          style={open ? { backgroundColor: paint.railActive } : undefined}
+          hoverStyle={open ? undefined : { background: '$hover' }}
+          focusVisibleStyle={ring}
           aria-label={`${userName} · Account & settings`}
           aria-haspopup="menu"
           aria-expanded={open}
@@ -464,17 +466,33 @@ export function RailAccountMenu({
           }}
         >
           {user?.avatar ? (
-            <OrgMark org={{ name: userName, logo: user.avatar }} size={28} />
+            <YStack
+              width={24}
+              height={24}
+              rounded={round.pill}
+              overflow="hidden"
+              items="center"
+              justify="center"
+              style={{ backgroundColor: paint.avatar }}
+            >
+              <img
+                src={user.avatar}
+                alt=""
+                width={24}
+                height={24}
+                style={{ width: 24, height: 24, objectFit: 'cover' }}
+              />
+            </YStack>
           ) : (
             <YStack
-              width={28}
-              height={28}
+              width={24}
+              height={24}
               rounded={round.pill}
               items="center"
               justify="center"
               style={{ backgroundColor: paint.avatar }}
             >
-              <Text fontSize={11} fontWeight="600" style={{ color: paint.avatarInk }}>
+              <Text fontSize={10.5} fontWeight="600" style={{ color: paint.avatarInk }}>
                 {avatarInitials(user?.name, user?.email)}
               </Text>
             </YStack>

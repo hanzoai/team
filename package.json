@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/team",
-  "version": "0.1.19",
+  "version": "0.1.20",
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
   "license": "Apache-2.0 OR MIT",
