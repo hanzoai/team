@@ -849,7 +849,7 @@ const ENROL_TRIED = 'team.enrol_tried'
  * workspace membership when signed in so users never hit a manual setup gate.
  */
 export const AuthGate = ({ children }: { children: ReactNode }) => {
-  const { standing: session } = useSession()
+  const { standing: session, who, depart, leave } = useSession()
   const { standing: space, refusal, enrolNow, enrolment } = useSpace()
   const [enrolling, setEnrolling] = useState(false)
   const [autoFallback, setAutoFallback] = useState(false)
@@ -902,35 +902,86 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
   if (session === 'unknown') return <Waiting />
   if (session === 'out') return <Login />
 
+  const account = who?.email ?? who?.label ?? null
+  const runEnrol = () => {
+    try {
+      sessionStorage.removeItem(ENROL_TRIED)
+    } catch {
+      /* ignore */
+    }
+    setEnrolling(true)
+    void enrolNow().then((ok) => {
+      if (!ok) window.location.assign(enrolment)
+      else setEnrolling(false)
+    })
+  }
+
   if (space === 'stranger') {
-    if (!autoFallback) return <Waiting />
+    if (!autoFallback) return <Waiting account={account} onLeave={leave} />
     return (
-      <Word title="One more step" body="Set up your workspace to see your projects.">
-        <Button
-          disabled={enrolling}
-          onPress={() => {
-            setEnrolling(true)
-            void enrolNow().then((ok) => {
-              if (!ok) window.location.assign(enrolment)
-              else setEnrolling(false)
-            })
-          }}
-        >
-          {enrolling ? 'Setting up…' : 'Set up'}
-        </Button>
+      <Word
+        title="Finish setting up Hanzo Team"
+        body="Provision your Team workspace to open channels, issues, docs, and CRM."
+        account={account}
+        onLeave={leave}
+        onOpen={runEnrol}
+        working={enrolling}
+      >
+        <XStack items="center" justify="center" gap={gap.tight} flexWrap="wrap" pt={gap.tight}>
+          <Button disabled={enrolling} rounded={round.pill} bg={paint.ink} onPress={runEnrol}>
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+              {enrolling ? 'Setting up…' : 'Set up workspace'}
+            </SizableText>
+          </Button>
+          <Button
+            variant="outline"
+            rounded={round.pill}
+            onPress={() => {
+              void depart('another')
+            }}
+          >
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Switch account
+            </SizableText>
+          </Button>
+        </XStack>
       </Word>
     )
   }
 
   if (space === 'refused') {
     return (
-      <Word title="Your workspace is not answering" body={refusal?.message ?? ''}>
-        <Button onPress={() => window.location.reload()}>Try again</Button>
+      <Word
+        title="Your workspace is not answering"
+        body={refusal?.message ?? 'Check your connection or try signing in again.'}
+        account={account}
+        onLeave={leave}
+        onOpen={() => window.location.reload()}
+        working={false}
+      >
+        <XStack items="center" justify="center" gap={gap.tight} flexWrap="wrap" pt={gap.tight}>
+          <Button rounded={round.pill} bg={paint.ink} onPress={() => window.location.reload()}>
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+              Try again
+            </SizableText>
+          </Button>
+          <Button
+            variant="outline"
+            rounded={round.pill}
+            onPress={() => {
+              void depart('another')
+            }}
+          >
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Switch account
+            </SizableText>
+          </Button>
+        </XStack>
       </Word>
     )
   }
 
-  if (space === 'unknown') return <Waiting />
+  if (space === 'unknown') return <Waiting account={account} onLeave={leave} />
 
   return <>{children}</>
 }
@@ -940,22 +991,118 @@ const Forward = ({ to }: { to: string }) => {
   return <Waiting />
 }
 
-const Waiting = () => (
-  <YStack flex={1} items="center" justify="center" bg={paint.ground}>
-    <Spinner />
+const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => {
+  const productName = `Hanzo ${brand.title}`
+  return (
+    <XStack
+      width="100%"
+      minH={68}
+      px={gap.wide}
+      py={gap.tight}
+      items="center"
+      justify="space-between"
+      borderBottomWidth={1}
+      borderColor={paint.rule}
+      bg={paint.ground}
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+      }}
+    >
+      <XStack
+        items="center"
+        gap={gap.tight}
+        cursor="pointer"
+        shrink={0}
+        onPress={() => window.location.assign('/')}
+      >
+        <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+          {productName}
+        </SizableText>
+      </XStack>
+      <XStack items="center" gap={gap.tight} shrink={0}>
+        {account ? (
+          <SizableText size={rung.small} color={paint.mute}>
+            {account}
+          </SizableText>
+        ) : null}
+        <Button
+          size="sm"
+          variant="outline"
+          rounded={round.pill}
+          onPress={() => window.location.assign(`${SITE}/contact-sales`)}
+        >
+          <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+            Contact sales
+          </SizableText>
+        </Button>
+        {onLeave ? (
+          <Button size="sm" variant="outline" rounded={round.pill} onPress={onLeave}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Sign out
+            </SizableText>
+          </Button>
+        ) : null}
+      </XStack>
+    </XStack>
+  )
+}
+
+const Waiting = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => (
+  <YStack flex={1} minH="100vh" bg={paint.ground}>
+    <GateHeader account={account} onLeave={onLeave} />
+    <YStack flex={1} items="center" justify="center" gap={gap.tight}>
+      <Spinner />
+      <SizableText size={rung.body} color={paint.ink} fontWeight="500">
+        {`Opening Hanzo ${brand.title}…`}
+      </SizableText>
+    </YStack>
   </YStack>
 )
 
-const Word = ({ title, body, children }: { title: string; body: string; children: ReactNode }) => (
-  <YStack flex={1} items="center" justify="center" gap={gap.inset} bg={paint.ground} p={gap.wide}>
-    <SizableText size={rung.title} color={paint.ink}>
-      {title}
-    </SizableText>
-    {body ? (
-      <SizableText size={rung.body} color={paint.mute}>
-        {body}
-      </SizableText>
-    ) : null}
-    {children}
+const Word = ({
+  title,
+  body,
+  account,
+  onLeave,
+  onOpen,
+  working,
+  children,
+}: {
+  title: string
+  body: string
+  account?: string | null
+  onLeave?: () => void
+  onOpen: () => void
+  working: boolean
+  children: ReactNode
+}) => (
+  <YStack flex={1} bg={paint.ground} overflow="scroll">
+    <GateHeader account={account} onLeave={onLeave} />
+    <YStack width="100%" minH={540} items="center" justify="center" px={gap.wide} py={gap.wide}>
+      <YStack
+        width="100%"
+        maxW={480}
+        items="center"
+        gap={gap.inset}
+        p={gap.wide}
+        rounded={round.panel}
+        bg={paint.panel}
+        borderWidth={1}
+        borderColor={paint.rule}
+      >
+        <SizableText size={rung.title} color={paint.ink} fontWeight="600" style={{ textAlign: 'center' }}>
+          {title}
+        </SizableText>
+        {body ? (
+          <SizableText size={rung.body} color={paint.mute} style={{ textAlign: 'center' }}>
+            {body}
+          </SizableText>
+        ) : null}
+        {children}
+      </YStack>
+    </YStack>
+    <TeamShowcase onOpen={onOpen} working={working} />
   </YStack>
 )

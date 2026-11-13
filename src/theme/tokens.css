@@ -24,19 +24,19 @@
 .t_dark {
   /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
   --background: #0d0d10;
-  --pane-floor: #1d1d22;
-  --pane-fill: #08080a;
-  --side-fill: #111114;
+  --pane-floor: #141417;
+  --pane-fill: #09090b;
+  --side-fill: #121215;
   --pane-round: 12px;
-  --pane-edge: rgba(255, 255, 255, 0.08);
+  --pane-edge: rgba(255, 255, 255, 0.1);
   --surface-card-emphasis: #18181c;
   --secondary: #222227;
-  --popover: #111114;
-  --card: #111114;
-  --surface-1: #08080a;
+  --popover: #121215;
+  --card: #121215;
+  --surface-1: #09090b;
   --surface-2: #17171b;
   --surface-3: #222227;
-  --border: #222227;
+  --border: #25252b;
   --primary: #fafafa !important;
   --primary-foreground: #09090b !important;
   --primary-hover: #e4e4e7 !important;
@@ -45,18 +45,18 @@
   --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #0d0d10;
-  --shell-bar-border: #202025;
-  --shell-rail-bg: #0d0d10;
-  --shell-rail-border: #202025;
-  --shell-rail-active: #242429;
-  --shell-rail-fg: #a1a1aa;
+  --shell-bar-bg: #141417;
+  --shell-bar-border: #24242a;
+  --shell-rail-bg: #141417;
+  --shell-rail-border: #24242a;
+  --shell-rail-active: #26262c;
+  --shell-rail-fg: #b8b8c2;
   --shell-rail-fg-active: #fafafa;
-  --shell-sidebar-bg: #111114;
-  --shell-sidebar-border: #202025;
-  --shell-row-active: #222227;
-  --shell-row-hover: #19191d;
-  --shell-canvas-bg: #08080a;
+  --shell-sidebar-bg: #121215;
+  --shell-sidebar-border: #24242a;
+  --shell-row-active: #24242a;
+  --shell-row-hover: #1a1a1f;
+  --shell-canvas-bg: #09090b;
   --shell-avatar-bg: #27272c;
   --shell-avatar-fg: #fafafa;
   --composer-fill: #141418;
@@ -100,8 +100,8 @@
   /* ——— ink: three ranks. The reference draws five and measures three —
          its "muted", "dim" and "placeholder" are one rank at ~28% white. ——— */
   --team-ink: var(--text-primary);
-  --team-mute: var(--text-tertiary);
-  --team-dim: var(--text-disabled);
+  --team-mute: var(--text-secondary);
+  --team-dim: var(--text-tertiary);
 
   /* ——— the categorical ramp: six slots, assigned by `slot()` in theme.ts and
          never by hand.
@@ -615,8 +615,8 @@ html {
   --pv-rule: #202025;
   --pv-rule-strong: #2c2c33;
   --pv-ink: #fafafa;
-  --pv-mute: #a1a1aa;
-  --pv-dim: #71717a;
+  --pv-mute: #b8b8c2;
+  --pv-dim: #8e8e98;
   --pv-active: #242429;
   --pv-bubble: #242429;
   --pv-bubble-ink: #fafafa;

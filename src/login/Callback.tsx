@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
+import { Button, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 
 import { brand } from '~/data/brand.ts'
 import { useSession } from '~/data/session.tsx'
-import { gap, paint, rung } from '~/theme/theme.ts'
+import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 /**
  * Where the issuer returns a browser that signed in the other way.
@@ -18,8 +18,13 @@ import { gap, paint, rung } from '~/theme/theme.ts'
  * as a broken sign-in.
  */
 export const Callback = () => {
-  const { land } = useSession()
+  const { land, depart } = useSession()
   const [refusal, setRefusal] = useState<string | null>(null)
+  const productName = `Hanzo ${brand.title}`
+
+  useEffect(() => {
+    document.title = `${refusal ? 'Sign in' : 'Signing you in'} — ${productName}`
+  }, [refusal, productName])
 
   useEffect(() => {
     void land()
@@ -35,6 +40,7 @@ export const Callback = () => {
         px={gap.wide}
         py={gap.tight}
         items="center"
+        justify="space-between"
         borderBottomWidth={1}
         borderColor={paint.rule}
         bg={paint.ground}
@@ -44,30 +50,62 @@ export const Callback = () => {
           gap={gap.tight}
           cursor="pointer"
           shrink={0}
-          onPress={() => window.location.assign('/')}
+          onPress={() => window.location.replace('/')}
         >
           <SizableText size={rung.row} color={paint.ink} fontWeight="600">
-            {`Hanzo ${brand.title}`}
+            {productName}
           </SizableText>
         </XStack>
+        <Button
+          size="sm"
+          variant="outline"
+          rounded={round.pill}
+          onPress={() => window.location.replace('/')}
+        >
+          <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+            {`← Back to ${productName}`}
+          </SizableText>
+        </Button>
       </XStack>
-      <YStack flex={1} items="center" justify="center" gap={gap.inset}>
+      <YStack flex={1} items="center" justify="center" gap={gap.inset} px={gap.wide}>
         {refusal ? (
-          <>
-            <SizableText size={rung.body} color={paint.alert}>
+          <YStack maxW={440} items="center" gap={gap.inset}>
+            <SizableText size={rung.title} color={paint.ink} fontWeight="600" style={{ textAlign: 'center' }}>
+              Couldn’t finish signing in
+            </SizableText>
+            <SizableText size={rung.body} color={paint.mute} style={{ textAlign: 'center' }}>
               {refusal}
             </SizableText>
-            <SizableText
-              size={rung.small}
-              color={paint.mute}
-              cursor="pointer"
-              onPress={() => window.location.replace('/login')}
-            >
-              Try again
-            </SizableText>
-          </>
+            <XStack items="center" justify="center" gap={gap.tight} flexWrap="wrap" pt={gap.tight}>
+              <Button
+                rounded={round.pill}
+                bg={paint.ink}
+                onPress={() => {
+                  void depart('login')
+                }}
+              >
+                <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+                  Try again
+                </SizableText>
+              </Button>
+              <Button
+                variant="outline"
+                rounded={round.pill}
+                onPress={() => window.location.replace('/')}
+              >
+                <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+                  {`Back to ${productName}`}
+                </SizableText>
+              </Button>
+            </XStack>
+          </YStack>
         ) : (
-          <Spinner />
+          <YStack items="center" gap={gap.tight}>
+            <Spinner />
+            <SizableText size={rung.body} color={paint.ink} fontWeight="500">
+              {`Signing you in to ${productName}…`}
+            </SizableText>
+          </YStack>
         )}
       </YStack>
     </YStack>
