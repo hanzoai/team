@@ -20,8 +20,6 @@ import { lazy, Suspense, type ReactNode } from 'react'
 import type { RouteObject } from 'react-router'
 import { Navigate, useParams } from 'react-router'
 
-import { useProjects } from '~/serve'
-
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen } from '~/crm/CrmWorkspace'
 import { Inbox } from '~/inbox'
@@ -40,15 +38,10 @@ const ProjectRoot = () => {
 }
 
 /**
- * Where a visit starts: the first project's Tracker board
- * (the board with the Rail, Project Navigator, Kanban columns and Inbox aside).
+ * Where a visit starts: the thread-focused workspace (`/chat`), with the
+ * left organization rail, channel & bot navigator, active conversation, and agent pane.
  */
-const Landing = () => {
-  const projects = useProjects()
-  if (projects.phase === 'loading') return tracker(null)
-  const first = [...(projects.data ?? [])].sort((a, b) => a.name.localeCompare(b.name))[0]
-  return <Navigate to={first ? `/projects/${first._id}/issues` : '/issues'} replace />
-}
+const Landing = () => <Navigate to="/chat" replace />
 
 const tracker = (view: ReactNode) => (
   <Shell nav={<Nav />} aside={<Inbox />}>

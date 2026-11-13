@@ -31,7 +31,7 @@ import { useSpace } from '~/data/space.tsx'
 import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
 import { paint } from '~/theme/theme.ts'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
-import { BusinessHeader, type BusinessAppItem } from './BusinessHeader.tsx'
+import { BusinessHeader } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
 import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
@@ -77,19 +77,6 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
 
   const orgs = all
   const activeOrg = current ?? orgs[0]
-  const currentAppId = pathname.startsWith('/crm') ? 'crm' : 'team'
-
-  const handleSelectApp = (app: BusinessAppItem) => {
-    if (app.id === 'crm') {
-      go('/crm/investors')
-    } else if (app.id === 'team' || app.id === 'work') {
-      go('/issues')
-    } else if (app.id === 'chat') {
-      go('/chat')
-    } else if (typeof window !== 'undefined') {
-      window.location.href = app.href
-    }
-  }
 
   const userIdentity = who
     ? {
@@ -115,14 +102,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   return (
     <Screen bg="$background">
       <BusinessHeader
-        appId={currentAppId}
-        showAppTitle={pathname.startsWith('/crm')}
         currentOrg={currentOrgInfo}
-        orgs={orgList}
-        onSelectOrg={(url: string) => choose(url)}
-        onSelectApp={handleSelectApp}
         onNavigate={reach}
-        onSettings={() => openSettingsModal('general')}
         navSpan={span + 1}
         navOpen={inlineNavOpen}
         onToggleNav={
@@ -134,7 +115,6 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             : undefined
         }
         surfaceTitle={surfaceAt(pathname)?.label}
-        user={userIdentity}
       />
       <XStack
         flex={1}

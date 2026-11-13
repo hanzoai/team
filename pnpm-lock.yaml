@@ -128,8 +128,8 @@ importers:
         specifier: 0.7.0
         version: 0.7.0(react@19.2.8)
       '@hanzo/app':
-        specifier: 0.3.74
-        version: 0.3.74(4847375212aab65dad4dcc237c4f97e6)
+        specifier: 0.3.76
+        version: 0.3.76(4847375212aab65dad4dcc237c4f97e6)
       '@hanzo/appearance':
         specifier: 0.2.15
         version: 0.2.15(react@19.2.8)
@@ -594,8 +594,8 @@ packages:
       react:
         optional: true
 
-  '@hanzo/app@0.3.74':
-    resolution: {integrity: sha512-GB2cM49fIiLvvBgOVXJN+buadlE65khXwoyqWPYmR/2a+uxT+L5N77aNHhiuP1JYLCUKmVNP90lglaZvQmBiJg==}
+  '@hanzo/app@0.3.76':
+    resolution: {integrity: sha512-c8I/hhehVjfvVUhVouTVpkdy4YEo07DPtnq6okrk4xDBiHYzfzkPZ6CP42iEDXk7CsP7/lAud3Q87wTMi4xajg==}
     engines: {node: '>=22.18'}
     peerDependencies:
       '@hanzo/ai': '>=0.7.0'
@@ -742,9 +742,8 @@ packages:
       react:
         optional: true
 
-  '@hanzo/personas@https://github.com/hanzoai/personas/releases/download/v1.3.2/hanzo-personas-1.3.2.tgz':
-    resolution: {integrity: sha512-bTOhmyZTLJCtOX9zAFvtM1Urn6AURX0BmmAoHvQ2pLr9YSvPfLJRAZXdW7OWGd+FTpTpamlY1pYYZi15utSfWA==, tarball: https://github.com/hanzoai/personas/releases/download/v1.3.2/hanzo-personas-1.3.2.tgz}
-    version: 1.3.2
+  '@hanzo/personas@1.3.3':
+    resolution: {integrity: sha512-1W4qeozx5hiHpMzxM9QT+zR95LryIxLJpwnR3o0fVGpita0XpzzbEiLhWmbMfDMtWf1fKyuqbPLcxUEzoM14hQ==}
 
   '@hanzo/products@0.2.6':
     resolution: {integrity: sha512-Y03ewQNDZdr29HWZAvYLHoYenU0I5XzZZ/VTGObkmL39HWSGqwAxzslFDEH2ABOCLl9Pe2P/LsL8hzpWX9hYUw==}
@@ -3740,7 +3739,7 @@ snapshots:
     optionalDependencies:
       react: 19.2.8
 
-  '@hanzo/app@0.3.74(4847375212aab65dad4dcc237c4f97e6)':
+  '@hanzo/app@0.3.76(4847375212aab65dad4dcc237c4f97e6)':
     dependencies:
       '@hanzo/ai': 0.7.0(react@19.2.8)
       '@hanzo/appearance': 0.2.15(react@19.2.8)
@@ -3754,7 +3753,7 @@ snapshots:
       '@hanzo/iam': 0.21.42(react-dom@19.2.8(react@19.2.8))(react@19.2.8)
       '@hanzo/logo': 1.0.26(react@19.2.8)
       '@hanzo/mod': 0.1.2(react@19.2.8)
-      '@hanzo/personas': https://github.com/hanzoai/personas/releases/download/v1.3.2/hanzo-personas-1.3.2.tgz
+      '@hanzo/personas': 1.3.3
       '@hanzo/studio': 0.1.8(172437515d9db6266b51bb24447eac15)
       '@hanzo/ui': 8.32.4(b8d39b8c7f735cdf822db78faac56616)
       '@hanzo/usage': 0.2.0(@hanzo/gui@8.3.5(react-dom@19.2.8(react@19.2.8))(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.18)(react@19.2.8)(supports-color@8.1.1))(react@19.2.8))(@hanzogui/lucide-icons-2@8.3.5(react-dom@19.2.8(react@19.2.8))(react-native-svg@15.15.5(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.18)(react@19.2.8)(supports-color@8.1.1))(react@19.2.8))(react@19.2.8))(react@19.2.8)
@@ -3927,7 +3926,7 @@ snapshots:
     optionalDependencies:
       react: 19.2.8
 
-  '@hanzo/personas@https://github.com/hanzoai/personas/releases/download/v1.3.2/hanzo-personas-1.3.2.tgz': {}
+  '@hanzo/personas@1.3.3': {}
 
   '@hanzo/products@0.2.6(@hanzogui/lucide-icons-2@8.3.5(react-dom@19.2.8(react@19.2.8))(react-native-svg@15.15.5(react-native@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(@react-native/metro-config@0.87.1(@babel/core@7.29.7(supports-color@8.1.1))(supports-color@8.1.1))(@types/react@19.2.18)(react@19.2.8)(supports-color@8.1.1))(react@19.2.8))(react@19.2.8))(react@19.2.8)':
     optionalDependencies:

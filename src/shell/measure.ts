@@ -28,14 +28,14 @@ export const SCALE = 1.5
 
 /** The icon rail. Fixed at every width, including the narrowest: it
  *  is how you leave the screen you are on. */
-export const RAIL = 44
+export const RAIL = 48
 /** The navigator. Fixed, dragged by the grip, a drawer when there is
  *  no room for it. */
-export const NAV = 240
-export const NAV_MIN = 200
-export const NAV_MAX = 380
+export const NAV = 220
+export const NAV_MIN = 188
+export const NAV_MAX = 340
 /** The dismissible right panel. */
-export const ASIDE = 304
+export const ASIDE = 284
 
 /** Flush edge-to-edge canvas with crisp 1px hairlines. */
 export const SEAM = 0
@@ -43,7 +43,7 @@ export const SEAM = 0
 // ── inside a region ──────────────────────────────────────────────────────────
 
 /** Panel padding: the navigator and the aside alike. */
-export const PAD = 12
+export const PAD = 10
 
 /** A navigator row: a standing entry or a project. */
 export const ROW = 29

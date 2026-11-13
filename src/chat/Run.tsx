@@ -49,7 +49,7 @@ export function Run({ author, at, messages, people, reactions, me, onReact, onOp
   const person = people.find((p) => p.name === name)
 
   return (
-    <XStack px={24} pt={12} gap={12} items="flex-start">
+    <XStack px={16} pt={10} gap={10} items="flex-start">
       <Avatar circular size={FACE}>
         {person?.avatar ? <AvatarImage src={person.avatar} alt="" /> : null}
         <AvatarFallback bg="$raised">

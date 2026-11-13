@@ -75,7 +75,7 @@ export function Composer({
   const height = Math.max(MIN, Math.min(MAX, lines * LINE + PAD * 2))
 
   return (
-    <YStack px={24} pb={16} pt={8} gap={6}>
+    <YStack px={16} pb={12} pt={6} gap={6}>
       {failed ? (
         <SizableText fontSize="$1" style={{ color: paint.alert }}>
           {failed}

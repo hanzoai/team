@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/team",
-  "version": "0.1.16",
+  "version": "0.1.17",
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
   "license": "Apache-2.0 OR MIT",
@@ -29,7 +29,7 @@
   },
   "dependencies": {
     "@hanzo/ai": "0.7.0",
-    "@hanzo/app": "0.3.74",
+    "@hanzo/app": "0.3.76",
     "@hanzo/appearance": "0.2.15",
     "@hanzo/build": "0.2.123",
     "@hanzo/composer": "0.2.1",

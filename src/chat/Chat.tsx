@@ -14,7 +14,7 @@ import { SizableText, XStack, YStack } from '@hanzo/ui'
 import { EmptyState } from '@hanzo/ui/product'
 import { Bell, Hash, Lock, MessagesSquare } from '@hanzogui/lucide-icons-2'
 import { useCallback, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import { Navigate, useParams } from 'react-router'
 
 import { invalidate, useRead } from '~/data/query.ts'
 import { useSpace } from '~/data/space.tsx'
@@ -101,7 +101,13 @@ export function Chat() {
   // which is what one `!room` guard does — makes a screen that is still
   // reading and a screen that refused indistinguishable from a room with
   // nothing in it, and the reader is left to guess which.
-  if (!id) return <Pick />
+  if (!id) {
+    if (rooms.phase === 'failure') return <Failed error={rooms.error} onRetry={rooms.reload} />
+    if (rooms.phase === 'loading' || !plane) return <Waiting />
+    const firstRoom = (rooms.data ?? []).find((r) => r.kind === 'channel') ?? (rooms.data ?? [])[0]
+    if (firstRoom) return <Navigate to={`/chat/${firstRoom.id}`} replace />
+    return <Pick />
+  }
   if (withWho) {
     if (roster.phase === 'failure') return <Failed error={roster.error} onRetry={roster.reload} />
     if (roster.phase === 'loading' || !plane) return <Waiting />
@@ -179,7 +185,7 @@ function Header({
   const asideKind = useAsideKind()
   return (
     <YStack borderBottomWidth={1} borderBottomColor="$edge" bg="$panel">
-      <XStack px={20} py={10} items="center" justify="space-between" gap={12}>
+      <XStack px={16} py={8} items="center" justify="space-between" gap={10}>
         {agent ? (
           <XStack flex={1} minW={0} items="center" gap={12}>
             <Face person={agent} size={34} />

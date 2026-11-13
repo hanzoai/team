@@ -109,7 +109,7 @@ function Said({
 
 /** A date, on a hairline that runs the width of the conversation. */
 const Day = ({ at }: { at: number }) => (
-  <YStack px={24} pt={20} pb={4}>
+  <YStack px={16} pt={14} pb={4}>
     <YStack height={1} bg="$edge" position="relative" justify="center">
       <SizableText
         position="absolute"

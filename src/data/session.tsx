@@ -218,6 +218,32 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * network fault or a 5xx signs nobody out.
    */
   useEffect(() => {
+    if (standing === 'out') {
+      let lastProbe = Date.now()
+      const probe = () => {
+        if (document.visibilityState !== 'visible' || Date.now() - lastProbe < 15_000) return
+        lastProbe = Date.now()
+        void (async () => {
+          const token = await iam().getValidAccessToken().catch(() => null)
+          if (token) {
+            await adopt()
+            return
+          }
+          if (navigator.webdriver || AUTOMATED.test(navigator.userAgent) || loopback(window.location.hostname)) return
+          try {
+            const prevAt = Number(sessionStorage.getItem('team.silent.at') || '0')
+            if (Date.now() - prevAt < RECHECK) return
+            sessionStorage.setItem('team.silent.at', String(Date.now()))
+            keepHere()
+            window.location.replace(silent(await iam().getSigninUrl({ additionalParams: { prompt: 'none' } })))
+          } catch {
+            /* keep current signed-out view */
+          }
+        })()
+      }
+      document.addEventListener('visibilitychange', probe)
+      return () => document.removeEventListener('visibilitychange', probe)
+    }
     if (standing !== 'in') return
     let last = Date.now()
     const seen = () => {
@@ -233,7 +259,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
     }
     document.addEventListener('visibilitychange', seen)
     return () => document.removeEventListener('visibilitychange', seen)
-  }, [standing, drop])
+  }, [standing, adopt, drop])
 
   /**
    * The SDK builds the authorize address and keeps the PKCE verifier and state
