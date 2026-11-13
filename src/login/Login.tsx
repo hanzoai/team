@@ -1105,7 +1105,8 @@ export const Login = () => {
  */
 export const AuthGate = ({ children }: { children: ReactNode }) => {
   const { standing: session } = useSession()
-  const { standing: space, refusal, enrolment } = useSpace()
+  const { standing: space, refusal, enrolNow, enrolment } = useSpace()
+  const [enrolling, setEnrolling] = useState(false)
 
   if (window.location.pathname === CALLBACK) return <Callback />
   if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
@@ -1115,7 +1116,18 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
   if (space === 'stranger') {
     return (
       <Word title="One more step" body="Set up your workspace to see your projects.">
-        <Button onPress={() => window.location.assign(enrolment)}>Set up</Button>
+        <Button
+          disabled={enrolling}
+          onPress={() => {
+            setEnrolling(true)
+            void enrolNow().then((ok) => {
+              if (!ok) window.location.assign(enrolment)
+              else setEnrolling(false)
+            })
+          }}
+        >
+          {enrolling ? 'Setting up…' : 'Set up'}
+        </Button>
       </Word>
     )
   }

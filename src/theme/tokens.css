@@ -23,42 +23,49 @@
 :root,
 .t_dark {
   /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
-  --background: #141414;
-  --popover: #1b1b1b;
-  --card: #1b1b1b;
-  --surface-1: #212121;
-  --surface-2: #2a2a2a;
-  --surface-3: #333333;
-  --border: #2e2e2e;
+  --background: #0d0d10;
+  --pane-floor: #1d1d22;
+  --pane-fill: #08080a;
+  --side-fill: #111114;
+  --pane-round: 12px;
+  --pane-edge: rgba(255, 255, 255, 0.08);
+  --surface-card-emphasis: #18181c;
+  --secondary: #222227;
+  --popover: #111114;
+  --card: #111114;
+  --surface-1: #08080a;
+  --surface-2: #17171b;
+  --surface-3: #222227;
+  --border: #222227;
   --primary: #fafafa !important;
   --primary-foreground: #09090b !important;
   --primary-hover: #e4e4e7 !important;
-  --accent: #27272a !important;
+  --accent: #242429 !important;
   --accent-foreground: #fafafa !important;
   --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #141414;
-  --shell-bar-border: #262626;
-  --shell-rail-bg: #141414;
-  --shell-rail-border: #262626;
-  --shell-rail-active: #2a2a2a;
-  --shell-rail-fg: #9e9e9e;
-  --shell-rail-fg-active: #ffffff;
-  --shell-sidebar-bg: #1b1b1b;
-  --shell-sidebar-border: #2a2a2a;
-  --shell-row-active: #2b2b2b;
-  --shell-row-hover: #242424;
-  --shell-canvas-bg: #212121;
-  --shell-avatar-bg: #df8173;
-  --shell-avatar-fg: #ffffff;
-  --composer-fill: #353535;
-  --composer-edge: #424242;
-  --composer-accent: #2850a7;
-  --composer-accent-fg: #ffffff;
+  --shell-bar-bg: #0d0d10;
+  --shell-bar-border: #202025;
+  --shell-rail-bg: #0d0d10;
+  --shell-rail-border: #202025;
+  --shell-rail-active: #242429;
+  --shell-rail-fg: #a1a1aa;
+  --shell-rail-fg-active: #fafafa;
+  --shell-sidebar-bg: #111114;
+  --shell-sidebar-border: #202025;
+  --shell-row-active: #222227;
+  --shell-row-hover: #19191d;
+  --shell-canvas-bg: #08080a;
+  --shell-avatar-bg: #27272c;
+  --shell-avatar-fg: #fafafa;
+  --composer-fill: #141418;
+  --composer-edge: #27272c;
+  --composer-accent: #fafafa;
+  --composer-accent-fg: #09090b;
   --composer-warn: #d98254;
-  --chat-user-bg: #213c71;
-  --chat-user-fg: #f3f6fc;
+  --chat-user-bg: #242429;
+  --chat-user-fg: #fafafa;
 
   /* ——— surfaces: three rungs + unified outer chrome ——— */
   --team-ground: var(--background);      /* outer shell & signed-out ground (#141414) */
@@ -155,6 +162,12 @@
 [data-theme='light'],
 .t_light {
   --background: #ffffff;
+  --pane-floor: #e6e6e9;
+  --pane-fill: #ffffff;
+  --side-fill: #f5f5f6;
+  --pane-edge: rgba(0, 0, 0, 0.09);
+  --surface-card-emphasis: #f3f3f5;
+  --secondary: #e8e8eb;
   --surface-1: #ffffff;
   --surface-2: #fbfbfa;
   --surface-3: #f3f3f2;
@@ -593,23 +606,23 @@ html {
 }
 
 .hz-pv-host {
-  --pv-bar: #141414;
-  --pv-rail: #141414;
-  --pv-sidebar: #1b1b1b;
-  --pv-canvas: #212121;
-  --pv-card: #292929;
-  --pv-card-hi: #303030;
-  --pv-rule: #2c2c2c;
-  --pv-rule-strong: #3a3a3a;
-  --pv-ink: #f2f2f3;
+  --pv-bar: #0d0d10;
+  --pv-rail: #0d0d10;
+  --pv-sidebar: #111114;
+  --pv-canvas: #08080a;
+  --pv-card: #17171b;
+  --pv-card-hi: #202025;
+  --pv-rule: #202025;
+  --pv-rule-strong: #2c2c33;
+  --pv-ink: #fafafa;
   --pv-mute: #a1a1aa;
   --pv-dim: #71717a;
-  --pv-active: #2e2e2e;
-  --pv-bubble: #213c71;
-  --pv-bubble-ink: #f3f6fc;
-  --pv-composer: #353535;
-  --pv-composer-rule: #444444;
-  --pv-send: #2850a7;
+  --pv-active: #242429;
+  --pv-bubble: #242429;
+  --pv-bubble-ink: #fafafa;
+  --pv-composer: #141418;
+  --pv-composer-rule: #27272c;
+  --pv-send: #fafafa;
   --pv-warn: #d98254;
   --pv-green: #22c55e;
   --pv-green-bg: rgba(34, 197, 94, 0.14);

@@ -17,11 +17,13 @@ import { iam } from './iam.ts'
 
 /** A refusal that carries the status, so a caller can tell 401 from 500. */
 export class Refused extends Error {
-  constructor(
-    readonly status: number,
-    readonly detail: string,
-  ) {
+  readonly status: number
+  readonly detail: string
+
+  constructor(status: number, detail: string) {
     super(detail || `HTTP ${status}`)
+    this.status = status
+    this.detail = detail
     this.name = 'Refused'
   }
 }

@@ -15,7 +15,7 @@
 import { brand } from './brand.ts'
 
 /** The one endpoint. Everything the estate publishes is under `/v1` on it. */
-const origin = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
+const origin = import.meta.env?.DEV ? '' : 'https://api.hanzo.ai'
 
 /** The team subsystem, mounted at `/v1/team`. No `/api/` hop. */
 export const team = {

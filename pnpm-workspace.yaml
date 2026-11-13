@@ -139,9 +139,8 @@ overrides:
   '@hanzogui/web': '8.3.5'
   '@hanzogui/z-index-stack': '8.3.5'
 minimumReleaseAgeExclude:
-  - '@hanzo/ui@8.32.4'
-  - '@hanzo/data@1.4.5'
-  - '@hanzo/app@0.3.68'
+  - '@hanzo/*'
+  - '@hanzogui/*'
 # @hanzo/app names @hanzo/personas by its release tarball (the figures ship as
 # a GitHub release asset, not an npm version), so a URL subdependency is allowed.
 blockExoticSubdeps: false

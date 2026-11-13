@@ -11,11 +11,11 @@ import { post } from './http.ts'
 
 /** The refusal shape the account plane answers with, at status 200. */
 export class Denied extends Error {
-  constructor(
-    readonly code: string,
-    message: string,
-  ) {
+  readonly code: string
+
+  constructor(code: string, message: string) {
     super(message)
+    this.code = code
     this.name = 'Denied'
   }
   /** True when the credential was not accepted, as against any other refusal. */
@@ -70,3 +70,6 @@ export const enter = (slug: string) => ask<Entry>('selectWorkspace', { workspace
 
 /** Who the account plane thinks is calling. Its refusal is the enrolment test. */
 export const introduce = () => ask<{ account: string; token?: string }>('getLoginInfoByToken')
+
+/** Provision this IAM session's account row, default spaces, and core personas in place. */
+export const enrol = () => ask<SpaceRow[]>('enrol')

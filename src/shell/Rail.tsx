@@ -7,7 +7,8 @@
  * a plate and not a pill.
  */
 import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
-import { Bell } from '@hanzogui/lucide-icons-2'
+import { OrgMark } from '@hanzo/ui/product'
+import { Bell, Plus, SlidersHorizontal } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { useLocation } from 'react-router'
 
@@ -41,6 +42,12 @@ export type RailProps = {
 export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
   const { pathname } = useLocation()
   const waiting = useNotices()
+  const orgItems =
+    account?.orgs && account.orgs.length > 0
+      ? account.orgs
+      : account?.currentOrg?.name || account?.currentOrg?.displayName
+        ? [account.currentOrg]
+        : []
 
   return (
     <YStack
@@ -57,6 +64,69 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
     >
       <ScrollArea flex={1} minH={0} width="100%">
         <YStack items="center" width="100%" gap={4}>
+          {orgItems.length > 0 ? (
+            <>
+              <YStack items="center" width="100%" gap={5} data-parity-key="shell.orgs">
+                {orgItems.slice(0, 5).map((org) => {
+                  const active = org.name === account?.currentOrg?.name || orgItems.length === 1
+                  const label = org.displayName?.trim() || org.name || 'Workspace'
+                  return (
+                    <Tooltip key={org.name || label}>
+                      <TooltipTrigger>
+                        <YStack
+                          {...press(() => account?.onSelectOrg?.(org.name), `${label} organization`)}
+                          width={STEP}
+                          height={STEP}
+                          rounded={9}
+                          items="center"
+                          justify="center"
+                          position="relative"
+                          style={active ? ACTIVE_PILL : undefined}
+                          hoverStyle={active ? undefined : { background: '$hover' }}
+                          focusVisibleStyle={RING}
+                        >
+                          {active ? (
+                            <YStack
+                              position="absolute"
+                              l={-6}
+                              width={3}
+                              height={16}
+                              rounded={round.pill}
+                              style={{ backgroundColor: paint.railFgActive }}
+                            />
+                          ) : null}
+                          <OrgMark org={{ name: label, logo: org.logo }} size={22} />
+                        </YStack>
+                      </TooltipTrigger>
+                      <TooltipContent>{label}</TooltipContent>
+                    </Tooltip>
+                  )
+                })}
+                {account?.onConnectOrg ? (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <YStack
+                        {...press(account.onConnectOrg, 'Connect or switch organization')}
+                        width={28}
+                        height={28}
+                        rounded={8}
+                        items="center"
+                        justify="center"
+                        hoverStyle={{ background: '$hover' }}
+                        focusVisibleStyle={RING}
+                      >
+                        <Plus size={15} color={paint.railFg} />
+                      </YStack>
+                    </TooltipTrigger>
+                    <TooltipContent>Connect organization</TooltipContent>
+                  </Tooltip>
+                ) : null}
+              </YStack>
+
+              <Rule />
+            </>
+          ) : null}
+
           <Slot
             label={
               waiting > 0
@@ -107,7 +177,12 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
         </YStack>
       </ScrollArea>
 
-      <YStack items="center" width="100%" gap={8} pt={6}>
+      <YStack items="center" width="100%" gap={6} pt={6}>
+        {account?.onSettings ? (
+          <Slot label="Preferences (⌘,)" onPress={account.onSettings}>
+            <SlidersHorizontal size={16} color={paint.railFg} />
+          </Slot>
+        ) : null}
         <RailAccountMenu {...account} />
       </YStack>
     </YStack>

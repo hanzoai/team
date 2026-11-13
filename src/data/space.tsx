@@ -24,7 +24,7 @@ import {
   type ReactNode,
 } from 'react'
 
-import { Denied, spaces as listSpaces, type SpaceRow } from './account.ts'
+import { Denied, enrol as requestEnrol, spaces as listSpaces, type SpaceRow } from './account.ts'
 import { team } from './api.ts'
 import { invalidate } from './query.ts'
 import { useSession } from './session.tsx'
@@ -61,6 +61,8 @@ export type Space = {
   connection: Plane_
   /** Why the plane refused, when it did. */
   refusal: Error | null
+  /** Provision workspace membership in place via the IAM bearer token. */
+  enrolNow: () => Promise<boolean>
   /** Where to go to be enrolled. A full-page trip through the issuer. */
   enrolment: string
 }
@@ -96,6 +98,26 @@ export const Space = ({ children }: { children: ReactNode }) => {
   const [connection, setConnection] = useState<Plane_>('idle')
   const [refusal, setRefusal] = useState<Error | null>(null)
 
+  const applyRows = useCallback((rows: SpaceRow[]) => {
+    setRefusal(null)
+    setAll(rows)
+    if (rows.length === 0) {
+      setStanding('homeless')
+      return
+    }
+    setSlug((held) => (held && rows.some((r) => r.url === held) ? held : rows[0].url))
+  }, [])
+
+  const enrolNow = useCallback(async (): Promise<boolean> => {
+    const provisioned = await requestEnrol().catch((e: unknown) => e as Error)
+    if (provisioned instanceof Error) {
+      setRefusal(provisioned)
+      return false
+    }
+    applyRows(provisioned)
+    return true
+  }, [applyRows])
+
   const asked = useRef(false)
   const prevSession = useRef(session)
   useEffect(() => {
@@ -108,22 +130,20 @@ export const Space = ({ children }: { children: ReactNode }) => {
     asked.current = true
     void (async () => {
       // Signed out has no spaces. Nothing stands in for them: a failed read is a refusal.
-      const rows = await (session === 'in' ? listSpaces() : Promise.resolve([] as SpaceRow[])).catch(
+      let rows = await (session === 'in' ? listSpaces() : Promise.resolve([] as SpaceRow[])).catch(
         (e: unknown) => e as Error,
       )
+      if (session === 'in' && rows instanceof Denied && rows.unauthorized) {
+        rows = await requestEnrol().catch((e: unknown) => (e instanceof Denied && e.code.endsWith(':UnknownMethod') ? rows : (e as Error)))
+      }
       if (rows instanceof Error) {
         setRefusal(rows)
         setStanding(rows instanceof Denied && rows.unauthorized ? 'stranger' : 'refused')
         return
       }
-      setAll(rows)
-      if (rows.length === 0) {
-        setStanding('homeless')
-        return
-      }
-      setSlug((held) => (held && rows.some((r) => r.url === held) ? held : rows[0].url))
+      applyRows(rows)
     })()
-  }, [session])
+  }, [session, applyRows])
 
   useEffect(() => {
     if (!slug) return
@@ -181,9 +201,10 @@ export const Space = ({ children }: { children: ReactNode }) => {
       plane,
       connection,
       refusal,
+      enrolNow,
       enrolment: ENROLMENT,
     }),
-    [standing, all, current, choose, plane, connection, refusal],
+    [standing, all, current, choose, plane, connection, refusal, enrolNow],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>

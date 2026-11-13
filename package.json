@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/team",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
   "license": "Apache-2.0 OR MIT",
@@ -19,7 +19,9 @@
   },
   "packageManager": "pnpm@11.24.0",
   "scripts": {
+    "predev": "node --experimental-strip-types scripts/assets.ts",
     "dev": "vite",
+    "prebuild": "node --experimental-strip-types scripts/assets.ts",
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
@@ -27,8 +29,9 @@
   },
   "dependencies": {
     "@hanzo/ai": "0.7.0",
-    "@hanzo/app": "0.3.68",
-    "@hanzo/build": "0.2.122",
+    "@hanzo/app": "0.3.74",
+    "@hanzo/appearance": "0.2.15",
+    "@hanzo/build": "0.2.123",
     "@hanzo/composer": "0.2.1",
     "@hanzo/data": "1.4.5",
     "@hanzo/event": "0.3.66",
@@ -37,6 +40,7 @@
     "@hanzo/i18n": "0.6.1",
     "@hanzo/iam": "0.21.42",
     "@hanzo/ui": "8.32.4",
+    "@hanzo/usage": "0.2.0",
     "@hanzo/voice": "0.1.19",
     "@hanzogui/lucide-icons-2": "8.3.5",
     "@hanzogui/next-theme": "8.3.5",
