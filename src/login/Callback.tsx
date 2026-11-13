@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import { SizableText, Spinner, YStack } from '@hanzo/ui'
+import { SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 
+import { brand } from '~/data/brand.ts'
 import { useSession } from '~/data/session.tsx'
 import { gap, paint, rung } from '~/theme/theme.ts'
 
@@ -27,23 +28,48 @@ export const Callback = () => {
   }, [land])
 
   return (
-    <YStack flex={1} items="center" justify="center" gap={gap.inset} bg={paint.ground}>
-      {refusal ? (
-        <>
-          <SizableText size={rung.body} color={paint.alert}>
-            {refusal}
+    <YStack flex={1} minH="100vh" bg={paint.ground}>
+      <XStack
+        width="100%"
+        minH={68}
+        px={gap.wide}
+        py={gap.tight}
+        items="center"
+        borderBottomWidth={1}
+        borderColor={paint.rule}
+        bg={paint.ground}
+      >
+        <XStack
+          items="center"
+          gap={gap.tight}
+          cursor="pointer"
+          shrink={0}
+          onPress={() => window.location.assign('/')}
+        >
+          <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+            {`Hanzo ${brand.title}`}
           </SizableText>
-          <SizableText
-            size={rung.small}
-            color={paint.mute}
-            onPress={() => window.location.replace('/login')}
-          >
-            Try again
-          </SizableText>
-        </>
-      ) : (
-        <Spinner />
-      )}
+        </XStack>
+      </XStack>
+      <YStack flex={1} items="center" justify="center" gap={gap.inset}>
+        {refusal ? (
+          <>
+            <SizableText size={rung.body} color={paint.alert}>
+              {refusal}
+            </SizableText>
+            <SizableText
+              size={rung.small}
+              color={paint.mute}
+              cursor="pointer"
+              onPress={() => window.location.replace('/login')}
+            >
+              Try again
+            </SizableText>
+          </>
+        ) : (
+          <Spinner />
+        )}
+      </YStack>
     </YStack>
   )
 }
