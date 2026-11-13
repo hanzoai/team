@@ -37,8 +37,9 @@ export const NAV_MAX = 340
 /** The dismissible right panel. */
 export const ASIDE = 284
 
-/** Flush edge-to-edge canvas with crisp 1px hairlines. */
-export const SEAM = 0
+/** 4px `--pane-gap` gutter and 12px `--pane-round` radius matching hanzo.app & hanzo.bot. */
+export const SEAM = 4
+export const PANE_ROUND = 12
 
 // ── inside a region ──────────────────────────────────────────────────────────
 

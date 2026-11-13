@@ -96,6 +96,14 @@ export function BusinessHeader({
   const [query, setQuery] = useState('')
   const [barW, setBarW] = useState(() => (typeof window === 'undefined' ? 1200 : window.innerWidth))
   const compact = barW < 680
+  const isDesktop =
+    typeof window !== 'undefined' &&
+    Boolean(
+      (window as unknown as { __TAURI__?: unknown; __TAURI_INTERNALS__?: unknown; hanzoDesktop?: unknown }).__TAURI__ ||
+        (window as unknown as { __TAURI_INTERNALS__?: unknown }).__TAURI_INTERNALS__ ||
+        (window as unknown as { hanzoDesktop?: unknown }).hanzoDesktop ||
+        document.documentElement.dataset.desktop === 'true',
+    )
 
   const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
 
@@ -145,26 +153,23 @@ export function BusinessHeader({
   return (
     <XStack
       render="header"
-      height={36}
+      height={38}
       items="center"
-      borderBottomWidth={1}
       shrink={0}
-      style={{ backgroundColor: paint.bar, borderBottomColor: paint.barRule }}
+      style={{ backgroundColor: paint.bar }}
       onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
       data-testid="hanzo-business-header"
     >
-      {/* LEFT FRAME SEGMENT: Sidebar toggle centered over the 48px rail, then ← → */}
+      {/* LEFT FRAME SEGMENT: Sidebar toggle centered over the 48px rail (Back/Forward only in desktop windows) */}
       <XStack
         height="100%"
-        width={navOpen && navSpan ? RAIL + navSpan : undefined}
-        minW={navOpen && navSpan ? RAIL + navSpan : undefined}
+        width={navOpen && navSpan ? RAIL + navSpan : RAIL}
+        minW={navOpen && navSpan ? RAIL + navSpan : RAIL}
         pl={11}
         pr={8}
         gap={2}
         items="center"
-        borderRightWidth={navOpen && navSpan ? 1 : 0}
         shrink={0}
-        style={{ borderRightColor: paint.barRule }}
       >
         {leftSlot}
         {onToggleNav ? (
@@ -185,7 +190,7 @@ export function BusinessHeader({
             <PanelLeft size={15} color="$color10" />
           </XStack>
         ) : null}
-        {!compact ? (
+        {isDesktop && !compact ? (
           <>
             <XStack
               role="button"

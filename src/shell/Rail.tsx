@@ -56,10 +56,9 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
       height="100%"
       items="center"
       justify="space-between"
-      pt={6}
-      pb={6}
-      borderRightWidth={1}
-      style={{ backgroundColor: paint.rail, borderRightColor: paint.railRule }}
+      pt={2}
+      pb={2}
+      style={{ backgroundColor: paint.rail }}
       data-parity-key="shell.rail"
     >
       <ScrollArea flex={1} minH={0} width="100%">

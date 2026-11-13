@@ -29,11 +29,11 @@ import { useLocation, useNavigate } from 'react-router'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
-import { paint } from '~/theme/theme.ts'
+import { paint, round } from '~/theme/theme.ts'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { BusinessHeader } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
-import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, SEAM } from './measure.ts'
+import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, PANE_ROUND, SEAM } from './measure.ts'
 import { Rail } from './Rail.tsx'
 import { surfaceAt } from './surfaces.ts'
 
@@ -100,11 +100,11 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const orgList = orgs.map((s) => ({ name: s.url, displayName: s.name }))
 
   return (
-    <Screen bg="$background">
+    <Screen style={{ backgroundColor: paint.rail }}>
       <BusinessHeader
         currentOrg={currentOrgInfo}
         onNavigate={reach}
-        navSpan={span + 1}
+        navSpan={span + SEAM}
         navOpen={inlineNavOpen}
         onToggleNav={
           nav
@@ -119,6 +119,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
       <XStack
         flex={1}
         minH={0}
+        pb={SEAM}
+        pr={SEAM}
         onLayout={(e: { nativeEvent: { layout: { width: number } } }) =>
           setWidth(e.nativeEvent.layout.width)
         }
@@ -147,30 +149,27 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         />
 
         {inlineNavOpen ? (
-          <>
+          <YStack width={span} shrink={0} minH={0} position="relative">
             <YStack
-              width={span}
-              shrink={0}
+              flex={1}
               minH={0}
-              style={{ backgroundColor: paint.sidebar }}
+              rounded={PANE_ROUND}
+              borderWidth={1}
+              overflow="hidden"
+              style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
               data-parity-key="shell.nav"
             >
               {nav}
             </YStack>
             <Grip value={span} onChange={setSpan} />
-          </>
+          </YStack>
         ) : null}
 
-        <XStack flex={1} minW={0} minH={0} pt={SEAM} pb={SEAM} pr={SEAM} gap={SEAM}>
+        <XStack flex={1} minW={0} minH={0} ml={inlineNavOpen ? SEAM : 0} gap={SEAM}>
           <Panel parity="shell.main">{children}</Panel>
 
           {aside && showing && wide ? (
-            <YStack
-              width={ASIDE}
-              shrink={0}
-              borderLeftWidth={1}
-              style={{ borderLeftColor: paint.sidebarRule }}
-            >
+            <YStack width={ASIDE} shrink={0} minH={0}>
               <Panel parity="shell.aside">{aside}</Panel>
             </YStack>
           ) : null}
@@ -199,15 +198,16 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   )
 }
 
-/** Flush main / aside canvas (#171717 dark / #ffffff light). */
+/** Curved inset main / aside canvas matching hanzo.app & hanzo.bot (`12px` radius, `1px` `--pane-edge`). */
 const Panel = ({ parity, children }: { parity: string; children: ReactNode }) => (
   <YStack
     flex={1}
     minW={0}
     minH={0}
-    rounded={0}
+    rounded={PANE_ROUND}
+    borderWidth={1}
     overflow="hidden"
-    style={{ backgroundColor: paint.panel }}
+    style={{ backgroundColor: paint.panel, borderColor: paint.paneEdge }}
     data-parity-key={parity}
   >
     {children}
@@ -215,11 +215,9 @@ const Panel = ({ parity, children }: { parity: string; children: ReactNode }) =>
 )
 
 /**
- * The navigator's edge, and the app's one resize.
+ * The navigator's edge, sitting in the 4px gutter between `shell.nav` and `shell.main`.
  *
- * A hairline you can see, a 17px band you can hit, and arrow keys for anyone not
- * using a pointer. Pointer capture, because at 1px wide the pointer leaves the
- * line immediately and a drag that ends there ends on the first move.
+ * Invisible until hovered or focused, with a 12px hit band and arrow-key support.
  */
 const Grip = ({ value, onChange }: { value: number; onChange: (n: number) => void }) => {
   const from = useRef(0)
@@ -243,11 +241,14 @@ const Grip = ({ value, onChange }: { value: number; onChange: (n: number) => voi
       aria-valuemin={NAV_MIN}
       aria-valuemax={NAV_MAX}
       tabIndex={0}
-      width={1}
-      shrink={0}
-      position="relative"
+      position="absolute"
+      t={8}
+      b={8}
+      r={-SEAM}
+      width={SEAM}
+      z={10}
+      rounded={round.pill}
       cursor="col-resize"
-      style={{ backgroundColor: paint.sidebarRule }}
       hoverStyle={{ bg: '$soft' }}
       focusVisibleStyle={{ bg: '$outlineColor' }}
       onPointerDown={(e: React.PointerEvent<HTMLElement>) => {

@@ -23,6 +23,8 @@ export const paint = {
   card: role('card'),
   /** The one hairline, at a fixed alpha so it lifts with its surface. */
   rule: role('rule'),
+  /** Curved inset panel hairline matching hanzo.app & hanzo.bot (`--pane-edge`). */
+  paneEdge: role('pane-edge'),
 
   /** Unified outer L-frame chrome (38px top bar + 44px icon rail + 240px sidebar). */
   bar: role('bar'),

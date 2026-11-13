@@ -23,17 +23,17 @@
 :root,
 .t_dark {
   /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
-  --background: #0d0d10;
-  --pane-floor: #141417;
-  --pane-fill: #09090b;
+  --background: #0a0a0c;
+  --pane-floor: #060607;
+  --pane-fill: #0d0d10;
   --side-fill: #121215;
   --pane-round: 12px;
-  --pane-edge: rgba(255, 255, 255, 0.1);
+  --pane-edge: rgba(255, 255, 255, 0.08);
   --surface-card-emphasis: #18181c;
   --secondary: #222227;
   --popover: #121215;
   --card: #121215;
-  --surface-1: #09090b;
+  --surface-1: #0d0d10;
   --surface-2: #17171b;
   --surface-3: #222227;
   --border: #25252b;
@@ -45,18 +45,18 @@
   --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #141417;
-  --shell-bar-border: #24242a;
-  --shell-rail-bg: #141417;
-  --shell-rail-border: #24242a;
-  --shell-rail-active: #26262c;
+  --shell-bar-bg: #060607;
+  --shell-bar-border: #1e1e24;
+  --shell-rail-bg: #060607;
+  --shell-rail-border: #1e1e24;
+  --shell-rail-active: #1e1e24;
   --shell-rail-fg: #b8b8c2;
   --shell-rail-fg-active: #fafafa;
   --shell-sidebar-bg: #121215;
   --shell-sidebar-border: #24242a;
   --shell-row-active: #24242a;
   --shell-row-hover: #1a1a1f;
-  --shell-canvas-bg: #09090b;
+  --shell-canvas-bg: #0d0d10;
   --shell-avatar-bg: #27272c;
   --shell-avatar-fg: #fafafa;
   --composer-fill: #141418;
@@ -96,6 +96,7 @@
          lands on. A solid line stops being a lighter line and becomes an
          unrelated grey the moment the surface under it moves. ——— */
   --team-rule: var(--border);
+  --team-pane-edge: var(--pane-edge);
 
   /* ——— ink: three ranks. The reference draws five and measures three —
          its "muted", "dim" and "placeholder" are one rank at ~28% white. ——— */
@@ -162,10 +163,10 @@
 [data-theme='light'],
 .t_light {
   --background: #ffffff;
-  --pane-floor: #e6e6e9;
+  --pane-floor: #efefee;
   --pane-fill: #ffffff;
-  --side-fill: #f5f5f6;
-  --pane-edge: rgba(0, 0, 0, 0.09);
+  --side-fill: #f6f6f5;
+  --pane-edge: rgba(0, 0, 0, 0.08);
   --surface-card-emphasis: #f3f3f5;
   --secondary: #e8e8eb;
   --surface-1: #ffffff;
@@ -179,14 +180,14 @@
   --accent-foreground: #18181b !important;
   --highlight: #0a0a0a !important;
 
-  --shell-bar-bg: #ededec;
+  --shell-bar-bg: #efefee;
   --shell-bar-border: #dedede;
-  --shell-rail-bg: #ededec;
+  --shell-rail-bg: #efefee;
   --shell-rail-border: #dedede;
   --shell-rail-active: #dcdcdb;
   --shell-rail-fg: #52525b;
   --shell-rail-fg-active: #18181b;
-  --shell-sidebar-bg: #f5f5f4;
+  --shell-sidebar-bg: #f6f6f5;
   --shell-sidebar-border: #e4e4e2;
   --shell-row-active: #e7e5e4;
   --shell-row-hover: #eceae8;
