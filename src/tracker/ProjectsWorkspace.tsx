@@ -1,11 +1,14 @@
 /**
  * Projects directory (`/projects`): the real projects of the open space, with
  * the issue counts their boards report. Nothing here is invented.
+ *
+ * `/projects?new` is the same screen with the New project dialog open, so the
+ * navigator can open it with a plain link and Back closes it.
  */
 import { useEffect, useState } from 'react'
-import { useNavigate } from 'react-router'
+import { useNavigate, useSearchParams } from 'react-router'
 import { Button, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
-import { FolderKanban } from '@hanzogui/lucide-icons-2'
+import { FolderKanban, Plus } from '@hanzogui/lucide-icons-2'
 
 import { useSpace } from '~/data/space.tsx'
 import { standingIs, useBoard, useCrew, useProjects } from '~/serve.tsx'
@@ -15,11 +18,15 @@ import { standby } from './board/standby.ts'
 import type { Issue } from './board/model.ts'
 import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
+import { NewProject } from './NewProject.tsx'
 
 export function AllProjectsScreen() {
   const navigate = useNavigate()
-  const { current, standing } = useSpace()
+  const [params, setParams] = useSearchParams()
+  const { current, standing, plane } = useSpace()
   const projectsRead = useProjects()
+  const asking = params.has('new')
+  const ask = () => setParams({ new: '' })
   const source = useBoard() ?? standby(standingIs(standing))
   const crew = useCrew()
   const [issues, setIssues] = useState<Issue[]>([])
@@ -52,8 +59,43 @@ export function AllProjectsScreen() {
           <XStack gap={8} items="center">
             <People people={crew} size={26} show={5} />
             <Button onPress={() => navigate('/issues')}>All Issues ({issues.length})</Button>
+            <Button disabled={!plane} onPress={ask} startIcon={<Plus />}>
+              New project
+            </Button>
           </XStack>
         </XStack>
+
+        {projectsRead.phase === 'ready' && projects.length === 0 ? (
+          <YStack
+            items="center"
+            gap={10}
+            py={48}
+            px={24}
+            rounded={round.card}
+            borderWidth={1}
+            borderColor="$edge"
+            bg="$background"
+          >
+            <FolderKanban size={22} color="$soft" />
+            <SizableText fontSize={rung.row} fontWeight="600" color="$ink">
+              No projects yet
+            </SizableText>
+            <SizableText fontSize={rung.body} color="$quiet" text="center" maxW={420}>
+              A project has its own board and its own key, so its issues read ENG-1, ENG-2 and on.
+            </SizableText>
+            <Button disabled={!plane} onPress={ask} startIcon={<Plus />}>
+              New project
+            </Button>
+          </YStack>
+        ) : null}
+
+        <NewProject
+          open={asking}
+          plane={plane}
+          projects={projects}
+          onClose={() => navigate('/projects', { replace: true })}
+          onOpened={(id) => navigate(`/projects/${id}/issues`, { replace: true })}
+        />
 
         {/* Projects Grid */}
         <XStack flexWrap="wrap" gap={16}>

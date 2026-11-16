@@ -62,6 +62,11 @@ export interface IssuePatch {
   assigneeId?: string | null
   labels?: string[]
   replies?: number
+  /**
+   * The project a new issue opens in. Read by `add` alone, and only on a board
+   * that spans every project: a project's own board is its own answer.
+   */
+  project?: string
 }
 
 export interface Column {

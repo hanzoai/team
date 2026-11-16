@@ -124,9 +124,14 @@ const columnsOf = (rows: Status[]) =>
  * it; that shape is not reachable through a single transaction, so this is
  * optimistic and the server is the authority. A collision shows up as two cards
  * sharing an identifier — visible, and recoverable, unlike a lost card.
+ *
+ * On a board that spans every project the issue goes where the person chose
+ * (`patch.project`), and with no choice it goes nowhere: guessing a project
+ * files work somewhere nobody looks.
  */
 const adder = (plane: Plane, space?: string) => async (to: Column, title: string, patch?: IssuePatch) => {
-  const targetSpace = space ?? 'proj-crm'
+  const targetSpace = space ?? patch?.project
+  if (!targetSpace) throw new Error('Choose a project for this issue.')
   const [work, columns, project] = await Promise.all([
     issues(plane, targetSpace),
     statuses(plane, targetSpace),
