@@ -1,0 +1,20 @@
+/*
+ * Two fixes to @hanzo/data 1.4.5's RecordsView at narrow widths, through the
+ * `data-slot` hooks it publishes, scoped to the CRM. Both belong upstream; drop
+ * them when the table and its bar do this themselves.
+ *
+ * 1. The table's frame clips (overflow: hidden) while its grid keeps the width
+ *    of every column, so the columns past the frame's edge could not be reached
+ *    at any width narrower than all of them. The frame scrolls sideways
+ *    instead, and the bar above it stays where it is.
+ * 2. The bar keeps the view picker and the search, Filter, Sort and Options on
+ *    one line, so on a phone the last of them ran past the edge. It wraps: the
+ *    controls take a second line when one line cannot hold them.
+ */
+[data-crm] [data-slot='data-table'] {
+  overflow-x: auto;
+}
+
+[data-crm] [data-slot='view-bar-top'] {
+  flex-wrap: wrap;
+}

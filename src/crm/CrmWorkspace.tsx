@@ -8,7 +8,7 @@
  * no CRM yet says that instead of showing an empty list.
  */
 import { RecordsView, RecordDetail, registerDefaultFields, type FieldDefinition, type SelectOption } from '@hanzo/data'
-import { Button, Density, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
+import { Button, Density, ScrollArea, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 import {
   Activity, Briefcase, Building2, Calendar, DollarSign, FileText, Globe, GraduationCap, Hash, Landmark, Layers,
   Link2, Mail, MapPin, Phone, RefreshCw, Target, TrendingUp, User, UserCheck, UserPlus, Users, X,
@@ -20,6 +20,9 @@ import { SECTIONS, readSection, sectionOf, unopened, type Row as Record_, type S
 import { useRead } from '~/data/query.ts'
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark } from '~/theme/theme.ts'
+
+import './crm.css'
+import { DETAIL, docked } from './layout.ts'
 
 registerDefaultFields()
 
@@ -264,6 +267,8 @@ export function CrmScreen() {
 function SectionView({ section }: { section: Section }) {
   const read = useRead(`crm:${section}`, () => readSection(section))
   const [selected, setSelected] = useState<Record_ | null>(null)
+  const [width, setWidth] = useState(0)
+  const beside = docked(width)
   const look = LOOK[section]
   const tone = useMemo(() => chip(section), [section])
   const sheet = read.phase === 'ready' ? read.data : undefined
@@ -271,7 +276,7 @@ function SectionView({ section }: { section: Section }) {
 
   return (
     <Density value="compact">
-      <YStack flex={1} minH={0} bg="$background">
+      <YStack flex={1} minH={0} bg="$background" {...{ 'data-crm': '' }}>
         <XStack height={44} px="$3" items="center" justify="space-between" borderBottomWidth={1} borderColor="$borderColor" gap="$2">
           <XStack items="center" gap="$2">
             <XStack width={22} height={22} rounded="$2" items="center" justify="center" style={{ backgroundColor: tone.background, color: tone.color }}>
@@ -318,13 +323,24 @@ function SectionView({ section }: { section: Section }) {
               </>
             )}
           </YStack>
+        ) : !sheet ? (
+          // Waiting and empty are said here, at the left, rather than by the table:
+          // the table centres its spinner and its empty line across every column,
+          // which puts both past the right edge of any screen narrower than them.
+          <XStack p="$4" items="center" gap="$2">
+            <Spinner size={16} />
+            <SizableText fontSize={13} color="$color10">{`Reading ${look.label.toLowerCase()}…`}</SizableText>
+          </XStack>
+        ) : sheet.rows.length === 0 ? (
+          <YStack p="$4" maxW={560}>
+            <SizableText fontSize={13} color="$color10">{look.empty}</SizableText>
+          </YStack>
         ) : (
-          <XStack flex={1} minW={0} minH={0}>
+          <XStack flex={1} minW={0} minH={0} position="relative" onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
             <ScrollArea flex={1} minW={0} minH={0}>
               <RecordsView
                 fields={look.fields}
-                records={sheet?.rows ?? []}
-                loading={read.phase === 'loading'}
+                records={sheet.rows}
                 editable={false}
                 selectable={false}
                 defaultKind="table"
@@ -335,7 +351,13 @@ function SectionView({ section }: { section: Section }) {
               />
             </ScrollArea>
             {selected ? (
-              <YStack width={380} shrink={0} borderLeftWidth={1} borderColor="$borderColor" bg="$background">
+              <YStack
+                {...(beside
+                  ? { width: DETAIL, shrink: 0, borderLeftWidth: 1 }
+                  : { position: 'absolute' as const, t: 0, r: 0, b: 0, l: 0, z: 1 })}
+                borderColor="$borderColor"
+                bg="$background"
+              >
                 <XStack height={44} px="$3" items="center" justify="space-between" borderBottomWidth={1} borderColor="$borderColor">
                   <SizableText fontSize={13} fontWeight="600" color="$color12" numberOfLines={1}>
                     {title(selected)}
