@@ -92,7 +92,7 @@ export const routes: RouteObject[] = [
     ),
   },
 
-  { path: '/crm', element: <Navigate to="/crm/investors" replace /> },
+  { path: '/crm', element: <Navigate to="/crm/people" replace /> },
   { path: '/crm/:section', element: crm(<CrmScreen />) },
 
   // Surfaces that held only invented content are gone; their addresses land on something real.
@@ -111,7 +111,7 @@ export const routes: RouteObject[] = [
   { path: '/mail', element: <Navigate to="/chat" replace /> },
   { path: '/admin', element: <Navigate to="/chat" replace /> },
   { path: '/settings', element: <Navigate to="/chat" replace /> },
-  { path: '/people', element: <Navigate to="/crm/investors" replace /> },
+  { path: '/people', element: <Navigate to="/crm/people" replace /> },
 
   { path: '*', element: <Navigate to="/chat" replace /> },
 ]

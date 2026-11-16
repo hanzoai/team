@@ -31,6 +31,20 @@ export const team = {
   plan: `${origin}/v1/team/billing/plan`,
 } as const
 
+/**
+ * The org's Base, where its CRM lives: people, companies, opportunities,
+ * candidates, the forms on their timeline, and the lists they are on. The org
+ * is the token's, never a parameter.
+ */
+export const base = {
+  collections: `${origin}/v1/base/collections`,
+} as const
+
+/** The org's captured runtime errors, newest first: `{data: [...]}`. */
+export const event = {
+  errors: `${origin}/v1/event/errors`,
+} as const
+
 /** The issuer, for the trips the IAM SDK does not make. */
 export const issuer = {
   signup: `${brand.issuer}/signup/${brand.org}-${brand.app}`,
