@@ -165,11 +165,22 @@ export function AllProjectsScreen() {
 
                 {/* Status breakdown bar */}
                 <YStack gap={6}>
+                  {/* Each status is as wide as its share of the issues, in the
+                      legend's order, and a status with none draws nothing: a
+                      floor of one made 0 Done as wide as 1 In progress. */}
                   <XStack height={6} rounded={round.pill} bg="$panel" overflow="hidden" gap={2}>
-                    <YStack flex={Math.max(1, doneCount)} style={{ backgroundColor: state.done }} />
-                    <YStack flex={Math.max(1, doingCount)} style={{ backgroundColor: state.doing }} />
-                    <YStack flex={Math.max(1, todoCount)} style={{ backgroundColor: state.todo }} />
-                    <YStack flex={Math.max(1, backlogCount)} style={{ backgroundColor: state.backlog }} />
+                    {(
+                      [
+                        [backlogCount, state.backlog],
+                        [todoCount, state.todo],
+                        [doingCount, state.doing],
+                        [doneCount, state.done],
+                      ] as const
+                    )
+                      .filter(([n]) => n > 0)
+                      .map(([n, color]) => (
+                        <YStack key={color} flex={n} style={{ backgroundColor: color }} />
+                      ))}
                   </XStack>
                   <XStack justify="space-between" flexWrap="wrap" gap={8}>
                     <SizableText fontSize={rung.chip} color="$quiet">

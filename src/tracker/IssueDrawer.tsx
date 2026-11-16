@@ -48,10 +48,32 @@ export function IssueDrawer({
   const [description, setDescription] = useState(issue.description ?? '')
   const [customTag, setCustomTag] = useState('')
   const [savedNotice, setSavedNotice] = useState(false)
+  const [confirming, setConfirming] = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const [refused, setRefused] = useState<string | null>(null)
   useEffect(() => {
     setTitle(issue.title)
     setDescription(issue.description ?? '')
   }, [issue.id, issue.title, issue.description])
+  // A question asked about one issue is not asked about the next one opened.
+  useEffect(() => {
+    setConfirming(false)
+    setRefused(null)
+  }, [issue.id])
+
+  const removeIssue = async () => {
+    if (!source.remove || removing) return
+    setRemoving(true)
+    setRefused(null)
+    try {
+      await source.remove(issue.id)
+      onClose()
+    } catch (e) {
+      setRefused(e instanceof Error ? e.message : String(e))
+    } finally {
+      setRemoving(false)
+    }
+  }
 
   const patchIssue = (patch: IssuePatch) => {
     if (source.update) {
@@ -149,10 +171,8 @@ export function IssueDrawer({
               variant="ghost"
               size="icon-sm"
               aria-label="Delete issue"
-              onPress={() => {
-                void source.remove?.(issue.id)
-                onClose()
-              }}
+              disabled={confirming}
+              onPress={() => setConfirming(true)}
             >
               <Trash2 size={14} color="$soft" />
             </Button>
@@ -162,6 +182,28 @@ export function IssueDrawer({
           </Button>
         </XStack>
       </XStack>
+
+      {/* Delete asks once: there is no undo, and the trash sits beside Close. */}
+      {confirming ? (
+        <YStack px={16} py={12} gap={10} borderBottomWidth={1} borderColor="$edge" bg="$raised" role="alertdialog" aria-label={`Delete ${issue.key}`}>
+          <SizableText fontSize={rung.small} color="$ink">
+            Delete {issue.key}? This can't be undone.
+          </SizableText>
+          {refused ? (
+            <SizableText fontSize={rung.small} color="$ink" role="alert">
+              It was not deleted: {refused}
+            </SizableText>
+          ) : null}
+          <XStack gap={8} justify="flex-end">
+            <Button size="sm" variant="ghost" disabled={removing} onPress={() => setConfirming(false)}>
+              Cancel
+            </Button>
+            <Button size="sm" variant="destructive" disabled={removing} onPress={() => void removeIssue()}>
+              {removing ? 'Deleting…' : 'Delete'}
+            </Button>
+          </XStack>
+        </YStack>
+      ) : null}
 
       <ScrollArea flex={1} minH={0}>
         <YStack p={16} gap={16}>
