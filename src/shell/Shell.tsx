@@ -23,7 +23,7 @@
  * the seed, so the first paint is not one frame of the wrong layout.
  */
 import { Screen, Sheet, SheetContent, XStack, YStack } from '@hanzo/ui'
-import { useRef, useState, type ReactNode } from 'react'
+import { useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { useSession } from '~/data/session.tsx'
@@ -47,7 +47,7 @@ export type ShellProps = {
 }
 
 export const Shell = ({ nav, children, aside }: ShellProps) => {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const go = useNavigate()
   const { who, leave, depart } = useSession()
   const { all, current, choose } = useSpace()
@@ -58,6 +58,11 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const [span, setSpan] = useState(NAV)
   const [navCollapsed, setNavCollapsed] = useState(false)
   const [drawer, setDrawer] = useState(false)
+  // A destination picked in the drawer is where the person is going, so the
+  // drawer steps aside. Left open it stands over the page it opened, and over
+  // a dialog the address opened (/projects?new), which dismissing the drawer
+  // then dismissed too.
+  useEffect(() => setDrawer(false), [pathname, search])
   const [over, setOver] = useState(false)
   const showing = useAside()
   const asideKind = useAsideKind()
