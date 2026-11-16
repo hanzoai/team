@@ -1,155 +1,228 @@
 /**
- * CRM (`/crm/:section`): the real records, read from the server.
+ * CRM (`/crm/:section`): the org's own CRM, read from its Base.
  *
- * Every section is one read of a real endpoint (`/v1/crm/*`, `/v1/base/*`,
- * `/v1/event/errors`) drawn as it came back. Nothing is derived, seeded or
- * kept in the browser; a failed read says so instead of showing something else.
+ * Every section is one read through `~/data/crm` (people, companies,
+ * opportunities, forms, candidates and lists from the org's Base; runtime
+ * errors from the event lens), drawn as it came back. Nothing is derived,
+ * seeded or kept in the browser. A failed read says so; an org whose Base has
+ * no CRM yet says that instead of showing an empty list.
  */
 import { RecordsView, RecordDetail, registerDefaultFields, type FieldDefinition, type SelectOption } from '@hanzo/data'
 import { Button, Density, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import {
-  Activity, Briefcase, Building2, Calendar, DollarSign, FileText, Globe, Hash, Layers, Link2, Mail, MapPin,
-  RefreshCw, Star, TrendingUp, User, Users, X, Zap,
+  Activity, Briefcase, Building2, Calendar, DollarSign, FileText, Globe, GraduationCap, Hash, Landmark, Layers,
+  Link2, Mail, MapPin, Phone, RefreshCw, Target, TrendingUp, User, UserCheck, UserPlus, Users, X,
 } from '@hanzogui/lucide-icons-2'
-import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
-import { useParams } from 'react-router'
+import { useMemo, useState, type ReactNode } from 'react'
+import { Navigate, useParams } from 'react-router'
 
-import { call } from '~/data/http.ts'
+import { SECTIONS, readSection, sectionOf, unopened, type Row as Record_, type Section, type Sheet } from '~/data/crm.ts'
+import { useRead } from '~/data/query.ts'
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark } from '~/theme/theme.ts'
 
 registerDefaultFields()
 
-const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
+// ── the options Base's own select fields declare ────────────────────────────────
 
-const read = <T,>(path: string): Promise<T> => call<T>(`${API_ORIGIN}${path}`)
-
-export type CrmSection = 'investors' | 'funds' | 'customers' | 'leads' | 'feedback' | 'errors' | 'lists'
-
-const SECTIONS: readonly CrmSection[] = ['investors', 'funds', 'customers', 'leads', 'feedback', 'errors', 'lists']
-
-const STAGE_OPTIONS: SelectOption[] = [
-  { value: 'NEW', label: 'New', color: 'pink' },
-  { value: 'SCREENING', label: 'Screening', color: 'cyan' },
-  { value: 'MEETING', label: 'Meeting', color: 'blue' },
-  { value: 'PROPOSAL', label: 'Proposal', color: 'amber' },
-  { value: 'CUSTOMER', label: 'Customer', color: 'green' },
+const LIFECYCLE: SelectOption[] = [
+  { value: 'lead', label: 'Lead', color: 'blue' },
+  { value: 'qualified', label: 'Qualified', color: 'cyan' },
+  { value: 'customer', label: 'Customer', color: 'green' },
+  { value: 'disqualified', label: 'Disqualified', color: 'gray' },
 ]
 
-const INVESTOR_CAT_OPTIONS: SelectOption[] = [
-  { value: 'vc', label: 'Institutional VC', color: 'blue' },
-  { value: 'crypto_vc', label: 'Crypto / Web3 VC', color: 'cyan' },
-  { value: 'accredited', label: 'Accredited High-Check', color: 'green' },
-  { value: 'angel', label: 'Angel Investor', color: 'amber' },
-  { value: 'family_office', label: 'Family Office', color: 'cyan' },
-  { value: 'crowdfunding_republic', label: 'Republic / Reg CF', color: 'orange' },
+const RELATIONSHIP: SelectOption[] = [
+  { value: 'prospect', label: 'Prospect', color: 'sky' },
+  { value: 'customer', label: 'Customer', color: 'green' },
+  { value: 'investor', label: 'Investor', color: 'amber' },
+  { value: 'partner', label: 'Partner', color: 'violet' },
+  { value: 'vendor', label: 'Vendor', color: 'sand' },
 ]
 
-const INVESTOR_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Investor', type: 'text', metadata: { avatar: 'circle' } as never },
-  { name: 'company', label: 'Firm / Fund', type: 'relation', metadata: { labelField: 'name', shape: 'square' } },
-  { name: 'category', label: 'Category', type: 'select', metadata: { options: INVESTOR_CAT_OPTIONS } },
-  { name: 'stage', label: 'Stage', type: 'select', metadata: { options: STAGE_OPTIONS } },
-  { name: 'email', label: 'Email', type: 'email' },
-  { name: 'title', label: 'Title', type: 'text' },
-  { name: 'checkSize', label: 'Check Size', type: 'text' },
-  { name: 'location', label: 'Location', type: 'text' },
+const OUTREACH: SelectOption[] = [
+  { value: 'sent', label: 'Sent', color: 'blue' },
+  { value: 'opened', label: 'Opened', color: 'cyan' },
+  { value: 'clicked', label: 'Clicked', color: 'teal' },
+  { value: 'replied', label: 'Replied', color: 'green' },
+  { value: 'bounced', label: 'Bounced', color: 'red' },
+  { value: 'unsubscribed', label: 'Unsubscribed', color: 'gray' },
 ]
 
-const FUND_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Fund / Firm', type: 'text', metadata: { avatar: 'square' } as never },
-  { name: 'stage', label: 'Stage', type: 'select', metadata: { options: STAGE_OPTIONS } },
-  { name: 'aum', label: 'AUM', type: 'text' },
-  { name: 'checkSize', label: 'Check Size', type: 'text' },
-  { name: 'primaryEmail', label: 'Primary Email', type: 'email' },
-  { name: 'website', label: 'Url', type: 'url' },
-  { name: 'location', label: 'Location', type: 'text' },
+const PIPELINE: SelectOption[] = [
+  { value: 'sales', label: 'Sales', color: 'blue' },
+  { value: 'fundraising', label: 'Fundraising', color: 'amber' },
 ]
 
-const CUSTOMER_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Customer', type: 'text', metadata: { avatar: 'circle' } as never },
-  { name: 'email', label: 'Email', type: 'email' },
-  { name: 'product', label: 'Product', type: 'text' },
-  { name: 'totalSpent', label: 'Total Spent', type: 'currency', metadata: { currencyCode: 'USD', decimals: 0 } },
-  { name: 'stage', label: 'Stage', type: 'select', metadata: { options: STAGE_OPTIONS } },
-  { name: 'location', label: 'Location', type: 'text' },
+const DEAL_STAGE: SelectOption[] = [
+  { value: 'new', label: 'New', color: 'gray' },
+  { value: 'screening', label: 'Screening', color: 'cyan' },
+  { value: 'meeting', label: 'Meeting', color: 'blue' },
+  { value: 'proposal', label: 'Proposal', color: 'amber' },
+  { value: 'customer', label: 'Customer', color: 'green' },
+  { value: 'intro', label: 'Intro', color: 'sky' },
+  { value: 'diligence', label: 'Diligence', color: 'violet' },
+  { value: 'term_sheet', label: 'Term sheet', color: 'purple' },
+  { value: 'closed', label: 'Closed', color: 'green' },
+  { value: 'lost', label: 'Lost', color: 'red' },
 ]
 
-const LEAD_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Developer', type: 'text', metadata: { avatar: 'circle' } as never },
-  { name: 'handle', label: 'GitHub', type: 'text' },
-  { name: 'email', label: 'Email', type: 'email' },
+const HIRING_STAGE: SelectOption[] = [
+  { value: 'new', label: 'New', color: 'gray' },
+  { value: 'screening', label: 'Screening', color: 'cyan' },
+  { value: 'interview', label: 'Interview', color: 'blue' },
+  { value: 'offer', label: 'Offer', color: 'amber' },
+  { value: 'hired', label: 'Hired', color: 'green' },
+  { value: 'rejected', label: 'Rejected', color: 'red' },
+]
+
+const CONSENT: SelectOption[] = [
+  { value: 'unasked', label: 'Not asked', color: 'gray' },
+  { value: 'given', label: 'Given', color: 'green' },
+  { value: 'declined', label: 'Declined', color: 'red' },
+]
+
+const LIST_OF: SelectOption[] = [
+  { value: 'people', label: 'People', color: 'blue' },
+  { value: 'companies', label: 'Companies', color: 'amber' },
+]
+
+// ── the columns ──────────────────────────────────────────────────────────────────
+
+const avatar = (shape: 'circle' | 'square') => ({ avatar: shape }) as never
+
+const PERSON_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Name', type: 'text', metadata: avatar('circle') },
   { name: 'company', label: 'Company', type: 'relation', metadata: { labelField: 'name', shape: 'square' } },
-  { name: 'stars', label: 'Stars', type: 'number' },
-  { name: 'followers', label: 'Followers', type: 'number' },
-  { name: 'location', label: 'Location', type: 'text' },
-]
-
-const LIST_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Audience / Segment', type: 'text', metadata: { avatar: 'square' } as never },
-  { name: 'purpose', label: 'Engine', type: 'text' },
-  { name: 'totalCount', label: 'Total Contacts', type: 'number' },
-  { name: 'eligibleCount', label: 'Deliverable', type: 'number' },
-  { name: 'description', label: 'Description', type: 'text' },
-]
-
-const FEEDBACK_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Subject / Summary', type: 'text', metadata: { avatar: 'square' } as never },
-  { name: 'program', label: 'Kind', type: 'text' },
-  { name: 'email', label: 'Submitter', type: 'email' },
-  { name: 'company', label: 'Organization', type: 'text' },
+  { name: 'email', label: 'Email', type: 'email' },
+  { name: 'job_title', label: 'Title', type: 'text' },
+  { name: 'lifecycle', label: 'Lifecycle', type: 'select', metadata: { options: LIFECYCLE } },
+  { name: 'type', label: 'Relationship', type: 'select', metadata: { options: RELATIONSHIP } },
+  { name: 'outreach', label: 'Outreach', type: 'select', metadata: { options: OUTREACH } },
+  { name: 'contacted', label: 'Last contacted', type: 'date' },
+  { name: 'phone', label: 'Phone', type: 'phone' },
+  { name: 'address', label: 'Address', type: 'address' },
+  { name: 'linkedin', label: 'LinkedIn', type: 'links' },
   { name: 'source', label: 'Source', type: 'text' },
-  { name: 'recordCode', label: 'Ref / Report ID', type: 'text', readOnly: true },
-  { name: 'closeDate', label: 'Submitted At', type: 'date' },
+  { name: 'created', label: 'Added', type: 'date' },
+]
+
+const COMPANY_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Company', type: 'text', metadata: avatar('square') },
+  { name: 'type', label: 'Relationship', type: 'select', metadata: { options: RELATIONSHIP } },
+  { name: 'domain', label: 'Domain', type: 'links' },
+  { name: 'employees', label: 'Employees', type: 'number' },
+  { name: 'annual_revenue', label: 'Annual revenue', type: 'currency', metadata: { decimals: 0 } },
+  { name: 'icp', label: 'Ideal customer', type: 'boolean' },
+  { name: 'address', label: 'Address', type: 'address' },
+  { name: 'linkedin', label: 'LinkedIn', type: 'links' },
+  { name: 'created', label: 'Added', type: 'date' },
+]
+
+const OPPORTUNITY_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Opportunity', type: 'text', metadata: avatar('square') },
+  { name: 'pipeline', label: 'Pipeline', type: 'select', metadata: { options: PIPELINE } },
+  { name: 'stage', label: 'Stage', type: 'select', metadata: { options: DEAL_STAGE } },
+  { name: 'amount', label: 'Amount', type: 'currency', metadata: { decimals: 0 } },
+  { name: 'company', label: 'Company', type: 'relation', metadata: { labelField: 'name', shape: 'square' } },
+  { name: 'contact', label: 'Contact', type: 'relation', metadata: { labelField: 'name', shape: 'circle' } },
+  { name: 'close_date', label: 'Close date', type: 'date' },
+  { name: 'next_step', label: 'Next step', type: 'text' },
+  { name: 'contacted', label: 'Last contacted', type: 'date' },
+  { name: 'created', label: 'Added', type: 'date' },
+]
+
+const FORM_FIELDS: FieldDefinition[] = [
+  { name: 'subject', label: 'Form', type: 'text', metadata: avatar('square') },
+  { name: 'kind', label: 'Kind', type: 'text' },
+  { name: 'from', label: 'From', type: 'relation', metadata: { labelField: 'name', shape: 'circle' } },
+  { name: 'email', label: 'Email', type: 'email' },
+  { name: 'channel', label: 'Channel', type: 'text' },
+  { name: 'ref', label: 'Reference', type: 'text' },
+  { name: 'at', label: 'Filed', type: 'dateTime' },
+]
+
+const CANDIDATE_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'Candidate', type: 'text', metadata: avatar('circle') },
+  { name: 'role', label: 'Role', type: 'text' },
+  { name: 'department', label: 'Department', type: 'text' },
+  { name: 'stage', label: 'Stage', type: 'select', metadata: { options: HIRING_STAGE } },
+  { name: 'email', label: 'Email', type: 'email' },
+  { name: 'phone', label: 'Phone', type: 'phone' },
+  { name: 'location', label: 'Location', type: 'text' },
+  { name: 'links', label: 'Links', type: 'links' },
+  { name: 'consent', label: 'News consent', type: 'select', metadata: { options: CONSENT } },
+  { name: 'source', label: 'Source', type: 'text' },
+  { name: 'applied', label: 'Applied', type: 'date' },
 ]
 
 const ERROR_FIELDS: FieldDefinition[] = [
-  { name: 'name', label: 'Exception / Fault', type: 'text', metadata: { avatar: 'square' } as never },
-  { name: 'program', label: 'Class / Type', type: 'text' },
-  { name: 'company', label: 'Service / App', type: 'text' },
-  { name: 'location', label: 'Origin / File', type: 'text' },
-  { name: 'source', label: 'Env & Release', type: 'text' },
-  { name: 'recordCode', label: 'Event / Issue ID', type: 'text', readOnly: true },
-  { name: 'closeDate', label: 'Occurred At', type: 'date' },
+  { name: 'message', label: 'Error', type: 'text', metadata: avatar('square') },
+  { name: 'type', label: 'Type', type: 'text' },
+  { name: 'product', label: 'Product', type: 'text' },
+  { name: 'path', label: 'Where', type: 'text' },
+  { name: 'handled', label: 'Handled', type: 'boolean' },
+  { name: 'library', label: 'SDK', type: 'text' },
+  { name: 'who', label: 'Visitor', type: 'text' },
+  { name: 'at', label: 'Occurred', type: 'dateTime' },
+]
+
+const LIST_FIELDS: FieldDefinition[] = [
+  { name: 'name', label: 'List', type: 'text', metadata: avatar('square') },
+  { name: 'members', label: 'Members', type: 'number' },
+  { name: 'object', label: 'Of', type: 'select', metadata: { options: LIST_OF } },
+  { name: 'purpose', label: 'Purpose', type: 'text' },
+  { name: 'description', label: 'Description', type: 'text' },
+  { name: 'created', label: 'Added', type: 'date' },
 ]
 
 const FIELD_ICONS: Record<string, ReactNode> = {
-  name: <Building2 size={14} color="$color10" />,
-  domainName: <Link2 size={14} color="$color10" />,
-  website: <Link2 size={14} color="$color10" />,
-  createdBy: <User size={14} color="$color10" />,
-  city: <MapPin size={14} color="$color10" />,
-  location: <MapPin size={14} color="$color10" />,
-  country: <Globe size={14} color="$color10" />,
-  employees: <Users size={14} color="$color10" />,
-  arr: <DollarSign size={14} color="$color10" />,
-  amount: <DollarSign size={14} color="$color10" />,
-  totalSpent: <DollarSign size={14} color="$color10" />,
   company: <Building2 size={14} color="$color10" />,
-  pointOfContact: <User size={14} color="$color10" />,
-  rating: <Star size={14} color="$color10" />,
-  closeDate: <Calendar size={14} color="$color10" />,
-  recordCode: <Hash size={14} color="$color10" />,
+  contact: <User size={14} color="$color10" />,
+  from: <User size={14} color="$color10" />,
   email: <Mail size={14} color="$color10" />,
-  primaryEmail: <Mail size={14} color="$color10" />,
-  jobTitle: <Briefcase size={14} color="$color10" />,
-  title: <Briefcase size={14} color="$color10" />,
+  phone: <Phone size={14} color="$color10" />,
+  job_title: <Briefcase size={14} color="$color10" />,
+  role: <Briefcase size={14} color="$color10" />,
+  address: <MapPin size={14} color="$color10" />,
+  location: <MapPin size={14} color="$color10" />,
+  domain: <Globe size={14} color="$color10" />,
+  linkedin: <Link2 size={14} color="$color10" />,
+  links: <Link2 size={14} color="$color10" />,
+  employees: <Users size={14} color="$color10" />,
+  annual_revenue: <DollarSign size={14} color="$color10" />,
+  amount: <DollarSign size={14} color="$color10" />,
+  members: <Users size={14} color="$color10" />,
+  ref: <Hash size={14} color="$color10" />,
+  contacted: <Calendar size={14} color="$color10" />,
+  close_date: <Calendar size={14} color="$color10" />,
+  applied: <Calendar size={14} color="$color10" />,
+  created: <Calendar size={14} color="$color10" />,
+  at: <Calendar size={14} color="$color10" />,
+}
+
+type Look = { label: string; group: string; icon: (size: number, color?: ReturnType<typeof mark>) => ReactNode; fields: FieldDefinition[]; empty: string }
+
+/** How each section is named, where it sits in the navigator, and which columns it draws. */
+const LOOK: Record<Section, Look> = {
+  people: { label: 'People', group: 'People', icon: (s, c) => <Users size={s} color={c} />, fields: PERSON_FIELDS, empty: 'No people in this CRM yet.' },
+  leads: { label: 'Leads', group: 'People', icon: (s, c) => <UserPlus size={s} color={c} />, fields: PERSON_FIELDS, empty: 'No one is a lead.' },
+  customers: { label: 'Customers', group: 'People', icon: (s, c) => <UserCheck size={s} color={c} />, fields: PERSON_FIELDS, empty: 'No one is a customer yet.' },
+  investors: { label: 'Investors', group: 'People', icon: (s, c) => <TrendingUp size={s} color={c} />, fields: PERSON_FIELDS, empty: 'No one is marked as an investor.' },
+  companies: { label: 'Companies', group: 'Companies', icon: (s, c) => <Building2 size={s} color={c} />, fields: COMPANY_FIELDS, empty: 'No companies in this CRM yet.' },
+  funds: { label: 'Funds', group: 'Companies', icon: (s, c) => <Landmark size={s} color={c} />, fields: COMPANY_FIELDS, empty: 'No company is marked as an investor.' },
+  opportunities: { label: 'Opportunities', group: 'Pipeline', icon: (s, c) => <Target size={s} color={c} />, fields: OPPORTUNITY_FIELDS, empty: 'No opportunities yet.' },
+  forms: { label: 'Forms', group: 'Inbound', icon: (s, c) => <FileText size={s} color={c} />, fields: FORM_FIELDS, empty: 'No forms have been filed.' },
+  candidates: { label: 'Candidates', group: 'Inbound', icon: (s, c) => <GraduationCap size={s} color={c} />, fields: CANDIDATE_FIELDS, empty: 'No one has applied yet.' },
+  errors: { label: 'Runtime errors', group: 'Inbound', icon: (s, c) => <Activity size={s} color={c} />, fields: ERROR_FIELDS, empty: 'No errors captured.' },
+  lists: { label: 'Lists', group: 'Engagement', icon: (s, c) => <Layers size={s} color={c} />, fields: LIST_FIELDS, empty: 'No lists yet.' },
 }
 
 export function CrmNav() {
   const [query, setQuery] = useState('')
   const q = query.trim().toLowerCase()
-  const all: { to: CrmSection; label: string; icon: ReactNode; group: string }[] = [
-    { to: 'investors', label: 'Investors', icon: <TrendingUp size={15} color={mark('investors')} />, group: 'Audiences' },
-    { to: 'funds', label: 'Funds', icon: <Briefcase size={15} color={mark('funds')} />, group: 'Audiences' },
-    { to: 'customers', label: 'Customers', icon: <Users size={15} color={mark('customers')} />, group: 'Audiences' },
-    { to: 'leads', label: 'Developer Leads', icon: <Zap size={15} color={mark('leads')} />, group: 'Audiences' },
-    { to: 'feedback', label: 'Feedback, Bugs & Forms', icon: <FileText size={15} color={mark('feedback')} />, group: 'Inbound' },
-    { to: 'errors', label: 'Runtime & CLI Errors', icon: <Activity size={15} color={mark('errors')} />, group: 'Inbound' },
-    { to: 'lists', label: 'Lists & Segments', icon: <Layers size={15} color="$soft" />, group: 'Engagement' },
-  ]
-  const rows = all.filter((r) => !q || r.label.toLowerCase().includes(q))
-  const groups = [...new Set(rows.map((r) => r.group))]
+  const rows = SECTIONS.filter((s) => !q || LOOK[s].label.toLowerCase().includes(q))
+  const groups = [...new Set(rows.map((s) => LOOK[s].group))]
   return (
     <Column title="CRM">
       <Find value={query} onChange={setQuery} />
@@ -160,10 +233,10 @@ export function CrmNav() {
             {i > 0 ? <Rule /> : null}
             <Group>{g}</Group>
             {rows
-              .filter((r) => r.group === g)
-              .map((r) => (
-                <Row key={r.to} to={`/crm/${r.to}`} icon={r.icon}>
-                  {r.label}
+              .filter((s) => LOOK[s].group === g)
+              .map((s) => (
+                <Row key={s} to={`/crm/${s}`} icon={LOOK[s].icon(15, mark(s))}>
+                  {LOOK[s].label}
                 </Row>
               ))}
           </YStack>
@@ -173,215 +246,28 @@ export function CrmNav() {
   )
 }
 
-type Items = { items?: any[]; total?: number }
-type Row_ = Record<string, unknown>
-type Loaded = { rows: Row_[]; total: number }
-
-const place = (r: any) => [r.city, r.state, r.country].filter(Boolean).join(', ') || String(r.location ?? '')
-const day = (v: unknown) => (typeof v === 'string' ? v.slice(0, 10) : '')
-
-const load = async (section: CrmSection, bucket: string, category: string): Promise<Loaded> => {
-  switch (section) {
-    case 'investors': {
-      const res = await read<Items>(`/v1/crm/investors?limit=250&category=${category === 'all' ? 'vc' : category}`)
-      const rows = (res.items ?? []).filter((v) => v.name || v.email).map((v) => ({
-        id: String(v.id),
-        name: String(v.name ?? v.email),
-        company: String(v.company ?? v.fund_name ?? ''),
-        category: String(v.category ?? ''),
-        stage: String(v.stage ?? '').toUpperCase(),
-        email: String(v.email ?? ''),
-        title: String(v.title ?? ''),
-        checkSize: String(v.check_size ?? ''),
-        location: place(v),
-      }))
-      return { rows, total: res.total ?? rows.length }
-    }
-    case 'funds': {
-      const res = await read<Items>('/v1/crm/funds?limit=250')
-      const rows = (res.items ?? []).map((f) => ({
-        id: String(f.id),
-        name: String(f.name ?? ''),
-        stage: String(f.stage ?? '').toUpperCase(),
-        aum: String(f.aum ?? ''),
-        checkSize: String(f.check_size ?? ''),
-        primaryEmail: String(f.primary_email ?? ''),
-        website: String(f.website ?? ''),
-        location: String(f.location ?? f.country ?? ''),
-      }))
-      return { rows, total: res.total ?? rows.length }
-    }
-    case 'customers': {
-      const res = await read<Items>('/v1/crm/customers?limit=250')
-      const rows = (res.items ?? []).map((c) => ({
-        id: String(c.id),
-        name: String(c.name ?? c.email ?? ''),
-        email: String(c.email ?? ''),
-        product: String(c.products ?? c.product ?? ''),
-        totalSpent: Number(c.total_spent ?? c.amount ?? 0),
-        stage: 'CUSTOMER',
-        location: place(c),
-      }))
-      return { rows, total: res.total ?? rows.length }
-    }
-    case 'leads': {
-      const qs = new URLSearchParams({ limit: '200' })
-      const [min, max] = bucket === 'all' ? [] : bucket.endsWith('+') ? [bucket.slice(0, -1)] : bucket.split('-')
-      if (min) qs.set('min_stars', min === '0' ? '1' : min)
-      if (max) qs.set('max_stars', max)
-      const res = await read<{ leads?: any[]; total?: number }>(`/v1/crm/leads?${qs}`)
-      const rows = (res.leads ?? []).map((l, i) => ({
-        id: String(l.id ?? l.github_login ?? i),
-        name: String(l.name ?? l.github_login ?? l.email ?? ''),
-        handle: l.github_login ? `@${l.github_login}` : '',
-        email: String(l.email ?? ''),
-        company: String(l.company ?? ''),
-        stars: Number(l.total_stars ?? l.stars ?? 0),
-        followers: Number(l.followers ?? 0),
-        location: String(l.location ?? l.country ?? ''),
-      }))
-      return { rows, total: res.total ?? rows.length }
-    }
-    case 'feedback': {
-      const [act, people] = await Promise.all([
-        read<{ items?: any[]; totalItems?: number }>('/v1/base/collections/activities/records?perPage=150&sort=-at,-created'),
-        read<{ items?: any[] }>('/v1/base/collections/people/records?perPage=250'),
-      ])
-      const byId = new Map<string, any>((people.items ?? []).map((p) => [String(p.id), p]))
-      const rows = (act.items ?? [])
-        .filter((a) => a.kind === 'form' || a.data?.program)
-        .map((a, i) => {
-          const data = (a.data ?? {}) as Record<string, any>
-          const p = byId.get(String(a.person_id ?? '')) ?? {}
-          return {
-            id: String(a.id ?? i),
-            name: String(a.subject ?? data.need ?? data.description ?? ''),
-            program: String(data.program ?? data.kind ?? 'feedback'),
-            email: String(p.email ?? data.email ?? ''),
-            company: String(p.company ?? p.name ?? data.company ?? ''),
-            source: String(data.source ?? a.channel ?? ''),
-            recordCode: String(data.public_ref ?? a.source_id ?? a.id ?? ''),
-            closeDate: day(a.at ?? a.created),
-          }
-        })
-      return { rows, total: act.totalItems ?? rows.length }
-    }
-    case 'errors': {
-      const res = await read<{ items?: any[]; errors?: any[] } | any[]>('/v1/event/errors?limit=100')
-      const list = Array.isArray(res) ? res : (res.items ?? res.errors ?? [])
-      const rows = list.map((e, i) => {
-        const env = String(e.environment ?? e.env ?? '')
-        const rel = String(e.release ?? '')
-        return {
-          id: String(e.id ?? e.event_id ?? i),
-          name: String(e.value ?? e.message ?? e.title ?? ''),
-          program: String(e.type ?? e.class ?? e.name ?? ''),
-          company: String(e.app ?? e.service ?? e.product ?? ''),
-          location: String(e.culprit ?? e.origin ?? e.path ?? ''),
-          source: [env, rel].filter(Boolean).join(' · '),
-          recordCode: String(e.issue ?? e.id ?? e.event_id ?? ''),
-          closeDate: day(e.timestamp ?? e.time ?? e.created_at),
-        }
-      })
-      return { rows, total: rows.length }
-    }
-    case 'lists': {
-      const res = await read<Items>('/v1/crm/lists')
-      const rows = (res.items ?? []).map((l) => ({
-        id: String(l.id),
-        name: String(l.name ?? ''),
-        purpose: String(l.purpose ?? l.kind ?? ''),
-        totalCount: Number(l.total_count ?? l.eligible_count ?? 0),
-        eligibleCount: Number(l.eligible_count ?? l.total_count ?? 0),
-        description: String(l.description ?? ''),
-      }))
-      return { rows, total: res.total ?? rows.length }
-    }
-  }
+/** The count beside a section's title: how many the org holds, and how many of them are drawn. */
+const tally = (sheet: Sheet, section: Section): string => {
+  if (section === 'errors') return `${sheet.rows.length.toLocaleString()} most recent`
+  const all = `${sheet.total.toLocaleString()} total`
+  return sheet.rows.length < sheet.total ? `first ${sheet.rows.length.toLocaleString()} of ${all}` : all
 }
 
-const FIELDS: Record<CrmSection, FieldDefinition[]> = {
-  investors: INVESTOR_FIELDS,
-  funds: FUND_FIELDS,
-  customers: CUSTOMER_FIELDS,
-  leads: LEAD_FIELDS,
-  feedback: FEEDBACK_FIELDS,
-  errors: ERROR_FIELDS,
-  lists: LIST_FIELDS,
-}
-
-const TITLES: Record<CrmSection, { title: string; icon: ReactNode }> = {
-  investors: { title: 'Investors', icon: <TrendingUp size={14} /> },
-  funds: { title: 'Funds', icon: <Briefcase size={14} /> },
-  customers: { title: 'Customers', icon: <Users size={14} /> },
-  leads: { title: 'Developer Leads', icon: <Zap size={14} /> },
-  feedback: { title: 'Feedback, Bugs & Forms', icon: <FileText size={14} /> },
-  errors: { title: 'Runtime & CLI Errors', icon: <Activity size={14} /> },
-  lists: { title: 'Lists & Segments', icon: <Layers size={14} /> },
-}
-
-const INVESTOR_CATEGORIES = [
-  { id: 'all', label: 'Institutional VCs' },
-  { id: 'crypto_vc', label: 'Crypto / Web3 VCs' },
-  { id: 'accredited', label: 'Accredited High-Check' },
-  { id: 'family_office', label: 'Family Offices' },
-  { id: 'crowdfunding_republic', label: 'Republic / Reg CF' },
-] as const
-
-const STAR_BUCKETS = ['all', '0-100', '100-500', '500-1000', '1000-5000', '5000-15000', '15000+'] as const
-
+/** `/crm/:section`. An address that is not a section's own is replaced by the one it names. */
 export function CrmScreen() {
   const { section: raw } = useParams()
-  const section: CrmSection = SECTIONS.includes(raw as CrmSection) ? (raw as CrmSection) : 'investors'
-  const [bucket, setBucket] = useState<string>('all')
-  const [category, setCategory] = useState<string>('all')
-  const [data, setData] = useState<Loaded | null>(null)
-  const [error, setError] = useState<string | null>(null)
-  const [loading, setLoading] = useState(false)
-  const [selected, setSelected] = useState<Row_ | null>(null)
+  const { section, exact } = sectionOf(raw)
+  if (!exact) return <Navigate to={`/crm/${section}`} replace />
+  return <SectionView key={section} section={section} />
+}
 
-  const refresh = useCallback(async () => {
-    setLoading(true)
-    setSelected(null)
-    setError(null)
-    try {
-      setData(await load(section, bucket, category))
-    } catch (e) {
-      setData(null)
-      setError(e instanceof Error ? e.message : 'The read failed.')
-    } finally {
-      setLoading(false)
-    }
-  }, [section, bucket, category])
-
-  useEffect(() => {
-    void refresh()
-  }, [refresh])
-
-  const fields = FIELDS[section]
+function SectionView({ section }: { section: Section }) {
+  const read = useRead(`crm:${section}`, () => readSection(section))
+  const [selected, setSelected] = useState<Record_ | null>(null)
+  const look = LOOK[section]
   const tone = useMemo(() => chip(section), [section])
-  const { title, icon } = TITLES[section]
-
-  const strip = (items: readonly { id: string; label: string }[], on: string, set: (id: string) => void) => (
-    <XStack height={36} px="$3" items="center" gap="$1.5" borderBottomWidth={1} borderColor="$borderColor" bg="$background">
-      {items.map((c) => (
-        <Button
-          key={c.id}
-          size="xs"
-          height={24}
-          px="$2"
-          rounded="$2"
-          chromeless={on !== c.id}
-          bg={on === c.id ? '$color3' : 'transparent'}
-          onPress={() => set(c.id)}
-        >
-          <SizableText fontSize={11} fontWeight={on === c.id ? '600' : '400'} color={on === c.id ? '$color12' : '$color10'}>
-            {c.label}
-          </SizableText>
-        </Button>
-      ))}
-    </XStack>
-  )
+  const sheet = read.phase === 'ready' ? read.data : undefined
+  const title = (r: Record_) => String(r.name || r.subject || r.message || r.email || look.label)
 
   return (
     <Density value="compact">
@@ -389,52 +275,70 @@ export function CrmScreen() {
         <XStack height={44} px="$3" items="center" justify="space-between" borderBottomWidth={1} borderColor="$borderColor" gap="$2">
           <XStack items="center" gap="$2">
             <XStack width={22} height={22} rounded="$2" items="center" justify="center" style={{ backgroundColor: tone.background, color: tone.color }}>
-              {icon}
+              {look.icon(14)}
             </XStack>
             <SizableText fontSize={14} fontWeight="600" color="$color12">
-              {title}
+              {look.label}
             </SizableText>
-            {data ? (
+            {sheet ? (
               <SizableText fontSize={12} color="$color10">
-                {`${data.total.toLocaleString()} total`}
+                {tally(sheet, section)}
               </SizableText>
             ) : null}
           </XStack>
-          <Button size="xs" height={24} px="$2" chromeless startIcon={<RefreshCw size={12} />} onPress={() => void refresh()}>
+          <Button
+            size="xs"
+            height={24}
+            px="$2"
+            chromeless
+            startIcon={<RefreshCw size={12} />}
+            onPress={() => {
+              setSelected(null)
+              read.reload()
+            }}
+          >
             <SizableText fontSize={12} color="$color10">Refresh</SizableText>
           </Button>
         </XStack>
 
-        {section === 'leads' ? strip(STAR_BUCKETS.map((b) => ({ id: b, label: b === 'all' ? 'All' : `★ ${b}` })), bucket, setBucket) : null}
-        {section === 'investors' ? strip(INVESTOR_CATEGORIES, category, setCategory) : null}
-
-        {error ? (
-          <YStack p="$4" gap="$2">
-            <SizableText fontSize={13} fontWeight="600" color="$color12">This list could not be read.</SizableText>
-            <SizableText fontSize={12} color="$color10">{error}</SizableText>
+        {read.phase === 'failure' ? (
+          <YStack p="$4" gap="$2" maxW={560}>
+            {unopened(read.error) && section !== 'errors' ? (
+              <>
+                <SizableText fontSize={13} fontWeight="600" color="$color12">This organization has no CRM yet.</SizableText>
+                <SizableText fontSize={12} color="$color10">
+                  The CRM keeps its records in the organization's Base, and this one has none. Hanzo CRM is in beta: an organization
+                  gets it by joining the beta at hanzo.ai/beta.
+                </SizableText>
+              </>
+            ) : (
+              <>
+                <SizableText fontSize={13} fontWeight="600" color="$color12">This list could not be read.</SizableText>
+                <SizableText fontSize={12} color="$color10">{read.error?.message ?? 'The read failed.'}</SizableText>
+              </>
+            )}
           </YStack>
         ) : (
           <XStack flex={1} minW={0} minH={0}>
             <ScrollArea flex={1} minW={0} minH={0}>
               <RecordsView
-                key={section}
-                fields={fields}
-                records={data?.rows ?? []}
-                loading={loading}
+                fields={look.fields}
+                records={sheet?.rows ?? []}
+                loading={read.phase === 'loading'}
                 editable={false}
                 selectable={false}
                 defaultKind="table"
                 boardDisabled
                 {...({ fieldIcons: FIELD_ICONS } as Record<string, unknown>)}
-                onOpen={(r) => setSelected(r)}
-                empty="No records."
+                onOpen={(r) => setSelected(r as Record_)}
+                empty={look.empty}
               />
             </ScrollArea>
             {selected ? (
               <YStack width={380} shrink={0} borderLeftWidth={1} borderColor="$borderColor" bg="$background">
                 <XStack height={44} px="$3" items="center" justify="space-between" borderBottomWidth={1} borderColor="$borderColor">
                   <SizableText fontSize={13} fontWeight="600" color="$color12" numberOfLines={1}>
-                    {String(selected.name || selected.email || 'Record')}
+                    {title(selected)}
                   </SizableText>
                   <Button size="xs" width={26} height={26} p="$0" chromeless onPress={() => setSelected(null)}>
                     <X size={14} color="$color10" />
@@ -442,7 +346,7 @@ export function CrmScreen() {
                 </XStack>
                 <ScrollArea flex={1} minH={0}>
                   <YStack p="$3">
-                    <RecordDetail fields={fields} record={selected} />
+                    <RecordDetail fields={look.fields} record={selected} />
                   </YStack>
                 </ScrollArea>
               </YStack>
