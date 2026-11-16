@@ -57,6 +57,14 @@ export interface Plane {
   one<T>(cls: string, query: Record<string, unknown>): Promise<T | undefined>
   /** Write. The reply is an acknowledgement; the CHANGE arrives on the broadcast. */
   write(tx: Wire): Promise<void>
+  /**
+   * Write a conditional apply (`unless`), and say whether it held.
+   *
+   * The reply to a plain write carries nothing, which is why `write` drops it.
+   * A conditional apply's reply is the one answer to whether its condition
+   * passed and its writes landed, so this one reads it.
+   */
+  apply(tx: Wire): Promise<boolean>
 }
 
 export class Socket implements Plane {
@@ -121,6 +129,11 @@ export class Socket implements Plane {
 
   async write(tx: Wire): Promise<void> {
     await this.call('tx', [tx])
+  }
+
+  async apply(tx: Wire): Promise<boolean> {
+    const reply = await this.call<{ success?: unknown } | null>('tx', [tx])
+    return reply?.success === true
   }
 
   async call<T>(method: string, params: unknown[] = []): Promise<T> {

@@ -13,7 +13,7 @@
  * mistake this shape exists to prevent, so each says its own sentence.
  */
 import { SizableText, Spinner, YStack } from '@hanzo/ui'
-import { Archive, Folder, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { Archive, Folder, Plus, SquareCheck } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useLocation, useParams } from 'react-router'
 
@@ -70,6 +70,12 @@ export const Nav = () => {
         {found.map((p) => (
           <Branch key={p._id} project={p} />
         ))}
+
+        {read.phase === 'ready' ? (
+          <Row to="/projects?new" icon={<Plus size={16} color="$soft" />}>
+            New project
+          </Row>
+        ) : null}
       </Roll>
     </Column>
   )

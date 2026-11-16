@@ -7,6 +7,7 @@
  * `https://api.hanzo.ai/v1/task/board`.
  */
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Badge, Button, Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
 import { Bot, Check, Plus, Tag, Trash2, User, X } from '@hanzogui/lucide-icons-2'
 
@@ -420,14 +421,23 @@ export function IssueDrawer({
   )
 }
 
+/** A project the new-issue form can file into. */
+export type Choice = { id: string; name: string; identifier: string }
+
 export function NewIssueModal({
   initialStatus = 'backlog',
   people,
+  projects,
   onCreate,
   onClose,
 }: {
   initialStatus?: Status
   people: Person[]
+  /**
+   * The projects to choose between, on a board that spans them all. Absent on
+   * a project's own board, where the project is already the answer.
+   */
+  projects?: readonly Choice[]
   onCreate: (status: Status, title: string, patch: IssuePatch) => Promise<void>
   onClose: () => void
 }) {
@@ -437,7 +447,17 @@ export function NewIssueModal({
   const [priority, setPriority] = useState<Priority>('medium')
   const [assigneeId, setAssigneeId] = useState<string | null>(people[0]?.id ?? null)
   const [labels, setLabels] = useState<string[]>(['Feature'])
+  const navigate = useNavigate()
+  const [project, setProject] = useState<string | null>(projects?.[0]?.id ?? null)
   const [submitting, setSubmitting] = useState(false)
+  const [failed, setFailed] = useState<string | null>(null)
+
+  // The list can arrive after the form opens; take its first project then.
+  useEffect(() => {
+    if (projects && !projects.some((p) => p.id === project)) setProject(projects[0]?.id ?? null)
+  }, [projects, project])
+
+  const placed = !projects || !!project
 
   const toggleLabel = (l: string) => {
     setLabels((prev) => (prev.includes(l) ? prev.filter((x) => x !== l) : [...prev, l]))
@@ -445,16 +465,20 @@ export function NewIssueModal({
 
   const submit = async () => {
     const clean = title.trim()
-    if (!clean || submitting) return
+    if (!clean || !placed || submitting) return
     setSubmitting(true)
+    setFailed(null)
     try {
       await onCreate(status, clean, {
         description: description.trim() || undefined,
         priority,
         assigneeId,
         labels,
+        ...(projects && project ? { project } : {}),
       })
       onClose()
+    } catch (e) {
+      setFailed(e instanceof Error ? e.message : String(e))
     } finally {
       setSubmitting(false)
     }
@@ -502,6 +526,55 @@ export function NewIssueModal({
         </XStack>
 
         <YStack p={16} gap={14}>
+          {projects ? (
+            <YStack gap={6}>
+              <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                Project
+              </SizableText>
+              {projects.length === 0 ? (
+                <XStack items="center" justify="space-between" gap={8} flexWrap="wrap">
+                  <SizableText fontSize={rung.small} color="$soft">
+                    There is no project to file this in yet.
+                  </SizableText>
+                  <Button size="sm" variant="outline" onPress={() => navigate('/projects?new')}>
+                    New project
+                  </Button>
+                </XStack>
+              ) : (
+                <XStack gap={6} flexWrap="wrap">
+                  {projects.map((p) => {
+                    const active = project === p.id
+                    return (
+                      <XStack
+                        key={p.id}
+                        role="button"
+                        aria-pressed={active}
+                        tabIndex={0}
+                        cursor="pointer"
+                        px={10}
+                        height={26}
+                        rounded={round.field}
+                        items="center"
+                        gap={6}
+                        bg={active ? '$hover' : '$raised'}
+                        borderWidth={1}
+                        borderColor={active ? '$ink' : '$edge'}
+                        onPress={() => setProject(p.id)}
+                      >
+                        <SizableText fontSize={rung.chip} fontWeight="700" color={active ? '$ink' : '$soft'}>
+                          {p.identifier}
+                        </SizableText>
+                        <SizableText fontSize={rung.chip} fontWeight={active ? '600' : '500'} color={active ? '$ink' : '$soft'}>
+                          {p.name}
+                        </SizableText>
+                      </XStack>
+                    )
+                  })}
+                </XStack>
+              )}
+            </YStack>
+          ) : null}
+
           <YStack gap={6}>
             <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
               Issue Title
@@ -675,13 +748,18 @@ export function NewIssueModal({
           borderColor="$edge"
           bg="$raised"
         >
+          {failed ? (
+            <SizableText flex={1} fontSize={rung.small} color="$ink" role="alert">
+              {failed}
+            </SizableText>
+          ) : null}
           <Button size="sm" variant="ghost" onPress={onClose}>
             Cancel
           </Button>
           <Button
             size="sm"
             style={{ backgroundColor: paint.accent }}
-            disabled={!title.trim() || submitting}
+            disabled={!title.trim() || !placed || submitting}
             onPress={() => void submit()}
           >
             <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ground }}>

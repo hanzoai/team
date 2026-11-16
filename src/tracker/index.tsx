@@ -10,12 +10,12 @@
  * in what the source is scoped to and in what the trail says, and in nothing
  * else.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useParams } from 'react-router'
 import { XStack, YStack } from '@hanzo/ui'
 
 import { useSpace } from '~/data/space.tsx'
-import { standingIs, useBoard, useCrew, useProject } from '~/serve'
+import { standingIs, useBoard, useCrew, useProject, useProjects } from '~/serve'
 import { Board } from './board/Board.tsx'
 import { standby } from './board/standby.ts'
 import type { Issue, Priority, Status } from './board/model.ts'
@@ -39,6 +39,12 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const [liveIssues, setLiveIssues] = useState<Issue[]>([])
   const [createStatus, setCreateStatus] = useState<Status | null>(null)
   const here = viewOf(view)
+  // A board spanning every project asks which one a new issue goes in.
+  const all = useProjects().data
+  const choices = useMemo(
+    () => (id ? undefined : (all ?? []).filter((p) => !p.archived).map((p) => ({ id: p._id, name: p.name, identifier: p.identifier }))),
+    [id, all],
+  )
 
   useEffect(() => {
     return source.watch(
@@ -107,6 +113,7 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
         <NewIssueModal
           initialStatus={createStatus}
           people={people}
+          projects={choices}
           onCreate={async (status, title, patch) => {
             await add(status, title, patch)
           }}

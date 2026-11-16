@@ -49,6 +49,25 @@ export const remove = (doc: Doc, by: string) => ({
   objectClass: doc._class,
 })
 
+/** A question about the space: a class, and the query a document of it must match. */
+export type Condition = { _class: string; query: Record<string, unknown> }
+
+/**
+ * Several writes as one, refused whole when any condition finds a document.
+ *
+ * The server checks the conditions and applies the writes under the space's one
+ * write lock, so nothing can land between the check and the writes. Refused, it
+ * applies none of them and answers `{success: false}` — read it with
+ * `Plane.apply`, since `write` drops the reply.
+ */
+export const unless = (by: string, conditions: Condition[], txes: ReturnType<typeof create>[]) => ({
+  ...stamp('core:space:Tx', by),
+  _class: Tx.applyIf,
+  match: [],
+  notMatch: conditions,
+  txes,
+})
+
 /**
  * A rank between two others, so a card can be dropped between two cards.
  *

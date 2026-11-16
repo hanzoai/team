@@ -25,6 +25,7 @@ export const Tx = {
   create: 'core:class:TxCreateDoc',
   update: 'core:class:TxUpdateDoc',
   remove: 'core:class:TxRemoveDoc',
+  applyIf: 'core:class:TxApplyIf',
 } as const
 
 /** The four fields the platform puts on every document. */

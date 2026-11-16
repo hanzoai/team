@@ -10,7 +10,7 @@
  */
 import { Category, Class, key, type Component, type Issue, type Person, type Project, type Status, type Tag } from './model.ts'
 import type { Plane } from './socket.ts'
-import { between, create, update } from './write.ts'
+import { between, create, mint, unless, update } from './write.ts'
 
 /** The order the four categories stand in on a board. Left to right. */
 export const ORDER = [Category.backlog, Category.todo, Category.doing, Category.done] as const
@@ -18,6 +18,87 @@ export const ORDER = [Category.backlog, Category.todo, Category.doing, Category.
 export const projects = (plane: Plane) => plane.find<Project>(Class.project)
 
 export const project = (plane: Plane, id: string) => plane.one<Project>(Class.project, { _id: id })
+
+/**
+ * The columns a new project's board starts with: one status per category, in
+ * board order.
+ *
+ * A board's columns are the project's OWN statuses (`statuses` reads them by
+ * the project's id). The platform's model ships five statuses too, but they sit
+ * in the model's space under the model's categories, which no board here reads,
+ * so a project opened without these has a board with nowhere to put a card.
+ */
+export const COLUMNS = [
+  { name: 'Backlog', category: Category.backlog },
+  { name: 'Todo', category: Category.todo },
+  { name: 'In Progress', category: Category.doing },
+  { name: 'Done', category: Category.done },
+] as const
+
+/** A project's key, which prefixes its issues (`ENG-42`): a letter, then up to four letters or digits. */
+export const KEY = /^[A-Z][A-Z0-9]{0,4}$/
+
+/**
+ * The key a name suggests: the initials of its words, or the first three
+ * letters of a single word. A word is a run starting with a letter, so the key
+ * always does too. '' when the name has no such word, and the person types one.
+ */
+export const keyOf = (name: string): string => {
+  const words = name.toUpperCase().match(/[A-Z][A-Z0-9]*/g) ?? []
+  if (words.length === 0) return ''
+  return (words.length === 1 ? words[0].slice(0, 3) : words.map((w) => w[0]).join('')).slice(0, 5)
+}
+
+/**
+ * Open a project, with the columns its board needs, as one conditional write.
+ *
+ * The condition is the key: when a project in the space already holds it, the
+ * server refuses the whole write, so two people taking one key at once cannot
+ * both have it, and a project never lands without its columns.
+ *
+ * The person who opens it is its first member, under the id the server checks
+ * membership by: the bare account, not the `hanzo:` spelling a transaction's
+ * author carries.
+ *
+ * Resolves to the new project's id, or null when the key was taken.
+ */
+export const start = async (
+  plane: Plane,
+  by: string,
+  fields: { name: string; identifier: string; description?: string },
+): Promise<string | null> => {
+  if (!by) throw new Error('nobody is signed in to this space')
+  if (!KEY.test(fields.identifier)) throw new Error(`"${fields.identifier}" is not a project key`)
+  const id = mint()
+  const columns = COLUMNS.map((c) =>
+    create(id, by, Class.status, {
+      name: c.name,
+      category: c.category,
+      ofAttribute: 'tracker:attribute:IssueStatus',
+      rank: between(),
+    }),
+  )
+  const opened = create(
+    'core:space:Space',
+    by,
+    Class.project,
+    {
+      name: fields.name,
+      description: fields.description ?? '',
+      identifier: fields.identifier,
+      sequence: 0,
+      defaultIssueStatus: columns[0].objectId,
+      members: [by.replace(/^hanzo:/, '')],
+      private: false,
+      archived: false,
+    },
+    id,
+  )
+  const held = await plane.apply(
+    unless(by, [{ _class: Class.project, query: { identifier: fields.identifier } }], [opened, ...columns]),
+  )
+  return held ? id : null
+}
 
 /**
  * A project's workflow states, in board order.
