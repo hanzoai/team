@@ -20,6 +20,9 @@ import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
 import { NewProject } from './NewProject.tsx'
 
+/** `1 member`, `2 members`. */
+const count = (n: number, noun: string) => `${n} ${noun}${n === 1 ? '' : 's'}`
+
 export function AllProjectsScreen() {
   const navigate = useNavigate()
   const [params, setParams] = useSearchParams()
@@ -147,7 +150,7 @@ export function AllProjectsScreen() {
                         </XStack>
                       </XStack>
                       <SizableText fontSize={rung.small} color="$soft">
-                        {projIssues.length} active issues · {(proj.members ?? []).length} members
+                        {count(projIssues.length, 'active issue')} · {count((proj.members ?? []).length, 'member')}
                       </SizableText>
                     </YStack>
                   </XStack>

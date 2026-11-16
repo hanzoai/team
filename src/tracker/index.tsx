@@ -31,7 +31,7 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const { id, view } = useParams()
   const project = useProject(id)
   const { standing } = useSpace()
-  const source = useBoard(id) ?? standby(standingIs(standing))
+  const source = useBoard(id, mine) ?? standby(standingIs(standing))
   const add = source.add?.bind(source)
   const people = useCrew(id)
   const [only, setOnly] = useState<Priority[]>([])
@@ -87,7 +87,6 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
             <IssueList
               source={source}
               only={only}
-              mine={mine}
               onOpen={(issue) => setSelectedId(issue.id)}
               onCreateIn={add ? (status) => setCreateStatus(status) : undefined}
             />
@@ -95,7 +94,6 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
             <IssueTimeline
               source={source}
               only={only}
-              mine={mine}
               onOpen={(issue) => setSelectedId(issue.id)}
             />
           )}

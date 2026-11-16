@@ -34,6 +34,27 @@ export const create = (space: string, by: string, cls: string, attributes: Recor
   attributes,
 })
 
+/**
+ * A create that hangs off another document: a label on an issue.
+ *
+ * What it hangs off rides on the TRANSACTION, never in its attributes. The
+ * server drops `attachedTo`, `attachedToClass` and `collection` from a
+ * create's attributes (apps/team txapply.go `reserved`), so a label written
+ * with them there is stored hanging off nothing, and no issue ever shows it.
+ */
+export const attach = (
+  space: string,
+  by: string,
+  cls: string,
+  to: { id: string; cls: string; collection: string },
+  attributes: Record<string, unknown>,
+) => ({
+  ...create(space, by, cls, attributes),
+  attachedTo: to.id,
+  attachedToClass: to.cls,
+  collection: to.collection,
+})
+
 export const update = (doc: Doc, by: string, operations: Record<string, unknown>) => ({
   ...stamp(doc.space, by),
   _class: Tx.update,
