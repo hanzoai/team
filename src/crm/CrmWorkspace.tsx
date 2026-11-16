@@ -318,6 +318,13 @@ function SectionView({ section }: { section: Section }) {
               </>
             )}
           </YStack>
+        ) : sheet && sheet.rows.length === 0 ? (
+          // Said here, at the left, rather than by the table: the table centres its
+          // empty line across every column, which puts it past the right edge of
+          // any screen narrower than the columns.
+          <YStack p="$4" maxW={560}>
+            <SizableText fontSize={13} color="$color10">{look.empty}</SizableText>
+          </YStack>
         ) : (
           <XStack flex={1} minW={0} minH={0}>
             <ScrollArea flex={1} minW={0} minH={0}>
