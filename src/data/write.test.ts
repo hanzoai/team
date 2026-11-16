@@ -43,3 +43,19 @@ test('an id is twenty-four hex characters and time ordered', () => {
   assert.match(a, /^[0-9a-f]{24}$/)
   assert.notEqual(a, mint())
 })
+
+test('a label rides on the transaction, where the server reads what it hangs off', async () => {
+  const { attach } = await import('./write.ts')
+  const tx = attach('proj-1', 'hanzo:acc-1', 'tags:class:TagReference', { id: 'issue-1', cls: 'tracker:class:Issue', collection: 'labels' }, {
+    tag: 'tag-design',
+    title: 'Design',
+  })
+  assert.equal(tx.attachedTo, 'issue-1')
+  assert.equal(tx.attachedToClass, 'tracker:class:Issue')
+  assert.equal(tx.collection, 'labels')
+  assert.equal(tx.objectSpace, 'proj-1')
+  // The server drops these from attributes, so a label that carried them only
+  // there was stored hanging off nothing.
+  assert.equal('attachedTo' in tx.attributes, false)
+  assert.deepEqual(tx.attributes, { tag: 'tag-design', title: 'Design' })
+})

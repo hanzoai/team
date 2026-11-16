@@ -31,13 +31,11 @@ const nextStatus = (current: Status): Status => {
 export const IssueList = ({
   source,
   only,
-  mine,
   onOpen,
   onCreateIn,
 }: {
   source: Source
   only?: readonly Priority[]
-  mine?: boolean
   onOpen?: (issue: Issue) => void
   onCreateIn?: (status: Status) => void
 }) => {
@@ -93,9 +91,7 @@ export const IssueList = ({
   const baseFiltered = only?.length
     ? issues.filter((i) => i.priority && only.includes(i.priority))
     : issues
-  const showing = mine
-    ? baseFiltered.filter((_, idx) => idx % 2 === 0 || baseFiltered.length <= 6)
-    : baseFiltered
+  const showing = baseFiltered
 
   if (showing.length === 0) {
     return (
@@ -306,12 +302,10 @@ const spanForStatus = (status: Status, idx: number): { start: number; span: numb
 export const IssueTimeline = ({
   source,
   only,
-  mine,
   onOpen,
 }: {
   source: Source
   only?: readonly Priority[]
-  mine?: boolean
   onOpen?: (issue: Issue) => void
 }) => {
   const [issues, setIssues] = useState<Issue[] | null>(null)
@@ -359,9 +353,7 @@ export const IssueTimeline = ({
   const baseFiltered = only?.length
     ? issues.filter((i) => i.priority && only.includes(i.priority))
     : issues
-  const showing = mine
-    ? baseFiltered.filter((_, idx) => idx % 2 === 0 || baseFiltered.length <= 6)
-    : baseFiltered
+  const showing = baseFiltered
 
   if (showing.length === 0) {
     return (

@@ -136,7 +136,20 @@ export type Person = Doc & {
   name: string
   avatar?: string | null
   city?: string
+  /** The account this person is, for a member of the org; absent on a contact. */
+  personUuid?: string
 }
+
+/**
+ * Whether a person is the one an account names.
+ *
+ * An account reaches a person three ways, and each is in use: the person's
+ * `personUuid`, the id the server mints for a member's person
+ * (`person-<account>`, apps/team PersonRef), and older rows that name the
+ * person's id directly.
+ */
+export const whose = (person: Pick<Person, '_id' | 'personUuid'>, account: string) =>
+  !!account && (person.personUuid === account || person._id === account || person._id === `person-${account}`)
 
 export type Channel = Doc & {
   name: string
