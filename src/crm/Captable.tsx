@@ -12,11 +12,11 @@
  */
 import { useEffect, useMemo, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
-import { ScrollArea, Spinner, YStack } from '@hanzo/ui'
+import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
 import { brand } from '~/data/brand.ts'
-import { captable, orgOf, type Member } from '~/data/captable.ts'
+import { captable, type Member } from '~/data/captable.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { Find, Nav as Column, Roll, Row } from '~/shell'
@@ -26,7 +26,7 @@ let actingIn = ''
 
 let held: { who: string; read: Promise<Member> } | null = null
 const memberNow = (who: string): Promise<Member> => {
-  if (held?.who !== who) held = { who, read: import('~/data/captable.ts').then((m) => m.memberOf(null)) }
+  if (held?.who !== who) held = { who, read: import('~/data/crm.ts').then((m) => m.memberOf(null as unknown as string)) }
   return held.read
 }
 
