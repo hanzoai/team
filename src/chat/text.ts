@@ -55,9 +55,13 @@ export const markup = (text: string, roster: readonly Mentionable[] = []): strin
 }
 
 const mentions = (text: string, roster: readonly Mentionable[]): string | null => {
-  const byName = new Map<string, Mentionable>()
-  for (const p of roster) if (p.name.trim()) byName.set(p.name.trim().toLowerCase(), p)
-  if (byName.size === 0) return null
+  // Longest name first, so `@Ada Lovelace` is Ada Lovelace and not a mention of
+  // somebody called Ada followed by a word.
+  const known = roster
+    .map((who) => ({ who, key: who.name.trim().toLowerCase() }))
+    .filter((k) => k.key !== '')
+    .sort((a, b) => b.key.length - a.key.length)
+  if (known.length === 0) return null
   let found = false
   const paras = text
     .replace(/\r\n/g, '\n')
@@ -66,17 +70,20 @@ const mentions = (text: string, roster: readonly Mentionable[]): string | null =
     .filter((l) => l !== '')
     .map((l) => {
       const content: Node[] = []
+      const low = l.toLowerCase()
       let at = 0
-      for (const m of l.matchAll(/(?<![\w.@-])@([\w.-]+)/g)) {
-        const who = byName.get(m[1]!.replace(/[.-]+$/, '').toLowerCase())
-        if (!who) continue
-        const end = m.index + 1 + m[1]!.replace(/[.-]+$/, '').length
+      for (const m of l.matchAll(/(?<![\w.@-])@/g)) {
+        const start = m.index + 1
+        if (start <= at) continue
+        // A name ends where a word does: `@Dev,` names Dev, `@Devon` does not.
+        const hit = known.find(({ key }) => low.startsWith(key, start) && !/\w/.test(l.charAt(start + key.length)))
+        if (!hit) continue
         if (m.index > at) content.push({ type: 'text', text: l.slice(at, m.index) })
         content.push({
           type: 'reference',
-          attrs: { id: `person-${who.id}`, objectclass: 'contact:class:Person', label: who.name },
+          attrs: { id: `person-${hit.who.id}`, objectclass: 'contact:class:Person', label: hit.who.name },
         } as Node)
-        at = end
+        at = start + hit.key.length
         found = true
       }
       if (at < l.length) content.push({ type: 'text', text: l.slice(at) })
@@ -84,6 +91,37 @@ const mentions = (text: string, roster: readonly Mentionable[]): string | null =
     })
   return found ? JSON.stringify({ type: 'doc', content: paras }) : null
 }
+
+/**
+ * The mention being typed: an `@` that opens the last word of the text, and
+ * what follows it so far. Null when the text does not end in one.
+ */
+export const asking = (text: string): { at: number; query: string } | null => {
+  const m = /(?<![\w.@-])@([\w.-]*)$/.exec(text)
+  return m ? { at: m.index, query: m[1]!.toLowerCase() } : null
+}
+
+/**
+ * Who a mention being typed could be: names that start with what was typed, or
+ * have a word that does, bots first because they are who answers one.
+ */
+export const offered = <T extends Mentionable & { bot?: boolean; gone?: boolean }>(
+  roster: readonly T[],
+  query: string,
+  max = 6,
+): T[] =>
+  roster
+    .filter((p) => !p.gone && p.name.trim() !== '')
+    .filter((p) => {
+      const name = p.name.toLowerCase()
+      return name.startsWith(query) || name.split(/\s+/).some((w) => w.startsWith(query))
+    })
+    .sort((a, b) => Number(Boolean(b.bot)) - Number(Boolean(a.bot)) || a.name.localeCompare(b.name))
+    .slice(0, max)
+
+/** The text with the mention being typed (from `at`) completed as `who`. */
+export const completed = (text: string, at: number, who: Mentionable): string =>
+  `${text.slice(0, at)}@${who.name.trim()} `
 
 const plain = (text: string): string =>
   text

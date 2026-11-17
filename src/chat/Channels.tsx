@@ -1,24 +1,30 @@
 /**
  * THE CHAT NAVIGATOR — channels, the space's bots, and direct messages. The
  * bots are the agents on the roster the server returns, nothing else.
+ *
+ * A bot here is a teammate: pressing one opens the direct message with it, in
+ * Chat. Working with one up close — its own thread, its computer, making a new
+ * one — is hanzo.bot, which the group's last row opens.
  */
 import { SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
-import { Hash, Lock, Plus, Share2 } from '@hanzogui/lucide-icons-2'
+import { ArrowUpRight, Hash, Lock, Plus, Share2 } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router'
+import { useLocation } from 'react-router'
 
 import { openConnectModal } from '~/shell/ConnectOrgModal.tsx'
 import { PAD } from '~/shell/measure.ts'
 import { Find, Group, Nav as Column, press, Roll, Row, Rule, surfaceAt } from '~/shell'
 import { round, rung } from '~/theme/theme'
-import { botPath, botsOf } from './bots.ts'
+import { useSpace } from '~/data/space.tsx'
+import { botDm, botsOf, hanzoBot, withPath } from './bots.ts'
 import { titled, type Person, type Room } from './chat.ts'
 import { Face } from './Face.tsx'
 import { usePeople, useRooms } from './read.ts'
 
 export function Channels() {
   const { pathname } = useLocation()
-  const navigate = useNavigate()
+  // The org this space works in, which hanzo.bot opens in.
+  const org = useSpace().current?.org ?? null
   const [query, setQuery] = useState('')
   const [channelsOpen, setChannelsOpen] = useState(true)
   const [connectOpen, setConnectOpen] = useState(true)
@@ -31,9 +37,12 @@ export function Channels() {
   const channels = shown.filter((r) => r.kind === 'channel')
   const internalChannels = channels.filter((r) => !r.connectedOrgs || r.connectedOrgs.length === 0)
   const connectChannels = channels.filter((r) => r.connectedOrgs && r.connectedOrgs.length > 0)
-  // A conversation with a bot from before the Bots app keeps its place here.
-  const directs = shown.filter((r) => r.kind === 'direct')
-  const shownBots = botsOf(roster).filter((p) => !q || p.name.toLowerCase().includes(q))
+  // A direct message with a bot is reached through the bot's own row, so it is
+  // not listed a second time among the people.
+  const bots = botsOf(roster)
+  const directs = shown.filter((r) => r.kind === 'direct' && !botDm(r, bots))
+  const shownBots = bots.filter((p) => !q || p.name.toLowerCase().includes(q))
+  const dmOf = (bot: Person) => all.find((r) => botDm(r, [bot]))?.id
 
   return (
     <Column title={surfaceAt(pathname)?.label ?? 'Chat'}>
@@ -112,36 +121,48 @@ export function Channels() {
           </>
         ) : null}
 
-        {shownBots.length > 0 ? (
+        {load.phase === 'ready' && (!q || shownBots.length > 0) ? (
           <>
             <Rule />
             <Group count={shownBots.length} open={botsOpen} onToggle={() => setBotsOpen((v) => !v)}>
               Bots
             </Group>
-            {botsOpen
-              ? shownBots.map((bot) => {
-                  const to = botPath(bot)
+            {botsOpen ? (
+              <>
+                {shownBots.map((bot) => {
+                  const to = withPath(bot)
+                  const dm = dmOf(bot)
                   return (
-                    <XStack
+                    <Row
                       key={bot.id}
-                      {...press(() => navigate(to), bot.name)}
-                      px={PAD - 2}
-                      py={6}
-                      mx={6}
-                      gap={10}
-                      items="center"
-                      rounded={8}
-                      bg="transparent"
-                      hoverStyle={{ background: '$hover' }}
+                      to={to}
+                      icon={<Face person={bot} size={18} />}
+                      current={(path) => path === to || (dm !== undefined && path === `/chat/${dm}`)}
                     >
-                      <Face person={bot} size={26} />
-                      <SizableText fontSize={rung.body} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
-                        {bot.name}
-                      </SizableText>
-                    </XStack>
+                      {bot.name}
+                    </Row>
                   )
-                })
-              : null}
+                })}
+                <XStack
+                  asChild
+                  px={PAD}
+                  py={6}
+                  mx={4}
+                  gap={8}
+                  items="center"
+                  rounded={round.field}
+                  hoverStyle={{ background: '$hover' }}
+                >
+                  <a href={hanzoBot(null, org)} target="_blank" rel="noopener" data-testid="make-bot-on-hanzo-bot">
+                    <Plus size={14} color="$soft" />
+                    <SizableText fontSize={rung.body} color="$quiet" fontWeight="500" flex={1}>
+                      Make a bot on hanzo.bot
+                    </SizableText>
+                    <ArrowUpRight size={13} color="$soft" />
+                  </a>
+                </XStack>
+              </>
+            ) : null}
           </>
         ) : null}
 

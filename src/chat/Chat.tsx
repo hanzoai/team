@@ -9,10 +9,15 @@
  *
  * Everything below the header is the same for a channel and a direct message.
  * The difference between them is a glyph and a name, which is where it belongs.
+ *
+ * Bots are teammates here. A direct message with one names it and links to it
+ * on hanzo.bot, where its own thread, computer and schedule are; a private
+ * channel can be given one, which then answers an @-mention there.
  */
+import { Popover } from '@hanzo/gui'
 import { SizableText, XStack, YStack } from '@hanzo/ui'
 import { EmptyState } from '@hanzo/ui/product'
-import { Bell, Hash, Lock, MessagesSquare } from '@hanzogui/lucide-icons-2'
+import { ArrowUpRight, Bell, Bot, Hash, Lock, MessagesSquare, Plus } from '@hanzogui/lucide-icons-2'
 import { useCallback, useMemo, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 
@@ -21,8 +26,9 @@ import { useSpace } from '~/data/space.tsx'
 import { press, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
 import { paint, ring, round, rung } from '~/theme/theme'
 import { Face } from './Face.tsx'
-import { botIn, withId } from './bots.ts'
+import { addable, botIn, hanzoBot, withId } from './bots.ts'
 import { openDm } from './dm.ts'
+import { addToChannel } from './members.ts'
 import { react, reply, say, titled, unreact, type Message, type Person, type Room } from './chat.ts'
 import { Composer } from './Composer.tsx'
 import { Failed, List, Middle, Waiting } from './List.tsx'
@@ -121,7 +127,7 @@ export function Chat() {
   return (
     <XStack flex={1} minH={0}>
       <YStack flex={1} minW={0} minH={0}>
-        <Header room={room} people={people} agent={agent} />
+        <Header room={room} people={people} agent={agent} space={space} org={current?.org ?? null} />
 
         <List
           room={room}
@@ -139,6 +145,7 @@ export function Chat() {
 
         <Composer
           placeholder={room.kind === 'direct' ? `Message ${titled(room, people)}` : `Message #${room.name}`}
+          people={people}
           onSend={(text) => say(plane, room, text, people)}
         />
       </YStack>
@@ -175,10 +182,16 @@ function Header({
   room,
   people,
   agent,
+  space,
+  org,
 }: {
   room: Room
   people: ReturnType<typeof usePeople>['data']
   agent?: Person
+  /** The open space, which a channel's members are added in. */
+  space: string
+  /** The org hanzo.bot opens in. */
+  org: string | null
 }) {
   const unread = useNotices()
   const asideShowing = useAside()
@@ -224,9 +237,12 @@ function Header({
         )}
 
         <XStack items="center" gap={8} shrink={0}>
-          {agent ? null : (
+          {agent ? <OnHanzoBot bot={agent} org={org} /> : (
             <People members={room.members} people={people ?? []} />
           )}
+          {room.kind === 'channel' && room.private ? (
+            <AddBot room={room} people={people ?? []} space={space} />
+          ) : null}
 
           {/* Collapsible Inbox drawer trigger with unread count badge */}
           <XStack
@@ -276,6 +292,136 @@ function Header({
       </XStack>
 
     </YStack>
+  )
+}
+
+/** The bot on hanzo.bot: its own thread, computer and schedule. */
+const OnHanzoBot = ({ bot, org }: { bot: Person; org: string | null }) => (
+  <XStack
+    asChild
+    px={9}
+    py={5}
+    rounded={round.field}
+    bg="$raised"
+    borderWidth={1}
+    borderColor="$edge"
+    items="center"
+    gap={6}
+    hoverStyle={{ background: '$hover' }}
+    focusVisibleStyle={ring}
+  >
+    <a href={hanzoBot(bot.name, org)} target="_blank" rel="noopener" data-testid="bot-on-hanzo-bot">
+      <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+        Open on hanzo.bot
+      </SizableText>
+      <ArrowUpRight size={13} color="$quiet" />
+    </a>
+  </XStack>
+)
+
+/**
+ * Give a private channel a bot. Only a private channel needs it: in a public
+ * one every bot of the org already answers an @-mention, and in a private one a
+ * bot answers only once it is in it.
+ */
+const AddBot = ({ room, people, space }: { room: Room; people: Person[]; space: string }) => {
+  const [open, setOpen] = useState(false)
+  const [busy, setBusy] = useState<string | null>(null)
+  const [failed, setFailed] = useState<string | null>(null)
+  const choices = addable(room, people)
+
+  const add = async (bot: Person) => {
+    if (busy) return
+    setBusy(bot.id)
+    setFailed(null)
+    try {
+      await addToChannel(space, room, bot)
+      invalidate('chat:rooms:')
+      setOpen(false)
+    } catch (e: unknown) {
+      setFailed(e instanceof Error ? e.message : String(e))
+    } finally {
+      setBusy(null)
+    }
+  }
+
+  return (
+    <Popover open={open} onOpenChange={setOpen} placement="bottom-end" allowFlip stayInFrame>
+      <Popover.Trigger asChild>
+        <XStack
+          {...press(() => setOpen((v) => !v), 'Add a bot to this channel')}
+          px={9}
+          py={5}
+          rounded={round.field}
+          bg="$raised"
+          borderWidth={1}
+          borderColor="$edge"
+          items="center"
+          gap={6}
+          hoverStyle={{ background: '$hover' }}
+          focusVisibleStyle={ring}
+          data-testid="add-bot-to-channel"
+        >
+          <Plus size={13} color="$quiet" />
+          <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+            Add bot
+          </SizableText>
+        </XStack>
+      </Popover.Trigger>
+
+      <Popover.Content
+        role="dialog"
+        aria-label="Add a bot to this channel"
+        borderWidth={1}
+        borderColor="$edge"
+        bg="$panel"
+        p={6}
+        width={260}
+        rounded={12}
+        elevation="$4"
+        style={{ zIndex: 100000 }}
+      >
+        <YStack gap={2} width="100%">
+          {choices.length === 0 ? (
+            <SizableText px={8} py={6} fontSize={rung.small} color="$dim">
+              Every bot is already in this channel.
+            </SizableText>
+          ) : (
+            choices.map((bot) => (
+              <XStack
+                key={bot.id}
+                {...press(() => void add(bot), `Add ${bot.name}`)}
+                aria-disabled={busy !== null}
+                px={8}
+                py={6}
+                gap={10}
+                items="center"
+                rounded={8}
+                hoverStyle={{ background: '$hover' }}
+                opacity={busy && busy !== bot.id ? 0.5 : 1}
+              >
+                <Face person={bot} size={22} />
+                <SizableText fontSize={rung.body} fontWeight="500" color="$ink" numberOfLines={1} flex={1}>
+                  {bot.name}
+                </SizableText>
+                {busy === bot.id ? (
+                  <SizableText fontSize={rung.chip} color="$quiet">
+                    Adding…
+                  </SizableText>
+                ) : (
+                  <Bot size={14} color="$soft" />
+                )}
+              </XStack>
+            ))
+          )}
+          {failed ? (
+            <SizableText px={8} py={4} fontSize={rung.small} style={{ color: paint.alert }}>
+              {failed}
+            </SizableText>
+          ) : null}
+        </YStack>
+      </Popover.Content>
+    </Popover>
   )
 }
 

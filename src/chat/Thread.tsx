@@ -93,7 +93,7 @@ export function Thread({
         onOpen={() => {}}
       />
 
-      <Composer placeholder="Reply…" onSend={onSend} />
+      <Composer placeholder="Reply…" people={people} onSend={onSend} />
     </YStack>
   )
 }

@@ -34,7 +34,8 @@ export type Surface = {
 
 export const SURFACES: readonly Surface[] = [
   { id: 'chat', label: 'Chat', icon: MessagesSquare, path: '/chat' },
-  { id: 'bots', label: 'Bots', icon: Bot, path: '/bots' },
+  // A hand-off: /bots opens hanzo.bot, where one bot is worked with up close.
+  { id: 'bots', label: 'Bots on hanzo.bot', icon: Bot, path: '/bots' },
   { id: 'tracker', label: 'Tracker', icon: SquareCheck, path: '/issues' },
   { id: 'crm', label: 'CRM', icon: Briefcase, path: '/crm' },
 ]

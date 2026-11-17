@@ -7,7 +7,7 @@
  * a second storage slot, and whichever one did not start the round trip could
  * not finish it.
  *
- * One exception, and why it is safe: the Bots surface hands @hanzo/app a
+ * One exception, and why it is safe: the Preferences dialog hands @hanzo/app a
  * provider built from the same `config()`. It reads the stored session and
  * never starts a sign-in, so it holds no verifier, and the SDK leases a refresh
  * across instances, so the two never rotate the same token at once.
@@ -33,7 +33,7 @@ let engine: IAM | null = null
 
 /**
  * The client's settings, stated once: this client is built from them, and so
- * is the provider the Bots app (@hanzo/app) reads its session through, so the
+ * is the provider the Preferences dialog (@hanzo/app) reads its session through, so the
  * two speak to IAM as one app.
  */
 export const config = () => {
