@@ -147,15 +147,20 @@ const Chevron = ({ open = true }: { open?: boolean }) => (
  * which the reference cannot show and is ours: it lands on a different channel
  * from selection, so a hovered row and the selected row never compete.
  */
-export const Row = ({ to, icon, children, indent }: {
+export const Row = ({ to, icon, children, indent, current }: {
   to: string
   icon?: ReactNode
   children: ReactNode
   /** A row under an open project: shorter, no glyph, same label column. */
   indent?: boolean
+  /**
+   * Whether this row is the page, for a row whose pages are not all under its
+   * own address: an index at `/crm` that is not every page under `/crm`.
+   */
+  current?: (pathname: string) => boolean
 }) => {
   const { pathname } = useLocation()
-  const here = pathname === to || pathname.startsWith(`${to}/`)
+  const here = current ? current(pathname) : pathname === to || pathname.startsWith(`${to}/`)
 
   return (
     <XStack

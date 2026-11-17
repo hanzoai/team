@@ -32,18 +32,11 @@ export const team = {
 } as const
 
 /**
- * The org's Base, where its CRM lives: people, companies, opportunities,
- * candidates, the forms on their timeline, and the lists they are on. The org
- * is the token's, never a parameter.
+ * Any API path, for the CRM (@hanzo/crm), which names its own: the org's Base
+ * (`base/collections/...`), the beta (`entitlement/orgs/:org`), mail and the drip
+ * (`email`, `marketing/...`). The org is the token's, never a parameter.
  */
-export const base = {
-  collections: `${origin}/v1/base/collections`,
-} as const
-
-/** The org's captured runtime errors, newest first: `{data: [...]}`. */
-export const event = {
-  errors: `${origin}/v1/event/errors`,
-} as const
+export const v1 = (path: string): string => `${origin}/v1/${path.replace(/^\/+/, '')}`
 
 /** The issuer, for the trips the IAM SDK does not make. */
 export const issuer = {
