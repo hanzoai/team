@@ -92,7 +92,7 @@ export function DataroomScreen() {
   )
 }
 
-const DataroomModule = ({ key: k, tab }: { key: string; tab: string }) => (
+const DataroomModule = ({ key: k }: { key: string }) => (
   <YStack flex={1} items="center" justify="center" px={4}>
     <SizableText color="$quiet">Data room — {k}</SizableText>
   </YStack>
