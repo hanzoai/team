@@ -11,7 +11,7 @@
  * Cloud answers them; cap table rows and the people on them never land here.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { Navigate, useParams } from 'react-router'
+import { useParams } from 'react-router'
 import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
