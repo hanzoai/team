@@ -12,6 +12,7 @@
 import { v1 } from './api.ts'
 import { call } from './http.ts'
 import { memberOf } from './crm.ts'
+export { memberOf } from './crm.ts'
 import { iam } from './iam.ts'
 
 type Send = <T>(path: string, init?: RequestInit) => Promise<T>
