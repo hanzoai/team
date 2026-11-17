@@ -27,8 +27,6 @@ import { useSpace } from '~/data/space.tsx'
 import { Find, Nav as Column, Roll, Row } from '~/shell'
 import { mark } from '~/theme/theme.ts'
 
-import './crm.css'
-
 /**
  * The org the CRM acts in, for its reads that are not drawn (the beta, a
  * schema's cache). `CrmScreen` sets it before the CRM renders.
@@ -165,9 +163,7 @@ export function CrmScreen() {
   }
   return (
     <ScrollArea flex={1} minH={0} bg="$background">
-      <YStack {...{ 'data-crm': '' }}>
-        <CrmModule key={actingIn} params={params} />
-      </YStack>
+      <CrmModule key={actingIn} params={params} />
     </ScrollArea>
   )
 }
