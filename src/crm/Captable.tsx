@@ -10,12 +10,11 @@
  * Nothing real is kept in this repo: the module names the Cloud addresses and
  * Cloud answers them; cap table rows and the people on them never land here.
  */
-import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import { useEffect, useState } from 'react'
 import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
-import { captable, member, type Member } from '~/data/captable.ts'
+import { member, type Member } from '~/data/captable.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { Find, Nav as Column, Roll, Row } from '~/shell'
@@ -43,18 +42,6 @@ const useMember = (who: string | undefined): Member | null => {
     }
   }, [who])
   return m
-}
-
-const useCaptableSession = () => {
-  const { who, leave } = useSession()
-  const m = useMember(who?.id)
-  return useMemo(
-    () => ({
-      account: who ? { name: who.name, email: who.email, superAdmin: m?.superAdmin ?? false, adminOrgs: m?.adminOrgs ?? [] } : null,
-      signOut: leave,
-    }),
-    [who, m, leave],
-  )
 }
 
 export function CaptableNav() {
@@ -87,7 +74,6 @@ export function CaptableNav() {
 }
 
 export function CaptableScreen() {
-  const { tab } = useParams()
   const { org } = useSpace()
   const { who } = useSession()
   const m = useMember(who?.id)
@@ -101,12 +87,12 @@ export function CaptableScreen() {
   }
   return (
     <ScrollArea flex={1} minH={0} bg="$background">
-      <CaptableModule key={actingIn} tab={tab ?? ''} />
+      <CaptableModule key={actingIn} />
     </ScrollArea>
   )
 }
 
-const CaptableModule = ({ key: k, tab }: { key: string; tab: string }) => (
+const CaptableModule = ({ key: k }: { key: string }) => (
   <YStack flex={1} items="center" justify="center" px={4}>
     <SizableText color="$quiet">Cap table — {k}</SizableText>
   </YStack>

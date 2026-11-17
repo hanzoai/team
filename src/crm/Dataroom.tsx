@@ -10,13 +10,12 @@
  * Nothing real is kept in this repo: the module names the Cloud addresses and
  * Cloud answers them; documents never land here.
  */
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useParams } from 'react-router'
 import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
-import { brand } from '~/data/brand.ts'
-import { dataroom, member, type Member } from '~/data/dataroom.ts'
+import { member, type Member } from '~/data/dataroom.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { Find, Nav as Column, Roll, Row } from '~/shell'
@@ -44,18 +43,6 @@ const useMember = (who: string | undefined): Member | null => {
     }
   }, [who])
   return m
-}
-
-const useDataroomSession = () => {
-  const { who, leave } = useSession()
-  const m = useMember(who?.id)
-  return useMemo(
-    () => ({
-      account: who ? { name: who.name, email: who.email, superAdmin: m?.superAdmin ?? false, adminOrgs: m?.adminOrgs ?? [] } : null,
-      signOut: leave,
-    }),
-    [who, m, leave],
-  )
 }
 
 export function DataroomNav() {
@@ -102,7 +89,7 @@ export function DataroomScreen() {
   }
   return (
     <ScrollArea flex={1} minH={0} bg="$background">
-      <DataroomModule key={actingIn} tab={tab ?? ''} />
+      <DataroomModule key={actingIn} />
     </ScrollArea>
   )
 }
