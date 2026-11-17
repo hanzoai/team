@@ -10,13 +10,11 @@
  * Nothing real is kept in this repo: the module names the Cloud addresses and
  * Cloud answers them; envelopes and signed documents never land here.
  */
-import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import { useEffect, useState } from 'react'
 import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
-import { brand } from '~/data/brand.ts'
-import { esign, member, type Member } from '~/data/esign.ts'
+import { member, type Member } from '~/data/esign.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { Find, Nav as Column, Roll, Row } from '~/shell'
@@ -44,18 +42,6 @@ const useMember = (who: string | undefined): Member | null => {
     }
   }, [who])
   return m
-}
-
-const useEsignSession = () => {
-  const { who, leave } = useSession()
-  const m = useMember(who?.id)
-  return useMemo(
-    () => ({
-      account: who ? { name: who.name, email: who.email, superAdmin: m?.superAdmin ?? false, adminOrgs: m?.adminOrgs ?? [] } : null,
-      signOut: leave,
-    }),
-    [who, m, leave],
-  )
 }
 
 export function EsignNav() {
@@ -88,7 +74,6 @@ export function EsignNav() {
 }
 
 export function EsignScreen() {
-  const { tab } = useParams()
   const { org } = useSpace()
   const { who } = useSession()
   const m = useMember(who?.id)
@@ -102,12 +87,12 @@ export function EsignScreen() {
   }
   return (
     <ScrollArea flex={1} minH={0} bg="$background">
-      <EsignModule key={actingIn} tab={tab ?? ''} />
+      <EsignModule key={actingIn} />
     </ScrollArea>
   )
 }
 
-const EsignModule = ({ key: k, tab }: { key: string; tab: string }) => (
+const EsignModule = ({ key: k }: { key: string }) => (
   <YStack flex={1} items="center" justify="center" px={4}>
     <SizableText color="$quiet">eSign — {k}</SizableText>
   </YStack>
