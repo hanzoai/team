@@ -85,28 +85,39 @@ const APP_IDS = [
   'platform',
 ]
 
-const CRM_SECTIONS = [
+/**
+ * The CRM's pages (@hanzo/crm CRM_PAGES; People is `crm` itself), and the
+ * addresses the CRM replaced, which land on what replaced them.
+ */
+const CRM_ROUTES = [
+  'companies',
+  'deals',
+  'fundraising',
+  'tasks',
+  'lists',
+  'sequences',
+  'candidates',
   'people',
   'leads',
+  'contacts',
   'customers',
   'investors',
-  'companies',
   'funds',
   'opportunities',
+  'outreach',
   'forms',
-  'candidates',
+  'feedback',
   'errors',
-  'lists',
+  'deliverability',
 ]
 
 const SPA_ROUTES = [
   'login',
   'auth',
   'auth/callback',
-  // The CRM's sections (src/data/crm.ts SECTIONS), and `feedback`, which became `forms`.
+  // The CRM, and each of its pages. A record's page is its id, answered by 404.html.
   'crm',
-  ...CRM_SECTIONS.map((s) => `crm/${s}`),
-  'crm/feedback',
+  ...CRM_ROUTES.map((s) => `crm/${s}`),
   'chat',
   ...CHANNEL_SLUGS.map((c) => `chat/${c}`),
   ...AGENT_SLUGS.map((a) => `chat/dm-${a}`),

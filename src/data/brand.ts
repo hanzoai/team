@@ -21,6 +21,10 @@ export type Brand = {
   issuer: string
   /** The product's name: the tab, the rail. */
   title: string
+  /** The brand's own name, as its products wear it ("Hanzo CRM"). */
+  name: string
+  /** The brand's site, where its betas are applied for. */
+  site: string
   /** The hosts this brand answers on. */
   hosts: readonly string[]
 }
@@ -31,6 +35,8 @@ const BRANDS: readonly Brand[] = [
     app: 'team-native',
     issuer: 'https://hanzo.id',
     title: 'Team',
+    name: 'Hanzo',
+    site: 'https://hanzo.ai',
     hosts: ['hanzo.team', 'www.hanzo.team', 'hanzo.app', 'localhost', '127.0.0.1'],
   },
   {
@@ -38,6 +44,8 @@ const BRANDS: readonly Brand[] = [
     app: 'team2',
     issuer: 'https://hanzo.id',
     title: 'Team',
+    name: 'Hanzo',
+    site: 'https://hanzo.ai',
     hosts: ['team2.hanzo.ai', 'team2.hanzo.app', 'hanzo-team.hanzo.app'],
   },
 ]

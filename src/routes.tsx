@@ -21,7 +21,7 @@ import type { RouteObject } from 'react-router'
 import { Navigate, useParams } from 'react-router'
 
 import { AgentPane, Chat, Channels } from '~/chat'
-import { CrmNav, CrmScreen } from '~/crm/CrmWorkspace'
+import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -92,8 +92,12 @@ export const routes: RouteObject[] = [
     ),
   },
 
-  { path: '/crm', element: <Navigate to="/crm/people" replace /> },
-  { path: '/crm/:section', element: crm(<CrmScreen />) },
+  // The CRM (@hanzo/crm): People at /crm, each object at /crm/:tab, a record at /crm/:tab/:id.
+  // An address the CRM replaced (/crm/leads, /crm/customers) lands inside it on what replaced it.
+  { path: '/crm', element: crm(<CrmScreen />) },
+  ...RETIRED.map((s) => ({ path: `/crm/${s}`, element: <Retired /> })),
+  { path: '/crm/:tab', element: crm(<CrmScreen />) },
+  { path: '/crm/:tab/:id', element: crm(<CrmScreen />) },
 
   // Surfaces that held only invented content are gone; their addresses land on something real.
   { path: '/overview', element: <Navigate to="/chat" replace /> },
@@ -111,7 +115,7 @@ export const routes: RouteObject[] = [
   { path: '/mail', element: <Navigate to="/chat" replace /> },
   { path: '/admin', element: <Navigate to="/chat" replace /> },
   { path: '/settings', element: <Navigate to="/chat" replace /> },
-  { path: '/people', element: <Navigate to="/crm/people" replace /> },
+  { path: '/people', element: <Navigate to="/crm" replace /> },
 
   { path: '*', element: <Navigate to="/chat" replace /> },
 ]
