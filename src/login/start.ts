@@ -10,7 +10,8 @@
  */
 export const START = '/start'
 
-const CART = 'https://pay.hanzo.ai/cart'
+/** pay's cart, on hanzo.ai/pay where every Hanzo site sends a buyer. pay.hanzo.ai only redirects here now. */
+const CART = 'https://hanzo.ai/pay/cart'
 
 export const cart = (search: string, origin: string): string => {
   const url = new URL(CART)
