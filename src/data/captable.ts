@@ -11,7 +11,7 @@
  */
 import { v1 } from './api.ts'
 import { call } from './http.ts'
-import { iam } from './iam.ts'
+import { memberOf } from './crm.ts'
 
 type Send = <T>(path: string, init?: RequestInit) => Promise<T>
 
@@ -30,9 +30,8 @@ export const captable = (send: Send = call) => ({
 })
 
 /** Who the signed-in person is in the orgs, read from the same token CRM reads. */
-export type Member = { org: string; superAdmin: boolean; adminOrgs: string[] }
+export type Member = ReturnType<typeof memberOf>
 
-/** Read from the access token's claims exactly as CRM reads them. */
-export const memberOf = (token: string | null | undefined): Member => {
-  throw new Error('use src/data/crm.ts memberOf')
-}
+/** The org the cap table acts in, from the open space else the token's first membership. */
+export const orgOf = (token: string | null | undefined): string =>
+  memberOf(token).org
