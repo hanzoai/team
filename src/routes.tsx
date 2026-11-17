@@ -16,10 +16,11 @@
  * answered and no longer does, so a stale bookmark is a redirect rather than
  * the router's own error page.
  */
-import { lazy, Suspense, type ReactNode } from 'react'
+import type { ReactNode } from 'react'
 import type { RouteObject } from 'react-router'
 import { Navigate, useParams } from 'react-router'
 
+import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
 import { Inbox } from '~/inbox'
@@ -27,10 +28,6 @@ import { Nav } from '~/nav'
 import { Shell } from '~/shell'
 import { Tracker } from '~/tracker'
 import { AllProjectsScreen } from '~/tracker/ProjectsWorkspace'
-
-/** The Bots app arrives on its first visit: the model client, the composer and
- *  the voice come with it, and the tracker never pays for them. */
-const Bots = lazy(() => import('~/bots/Bots.tsx').then((m) => ({ default: m.Bots })))
 
 const ProjectRoot = () => {
   const { id } = useParams()
@@ -80,14 +77,13 @@ export const routes: RouteObject[] = [
   { path: '/chat', element: chat(<Chat />) },
   { path: '/chat/:id', element: chat(<Chat />) },
 
-  // The Bots app draws its own roster, thread and panel, so it takes no navigator.
+  // One bot up close is hanzo.bot's app; this address hands over to it, in the
+  // open space's org. Bots as teammates are in Chat.
   {
     path: '/bots',
     element: (
       <Shell nav={null}>
-        <Suspense fallback={null}>
-          <Bots />
-        </Suspense>
+        <ToHanzoBot />
       </Shell>
     ),
   },

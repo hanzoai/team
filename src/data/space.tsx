@@ -3,8 +3,8 @@
  *
  * The org is NEVER something this app decides on its own. The tenant is read on
  * the server from the token's signed membership set: the gateway honours an
- * `X-Org-Id` only when it names an org the caller belongs to, and the Bots
- * surface sends the open space's org that way (src/bots). What the client
+ * `X-Org-Id` only when it names an org the caller belongs to, and the
+ * Preferences dialog sends the open space's org that way (src/settings). What the client
  * holds is the org that came BACK with a space — `SpaceRow.org` —
  * so choosing a space is how a person changes org, and there is no second way
  * to do it. Somebody in two orgs sees both orgs' spaces in one list, and the

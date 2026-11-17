@@ -26,7 +26,7 @@ import {
   UserPlus,
 } from '@hanzogui/lucide-icons-2'
 import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
-import { botPath, botsOf } from '~/chat/bots.ts'
+import { botsOf, withPath } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, ring, round, state } from '~/theme/theme.ts'
 import { RAIL, STEP } from './measure.ts'
@@ -127,7 +127,7 @@ export function BusinessHeader({
       kind: 'bot' as const,
       label: p.name,
       desc: 'Agent',
-      path: botPath(p),
+      path: withPath(p),
     }))
     const channelItems = rooms
       .filter((r) => r.kind === 'channel')
