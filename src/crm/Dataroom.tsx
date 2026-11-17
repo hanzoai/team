@@ -11,7 +11,6 @@
  * Cloud answers them; documents never land here.
  */
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router'
 import { ScrollArea, SizableText, Spinner, YStack } from '@hanzo/ui'
 import { Users } from '@hanzogui/lucide-icons-2'
 
@@ -75,7 +74,6 @@ export function DataroomNav() {
 }
 
 export function DataroomScreen() {
-  const { tab } = useParams()
   const { org } = useSpace()
   const { who } = useSession()
   const m = useMember(who?.id)
