@@ -14,7 +14,7 @@
  * The order is the rail's: chat, bots, tracker, CRM, with the bell above them and the
  * add control below.
  */
-import { Bot, Briefcase, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { Bot, Briefcase, Coins, Folder, Lock, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
 
 /** Any glyph from the icon set. Named off one of them, because the set's own
  *  component type is not exported and restating it here would be a second
@@ -38,6 +38,9 @@ export const SURFACES: readonly Surface[] = [
   { id: 'bots', label: 'Bots on hanzo.bot', icon: Bot, path: '/bots' },
   { id: 'tracker', label: 'Tracker', icon: SquareCheck, path: '/issues' },
   { id: 'crm', label: 'CRM', icon: Briefcase, path: '/crm' },
+  { id: 'captable', label: 'Cap table', icon: Coins, path: '/captable' },
+  { id: 'dataroom', label: 'Data room', icon: Folder, path: '/dataroom' },
+  { id: 'esign', label: 'eSign', icon: Lock, path: '/esign' },
 ]
 
 /** Which surface an address is inside. */
