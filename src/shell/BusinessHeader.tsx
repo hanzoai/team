@@ -79,6 +79,9 @@ const JUMP_SURFACES = [
   { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
   { id: 'projects', label: 'Projects', desc: 'Every project in this space', path: '/projects' },
   { id: 'crm', label: 'CRM', desc: 'Investors, contacts & pipeline', path: '/crm/investors' },
+  { id: 'captable', label: 'Cap table', desc: 'Shareholders, rounds & options', path: '/captable' },
+  { id: 'dataroom', label: 'Data room', desc: 'Folders & documents', path: '/dataroom' },
+  { id: 'esign', label: 'eSign', desc: 'Envelopes, signers & templates', path: '/esign' },
 ]
 
 export function BusinessHeader({
