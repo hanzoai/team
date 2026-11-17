@@ -9,7 +9,6 @@
  * Nothing real is kept in this repo: the module names the Cloud addresses and
  * Cloud answers them; envelopes and signed documents never land here.
  */
-import { v1 } from './api.ts'
 import { call } from './http.ts'
 import { memberOf } from './crm.ts'
 export { memberOf } from './crm.ts'
