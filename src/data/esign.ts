@@ -12,6 +12,7 @@
 import { v1 } from './api.ts'
 import { call } from './http.ts'
 import { memberOf } from './crm.ts'
+import { iam } from './iam.ts'
 
 type Send = <T>(path: string, init?: RequestInit) => Promise<T>
 
@@ -35,3 +36,11 @@ export type Member = ReturnType<typeof memberOf>
 /** The org eSign acts in, from the open space else the token's first membership. */
 export const orgOf = (token: string | null | undefined): string =>
   memberOf(token).org
+
+/** The signed-in person now, from a fresh token; no org and no rank when there is no session. */
+export const member = async (): Promise<Member> =>
+  memberOf(
+    await iam()
+      .getValidAccessToken()
+      .catch(() => null),
+  )

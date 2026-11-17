@@ -23,6 +23,9 @@ import { Navigate, useParams } from 'react-router'
 import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
+import { CaptableNav, CaptableScreen } from '~/crm/Captable'
+import { DataroomNav, DataroomScreen } from '~/crm/Dataroom'
+import { EsignNav, EsignScreen } from '~/crm/Esign'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -54,6 +57,24 @@ const chat = (view: ReactNode) => (
 
 const crm = (view: ReactNode) => (
   <Shell nav={<CrmNav />}>
+    {view}
+  </Shell>
+)
+
+const captable = (view: ReactNode) => (
+  <Shell nav={<CaptableNav />}>
+    {view}
+  </Shell>
+)
+
+const dataroom = (view: ReactNode) => (
+  <Shell nav={<DataroomNav />}>
+    {view}
+  </Shell>
+)
+
+const esign = (view: ReactNode) => (
+  <Shell nav={<EsignNav />}>
     {view}
   </Shell>
 )
@@ -94,6 +115,18 @@ export const routes: RouteObject[] = [
   ...RETIRED.map((s) => ({ path: `/crm/${s}`, element: <Retired /> })),
   { path: '/crm/:tab', element: crm(<CrmScreen />) },
   { path: '/crm/:tab/:id', element: crm(<CrmScreen />) },
+
+  // The cap table (@hanzo/team): rows at /captable, each tab under /captable/:tab.
+  { path: '/captable', element: captable(<CaptableScreen />) },
+  { path: '/captable/:tab', element: captable(<CaptableScreen />) },
+
+  // The data room (@hanzo/team): folders at /dataroom, each tab under /dataroom/:tab.
+  { path: '/dataroom', element: dataroom(<DataroomScreen />) },
+  { path: '/dataroom/:tab', element: dataroom(<DataroomScreen />) },
+
+  // eSign (@hanzo/team): envelopes at /esign, each tab under /esign/:tab.
+  { path: '/esign', element: esign(<EsignScreen />) },
+  { path: '/esign/:tab', element: esign(<EsignScreen />) },
 
   // Surfaces that held only invented content are gone; their addresses land on something real.
   { path: '/overview', element: <Navigate to="/chat" replace /> },
