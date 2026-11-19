@@ -30,6 +30,7 @@ import { botsOf, withPath } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, ring, round, state } from '~/theme/theme.ts'
 import { RAIL, STEP } from './measure.ts'
+import { DIRECT_HANDOFF_ROSTER, matchTeamShortcut } from './unified.ts'
 
 function displayName(name?: string, email?: string): string {
   if (name?.trim()) return name.trim()
@@ -109,7 +110,17 @@ export function BusinessHeader({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+      const action = matchTeamShortcut({
+        key: e.key,
+        metaKey: e.metaKey,
+        ctrlKey: e.ctrlKey,
+        shiftKey: e.shiftKey,
+        altKey: e.altKey,
+        repeat: e.repeat,
+        defaultPrevented: e.defaultPrevented,
+        isComposing: e.isComposing,
+      })
+      if (action === 'command-palette') {
         e.preventDefault()
         setSearchOpen((v) => !v)
       }
@@ -129,12 +140,19 @@ export function BusinessHeader({
       desc: 'Agent',
       path: withPath(p),
     }))
+    const handoffItems = DIRECT_HANDOFF_ROSTER.map((dm) => ({
+      id: `handoff-${dm.id}`,
+      kind: dm.kind === 'bot' ? ('bot' as const) : ('surface' as const),
+      label: `${dm.handle} (${dm.name})`,
+      desc: dm.role,
+      path: `/chat/${dm.id}`,
+    }))
     const channelItems = rooms
       .filter((r) => r.kind === 'channel')
       .map((r) => ({ id: r.id, kind: 'channel' as const, label: `#${r.name}`, desc: r.topic ?? '', path: `/chat/${r.id}` }))
     const surfaceItems = JUMP_SURFACES.map((s) => ({ ...s, kind: 'surface' as const }))
-    const all = [...surfaceItems, ...channelItems, ...botItems]
-    if (!q) return all.slice(0, 12)
+    const all = [...channelItems, ...handoffItems, ...botItems, ...surfaceItems]
+    if (!q) return all.slice(0, 14)
     return all
       .filter((item) => item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q))
       .slice(0, 14)

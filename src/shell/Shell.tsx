@@ -109,6 +109,11 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
       if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
       if (roomy && nav && navCollapsed && (pathname === path || pathname.startsWith(`${path}/`))) {
         setNavCollapsed(false)
+        try {
+          window.localStorage.setItem('hanzo.team.sidebar.collapsed', 'false')
+        } catch {
+          // ignore storage errors
+        }
         return
       }
       go(path)
@@ -273,7 +278,21 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
           have sat on, at the width it would have had. */}
       <Sheet open={!!nav && drawer && !roomy} onOpenChange={setDrawer}>
         <SheetContent side="left" width={NAV} p={0} style={{ backgroundColor: paint.sidebar }}>
-          {nav}
+          <YStack flex={1} minH={0}>
+            <YStack flex={1} minH={0}>
+              {nav}
+            </YStack>
+            <SidebarAccountFooter
+              user={userIdentity}
+              currentOrg={currentOrgInfo}
+              orgs={orgList}
+              onSelectOrg={(url: string) => choose(url)}
+              onSettings={() => openSettingsModal('general')}
+              onOpenShortcuts={() => setShortcutsOpen(true)}
+              onNavigate={reach}
+              onSignIn={() => void depart('another')}
+            />
+          </YStack>
         </SheetContent>
       </Sheet>
 
@@ -334,6 +353,8 @@ const SidebarAccountFooter = ({
   onSignIn: () => void
 }) => {
   const [open, setOpen] = useState(false)
+  const displayUser = user.name.trim() || user.email?.split('@')[0] || 'Account'
+  const orgId = currentOrg.name.trim() || 'hanzo'
 
   const handleCrossApp = (item: TeamCrossAppItem) => {
     setOpen(false)
@@ -370,7 +391,7 @@ const SidebarAccountFooter = ({
           >
             <XStack items="center" gap={8} minW={0} flex={1}>
               <YStack position="relative" shrink={0}>
-                <OrgMark org={{ name: user.name, logo: user.avatar }} size={24} />
+                <OrgMark org={{ name: displayUser, logo: user.avatar }} size={24} />
                 <YStack
                   position="absolute"
                   b={-1}
@@ -383,10 +404,10 @@ const SidebarAccountFooter = ({
               </YStack>
               <YStack flex={1} minW={0}>
                 <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
-                  {user.name} · hanzo.id
+                  {displayUser} · hanzo.id
                 </SizableText>
                 <SizableText fontSize={rung.chip} color="$quiet" numberOfLines={1}>
-                  X-Org-Id: {currentOrg.name}
+                  X-Org-Id: {orgId}
                 </SizableText>
               </YStack>
             </XStack>
@@ -412,10 +433,10 @@ const SidebarAccountFooter = ({
           <YStack gap={6} width="100%">
             <YStack px={6} py={4}>
               <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
-                {user.name}
+                {displayUser}
               </SizableText>
               <SizableText fontSize={rung.chip} color="$quiet">
-                {user.email || 'hanzo.id'} · X-Org-Id: {currentOrg.name}
+                {user.email || 'hanzo.id'} · X-Org-Id: {orgId}
               </SizableText>
               <XStack
                 {...press(() => {

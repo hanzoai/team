@@ -12,11 +12,15 @@
  * strings, which gui's props reject by type: they are for CSS, and the neutral
  * ladder has a token for every rung this column needs.
  */
-import { Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { ChevronDown, Search } from '@hanzogui/lucide-icons-2'
-import type { ReactNode } from 'react'
+import { Popover, Separator } from '@hanzo/gui'
+import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
+import { OrgMark } from '@hanzo/ui/product'
+import { Check, ChevronDown, Plus, Search } from '@hanzogui/lucide-icons-2'
+import { useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router'
 
+import { useSpace } from '~/data/space.tsx'
+import { openConnectModal } from './ConnectOrgModal.tsx'
 import { FIELD, ICON, LABEL, LEAF, PAD, ROW, SPINE } from './measure.ts'
 import { press } from './press.ts'
 import { paint, round, rung } from '~/theme/theme'
@@ -36,66 +40,215 @@ const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'so
  */
 const ROW_AXIS = { flexDirection: 'row' } as const
 
-/** The navigator's own chrome: its surface title, ⌘K command trigger, ⌘B collapse button,
- *  then whatever the surface puts in it. */
-export const Nav = ({ title, children }: { title: string; children: ReactNode }) => (
-  <YStack flex={1} minH={0} pt={6} pb={8}>
-    <XStack height={36} px={PAD} pb={4} items="center" justify="space-between" gap={6}>
-      <XStack items="center" gap={4} minW={0} flex={1}>
-        <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1}>
-          {title}
-        </SizableText>
-        <ChevronDown size={13} color="$soft" />
-      </XStack>
-      <XStack items="center" gap={4} shrink={0}>
-        <XStack
-          {...press(() => {
-            if (typeof window !== 'undefined') {
-              window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))
-            }
-          }, 'Open Command Palette (⌘K)')}
-          height={24}
-          px={7}
-          rounded={round.field}
-          borderWidth={1}
-          borderColor="$edge"
-          bg="$panel"
-          items="center"
-          justify="center"
-          hoverStyle={{ bg: '$hover' }}
-          focusVisibleStyle={RING}
-          data-testid="nav-command-palette-trigger"
+/** The navigator's own chrome: first-class Org Switcher (`Orgs` + `X-Org-Id`),
+ *  ⌘K command trigger, ⌘B collapse button, then whatever the surface puts in it. */
+export const Nav = ({ title, children }: { title: string; children: ReactNode }) => {
+  const { all, current, choose } = useSpace()
+  const [orgMenuOpen, setOrgMenuOpen] = useState(false)
+  const activeOrg = current ?? all[0] ?? null
+  const activeOrgLabel = activeOrg?.name?.trim() || title
+  const activeOrgId = activeOrg?.org || activeOrg?.url || 'hanzo'
+  const showSurfaceTag = Boolean(activeOrg?.name?.trim() && title && activeOrg.name.trim() !== title)
+
+  return (
+    <YStack flex={1} minH={0} pt={6} pb={8}>
+      <XStack height={38} px={PAD} pb={4} items="center" justify="space-between" gap={6}>
+        <Popover
+          open={orgMenuOpen}
+          onOpenChange={setOrgMenuOpen}
+          placement="bottom-start"
+          allowFlip
+          stayInFrame
         >
-          <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
-            ⌘K
-          </SizableText>
-        </XStack>
-        <XStack
-          {...press(() => {
-            if (typeof window !== 'undefined') {
-              window.dispatchEvent(new CustomEvent('hanzo:team-toggle-sidebar'))
-            }
-          }, 'Toggle sidebar (⌘B)')}
-          height={24}
-          px={7}
-          rounded={round.field}
-          borderWidth={1}
-          borderColor="$edge"
-          items="center"
-          justify="center"
-          hoverStyle={{ bg: '$hover' }}
-          focusVisibleStyle={RING}
-          data-testid="nav-collapse-sidebar-trigger"
-        >
-          <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
-            ⌘B
-          </SizableText>
+          <Popover.Trigger asChild>
+            <XStack
+              {...press(() => setOrgMenuOpen((v) => !v), `Switch organization (${activeOrgLabel})`)}
+              items="center"
+              gap={6}
+              px={5}
+              py={3}
+              ml={-5}
+              rounded={round.field}
+              minW={0}
+              flex={1}
+              hoverStyle={{ bg: '$hover' }}
+              focusVisibleStyle={RING}
+              data-testid="sidebar-org-switcher-trigger"
+            >
+              <OrgMark org={{ name: activeOrgLabel }} size={18} />
+              <YStack minW={0} flex={1}>
+                <XStack items="center" gap={4} minW={0}>
+                  <SizableText fontSize={rung.body} fontWeight="600" color="$ink" numberOfLines={1}>
+                    {activeOrgLabel}
+                  </SizableText>
+                  <ChevronDown size={12} color="$soft" />
+                </XStack>
+                {showSurfaceTag ? (
+                  <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
+                    {title} · {activeOrgId}
+                  </SizableText>
+                ) : null}
+              </YStack>
+            </XStack>
+          </Popover.Trigger>
+
+          <Popover.Content
+            role="menu"
+            aria-label="Organizations switcher"
+            borderWidth={1}
+            borderColor="$edge"
+            bg="$panel"
+            rounded={round.panel}
+            p={8}
+            width={236}
+            style={{ zIndex: 100000 }}
+            data-testid="sidebar-org-switcher-menu"
+          >
+            <YStack gap={4} width="100%">
+              <XStack px={6} py={2} items="center" justify="space-between">
+                <SizableText fontSize={rung.chip} fontWeight="600" color="$faint">
+                  ORGANIZATIONS (X-ORG-ID)
+                </SizableText>
+                <SizableText fontSize={rung.chip} color="$faint">
+                  {Math.max(all.length, 1)}
+                </SizableText>
+              </XStack>
+              {all.length > 0 ? (
+                all.map((space) => {
+                  const active = space.url === activeOrg?.url
+                  return (
+                    <XStack
+                      key={space.url}
+                      {...press(() => {
+                        setOrgMenuOpen(false)
+                        if (!active) choose(space.url)
+                      }, `Switch to organization ${space.name}`)}
+                      px={8}
+                      py={6}
+                      gap={8}
+                      rounded={round.field}
+                      style={active ? { backgroundColor: paint.rowActive } : undefined}
+                      hoverStyle={active ? undefined : { bg: '$hover' }}
+                      items="center"
+                      justify="space-between"
+                      data-testid={`sidebar-org-option-${space.url}`}
+                    >
+                      <XStack items="center" gap={8} minW={0} flex={1}>
+                        <OrgMark org={{ name: space.name }} size={18} />
+                        <YStack minW={0} flex={1}>
+                          <SizableText
+                            fontSize={rung.small}
+                            fontWeight={active ? '600' : '500'}
+                            color="$ink"
+                            numberOfLines={1}
+                          >
+                            {space.name}
+                          </SizableText>
+                          <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
+                            {space.org || space.url}
+                          </SizableText>
+                        </YStack>
+                      </XStack>
+                      {active ? <Check size={13} color="$ink" /> : null}
+                    </XStack>
+                  )
+                })
+              ) : (
+                <XStack
+                  px={8}
+                  py={6}
+                  gap={8}
+                  rounded={round.field}
+                  style={{ backgroundColor: paint.rowActive }}
+                  items="center"
+                  justify="space-between"
+                >
+                  <XStack items="center" gap={8} minW={0} flex={1}>
+                    <OrgMark org={{ name: activeOrgLabel }} size={18} />
+                    <YStack minW={0} flex={1}>
+                      <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+                        {activeOrgLabel}
+                      </SizableText>
+                      <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
+                        {activeOrgId}
+                      </SizableText>
+                    </YStack>
+                  </XStack>
+                  <Check size={13} color="$ink" />
+                </XStack>
+              )}
+              <Separator my={2} borderColor="$edge" />
+              <XStack
+                {...press(() => {
+                  setOrgMenuOpen(false)
+                  openConnectModal('connect')
+                }, 'Connect organization')}
+                px={8}
+                py={5}
+                gap={6}
+                rounded={round.field}
+                hoverStyle={{ bg: '$hover' }}
+                items="center"
+              >
+                <Plus size={13} color="$soft" />
+                <SizableText fontSize={rung.small} color="$quiet">
+                  Connect organization…
+                </SizableText>
+              </XStack>
+            </YStack>
+          </Popover.Content>
+        </Popover>
+
+        <XStack items="center" gap={4} shrink={0}>
+          <XStack
+            {...press(() => {
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))
+              }
+            }, 'Open Command Palette (⌘K)')}
+            height={24}
+            px={7}
+            rounded={round.field}
+            borderWidth={1}
+            borderColor="$edge"
+            bg="$panel"
+            items="center"
+            justify="center"
+            hoverStyle={{ bg: '$hover' }}
+            focusVisibleStyle={RING}
+            data-testid="nav-command-palette-trigger"
+          >
+            <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+              ⌘K
+            </SizableText>
+          </XStack>
+          <XStack
+            {...press(() => {
+              if (typeof window !== 'undefined') {
+                window.dispatchEvent(new CustomEvent('hanzo:team-toggle-sidebar'))
+              }
+            }, 'Toggle sidebar (⌘B)')}
+            height={24}
+            px={7}
+            rounded={round.field}
+            borderWidth={1}
+            borderColor="$edge"
+            items="center"
+            justify="center"
+            hoverStyle={{ bg: '$hover' }}
+            focusVisibleStyle={RING}
+            data-testid="nav-collapse-sidebar-trigger"
+          >
+            <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+              ⌘B
+            </SizableText>
+          </XStack>
         </XStack>
       </XStack>
-    </XStack>
-    {children}
-  </YStack>
-)
+      {children}
+    </YStack>
+  )
+}
 
 /**
  * The search field. `$panel` over the ground, so it reads as a well rather than

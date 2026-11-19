@@ -3,7 +3,7 @@ import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
 
-import { NAV } from './measure.ts'
+import { NAV, PANE_ROUND } from './measure.ts'
 import {
   DEFAULT_CHANNEL_UNREADS,
   DEFAULT_REQUIRED_CHANNELS,
@@ -17,13 +17,22 @@ import {
 const ROOT = new URL('../', import.meta.url).pathname
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
 const CHANNELS_TSX = readFileSync(join(ROOT, 'chat/Channels.tsx'), 'utf8')
+const NAV_TSX = readFileSync(join(ROOT, 'shell/Nav.tsx'), 'utf8')
+const SHELL_TSX = readFileSync(join(ROOT, 'shell/Shell.tsx'), 'utf8')
 
 test('Hanzo Team shell geometry & obsidian tokens match Hanzo Dev chrome', () => {
   assert.equal(NAV, 256)
+  assert.equal(PANE_ROUND, 12)
   assert.ok(SHEET.includes('--team-ground: #050505;'))
   assert.ok(SHEET.includes('--team-sidebar: #09090b;'))
   assert.ok(SHEET.includes('--team-panel: #0f0f12;'))
   assert.ok(SHEET.includes('--team-rule: rgba(255, 255, 255, 0.08);'))
+  assert.ok(NAV_TSX.includes('data-testid="sidebar-org-switcher-trigger"'))
+  assert.ok(NAV_TSX.includes('ORGANIZATIONS (X-ORG-ID)'))
+  assert.ok(NAV_TSX.includes('data-testid="nav-command-palette-trigger"'))
+  assert.ok(NAV_TSX.includes('data-testid="nav-collapse-sidebar-trigger"'))
+  assert.ok(SHELL_TSX.includes('data-testid="sidebar-account-org-footer"'))
+  assert.ok(SHELL_TSX.includes('hanzo.id'))
 })
 
 test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', () => {

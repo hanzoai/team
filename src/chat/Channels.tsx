@@ -248,9 +248,12 @@ export function Channels() {
                       justify="space-between"
                       rounded={round.field}
                       borderWidth={1}
-                      borderColor={here ? '$edge' : 'transparent'}
-                      bg={here ? '$hover' : 'transparent'}
-                      hoverStyle={{ bg: '$hover' }}
+                      style={
+                        here
+                          ? { backgroundColor: paint.rowActive, borderColor: paint.paneEdge }
+                          : { borderColor: 'transparent' }
+                      }
+                      hoverStyle={here ? undefined : { bg: '$hover' }}
                       data-testid={`sidebar-handoff-${dm.id}`}
                     >
                       <XStack items="center" gap={8} minW={0} flex={1}>
@@ -397,7 +400,11 @@ const ChannelPill = ({
   return (
     <XStack
       asChild
-      style={ROW_AXIS}
+      style={
+        here
+          ? { ...ROW_AXIS, backgroundColor: paint.rowActive, borderColor: paint.paneEdge }
+          : { ...ROW_AXIS, borderColor: 'transparent' }
+      }
       height={ROW - 2}
       items="center"
       justify="space-between"
@@ -406,9 +413,7 @@ const ChannelPill = ({
       mx={6}
       rounded={round.field}
       borderWidth={1}
-      borderColor={here ? '$edge' : 'transparent'}
-      bg={here ? '$hover' : 'transparent'}
-      hoverStyle={{ bg: '$hover' }}
+      hoverStyle={here ? undefined : { bg: '$hover' }}
       onClick={onClearUnread}
       data-testid={`sidebar-channel-${room.name}`}
     >
