@@ -25,10 +25,12 @@ import {
   FileCheck2,
   Hash,
   Lock,
+  Megaphone,
   MessagesSquare,
   Plus,
   ShieldAlert,
   User,
+  Users,
 } from '@hanzogui/lucide-icons-2'
 import { useCallback, useMemo, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
@@ -396,7 +398,9 @@ function Header({
         ) : (
           <XStack flex={1} minW={0} items="center" gap={10}>
             <XStack items="center" gap={6} shrink={0}>
-              {room.kind === 'direct' ? null : room.private ? (
+              {room.kind === 'direct' ? null : /^(announcements?|releases?|news)$/i.test(room.name) ? (
+                <Megaphone size={16} color="$quiet" />
+              ) : room.private ? (
                 <Lock size={16} color="$quiet" />
               ) : (
                 <Hash size={17} color="$quiet" />
@@ -423,6 +427,47 @@ function Header({
           {room.kind === 'channel' && room.private ? (
             <AddBot room={room} people={people ?? []} space={space} />
           ) : null}
+
+          {/* Discord-style Members / Profile right-sidebar toggle */}
+          <XStack
+            {...press(
+              () => toggleAsideKind(agent ? 'inspector' : 'members'),
+              agent ? 'Toggle Profile panel' : 'Toggle Members list',
+            )}
+            aria-pressed={asideShowing && asideKind === (agent ? 'inspector' : 'members')}
+            px={8}
+            py={4}
+            minH={26}
+            rounded={round.field}
+            borderWidth={1}
+            style={{
+              backgroundColor:
+                asideShowing && asideKind === (agent ? 'inspector' : 'members')
+                  ? paint.rowActive
+                  : 'transparent',
+              borderColor:
+                asideShowing && asideKind === (agent ? 'inspector' : 'members')
+                  ? paint.paneEdge
+                  : paint.rule,
+            }}
+            items="center"
+            gap={5}
+            hoverStyle={{ background: '$hover' }}
+            focusVisibleStyle={ring}
+            data-testid="chat-header-members-trigger"
+          >
+            <Users
+              size={13}
+              color={asideShowing && asideKind === (agent ? 'inspector' : 'members') ? '$ink' : '$quiet'}
+            />
+            <SizableText
+              fontSize={rung.chip}
+              fontWeight="500"
+              color={asideShowing && asideKind === (agent ? 'inspector' : 'members') ? '$ink' : '$quiet'}
+            >
+              {agent ? 'Profile' : 'Members'}
+            </SizableText>
+          </XStack>
 
           {/* Collapsible Inbox drawer trigger with unread count badge */}
           <XStack

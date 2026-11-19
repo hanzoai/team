@@ -6,7 +6,7 @@
  *  - `Hanzo Connect` shared channels, server-backed `Bots`, and `Direct` messages
  */
 import { Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
-import { ArrowUpRight, Hash, Lock, Plus, Share2 } from '@hanzogui/lucide-icons-2'
+import { ArrowUpRight, Hash, Lock, Megaphone, Plus, Share2 } from '@hanzogui/lucide-icons-2'
 import { useEffect, useState } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router'
 
@@ -455,6 +455,8 @@ const ChannelPill = ({
 const Glyph = ({ room }: { room: Room }) =>
   room.kind === 'direct' ? null : room.connectedOrgs && room.connectedOrgs.length > 0 ? (
     <Share2 size={14} color="$soft" />
+  ) : /^(announcements?|releases?|news)$/i.test(room.name) ? (
+    <Megaphone size={14} color="$soft" />
   ) : room.private ? (
     <Lock size={14} color="$soft" />
   ) : (
