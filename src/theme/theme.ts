@@ -15,16 +15,38 @@
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** The app outer obsidian floor (#050505). */
+  /** The app outer obsidian floor (#050505 dark / #ffffff light). */
   ground: role('ground'),
-  /** The 256px collapsible left sidebar (#09090b). */
-  sidebar: role('sidebar'),
-  /** The inset stage pane (#0f0f12) — one lift off the ground. */
+  /** The inset board, chat, and inbox canvas (#0f0f12 dark / #ffffff light). */
   panel: role('panel'),
   /** A card, and an unread row: the same rung, because both are objects. */
   card: role('card'),
   /** The one hairline, at a fixed alpha so it lifts with its surface. */
   rule: role('rule'),
+  /** Curved inset panel hairline matching hanzo.app & hanzo.bot (`--pane-edge`). */
+  paneEdge: role('pane-edge'),
+
+  /** Unified outer L-frame chrome (38px top bar + 44px icon rail + 240px sidebar). */
+  bar: role('bar'),
+  barRule: role('bar-rule'),
+  rail: role('rail'),
+  railRule: role('rail-rule'),
+  railActive: role('rail-active'),
+  railFg: role('rail-fg'),
+  railFgActive: role('rail-fg-active'),
+  sidebar: role('sidebar'),
+  sidebarRule: role('sidebar-rule'),
+  rowActive: role('row-active'),
+  rowHover: role('row-hover'),
+  avatar: role('avatar'),
+  avatarInk: role('avatar-ink'),
+  composer: role('composer'),
+  composerRule: role('composer-rule'),
+  composerAccent: role('composer-accent'),
+  composerAccentInk: role('composer-accent-ink'),
+  composerWarn: role('composer-warn'),
+  chatUser: role('chat-user'),
+  chatUserInk: role('chat-user-ink'),
 
   ink: role('ink'),
   mute: role('mute'),

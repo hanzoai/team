@@ -63,8 +63,6 @@ const CHANNEL_SLUGS = [
   'c-lux-bridge',
 ]
 
-const PROJECT_IDS = ['proj-crm', 'proj-mkt', 'proj-next', 'proj-dev']
-
 const APP_IDS = [
   'chat',
   'tracker',
@@ -87,29 +85,39 @@ const APP_IDS = [
   'platform',
 ]
 
+/**
+ * The CRM's pages (@hanzo/crm CRM_PAGES; People is `crm` itself), and the
+ * addresses the CRM replaced, which land on what replaced them.
+ */
+const CRM_ROUTES = [
+  'companies',
+  'deals',
+  'fundraising',
+  'tasks',
+  'lists',
+  'sequences',
+  'candidates',
+  'people',
+  'leads',
+  'contacts',
+  'customers',
+  'investors',
+  'funds',
+  'opportunities',
+  'outreach',
+  'forms',
+  'feedback',
+  'errors',
+  'deliverability',
+]
+
 const SPA_ROUTES = [
   'login',
   'auth',
   'auth/callback',
+  // The CRM, and each of its pages. A record's page is its id, answered by 404.html.
   'crm',
-  'crm/opportunities',
-  'crm/companies',
-  'crm/contacts',
-  'crm/investors',
-  'crm/funds',
-  'crm/customers',
-  'crm/leads',
-  'crm/lists',
-  'crm/campaigns',
-  'crm/deliverability',
-  'crm/analytics',
-  'crm/segments',
-  'crm/automations',
-  'crm/forms',
-  'crm/templates',
-  'crm/journeys',
-  'crm/webhooks',
-  'crm/settings',
+  ...CRM_ROUTES.map((s) => `crm/${s}`),
   'chat',
   ...CHANNEL_SLUGS.map((c) => `chat/${c}`),
   ...AGENT_SLUGS.map((a) => `chat/dm-${a}`),
@@ -117,16 +125,9 @@ const SPA_ROUTES = [
   'issues/kanban',
   'issues/list',
   'mine',
+  // A project's own pages are its id, minted when it is opened, so no build can
+  // name them: they are answered by 404.html, which is this same index.
   'projects',
-  ...PROJECT_IDS.flatMap((p) => [
-    `projects/${p}`,
-    `projects/${p}/issues`,
-    `projects/${p}/issues/kanban`,
-    `projects/${p}/issues/list`,
-    `projects/${p}/components`,
-    `projects/${p}/milestones`,
-    `projects/${p}/templates`,
-  ]),
   'bots',
   'agents',
   ...AGENT_SLUGS.map((a) => `agents/${a}`),
@@ -171,8 +172,7 @@ const fallback = {
  * in place on a loopback host that hanzo.id does not answer with
  * `Access-Control-Allow-Credentials`.
  */
-const API = 'https://api.hanzo.ai'
-const FORGE = 'https://git.hanzo.ai'
+const API = process.env.HANZO_API_ORIGIN || 'https://api.hanzo.ai'
 
 const config = hanzo(
   {
@@ -184,11 +184,6 @@ const config = hanzo(
       allowedHosts: true,
       proxy: {
         '/v1': { target: API, changeOrigin: true },
-        '/forge-api': {
-          target: FORGE,
-          changeOrigin: true,
-          rewrite: (path: string) => path.replace(/^\/forge-api/, ''),
-        },
       },
     },
   },

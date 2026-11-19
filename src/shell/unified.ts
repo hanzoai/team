@@ -88,6 +88,14 @@ export const DIRECT_HANDOFF_ROSTER: readonly DirectHandoffEntry[] = [
   },
 ] as const
 
+export const DEFAULT_REQUIRED_CHANNELS = [
+  'general',
+  'engineering',
+  'deployments',
+  'approvals',
+  'incidents',
+] as const
+
 export const DEFAULT_CHANNEL_UNREADS: Readonly<Record<string, number>> = {
   'c-general': 2,
   'c-engineering': 5,

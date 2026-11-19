@@ -16,6 +16,7 @@ import { SizableText, Spinner, YStack } from '@hanzo/ui'
 import { BackendStateCard, classifyBackend } from '@hanzo/ui/product'
 import { useEffect, useRef } from 'react'
 
+import { paint } from '~/theme/theme.ts'
 import type { Message, Person, Reaction, Room } from './chat.ts'
 import { dayName, entries } from './group.ts'
 import { Run } from './Run.tsx'
@@ -31,6 +32,7 @@ export type ListProps = {
   onRetry: () => void
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
+  onHandoff?: (m: Message) => void
   open?: string
 }
 
@@ -45,13 +47,14 @@ export function List({
   onRetry,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: ListProps) {
   if (phase === 'loading') return <Waiting />
   if (phase === 'failure') return <Failed error={error} onRetry={onRetry} />
   if (messages.length === 0) return <Nothing room={room} />
 
-  return <Said {...{ messages, people, reactions, me, onReact, onOpen, open }} />
+  return <Said {...{ messages, people, reactions, me, onReact, onOpen, onHandoff, open }} />
 }
 
 /**
@@ -67,6 +70,7 @@ function Said({
   me,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: Omit<ListProps, 'room' | 'phase' | 'error' | 'onRetry'>) {
   const end = useRef<HTMLElement | null>(null)
@@ -96,6 +100,7 @@ function Said({
               me={me}
               onReact={onReact}
               onOpen={onOpen}
+              onHandoff={onHandoff}
               open={open}
             />
           ),
@@ -108,13 +113,13 @@ function Said({
 
 /** A date, on a hairline that runs the width of the conversation. */
 const Day = ({ at }: { at: number }) => (
-  <YStack px={24} pt={20} pb={4}>
+  <YStack px={16} pt={14} pb={4}>
     <YStack height={1} bg="$edge" position="relative" justify="center">
       <SizableText
         position="absolute"
         self="center"
         px={10}
-        bg="$panel"
+        style={{ backgroundColor: paint.panel }}
         fontSize="$1"
         color="$dim"
       >

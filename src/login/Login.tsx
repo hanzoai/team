@@ -4,13 +4,13 @@ import { SignInPanel } from '@hanzo/ui/auth/panel'
 
 import { type Way } from '~/data/away.ts'
 import { brand } from '~/data/brand.ts'
-import { fixture } from '~/data/fixture.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
 import { Points, Preview } from './Preview.tsx'
+import { TeamShowcase } from './TeamShowcase.tsx'
 import { cart, START } from './start.ts'
 
 /** Where the issuer returns a browser. Registered at IAM, so it is fixed. */
@@ -72,7 +72,6 @@ const FOOTER_COLUMNS: readonly (readonly FooterGroup[])[] = [
         { label: 'Hanzo Security', href: `${SITE}/security` },
         { label: 'Download app', href: `${SITE}/download` },
         { label: 'Pricing', href: `${SITE}/pricing` },
-        { label: 'Log in', href: '/login' },
       ],
     },
     {
@@ -264,7 +263,8 @@ const SOCIALS = [
 ] as const
 
 /**
- * Interactive halftone dot-field with ambient organic wave + pointer lens swell.
+ * Unified un-zoomed 10px (`G = 10`) topological halftone wave + Blinn-Phong cursor gleam,
+ * coherent with hanzo.ai, hanzo.app, hanzo.bot, and platform.hanzo.ai.
  */
 function HeroDots() {
   const cvRef = useRef<HTMLCanvasElement | null>(null)
@@ -273,131 +273,254 @@ function HeroDots() {
     const cv = cvRef.current
     const host = cv?.parentElement
     if (!cv || !host) return
-    const ctx = cv.getContext('2d')
-    if (!ctx) return
+    const cx = cv.getContext('2d')
+    if (!cx) return
 
-    const STEP = 14
-    const LENS = 190
-    const LENS2 = LENS * LENS
-    const LERP = 0.14
-    let w = 0
-    let h = 0
-    let dpr = 1
+    const G = 10
+    const R = 255
+    const Z_SCALE = 68
+    const LIGHT_Z = 108
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    let W = 0
+    let H = 0
+    let cols = 0
+    let rows = 0
     let raf = 0
-    const cur = { x: -9999, y: -9999 }
-    const tgt = { x: -9999, y: -9999 }
+    let tx = -1e4
+    let ty = -1e4
+    let lx = -1e4
+    let ly = -1e4
+    let inside = false
+    let energy = 0
+    let boost = 0
 
-    const measure = () => {
-      const r = host.getBoundingClientRect()
-      dpr = Math.min(window.devicePixelRatio || 1, 2)
-      w = r.width
-      h = r.height
-      cv.width = Math.max(1, Math.round(w * dpr))
-      cv.height = Math.max(1, Math.round(h * dpr))
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
+    const ambientAlphas = [0.085, 0.155, 0.235]
+    const gleamAlphas = [0.32, 0.44, 0.56, 0.68, 0.8, 0.92]
+    const amb: number[][] = [[], [], []]
+    const glm: number[][] = [[], [], [], [], [], []]
 
-    const draw = (ts: number) => {
-      const t = (ts || 0) * 0.001
-      ctx.clearRect(0, 0, w, h)
-      // The scheme's ink, read off the canvas (its `color` is the foreground
-      // token), so the field is light dots on the dark ground and dark on the light.
-      ctx.fillStyle = getComputedStyle(cv).color
-      const cols = Math.ceil(w / STEP)
-      const rows = Math.ceil(h / STEP)
-      const ox = (w - (cols - 1) * STEP) * 0.5
-      const oy = (h - (rows - 1) * STEP) * 0.5
-      const cx = w * 0.5
-      const cy = h * 0.45
-      const rx = w * 0.56
-      const ry = h * 0.58
-      const px = cur.x
-      const py = cur.y
-      const hasPtr = px > -999
+    const draw = () => {
+      if (W < 1 || H < 1) return
+      cx.clearRect(0, 0, W, H)
+      cx.fillStyle = getComputedStyle(cv).color
+      for (let b = 0; b < 3; b++) amb[b].length = 0
+      for (let b = 0; b < 6; b++) glm[b].length = 0
 
-      const w1x = w * (0.5 + 0.28 * Math.cos(t * 0.42))
-      const w1y = h * (0.45 + 0.22 * Math.sin(t * 0.31))
-      const w2x = w * (0.5 + 0.32 * Math.sin(t * 0.27 + 1.8))
-      const w2y = h * (0.48 + 0.24 * Math.cos(t * 0.36 + 0.9))
-      const wellR2 = Math.max(w, h) * 0.28
-      const invWell = 1 / (wellR2 * wellR2)
+      const gx1 = W * 0.18
+      const gy1 = H * 0.58
+      const gx2 = W * 0.82
+      const gy2 = H * 0.48
+      const invH = 1 / Math.max(1, H)
+      const wLeft = Math.max(1, W * 0.3)
+      const wRight = Math.max(1, W * 0.34)
+      const lit = energy > 0.01 && lx > -5e3
+      const r2Max = R * R
 
-      for (let r = 0; r < rows; r++) {
-        const y = oy + r * STEP
-        const ny = (y - cy) / ry
-        for (let c = 0; c < cols; c++) {
-          const x = ox + c * STEP
-          const nx = (x - cx) / rx
-          const d = Math.hypot(nx, ny)
-          const edge = Math.max(0, Math.min(1, (d - 0.16) / 0.88))
-          const vig = Math.max(0, 1 - Math.max(0, d - 0.72) * 1.45)
+      for (let j = 0; j < rows; j++) {
+        const y = j * G
+        const rawEy = 0.28 + y * invH * 0.95
+        const ey = rawEy < 1 ? rawEy : 1
+        const dey = rawEy < 1 ? invH * 0.95 : 0
 
-          const wave =
-            0.5 +
-            0.5 *
-              Math.sin(c * 0.18 + r * 0.14 - t * 1.15 + Math.cos(c * 0.09 - r * 0.11 + t * 0.65) * 1.3)
-          const d1 = (x - w1x) * (x - w1x) + (y - w1y) * (y - w1y)
-          const d2 = (x - w2x) * (x - w2x) + (y - w2y) * (y - w2y)
-          const well = Math.exp(-d1 * invWell) * 0.65 + Math.exp(-d2 * invWell) * 0.55
+        for (let i = 0; i < cols; i++) {
+          const x = i * G
+          const leftRamp = 1 - x / wLeft
+          const rightRamp = (x - W * 0.66) / wRight
+          let ex = 0.14
+          let dex = 0
+          if (leftRamp >= rightRamp && leftRamp > 0.14) {
+            ex = leftRamp
+            dex = -1 / wLeft
+          } else if (rightRamp > 0.14) {
+            ex = rightRamp
+            dex = 1 / wRight
+          }
 
-          let rad = (0.7 + edge * 2.1 + wave * 0.42 + well * 0.95) * (0.45 + vig * 0.55)
-          let a = (0.045 + edge * 0.18 + wave * 0.035 + well * 0.11) * vig
+          const p1 = x * 0.012 + y * 0.006
+          const p2 = y * 0.014 - x * 0.005
+          const p3 = (x + y) * 0.007
+          const w1 = Math.sin(p1)
+          const c1 = Math.cos(p1)
+          const w2 = Math.cos(p2)
+          const s2 = Math.sin(p2)
+          const w3 = Math.sin(p3)
+          const c3 = Math.cos(p3)
+          const wave = w1 * w2 * 0.65 + w3 * 0.35
+          const dwx = 0.65 * (0.012 * c1 * w2 + w1 * 0.005 * s2) + 0.35 * 0.007 * c3
+          const dwy = 0.65 * (0.006 * c1 * w2 - w1 * 0.014 * s2) + 0.35 * 0.007 * c3
 
-          if (hasPtr) {
-            const dx = x - px
-            const dy = y - py
-            const d2p = dx * dx + dy * dy
-            if (d2p < LENS2) {
-              const k = 1 - Math.sqrt(d2p) / LENS
-              const s = k * k * (3 - 2 * k)
-              rad += s * 1.9
-              a = Math.min(0.68, a + s * 0.34)
+          const n = 0.56 + 0.44 * wave
+          let f = ex * ey * n * 1.24
+          let dfx = (dex * ey * n + ex * ey * 0.44 * dwx) * 1.24
+          let dfy = (ex * dey * n + ex * ey * 0.44 * dwy) * 1.24
+
+          const dx1 = x - gx1
+          const dy1 = y - gy1
+          const d1Sq = dx1 * dx1 + dy1 * dy1
+          if (d1Sq < 57600) {
+            const d1 = Math.sqrt(d1Sq) || 1
+            const k1 = 1 - d1 / 240
+            f += k1 * k1 * 0.24
+            const gSlope = (-0.48 * k1) / (240 * d1)
+            dfx += gSlope * dx1
+            dfy += gSlope * dy1
+          }
+          const dx2 = x - gx2
+          const dy2 = y - gy2
+          const d2Sq = dx2 * dx2 + dy2 * dy2
+          if (d2Sq < 57600) {
+            const d2 = Math.sqrt(d2Sq) || 1
+            const k2 = 1 - d2 / 240
+            f += k2 * k2 * 0.24
+            const gSlope = (-0.48 * k2) / (240 * d2)
+            dfx += gSlope * dx2
+            dfy += gSlope * dy2
+          }
+
+          const z = f < 0 ? 0 : f > 1 ? 1 : f
+          if (z < 0.05) continue
+
+          const sx = -dfx * Z_SCALE
+          const sy = -dfy * Z_SCALE
+          const invN = 1 / Math.sqrt(sx * sx + sy * sy + 1)
+          const nx = sx * invN
+          const ny = sy * invN
+          const nz = invN
+
+          let drawX = x + nx * z * 2.4
+          let drawY = y + ny * z * 2.4
+          let r = z * G * 0.38
+          let gleamBucket = -1
+
+          if (lit) {
+            const vx = lx - x
+            const vy = ly - y
+            const dSq = vx * vx + vy * vy
+            if (dSq < r2Max) {
+              const dist2 = Math.sqrt(dSq)
+              const falloff = 1 - dist2 / R
+              const atten = falloff * falloff * (3 - 2 * falloff)
+              const vz = LIGHT_Z - z * 44
+              const invL = 1 / Math.sqrt(dSq + vz * vz)
+              const ldx = vx * invL
+              const ldy = vy * invL
+              const ldz = vz * invL
+              const ndotl = Math.max(0, nx * ldx + ny * ldy + nz * ldz)
+              const hzf = ldz + 1
+              const invHalf = 1 / Math.sqrt(ldx * ldx + ldy * ldy + hzf * hzf)
+              const ndoth = Math.max(0, (nx * ldx + ny * ldy + nz * hzf) * invHalf)
+              const ndoth2 = ndoth * ndoth
+              const ndoth4 = ndoth2 * ndoth2
+              const spec = ndoth4 * ndoth4 * ndoth4
+              const crestFactor = Math.max(0.06, Math.min(1, (wave + 0.72) * 0.68)) * (0.2 + 0.8 * z)
+              const gleam = atten * energy * crestFactor * (0.42 * ndotl + 1.05 * spec)
+              const reliefLift = gleam * (0.35 + 0.65 * z)
+              r = Math.min(G * 0.48, r + reliefLift * G * 0.16)
+              drawX -= (vx / R) * z * 2.2 * atten * energy
+              drawY -= (vy / R) * z * 2.2 * atten * energy
+              if (gleam > 0.07) gleamBucket = Math.min(5, Math.floor((gleam - 0.07) * 7.2))
             }
           }
-          if (a < 0.01 || rad < 0.3) continue
-          ctx.globalAlpha = a
-          ctx.beginPath()
-          ctx.arc(x, y, rad, 0, Math.PI * 2)
-          ctx.fill()
+
+          if (gleamBucket >= 0) glm[gleamBucket].push(drawX, drawY, r)
+          else amb[z < 0.28 ? 0 : z < 0.56 ? 1 : 2].push(drawX, drawY, r)
         }
       }
-      ctx.globalAlpha = 1
-    }
 
-    const step = (ts: number) => {
-      cur.x += (tgt.x - cur.x) * LERP
-      cur.y += (tgt.y - cur.y) * LERP
-      draw(ts)
-      raf = requestAnimationFrame(step)
-    }
-
-    const onMove = (e: PointerEvent) => {
-      const r = host.getBoundingClientRect()
-      tgt.x = e.clientX - r.left
-      tgt.y = e.clientY - r.top
-      if (cur.x < -999) {
-        cur.x = tgt.x
-        cur.y = tgt.y
+      for (let b = 0; b < 3; b++) {
+        const arr = amb[b]
+        if (!arr.length) continue
+        cx.globalAlpha = ambientAlphas[b]
+        cx.beginPath()
+        for (let k = 0; k < arr.length; k += 3) {
+          const dx = arr[k]
+          const dy = arr[k + 1]
+          const dr = arr[k + 2]
+          cx.moveTo(dx + dr, dy)
+          cx.arc(dx, dy, dr, 0, 6.2832)
+        }
+        cx.fill()
       }
+      for (let b = 0; b < 6; b++) {
+        const arr = glm[b]
+        if (!arr.length) continue
+        cx.globalAlpha = gleamAlphas[b]
+        cx.beginPath()
+        for (let k = 0; k < arr.length; k += 3) {
+          const dx = arr[k]
+          const dy = arr[k + 1]
+          const dr = arr[k + 2]
+          cx.moveTo(dx + dr, dy)
+          cx.arc(dx, dy, dr, 0, 6.2832)
+        }
+        cx.fill()
+      }
+      cx.globalAlpha = 1
     }
 
-    const onLeave = () => {
-      tgt.x = -9999
-      tgt.y = -9999
+    const tick = () => {
+      boost *= 0.9
+      const target = inside ? Math.min(1, 0.72 + boost * 0.28) : 0
+      energy += (target - energy) * (inside ? 0.18 : 0.08)
+      if (lx < -5e3 && tx > -5e3) {
+        lx = tx
+        ly = ty
+      } else if (tx > -5e3) {
+        lx += (tx - lx) * 0.28
+        ly += (ty - ly) * 0.28
+      }
+      draw()
+      raf = energy > 0.01 || inside ? requestAnimationFrame(tick) : 0
     }
 
-    measure()
-    raf = requestAnimationFrame(step)
-    const ro = new ResizeObserver(() => measure())
+    const startLoop = () => {
+      if (!raf && (energy > 0.01 || inside)) raf = requestAnimationFrame(tick)
+    }
+
+    const size = () => {
+      const r = host.getBoundingClientRect()
+      const dpr = Math.min(window.devicePixelRatio || 1, 2)
+      W = r.width
+      H = r.height
+      if (W < 1 || H < 1) return
+      cv.width = Math.round(W * dpr)
+      cv.height = Math.round(H * dpr)
+      cv.style.width = `${W}px`
+      cv.style.height = `${H}px`
+      cx.setTransform(dpr, 0, 0, dpr, 0, 0)
+      cols = Math.ceil(W / G) + 1
+      rows = Math.ceil(H / G) + 1
+      draw()
+    }
+
+    const move = (e: PointerEvent) => {
+      if (calm || e.pointerType === 'touch') return
+      const r = host.getBoundingClientRect()
+      const nx = e.clientX - r.left
+      const ny = e.clientY - r.top
+      if (tx > -5e3) boost = Math.min(1.4, boost + Math.hypot(nx - tx, ny - ty) * 0.016)
+      tx = nx
+      ty = ny
+      inside = true
+      startLoop()
+    }
+
+    const leave = () => {
+      inside = false
+      startLoop()
+    }
+
+    size()
+    const ro = new ResizeObserver(size)
     ro.observe(host)
-    host.addEventListener('pointermove', onMove, { passive: true })
-    host.addEventListener('pointerleave', onLeave, { passive: true })
+    window.addEventListener('pointermove', move, { passive: true })
+    document.addEventListener('mouseleave', leave, { passive: true })
 
     return () => {
-      cancelAnimationFrame(raf)
+      if (raf) cancelAnimationFrame(raf)
       ro.disconnect()
-      host.removeEventListener('pointermove', onMove)
-      host.removeEventListener('pointerleave', onLeave)
+      window.removeEventListener('pointermove', move)
+      document.removeEventListener('mouseleave', leave)
     }
   }, [])
 
@@ -418,32 +541,14 @@ function HeroDots() {
   )
 }
 
-/** Which control was pressed, so that one says it is working while the browser leaves. */
-type Press = 'nav' | 'open'
+type Press = 'open'
 
-/**
- * The signed-out page for Hanzo Team (`hanzo.team`), in hanzo.app's shape
- * (hanzo-inc/app components/chat/ChatLanding.tsx): the top bar, then a first
- * screen with the sign-in on the left (title, one line, the panel, the terms)
- * and a picture of Team on the right with three lines about it, stacked into
- * one column under 1280px; then the customer logo strip and the shared footer.
- *
- * Every signed-out visit lands here, the page a sign-out returns to included,
- * and nothing leaves by itself. The panel LOOKS like a sign-in and takes no
- * credential: it is @hanzo/ui/auth's `SignInPanel`, the one every Hanzo site
- * draws, and each press leaves with this app's own request (`request`): Google
- * or GitHub straight to the provider in one press, an email to hanzo.ai/login
- * with the address, a new account to /signup. The person comes back signed in
- * on /auth/callback. A password typed here would start a session only this
- * host knows, which is the one thing this page exists not to do.
- */
 export const Login = () => {
   const { standing, depart, request } = useSession()
   const [busy, setBusy] = useState<Press | null>(null)
 
   if (standing === 'in') return null
 
-  // Settles only when the request could not be made; otherwise the page is gone.
   const go = (press: Press, way: Way) => {
     setBusy(press)
     depart(way).catch(() => setBusy(null))
@@ -454,7 +559,7 @@ export const Login = () => {
 
   return (
     <YStack flex={1} bg={paint.ground} overflow="scroll">
-      {/* Top 68px Bar matching platform.hanzo.ai */}
+      {/* Top 68px Bar matching hanzo.ai, hanzo.app & hanzo.bot */}
       <XStack
         width="100%"
         minH={68}
@@ -464,7 +569,7 @@ export const Login = () => {
         justify="space-between"
         borderBottomWidth={1}
         borderColor={paint.rule}
-        bg={paint.panel}
+        bg={paint.ground}
         style={{
           position: 'sticky',
           top: 0,
@@ -475,62 +580,78 @@ export const Login = () => {
           items="center"
           gap={gap.tight}
           cursor="pointer"
+          shrink={0}
           onPress={() => window.location.assign('/')}
         >
           <SizableText size={rung.row} color={paint.ink} fontWeight="600">
-            {brand.title}
+            {`Hanzo ${brand.title}`}
           </SizableText>
         </XStack>
 
-        <XStack items="center" gap={gap.tight} flexWrap="wrap">
-          {HEADER_LINKS.map((item) => (
-            <Button
-              key={item.label}
-              size="sm"
-              chromeless
-              rounded={round.pill}
-              onPress={() => window.location.assign(item.href)}
-            >
-              <SizableText size={rung.small} color={paint.mute}>
-                {item.label}
-              </SizableText>
-            </Button>
-          ))}
+        <XStack items="center" gap={gap.tight} shrink={0}>
+          <div className="hz-landing-nav-links">
+            {HEADER_LINKS.map((item) => (
+              <Button
+                key={item.label}
+                size="sm"
+                chromeless
+                rounded={round.pill}
+                onPress={() => window.location.assign(item.href)}
+              >
+                <SizableText size={rung.small} color={paint.mute}>
+                  {item.label}
+                </SizableText>
+              </Button>
+            ))}
+          </div>
           <Button
             size="sm"
             variant="outline"
-            rounded={round.field}
+            rounded={round.pill}
             onPress={() => window.location.assign('https://hanzo.ai/contact-sales')}
           >
-            <SizableText size={rung.small} color={paint.ink}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
               Contact sales
             </SizableText>
           </Button>
-          <Button size="sm" chromeless rounded={round.field} disabled={working} onPress={() => go('nav', 'login')}>
-            <SizableText size={rung.small} color={paint.ink}>
-              Log in
-            </SizableText>
-          </Button>
-          <Button size="sm" rounded={round.field} disabled={working} onPress={() => go('open', 'login')}>
-            <SizableText size={rung.small} color={paint.ink} fontWeight="600">
-              {label('open', 'Open Hanzo Team')}
+          <Button
+            size="sm"
+            rounded={round.pill}
+            bg={paint.ink}
+            disabled={working}
+            onPress={() => go('open', 'login')}
+          >
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+              {label('open', 'Open Team')}
             </SizableText>
           </Button>
         </XStack>
       </XStack>
 
-      {/* The first screen, as hanzo.app's: the sign-in on the left, Team on the right (tokens.css `.hz-signin`). */}
+      {/* First screen: Sign-in on left, Dual-Device Team Preview on right */}
       <main className="hz-signin">
         <HeroDots />
         <div className="hz-signin-row">
           <div className="hz-signin-copy">
             <SignInPanel
+              bare
               title={`Sign in to Hanzo ${brand.title}`}
               line="AI cockpit, live streams, issue boards, channels, and bots for your team."
               request={request}
               termsHref={`${SITE}/terms`}
               privacyHref={`${SITE}/privacy`}
             />
+            <XStack items="center" justify="center" pt={gap.tight}>
+              <SizableText
+                size={rung.small}
+                color={paint.mute}
+                cursor="pointer"
+                onPress={() => window.location.assign(`${SITE}/team`)}
+                style={{ textDecoration: 'underline', textUnderlineOffset: '3px' }}
+              >
+                Learn more about Hanzo Team →
+              </SizableText>
+            </XStack>
           </div>
 
           <div className="hz-signin-figure">
@@ -578,18 +699,21 @@ export const Login = () => {
                     <img src={company.logo} alt={hidden ? '' : company.name} loading="lazy" />
                   </a>
                 )
-              })
+              }),
             )}
           </div>
         </div>
       </YStack>
+
+      {/* Interactive Hanzo Team Showcase (ported from hanzo.ai/team) */}
+      <TeamShowcase onOpen={() => go('open', 'login')} working={working} />
 
       {/* Shared Multi-Column Hanzo Footer matching platform.hanzo.ai & hanzo.ai */}
       <YStack
         width="100%"
         borderTopWidth={1}
         borderColor={paint.rule}
-        bg={paint.panel}
+        bg={paint.ground}
         px={gap.wide}
         py={gap.edge}
       >
@@ -641,7 +765,7 @@ export const Login = () => {
                             key={link.href + link.label}
                             size={rung.small}
                             color={paint.mute}
-                            cursor="pointer"
+                            cursor={link.href ? 'pointer' : undefined}
                             onPress={() => window.location.assign(link.href)}
                             style={{ lineHeight: '1.32' }}
                           >
@@ -717,37 +841,147 @@ export const Login = () => {
   )
 }
 
+const ENROL_TRIED = 'team.enrol_tried'
+
 /**
  * AuthGate wraps the router and renders the Login page when signed out,
- * handles `/auth/callback` and `/start`, and checks workspace enrolment.
+ * handles `/auth/callback` and `/start`, and automatically provisions
+ * workspace membership when signed in so users never hit a manual setup gate.
  */
 export const AuthGate = ({ children }: { children: ReactNode }) => {
-  const { standing: session } = useSession()
-  const { standing: space, refusal, enrolment } = useSpace()
+  const { standing: session, who, depart, leave } = useSession()
+  const { standing: space, refusal, enrolNow, enrolment } = useSpace()
+  const [enrolling, setEnrolling] = useState(false)
+  const [autoFallback, setAutoFallback] = useState(false)
+
+  useEffect(() => {
+    if (space === 'settled') {
+      try {
+        sessionStorage.removeItem(ENROL_TRIED)
+      } catch {
+        /* ignore */
+      }
+      setAutoFallback(false)
+    }
+  }, [space])
+
+  useEffect(() => {
+    if (session !== 'in' || space !== 'stranger') return
+    let alreadyTried = false
+    try {
+      alreadyTried = sessionStorage.getItem(ENROL_TRIED) === '1'
+    } catch {
+      alreadyTried = true
+    }
+    if (alreadyTried) {
+      setAutoFallback(true)
+      return
+    }
+    try {
+      sessionStorage.setItem(ENROL_TRIED, '1')
+    } catch {
+      /* ignore */
+    }
+    setEnrolling(true)
+    void enrolNow().then((ok) => {
+      if (!ok) {
+        if (!navigator.webdriver) {
+          window.location.replace(enrolment)
+        } else {
+          setEnrolling(false)
+          setAutoFallback(true)
+        }
+      } else {
+        setEnrolling(false)
+      }
+    })
+  }, [session, space, enrolNow, enrolment])
 
   if (window.location.pathname === CALLBACK) return <Callback />
   if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
-  if (fixture.on) return <>{children}</>
   if (session === 'unknown') return <Waiting />
   if (session === 'out') return <Login />
 
+  const account = who?.email ?? who?.label ?? null
+  const runEnrol = () => {
+    try {
+      sessionStorage.removeItem(ENROL_TRIED)
+    } catch {
+      /* ignore */
+    }
+    setEnrolling(true)
+    void enrolNow().then((ok) => {
+      if (!ok) window.location.assign(enrolment)
+      else setEnrolling(false)
+    })
+  }
+
   if (space === 'stranger') {
+    if (!autoFallback) return <Waiting account={account} onLeave={leave} />
     return (
-      <Word title="One more step" body="Set up your workspace to see your projects.">
-        <Button onPress={() => window.location.assign(enrolment)}>Set up</Button>
+      <Word
+        title="Finish setting up Hanzo Team"
+        body="Provision your Team workspace to open channels, issues, docs, and CRM."
+        account={account}
+        onLeave={leave}
+        onOpen={runEnrol}
+        working={enrolling}
+      >
+        <XStack items="center" justify="center" gap={gap.tight} flexWrap="wrap" pt={gap.tight}>
+          <Button disabled={enrolling} rounded={round.pill} bg={paint.ink} onPress={runEnrol}>
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+              {enrolling ? 'Setting up…' : 'Set up workspace'}
+            </SizableText>
+          </Button>
+          <Button
+            variant="outline"
+            rounded={round.pill}
+            onPress={() => {
+              void depart('another')
+            }}
+          >
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Switch account
+            </SizableText>
+          </Button>
+        </XStack>
       </Word>
     )
   }
 
   if (space === 'refused') {
     return (
-      <Word title="Your workspace is not answering" body={refusal?.message ?? ''}>
-        <Button onPress={() => window.location.reload()}>Try again</Button>
+      <Word
+        title="Your workspace is not answering"
+        body={refusal?.message ?? 'Check your connection or try signing in again.'}
+        account={account}
+        onLeave={leave}
+        onOpen={() => window.location.reload()}
+        working={false}
+      >
+        <XStack items="center" justify="center" gap={gap.tight} flexWrap="wrap" pt={gap.tight}>
+          <Button rounded={round.pill} bg={paint.ink} onPress={() => window.location.reload()}>
+            <SizableText size={rung.small} color={paint.ground} fontWeight="600">
+              Try again
+            </SizableText>
+          </Button>
+          <Button
+            variant="outline"
+            rounded={round.pill}
+            onPress={() => {
+              void depart('another')
+            }}
+          >
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Switch account
+            </SizableText>
+          </Button>
+        </XStack>
       </Word>
     )
   }
 
-  if (space === 'unknown') return <Waiting />
+  if (space === 'unknown') return <Waiting account={account} onLeave={leave} />
 
   return <>{children}</>
 }
@@ -757,22 +991,118 @@ const Forward = ({ to }: { to: string }) => {
   return <Waiting />
 }
 
-const Waiting = () => (
-  <YStack flex={1} items="center" justify="center" bg={paint.ground}>
-    <Spinner />
+const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => {
+  const productName = `Hanzo ${brand.title}`
+  return (
+    <XStack
+      width="100%"
+      minH={68}
+      px={gap.wide}
+      py={gap.tight}
+      items="center"
+      justify="space-between"
+      borderBottomWidth={1}
+      borderColor={paint.rule}
+      bg={paint.ground}
+      style={{
+        position: 'sticky',
+        top: 0,
+        zIndex: 40,
+      }}
+    >
+      <XStack
+        items="center"
+        gap={gap.tight}
+        cursor="pointer"
+        shrink={0}
+        onPress={() => window.location.assign('/')}
+      >
+        <SizableText size={rung.row} color={paint.ink} fontWeight="600">
+          {productName}
+        </SizableText>
+      </XStack>
+      <XStack items="center" gap={gap.tight} shrink={0}>
+        {account ? (
+          <SizableText size={rung.small} color={paint.mute}>
+            {account}
+          </SizableText>
+        ) : null}
+        <Button
+          size="sm"
+          variant="outline"
+          rounded={round.pill}
+          onPress={() => window.location.assign(`${SITE}/contact-sales`)}
+        >
+          <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+            Contact sales
+          </SizableText>
+        </Button>
+        {onLeave ? (
+          <Button size="sm" variant="outline" rounded={round.pill} onPress={onLeave}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Sign out
+            </SizableText>
+          </Button>
+        ) : null}
+      </XStack>
+    </XStack>
+  )
+}
+
+const Waiting = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => (
+  <YStack flex={1} minH="100vh" bg={paint.ground}>
+    <GateHeader account={account} onLeave={onLeave} />
+    <YStack flex={1} items="center" justify="center" gap={gap.tight}>
+      <Spinner />
+      <SizableText size={rung.body} color={paint.ink} fontWeight="500">
+        {`Opening Hanzo ${brand.title}…`}
+      </SizableText>
+    </YStack>
   </YStack>
 )
 
-const Word = ({ title, body, children }: { title: string; body: string; children: ReactNode }) => (
-  <YStack flex={1} items="center" justify="center" gap={gap.inset} bg={paint.ground} p={gap.wide}>
-    <SizableText size={rung.title} color={paint.ink}>
-      {title}
-    </SizableText>
-    {body ? (
-      <SizableText size={rung.body} color={paint.mute}>
-        {body}
-      </SizableText>
-    ) : null}
-    {children}
+const Word = ({
+  title,
+  body,
+  account,
+  onLeave,
+  onOpen,
+  working,
+  children,
+}: {
+  title: string
+  body: string
+  account?: string | null
+  onLeave?: () => void
+  onOpen: () => void
+  working: boolean
+  children: ReactNode
+}) => (
+  <YStack flex={1} bg={paint.ground} overflow="scroll">
+    <GateHeader account={account} onLeave={onLeave} />
+    <YStack width="100%" minH={540} items="center" justify="center" px={gap.wide} py={gap.wide}>
+      <YStack
+        width="100%"
+        maxW={480}
+        items="center"
+        gap={gap.inset}
+        p={gap.wide}
+        rounded={round.panel}
+        bg={paint.panel}
+        borderWidth={1}
+        borderColor={paint.rule}
+      >
+        <SizableText size={rung.title} color={paint.ink} fontWeight="600" style={{ textAlign: 'center' }}>
+          {title}
+        </SizableText>
+        {body ? (
+          <SizableText size={rung.body} color={paint.mute} style={{ textAlign: 'center' }}>
+            {body}
+          </SizableText>
+        ) : null}
+        {children}
+      </YStack>
+    </YStack>
+    <TeamShowcase onOpen={onOpen} working={working} />
   </YStack>
 )

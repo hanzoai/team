@@ -9,13 +9,22 @@
  * It grows with what is typed and stops. A field that grows forever pushes the
  * conversation off the top of its own screen, and one that never grows hides
  * the third line of what somebody is about to send.
+ *
+ * An `@` opening the last word offers the people and bots it could name. A
+ * mention only wakes a bot when the name is exact (text.ts `markup`), so the
+ * picker is how a bot is reached without spelling it.
  */
 import { SizableText, Textarea, XStack, YStack } from '@hanzo/ui'
-import { ArrowUp } from '@hanzogui/lucide-icons-2'
-import { useState } from 'react'
+import { AlertCircle, ArrowUp, AtSign, Plus, Send, ShieldCheck } from '@hanzogui/lucide-icons-2'
+import { useMemo, useState } from 'react'
 
+import { activeMentionQuery, applyMention, mentionSuggestions } from '~/handoff/handoff.ts'
+import { useHanzoPreferences } from '~/settings/preferences.ts'
 import { press } from '~/shell'
-import { paint } from '~/theme/theme.ts'
+import { paint, round, rung } from '~/theme/theme.ts'
+import type { Person } from './chat.ts'
+import { Face } from './Face.tsx'
+import { asking, completed, offered } from './text.ts'
 
 /**
  * A key, as both halves of the prop's type see one.
@@ -26,6 +35,9 @@ import { paint } from '~/theme/theme.ts'
  * fields and a native event carries only the first, hence the optionals.
  */
 type Key = { nativeEvent: { key: string }; shiftKey?: boolean; preventDefault?: () => void }
+
+/** Keys the picker takes while it is open. */
+const PICKER_KEYS = new Set(['ArrowDown', 'ArrowUp', 'Enter', 'Tab', 'Escape'])
 
 /** One line, and the most it will grow to. Image 68 on a marketing crop; here
  *  it is the type's own line box plus the field's padding, so it cannot
@@ -38,16 +50,52 @@ const MAX = LINE * 8 + PAD * 2
 export function Composer({
   placeholder,
   disabled,
+  people = [],
   onSend,
+  onHandoff,
 }: {
   placeholder: string
   /** Why it cannot be used, said out loud. Absent means it can. */
   disabled?: string
+  /** Who a mention can name: the roster, people and bots. */
+  people?: readonly Person[]
   onSend: (text: string) => Promise<void>
+  onHandoff?: (draftText: string) => void
 }) {
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
+  // The text Escape was pressed on: the picker stays shut until it changes.
+  const [shut, setShut] = useState<string | null>(null)
+  const [lit, setLit] = useState(0)
+  const [pickerPinned, setPickerPinned] = useState(false)
+  const { chat, setChat } = useHanzoPreferences()
+  const fullAccess = chat.approvalMode === 'auto'
+
+  const typing = text === shut ? null : asking(text)
+  const mention = useMemo(() => activeMentionQuery(text), [text])
+  const choices = useMemo(() => {
+    if (typing) return offered(people, typing.query)
+    if (pickerPinned) return mentionSuggestions(people, mention?.query ?? '')
+    return []
+  }, [typing, pickerPinned, people, mention])
+  const picking = choices.length > 0
+  const at = Math.min(lit, Math.max(0, choices.length - 1))
+
+  const choose = (who: Person) => {
+    if (typing) {
+      setText(completed(text, typing.at, who))
+    } else {
+      setText((prev) => applyMention(prev, who.name))
+    }
+    setPickerPinned(false)
+    setLit(0)
+  }
+
+  const edit = (next: string) => {
+    setText(next)
+    setLit(0)
+  }
 
   const ready = text.trim() !== '' && !sending && !disabled
 
@@ -72,38 +120,80 @@ export function Composer({
   const height = Math.max(MIN, Math.min(MAX, lines * LINE + PAD * 2))
 
   return (
-    <YStack px={24} pb={16} pt={8} gap={6}>
+    <YStack px={16} pb={12} pt={6} gap={6}>
       {failed ? (
         <SizableText fontSize="$1" style={{ color: paint.alert }}>
           {failed}
         </SizableText>
       ) : null}
 
-      <XStack
-        items="flex-end"
-        gap={8}
-        pl={16}
-        pr={6}
-        py={5}
-        rounded={MAX}
-        bg="$raised"
+      {picking ? (
+        <YStack
+          aria-label="Mention somebody"
+          py={4}
+          rounded={12}
+          borderWidth={1}
+          borderColor="$edge"
+          bg="$panel"
+          data-testid="mention-picker"
+        >
+          {choices.map((who, i) => (
+            <XStack
+              key={who.id}
+              {...press(() => choose(who), `Mention ${who.name}`)}
+              px={10}
+              py={6}
+              mx={4}
+              gap={10}
+              items="center"
+              rounded={8}
+              bg={i === at ? '$hover' : 'transparent'}
+              hoverStyle={{ background: '$hover' }}
+              onMouseEnter={() => setLit(i)}
+            >
+              <Face person={who} size={22} />
+              <SizableText fontSize={rung.body} fontWeight="500" color="$ink" numberOfLines={1} flex={1}>
+                {who.name}
+              </SizableText>
+              {who.bot ? (
+                <XStack px={6} py={1} rounded={round.field} borderWidth={1} borderColor="$edge">
+                  <SizableText fontSize={rung.chip} color="$quiet">
+                    Agent
+                  </SizableText>
+                </XStack>
+              ) : null}
+            </XStack>
+          ))}
+        </YStack>
+      ) : null}
+
+      <YStack
+        gap={4}
+        px={12}
+        pt={8}
+        pb={8}
+        rounded={18}
         borderWidth={1}
-        borderColor="$edge"
         opacity={disabled ? 0.6 : 1}
+        style={{
+          backgroundColor: paint.composer,
+          borderTopColor: paint.composerRule,
+          borderRightColor: paint.composerRule,
+          borderBottomColor: paint.composerRule,
+          borderLeftColor: paint.composerRule,
+        }}
         focusWithinStyle={{ borderColor: '$bound' }}
+        data-testid="team-composer"
       >
         <Textarea
           flex={1}
           unstyled
-          // The primitive defaults to three rows, which outgrew every height
-          // this component asked for. One row, and the height below decides.
           rows={1}
-          height={height}
-          // `Textarea` carries its own `min-height: 64px`, which outranks a
-          // height and made every composer two lines tall whatever was in it.
-          minH={height}
+          height={height - 12}
+          minH={height - 12}
           maxH={MAX}
-          py={PAD}
+          py={4}
+          px={2}
           borderWidth={0}
           bg="transparent"
           fontSize="$3"
@@ -114,38 +204,124 @@ export function Composer({
           value={text}
           disabled={Boolean(disabled)}
           aria-label={placeholder}
-          onChangeText={setText}
-          // Enter sends and Shift+Enter breaks the line, which is what every
-          // conversation surface does and therefore what fingers expect.
-          //
-          // `keydown`, not `keypress`. Measured: a `keypress` handler on this
-          // control never ran for Enter, so the key fell through to the
-          // textarea's own default and typed a newline into the field somebody
-          // had just tried to send.
+          onChangeText={edit}
           onKeyDown={(e: Key) => {
-            if (e.nativeEvent.key !== 'Enter' || e.shiftKey) return
+            const key = e.nativeEvent.key
+            if (picking && PICKER_KEYS.has(key) && !(key === 'Enter' && e.shiftKey)) {
+              e.preventDefault?.()
+              if (key === 'ArrowDown') setLit((at + 1) % choices.length)
+              else if (key === 'ArrowUp') setLit((at - 1 + choices.length) % choices.length)
+              else if (key === 'Escape') {
+                setShut(text)
+                setPickerPinned(false)
+              }
+              else choose(choices[at]!)
+              return
+            }
+            if (key !== 'Enter' || e.shiftKey) return
             e.preventDefault?.()
             void send()
           }}
         />
 
-        <YStack
-          aria-disabled={!ready}
-          {...press(() => void send(), 'Send')}
-          cursor={ready ? 'pointer' : 'default'}
-          width={32}
-          height={32}
-          items="center"
-          justify="center"
-          rounded={16}
-          style={{ background: ready ? paint.accent : undefined }}
-          bg={ready ? undefined : '$hover'}
-          opacity={ready ? 1 : 0.5}
-          focusVisibleStyle={{ outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' }}
-        >
-          <ArrowUp size={17} color={ready ? '$background' : '$soft'} />
-        </YStack>
-      </XStack>
+        <XStack items="center" justify="space-between" pt={2}>
+          <XStack items="center" gap={6} flexWrap="wrap">
+            <YStack
+              width={26}
+              height={26}
+              rounded={13}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$hover' }}
+            >
+              <Plus size={15} color="$soft" />
+            </YStack>
+
+            {people.length > 0 ? (
+              <XStack
+                {...press(() => setPickerPinned((v) => !v), 'Mention teammate or bot')}
+                height={24}
+                px={7}
+                gap={4}
+                rounded={7}
+                items="center"
+                hoverStyle={{ bg: '$hover' }}
+                data-testid="composer-mention-toggle"
+              >
+                <AtSign size={13} color="$soft" />
+                <SizableText fontSize={12} fontWeight="500" color="$soft">
+                  Mention
+                </SizableText>
+              </XStack>
+            ) : null}
+
+            {onHandoff ? (
+              <XStack
+                {...press(() => onHandoff(text), 'Hand off work to teammate or bot')}
+                height={24}
+                px={8}
+                gap={5}
+                rounded={7}
+                items="center"
+                bg="$raised"
+                borderWidth={1}
+                borderColor="$edge"
+                hoverStyle={{ bg: '$hover' }}
+                data-testid="composer-handoff-trigger"
+              >
+                <Send size={12} color="$ink" />
+                <SizableText fontSize={12} fontWeight="600" color="$ink">
+                  Hand off
+                </SizableText>
+              </XStack>
+            ) : null}
+
+            <XStack
+              {...press(
+                () => setChat({ approvalMode: fullAccess ? 'manual' : 'auto' }),
+                fullAccess ? 'Switch to manual approval' : 'Switch to full access',
+              )}
+              height={24}
+              px={7}
+              gap={5}
+              rounded={7}
+              items="center"
+              hoverStyle={{ bg: '$hover' }}
+              data-testid="composer-approval-toggle"
+            >
+              {fullAccess ? (
+                <AlertCircle size={13} color={paint.composerWarn} />
+              ) : (
+                <ShieldCheck size={13} color="$soft" />
+              )}
+              <SizableText
+                fontSize={12}
+                fontWeight="500"
+                style={{ color: fullAccess ? paint.composerWarn : undefined }}
+                color={fullAccess ? undefined : '$soft'}
+              >
+                {fullAccess ? 'Full access' : 'Manual approval'}
+              </SizableText>
+            </XStack>
+          </XStack>
+
+          <YStack
+            aria-disabled={!ready}
+            {...press(() => void send(), 'Send')}
+            cursor={ready ? 'pointer' : 'default'}
+            width={30}
+            height={30}
+            items="center"
+            justify="center"
+            rounded={15}
+            style={{ backgroundColor: paint.composerAccent }}
+            opacity={ready ? 1 : 0.92}
+            focusVisibleStyle={{ outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' }}
+          >
+            <ArrowUp size={16} color={paint.composerAccentInk} />
+          </YStack>
+        </XStack>
+      </YStack>
     </YStack>
   )
 }

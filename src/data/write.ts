@@ -20,7 +20,7 @@ export const mint = (): string => {
 
 const stamp = (space: string, by: string) => ({
   _id: mint(),
-  space: 'team:space:Tx',
+  space: 'core:space:Tx',
   objectSpace: space,
   modifiedBy: by,
   modifiedOn: Date.now(),
@@ -32,6 +32,27 @@ export const create = (space: string, by: string, cls: string, attributes: Recor
   objectId: id,
   objectClass: cls,
   attributes,
+})
+
+/**
+ * A create that hangs off another document: a label on an issue.
+ *
+ * What it hangs off rides on the TRANSACTION, never in its attributes. The
+ * server drops `attachedTo`, `attachedToClass` and `collection` from a
+ * create's attributes (apps/team txapply.go `reserved`), so a label written
+ * with them there is stored hanging off nothing, and no issue ever shows it.
+ */
+export const attach = (
+  space: string,
+  by: string,
+  cls: string,
+  to: { id: string; cls: string; collection: string },
+  attributes: Record<string, unknown>,
+) => ({
+  ...create(space, by, cls, attributes),
+  attachedTo: to.id,
+  attachedToClass: to.cls,
+  collection: to.collection,
 })
 
 export const update = (doc: Doc, by: string, operations: Record<string, unknown>) => ({
@@ -47,6 +68,25 @@ export const remove = (doc: Doc, by: string) => ({
   _class: Tx.remove,
   objectId: doc._id,
   objectClass: doc._class,
+})
+
+/** A question about the space: a class, and the query a document of it must match. */
+export type Condition = { _class: string; query: Record<string, unknown> }
+
+/**
+ * Several writes as one, refused whole when any condition finds a document.
+ *
+ * The server checks the conditions and applies the writes under the space's one
+ * write lock, so nothing can land between the check and the writes. Refused, it
+ * applies none of them and answers `{success: false}` — read it with
+ * `Plane.apply`, since `write` drops the reply.
+ */
+export const unless = (by: string, conditions: Condition[], txes: ReturnType<typeof create>[]) => ({
+  ...stamp('core:space:Tx', by),
+  _class: Tx.applyIf,
+  match: [],
+  notMatch: conditions,
+  txes,
 })
 
 /**

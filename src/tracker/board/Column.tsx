@@ -21,7 +21,7 @@ import { dot } from './tone.ts'
  * would land in. It is the same rectangle the dragged card vacated, which is
  * what makes the gap read as a destination rather than as a hole.
  */
-export const WIDTH = 208
+export const WIDTH = 240
 
 export const Column = ({
   column, drag, over, onOver, onDrop, onAdd, onOpen, onLift, onLand,
@@ -53,7 +53,8 @@ export const Column = ({
     <YStack
       data-slot="column"
       data-status={column.status}
-      width={WIDTH}
+      flex={1}
+      minW={WIDTH}
       shrink={0}
       gap={gap.tight}
       role="list"

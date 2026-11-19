@@ -25,25 +25,27 @@
 import { Popover, Separator } from '@hanzo/gui'
 import { Screen, Sheet, SheetContent, SizableText, XStack, YStack } from '@hanzo/ui'
 import { OrgMark } from '@hanzo/ui/product'
-import { Check, PanelLeft } from '@hanzogui/lucide-icons-2'
+import { Check } from '@hanzogui/lucide-icons-2'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
+import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
+import { paint, round, rung, state } from '~/theme/theme.ts'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
-import { BusinessHeader, type BusinessAppItem } from './BusinessHeader.tsx'
+import { BusinessHeader } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
-import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, PAD, SEAM } from './measure.ts'
+import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, PAD, PANE_ROUND, SEAM } from './measure.ts'
 import { press } from './press.ts'
 import { Rail } from './Rail.tsx'
+import { surfaceAt } from './surfaces.ts'
 import {
   matchTeamShortcut,
   TEAM_CROSS_APPS,
   TEAM_SHORTCUTS,
   type TeamCrossAppItem,
 } from './unified.ts'
-import { paint, round, rung, state } from '~/theme/theme'
 
 export type ShellProps = {
   /** The navigator region: a panel title, a search, a list. */
@@ -55,7 +57,7 @@ export type ShellProps = {
 }
 
 export const Shell = ({ nav, children, aside }: ShellProps) => {
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
   const go = useNavigate()
   const { who, leave, depart } = useSession()
   const { all, current, choose } = useSpace()
@@ -64,7 +66,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     typeof window === 'undefined' ? INLINE_ASIDE : window.innerWidth,
   )
   const [span, setSpan] = useState(NAV)
-  const [collapsed, setCollapsed] = useState(() => {
+  const [navCollapsed, setNavCollapsed] = useState(() => {
     try {
       return typeof window !== 'undefined' && window.localStorage.getItem('hanzo.team.sidebar.collapsed') === 'true'
     } catch {
@@ -73,19 +75,25 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   })
   const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [drawer, setDrawer] = useState(false)
+  // A destination picked in the drawer is where the person is going, so the
+  // drawer steps aside. Left open it stands over the page it opened, and over
+  // a dialog the address opened (/projects?new), which dismissing the drawer
+  // then dismissed too.
+  useEffect(() => setDrawer(false), [pathname, search])
   const [over, setOver] = useState(false)
   const showing = useAside()
   const asideKind = useAsideKind()
 
   const wide = width >= INLINE_ASIDE
   const roomy = width >= INLINE_NAV
+  const inlineNavOpen = Boolean(roomy && nav && !navCollapsed)
 
   const toggleSidebar = useCallback(() => {
     if (!roomy) {
       setDrawer((v) => !v)
       return
     }
-    setCollapsed((prev) => {
+    setNavCollapsed((prev) => {
       const next = !prev
       try {
         window.localStorage.setItem('hanzo.team.sidebar.collapsed', String(next))
@@ -99,9 +107,13 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const reach = useCallback(
     (path: string) => {
       if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
+      if (roomy && nav && navCollapsed && (pathname === path || pathname.startsWith(`${path}/`))) {
+        setNavCollapsed(false)
+        return
+      }
       go(path)
     },
-    [go, nav, pathname, roomy],
+    [go, nav, navCollapsed, pathname, roomy],
   )
 
   useEffect(() => {
@@ -126,7 +138,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         setShortcutsOpen((v) => !v)
       } else if (action === 'settings') {
         e.preventDefault()
-        reach('/bots')
+        openSettingsModal('general')
       } else if (action === 'new-thread') {
         e.preventDefault()
         reach('/chat/c-general')
@@ -142,31 +154,8 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     }
   }, [reach, toggleSidebar])
 
-  const orgs = all.length > 0 ? all : [{ uuid: 'hanzo', name: 'Hanzo AI', url: 'fixture', org: 'hanzo', isDisabled: false }]
+  const orgs = all
   const activeOrg = current ?? orgs[0]
-  const currentAppId = pathname.startsWith('/crm')
-    ? 'crm'
-    : pathname.startsWith('/bots')
-      ? 'bots'
-      : pathname.startsWith('/calendar')
-        ? 'cal'
-        : 'team'
-
-  const handleSelectApp = (app: BusinessAppItem) => {
-    if (app.id === 'crm') {
-      go('/crm/opportunities')
-    } else if (app.id === 'team' || app.id === 'work') {
-      go('/issues')
-    } else if (app.id === 'chat') {
-      go('/chat/c-general')
-    } else if (app.id === 'bots') {
-      go('/bots')
-    } else if (app.id === 'cal') {
-      go('/calendar')
-    } else if (typeof window !== 'undefined') {
-      window.location.href = app.href
-    }
-  }
 
   const userIdentity = who
     ? {
@@ -174,56 +163,36 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         name: who.label || who.name,
         email: who.email,
         avatar: who.avatar,
-        owner: activeOrg?.org ?? 'hanzo',
+        owner: activeOrg?.org ?? '',
       }
     : {
-        sub: 'zeekay',
-        name: 'Zach Kelling',
-        email: 'z@hanzo.ai',
-        owner: 'hanzo',
+        sub: '',
+        name: '',
+        email: '',
+        owner: '',
       }
 
   const currentOrgInfo = {
-    name: activeOrg?.url ?? 'hanzo',
-    displayName: activeOrg?.name ?? 'Hanzo AI',
+    name: activeOrg?.url ?? '',
+    displayName: activeOrg?.name ?? '',
   }
   const orgList = orgs.map((s) => ({ name: s.url, displayName: s.name }))
 
   return (
-    <Screen bg="$background" style={{ backgroundColor: paint.ground }}>
+    <Screen style={{ backgroundColor: paint.ground }}>
       <BusinessHeader
-        appId={currentAppId}
-        showAppTitle={pathname.startsWith('/crm')}
         currentOrg={currentOrgInfo}
-        orgs={orgList}
-        onSelectOrg={(url: string) => choose(url)}
-        onCreateOrg={() => openConnectModal('create-org')}
-        onSelectApp={handleSelectApp}
         onNavigate={reach}
-        user={userIdentity}
-        leftSlot={
-          <XStack
-            {...press(toggleSidebar, 'Toggle sidebar (⌘B)')}
-            height={28}
-            px={8}
-            gap={5}
-            rounded={round.field}
-            borderWidth={1}
-            borderColor="$edge"
-            items="center"
-            hoverStyle={{ bg: '$hover' }}
-            data-testid="header-sidebar-toggle"
-          >
-            <PanelLeft size={14} color="$soft" />
-            <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
-              ⌘B
-            </SizableText>
-          </XStack>
-        }
+        navSpan={span + SEAM}
+        navOpen={inlineNavOpen}
+        onToggleNav={nav ? toggleSidebar : undefined}
+        surfaceTitle={surfaceAt(pathname)?.label}
       />
       <XStack
         flex={1}
         minH={0}
+        pb={SEAM}
+        pr={SEAM}
         onLayout={(e: { nativeEvent: { layout: { width: number } } }) =>
           setWidth(e.nativeEvent.layout.width)
         }
@@ -244,22 +213,22 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
             currentOrg: currentOrgInfo,
             orgs: orgList,
             onSelectOrg: (url: string) => choose(url),
-            onCreateOrg: () => openConnectModal('create-org'),
             onConnectOrg: () => openConnectModal('connect'),
             onAddAccount: () => void depart('another'),
-            onSettings: () => reach('/bots'),
+            onSettings: () => openSettingsModal('general'),
             onSignOut: () => leave(),
           }}
         />
 
-        {roomy && nav && !collapsed ? (
-          <>
+        {inlineNavOpen ? (
+          <YStack width={span} shrink={0} minH={0} position="relative">
             <YStack
-              width={span}
-              shrink={0}
+              flex={1}
               minH={0}
-              borderRightWidth={1}
-              style={{ backgroundColor: paint.sidebar, borderRightColor: paint.rule }}
+              rounded={PANE_ROUND}
+              borderWidth={1}
+              overflow="hidden"
+              style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
               data-parity-key="shell.nav"
               data-testid="team-left-sidebar"
             >
@@ -271,22 +240,21 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
                 currentOrg={currentOrgInfo}
                 orgs={orgList}
                 onSelectOrg={(url: string) => choose(url)}
-                onSettings={() => reach('/bots')}
+                onSettings={() => openSettingsModal('general')}
                 onOpenShortcuts={() => setShortcutsOpen(true)}
                 onNavigate={reach}
                 onSignIn={() => void depart('another')}
               />
             </YStack>
             <Grip value={span} onChange={setSpan} />
-          </>
+          </YStack>
         ) : null}
 
-        {/* Inset rounded stage pane on the obsidian floor */}
-        <XStack flex={1} minW={0} minH={0} pl={SEAM} pt={SEAM} pb={SEAM} pr={SEAM} gap={SEAM}>
+        <XStack flex={1} minW={0} minH={0} ml={inlineNavOpen ? SEAM : 0} gap={SEAM}>
           <Panel parity="shell.main">{children}</Panel>
 
           {aside && showing && wide ? (
-            <YStack width={ASIDE} shrink={0}>
+            <YStack width={ASIDE} shrink={0} minH={0}>
               <Panel parity="shell.aside">{aside}</Panel>
             </YStack>
           ) : null}
@@ -304,7 +272,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
       {/* No room for the column: the navigator comes over the ground it would
           have sat on, at the width it would have had. */}
       <Sheet open={!!nav && drawer && !roomy} onOpenChange={setDrawer}>
-        <SheetContent side="left" width={NAV} p={0} bg="$background">
+        <SheetContent side="left" width={NAV} p={0} style={{ backgroundColor: paint.sidebar }}>
           {nav}
         </SheetContent>
       </Sheet>
@@ -340,6 +308,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
       </Sheet>
 
       <ConnectOrgModal />
+      <SettingsModal user={userIdentity} orgName={currentOrgInfo.displayName} />
     </Screen>
   )
 }
@@ -569,17 +538,16 @@ const SidebarAccountFooter = ({
   )
 }
 
-/** Inset rounded stage panel (#0f0f12, 1px rgba(255,255,255,0.08) hairline). */
+/** Curved inset main / aside canvas matching hanzo.app & hanzo.bot (`12px` radius, `1px` `--pane-edge`). */
 const Panel = ({ parity, children }: { parity: string; children: ReactNode }) => (
   <YStack
     flex={1}
     minW={0}
     minH={0}
-    bg="$panel"
+    rounded={PANE_ROUND}
     borderWidth={1}
-    rounded={round.panel}
     overflow="hidden"
-    style={{ backgroundColor: paint.panel, borderColor: paint.rule }}
+    style={{ backgroundColor: paint.panel, borderColor: paint.paneEdge }}
     data-parity-key={parity}
   >
     {children}
@@ -587,11 +555,9 @@ const Panel = ({ parity, children }: { parity: string; children: ReactNode }) =>
 )
 
 /**
- * The navigator's edge, and the app's one resize.
+ * The navigator's edge, sitting in the 4px gutter between `shell.nav` and `shell.main`.
  *
- * A hairline you can see, a 17px band you can hit, and arrow keys for anyone not
- * using a pointer. Pointer capture, because at 1px wide the pointer leaves the
- * line immediately and a drag that ends there ends on the first move.
+ * Invisible until hovered or focused, with a 12px hit band and arrow-key support.
  */
 const Grip = ({ value, onChange }: { value: number; onChange: (n: number) => void }) => {
   const from = useRef(0)
@@ -615,10 +581,13 @@ const Grip = ({ value, onChange }: { value: number; onChange: (n: number) => voi
       aria-valuemin={NAV_MIN}
       aria-valuemax={NAV_MAX}
       tabIndex={0}
-      width={1}
-      shrink={0}
-      bg="$edge"
-      position="relative"
+      position="absolute"
+      t={8}
+      b={8}
+      r={-SEAM}
+      width={SEAM}
+      z={10}
+      rounded={round.pill}
       cursor="col-resize"
       hoverStyle={{ bg: '$soft' }}
       focusVisibleStyle={{ bg: '$outlineColor' }}

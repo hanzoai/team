@@ -13,13 +13,13 @@
  * ladder has a token for every rung this column needs.
  */
 import { Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Search } from '@hanzogui/lucide-icons-2'
+import { ChevronDown, Search } from '@hanzogui/lucide-icons-2'
 import type { ReactNode } from 'react'
 import { Link, useLocation } from 'react-router'
 
 import { FIELD, ICON, LABEL, LEAF, PAD, ROW, SPINE } from './measure.ts'
 import { press } from './press.ts'
-import { caps, round, rung } from '~/theme/theme'
+import { paint, round, rung } from '~/theme/theme'
 
 /** The system's ring, stated once for the column. */
 const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
@@ -39,11 +39,14 @@ const ROW_AXIS = { flexDirection: 'row' } as const
 /** The navigator's own chrome: its surface title, ⌘K command trigger, ⌘B collapse button,
  *  then whatever the surface puts in it. */
 export const Nav = ({ title, children }: { title: string; children: ReactNode }) => (
-  <YStack flex={1} minH={0} pt={12} pb={6}>
-    <XStack px={PAD} pb={10} items="center" justify="space-between" gap={6}>
-      <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
-        {title}
-      </SizableText>
+  <YStack flex={1} minH={0} pt={6} pb={8}>
+    <XStack height={36} px={PAD} pb={4} items="center" justify="space-between" gap={6}>
+      <XStack items="center" gap={4} minW={0} flex={1}>
+        <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1}>
+          {title}
+        </SizableText>
+        <ChevronDown size={13} color="$soft" />
+      </XStack>
       <XStack items="center" gap={4} shrink={0}>
         <XStack
           {...press(() => {
@@ -141,7 +144,7 @@ export const Find = ({
 /** The hairline between groups of rows. */
 export const Rule = () => <Separator my={6} mx={PAD} borderColor="$edge" />
 
-/** A group's name. Uppercase and tracked, with optional disclosure, count, and right action. */
+/** A group's name. Clean sentence case with optional disclosure, count, and right action. */
 export const Group = ({
   children,
   count,
@@ -156,21 +159,21 @@ export const Group = ({
   action?: ReactNode
 }) => (
   <XStack
-    height={28}
+    height={26}
     items="center"
     justify="space-between"
     px={PAD}
-    gap={6}
+    gap={5}
   >
     <XStack
       {...(onToggle ? press(onToggle) : {})}
       items="center"
-      gap={6}
+      gap={4}
       minW={0}
       flex={1}
     >
-      <Chevron open={open} />
-      <SizableText {...caps} fontSize={rung.chip} fontWeight="600" color="$quiet" numberOfLines={1}>
+      {onToggle ? <Chevron open={open} /> : null}
+      <SizableText fontSize={12} fontWeight="500" color="$soft" numberOfLines={1}>
         {children}
       </SizableText>
       {count !== undefined ? (
@@ -206,28 +209,33 @@ const Chevron = ({ open = true }: { open?: boolean }) => (
  * which the reference cannot show and is ours: it lands on a different channel
  * from selection, so a hovered row and the selected row never compete.
  */
-export const Row = ({ to, icon, children, indent }: {
+export const Row = ({ to, icon, children, indent, current }: {
   to: string
   icon?: ReactNode
   children: ReactNode
   /** A row under an open project: shorter, no glyph, same label column. */
   indent?: boolean
+  /**
+   * Whether this row is the page, for a row whose pages are not all under its
+   * own address: an index at `/crm` that is not every page under `/crm`.
+   */
+  current?: (pathname: string) => boolean
 }) => {
   const { pathname } = useLocation()
-  const here = pathname === to || pathname.startsWith(`${to}/`)
+  const here = current ? current(pathname) : pathname === to || pathname.startsWith(`${to}/`)
 
   return (
     <XStack
       asChild
-      style={ROW_AXIS}
+      style={here ? { ...ROW_AXIS, backgroundColor: paint.rowActive } : ROW_AXIS}
       height={indent ? LEAF : ROW}
       items="center"
       gap={8}
-      pl={indent ? LABEL : PAD}
-      pr={PAD}
-      mx={4}
-      rounded={round.field}
-      hoverStyle={{ bg: '$hover' }}
+      pl={indent ? LABEL - 4 : PAD - 2}
+      pr={PAD - 2}
+      mx={6}
+      rounded={8}
+      hoverStyle={here ? undefined : { bg: '$hover' }}
       focusVisibleStyle={RING}
     >
       <Link to={to} aria-current={here ? 'page' : undefined}>
@@ -237,7 +245,7 @@ export const Row = ({ to, icon, children, indent }: {
           </YStack>
         ) : null}
         <SizableText
-          fontSize={rung.row}
+          fontSize={rung.small}
           fontWeight={here ? '500' : '400'}
           color={here ? '$ink' : '$quiet'}
           numberOfLines={1}

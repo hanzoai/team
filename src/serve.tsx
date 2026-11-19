@@ -13,17 +13,18 @@
  */
 import { useEffect, useMemo } from 'react'
 
-import { Category, Class, Priority as PriorityNum, nameOf, ref, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
+import { Category, Class, Priority as PriorityNum, nameOf, ref, whose, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
 import { see as seeNotice, notices, places } from '~/data/notice.ts'
 import { useRead, type Read } from '~/data/query.ts'
 import type { Plane } from '~/data/socket.ts'
 import { useSpace, type Standing } from '~/data/space.tsx'
 import { amend, components, issues, keys, move, open, people, project as readProject, projects, statuses, tags } from '~/data/tracker.ts'
-import { create, remove as removeDoc } from '~/data/write.ts'
+import { attach, remove as removeDoc } from '~/data/write.ts'
 import { serve, useUnseen } from '~/inbox/feed.ts'
 import type { Note, Span } from '~/inbox/note.ts'
+import { setHandoffSpace, syncBoardHandoffs, usePendingApprovals } from '~/handoff/store.ts'
 import { setNotices, setTodo } from '~/shell'
-import type { Standby } from '~/tracker/board/fixture.ts'
+import type { Standby } from '~/tracker/board/standby.ts'
 import type { Issue, IssuePatch, Person, Priority, Source as Board, Status as Column } from '~/tracker/board/model.ts'
 
 /** A platform category, as the board spells it. */
@@ -60,8 +61,25 @@ const done = (issue: Doc): number => {
   return Math.max(0, Math.min(1, (issue.reportedTime ?? 0) / estimate))
 }
 
+const isBotPerson = (who: Human): boolean => {
+  const rec = who as Record<string, unknown>
+  const mixin = rec['contact:mixin:Employee']
+  const pos =
+    typeof rec.position === 'string'
+      ? rec.position
+      : mixin && typeof mixin === 'object' && typeof (mixin as Record<string, unknown>).position === 'string'
+        ? String((mixin as Record<string, unknown>).position)
+        : ''
+  return pos === 'Agent'
+}
+
 /** A platform person, as the board draws one. */
-const face = (who: Human): Person => ({ id: who._id, name: nameOf(who), face: who.avatar ?? undefined })
+const face = (who: Human): Person => ({
+  id: who._id,
+  name: nameOf(who),
+  face: who.avatar ?? undefined,
+  bot: isBotPerson(who) || undefined,
+})
 
 /**
  * Everyone on a card: the assignee first, then the rest of the collaborators.
@@ -124,9 +142,14 @@ const columnsOf = (rows: Status[]) =>
  * it; that shape is not reachable through a single transaction, so this is
  * optimistic and the server is the authority. A collision shows up as two cards
  * sharing an identifier — visible, and recoverable, unlike a lost card.
+ *
+ * On a board that spans every project the issue goes where the person chose
+ * (`patch.project`), and with no choice it goes nowhere: guessing a project
+ * files work somewhere nobody looks.
  */
 const adder = (plane: Plane, space?: string) => async (to: Column, title: string, patch?: IssuePatch) => {
-  const targetSpace = space ?? 'proj-crm'
+  const targetSpace = space ?? patch?.project
+  if (!targetSpace) throw new Error('Choose a project for this issue.')
   const [work, columns, project] = await Promise.all([
     issues(plane, targetSpace),
     statuses(plane, targetSpace),
@@ -156,13 +179,13 @@ const adder = (plane: Plane, space?: string) => async (to: Column, title: string
       if (patch.labels && patch.labels.length > 0) {
         for (const label of patch.labels) {
           await plane.write(
-            create(targetSpace, plane.account ?? '', Class.tag, {
-              attachedTo: created._id,
-              attachedToClass: Class.issue,
-              collection: 'labels',
-              tag: `tag-${label.toLowerCase()}`,
-              title: label,
-            }),
+            attach(
+              targetSpace,
+              plane.account ?? '',
+              Class.tag,
+              { id: created._id, cls: Class.issue, collection: 'labels' },
+              { tag: `tag-${label.toLowerCase()}`, title: label },
+            ),
           )
         }
       }
@@ -177,8 +200,12 @@ const adder = (plane: Plane, space?: string) => async (to: Column, title: string
  * card somebody else moved arrives — and how a card THIS browser moved arrives,
  * because the server echoes a write back to the session that made it. One path,
  * so the two cannot disagree.
+ *
+ * `mine` narrows it to the issues assigned to the person on this connection,
+ * which is what My issues is. Narrowed here, once, so the board, the list and
+ * the timeline cannot each decide differently what "mine" means.
  */
-const board = (plane: Plane, space?: string): Board => ({
+const board = (plane: Plane, space?: string, mine = false): Board => ({
   watch(next, fail) {
     let live = true
     const read = () => {
@@ -208,7 +235,10 @@ const board = (plane: Plane, space?: string): Board => ({
             project,
             projects: new Map((allProjects as Project[]).map((p) => [p._id, p])),
           }
-          next(work.map((issue) => card(issue, world)))
+          const account = (plane.account ?? '').replace(/^hanzo:/, '')
+          const me = mine ? crowd.find((p) => whose(p, account))?._id : undefined
+          const shown = mine ? work.filter((issue) => !!me && issue.assignee === me) : work
+          next(shown.map((issue) => card(issue, world)))
         })
         .catch((e: unknown) => live && fail(e instanceof Error ? e : new Error(String(e))))
     }
@@ -273,13 +303,13 @@ const board = (plane: Plane, space?: string): Board => ({
       }
       for (const label of patch.labels) {
         await plane.write(
-          create(held.space, plane.account ?? '', Class.tag, {
-            attachedTo: id,
-            attachedToClass: Class.issue,
-            collection: 'labels',
-            tag: `tag-${label.toLowerCase()}`,
-            title: label,
-          }),
+          attach(
+            held.space,
+            plane.account ?? '',
+            Class.tag,
+            { id, cls: Class.issue, collection: 'labels' },
+            { tag: `tag-${label.toLowerCase()}`, title: label },
+          ),
         )
       }
     }
@@ -297,25 +327,36 @@ const board = (plane: Plane, space?: string): Board => ({
  *
  * `project` names one project's board; without it the board is every project
  * this person can see. The connection is already the workspace, so that is the
- * only scope a caller ever states.
+ * only scope a caller ever states. `mine` narrows it to this person's issues.
  */
-export const useBoard = (project?: string): Board | null => {
+export const useBoard = (project?: string, mine = false): Board | null => {
   const { plane, current } = useSpace()
   return useMemo(
-    () => (plane && current ? board(plane, project) : null),
-    [plane, current, project],
+    () => (plane && current ? board(plane, project, mine) : null),
+    [plane, current, project, mine],
   )
 }
 
-/** The faces a board's head carries: a project's members, or the whole space. */
+/**
+ * The people a board offers and its head shows: everyone in the space, or a
+ * private project's members.
+ *
+ * A project the whole space can see is the whole space's to work on, so its
+ * board offers everyone; reading its member list instead left a new project's
+ * assignee picker empty. A private project's members are named by account
+ * (what the server checks them against) or, on older rows, by person, and
+ * `whose` finds the person either way.
+ */
 export const useCrew = (project?: string): Person[] => {
   const { plane } = useSpace()
   const crowd = useRead(keys.people(), () => people(plane!), { enabled: !!plane })
   const all = useRead(keys.projects(), () => projects(plane!), { enabled: !!plane })
-  const held = project ? (all.data ?? []).find((p) => p._id === project)?.members : undefined
-  const byId = new Map((crowd.data ?? []).map((p) => [p._id, p]))
-  const rows = held ? held.map((id) => byId.get(id)) : (crowd.data ?? [])
-  return rows.filter((p): p is Human => !!p).map(face)
+  const held = project ? (all.data ?? []).find((p) => p._id === project) : undefined
+  const everyone = crowd.data ?? []
+  const rows = held?.private
+    ? everyone.filter((p) => (held.members ?? []).some((m) => whose(p, m)))
+    : everyone
+  return rows.map((p: Human) => face(p))
 }
 
 /**
@@ -409,12 +450,8 @@ const note = (
 export const Serve = () => {
   const { plane, current, standing } = useSpace()
   useEffect(() => {
-    // Always serve, even with nothing to serve from. The feed keeps a fixture
-    // as its own default so the region can be developed alone, and a live build
-    // that left it installed would paint five invented notifications beside a
-    // real board — a mock presented as working, which is worse than an empty
-    // panel. What it is handed instead says which of the three it is, from the
-    // same mapping the board reads.
+    // Always serve, even with nothing to serve from: what it is handed says
+    // which of the three states it is, from the same mapping the board reads.
     if (!plane || !current) {
       const held = standingIs(standing)
       const answer =
@@ -445,12 +482,30 @@ export const Serve = () => {
     })
   }, [plane, current, standing])
 
+  useEffect(() => {
+    setHandoffSpace(current?.uuid ?? 'default')
+  }, [current?.uuid])
+
   return (
     <>
+      <HandoffsBridge />
       <Waiting />
       <Left />
     </>
   )
+}
+
+/** Keeps the Approval Inbox synced with every handed-off issue in the open space. */
+const HandoffsBridge = () => {
+  const source = useBoard()
+  useEffect(() => {
+    if (!source) return
+    return source.watch(
+      (next) => syncBoardHandoffs(next, source),
+      () => {},
+    )
+  }, [source])
+  return null
 }
 
 /**
@@ -462,7 +517,8 @@ export const Serve = () => {
  */
 const Waiting = () => {
   const waiting = useUnseen()
-  useEffect(() => setNotices(waiting), [waiting])
+  const pendingApprovals = usePendingApprovals().length
+  useEffect(() => setNotices(waiting + pendingApprovals), [waiting, pendingApprovals])
   return null
 }
 

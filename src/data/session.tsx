@@ -30,7 +30,7 @@ import {
   type ReactNode,
 } from 'react'
 
-import { away, hinted, logout, loopback, silent, type How, type Way } from './away.ts'
+import { away, hinted, logout, loopback, silent, silentRefusal, type How, type Way } from './away.ts'
 import { brand, clientId } from './brand.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
@@ -118,13 +118,6 @@ const asked = () => {
     /* unasked() already answered no for a browser with no store */
   }
 }
-
-/**
- * IAM's answers to a request that allowed no page (`prompt=none`, OIDC Core
- * §3.1.2.6): the silent ask found nobody it could sign in without them. Nothing
- * failed; the visitor goes back to the page they were on, signed out as before.
- */
-const SILENT = new Set(['login_required', 'interaction_required', 'consent_required', 'account_selection_required'])
 
 /** How long a tab is looked away from before its session is asked about again. */
 const RECHECK = 60_000
@@ -218,6 +211,32 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * network fault or a 5xx signs nobody out.
    */
   useEffect(() => {
+    if (standing === 'out') {
+      let lastProbe = Date.now()
+      const probe = () => {
+        if (document.visibilityState !== 'visible' || Date.now() - lastProbe < 15_000) return
+        lastProbe = Date.now()
+        void (async () => {
+          const token = await iam().getValidAccessToken().catch(() => null)
+          if (token) {
+            await adopt()
+            return
+          }
+          if (navigator.webdriver || AUTOMATED.test(navigator.userAgent) || loopback(window.location.hostname)) return
+          try {
+            const prevAt = Number(sessionStorage.getItem('team.silent.at') || '0')
+            if (Date.now() - prevAt < RECHECK) return
+            sessionStorage.setItem('team.silent.at', String(Date.now()))
+            keepHere()
+            window.location.replace(silent(await iam().getSigninUrl({ additionalParams: { prompt: 'none' } })))
+          } catch {
+            /* keep current signed-out view */
+          }
+        })()
+      }
+      document.addEventListener('visibilitychange', probe)
+      return () => document.removeEventListener('visibilitychange', probe)
+    }
     if (standing !== 'in') return
     let last = Date.now()
     const seen = () => {
@@ -233,7 +252,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
     }
     document.addEventListener('visibilitychange', seen)
     return () => document.removeEventListener('visibilitychange', seen)
-  }, [standing, drop])
+  }, [standing, adopt, drop])
 
   /**
    * The SDK builds the authorize address and keeps the PKCE verifier and state
@@ -303,7 +322,8 @@ export const Session = ({ children }: { children: ReactNode }) => {
   const land = useCallback(async () => {
     const where = take()
     // The silent ask found nobody signed in on hanzo.ai: back to the page it left.
-    if (SILENT.has(new URLSearchParams(window.location.search).get('error') ?? '')) return where
+    const params = new URLSearchParams(window.location.search)
+    if (silentRefusal(params.get('error'), params.get('error_description'))) return where
     const token = await iam().handleCallback()
     if (!token.accessToken) throw new Error('the issuer returned no access token')
     await adopt()

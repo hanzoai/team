@@ -1,10 +1,11 @@
 /**
  * Which org a person is acting in, and which space they are looking at.
  *
- * The org is NEVER something this app decides or sends. `X-Org-Id` is stripped
- * at the gateway, so a header would be discarded even if one were set; the
- * tenant is read on the server from the token's signed membership set. What
- * the client holds is the org that came BACK with a space — `SpaceRow.org` —
+ * The org is NEVER something this app decides on its own. The tenant is read on
+ * the server from the token's signed membership set: the gateway honours an
+ * `X-Org-Id` only when it names an org the caller belongs to, and the
+ * Preferences dialog sends the open space's org that way (src/settings). What the client
+ * holds is the org that came BACK with a space — `SpaceRow.org` —
  * so choosing a space is how a person changes org, and there is no second way
  * to do it. Somebody in two orgs sees both orgs' spaces in one list, and the
  * one they open decides who they are acting as.
@@ -23,12 +24,11 @@ import {
   type ReactNode,
 } from 'react'
 
-import { Denied, spaces as listSpaces, type SpaceRow } from './account.ts'
+import { Denied, enrol as requestEnrol, spaces as listSpaces, type SpaceRow } from './account.ts'
 import { team } from './api.ts'
-import { fixture } from './fixture.ts'
 import { invalidate } from './query.ts'
 import { useSession } from './session.tsx'
-import { type Plane, type Standing as Plane_ } from './socket.ts'
+import { Socket, type Plane, type Standing as Plane_ } from './socket.ts'
 
 /**
  * Where this browser stands with the team plane.
@@ -55,13 +55,14 @@ export type Space = {
   /** Open a space by slug. Tears down the previous plane. */
   choose: (slug: string) => void
   /** Create a new organization workspace and add it to the tenant list. */
-  createOrg: (slug: string, displayName: string) => SpaceRow
   /** The data plane for `current`, or null when none is open. */
   plane: Plane | null
   /** Whether that plane is live, for a screen that has to say so. */
   connection: Plane_
   /** Why the plane refused, when it did. */
   refusal: Error | null
+  /** Provision workspace membership in place via the IAM bearer token. */
+  enrolNow: () => Promise<boolean>
   /** Where to go to be enrolled. A full-page trip through the issuer. */
   enrolment: string
 }
@@ -97,41 +98,57 @@ export const Space = ({ children }: { children: ReactNode }) => {
   const [connection, setConnection] = useState<Plane_>('idle')
   const [refusal, setRefusal] = useState<Error | null>(null)
 
+  const applyRows = useCallback((rows: SpaceRow[]) => {
+    setRefusal(null)
+    setAll(rows)
+    if (rows.length === 0) {
+      setStanding('homeless')
+      return
+    }
+    setSlug((held) => (held && rows.some((r) => r.url === held) ? held : rows[0].url))
+  }, [])
+
+  const enrolNow = useCallback(async (): Promise<boolean> => {
+    const provisioned = await requestEnrol().catch((e: unknown) => e as Error)
+    if (provisioned instanceof Error) {
+      setRefusal(provisioned)
+      return false
+    }
+    applyRows(provisioned)
+    return true
+  }, [applyRows])
+
   const asked = useRef(false)
   const prevSession = useRef(session)
   useEffect(() => {
-    if (prevSession.current !== session && !fixture.on) {
+    if (prevSession.current !== session) {
       asked.current = false
       invalidate()
     }
     prevSession.current = session
-    // A fixture stands in for the whole plane, the session included, so it asks
-    // for a space list without one. When signed out on a live visit, fallback
-    // workspace spaces are loaded so the full workspace can be explored immediately.
-    if ((session === 'unknown' && !fixture.on) || asked.current) return
+    if (session === 'unknown' || asked.current) return
     asked.current = true
     void (async () => {
-      const rows = await fixture
-        .spaces(session === 'in' ? listSpaces : () => Promise.resolve([]))
-        .catch((e: unknown) => e as Error)
+      // Signed out has no spaces. Nothing stands in for them: a failed read is a refusal.
+      let rows = await (session === 'in' ? listSpaces() : Promise.resolve([] as SpaceRow[])).catch(
+        (e: unknown) => e as Error,
+      )
+      if (session === 'in' && rows instanceof Denied && rows.unauthorized) {
+        rows = await requestEnrol().catch((e: unknown) => (e instanceof Denied && e.code.endsWith(':UnknownMethod') ? rows : (e as Error)))
+      }
       if (rows instanceof Error) {
         setRefusal(rows)
         setStanding(rows instanceof Denied && rows.unauthorized ? 'stranger' : 'refused')
         return
       }
-      setAll(rows)
-      if (rows.length === 0) {
-        setStanding('homeless')
-        return
-      }
-      setSlug((held) => (held && rows.some((r) => r.url === held) ? held : rows[0].url))
+      applyRows(rows)
     })()
-  }, [session])
+  }, [session, applyRows])
 
   useEffect(() => {
     if (!slug) return
     localStorage.setItem(LAST, slug)
-    const next = fixture.plane(slug)
+    const next = new Socket(slug)
     setPlane(next)
     const stop = next.observe(setConnection)
     next
@@ -172,12 +189,6 @@ export const Space = ({ children }: { children: ReactNode }) => {
     setSlug(next)
   }, [])
 
-  const createOrg = useCallback((orgSlug: string, displayName: string): SpaceRow => {
-    const row = fixture.addSpace(orgSlug, displayName)
-    setAll((prev) => (prev.some((s) => s.url === row.url) ? prev : [...prev, row]))
-    return row
-  }, [])
-
   const current = useMemo(() => all.find((s) => s.url === slug) ?? null, [all, slug])
 
   const value = useMemo<Space>(
@@ -187,13 +198,13 @@ export const Space = ({ children }: { children: ReactNode }) => {
       current,
       org: current?.org ?? null,
       choose,
-      createOrg,
       plane,
       connection,
       refusal,
+      enrolNow,
       enrolment: ENROLMENT,
     }),
-    [standing, all, current, choose, createOrg, plane, connection, refusal],
+    [standing, all, current, choose, plane, connection, refusal, enrolNow],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>

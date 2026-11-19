@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { address, away, hinted, logout, silent } from './away.ts'
+import { address, away, hinted, logout, silent, silentRefusal } from './away.ts'
 
 /** What @hanzo/iam `getSigninUrl` answers on hanzo.team: the issuer's address, this app's request. */
 const OWN =
@@ -99,4 +99,19 @@ test("the silent ask is this app's own request with no page allowed, at IAM's au
   assert.deepEqual(rest, request(new URL(OWN)))
   assert.equal(url.searchParams.get('redirect_uri'), 'https://hanzo.team/auth/callback')
   assert.equal(url.searchParams.get('code_challenge'), 'c1')
+})
+
+test('silent prompt=none refusals include IAM access_denied no-interaction responses', () => {
+  assert.equal(silentRefusal('login_required'), true)
+  assert.equal(silentRefusal('account_selection_required'), true)
+  assert.equal(
+    silentRefusal(
+      'access_denied',
+      'no interaction was permitted and the request could not be answered from an existing session',
+    ),
+    true,
+  )
+  assert.equal(silentRefusal('access_denied', 'user cancelled'), false)
+  assert.equal(silentRefusal('access_denied'), false)
+  assert.equal(silentRefusal(null), false)
 })

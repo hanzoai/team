@@ -28,40 +28,41 @@ export const SCALE = 1.5
 
 /** The icon rail. Fixed at every width, including the narrowest: it
  *  is how you leave the screen you are on. */
-export const RAIL = 64
+export const RAIL = 48
 /** The navigator. Unified 256px collapsible sidebar (⌘B), dragged by the grip, a drawer when narrow. */
 export const NAV = 256
 export const NAV_MIN = 220
 export const NAV_MAX = 380
 /** The dismissible right panel. */
-export const ASIDE = 304
+export const ASIDE = 284
 
-/** Ground showing between the raised panels, and around them. */
-export const SEAM = 6
+/** 4px `--pane-gap` gutter and 12px `--pane-round` radius matching hanzo.app & hanzo.bot. */
+export const SEAM = 4
+export const PANE_ROUND = 12
 
 // ── inside a region ──────────────────────────────────────────────────────────
 
 /** Panel padding: the navigator and the aside alike. */
-export const PAD = 14
+export const PAD = 10
 
 /** A navigator row: a standing entry or a project. */
-export const ROW = 34
+export const ROW = 29
 /** A row under an expanded project. */
-export const LEAF = 30
-/** The rail's icon pitch, which is also the touch minimum. */
-export const STEP = 38
+export const LEAF = 27
+/** The rail's icon pitch, which is also the 36x36 rounded-10 active/hover square (6px inset inside 48px rail). */
+export const STEP = 36
 /** Every glyph in the rail and the navigator. */
 export const ICON = 18
 /** The search field. */
-export const FIELD = 34
+export const FIELD = 30
 
 /** The rail's mark. */
 export const MARK = 36
 /** The rail's gauge. */
-export const GAUGE = { width: 48, height: 64 }
-/** The rail's add control, and the glow behind the selected glyph. */
-export const ADD = 32
-export const GLOW = 52
+export const GAUGE = { width: 36, height: 52 }
+/** The rail's add control, and the pill behind the selected glyph. */
+export const ADD = 28
+export const GLOW = 36
 
 /** Where a row's label starts, and where the tree's spine runs. Padding, the
  *  icon box, then the gap — so a row with no glyph indents to the same place and

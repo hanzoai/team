@@ -15,7 +15,7 @@
  * though nothing was copied.
  */
 import { Avatar, AvatarFallback, AvatarImage, SizableText, XStack, YStack } from '@hanzo/ui'
-import { MessageSquare, SmilePlus } from '@hanzogui/lucide-icons-2'
+import { MessageSquare, Send, SmilePlus } from '@hanzogui/lucide-icons-2'
 
 import { paint } from '~/theme/theme.ts'
 import { press } from '~/shell'
@@ -40,16 +40,17 @@ export type RunProps = {
   me: string
   onReact: (message: Message, emoji: string) => void
   onOpen: (message: Message) => void
+  onHandoff?: (message: Message) => void
   /** The message whose thread is open, so its row can say so. */
   open?: string
 }
 
-export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, open }: RunProps) {
+export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, onHandoff, open }: RunProps) {
   const name = nameOf(people, author)
   const person = people.find((p) => p.name === name)
 
   return (
-    <XStack px={24} pt={12} gap={12} items="flex-start">
+    <XStack px={16} pt={10} gap={10} items="flex-start">
       <Avatar circular size={FACE}>
         {person?.avatar ? <AvatarImage src={person.avatar} alt="" /> : null}
         <AvatarFallback bg="$raised">
@@ -71,6 +72,7 @@ export function Run({ author, at, messages, people, reactions, me, onReact, onOp
             me={me}
             onReact={onReact}
             onOpen={onOpen}
+            onHandoff={onHandoff}
             open={open === m.id}
           />
         ))}
@@ -92,6 +94,7 @@ function Said({
   me,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: {
   message: Message
@@ -99,9 +102,11 @@ function Said({
   me: string
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
+  onHandoff?: (m: Message) => void
   open: boolean
 }) {
   const groups = tally(reactions)
+  const own = Boolean(me) && message.author === me
 
   return (
     <YStack
@@ -113,28 +118,50 @@ function Said({
       bg={open ? '$hover' : 'transparent'}
       hoverStyle={{ background: '$hover' }}
     >
-      {message.lines.map((line, i) => (
-        <SizableText key={i} fontSize="$3" lineHeight={22} color="$ink">
-          {tokens(line).map((t, j) =>
-            t.kind === 'text' ? (
-              <SizableText key={j} fontSize="$3" lineHeight={22} color="$ink">{t.value}</SizableText>
-            ) : (
-              <SizableText
-                key={j}
-                fontSize="$3"
-                lineHeight={22}
-                style={{ color: t.kind === 'mention' ? paint.alert : paint.accent }}
-                fontWeight={t.kind === 'mention' ? '500' : '400'}
-                {...(t.kind === 'link'
-                  ? { tag: 'a', href: t.value, target: '_blank', rel: 'noreferrer' }
-                  : {})}
-              >
-                {t.value}
-              </SizableText>
-            ),
-          )}
-        </SizableText>
-      ))}
+      <YStack
+        self={own ? 'flex-start' : undefined}
+        px={own ? 12 : 0}
+        py={own ? 6 : 0}
+        rounded={own ? 12 : 0}
+        style={own ? { backgroundColor: paint.chatUser } : undefined}
+      >
+        {message.lines.map((line, i) => (
+          <SizableText
+            key={i}
+            fontSize="$3"
+            lineHeight={22}
+            color={own ? undefined : '$ink'}
+            style={own ? { color: paint.chatUserInk } : undefined}
+          >
+            {tokens(line).map((t, j) =>
+              t.kind === 'text' ? (
+                <SizableText
+                  key={j}
+                  fontSize="$3"
+                  lineHeight={22}
+                  color={own ? undefined : '$ink'}
+                  style={own ? { color: paint.chatUserInk } : undefined}
+                >
+                  {t.value}
+                </SizableText>
+              ) : (
+                <SizableText
+                  key={j}
+                  fontSize="$3"
+                  lineHeight={22}
+                  style={{ color: t.kind === 'mention' ? paint.alert : paint.accent }}
+                  fontWeight={t.kind === 'mention' ? '500' : '400'}
+                  {...(t.kind === 'link'
+                    ? { tag: 'a', href: t.value, target: '_blank', rel: 'noreferrer' }
+                    : {})}
+                >
+                  {t.value}
+                </SizableText>
+              ),
+            )}
+          </SizableText>
+        ))}
+      </YStack>
 
       {groups.length > 0 ? (
         <XStack gap={4} pt={4} flexWrap="wrap">
@@ -183,6 +210,11 @@ function Said({
         <Control label="Reply in thread" onPress={() => onOpen(message)}>
           <MessageSquare size={15} color="$soft" />
         </Control>
+        {onHandoff ? (
+          <Control label="Hand off work" onPress={() => onHandoff(message)}>
+            <Send size={14} color="$soft" />
+          </Control>
+        ) : null}
       </XStack>
     </YStack>
   )

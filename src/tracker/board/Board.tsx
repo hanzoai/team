@@ -23,11 +23,8 @@ import type { Issue, Priority, Source, Status } from './model.ts'
 /** What a new issue is called until someone names it. */
 export const NEW = 'New issue'
 
-const GAP = 16 // gap.wide — column to column
-/** The board's inset, on every side. Measured: the reference's column header
- *  sits at image 264 and the rule above it at 209, which is this inset plus
- *  half a header row. */
-const PAD = 24
+const GAP = 10 // column to column
+const PAD = 14
 
 /**
  * `shrink: 0` on the content is what makes the board scroll rather than clip.
@@ -82,7 +79,7 @@ export const Board = ({ source, only, onOpen, onCreateIn }: {
   const showing = only?.length ? issues.filter((i) => i.priority && only.includes(i.priority)) : issues
 
   return (
-    <ScrollView horizontal contentContainerStyle={{ p: PAD, gap: GAP, shrink: 0 }}>
+    <ScrollView horizontal contentContainerStyle={{ p: PAD, gap: GAP, shrink: 0, grow: 1, minW: '100%' }}>
       {columns(showing).map((column) => (
         <Column
           key={column.status}

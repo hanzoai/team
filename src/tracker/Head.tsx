@@ -27,13 +27,13 @@ import { caps, paint, ring, round, rung } from '~/theme/theme'
 /** The band: 20 above the crumb, then the three rows and the two gaps between
  *  them. Measured centres, ÷1.5 from the reference: crumb 39, title 71, tabs
  *  120, and the rule that ends the band at 139. */
-const INSET = 24
-const TOP = 20
+const INSET = 16
+const TOP = 12
 const CRUMB = 20
-const BAND = 8
+const BAND = 4
 const TITLE = 28
-const REST = 20
-const TABS = 36
+const REST = 10
+const TABS = 34
 
 /** The three views of a project's issues, in the order the reference draws
  *  them. A view is an ADDRESS, so these are links and not a tab control: the

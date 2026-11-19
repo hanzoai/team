@@ -3,15 +3,40 @@
  *
  * Connected to `Source` (`source.update`, `source.move`, `source.add`, `source.remove`)
  * so edits to title, description, status, priority, completion %, assignee/bot,
- * labels, and comments immediately persist to the workspace plane and sync to
+ * labels immediately persist to the workspace plane and sync to
  * `https://api.hanzo.ai/v1/task/board`.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { useNavigate } from 'react-router'
 import { Badge, Button, Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Bot, Check, ExternalLink, FileCode2, GitBranch, GitCommit, MessageSquare, Plus, Send, Sparkles, Tag, Trash2, User, X } from '@hanzogui/lucide-icons-2'
+import {
+  Bot,
+  Check,
+  CheckCircle2,
+  FileCheck2,
+  Plus,
+  RotateCcw,
+  Send,
+  ShieldCheck,
+  Tag,
+  Trash2,
+  User,
+  X,
+} from '@hanzogui/lucide-icons-2'
 
-import { fetchLiveForgeRepo, resolveForgeRepo, type ForgeRepoSpec } from '~/data/forge.ts'
-import { caps, paint, ring, round, rung } from '~/theme/theme.ts'
+import { useSession } from '~/data/session.tsx'
+import {
+  approvalLabel,
+  approveHandoff,
+  createHandoff,
+  formatHandoff,
+  issueHandoffPatch,
+  parseHandoff,
+  requestChanges,
+  submitDeliverable,
+} from '~/handoff/handoff.ts'
+import { setAsideKind, showAside } from '~/shell/aside.ts'
+import { caps, paint, ring, round, rung, state } from '~/theme/theme.ts'
 import { NAME, PRIORITY, STATUS, type Issue, type IssuePatch, type Person, type Priority, type Source, type Status } from './board/model.ts'
 import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
@@ -31,52 +56,6 @@ const AVAILABLE_LABELS = [
 
 const DONE_STEPS = [0, 0.25, 0.5, 0.75, 1] as const
 
-type IssueComment = {
-  id: string
-  author: string
-  face?: string
-  body: string
-  at: string
-}
-
-const COMMENTS_STORAGE_KEY = 'hanzo.team.issue.comments.v1'
-
-function loadIssueComments(issueId: string, issue: Issue): IssueComment[] {
-  if (typeof window !== 'undefined') {
-    try {
-      const raw = window.localStorage.getItem(COMMENTS_STORAGE_KEY)
-      if (raw) {
-        const map = JSON.parse(raw) as Record<string, IssueComment[]>
-        if (map[issueId] && map[issueId].length > 0) return map[issueId]
-      }
-    } catch {
-      // ignore storage errors
-    }
-  }
-  const assignee = issue.people[0]
-  return [
-    {
-      id: 'c-init-1',
-      author: assignee?.name ?? 'Dev (@dev)',
-      face: assignee?.face ?? '/team/portraits/Comparison_2_Grid_5.jpg',
-      body: `Tracking ${issue.key}${issue.origin ? ` in ${issue.origin.name}` : ''}. Status is ${NAME[issue.status]} (${Math.round((issue.done ?? 0) * 100)}% complete).`,
-      at: 'Synced',
-    },
-  ]
-}
-
-function saveIssueComments(issueId: string, list: IssueComment[]) {
-  if (typeof window === 'undefined') return
-  try {
-    const raw = window.localStorage.getItem(COMMENTS_STORAGE_KEY)
-    const map = raw ? (JSON.parse(raw) as Record<string, IssueComment[]>) : {}
-    map[issueId] = list
-    window.localStorage.setItem(COMMENTS_STORAGE_KEY, JSON.stringify(map))
-  } catch {
-    // ignore storage errors
-  }
-}
-
 const cap = (s: string): string => s[0]!.toUpperCase() + s.slice(1)
 
 export function IssueDrawer({
@@ -90,30 +69,50 @@ export function IssueDrawer({
   people: Person[]
   onClose: () => void
 }) {
+  const { who } = useSession()
+  const actorName = who?.label || who?.name || 'Teammate'
+  const parsed = useMemo(() => parseHandoff(issue.description), [issue.description])
+  const handoff = parsed.handoff
+
   const [title, setTitle] = useState(issue.title)
-  const [description, setDescription] = useState(issue.description ?? '')
-  const [commentText, setCommentText] = useState('')
+  const [description, setDescription] = useState(parsed.body)
   const [customTag, setCustomTag] = useState('')
-  const [comments, setComments] = useState<IssueComment[]>(() => loadIssueComments(issue.id, issue))
   const [savedNotice, setSavedNotice] = useState(false)
-  const [forgeSpec, setForgeSpec] = useState<ForgeRepoSpec>(() =>
-    resolveForgeRepo(issue.origin?.name ?? issue.key),
-  )
+  const [confirming, setConfirming] = useState(false)
+  const [removing, setRemoving] = useState(false)
+  const [refused, setRefused] = useState<string | null>(null)
+  const [approvalRequired, setApprovalRequired] = useState(handoff?.approvalRequired ?? true)
+  const [deliverableSummary, setDeliverableSummary] = useState(handoff?.deliverable?.summary ?? '')
+  const [deliverableArtifact, setDeliverableArtifact] = useState(handoff?.deliverable?.artifact ?? '')
+  const [reviewNote, setReviewNote] = useState('')
 
   useEffect(() => {
     setTitle(issue.title)
-    setDescription(issue.description ?? '')
-    setComments(loadIssueComments(issue.id, issue))
-    const initial = resolveForgeRepo(issue.origin?.name ?? issue.key)
-    setForgeSpec(initial)
-    let cancelled = false
-    void fetchLiveForgeRepo(issue.origin?.name ?? issue.key).then((live) => {
-      if (!cancelled) setForgeSpec(live)
-    })
-    return () => {
-      cancelled = true
+    setDescription(parsed.body)
+    setApprovalRequired(parsed.handoff?.approvalRequired ?? true)
+    setDeliverableSummary(parsed.handoff?.deliverable?.summary ?? '')
+    setDeliverableArtifact(parsed.handoff?.deliverable?.artifact ?? '')
+  }, [issue.id, issue.title, parsed.body, parsed.handoff])
+  // A question asked about one issue is not asked about the next one opened.
+  useEffect(() => {
+    setConfirming(false)
+    setRefused(null)
+    setReviewNote('')
+  }, [issue.id])
+
+  const removeIssue = async () => {
+    if (!source.remove || removing) return
+    setRemoving(true)
+    setRefused(null)
+    try {
+      await source.remove(issue.id)
+      onClose()
+    } catch (e) {
+      setRefused(e instanceof Error ? e.message : String(e))
+    } finally {
+      setRemoving(false)
     }
-  }, [issue.id, issue.title, issue.description, issue.origin?.name, issue.key])
+  }
 
   const patchIssue = (patch: IssuePatch) => {
     if (source.update) {
@@ -129,8 +128,74 @@ export function IssueDrawer({
     const nextTitle = title.trim() || issue.title
     patchIssue({
       title: nextTitle,
-      description: description.trim(),
+      description: formatHandoff(description, handoff),
     })
+  }
+
+  const handOffTo = (person: Person) => {
+    const meta = createHandoff({
+      owner: {
+        id: person.id,
+        name: person.name,
+        kind: person.bot ? 'bot' : 'person',
+        face: person.face,
+      },
+      handedOffBy: actorName,
+      approvalRequired,
+    })
+    patchIssue(issueHandoffPatch(issue, meta, description))
+    if (approvalRequired) {
+      setAsideKind('inbox')
+      showAside()
+    }
+  }
+
+  const onSaveDeliverable = () => {
+    const clean = deliverableSummary.trim()
+    if (!clean) return
+    const assignee = issue.people[0]
+    const base =
+      handoff ??
+      createHandoff({
+        owner: {
+          id: assignee?.id ?? 'owner',
+          name: assignee?.name ?? actorName,
+          kind: assignee?.bot ? 'bot' : 'person',
+          face: assignee?.face,
+        },
+        handedOffBy: actorName,
+        approvalRequired,
+      })
+    const next = submitDeliverable(base, {
+      summary: clean,
+      artifact: deliverableArtifact.trim() || undefined,
+      completedBy: base.owner.name,
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    if (next.approvalState === 'pending') {
+      setAsideKind('inbox')
+      showAside()
+    }
+  }
+
+  const onApprove = () => {
+    if (!handoff) return
+    const next = approveHandoff(handoff, {
+      approvedBy: actorName,
+      note: reviewNote.trim() || undefined,
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    setReviewNote('')
+  }
+
+  const onRequestChanges = () => {
+    if (!handoff) return
+    const next = requestChanges(handoff, {
+      reviewedBy: actorName,
+      note: reviewNote.trim() || 'Please revise and resubmit.',
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    setReviewNote('')
   }
 
   const toggleLabel = (label: string) => {
@@ -146,54 +211,6 @@ export function IssueDrawer({
       patchIssue({ labels: [...issue.labels, clean] })
     }
     setCustomTag('')
-  }
-
-  const postComment = () => {
-    const body = commentText.trim()
-    if (!body) return
-    const next: IssueComment[] = [
-      ...comments,
-      {
-        id: `c-${Date.now()}`,
-        author: 'Zach Kelling',
-        body,
-        at: 'Just now',
-      },
-    ]
-    setComments(next)
-    saveIssueComments(issue.id, next)
-    setCommentText('')
-    patchIssue({ replies: (issue.replies ?? 0) + 1 })
-  }
-
-  const triggerBotTriage = () => {
-    const assignee = issue.people[0]
-    const botName = assignee?.name ?? 'Dev (@dev)'
-    const botFace = assignee?.face ?? '/team/portraits/Comparison_2_Grid_5.jpg'
-    const headCommit = forgeSpec.commits[0]
-    const headRun = forgeSpec.ciRuns[0]
-    const next: IssueComment[] = [
-      ...comments,
-      {
-        id: `c-bot-${Date.now()}`,
-        author: botName,
-        face: botFace,
-        body: `Triaged ${issue.key} against git.hanzo.ai/${forgeSpec.forgeRepo} (${headCommit ? `HEAD ${headCommit.shortSha}` : 'main'} · CI ${headRun ? `#${headRun.id} ${headRun.conclusion}` : 'green'} → ${forgeSpec.deployTarget}). Ready to advance from ${NAME[issue.status]}.`,
-        at: 'Just now · 24/7 Bot',
-      },
-    ]
-    setComments(next)
-    saveIssueComments(issue.id, next)
-    patchIssue({
-      replies: (issue.replies ?? 0) + 1,
-      done: Math.min(1, Math.max(0.25, (issue.done ?? 0) * 1 + 0.25)),
-    })
-  }
-
-  const openExternal = (url: string) => {
-    if (typeof window !== 'undefined') {
-      window.open(url, '_blank', 'noopener,noreferrer')
-    }
   }
 
   const currentAssigneeId = issue.people[0]?.id ?? null
@@ -259,10 +276,8 @@ export function IssueDrawer({
               variant="ghost"
               size="icon-sm"
               aria-label="Delete issue"
-              onPress={() => {
-                void source.remove?.(issue.id)
-                onClose()
-              }}
+              disabled={confirming}
+              onPress={() => setConfirming(true)}
             >
               <Trash2 size={14} color="$soft" />
             </Button>
@@ -272,6 +287,28 @@ export function IssueDrawer({
           </Button>
         </XStack>
       </XStack>
+
+      {/* Delete asks once: there is no undo, and the trash sits beside Close. */}
+      {confirming ? (
+        <YStack px={16} py={12} gap={10} borderBottomWidth={1} borderColor="$edge" bg="$raised" role="alertdialog" aria-label={`Delete ${issue.key}`}>
+          <SizableText fontSize={rung.small} color="$ink">
+            Delete {issue.key}? This can't be undone.
+          </SizableText>
+          {refused ? (
+            <SizableText fontSize={rung.small} color="$ink" role="alert">
+              It was not deleted: {refused}
+            </SizableText>
+          ) : null}
+          <XStack gap={8} justify="flex-end">
+            <Button size="sm" variant="ghost" disabled={removing} onPress={() => setConfirming(false)}>
+              Cancel
+            </Button>
+            <Button size="sm" variant="destructive" disabled={removing} onPress={() => void removeIssue()}>
+              {removing ? 'Deleting…' : 'Delete'}
+            </Button>
+          </XStack>
+        </YStack>
+      ) : null}
 
       <ScrollArea flex={1} minH={0}>
         <YStack p={16} gap={16}>
@@ -434,16 +471,38 @@ export function IssueDrawer({
             </XStack>
           </YStack>
 
-          {/* Assignee / Bot Selector */}
+          {/* Assignee / Owner (Person or @Bot) */}
           <YStack gap={8}>
-            <XStack items="center" gap={6}>
-              <User size={12} color="$dim" />
-              <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
-                Assignee / 24/7 Bot
-              </SizableText>
+            <XStack items="center" justify="space-between" gap={6}>
+              <XStack items="center" gap={6}>
+                <User size={12} color="$dim" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                  Owner & Handoff
+                </SizableText>
+              </XStack>
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap={5}
+                px={7}
+                py={2}
+                rounded={round.field}
+                bg="$raised"
+                borderWidth={1}
+                borderColor={approvalRequired ? '$ink' : '$edge'}
+                focusVisibleStyle={ring}
+                onPress={() => setApprovalRequired((v) => !v)}
+              >
+                <ShieldCheck size={11} color={approvalRequired ? '$ink' : '$soft'} />
+                <SizableText fontSize={rung.chip} fontWeight="600" color={approvalRequired ? '$ink' : '$soft'}>
+                  {approvalRequired ? 'Approval required' : 'Auto-approve'}
+                </SizableText>
+              </XStack>
             </XStack>
             <XStack gap={6} flexWrap="wrap">
-              {people.slice(0, 10).map((person) => {
+              {people.slice(0, 12).map((person) => {
                 const active = currentAssigneeId === person.id
                 return (
                   <XStack
@@ -459,16 +518,185 @@ export function IssueDrawer({
                     bg={active ? '$hover' : '$raised'}
                     borderWidth={1}
                     borderColor={active ? '$ink' : '$edge'}
-                    onPress={() => patchIssue({ assigneeId: person.id })}
+                    onPress={() => handOffTo(person)}
                   >
-                    <People people={[person]} size={18} show={1} />
+                    {person.bot ? (
+                      <Bot size={13} color="$ink" />
+                    ) : (
+                      <People people={[person]} size={18} show={1} />
+                    )}
                     <SizableText fontSize={rung.chip} fontWeight={active ? '700' : '500'} color={active ? '$ink' : '$soft'}>
-                      {person.name.split(' ')[0]}
+                      {person.bot ? `@${person.name}` : person.name.split(' ')[0]}
                     </SizableText>
                   </XStack>
                 )
               })}
             </XStack>
+          </YStack>
+
+          {/* Approval Gate & Resulting Deliverable */}
+          <YStack
+            data-testid="issue-handoff-panel"
+            p={12}
+            gap={10}
+            rounded={round.card}
+            bg="$raised"
+            borderWidth={1}
+            borderColor="$edge"
+          >
+            <XStack items="center" justify="space-between" gap={8}>
+              <XStack items="center" gap={6}>
+                <Send size={13} color="$ink" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$ink" {...caps}>
+                  Approval & Deliverable
+                </SizableText>
+              </XStack>
+              {handoff ? (
+                <XStack
+                  px={7}
+                  py={2}
+                  rounded={round.pill}
+                  style={{
+                    backgroundColor:
+                      handoff.approvalState === 'approved'
+                        ? state.done
+                        : handoff.approvalState === 'pending'
+                          ? paint.alert
+                          : handoff.approvalState === 'changes_requested'
+                            ? paint.composerWarn
+                            : state.doing,
+                  }}
+                >
+                  <SizableText
+                    fontSize={rung.chip}
+                    fontWeight="700"
+                    style={{ color: handoff.approvalState === 'pending' ? paint.panel : paint.ground }}
+                  >
+                    {approvalLabel(handoff.approvalState)}
+                  </SizableText>
+                </XStack>
+              ) : null}
+            </XStack>
+
+            {handoff ? (
+              <SizableText fontSize={rung.small} color="$soft">
+                {`Owned by ${handoff.owner.kind === 'bot' ? `@${handoff.owner.name}` : handoff.owner.name} · handed off by ${handoff.handedOffBy}`}
+              </SizableText>
+            ) : (
+              <SizableText fontSize={rung.small} color="$soft">
+                Pick a teammate or @bot above to hand off work, attach a deliverable, and route it to the Approval Inbox.
+              </SizableText>
+            )}
+
+            {handoff?.deliverable ? (
+              <YStack p={10} gap={4} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                <XStack items="center" justify="space-between" gap={6}>
+                  <XStack items="center" gap={5}>
+                    <FileCheck2 size={13} color={handoff.deliverable.verified ? state.done : paint.ink} />
+                    <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
+                      {handoff.deliverable.verified ? 'Verified deliverable' : 'Submitted deliverable'}
+                    </SizableText>
+                  </XStack>
+                  <SizableText fontSize={rung.chip} color="$dim">
+                    {handoff.deliverable.completedBy}
+                  </SizableText>
+                </XStack>
+                <SizableText fontSize={rung.small} color="$ink">
+                  {handoff.deliverable.summary}
+                </SizableText>
+                {handoff.deliverable.artifact ? (
+                  <SizableText fontSize={rung.chip} style={{ color: paint.accent }} numberOfLines={1}>
+                    {handoff.deliverable.artifact}
+                  </SizableText>
+                ) : null}
+              </YStack>
+            ) : null}
+
+            {handoff?.approvalNote ? (
+              <SizableText fontSize={rung.chip} color="$quiet">
+                {`${handoff.approvedBy ?? 'Reviewer'}: ${handoff.approvalNote}`}
+              </SizableText>
+            ) : null}
+
+            {/* Deliverable submission inputs */}
+            <YStack gap={6}>
+              <Input
+                height={30}
+                fontSize={12}
+                placeholder="Deliverable summary (e.g. PR 412 verified, report ready)..."
+                value={deliverableSummary}
+                onChangeText={setDeliverableSummary}
+                bg="$panel"
+                borderColor="$edge"
+              />
+              <XStack gap={6}>
+                <Input
+                  flex={1}
+                  height={28}
+                  fontSize={11}
+                  placeholder="Artifact link or path (optional)"
+                  value={deliverableArtifact}
+                  onChangeText={setDeliverableArtifact}
+                  bg="$panel"
+                  borderColor="$edge"
+                />
+                <Button
+                  data-testid="drawer-submit-deliverable"
+                  size="xs"
+                  height={28}
+                  px={10}
+                  disabled={!deliverableSummary.trim()}
+                  style={{ backgroundColor: paint.accent }}
+                  onPress={onSaveDeliverable}
+                >
+                  <SizableText fontSize={rung.chip} fontWeight="700" style={{ color: paint.ground }}>
+                    {handoff?.deliverable ? 'Update result' : 'Submit result'}
+                  </SizableText>
+                </Button>
+              </XStack>
+            </YStack>
+
+            {/* Reviewer Approval Controls */}
+            {handoff && handoff.approvalState !== 'approved' ? (
+              <YStack gap={6} pt={4} borderTopWidth={1} borderColor="$edge">
+                <Input
+                  height={28}
+                  fontSize={11}
+                  placeholder="Approval or revision note (optional)..."
+                  value={reviewNote}
+                  onChangeText={setReviewNote}
+                  bg="$panel"
+                  borderColor="$edge"
+                />
+                <XStack gap={8}>
+                  <Button
+                    data-testid="drawer-approve-handoff"
+                    size="xs"
+                    height={28}
+                    flex={1}
+                    style={{ backgroundColor: state.done }}
+                    onPress={onApprove}
+                  >
+                    <CheckCircle2 size={13} color={paint.ground} />
+                    <SizableText fontSize={rung.chip} fontWeight="700" style={{ color: paint.ground }}>
+                      Approve & Complete
+                    </SizableText>
+                  </Button>
+                  <Button
+                    data-testid="drawer-request-changes"
+                    size="xs"
+                    height={28}
+                    variant="outline"
+                    onPress={onRequestChanges}
+                  >
+                    <RotateCcw size={12} />
+                    <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                      Request changes
+                    </SizableText>
+                  </Button>
+                </XStack>
+              </YStack>
+            ) : null}
           </YStack>
 
           {/* Labels / Tags */}
@@ -525,264 +753,29 @@ export function IssueDrawer({
               </Button>
             </XStack>
           </YStack>
-
-          <Separator borderColor="$edge" />
-
-          {/* Forge · Source Code, Commits & CI/CD */}
-          <YStack gap={10} data-slot="issue-forge-panel">
-            <XStack items="center" justify="space-between">
-              <XStack items="center" gap={6}>
-                <GitBranch size={12} color="$dim" />
-                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
-                  Forge · Source, Commits & CI/CD
-                </SizableText>
-              </XStack>
-              <XStack items="center" gap={6}>
-                <Button
-                  size="xs"
-                  height={22}
-                  px={8}
-                  variant="outline"
-                  onPress={() => openExternal(forgeSpec.forgeUrl)}
-                >
-                  <XStack items="center" gap={4}>
-                    <SizableText fontSize={10} fontWeight="600" color="$ink">
-                      git.hanzo.ai/{forgeSpec.forgeRepo}
-                    </SizableText>
-                    <ExternalLink size={10} color="$soft" />
-                  </XStack>
-                </Button>
-              </XStack>
-            </XStack>
-
-            {/* CI/CD Pipeline & Deployment Card */}
-            {forgeSpec.ciRuns[0] ? (
-              <YStack
-                p={10}
-                rounded={round.card}
-                bg="$raised"
-                borderWidth={1}
-                borderColor="$edge"
-                gap={6}
-              >
-                <XStack items="center" justify="space-between" gap={8}>
-                  <XStack items="center" gap={6}>
-                    <YStack
-                      width={8}
-                      height={8}
-                      rounded={9999}
-                      style={{
-                        backgroundColor:
-                          forgeSpec.ciRuns[0].conclusion === 'failure' ? dot.backlog : dot.done,
-                      }}
-                    />
-                    <SizableText fontSize={rung.small} fontWeight="700" color="$ink">
-                      {forgeSpec.ciRuns[0].name}
-                    </SizableText>
-                    <XStack px={6} py={1} rounded={round.pill} bg="$panel" borderWidth={1} borderColor="$edge">
-                      <SizableText fontSize={10} fontWeight="600" color="$soft">
-                        #{forgeSpec.ciRuns[0].id.slice(-5)} · {forgeSpec.ciRuns[0].headSha}
-                      </SizableText>
-                    </XStack>
-                  </XStack>
-                  <Button
-                    size="xs"
-                    height={20}
-                    px={6}
-                    variant="ghost"
-                    onPress={() => openExternal(forgeSpec.ciRuns[0]!.url)}
-                  >
-                    <SizableText fontSize={10} color="$soft">
-                      Logs →
-                    </SizableText>
-                  </Button>
-                </XStack>
-
-                <SizableText fontSize={11} color="$soft" numberOfLines={1}>
-                  {forgeSpec.ciRuns[0].workflow} · {forgeSpec.runner}
-                </SizableText>
-
-                <XStack items="center" justify="space-between" pt={2}>
-                  <SizableText fontSize={10} color="$dim">
-                    Deploy: {forgeSpec.deployTarget}
-                  </SizableText>
-                  <XStack
-                    role="button"
-                    tabIndex={0}
-                    cursor="pointer"
-                    onPress={() => openExternal(forgeSpec.deployTarget)}
-                  >
-                    <SizableText fontSize={10} fontWeight="600" color="$ink">
-                      Open Live ↗
-                    </SizableText>
-                  </XStack>
-                </XStack>
-              </YStack>
-            ) : null}
-
-            {/* Recent Commits on main */}
-            <YStack gap={6}>
-              <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
-                Recent Commits ({forgeSpec.branch})
-              </SizableText>
-              {forgeSpec.commits.slice(0, 3).map((c) => (
-                <XStack
-                  key={c.sha}
-                  role="button"
-                  tabIndex={0}
-                  cursor="pointer"
-                  p={8}
-                  rounded={round.field}
-                  bg="$raised"
-                  borderWidth={1}
-                  borderColor="$edge"
-                  hoverStyle={{ background: '$hover' }}
-                  items="center"
-                  justify="space-between"
-                  gap={8}
-                  onPress={() => openExternal(c.forgeUrl)}
-                >
-                  <XStack items="center" gap={6} flex={1} minW={0}>
-                    <GitCommit size={12} color="$soft" />
-                    <XStack px={6} py={1} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
-                      <SizableText fontSize={10} fontWeight="700" color="$ink">
-                        {c.shortSha}
-                      </SizableText>
-                    </XStack>
-                    <SizableText fontSize={11} color="$soft" numberOfLines={1} flex={1}>
-                      {c.message}
-                    </SizableText>
-                  </XStack>
-                  <ExternalLink size={10} color="$dim" />
-                </XStack>
-              ))}
-            </YStack>
-
-            {/* Source Tree Quick Links */}
-            <YStack gap={6}>
-              <SizableText fontSize={10} fontWeight="700" color="$dim" {...caps}>
-                Source Files ({forgeSpec.forgeRepo})
-              </SizableText>
-              <XStack gap={6} flexWrap="wrap">
-                {forgeSpec.files.slice(0, 5).map((f) => (
-                  <XStack
-                    key={f.path}
-                    role="button"
-                    tabIndex={0}
-                    cursor="pointer"
-                    px={8}
-                    height={24}
-                    rounded={round.field}
-                    bg="$raised"
-                    borderWidth={1}
-                    borderColor="$edge"
-                    hoverStyle={{ background: '$hover' }}
-                    items="center"
-                    gap={5}
-                    onPress={() => openExternal(f.forgeUrl)}
-                  >
-                    <FileCode2 size={11} color="$soft" />
-                    <SizableText fontSize={10} fontWeight="500" color="$ink">
-                      {f.name}
-                    </SizableText>
-                  </XStack>
-                ))}
-              </XStack>
-            </YStack>
-          </YStack>
-
-          <Separator borderColor="$edge" />
-
-          {/* Activity & Bot Triage */}
-          <YStack gap={10}>
-            <XStack items="center" justify="space-between">
-              <XStack items="center" gap={6}>
-                <MessageSquare size={12} color="$dim" />
-                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
-                  Activity & Comments ({comments.length})
-                </SizableText>
-              </XStack>
-              <Button
-                size="xs"
-                height={24}
-                px={8}
-                rounded={round.field}
-                variant="outline"
-                startIcon={<Sparkles size={11} color="$ink" />}
-                onPress={triggerBotTriage}
-              >
-                <SizableText fontSize={11} fontWeight="600" color="$ink">
-                  Ask Bot to Triage
-                </SizableText>
-              </Button>
-            </XStack>
-
-            <YStack gap={8}>
-              {comments.map((c) => (
-                <YStack
-                  key={c.id}
-                  p={10}
-                  rounded={round.card}
-                  bg="$raised"
-                  borderWidth={1}
-                  borderColor="$edge"
-                  gap={4}
-                >
-                  <XStack items="center" justify="space-between">
-                    <XStack items="center" gap={6}>
-                      <People people={[{ id: c.id, name: c.author, face: c.face }]} size={18} show={1} />
-                      <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
-                        {c.author}
-                      </SizableText>
-                    </XStack>
-                    <SizableText fontSize={10} color="$dim">
-                      {c.at}
-                    </SizableText>
-                  </XStack>
-                  <SizableText fontSize={rung.small} color="$soft" lineHeight={18}>
-                    {c.body}
-                  </SizableText>
-                </YStack>
-              ))}
-            </YStack>
-
-            <XStack gap={6} items="center">
-              <Input
-                flex={1}
-                height={30}
-                fontSize={12}
-                placeholder={`Comment on ${issue.key}...`}
-                value={commentText}
-                onChangeText={setCommentText}
-                bg="$raised"
-                borderColor="$edge"
-              />
-              <Button
-                size="xs"
-                height={30}
-                px={10}
-                rounded={round.field}
-                style={{ backgroundColor: paint.accent }}
-                onPress={postComment}
-              >
-                <Send size={12} color={paint.ground} />
-              </Button>
-            </XStack>
-          </YStack>
         </YStack>
       </ScrollArea>
     </YStack>
   )
 }
 
+/** A project the new-issue form can file into. */
+export type Choice = { id: string; name: string; identifier: string }
+
 export function NewIssueModal({
   initialStatus = 'backlog',
   people,
+  projects,
   onCreate,
   onClose,
 }: {
   initialStatus?: Status
   people: Person[]
+  /**
+   * The projects to choose between, on a board that spans them all. Absent on
+   * a project's own board, where the project is already the answer.
+   */
+  projects?: readonly Choice[]
   onCreate: (status: Status, title: string, patch: IssuePatch) => Promise<void>
   onClose: () => void
 }) {
@@ -792,7 +785,17 @@ export function NewIssueModal({
   const [priority, setPriority] = useState<Priority>('medium')
   const [assigneeId, setAssigneeId] = useState<string | null>(people[0]?.id ?? null)
   const [labels, setLabels] = useState<string[]>(['Feature'])
+  const navigate = useNavigate()
+  const [project, setProject] = useState<string | null>(projects?.[0]?.id ?? null)
   const [submitting, setSubmitting] = useState(false)
+  const [failed, setFailed] = useState<string | null>(null)
+
+  // The list can arrive after the form opens; take its first project then.
+  useEffect(() => {
+    if (projects && !projects.some((p) => p.id === project)) setProject(projects[0]?.id ?? null)
+  }, [projects, project])
+
+  const placed = !projects || !!project
 
   const toggleLabel = (l: string) => {
     setLabels((prev) => (prev.includes(l) ? prev.filter((x) => x !== l) : [...prev, l]))
@@ -800,16 +803,20 @@ export function NewIssueModal({
 
   const submit = async () => {
     const clean = title.trim()
-    if (!clean || submitting) return
+    if (!clean || !placed || submitting) return
     setSubmitting(true)
+    setFailed(null)
     try {
       await onCreate(status, clean, {
         description: description.trim() || undefined,
         priority,
         assigneeId,
         labels,
+        ...(projects && project ? { project } : {}),
       })
       onClose()
+    } catch (e) {
+      setFailed(e instanceof Error ? e.message : String(e))
     } finally {
       setSubmitting(false)
     }
@@ -857,6 +864,55 @@ export function NewIssueModal({
         </XStack>
 
         <YStack p={16} gap={14}>
+          {projects ? (
+            <YStack gap={6}>
+              <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                Project
+              </SizableText>
+              {projects.length === 0 ? (
+                <XStack items="center" justify="space-between" gap={8} flexWrap="wrap">
+                  <SizableText fontSize={rung.small} color="$soft">
+                    There is no project to file this in yet.
+                  </SizableText>
+                  <Button size="sm" variant="outline" onPress={() => navigate('/projects?new')}>
+                    New project
+                  </Button>
+                </XStack>
+              ) : (
+                <XStack gap={6} flexWrap="wrap">
+                  {projects.map((p) => {
+                    const active = project === p.id
+                    return (
+                      <XStack
+                        key={p.id}
+                        role="button"
+                        aria-pressed={active}
+                        tabIndex={0}
+                        cursor="pointer"
+                        px={10}
+                        height={26}
+                        rounded={round.field}
+                        items="center"
+                        gap={6}
+                        bg={active ? '$hover' : '$raised'}
+                        borderWidth={1}
+                        borderColor={active ? '$ink' : '$edge'}
+                        onPress={() => setProject(p.id)}
+                      >
+                        <SizableText fontSize={rung.chip} fontWeight="700" color={active ? '$ink' : '$soft'}>
+                          {p.identifier}
+                        </SizableText>
+                        <SizableText fontSize={rung.chip} fontWeight={active ? '600' : '500'} color={active ? '$ink' : '$soft'}>
+                          {p.name}
+                        </SizableText>
+                      </XStack>
+                    )
+                  })}
+                </XStack>
+              )}
+            </YStack>
+          ) : null}
+
           <YStack gap={6}>
             <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
               Issue Title
@@ -953,7 +1009,7 @@ export function NewIssueModal({
 
           <YStack gap={6}>
             <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
-              Assign to Team Member or 24/7 Bot
+              Assign to a team member
             </SizableText>
             <XStack gap={6} flexWrap="wrap">
               {people.slice(0, 8).map((p) => {
@@ -1030,13 +1086,18 @@ export function NewIssueModal({
           borderColor="$edge"
           bg="$raised"
         >
+          {failed ? (
+            <SizableText flex={1} fontSize={rung.small} color="$ink" role="alert">
+              {failed}
+            </SizableText>
+          ) : null}
           <Button size="sm" variant="ghost" onPress={onClose}>
             Cancel
           </Button>
           <Button
             size="sm"
             style={{ backgroundColor: paint.accent }}
-            disabled={!title.trim() || submitting}
+            disabled={!title.trim() || !placed || submitting}
             onPress={() => void submit()}
           >
             <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ground }}>

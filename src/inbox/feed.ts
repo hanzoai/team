@@ -6,20 +6,15 @@
  */
 import { held, hold, invalidate, useRead, type Read } from '~/data/query'
 
-import { sample, still } from './fixture.ts'
 import { seen, type Note, type Source } from './note.ts'
 
 const CELL = 'inbox'
 
 /**
- * The feed, and today it is fixtures.
- *
- * A default rather than a required call, because a region that renders its
- * failure state until another region is finished tells you nothing about
- * itself. `serve` replaces it the moment a transactor client exists, and the
- * fixtures stay as what the tests and a deterministic capture read.
+ * The feed before a backend is handed over: empty, never invented. `serve`
+ * replaces it as soon as a space is open.
  */
-let source: Source = still(sample())
+let source: Source = { list: () => Promise.resolve([]), see: () => Promise.resolve() }
 
 /**
  * Hand the feed a backend.

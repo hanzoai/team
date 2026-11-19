@@ -6,6 +6,7 @@ import { test } from 'node:test'
 import { NAV } from './measure.ts'
 import {
   DEFAULT_CHANNEL_UNREADS,
+  DEFAULT_REQUIRED_CHANNELS,
   DIRECT_HANDOFF_ROSTER,
   filterChannelItems,
   filterDirectHandoffs,
@@ -15,7 +16,6 @@ import {
 
 const ROOT = new URL('../', import.meta.url).pathname
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
-const FIXTURE = readFileSync(join(ROOT, 'data/fixture.ts'), 'utf8')
 const CHANNELS_TSX = readFileSync(join(ROOT, 'chat/Channels.tsx'), 'utf8')
 
 test('Hanzo Team shell geometry & obsidian tokens match Hanzo Dev chrome', () => {
@@ -33,10 +33,10 @@ test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', 
     'deployments',
     'approvals',
     'incidents',
-  ]) {
+  ] as const) {
     assert.ok(
-      FIXTURE.includes(`name: '${requiredChannel}'`),
-      `missing #${requiredChannel} in fixture channels`,
+      DEFAULT_REQUIRED_CHANNELS.includes(requiredChannel),
+      `missing #${requiredChannel} in required channels`,
     )
   }
   assert.ok(CHANNELS_TSX.includes('Jump to channel or person... ⌘K'))

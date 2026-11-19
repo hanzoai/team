@@ -4,7 +4,7 @@ import { test } from 'node:test'
 import { rows } from './rows.ts'
 
 test('a TotalArray reply is its value', () => {
-  const doc = { _id: 'c-general', _class: 'team:class:Channel' }
+  const doc = { _id: 'c-general', _class: 'chunter:class:Channel' }
   assert.deepEqual(rows({ dataType: 'TotalArray', total: 1, value: [doc] }), [doc])
   assert.deepEqual(rows({ dataType: 'TotalArray', total: 0, value: [] }), [])
 })

@@ -77,6 +77,27 @@ export const silent = (authorize: string): string => {
   return `${SIGNIN}/v1/iam/oauth/authorize${own.search}`
 }
 
+const SILENT_ERRORS = new Set([
+  'login_required',
+  'interaction_required',
+  'consent_required',
+  'account_selection_required',
+])
+
+/**
+ * Whether IAM's callback error is the normal "no existing session" answer to a
+ * silent (`prompt=none`) ask — including IAM's `access_denied` with
+ * `no interaction was permitted` description.
+ */
+export const silentRefusal = (code?: string | null, description?: string | null): boolean => {
+  if (!code) return false
+  if (SILENT_ERRORS.has(code)) return true
+  return (
+    code === 'access_denied' &&
+    Boolean(description && description.toLowerCase().includes('no interaction was permitted'))
+  )
+}
+
 export const loopback = (hostname: string): boolean =>
   hostname === 'localhost' || hostname === '127.0.0.1' || hostname === '[::1]'
 

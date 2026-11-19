@@ -32,6 +32,17 @@ export type Room = {
   connectedOrgs?: string[]
 }
 
+/**
+ * What a room is called. A direct message carries no name of its own on the
+ * server, so it is the people in it.
+ */
+export const titled = (room: Pick<Room, 'name' | 'members'>, roster: readonly Person[]): string =>
+  room.name ||
+  room.members
+    .map((m) => roster.find((p) => p.id === m)?.name)
+    .filter((n): n is string => Boolean(n))
+    .join(', ')
+
 /** One thing somebody said. */
 export type Message = {
   id: string
@@ -49,7 +60,7 @@ export type Message = {
 export type Reaction = { id: string; message: string; emoji: string; by: string }
 
 /** What to call somebody, and what to draw for them. */
-export type Person = { id: string; name: string; avatar?: string }
+export type Person = { id: string; name: string; avatar?: string; bot?: boolean; gone?: boolean }
 
 type Doc = Record<string, unknown>
 
@@ -163,6 +174,19 @@ export const reactions = async (plane: Plane, ids: string[]): Promise<Reaction[]
  */
 export const spoken = (stored: string): string => nameOf({ name: stored }).replace(/\s+/g, ' ')
 
+/** The Employee mixin's position, wherever the store put the mixin. */
+const positionOf = (d: Doc): string => {
+  const mixin = d['contact:mixin:Employee']
+  return str(d.position) || (mixin && typeof mixin === 'object' ? str((mixin as Doc).position) : '')
+}
+
+/** The Employee mixin's `active`, wherever the store put the mixin; undefined where none is stated. */
+const activeOf = (d: Doc): boolean | undefined => {
+  const mixin = d['contact:mixin:Employee']
+  const v = mixin && typeof mixin === 'object' ? (mixin as Doc).active : d.active
+  return typeof v === 'boolean' ? v : undefined
+}
+
 /** The roster, so a message can be drawn with a name instead of a uuid. */
 export const people = async (plane: Plane): Promise<Person[]> => {
   const docs = await plane.find<Doc>(Class.person)
@@ -170,6 +194,10 @@ export const people = async (plane: Plane): Promise<Person[]> => {
     id: str(d.personUuid) || str(d._id),
     name: spoken(str(d.name)),
     avatar: str(d.avatar) || undefined,
+    // The server projects an agent member with the position `Agent` (cloud apps/team projections.go).
+    bot: positionOf(d) === 'Agent' || undefined,
+    // A member the server deactivated: a deleted agent stays a Person, marked inactive.
+    gone: activeOf(d) === false || undefined,
   }))
 }
 
@@ -184,18 +212,24 @@ export const people = async (plane: Plane): Promise<Person[]> => {
  * optimistic copy to disagree with the server the first time a write is
  * refused.
  */
-export const say = (plane: Plane, room: Room, text: string): Promise<void> =>
+export const say = (plane: Plane, room: Room, text: string, roster: readonly Person[] = []): Promise<void> =>
   plane.write(
     attached(id(), Class.message, room.id, room.id, classOf(room), 'messages', by(plane), {
-      message: markup(text),
+      message: markup(text, roster),
     }),
   )
 
 /** Reply to a message. A thread is a room whose parent is a message. */
-export const reply = (plane: Plane, room: Room, message: Message, text: string): Promise<void> =>
+export const reply = (
+  plane: Plane,
+  room: Room,
+  message: Message,
+  text: string,
+  roster: readonly Person[] = [],
+): Promise<void> =>
   plane.write(
     attached(id(), Class.reply, room.id, message.id, Class.message, 'replies', by(plane), {
-      message: markup(text),
+      message: markup(text, roster),
       objectId: room.id,
       objectClass: classOf(room),
     }),
@@ -279,7 +313,7 @@ export const createConnectChannel = async (
     _class: TX_CREATE,
     objectId: roomId,
     objectClass: Class.channel,
-    objectSpace: 'hanzo',
+    objectSpace: 'core:space:Space',
     modifiedBy: author,
     modifiedOn: now,
     createdBy: author,

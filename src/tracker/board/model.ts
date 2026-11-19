@@ -19,6 +19,8 @@ export interface Person {
   name: string
   /** An image. Absent means the initials stand in — never a fabricated face. */
   face?: string
+  /** True when the server projects this member as an Agent/bot (`position: 'Agent'`). */
+  bot?: boolean
 }
 
 /** Where an issue came from: a repository, a tracker, an integration. */
@@ -62,6 +64,11 @@ export interface IssuePatch {
   assigneeId?: string | null
   labels?: string[]
   replies?: number
+  /**
+   * The project a new issue opens in. Read by `add` alone, and only on a board
+   * that spans every project: a project's own board is its own answer.
+   */
+  project?: string
 }
 
 export interface Column {

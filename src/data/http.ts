@@ -15,14 +15,31 @@
  */
 import { iam } from './iam.ts'
 
-/** A refusal that carries the status, so a caller can tell 401 from 500. */
+/**
+ * A refusal that carries the status, so a caller can tell 401 from 500, and the
+ * parsed body when there was one, for a caller that reads more than the reason
+ * (a 422 naming each recipient it would not send to).
+ */
 export class Refused extends Error {
-  constructor(
-    readonly status: number,
-    readonly detail: string,
-  ) {
+  readonly status: number
+  readonly detail: string
+  readonly body?: unknown
+
+  constructor(status: number, detail: string, body?: unknown) {
     super(detail || `HTTP ${status}`)
+    this.status = status
+    this.detail = detail
+    this.body = body
     this.name = 'Refused'
+  }
+}
+
+/** A reply's text as JSON, or undefined when it is not JSON. */
+const parsed = (text: string): unknown => {
+  try {
+    return JSON.parse(text)
+  } catch {
+    return undefined
   }
 }
 
@@ -52,7 +69,7 @@ export const call = async <T>(path: string, init?: RequestInit): Promise<T> => {
     },
   })
   const text = await res.text()
-  if (!res.ok) throw new Refused(res.status, detailOf(text) || res.statusText)
+  if (!res.ok) throw new Refused(res.status, detailOf(text) || res.statusText, parsed(text))
   if (!text) return undefined as T
   try {
     return JSON.parse(text) as T

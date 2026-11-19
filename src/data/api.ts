@@ -15,7 +15,7 @@
 import { brand } from './brand.ts'
 
 /** The one endpoint. Everything the estate publishes is under `/v1` on it. */
-const origin = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
+const origin = import.meta.env?.DEV ? '' : 'https://api.hanzo.ai'
 
 /** The team subsystem, mounted at `/v1/team`. No `/api/` hop. */
 export const team = {
@@ -23,11 +23,20 @@ export const team = {
   account: `${origin}/v1/team/account`,
   /** Channels and their messages — the REST half of the chat surface. */
   channels: `${origin}/v1/team/channels`,
+  /** Open, or find, a direct message. */
+  dms: `${origin}/v1/team/dms`,
   /** Per-space file storage. */
   files: `${origin}/v1/team/files`,
   /** The plan, the seats and the guest cap. */
   plan: `${origin}/v1/team/billing/plan`,
 } as const
+
+/**
+ * Any API path, for the CRM (@hanzo/crm), which names its own: the org's Base
+ * (`base/collections/...`), the beta (`entitlement/orgs/:org`), mail and the drip
+ * (`email`, `marketing/...`). The org is the token's, never a parameter.
+ */
+export const v1 = (path: string): string => `${origin}/v1/${path.replace(/^\/+/, '')}`
 
 /** The issuer, for the trips the IAM SDK does not make. */
 export const issuer = {
