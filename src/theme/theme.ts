@@ -15,9 +15,9 @@
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** The app. The main canvas sits directly on it (#171717 dark / #ffffff light). */
+  /** The app outer obsidian floor (#050505 dark / #ffffff light). */
   ground: role('ground'),
-  /** The board, chat, and inbox canvas. */
+  /** The inset board, chat, and inbox canvas (#0f0f12 dark / #ffffff light). */
   panel: role('panel'),
   /** A card, and an unread row: the same rung, because both are objects. */
   card: role('card'),
@@ -161,7 +161,7 @@ export const gap = {
 
 export const round = {
   card: '$1',
-  panel: '$1',
+  panel: '$3',
   field: '$1',
   pill: '$10',
 } as const

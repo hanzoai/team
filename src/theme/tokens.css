@@ -23,20 +23,20 @@
 :root,
 .t_dark {
   /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
-  --background: #0a0a0c;
-  --pane-floor: #060607;
-  --pane-fill: #0d0d10;
-  --side-fill: #121215;
+  --background: #050505;
+  --pane-floor: #050505;
+  --pane-fill: #0f0f12;
+  --side-fill: #09090b;
   --pane-round: 12px;
   --pane-edge: rgba(255, 255, 255, 0.08);
   --surface-card-emphasis: #18181c;
   --secondary: #222227;
-  --popover: #121215;
-  --card: #121215;
-  --surface-1: #0d0d10;
-  --surface-2: #17171b;
+  --popover: #111114;
+  --card: #111114;
+  --surface-1: #0f0f12;
+  --surface-2: #111114;
   --surface-3: #222227;
-  --border: #25252b;
+  --border: rgba(255, 255, 255, 0.08);
   --primary: #fafafa !important;
   --primary-foreground: #09090b !important;
   --primary-hover: #e4e4e7 !important;
@@ -45,18 +45,18 @@
   --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #060607;
-  --shell-bar-border: #1e1e24;
-  --shell-rail-bg: #060607;
-  --shell-rail-border: #1e1e24;
+  --shell-bar-bg: #050505;
+  --shell-bar-border: rgba(255, 255, 255, 0.08);
+  --shell-rail-bg: #050505;
+  --shell-rail-border: rgba(255, 255, 255, 0.08);
   --shell-rail-active: #1e1e24;
   --shell-rail-fg: #b8b8c2;
   --shell-rail-fg-active: #fafafa;
-  --shell-sidebar-bg: #121215;
-  --shell-sidebar-border: #24242a;
+  --shell-sidebar-bg: #09090b;
+  --shell-sidebar-border: rgba(255, 255, 255, 0.08);
   --shell-row-active: #24242a;
   --shell-row-hover: #1a1a1f;
-  --shell-canvas-bg: #0d0d10;
+  --shell-canvas-bg: #0f0f12;
   --shell-avatar-bg: #27272c;
   --shell-avatar-fg: #fafafa;
   --composer-fill: #141418;
@@ -67,10 +67,11 @@
   --chat-user-bg: #242429;
   --chat-user-fg: #fafafa;
 
-  /* ——— surfaces: three rungs + unified outer chrome ——— */
-  --team-ground: var(--background);      /* outer shell & signed-out ground (#141414) */
-  --team-panel: var(--shell-canvas-bg);  /* main workspace canvas (#212121, flush) */
-  --team-card: var(--surface-2);         /* elevated card / unread row (#2a2a2a) */
+  /* ——— surfaces: Unified Hanzo Dev obsidian chrome + unified outer chrome ——— */
+  --team-ground: #050505;             /* outer obsidian shell floor */
+  --team-sidebar: #09090b;            /* 256px collapsible left sidebar */
+  --team-panel: #0f0f12;              /* inset rounded stage pane */
+  --team-card: #111114;               /* raised card / unread surface */
   --team-bar: var(--shell-bar-bg);
   --team-bar-rule: var(--shell-bar-border);
   --team-rail: var(--shell-rail-bg);
@@ -78,7 +79,6 @@
   --team-rail-active: var(--shell-rail-active);
   --team-rail-fg: var(--shell-rail-fg);
   --team-rail-fg-active: var(--shell-rail-fg-active);
-  --team-sidebar: var(--shell-sidebar-bg);
   --team-sidebar-rule: var(--shell-sidebar-border);
   --team-row-active: var(--shell-row-active);
   --team-row-hover: var(--shell-row-hover);
@@ -92,10 +92,8 @@
   --team-chat-user: var(--chat-user-bg);
   --team-chat-user-ink: var(--chat-user-fg);
 
-  /* ——— the hairline. ONE, at a fixed alpha, so it lifts with whatever it
-         lands on. A solid line stops being a lighter line and becomes an
-         unrelated grey the moment the surface under it moves. ——— */
-  --team-rule: var(--border);
+  /* ——— the hairline. 1px rgba(255,255,255,0.08) across stage & sidebar ——— */
+  --team-rule: rgba(255, 255, 255, 0.08);
   --team-pane-edge: var(--pane-edge);
 
   /* ——— ink: three ranks. The reference draws five and measures three —
@@ -202,6 +200,11 @@
   --chat-user-bg: #dbeafe;
   --chat-user-fg: #1e3a8a;
 
+  --team-ground: var(--background);
+  --team-sidebar: var(--shell-sidebar-bg);
+  --team-panel: var(--shell-canvas-bg);
+  --team-card: var(--surface-2);
+  --team-rule: var(--border);
   --team-hue-1: oklch(0.62 0.14 258);
   --team-hue-2: oklch(0.62 0.14 215);
   --team-hue-3: oklch(0.62 0.14 350);

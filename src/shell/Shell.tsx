@@ -22,20 +22,30 @@
  * media query cannot see. `onLayout` is the measurement and the window is only
  * the seed, so the first paint is not one frame of the wrong layout.
  */
-import { Screen, Sheet, SheetContent, XStack, YStack } from '@hanzo/ui'
-import { useEffect, useRef, useState, type ReactNode } from 'react'
+import { Popover, Separator } from '@hanzo/gui'
+import { Screen, Sheet, SheetContent, SizableText, XStack, YStack } from '@hanzo/ui'
+import { OrgMark } from '@hanzo/ui/product'
+import { Check } from '@hanzogui/lucide-icons-2'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
-import { paint, round } from '~/theme/theme.ts'
+import { paint, round, rung, state } from '~/theme/theme.ts'
 import { setAsideKind, toggleAsideKind, useAside, useAsideKind } from './aside.ts'
 import { BusinessHeader } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
-import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, PANE_ROUND, SEAM } from './measure.ts'
+import { ASIDE, INLINE_ASIDE, INLINE_NAV, NAV, NAV_MAX, NAV_MIN, PAD, PANE_ROUND, SEAM } from './measure.ts'
+import { press } from './press.ts'
 import { Rail } from './Rail.tsx'
 import { surfaceAt } from './surfaces.ts'
+import {
+  matchTeamShortcut,
+  TEAM_CROSS_APPS,
+  TEAM_SHORTCUTS,
+  type TeamCrossAppItem,
+} from './unified.ts'
 
 export type ShellProps = {
   /** The navigator region: a panel title, a search, a list. */
@@ -56,7 +66,14 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
     typeof window === 'undefined' ? INLINE_ASIDE : window.innerWidth,
   )
   const [span, setSpan] = useState(NAV)
-  const [navCollapsed, setNavCollapsed] = useState(false)
+  const [navCollapsed, setNavCollapsed] = useState(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage.getItem('hanzo.team.sidebar.collapsed') === 'true'
+    } catch {
+      return false
+    }
+  })
+  const [shortcutsOpen, setShortcutsOpen] = useState(false)
   const [drawer, setDrawer] = useState(false)
   // A destination picked in the drawer is where the person is going, so the
   // drawer steps aside. Left open it stands over the page it opened, and over
@@ -71,14 +88,71 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const roomy = width >= INLINE_NAV
   const inlineNavOpen = Boolean(roomy && nav && !navCollapsed)
 
-  const reach = (path: string) => {
-    if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
-    if (roomy && nav && navCollapsed && (pathname === path || pathname.startsWith(`${path}/`))) {
-      setNavCollapsed(false)
+  const toggleSidebar = useCallback(() => {
+    if (!roomy) {
+      setDrawer((v) => !v)
       return
     }
-    go(path)
-  }
+    setNavCollapsed((prev) => {
+      const next = !prev
+      try {
+        window.localStorage.setItem('hanzo.team.sidebar.collapsed', String(next))
+      } catch {
+        // ignore storage errors
+      }
+      return next
+    })
+  }, [roomy])
+
+  const reach = useCallback(
+    (path: string) => {
+      if (!roomy && nav && (pathname === path || pathname.startsWith(`${path}/`))) return setDrawer(true)
+      if (roomy && nav && navCollapsed && (pathname === path || pathname.startsWith(`${path}/`))) {
+        setNavCollapsed(false)
+        return
+      }
+      go(path)
+    },
+    [go, nav, navCollapsed, pathname, roomy],
+  )
+
+  useEffect(() => {
+    const onKeyDown = (e: KeyboardEvent) => {
+      const action = matchTeamShortcut({
+        key: e.key,
+        metaKey: e.metaKey,
+        ctrlKey: e.ctrlKey,
+        shiftKey: e.shiftKey,
+        altKey: e.altKey,
+        repeat: e.repeat,
+        defaultPrevented: e.defaultPrevented,
+        isComposing: e.isComposing,
+        isContentEditable: Boolean((e.target as HTMLElement | null)?.isContentEditable),
+      })
+      if (!action) return
+      if (action === 'toggle-sidebar') {
+        e.preventDefault()
+        toggleSidebar()
+      } else if (action === 'shortcuts') {
+        e.preventDefault()
+        setShortcutsOpen((v) => !v)
+      } else if (action === 'settings') {
+        e.preventDefault()
+        openSettingsModal('general')
+      } else if (action === 'new-thread') {
+        e.preventDefault()
+        reach('/chat/c-general')
+        window.dispatchEvent(new CustomEvent('hanzo:team-new-channel'))
+      }
+    }
+    const onCustomToggle = () => toggleSidebar()
+    window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('hanzo:team-toggle-sidebar', onCustomToggle)
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('hanzo:team-toggle-sidebar', onCustomToggle)
+    }
+  }, [reach, toggleSidebar])
 
   const orgs = all
   const activeOrg = current ?? orgs[0]
@@ -105,20 +179,13 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const orgList = orgs.map((s) => ({ name: s.url, displayName: s.name }))
 
   return (
-    <Screen style={{ backgroundColor: paint.rail }}>
+    <Screen style={{ backgroundColor: paint.ground }}>
       <BusinessHeader
         currentOrg={currentOrgInfo}
         onNavigate={reach}
         navSpan={span + SEAM}
         navOpen={inlineNavOpen}
-        onToggleNav={
-          nav
-            ? () => {
-                if (roomy) setNavCollapsed((v) => !v)
-                else setDrawer((v) => !v)
-              }
-            : undefined
-        }
+        onToggleNav={nav ? toggleSidebar : undefined}
         surfaceTitle={surfaceAt(pathname)?.label}
       />
       <XStack
@@ -163,8 +230,21 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
               overflow="hidden"
               style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
               data-parity-key="shell.nav"
+              data-testid="team-left-sidebar"
             >
-              {nav}
+              <YStack flex={1} minH={0}>
+                {nav}
+              </YStack>
+              <SidebarAccountFooter
+                user={userIdentity}
+                currentOrg={currentOrgInfo}
+                orgs={orgList}
+                onSelectOrg={(url: string) => choose(url)}
+                onSettings={() => openSettingsModal('general')}
+                onOpenShortcuts={() => setShortcutsOpen(true)}
+                onNavigate={reach}
+                onSignIn={() => void depart('another')}
+              />
             </YStack>
             <Grip value={span} onChange={setSpan} />
           </YStack>
@@ -197,9 +277,264 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         </SheetContent>
       </Sheet>
 
+      <Sheet open={shortcutsOpen} onOpenChange={setShortcutsOpen}>
+        <SheetContent side="right" width={360} p={PAD} bg="$panel">
+          <YStack gap={12}>
+            <SizableText fontSize={rung.row} fontWeight="600" color="$ink">
+              Keyboard shortcuts
+            </SizableText>
+            <Separator borderColor="$edge" />
+            {TEAM_SHORTCUTS.map((s) => (
+              <XStack key={s.action} items="center" justify="space-between" py={4}>
+                <SizableText fontSize={rung.body} color="$quiet">
+                  {s.label}
+                </SizableText>
+                <XStack
+                  px={8}
+                  py={2}
+                  rounded={round.field}
+                  borderWidth={1}
+                  borderColor="$edge"
+                  bg="$background"
+                >
+                  <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                    {s.mac}
+                  </SizableText>
+                </XStack>
+              </XStack>
+            ))}
+          </YStack>
+        </SheetContent>
+      </Sheet>
+
       <ConnectOrgModal />
       <SettingsModal user={userIdentity} orgName={currentOrgInfo.displayName} />
     </Screen>
+  )
+}
+
+/** Unified bottom-left Hanzo IAM Account & Org Switcher (`X-Org-Id`) pill in sidebar footer. */
+const SidebarAccountFooter = ({
+  user,
+  currentOrg,
+  orgs,
+  onSelectOrg,
+  onSettings,
+  onOpenShortcuts,
+  onNavigate,
+  onSignIn,
+}: {
+  user: { sub: string; name: string; email?: string; avatar?: string; owner: string }
+  currentOrg: { name: string; displayName: string }
+  orgs: Array<{ name: string; displayName: string }>
+  onSelectOrg: (orgName: string) => void
+  onSettings: () => void
+  onOpenShortcuts: () => void
+  onNavigate: (path: string) => void
+  onSignIn: () => void
+}) => {
+  const [open, setOpen] = useState(false)
+
+  const handleCrossApp = (item: TeamCrossAppItem) => {
+    setOpen(false)
+    if (item.internalPath) {
+      onNavigate(item.internalPath)
+    } else if (typeof window !== 'undefined') {
+      window.open(item.href, '_blank', 'noopener,noreferrer')
+    }
+  }
+
+  return (
+    <YStack
+      px={10}
+      py={8}
+      borderTopWidth={1}
+      style={{ borderTopColor: paint.rule }}
+      data-testid="sidebar-account-org-footer"
+    >
+      <Popover open={open} onOpenChange={setOpen} placement="top-start" allowFlip stayInFrame>
+        <Popover.Trigger asChild>
+          <XStack
+            {...press(() => setOpen(!open), 'Hanzo Account & Organization Switcher')}
+            height={40}
+            px={10}
+            rounded={round.field}
+            borderWidth={1}
+            borderColor="$edge"
+            bg="$panel"
+            items="center"
+            justify="space-between"
+            gap={8}
+            hoverStyle={{ bg: '$hover' }}
+            data-testid="sidebar-account-org-pill"
+          >
+            <XStack items="center" gap={8} minW={0} flex={1}>
+              <YStack position="relative" shrink={0}>
+                <OrgMark org={{ name: user.name, logo: user.avatar }} size={24} />
+                <YStack
+                  position="absolute"
+                  b={-1}
+                  r={-1}
+                  width={7}
+                  height={7}
+                  rounded={round.pill}
+                  style={{ backgroundColor: state.done }}
+                />
+              </YStack>
+              <YStack flex={1} minW={0}>
+                <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+                  {user.name} · hanzo.id
+                </SizableText>
+                <SizableText fontSize={rung.chip} color="$quiet" numberOfLines={1}>
+                  X-Org-Id: {currentOrg.name}
+                </SizableText>
+              </YStack>
+            </XStack>
+            <XStack px={6} py={2} rounded={round.pill} bg="$hover" shrink={0}>
+              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                Team
+              </SizableText>
+            </XStack>
+          </XStack>
+        </Popover.Trigger>
+
+        <Popover.Content
+          role="menu"
+          aria-label="Hanzo Account and Organization Switcher"
+          borderWidth={1}
+          borderColor="$edge"
+          bg="$panel"
+          rounded={round.panel}
+          p={10}
+          width={248}
+          style={{ zIndex: 100000 }}
+        >
+          <YStack gap={6} width="100%">
+            <YStack px={6} py={4}>
+              <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
+                {user.name}
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$quiet">
+                {user.email || 'hanzo.id'} · X-Org-Id: {currentOrg.name}
+              </SizableText>
+              <XStack
+                {...press(() => {
+                  setOpen(false)
+                  onSignIn()
+                }, 'Switch or sign in via hanzo.id')}
+                mt={6}
+                py={4}
+                px={8}
+                rounded={round.field}
+                borderWidth={1}
+                borderColor="$edge"
+                hoverStyle={{ bg: '$hover' }}
+              >
+                <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                  Switch account via hanzo.id →
+                </SizableText>
+              </XStack>
+            </YStack>
+
+            <Separator borderColor="$edge" />
+
+            <SizableText px={6} fontSize={rung.chip} fontWeight="600" color="$faint">
+              ORGANIZATIONS (X-ORG-ID)
+            </SizableText>
+            {orgs.map((o) => {
+              const active = o.name === currentOrg.name
+              return (
+                <XStack
+                  key={o.name}
+                  {...press(() => {
+                    setOpen(false)
+                    onSelectOrg(o.name)
+                  }, `Switch org to ${o.displayName}`)}
+                  px={8}
+                  py={5}
+                  rounded={round.field}
+                  bg={active ? '$hover' : 'transparent'}
+                  hoverStyle={{ bg: '$hover' }}
+                  items="center"
+                  justify="space-between"
+                >
+                  <SizableText fontSize={rung.small} color="$ink" numberOfLines={1}>
+                    {o.displayName}
+                  </SizableText>
+                  {active ? <Check size={13} color="$ink" /> : null}
+                </XStack>
+              )
+            })}
+
+            <Separator borderColor="$edge" />
+
+            <SizableText px={6} fontSize={rung.chip} fontWeight="600" color="$faint">
+              SWITCH HANZO APP
+            </SizableText>
+            <XStack flexWrap="wrap" gap={4} px={4}>
+              {TEAM_CROSS_APPS.map((item) => (
+                <XStack
+                  key={item.id}
+                  {...press(() => handleCrossApp(item), `Open Hanzo ${item.label}`)}
+                  px={8}
+                  py={4}
+                  rounded={round.field}
+                  borderWidth={1}
+                  borderColor="$edge"
+                  hoverStyle={{ bg: '$hover' }}
+                >
+                  <SizableText fontSize={rung.chip} color="$ink">
+                    {item.label}
+                  </SizableText>
+                </XStack>
+              ))}
+            </XStack>
+
+            <Separator borderColor="$edge" />
+
+            <XStack
+              {...press(() => {
+                setOpen(false)
+                onSettings()
+              }, 'Settings (⌘,)')}
+              px={8}
+              py={5}
+              rounded={round.field}
+              hoverStyle={{ bg: '$hover' }}
+              items="center"
+              justify="space-between"
+            >
+              <SizableText fontSize={rung.small} color="$quiet">
+                Settings
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$faint">
+                ⌘,
+              </SizableText>
+            </XStack>
+
+            <XStack
+              {...press(() => {
+                setOpen(false)
+                onOpenShortcuts()
+              }, 'Keyboard shortcuts (⌘/)')}
+              px={8}
+              py={5}
+              rounded={round.field}
+              hoverStyle={{ bg: '$hover' }}
+              items="center"
+              justify="space-between"
+            >
+              <SizableText fontSize={rung.small} color="$quiet">
+                Shortcuts
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$faint">
+                ⌘/
+              </SizableText>
+            </XStack>
+          </YStack>
+        </Popover.Content>
+      </Popover>
+    </YStack>
   )
 }
 
