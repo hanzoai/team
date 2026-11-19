@@ -15,9 +15,10 @@
  * picker is how a bot is reached without spelling it.
  */
 import { SizableText, Textarea, XStack, YStack } from '@hanzo/ui'
-import { AlertCircle, ArrowUp, Plus, ShieldCheck } from '@hanzogui/lucide-icons-2'
-import { useState } from 'react'
+import { AlertCircle, ArrowUp, AtSign, Plus, Send, ShieldCheck } from '@hanzogui/lucide-icons-2'
+import { useMemo, useState } from 'react'
 
+import { activeMentionQuery, applyMention, mentionSuggestions } from '~/handoff/handoff.ts'
 import { useHanzoPreferences } from '~/settings/preferences.ts'
 import { press } from '~/shell'
 import { paint, round, rung } from '~/theme/theme.ts'
@@ -51,6 +52,7 @@ export function Composer({
   disabled,
   people = [],
   onSend,
+  onHandoff,
 }: {
   placeholder: string
   /** Why it cannot be used, said out loud. Absent means it can. */
@@ -58,6 +60,7 @@ export function Composer({
   /** Who a mention can name: the roster, people and bots. */
   people?: readonly Person[]
   onSend: (text: string) => Promise<void>
+  onHandoff?: (draftText: string) => void
 }) {
   const [text, setText] = useState('')
   const [sending, setSending] = useState(false)
@@ -65,15 +68,27 @@ export function Composer({
   // The text Escape was pressed on: the picker stays shut until it changes.
   const [shut, setShut] = useState<string | null>(null)
   const [lit, setLit] = useState(0)
+  const [pickerPinned, setPickerPinned] = useState(false)
+  const { chat, setChat } = useHanzoPreferences()
+  const fullAccess = chat.approvalMode === 'auto'
 
   const typing = text === shut ? null : asking(text)
-  const choices = typing ? offered(people, typing.query) : []
+  const mention = useMemo(() => activeMentionQuery(text), [text])
+  const choices = useMemo(() => {
+    if (typing) return offered(people, typing.query)
+    if (pickerPinned) return mentionSuggestions(people, mention?.query ?? '')
+    return []
+  }, [typing, pickerPinned, people, mention])
   const picking = choices.length > 0
   const at = Math.min(lit, Math.max(0, choices.length - 1))
 
   const choose = (who: Person) => {
-    if (!typing) return
-    setText(completed(text, typing.at, who))
+    if (typing) {
+      setText(completed(text, typing.at, who))
+    } else {
+      setText((prev) => applyMention(prev, who.name))
+    }
+    setPickerPinned(false)
     setLit(0)
   }
 
@@ -81,8 +96,6 @@ export function Composer({
     setText(next)
     setLit(0)
   }
-  const { chat, setChat } = useHanzoPreferences()
-  const fullAccess = chat.approvalMode === 'auto'
 
   const ready = text.trim() !== '' && !sending && !disabled
 
@@ -198,7 +211,10 @@ export function Composer({
               e.preventDefault?.()
               if (key === 'ArrowDown') setLit((at + 1) % choices.length)
               else if (key === 'ArrowUp') setLit((at - 1 + choices.length) % choices.length)
-              else if (key === 'Escape') setShut(text)
+              else if (key === 'Escape') {
+                setShut(text)
+                setPickerPinned(false)
+              }
               else choose(choices[at]!)
               return
             }
@@ -209,7 +225,7 @@ export function Composer({
         />
 
         <XStack items="center" justify="space-between" pt={2}>
-          <XStack items="center" gap={6}>
+          <XStack items="center" gap={6} flexWrap="wrap">
             <YStack
               width={26}
               height={26}
@@ -220,6 +236,45 @@ export function Composer({
             >
               <Plus size={15} color="$soft" />
             </YStack>
+
+            {people.length > 0 ? (
+              <XStack
+                {...press(() => setPickerPinned((v) => !v), 'Mention teammate or bot')}
+                height={24}
+                px={7}
+                gap={4}
+                rounded={7}
+                items="center"
+                hoverStyle={{ bg: '$hover' }}
+                data-testid="composer-mention-toggle"
+              >
+                <AtSign size={13} color="$soft" />
+                <SizableText fontSize={12} fontWeight="500" color="$soft">
+                  Mention
+                </SizableText>
+              </XStack>
+            ) : null}
+
+            {onHandoff ? (
+              <XStack
+                {...press(() => onHandoff(text), 'Hand off work to teammate or bot')}
+                height={24}
+                px={8}
+                gap={5}
+                rounded={7}
+                items="center"
+                bg="$raised"
+                borderWidth={1}
+                borderColor="$edge"
+                hoverStyle={{ bg: '$hover' }}
+                data-testid="composer-handoff-trigger"
+              >
+                <Send size={12} color="$ink" />
+                <SizableText fontSize={12} fontWeight="600" color="$ink">
+                  Hand off
+                </SizableText>
+              </XStack>
+            ) : null}
 
             <XStack
               {...press(

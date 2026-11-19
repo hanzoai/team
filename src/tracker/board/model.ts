@@ -19,6 +19,8 @@ export interface Person {
   name: string
   /** An image. Absent means the initials stand in — never a fabricated face. */
   face?: string
+  /** True when the server projects this member as an Agent/bot (`position: 'Agent'`). */
+  bot?: boolean
 }
 
 /** Where an issue came from: a repository, a tracker, an integration. */

@@ -1,11 +1,12 @@
 import type { DragEvent } from 'react'
 import { Badge, Image, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { MessageSquare, Paperclip } from '@hanzogui/lucide-icons-2'
+import { Bot, CheckCircle2, FileCheck2, MessageSquare, Paperclip, ShieldAlert } from '@hanzogui/lucide-icons-2'
+import { approvalLabel, parseHandoff } from '../../handoff/handoff.ts'
 import { Count } from './Count.tsx'
 import { People } from './People.tsx'
 import { Ring } from './Ring.tsx'
 import type { Issue } from './model.ts'
-import { gap, round, rung } from '../../theme/theme.ts'
+import { gap, paint, round, rung, state } from '../../theme/theme.ts'
 import { tone } from './tone.ts'
 
 /**
@@ -33,6 +34,8 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
   onDragEnd?: (e: DragEvent) => void
 }) => {
   const chips = issue.priority ? [cap(issue.priority), ...issue.labels] : issue.labels
+  const { handoff } = parseHandoff(issue.description)
+  const ownerBot = handoff?.owner.kind === 'bot' || issue.people[0]?.bot === true
 
   return (
     <YStack
@@ -56,14 +59,63 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
         ) : null}
 
         <XStack items="center" justify="space-between" gap={6}>
-          <SizableText fontSize={rung.small} fontWeight="600" color="$dim">
-            {issue.key}
-          </SizableText>
+          <XStack items="center" gap={6}>
+            <SizableText fontSize={rung.small} fontWeight="600" color="$dim">
+              {issue.key}
+            </SizableText>
+            {ownerBot ? (
+              <XStack items="center" gap={3} px={5} py={1} rounded={round.pill} bg="$panel" borderWidth={1} borderColor="$edge">
+                <Bot size={10} color="$soft" />
+                <SizableText fontSize={rung.chip} color="$soft">
+                  {handoff?.owner.name ? `@${handoff.owner.name}` : 'Bot'}
+                </SizableText>
+              </XStack>
+            ) : null}
+          </XStack>
+          {handoff && handoff.approvalState !== 'none' ? (
+            <XStack
+              items="center"
+              gap={3}
+              px={6}
+              py={1}
+              rounded={round.pill}
+              style={{
+                backgroundColor:
+                  handoff.approvalState === 'approved'
+                    ? state.done
+                    : handoff.approvalState === 'pending'
+                      ? paint.alert
+                      : paint.composerWarn,
+              }}
+            >
+              {handoff.approvalState === 'approved' ? (
+                <CheckCircle2 size={10} color={paint.ground} />
+              ) : (
+                <ShieldAlert size={10} color={handoff.approvalState === 'pending' ? paint.panel : paint.ground} />
+              )}
+              <SizableText
+                fontSize={rung.chip}
+                fontWeight="700"
+                style={{ color: handoff.approvalState === 'pending' ? paint.panel : paint.ground }}
+              >
+                {approvalLabel(handoff.approvalState)}
+              </SizableText>
+            </XStack>
+          ) : null}
         </XStack>
 
         <SizableText fontSize={rung.body} lineHeight={20} color="$ink" style={CLAMP}>
           {issue.title}
         </SizableText>
+
+        {handoff?.deliverable ? (
+          <XStack items="center" gap={5} px={7} py={4} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+            <FileCheck2 size={12} color={handoff.deliverable.verified ? state.done : paint.ink} />
+            <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1} flex={1}>
+              {handoff.deliverable.summary}
+            </SizableText>
+          </XStack>
+        ) : null}
 
         {chips.length > 0 ? (
           <XStack gap={gap.tight} flexWrap="wrap">

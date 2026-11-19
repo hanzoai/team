@@ -32,6 +32,7 @@ export type ListProps = {
   onRetry: () => void
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
+  onHandoff?: (m: Message) => void
   open?: string
 }
 
@@ -46,13 +47,14 @@ export function List({
   onRetry,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: ListProps) {
   if (phase === 'loading') return <Waiting />
   if (phase === 'failure') return <Failed error={error} onRetry={onRetry} />
   if (messages.length === 0) return <Nothing room={room} />
 
-  return <Said {...{ messages, people, reactions, me, onReact, onOpen, open }} />
+  return <Said {...{ messages, people, reactions, me, onReact, onOpen, onHandoff, open }} />
 }
 
 /**
@@ -68,6 +70,7 @@ function Said({
   me,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: Omit<ListProps, 'room' | 'phase' | 'error' | 'onRetry'>) {
   const end = useRef<HTMLElement | null>(null)
@@ -97,6 +100,7 @@ function Said({
               me={me}
               onReact={onReact}
               onOpen={onOpen}
+              onHandoff={onHandoff}
               open={open}
             />
           ),

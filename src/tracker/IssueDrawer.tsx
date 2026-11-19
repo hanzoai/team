@@ -6,12 +6,37 @@
  * labels immediately persist to the workspace plane and sync to
  * `https://api.hanzo.ai/v1/task/board`.
  */
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Badge, Button, Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Bot, Check, Plus, Tag, Trash2, User, X } from '@hanzogui/lucide-icons-2'
+import {
+  Bot,
+  Check,
+  CheckCircle2,
+  FileCheck2,
+  Plus,
+  RotateCcw,
+  Send,
+  ShieldCheck,
+  Tag,
+  Trash2,
+  User,
+  X,
+} from '@hanzogui/lucide-icons-2'
 
-import { caps, paint, ring, round, rung } from '~/theme/theme.ts'
+import { useSession } from '~/data/session.tsx'
+import {
+  approvalLabel,
+  approveHandoff,
+  createHandoff,
+  formatHandoff,
+  issueHandoffPatch,
+  parseHandoff,
+  requestChanges,
+  submitDeliverable,
+} from '~/handoff/handoff.ts'
+import { setAsideKind, showAside } from '~/shell/aside.ts'
+import { caps, paint, ring, round, rung, state } from '~/theme/theme.ts'
 import { NAME, PRIORITY, STATUS, type Issue, type IssuePatch, type Person, type Priority, type Source, type Status } from './board/model.ts'
 import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
@@ -44,21 +69,35 @@ export function IssueDrawer({
   people: Person[]
   onClose: () => void
 }) {
+  const { who } = useSession()
+  const actorName = who?.label || who?.name || 'Teammate'
+  const parsed = useMemo(() => parseHandoff(issue.description), [issue.description])
+  const handoff = parsed.handoff
+
   const [title, setTitle] = useState(issue.title)
-  const [description, setDescription] = useState(issue.description ?? '')
+  const [description, setDescription] = useState(parsed.body)
   const [customTag, setCustomTag] = useState('')
   const [savedNotice, setSavedNotice] = useState(false)
   const [confirming, setConfirming] = useState(false)
   const [removing, setRemoving] = useState(false)
   const [refused, setRefused] = useState<string | null>(null)
+  const [approvalRequired, setApprovalRequired] = useState(handoff?.approvalRequired ?? true)
+  const [deliverableSummary, setDeliverableSummary] = useState(handoff?.deliverable?.summary ?? '')
+  const [deliverableArtifact, setDeliverableArtifact] = useState(handoff?.deliverable?.artifact ?? '')
+  const [reviewNote, setReviewNote] = useState('')
+
   useEffect(() => {
     setTitle(issue.title)
-    setDescription(issue.description ?? '')
-  }, [issue.id, issue.title, issue.description])
+    setDescription(parsed.body)
+    setApprovalRequired(parsed.handoff?.approvalRequired ?? true)
+    setDeliverableSummary(parsed.handoff?.deliverable?.summary ?? '')
+    setDeliverableArtifact(parsed.handoff?.deliverable?.artifact ?? '')
+  }, [issue.id, issue.title, parsed.body, parsed.handoff])
   // A question asked about one issue is not asked about the next one opened.
   useEffect(() => {
     setConfirming(false)
     setRefused(null)
+    setReviewNote('')
   }, [issue.id])
 
   const removeIssue = async () => {
@@ -89,8 +128,74 @@ export function IssueDrawer({
     const nextTitle = title.trim() || issue.title
     patchIssue({
       title: nextTitle,
-      description: description.trim(),
+      description: formatHandoff(description, handoff),
     })
+  }
+
+  const handOffTo = (person: Person) => {
+    const meta = createHandoff({
+      owner: {
+        id: person.id,
+        name: person.name,
+        kind: person.bot ? 'bot' : 'person',
+        face: person.face,
+      },
+      handedOffBy: actorName,
+      approvalRequired,
+    })
+    patchIssue(issueHandoffPatch(issue, meta, description))
+    if (approvalRequired) {
+      setAsideKind('inbox')
+      showAside()
+    }
+  }
+
+  const onSaveDeliverable = () => {
+    const clean = deliverableSummary.trim()
+    if (!clean) return
+    const assignee = issue.people[0]
+    const base =
+      handoff ??
+      createHandoff({
+        owner: {
+          id: assignee?.id ?? 'owner',
+          name: assignee?.name ?? actorName,
+          kind: assignee?.bot ? 'bot' : 'person',
+          face: assignee?.face,
+        },
+        handedOffBy: actorName,
+        approvalRequired,
+      })
+    const next = submitDeliverable(base, {
+      summary: clean,
+      artifact: deliverableArtifact.trim() || undefined,
+      completedBy: base.owner.name,
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    if (next.approvalState === 'pending') {
+      setAsideKind('inbox')
+      showAside()
+    }
+  }
+
+  const onApprove = () => {
+    if (!handoff) return
+    const next = approveHandoff(handoff, {
+      approvedBy: actorName,
+      note: reviewNote.trim() || undefined,
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    setReviewNote('')
+  }
+
+  const onRequestChanges = () => {
+    if (!handoff) return
+    const next = requestChanges(handoff, {
+      reviewedBy: actorName,
+      note: reviewNote.trim() || 'Please revise and resubmit.',
+    })
+    patchIssue(issueHandoffPatch(issue, next, description))
+    setReviewNote('')
   }
 
   const toggleLabel = (label: string) => {
@@ -366,16 +471,38 @@ export function IssueDrawer({
             </XStack>
           </YStack>
 
-          {/* Assignee / Bot Selector */}
+          {/* Assignee / Owner (Person or @Bot) */}
           <YStack gap={8}>
-            <XStack items="center" gap={6}>
-              <User size={12} color="$dim" />
-              <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
-                Assignee
-              </SizableText>
+            <XStack items="center" justify="space-between" gap={6}>
+              <XStack items="center" gap={6}>
+                <User size={12} color="$dim" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                  Owner & Handoff
+                </SizableText>
+              </XStack>
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                items="center"
+                gap={5}
+                px={7}
+                py={2}
+                rounded={round.field}
+                bg="$raised"
+                borderWidth={1}
+                borderColor={approvalRequired ? '$ink' : '$edge'}
+                focusVisibleStyle={ring}
+                onPress={() => setApprovalRequired((v) => !v)}
+              >
+                <ShieldCheck size={11} color={approvalRequired ? '$ink' : '$soft'} />
+                <SizableText fontSize={rung.chip} fontWeight="600" color={approvalRequired ? '$ink' : '$soft'}>
+                  {approvalRequired ? 'Approval required' : 'Auto-approve'}
+                </SizableText>
+              </XStack>
             </XStack>
             <XStack gap={6} flexWrap="wrap">
-              {people.slice(0, 10).map((person) => {
+              {people.slice(0, 12).map((person) => {
                 const active = currentAssigneeId === person.id
                 return (
                   <XStack
@@ -391,16 +518,185 @@ export function IssueDrawer({
                     bg={active ? '$hover' : '$raised'}
                     borderWidth={1}
                     borderColor={active ? '$ink' : '$edge'}
-                    onPress={() => patchIssue({ assigneeId: person.id })}
+                    onPress={() => handOffTo(person)}
                   >
-                    <People people={[person]} size={18} show={1} />
+                    {person.bot ? (
+                      <Bot size={13} color="$ink" />
+                    ) : (
+                      <People people={[person]} size={18} show={1} />
+                    )}
                     <SizableText fontSize={rung.chip} fontWeight={active ? '700' : '500'} color={active ? '$ink' : '$soft'}>
-                      {person.name.split(' ')[0]}
+                      {person.bot ? `@${person.name}` : person.name.split(' ')[0]}
                     </SizableText>
                   </XStack>
                 )
               })}
             </XStack>
+          </YStack>
+
+          {/* Approval Gate & Resulting Deliverable */}
+          <YStack
+            data-testid="issue-handoff-panel"
+            p={12}
+            gap={10}
+            rounded={round.card}
+            bg="$raised"
+            borderWidth={1}
+            borderColor="$edge"
+          >
+            <XStack items="center" justify="space-between" gap={8}>
+              <XStack items="center" gap={6}>
+                <Send size={13} color="$ink" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$ink" {...caps}>
+                  Approval & Deliverable
+                </SizableText>
+              </XStack>
+              {handoff ? (
+                <XStack
+                  px={7}
+                  py={2}
+                  rounded={round.pill}
+                  style={{
+                    backgroundColor:
+                      handoff.approvalState === 'approved'
+                        ? state.done
+                        : handoff.approvalState === 'pending'
+                          ? paint.alert
+                          : handoff.approvalState === 'changes_requested'
+                            ? paint.composerWarn
+                            : state.doing,
+                  }}
+                >
+                  <SizableText
+                    fontSize={rung.chip}
+                    fontWeight="700"
+                    style={{ color: handoff.approvalState === 'pending' ? paint.panel : paint.ground }}
+                  >
+                    {approvalLabel(handoff.approvalState)}
+                  </SizableText>
+                </XStack>
+              ) : null}
+            </XStack>
+
+            {handoff ? (
+              <SizableText fontSize={rung.small} color="$soft">
+                {`Owned by ${handoff.owner.kind === 'bot' ? `@${handoff.owner.name}` : handoff.owner.name} · handed off by ${handoff.handedOffBy}`}
+              </SizableText>
+            ) : (
+              <SizableText fontSize={rung.small} color="$soft">
+                Pick a teammate or @bot above to hand off work, attach a deliverable, and route it to the Approval Inbox.
+              </SizableText>
+            )}
+
+            {handoff?.deliverable ? (
+              <YStack p={10} gap={4} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                <XStack items="center" justify="space-between" gap={6}>
+                  <XStack items="center" gap={5}>
+                    <FileCheck2 size={13} color={handoff.deliverable.verified ? state.done : paint.ink} />
+                    <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
+                      {handoff.deliverable.verified ? 'Verified deliverable' : 'Submitted deliverable'}
+                    </SizableText>
+                  </XStack>
+                  <SizableText fontSize={rung.chip} color="$dim">
+                    {handoff.deliverable.completedBy}
+                  </SizableText>
+                </XStack>
+                <SizableText fontSize={rung.small} color="$ink">
+                  {handoff.deliverable.summary}
+                </SizableText>
+                {handoff.deliverable.artifact ? (
+                  <SizableText fontSize={rung.chip} style={{ color: paint.accent }} numberOfLines={1}>
+                    {handoff.deliverable.artifact}
+                  </SizableText>
+                ) : null}
+              </YStack>
+            ) : null}
+
+            {handoff?.approvalNote ? (
+              <SizableText fontSize={rung.chip} color="$quiet">
+                {`${handoff.approvedBy ?? 'Reviewer'}: ${handoff.approvalNote}`}
+              </SizableText>
+            ) : null}
+
+            {/* Deliverable submission inputs */}
+            <YStack gap={6}>
+              <Input
+                height={30}
+                fontSize={12}
+                placeholder="Deliverable summary (e.g. PR 412 verified, report ready)..."
+                value={deliverableSummary}
+                onChangeText={setDeliverableSummary}
+                bg="$panel"
+                borderColor="$edge"
+              />
+              <XStack gap={6}>
+                <Input
+                  flex={1}
+                  height={28}
+                  fontSize={11}
+                  placeholder="Artifact link or path (optional)"
+                  value={deliverableArtifact}
+                  onChangeText={setDeliverableArtifact}
+                  bg="$panel"
+                  borderColor="$edge"
+                />
+                <Button
+                  data-testid="drawer-submit-deliverable"
+                  size="xs"
+                  height={28}
+                  px={10}
+                  disabled={!deliverableSummary.trim()}
+                  style={{ backgroundColor: paint.accent }}
+                  onPress={onSaveDeliverable}
+                >
+                  <SizableText fontSize={rung.chip} fontWeight="700" style={{ color: paint.ground }}>
+                    {handoff?.deliverable ? 'Update result' : 'Submit result'}
+                  </SizableText>
+                </Button>
+              </XStack>
+            </YStack>
+
+            {/* Reviewer Approval Controls */}
+            {handoff && handoff.approvalState !== 'approved' ? (
+              <YStack gap={6} pt={4} borderTopWidth={1} borderColor="$edge">
+                <Input
+                  height={28}
+                  fontSize={11}
+                  placeholder="Approval or revision note (optional)..."
+                  value={reviewNote}
+                  onChangeText={setReviewNote}
+                  bg="$panel"
+                  borderColor="$edge"
+                />
+                <XStack gap={8}>
+                  <Button
+                    data-testid="drawer-approve-handoff"
+                    size="xs"
+                    height={28}
+                    flex={1}
+                    style={{ backgroundColor: state.done }}
+                    onPress={onApprove}
+                  >
+                    <CheckCircle2 size={13} color={paint.ground} />
+                    <SizableText fontSize={rung.chip} fontWeight="700" style={{ color: paint.ground }}>
+                      Approve & Complete
+                    </SizableText>
+                  </Button>
+                  <Button
+                    data-testid="drawer-request-changes"
+                    size="xs"
+                    height={28}
+                    variant="outline"
+                    onPress={onRequestChanges}
+                  >
+                    <RotateCcw size={12} />
+                    <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                      Request changes
+                    </SizableText>
+                  </Button>
+                </XStack>
+              </YStack>
+            ) : null}
           </YStack>
 
           {/* Labels / Tags */}

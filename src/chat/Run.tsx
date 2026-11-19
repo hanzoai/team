@@ -15,7 +15,7 @@
  * though nothing was copied.
  */
 import { Avatar, AvatarFallback, AvatarImage, SizableText, XStack, YStack } from '@hanzo/ui'
-import { MessageSquare, SmilePlus } from '@hanzogui/lucide-icons-2'
+import { MessageSquare, Send, SmilePlus } from '@hanzogui/lucide-icons-2'
 
 import { paint } from '~/theme/theme.ts'
 import { press } from '~/shell'
@@ -40,11 +40,12 @@ export type RunProps = {
   me: string
   onReact: (message: Message, emoji: string) => void
   onOpen: (message: Message) => void
+  onHandoff?: (message: Message) => void
   /** The message whose thread is open, so its row can say so. */
   open?: string
 }
 
-export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, open }: RunProps) {
+export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, onHandoff, open }: RunProps) {
   const name = nameOf(people, author)
   const person = people.find((p) => p.name === name)
 
@@ -71,6 +72,7 @@ export function Run({ author, at, messages, people, reactions, me, onReact, onOp
             me={me}
             onReact={onReact}
             onOpen={onOpen}
+            onHandoff={onHandoff}
             open={open === m.id}
           />
         ))}
@@ -92,6 +94,7 @@ function Said({
   me,
   onReact,
   onOpen,
+  onHandoff,
   open,
 }: {
   message: Message
@@ -99,6 +102,7 @@ function Said({
   me: string
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
+  onHandoff?: (m: Message) => void
   open: boolean
 }) {
   const groups = tally(reactions)
@@ -206,6 +210,11 @@ function Said({
         <Control label="Reply in thread" onPress={() => onOpen(message)}>
           <MessageSquare size={15} color="$soft" />
         </Control>
+        {onHandoff ? (
+          <Control label="Hand off work" onPress={() => onHandoff(message)}>
+            <Send size={14} color="$soft" />
+          </Control>
+        ) : null}
       </XStack>
     </YStack>
   )

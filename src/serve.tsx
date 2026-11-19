@@ -22,6 +22,7 @@ import { amend, components, issues, keys, move, open, people, project as readPro
 import { attach, remove as removeDoc } from '~/data/write.ts'
 import { serve, useUnseen } from '~/inbox/feed.ts'
 import type { Note, Span } from '~/inbox/note.ts'
+import { setHandoffSpace, syncBoardHandoffs, usePendingApprovals } from '~/handoff/store.ts'
 import { setNotices, setTodo } from '~/shell'
 import type { Standby } from '~/tracker/board/standby.ts'
 import type { Issue, IssuePatch, Person, Priority, Source as Board, Status as Column } from '~/tracker/board/model.ts'
@@ -60,8 +61,25 @@ const done = (issue: Doc): number => {
   return Math.max(0, Math.min(1, (issue.reportedTime ?? 0) / estimate))
 }
 
+const isBotPerson = (who: Human): boolean => {
+  const rec = who as Record<string, unknown>
+  const mixin = rec['contact:mixin:Employee']
+  const pos =
+    typeof rec.position === 'string'
+      ? rec.position
+      : mixin && typeof mixin === 'object' && typeof (mixin as Record<string, unknown>).position === 'string'
+        ? String((mixin as Record<string, unknown>).position)
+        : ''
+  return pos === 'Agent'
+}
+
 /** A platform person, as the board draws one. */
-const face = (who: Human): Person => ({ id: who._id, name: nameOf(who), face: who.avatar ?? undefined })
+const face = (who: Human): Person => ({
+  id: who._id,
+  name: nameOf(who),
+  face: who.avatar ?? undefined,
+  bot: isBotPerson(who) || undefined,
+})
 
 /**
  * Everyone on a card: the assignee first, then the rest of the collaborators.
@@ -464,12 +482,30 @@ export const Serve = () => {
     })
   }, [plane, current, standing])
 
+  useEffect(() => {
+    setHandoffSpace(current?.uuid ?? 'default')
+  }, [current?.uuid])
+
   return (
     <>
+      <HandoffsBridge />
       <Waiting />
       <Left />
     </>
   )
+}
+
+/** Keeps the Approval Inbox synced with every handed-off issue in the open space. */
+const HandoffsBridge = () => {
+  const source = useBoard()
+  useEffect(() => {
+    if (!source) return
+    return source.watch(
+      (next) => syncBoardHandoffs(next, source),
+      () => {},
+    )
+  }, [source])
+  return null
 }
 
 /**
@@ -481,7 +517,8 @@ export const Serve = () => {
  */
 const Waiting = () => {
   const waiting = useUnseen()
-  useEffect(() => setNotices(waiting), [waiting])
+  const pendingApprovals = usePendingApprovals().length
+  useEffect(() => setNotices(waiting + pendingApprovals), [waiting, pendingApprovals])
   return null
 }
 

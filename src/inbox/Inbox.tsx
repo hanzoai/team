@@ -13,7 +13,7 @@
  * Five states, each entered deliberately and none inheriting a neighbour's
  * verdict — see fixture.ts. Only the last of them has a reference.
  */
-import { CopyCheck, List as ListMark, MessageCircleMore, X } from '@hanzogui/lucide-icons-2'
+import { CopyCheck, List as ListMark, MessageCircleMore, ShieldCheck, X } from '@hanzogui/lucide-icons-2'
 import {
   ScrollArea,
   SizableText,
@@ -27,11 +27,13 @@ import {
 } from '@hanzo/ui'
 import { useState, type ReactNode } from 'react'
 
+import { useHandoffs, usePendingApprovals } from '~/handoff/store.ts'
 import { hideAside } from '~/shell/aside.ts'
 import { PAD } from '~/shell/measure.ts'
 import { gap, paint, ring, round, rung } from '~/theme/theme'
+import { ApprovalCard } from './ApprovalCard.tsx'
 import { see, seeAll, useNotes, useUnseen } from './feed.ts'
-import { inTab, TABS, unseen, type Note, type Tab } from './note.ts'
+import { inTab, unseen, type Note, type Tab } from './note.ts'
 import { press } from '~/shell'
 import { Row } from './Row.tsx'
 
@@ -47,10 +49,12 @@ const MARK = 17
 const BADGE = 16
 const SHUT = 24
 
+type InboxTab = Tab | 'approvals'
+const INBOX_TABS: readonly InboxTab[] = ['all', 'approvals', 'task', 'chat'] as const
 type Filter = 'all' | 'unread' | 'mentions'
 
-const face = { all: ListMark, task: CopyCheck, chat: MessageCircleMore } as const
-const label = { all: 'All', task: 'Tasks', chat: 'Chat' } as const
+const face = { all: ListMark, approvals: ShieldCheck, task: CopyCheck, chat: MessageCircleMore } as const
+const label = { all: 'All', approvals: 'Approvals', task: 'Tasks', chat: 'Chat' } as const
 
 const hasMention = (note: Note): boolean =>
   note.line.some((s) => s.mention || s.text.includes('mentioned')) ||
@@ -63,17 +67,47 @@ const Say = ({ children }: { children: ReactNode }) => (
   </YStack>
 )
 
+const ApprovalsFeed = ({ filter }: { filter: Filter }) => {
+  const handoffs = useHandoffs()
+  const shown =
+    filter === 'unread'
+      ? handoffs.filter((h) => h.meta.approvalState === 'pending')
+      : handoffs
+
+  if (shown.length === 0)
+    return (
+      <Say>
+        <SizableText size={rung.body} color={paint.dim} text="center">
+          {filter === 'unread'
+            ? 'No pending approvals right now.'
+            : 'No handoffs yet. Hand off work from Chat or an issue to track ownership, approval, and deliverables here.'}
+        </SizableText>
+      </Say>
+    )
+
+  return (
+    <ScrollArea data-testid="approval-inbox-list" flex={1} pt={LIST}>
+      <YStack role="list">
+        {shown.map((rec) => (
+          <ApprovalCard key={rec.id} record={rec} />
+        ))}
+      </YStack>
+    </ScrollArea>
+  )
+}
+
 const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
   const feed = useNotes()
+  const pendingApprovals = usePendingApprovals()
 
-  if (feed.phase === 'loading')
+  if (feed.phase === 'loading' && pendingApprovals.length === 0)
     return (
       <Say>
         <Spinner />
       </Say>
     )
 
-  if (feed.phase === 'failure')
+  if (feed.phase === 'failure' && pendingApprovals.length === 0)
     return (
       <Say>
         <SizableText size={rung.body} color={paint.mute}>
@@ -97,8 +131,9 @@ const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
     if (filter === 'mentions') return hasMention(n)
     return true
   })
+  const showApprovalsHere = tab === 'all' && filter !== 'mentions' && pendingApprovals.length > 0
 
-  if (notes.length === 0)
+  if (notes.length === 0 && !showApprovalsHere)
     return (
       <Say>
         <SizableText size={rung.body} color={paint.dim}>
@@ -114,6 +149,9 @@ const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
   return (
     <ScrollArea data-parity-key="inbox.list" flex={1} pt={LIST}>
       <YStack role="list">
+        {showApprovalsHere
+          ? pendingApprovals.map((rec) => <ApprovalCard key={rec.id} record={rec} />)
+          : null}
         {notes.map((n) => (
           <Row key={n.id} note={n} onSee={see} />
         ))}
@@ -123,11 +161,14 @@ const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
 }
 
 export const Inbox = () => {
-  const [tab, setTab] = useState<Tab>('all')
+  const [tab, setTab] = useState<InboxTab>('all')
   const [filter, setFilter] = useState<Filter>('all')
   const feed = useNotes()
   const notes = feed.data ?? []
-  const unreadTotal = useUnseen()
+  const unreadNotes = useUnseen()
+  const handoffs = useHandoffs()
+  const pendingApprovals = usePendingApprovals()
+  const unreadTotal = unreadNotes + pendingApprovals.length
   const mentionCount = notes.filter(hasMention).length
 
   return (
@@ -187,7 +228,7 @@ export const Inbox = () => {
 
       <Tabs
         value={tab}
-        onValueChange={(v: string) => setTab(v as Tab)}
+        onValueChange={(v: string) => setTab(v as InboxTab)}
         orientation="horizontal"
         flex={1}
         minH={0}
@@ -206,14 +247,20 @@ export const Inbox = () => {
             bg="transparent"
             rounded={0}
           >
-            {TABS.map((t) => {
+            {INBOX_TABS.map((t) => {
               const on = t === tab
               const Mark = face[t]
-              const count = t === 'all' ? 0 : unseen(notes, t)
+              const count =
+                t === 'all'
+                  ? 0
+                  : t === 'approvals'
+                    ? pendingApprovals.length
+                    : unseen(notes, t)
               return (
                 <TabsTrigger
                   key={t}
                   data-parity-key={`inbox.tab.${t}`}
+                  data-testid={`inbox-tab-${t}`}
                   value={t}
                   height="100%"
                   flexDirection="row"
@@ -267,8 +314,8 @@ export const Inbox = () => {
         >
           {(
             [
-              ['all', `All (${notes.length})`],
-              ['unread', `Unread (${unreadTotal})`],
+              ['all', `All (${notes.length + handoffs.length})`],
+              ['unread', `Pending (${unreadTotal})`],
               ['mentions', `Mentions (${mentionCount})`],
             ] as const
           ).map(([key, text]) => {
@@ -298,9 +345,15 @@ export const Inbox = () => {
           })}
         </XStack>
 
-        {TABS.map((t) => (
+        {INBOX_TABS.map((t) => (
           <TabsContent key={t} value={t} flex={1} minH={0}>
-            {t === tab ? <Feed tab={t} filter={filter} /> : null}
+            {t === tab ? (
+              t === 'approvals' ? (
+                <ApprovalsFeed filter={filter} />
+              ) : (
+                <Feed tab={t} filter={filter} />
+              )
+            ) : null}
           </TabsContent>
         ))}
       </Tabs>

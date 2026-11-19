@@ -17,20 +17,44 @@
 import { Popover } from '@hanzo/gui'
 import { SizableText, XStack, YStack } from '@hanzo/ui'
 import { EmptyState } from '@hanzo/ui/product'
-import { ArrowUpRight, Bell, Bot, Hash, Lock, MessagesSquare, Plus } from '@hanzogui/lucide-icons-2'
+import {
+  ArrowUpRight,
+  Bell,
+  Bot,
+  CheckCircle2,
+  FileCheck2,
+  Hash,
+  Lock,
+  MessagesSquare,
+  Plus,
+  ShieldAlert,
+  User,
+} from '@hanzogui/lucide-icons-2'
 import { useCallback, useMemo, useState } from 'react'
 import { Navigate, useParams } from 'react-router'
 
 import { invalidate, useRead } from '~/data/query.ts'
+import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
-import { press, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
-import { paint, ring, round, rung } from '~/theme/theme'
+import {
+  approvalLabel,
+  createHandoff,
+  formatHandoff,
+  handoffChatMessage,
+  handoffLabels,
+} from '~/handoff/handoff.ts'
+import { addHandoffRecord, useRoomHandoffs } from '~/handoff/store.ts'
+import { useBoard, useProjects } from '~/serve.tsx'
+import { useHanzoPreferences } from '~/settings/preferences.ts'
+import { press, setAsideKind, showAside, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
+import { paint, ring, round, rung, state } from '~/theme/theme'
 import { Face } from './Face.tsx'
 import { addable, botIn, hanzoBot, withId } from './bots.ts'
 import { openDm } from './dm.ts'
 import { addToChannel } from './members.ts'
 import { react, reply, say, titled, unreact, type Message, type Person, type Room } from './chat.ts'
 import { Composer } from './Composer.tsx'
+import { HandoffModal, type HandoffSubmit } from './HandoffModal.tsx'
 import { Failed, List, Middle, Waiting } from './List.tsx'
 import { People } from './People.tsx'
 import { useLive, useMessages, usePeople, useReactions, useReplies, useRooms } from './read.ts'
@@ -75,12 +99,81 @@ export function Chat() {
   useLive(room?.id ?? null)
 
   const [thread, setThread] = useState<string | null>(null)
+  const [handoffDraft, setHandoffDraft] = useState<string | null>(null)
   const parent = messages.find((m) => m.id === thread) ?? null
   const answers = useReplies(parent?.id ?? null)
+
+  const { who: sessionUser } = useSession()
+  const { chat: chatPrefs } = useHanzoPreferences()
+  const boardSource = useBoard()
+  const allProjects = useProjects().data ?? []
+  const projectOptions = useMemo(
+    () =>
+      allProjects
+        .filter((p) => !p.archived)
+        .map((p) => ({ id: p._id, name: p.name, identifier: p.identifier })),
+    [allProjects],
+  )
+  const roomHandoffs = useRoomHandoffs(room?.id)
 
   const me = plane?.account ?? ''
   const people = roster.data ?? []
   const reactions = feelings.data ?? []
+
+  const submitHandoff = useCallback(
+    async (payload: HandoffSubmit) => {
+      if (!plane || !room) return
+      const roomName = room.kind === 'direct' ? titled(room, people) : `#${room.name}`
+      const handedOffBy = sessionUser?.label || sessionUser?.name || 'Teammate'
+      const now = Date.now()
+      const meta = createHandoff({
+        owner: payload.owner,
+        handedOffBy,
+        approvalRequired: payload.approvalRequired,
+        sourceRoomId: room.id,
+        sourceRoomName: roomName,
+        now,
+      })
+      const proj = payload.projectId ? projectOptions.find((p) => p.id === payload.projectId) : undefined
+
+      // 1. Post the real @owner handoff message in the active Chat room (triggers @bot notifications).
+      await say(
+        plane,
+        room,
+        handoffChatMessage({
+          title: payload.title,
+          owner: payload.owner,
+          brief: payload.brief,
+          approvalRequired: payload.approvalRequired,
+          issueKey: proj ? `${proj.identifier}` : undefined,
+        }),
+        people,
+      )
+
+      // 2. Persist a real tracker issue when a project board is available.
+      if (boardSource?.add && payload.projectId) {
+        await boardSource.add('progress', payload.title, {
+          description: formatHandoff(payload.brief, meta),
+          assigneeId: payload.owner.id,
+          labels: handoffLabels([], meta.approvalState, false),
+          project: payload.projectId,
+        })
+      }
+
+      // 3. Immediately surface in the Approval Inbox & room handoff strip.
+      addHandoffRecord({
+        id: `chat:${room.id}:${now}`,
+        title: payload.title,
+        body: payload.brief,
+        status: 'progress',
+        meta,
+        updatedAt: now,
+      })
+      setAsideKind('inbox')
+      showAside()
+    },
+    [plane, room, people, sessionUser, projectOptions, boardSource],
+  )
 
   /**
    * React, or take it back.
@@ -129,6 +222,78 @@ export function Chat() {
       <YStack flex={1} minW={0} minH={0}>
         <Header room={room} people={people} agent={agent} space={space} org={current?.org ?? null} />
 
+        {roomHandoffs.length > 0 ? (
+          <XStack
+            data-testid="room-handoff-strip"
+            px={16}
+            py={7}
+            gap={8}
+            items="center"
+            borderBottomWidth={1}
+            borderColor="$edge"
+            bg="$raised"
+            flexWrap="wrap"
+          >
+            {roomHandoffs.slice(0, 3).map((h) => {
+              const pillBg =
+                h.meta.approvalState === 'approved'
+                  ? state.done
+                  : h.meta.approvalState === 'pending'
+                    ? paint.alert
+                    : h.meta.approvalState === 'changes_requested'
+                      ? paint.composerWarn
+                      : state.doing
+              const pillFg = h.meta.approvalState === 'pending' ? paint.panel : paint.ground
+              return (
+                <XStack
+                  key={h.id}
+                  {...press(() => {
+                    setAsideKind('inbox')
+                    showAside()
+                  }, `Review handoff ${h.title}`)}
+                  px={8}
+                  py={4}
+                  gap={6}
+                  rounded={round.field}
+                  bg="$panel"
+                  borderWidth={1}
+                  borderColor="$edge"
+                  items="center"
+                  hoverStyle={{ background: '$hover' }}
+                  focusVisibleStyle={ring}
+                >
+                  {h.meta.owner.kind === 'bot' ? (
+                    <Bot size={12} color="$ink" />
+                  ) : (
+                    <User size={12} color="$ink" />
+                  )}
+                  <SizableText fontSize={rung.chip} fontWeight="600" color="$ink" numberOfLines={1}>
+                    {`${h.meta.owner.kind === 'bot' ? `@${h.meta.owner.name}` : h.meta.owner.name} · ${h.title}`}
+                  </SizableText>
+                  <XStack px={6} py={1} rounded={round.pill} items="center" gap={3} style={{ backgroundColor: pillBg }}>
+                    {h.meta.approvalState === 'approved' ? (
+                      <CheckCircle2 size={10} color={pillFg} />
+                    ) : (
+                      <ShieldAlert size={10} color={pillFg} />
+                    )}
+                    <SizableText fontSize={rung.chip} fontWeight="700" style={{ color: pillFg }}>
+                      {approvalLabel(h.meta.approvalState)}
+                    </SizableText>
+                  </XStack>
+                  {h.meta.deliverable ? (
+                    <XStack items="center" gap={3}>
+                      <FileCheck2 size={11} color={h.meta.deliverable.verified ? state.done : paint.ink} />
+                      <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1}>
+                        {h.meta.deliverable.summary}
+                      </SizableText>
+                    </XStack>
+                  ) : null}
+                </XStack>
+              )
+            })}
+          </XStack>
+        ) : null}
+
         <List
           room={room}
           phase={conversation.phase}
@@ -140,6 +305,7 @@ export function Chat() {
           onRetry={conversation.reload}
           onReact={onReact}
           onOpen={(m) => setThread(m.id)}
+          onHandoff={(m) => setHandoffDraft(m.lines.join('\n'))}
           open={thread ?? undefined}
         />
 
@@ -147,8 +313,22 @@ export function Chat() {
           placeholder={room.kind === 'direct' ? `Message ${titled(room, people)}` : `Message #${room.name}`}
           people={people}
           onSend={(text) => say(plane, room, text, people)}
+          onHandoff={(draft) => setHandoffDraft(draft)}
         />
       </YStack>
+
+      {handoffDraft !== null ? (
+        <HandoffModal
+          initialText={handoffDraft}
+          people={people}
+          defaultOwnerId={agent?.id}
+          defaultApprovalRequired={chatPrefs.approvalMode !== 'auto'}
+          projects={projectOptions}
+          roomLabel={room.kind === 'direct' ? titled(room, people) : `#${room.name}`}
+          onSubmit={submitHandoff}
+          onClose={() => setHandoffDraft(null)}
+        />
+      ) : null}
 
       {parent ? (
         <Thread
