@@ -29,9 +29,8 @@ export const SCALE = 1.5
 /** The icon rail. Fixed at every width, including the narrowest: it
  *  is how you leave the screen you are on. */
 export const RAIL = 64
-/** The navigator. Fixed, dragged by the grip, a drawer when there is
- *  no room for it. */
-export const NAV = 268
+/** The navigator. Unified 256px collapsible sidebar (⌘B), dragged by the grip, a drawer when narrow. */
+export const NAV = 256
 export const NAV_MIN = 220
 export const NAV_MAX = 380
 /** The dismissible right panel. */

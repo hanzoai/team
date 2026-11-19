@@ -15,9 +15,11 @@
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** The app. The rail and the navigator sit directly on it. */
+  /** The app outer obsidian floor (#050505). */
   ground: role('ground'),
-  /** The board and the inbox — one lift off the ground. */
+  /** The 256px collapsible left sidebar (#09090b). */
+  sidebar: role('sidebar'),
+  /** The inset stage pane (#0f0f12) — one lift off the ground. */
   panel: role('panel'),
   /** A card, and an unread row: the same rung, because both are objects. */
   card: role('card'),
@@ -137,7 +139,7 @@ export const gap = {
 
 export const round = {
   card: '$1',
-  panel: '$1',
+  panel: '$3',
   field: '$1',
   pill: '$10',
 } as const

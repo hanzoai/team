@@ -1,28 +1,45 @@
 /**
- * THE CHAT SCREEN — a room's header, its conversation, and a composer.
- *
- * The header is the reference board's own, one field at a time: the quiet line
- * the breadcrumb occupies carries the topic, the title row carries the name and
- * the member faces, and the whole thing sits on the board's inset. There is no
- * tab row, because a channel has one view and the board's tabs exist to choose
- * between three — a row of one tab is a row that says nothing.
+ * THE CHAT SCREEN — a room's header, structured task handoffs & approval inbox,
+ * its conversation, and a composer.
  *
  * Everything below the header is the same for a channel and a direct message.
- * The difference between them is a glyph and a name, which is where it belongs.
+ * Channels additionally support assigning / handing off tasks to @hanzo-dev or
+ * teammates (#67-#68) and reviewing + approving waiting deliverables inside
+ * #approvals (#69-#70).
  */
-import { SizableText, XStack, YStack } from '@hanzo/ui'
+import { Input, SizableText, XStack, YStack } from '@hanzo/ui'
 import { EmptyState } from '@hanzo/ui/product'
-import { Bell, Code, Hash, Lock, MessagesSquare, Monitor } from '@hanzogui/lucide-icons-2'
-import { useCallback, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import {
+  ArrowRight,
+  Bell,
+  Check,
+  Code,
+  Hash,
+  Lock,
+  MessagesSquare,
+  Monitor,
+  Plus,
+} from '@hanzogui/lucide-icons-2'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useNavigate, useParams } from 'react-router'
 
 import { HANZO_AGENTS, humanSchedule, type AgentPreset } from '~/data/agents.ts'
 import { invalidate } from '~/data/query.ts'
 import { useSpace } from '~/data/space.tsx'
 import { press, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
-import { paint, ring, round, rung } from '~/theme/theme'
+import { caps, paint, ring, round, rung, state } from '~/theme/theme'
 import { react, reply, say, unreact, type Message, type Room } from './chat.ts'
 import { Composer } from './Composer.tsx'
+import {
+  approveTaskHandoff,
+  createTaskHandoff,
+  HANDOFF_ASSIGNEES,
+  handoffsForRoom,
+  readHandoffs,
+  requestChangesOnHandoff,
+  subscribeHandoffs,
+  type TaskHandoff,
+} from './handoff.ts'
 import { Failed, List, Middle, Waiting } from './List.tsx'
 import { People } from './People.tsx'
 import { useLive, useMessages, usePeople, useReactions, useReplies, useRooms } from './read.ts'
@@ -39,10 +56,15 @@ const LEGACY_DM_ALIAS: Record<string, string> = {
 
 export function Chat() {
   const { id: rawId } = useParams()
+  const navigate = useNavigate()
   const id = rawId ? (LEGACY_DM_ALIAS[rawId] ?? rawId) : rawId
   const { plane } = useSpace()
   const rooms = useRooms()
   const room = useMemo(() => (rooms.data ?? []).find((r) => r.id === id) ?? null, [rooms.data, id])
+  const approvalsRoom = useMemo(
+    () => (rooms.data ?? []).find((r) => r.id === 'c-approvals') ?? null,
+    [rooms.data],
+  )
 
   const conversation = useMessages(room?.id ?? null)
   const roster = usePeople()
@@ -55,17 +77,31 @@ export function Chat() {
   const parent = messages.find((m) => m.id === thread) ?? null
   const answers = useReplies(parent?.id ?? null)
 
+  const [handoffs, setHandoffs] = useState<TaskHandoff[]>(() => readHandoffs())
+  const [composerOpen, setComposerOpen] = useState(false)
+  const [taskTitle, setTaskTitle] = useState('')
+  const [taskDeliverable, setTaskDeliverable] = useState('')
+  const [assigneeHandle, setAssigneeHandle] = useState<string>('@hanzo-dev')
+  const [requireApproval, setRequireApproval] = useState(true)
+
+  useEffect(() => {
+    setHandoffs(readHandoffs())
+    return subscribeHandoffs(() => setHandoffs(readHandoffs()))
+  }, [])
+
   const me = plane?.account ?? ''
   const people = roster.data ?? []
   const reactions = feelings.data ?? []
+  const meDisplay = useMemo(
+    () => people.find((p) => p.id === me)?.name || 'Team Member',
+    [people, me],
+  )
 
-  /**
-   * React, or take it back.
-   *
-   * The same press does both, because a reaction chip is a toggle and a
-   * separate un-react control would be a second thing to find for an action
-   * that has one obvious place.
-   */
+  const roomHandoffs = useMemo(
+    () => (room ? handoffsForRoom(handoffs, room.id) : []),
+    [handoffs, room],
+  )
+
   const onReact = useCallback(
     (message: Message, emoji: string) => {
       if (!plane || !room) return
@@ -79,11 +115,59 @@ export function Chat() {
     [plane, room, reactions, me],
   )
 
-  // The four answers before there is a room, and they are four because they
-  // are four different facts. Rendering an empty panel for the middle two —
-  // which is what one `!room` guard does — makes a screen that is still
-  // reading and a screen that refused indistinguishable from a room with
-  // nothing in it, and the reader is left to guess which.
+  const handleSubmitHandoff = useCallback(() => {
+    if (!plane || !room || !taskTitle.trim()) return
+    const created = createTaskHandoff({
+      title: taskTitle,
+      deliverable: taskDeliverable,
+      assigneeHandle,
+      assignedBy: meDisplay,
+      sourceRoomId: room.id,
+      sourceRoomName: room.name,
+      requireApproval,
+    })
+    setTaskTitle('')
+    setTaskDeliverable('')
+    setComposerOpen(false)
+
+    const summaryLine = created.status === 'waiting_approval'
+      ? `Task handed off to ${created.ownerHandle}: "${created.title}" · Deliverable: ${created.deliverable} · Waiting for approval in #approvals.`
+      : `Task completed by ${created.ownerHandle}: "${created.title}" · Deliverable: ${created.deliverable}.`
+
+    void say(plane, room, summaryLine).then(() => invalidate('chat:messages:'))
+    if (created.status === 'waiting_approval' && approvalsRoom && approvalsRoom.id !== room.id) {
+      void say(
+        plane,
+        approvalsRoom,
+        `Approval requested from #${created.sourceRoomName} · Owner: ${created.ownerHandle} · Task: "${created.title}" · Deliverable: ${created.deliverable}`,
+      ).then(() => invalidate('chat:messages:'))
+    }
+  }, [plane, room, approvalsRoom, taskTitle, taskDeliverable, assigneeHandle, meDisplay, requireApproval])
+
+  const handleApproveHandoff = useCallback(
+    (item: TaskHandoff) => {
+      if (!plane) return
+      const resolved = approveTaskHandoff(item.id, meDisplay)
+      if (!resolved) return
+      const sourceRoom = (rooms.data ?? []).find((r) => r.id === resolved.sourceRoomId)
+      const notice = `Approved by ${meDisplay} · ${resolved.resultSummary ?? ''}`
+      if (approvalsRoom) {
+        void say(plane, approvalsRoom, notice).then(() => invalidate('chat:messages:'))
+      }
+      if (sourceRoom && sourceRoom.id !== approvalsRoom?.id) {
+        void say(plane, sourceRoom, notice).then(() => invalidate('chat:messages:'))
+      }
+    },
+    [plane, meDisplay, rooms.data, approvalsRoom],
+  )
+
+  const handleRequestChanges = useCallback(
+    (item: TaskHandoff) => {
+      requestChangesOnHandoff(item.id, meDisplay)
+    },
+    [meDisplay],
+  )
+
   if (!id) return <Pick />
   if (rooms.phase === 'failure') return <Failed error={rooms.error} onRetry={rooms.reload} />
   if (rooms.phase === 'loading' || !plane) return <Waiting />
@@ -92,7 +176,44 @@ export function Chat() {
   return (
     <XStack flex={1} minH={0}>
       <YStack flex={1} minW={0} minH={0}>
-        <Header room={room} people={people} />
+        <Header
+          room={room}
+          people={people}
+          handoffOpen={composerOpen}
+          onToggleHandoff={() => setComposerOpen((v) => !v)}
+          waitingCount={handoffs.filter((h) => h.status === 'waiting_approval').length}
+          onOpenApprovals={() => navigate('/chat/c-approvals')}
+        />
+
+        {composerOpen ? (
+          <HandoffComposer
+            roomName={room.name}
+            taskTitle={taskTitle}
+            onChangeTitle={setTaskTitle}
+            taskDeliverable={taskDeliverable}
+            onChangeDeliverable={setTaskDeliverable}
+            assigneeHandle={assigneeHandle}
+            onChangeAssignee={setAssigneeHandle}
+            requireApproval={requireApproval}
+            onToggleApproval={() => setRequireApproval((v) => !v)}
+            onSubmit={handleSubmitHandoff}
+            onCancel={() => setComposerOpen(false)}
+          />
+        ) : null}
+
+        {room.id === 'c-approvals' ? (
+          <ApprovalInboxPanel
+            items={roomHandoffs}
+            onApprove={handleApproveHandoff}
+            onRequestChanges={handleRequestChanges}
+            onJumpRoom={(roomId) => navigate(`/chat/${roomId}`)}
+          />
+        ) : roomHandoffs.length > 0 ? (
+          <ChannelHandoffsStrip
+            items={roomHandoffs}
+            onOpenApprovals={() => navigate('/chat/c-approvals')}
+          />
+        ) : null}
 
         <List
           room={room}
@@ -134,15 +255,455 @@ export function Chat() {
   )
 }
 
-/**
- * The room's own header.
- *
- * The topic sits where the board draws its breadcrumb — the quiet line above
- * the title — because it is the same kind of information: where you are, said
- * without weight. A room with no topic leaves the line out rather than filling
- * it with a placeholder.
- */
-function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeople>['data'] }) {
+function HandoffComposer({
+  roomName,
+  taskTitle,
+  onChangeTitle,
+  taskDeliverable,
+  onChangeDeliverable,
+  assigneeHandle,
+  onChangeAssignee,
+  requireApproval,
+  onToggleApproval,
+  onSubmit,
+  onCancel,
+}: {
+  roomName: string
+  taskTitle: string
+  onChangeTitle: (v: string) => void
+  taskDeliverable: string
+  onChangeDeliverable: (v: string) => void
+  assigneeHandle: string
+  onChangeAssignee: (v: string) => void
+  requireApproval: boolean
+  onToggleApproval: () => void
+  onSubmit: () => void
+  onCancel: () => void
+}) {
+  const selectedPreset = HANDOFF_ASSIGNEES.find((a) => a.handle === assigneeHandle)
+  return (
+    <YStack
+      data-testid="handoff-composer"
+      px={20}
+      py={14}
+      gap={10}
+      bg="$background"
+      borderBottomWidth={1}
+      borderBottomColor="$edge"
+    >
+      <XStack items="center" justify="space-between" gap={8} flexWrap="wrap">
+        <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
+          {`Hand off task from #${roomName}`}
+        </SizableText>
+        <SizableText fontSize={rung.chip} color="$quiet">
+          {`Owner after handoff: ${assigneeHandle} (${selectedPreset?.role ?? 'Teammate'})`}
+        </SizableText>
+      </XStack>
+
+      <XStack gap={8} flexWrap="wrap">
+        {HANDOFF_ASSIGNEES.map((item) => {
+          const active = item.handle === assigneeHandle
+          return (
+            <XStack
+              key={item.handle}
+              {...press(() => onChangeAssignee(item.handle), `Assign to ${item.handle}`)}
+              px={10}
+              py={4}
+              rounded={round.pill}
+              bg={active ? '$hover' : '$panel'}
+              borderWidth={1}
+              borderColor={active ? '$bound' : '$edge'}
+              items="center"
+              gap={6}
+              focusVisibleStyle={ring}
+            >
+              <SizableText fontSize={rung.chip} fontWeight={active ? '600' : '500'} color={active ? '$ink' : '$quiet'}>
+                {item.handle}
+              </SizableText>
+            </XStack>
+          )
+        })}
+      </XStack>
+
+      <XStack gap={10} flexWrap="wrap">
+        <Input
+          flex={1}
+          minW={220}
+          height={34}
+          px={10}
+          fontSize={rung.body}
+          color="$ink"
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$edge"
+          rounded={round.field}
+          value={taskTitle}
+          onChangeText={onChangeTitle}
+          placeholder="Task to hand off (e.g. Add webhook signature verification)"
+          aria-label="Task title"
+        />
+        <Input
+          flex={1}
+          minW={220}
+          height={34}
+          px={10}
+          fontSize={rung.body}
+          color="$ink"
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$edge"
+          rounded={round.field}
+          value={taskDeliverable}
+          onChangeText={onChangeDeliverable}
+          placeholder="Expected deliverable (e.g. PR + passing smoke report)"
+          aria-label="Expected deliverable"
+        />
+      </XStack>
+
+      <XStack items="center" justify="space-between" gap={10} flexWrap="wrap">
+        <XStack
+          {...press(onToggleApproval, 'Toggle #approvals gate')}
+          px={9}
+          py={4}
+          rounded={round.field}
+          bg={requireApproval ? '$hover' : '$panel'}
+          borderWidth={1}
+          borderColor={requireApproval ? '$bound' : '$edge'}
+          items="center"
+          gap={6}
+          focusVisibleStyle={ring}
+        >
+          <Check size={12} color={requireApproval ? '$ink' : '$dim'} />
+          <SizableText fontSize={rung.chip} color={requireApproval ? '$ink' : '$quiet'}>
+            {requireApproval
+              ? 'Require human sign-off in #approvals before execution'
+              : 'Execute immediately without approval gate'}
+          </SizableText>
+        </XStack>
+
+        <XStack items="center" gap={8}>
+          <XStack
+            {...press(onCancel, 'Cancel handoff')}
+            px={10}
+            py={5}
+            rounded={round.field}
+            bg="$panel"
+            borderWidth={1}
+            borderColor="$edge"
+            focusVisibleStyle={ring}
+          >
+            <SizableText fontSize={rung.chip} color="$quiet">
+              Cancel
+            </SizableText>
+          </XStack>
+          <XStack
+            data-testid="submit-handoff-btn"
+            {...press(onSubmit, `Hand off to ${assigneeHandle}`)}
+            px={12}
+            py={5}
+            rounded={round.field}
+            bg="$ink"
+            items="center"
+            gap={6}
+            opacity={taskTitle.trim() ? 1 : 0.5}
+            focusVisibleStyle={ring}
+          >
+            <SizableText fontSize={rung.chip} fontWeight="600" style={{ color: paint.panel }}>
+              {`Hand off to ${assigneeHandle}`}
+            </SizableText>
+            <ArrowRight size={12} color={paint.panel} />
+          </XStack>
+        </XStack>
+      </XStack>
+    </YStack>
+  )
+}
+
+function ApprovalInboxPanel({
+  items,
+  onApprove,
+  onRequestChanges,
+  onJumpRoom,
+}: {
+  items: TaskHandoff[]
+  onApprove: (item: TaskHandoff) => void
+  onRequestChanges: (item: TaskHandoff) => void
+  onJumpRoom: (roomId: string) => void
+}) {
+  const waiting = items.filter((h) => h.status === 'waiting_approval')
+  const resolved = items.filter((h) => h.status !== 'waiting_approval')
+
+  return (
+    <YStack
+      data-testid="team-approval-inbox"
+      px={20}
+      py={12}
+      gap={10}
+      bg="$background"
+      borderBottomWidth={1}
+      borderBottomColor="$edge"
+      maxH={320}
+      overflow="scroll"
+    >
+      <XStack items="center" justify="space-between" gap={8}>
+        <SizableText fontSize={rung.chip} fontWeight="600" color="$quiet" {...caps}>
+          {`Approval Inbox · ${waiting.length} waiting · ${resolved.length} resolved`}
+        </SizableText>
+      </XStack>
+
+      {waiting.map((item) => (
+        <YStack
+          key={item.id}
+          data-testid="approval-card-waiting"
+          p={12}
+          gap={6}
+          rounded={round.panel}
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$bound"
+        >
+          <XStack items="center" justify="space-between" gap={8} flexWrap="wrap">
+            <XStack items="center" gap={8} flexWrap="wrap">
+              <YStack width={8} height={8} rounded={round.pill} style={{ background: state.doing }} />
+              <SizableText fontSize={rung.body} fontWeight="600" color="$ink">
+                {item.title}
+              </SizableText>
+            </XStack>
+            <XStack items="center" gap={6}>
+              <XStack px={8} py={2} rounded={round.pill} bg="$hover" borderWidth={1} borderColor="$edge">
+                <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                  {`Owner: ${item.ownerHandle}`}
+                </SizableText>
+              </XStack>
+              <XStack
+                {...press(() => onJumpRoom(item.sourceRoomId), `Open #${item.sourceRoomName}`)}
+                px={8}
+                py={2}
+                rounded={round.pill}
+                bg="$raised"
+                borderWidth={1}
+                borderColor="$edge"
+                focusVisibleStyle={ring}
+              >
+                <SizableText fontSize={rung.chip} color="$quiet">
+                  {`#${item.sourceRoomName}`}
+                </SizableText>
+              </XStack>
+            </XStack>
+          </XStack>
+
+          <SizableText fontSize={rung.small} color="$ink">
+            {`Deliverable: ${item.deliverable}`}
+          </SizableText>
+          <SizableText fontSize={rung.chip} color="$quiet">
+            {`Why decision is needed: ${item.approvalReason}`}
+          </SizableText>
+          <SizableText fontSize={rung.chip} color="$dim">
+            {`What Approve will do: ${item.approveEffect}`}
+          </SizableText>
+
+          <XStack items="center" justify="flex-end" gap={8} pt={4}>
+            <XStack
+              {...press(() => onRequestChanges(item), `Request changes on ${item.title}`)}
+              px={10}
+              py={5}
+              rounded={round.field}
+              bg="$raised"
+              borderWidth={1}
+              borderColor="$edge"
+              focusVisibleStyle={ring}
+            >
+              <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                Request changes
+              </SizableText>
+            </XStack>
+            <XStack
+              data-testid="approve-handoff-btn"
+              {...press(() => onApprove(item), `Approve ${item.title}`)}
+              px={12}
+              py={5}
+              rounded={round.field}
+              bg="$ink"
+              items="center"
+              gap={6}
+              focusVisibleStyle={ring}
+            >
+              <Check size={12} color={paint.panel} />
+              <SizableText fontSize={rung.chip} fontWeight="600" style={{ color: paint.panel }}>
+                Approve & deliver
+              </SizableText>
+            </XStack>
+          </XStack>
+        </YStack>
+      ))}
+
+      {resolved.map((item) => (
+        <YStack
+          key={item.id}
+          data-testid="approval-card-completed"
+          p={10}
+          gap={4}
+          rounded={round.panel}
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$edge"
+        >
+          <XStack items="center" justify="space-between" gap={8} flexWrap="wrap">
+            <XStack items="center" gap={8}>
+              <YStack
+                width={8}
+                height={8}
+                rounded={round.pill}
+                style={{ background: item.status === 'completed' ? state.done : state.todo }}
+              />
+              <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
+                {item.title}
+              </SizableText>
+            </XStack>
+            <XStack
+              {...press(() => onJumpRoom(item.sourceRoomId), `View in #${item.sourceRoomName}`)}
+              px={8}
+              py={2}
+              rounded={round.pill}
+              bg="$raised"
+              borderWidth={1}
+              borderColor="$edge"
+              focusVisibleStyle={ring}
+            >
+              <SizableText fontSize={rung.chip} color="$quiet">
+                {`#${item.sourceRoomName} →`}
+              </SizableText>
+            </XStack>
+          </XStack>
+          {item.resultSummary ? (
+            <SizableText fontSize={rung.chip} color="$ink">
+              {item.resultSummary}
+            </SizableText>
+          ) : null}
+          {item.resultArtifact ? (
+            <SizableText fontSize={rung.chip} color="$dim">
+              {item.resultArtifact}
+            </SizableText>
+          ) : null}
+        </YStack>
+      ))}
+    </YStack>
+  )
+}
+
+function ChannelHandoffsStrip({
+  items,
+  onOpenApprovals,
+}: {
+  items: TaskHandoff[]
+  onOpenApprovals: () => void
+}) {
+  return (
+    <YStack
+      data-testid="channel-handoffs-strip"
+      px={20}
+      py={10}
+      gap={8}
+      bg="$background"
+      borderBottomWidth={1}
+      borderBottomColor="$edge"
+    >
+      <XStack items="center" justify="space-between">
+        <SizableText fontSize={rung.chip} fontWeight="600" color="$quiet" {...caps}>
+          {`Channel Handoffs & Deliverables (${items.length})`}
+        </SizableText>
+        <XStack
+          {...press(onOpenApprovals, 'Open #approvals inbox')}
+          px={8}
+          py={2}
+          rounded={round.pill}
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$edge"
+          focusVisibleStyle={ring}
+        >
+          <SizableText fontSize={rung.chip} color="$quiet">
+            Open #approvals →
+          </SizableText>
+        </XStack>
+      </XStack>
+
+      {items.slice(0, 3).map((item) => (
+        <XStack
+          key={item.id}
+          p={9}
+          rounded={round.field}
+          bg="$panel"
+          borderWidth={1}
+          borderColor="$edge"
+          items="center"
+          justify="space-between"
+          gap={10}
+          flexWrap="wrap"
+        >
+          <YStack flex={1} minW={200} gap={2}>
+            <XStack items="center" gap={6} flexWrap="wrap">
+              <YStack
+                width={7}
+                height={7}
+                rounded={round.pill}
+                style={{
+                  background: item.status === 'completed' ? state.done : state.doing,
+                }}
+              />
+              <SizableText fontSize={rung.small} fontWeight="600" color="$ink">
+                {item.title}
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$quiet">
+                {`· Owner: ${item.ownerHandle}`}
+              </SizableText>
+            </XStack>
+            <SizableText fontSize={rung.chip} color="$dim">
+              {item.status === 'completed' && item.resultSummary
+                ? item.resultSummary
+                : `Deliverable: ${item.deliverable}`}
+            </SizableText>
+          </YStack>
+
+          <XStack
+            {...press(onOpenApprovals, 'Review in #approvals')}
+            px={9}
+            py={4}
+            rounded={round.pill}
+            bg={item.status === 'waiting_approval' ? '$hover' : '$raised'}
+            borderWidth={1}
+            borderColor={item.status === 'waiting_approval' ? '$bound' : '$edge'}
+            focusVisibleStyle={ring}
+          >
+            <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+              {item.status === 'waiting_approval'
+                ? 'Waiting in #approvals →'
+                : item.status === 'completed'
+                  ? 'Completed ✓'
+                  : 'Changes requested'}
+            </SizableText>
+          </XStack>
+        </XStack>
+      ))}
+    </YStack>
+  )
+}
+
+function Header({
+  room,
+  people,
+  handoffOpen,
+  onToggleHandoff,
+  waitingCount,
+  onOpenApprovals,
+}: {
+  room: Room
+  people: ReturnType<typeof usePeople>['data']
+  handoffOpen: boolean
+  onToggleHandoff: () => void
+  waitingCount: number
+  onOpenApprovals: () => void
+}) {
   const [techOpen, setTechOpen] = useState(false)
   const unread = useNotices()
   const asideShowing = useAside()
@@ -153,7 +714,7 @@ function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeo
 
   return (
     <YStack borderBottomWidth={1} borderBottomColor="$edge" bg="$panel">
-      <XStack px={20} py={10} items="center" justify="space-between" gap={12}>
+      <XStack px={20} py={10} items="center" justify="space-between" gap={12} flexWrap="wrap">
         {agent ? (
           <XStack flex={1} minW={0} items="center" gap={12}>
             <YStack position="relative" shrink={0}>
@@ -249,7 +810,50 @@ function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeo
           </XStack>
         )}
 
-        <XStack items="center" gap={8} shrink={0}>
+        <XStack items="center" gap={8} shrink={0} flexWrap="wrap">
+          {room.kind === 'channel' && room.id !== 'c-approvals' ? (
+            <XStack
+              data-testid="open-handoff-composer"
+              {...press(onToggleHandoff, 'Hand off task to teammate or @hanzo-dev')}
+              aria-expanded={handoffOpen}
+              px={10}
+              py={5}
+              rounded={round.field}
+              bg={handoffOpen ? '$hover' : '$raised'}
+              borderWidth={1}
+              borderColor={handoffOpen ? '$bound' : '$edge'}
+              items="center"
+              gap={5}
+              hoverStyle={{ background: '$hover' }}
+              focusVisibleStyle={ring}
+            >
+              <Plus size={13} color="$ink" />
+              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
+                Hand off task
+              </SizableText>
+            </XStack>
+          ) : null}
+
+          {room.id !== 'c-approvals' && waitingCount > 0 ? (
+            <XStack
+              {...press(onOpenApprovals, `Open #approvals (${waitingCount} waiting)`)}
+              px={9}
+              py={5}
+              rounded={round.field}
+              bg="$raised"
+              borderWidth={1}
+              borderColor="$edge"
+              items="center"
+              gap={5}
+              hoverStyle={{ background: '$hover' }}
+              focusVisibleStyle={ring}
+            >
+              <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+                {`#approvals (${waitingCount})`}
+              </SizableText>
+            </XStack>
+          ) : null}
+
           {agent ? (
             <>
               <XStack
@@ -296,7 +900,6 @@ function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeo
             <People members={room.members} people={people ?? []} />
           )}
 
-          {/* Collapsible Inbox drawer trigger with unread count badge */}
           <XStack
             {...press(() => toggleAsideKind('inbox'), 'Toggle Inbox drawer')}
             aria-pressed={asideShowing && asideKind === 'inbox'}
@@ -343,7 +946,6 @@ function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeo
         </XStack>
       </XStack>
 
-      {/* Collapsible Technical Details View — keeps raw cron & triggers out of the primary header */}
       {agent && techOpen ? (
         <XStack
           px={20}
@@ -401,7 +1003,6 @@ function Header({ room, people }: { room: Room; people: ReturnType<typeof usePeo
   )
 }
 
-/** No room in the address: the surface opened, and nothing is chosen. */
 const Pick = () => (
   <Middle>
     <EmptyState
@@ -412,7 +1013,6 @@ const Pick = () => (
   </Middle>
 )
 
-/** An address that named a room this space does not have. */
 const Gone = () => (
   <Middle>
     <EmptyState
@@ -422,4 +1022,3 @@ const Gone = () => (
     />
   </Middle>
 )
-

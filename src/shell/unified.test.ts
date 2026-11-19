@@ -1,0 +1,76 @@
+import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
+import { join } from 'node:path'
+import { test } from 'node:test'
+
+import { NAV } from './measure.ts'
+import {
+  DEFAULT_CHANNEL_UNREADS,
+  DIRECT_HANDOFF_ROSTER,
+  filterChannelItems,
+  filterDirectHandoffs,
+  matchTeamShortcut,
+  TEAM_CROSS_APPS,
+} from './unified.ts'
+
+const ROOT = new URL('../', import.meta.url).pathname
+const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
+const FIXTURE = readFileSync(join(ROOT, 'data/fixture.ts'), 'utf8')
+const CHANNELS_TSX = readFileSync(join(ROOT, 'chat/Channels.tsx'), 'utf8')
+
+test('Hanzo Team shell geometry & obsidian tokens match Hanzo Dev chrome', () => {
+  assert.equal(NAV, 256)
+  assert.ok(SHEET.includes('--team-ground: #050505;'))
+  assert.ok(SHEET.includes('--team-sidebar: #09090b;'))
+  assert.ok(SHEET.includes('--team-panel: #0f0f12;'))
+  assert.ok(SHEET.includes('--team-rule: rgba(255, 255, 255, 0.08);'))
+})
+
+test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', () => {
+  for (const requiredChannel of [
+    'general',
+    'engineering',
+    'deployments',
+    'approvals',
+    'incidents',
+  ]) {
+    assert.ok(
+      FIXTURE.includes(`name: '${requiredChannel}'`),
+      `missing #${requiredChannel} in fixture channels`,
+    )
+  }
+  assert.ok(CHANNELS_TSX.includes('Jump to channel or person... ⌘K'))
+  assert.ok(CHANNELS_TSX.includes('Direct &amp; Bot Handoffs'))
+  assert.ok(CHANNELS_TSX.includes('New Channel'))
+
+  const handles = DIRECT_HANDOFF_ROSTER.map((d) => d.handle)
+  assert.ok(handles.includes('@hanzo-dev'))
+  assert.ok(handles.includes('@release-bot'))
+  assert.equal(DEFAULT_CHANNEL_UNREADS['c-engineering'], 5)
+})
+
+test('filterChannelItems and filterDirectHandoffs filter accurately', () => {
+  const rooms = [
+    { name: 'general', topic: 'Company updates' },
+    { name: 'engineering', topic: 'Runtime & SDK PRs' },
+    { name: 'incidents', topic: 'On-call alerts' },
+  ]
+  assert.equal(filterChannelItems(rooms, '#eng').length, 1)
+  assert.equal(filterChannelItems(rooms, '#eng')[0]?.name, 'engineering')
+  assert.equal(filterDirectHandoffs(DIRECT_HANDOFF_ROSTER, 'release').length, 1)
+  assert.equal(filterDirectHandoffs(DIRECT_HANDOFF_ROSTER, 'release')[0]?.handle, '@release-bot')
+})
+
+test('matchTeamShortcut handles ⌘B, ⌘K, ⌘,, ⌘/, and ⇧⌘O', () => {
+  assert.equal(matchTeamShortcut({ key: 'b', metaKey: true }), 'toggle-sidebar')
+  assert.equal(matchTeamShortcut({ key: 'b', metaKey: true, isContentEditable: true }), null)
+  assert.equal(matchTeamShortcut({ key: 'k', ctrlKey: true }), 'command-palette')
+  assert.equal(matchTeamShortcut({ key: ',', metaKey: true }), 'settings')
+  assert.equal(matchTeamShortcut({ key: '/', metaKey: true }), 'shortcuts')
+  assert.equal(matchTeamShortcut({ key: 'O', metaKey: true, shiftKey: true }), 'new-thread')
+
+  assert.deepEqual(
+    TEAM_CROSS_APPS.map((a) => a.id),
+    ['dev', 'bot', 'team', 'console', 'desktop'],
+  )
+})

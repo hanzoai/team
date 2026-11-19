@@ -52,21 +52,16 @@ import {
 import { useCallback, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { useParams } from 'react-router'
 
-import { call } from '~/data/http.ts'
+import { dataProvider } from './data-provider';
 import { Find, Group, Nav as Column, Roll, Row, Rule } from '~/shell'
 import { chip, mark, paint } from '~/theme/theme.ts'
 import { OverviewScreen } from './OverviewScreen.tsx'
 
 registerDefaultFields()
 
-const API_ORIGIN = import.meta.env.DEV ? '' : 'https://api.hanzo.ai'
-
-async function crmCall<T>(path: string, fallback: T, init?: RequestInit): Promise<T> {
-  try {
-    return await call<T>(`${API_ORIGIN}${path}`, init)
-  } catch {
-    return fallback
-  }
+async function crmCall<T>(path: string, fallback: T): Promise<T> {
+  const table = path.split('/')[2];
+  return (await dataProvider.query(table, '').catch(() => fallback)) as T;
 }
 
 export type CrmSection =

@@ -221,6 +221,43 @@ export const unreact = (plane: Plane, room: Room, reaction: Reaction): Promise<v
   })
 
 /**
+ * Create a new workspace channel directly from the sidebar (`+ New Channel`).
+ */
+export const createChannel = async (
+  plane: Plane,
+  name: string,
+  topic?: string,
+): Promise<string> => {
+  const cleanName = name.trim().replace(/^#+/, '').toLowerCase().replace(/[^a-z0-9_-]+/g, '-')
+  const roomId = `c-${cleanName}-${id().slice(0, 6)}`
+  const now = Date.now()
+  const author = by(plane)
+  const fullTopic = topic?.trim() || `#${cleanName} team channel`
+
+  await plane.write({
+    _class: TX_CREATE,
+    objectId: roomId,
+    objectClass: Class.channel,
+    objectSpace: 'hanzo',
+    modifiedBy: author,
+    modifiedOn: now,
+    createdBy: author,
+    createdOn: now,
+    attributes: {
+      name: cleanName,
+      topic: fullTopic,
+      description: fullTopic,
+      private: false,
+      archived: false,
+      members: author ? [author] : [],
+      owners: author ? [author] : [],
+      life: 'standing',
+    },
+  })
+  return roomId
+}
+
+/**
  * Create a Hanzo Connect shared channel between the current org and one or more
  * partner organizations.
  */

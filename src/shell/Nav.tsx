@@ -36,14 +36,59 @@ const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'so
  */
 const ROW_AXIS = { flexDirection: 'row' } as const
 
-/** The navigator's own chrome: its surface title, then whatever the surface puts in it.
- *  Organization switching and the user account menu live in the universal top BusinessHeader. */
+/** The navigator's own chrome: its surface title, ⌘K command trigger, ⌘B collapse button,
+ *  then whatever the surface puts in it. */
 export const Nav = ({ title, children }: { title: string; children: ReactNode }) => (
-  <YStack flex={1} minH={0} pt={12} pb={8}>
-    <XStack px={PAD} pb={10} items="center" justify="space-between">
-      <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1}>
+  <YStack flex={1} minH={0} pt={12} pb={6}>
+    <XStack px={PAD} pb={10} items="center" justify="space-between" gap={6}>
+      <SizableText fontSize={rung.row} fontWeight="600" color="$ink" numberOfLines={1} flex={1}>
         {title}
       </SizableText>
+      <XStack items="center" gap={4} shrink={0}>
+        <XStack
+          {...press(() => {
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))
+            }
+          }, 'Open Command Palette (⌘K)')}
+          height={24}
+          px={7}
+          rounded={round.field}
+          borderWidth={1}
+          borderColor="$edge"
+          bg="$panel"
+          items="center"
+          justify="center"
+          hoverStyle={{ bg: '$hover' }}
+          focusVisibleStyle={RING}
+          data-testid="nav-command-palette-trigger"
+        >
+          <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+            ⌘K
+          </SizableText>
+        </XStack>
+        <XStack
+          {...press(() => {
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new CustomEvent('hanzo:team-toggle-sidebar'))
+            }
+          }, 'Toggle sidebar (⌘B)')}
+          height={24}
+          px={7}
+          rounded={round.field}
+          borderWidth={1}
+          borderColor="$edge"
+          items="center"
+          justify="center"
+          hoverStyle={{ bg: '$hover' }}
+          focusVisibleStyle={RING}
+          data-testid="nav-collapse-sidebar-trigger"
+        >
+          <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
+            ⌘B
+          </SizableText>
+        </XStack>
+      </XStack>
     </XStack>
     {children}
   </YStack>
@@ -54,7 +99,15 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
  * a raised thing — measured at +4 luminance over the ground, the same step the
  * board's panel takes.
  */
-export const Find = ({ value, onChange }: { value: string; onChange: (q: string) => void }) => (
+export const Find = ({
+  value,
+  onChange,
+  placeholder = 'Search…',
+}: {
+  value: string
+  onChange: (q: string) => void
+  placeholder?: string
+}) => (
   <XStack
     mx={PAD}
     height={FIELD}
@@ -77,9 +130,10 @@ export const Find = ({ value, onChange }: { value: string; onChange: (q: string)
       fontSize={rung.body}
       color="$ink"
       placeholderTextColor="$faint"
-      placeholder="Search…"
+      placeholder={placeholder}
       value={value}
       onChangeText={onChange}
+      data-testid="sidebar-find-input"
     />
   </XStack>
 )
@@ -87,37 +141,45 @@ export const Find = ({ value, onChange }: { value: string; onChange: (q: string)
 /** The hairline between groups of rows. */
 export const Rule = () => <Separator my={6} mx={PAD} borderColor="$edge" />
 
-/** A group's name. Uppercase and tracked, with optional disclosure and count. */
+/** A group's name. Uppercase and tracked, with optional disclosure, count, and right action. */
 export const Group = ({
   children,
   count,
   open = true,
   onToggle,
+  action,
 }: {
   children: ReactNode
   count?: number
   open?: boolean
   onToggle?: () => void
+  action?: ReactNode
 }) => (
   <XStack
-    {...(onToggle ? press(onToggle) : {})}
     height={28}
     items="center"
     justify="space-between"
     px={PAD}
     gap={6}
   >
-    <XStack items="center" gap={6} minW={0} flex={1}>
+    <XStack
+      {...(onToggle ? press(onToggle) : {})}
+      items="center"
+      gap={6}
+      minW={0}
+      flex={1}
+    >
       <Chevron open={open} />
       <SizableText {...caps} fontSize={rung.chip} fontWeight="600" color="$quiet" numberOfLines={1}>
         {children}
       </SizableText>
+      {count !== undefined ? (
+        <SizableText fontSize={rung.chip} color="$faint">
+          {count}
+        </SizableText>
+      ) : null}
     </XStack>
-    {count !== undefined ? (
-      <SizableText fontSize={rung.chip} color="$faint">
-        {count}
-      </SizableText>
-    ) : null}
+    {action ?? null}
   </XStack>
 )
 

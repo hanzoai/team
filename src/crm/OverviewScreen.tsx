@@ -812,7 +812,7 @@ export function OverviewScreen() {
           {
             method: 'POST',
             body: JSON.stringify({
-              model: 'zen4-mini',
+              model: 'zen6-flash',
               temperature: 0.2,
               messages: [
                 {

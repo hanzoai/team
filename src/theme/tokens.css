@@ -21,15 +21,19 @@
  */
 
 :root {
-  /* ——— surfaces: three rungs, and there is no fourth ——— */
-  --team-ground: var(--background);   /* the app: rail and navigator sit on it */
-  --team-panel: var(--surface-1);     /* the board and the inbox */
-  --team-card: var(--surface-2);      /* a card; an unread row is the same rung */
+  /* ——— surfaces: Unified Hanzo Dev obsidian chrome ——— */
+  --background: #050505;
+  --surface-1: #0f0f12;
+  --surface-2: #111114;
+  --border: rgba(255, 255, 255, 0.08);
 
-  /* ——— the hairline. ONE, at a fixed alpha, so it lifts with whatever it
-         lands on. A solid line stops being a lighter line and becomes an
-         unrelated grey the moment the surface under it moves. ——— */
-  --team-rule: var(--border);
+  --team-ground: #050505;             /* outer obsidian shell floor */
+  --team-sidebar: #09090b;            /* 256px collapsible left sidebar */
+  --team-panel: #0f0f12;              /* inset rounded stage pane */
+  --team-card: #111114;               /* raised card / unread surface */
+
+  /* ——— the hairline. 1px rgba(255,255,255,0.08) across stage & sidebar ——— */
+  --team-rule: rgba(255, 255, 255, 0.08);
 
   /* ——— ink: three ranks. The reference draws five and measures three —
          its "muted", "dim" and "placeholder" are one rank at ~28% white. ——— */
@@ -93,6 +97,11 @@
    states its own column — a touch darker and a touch stronger, which is what a
    hue needs to hold against white rather than against near-black. */
 .light {
+  --team-ground: var(--background);
+  --team-sidebar: var(--surface-1);
+  --team-panel: var(--surface-1);
+  --team-card: var(--surface-2);
+  --team-rule: var(--border);
   --team-hue-1: oklch(0.62 0.14 258);
   --team-hue-2: oklch(0.62 0.14 300);
   --team-hue-3: oklch(0.62 0.14 350);

@@ -568,6 +568,10 @@ const tags: Tag[] = WORK.flatMap((row, i) =>
 
 const channels: Channel[] = [
   { ...base('c-general', Class.channel), name: 'general', topic: 'Company-wide engineering, launches & announcements' },
+  { ...base('c-engineering', Class.channel), name: 'engineering', topic: 'Architecture, Hanzo Dev PRs, runtime & SDK releases' },
+  { ...base('c-deployments', Class.channel), name: 'deployments', topic: 'Live cluster rollouts, Sites / K8s pipelines & telemetry' },
+  { ...base('c-approvals', Class.channel), name: 'approvals', topic: 'Human-in-the-loop sign-offs for autonomous bots & spend' },
+  { ...base('c-incidents', Class.channel), name: 'incidents', topic: 'On-call alerts, postmortems & latency budgets', private: true },
   { ...base('c-errors', Class.channel), name: 'errors', topic: 'Live runtime exceptions, Sentry faults & CLI crash reports (/v1/event/errors)' },
   { ...base('c-feedback', Class.channel), name: 'feedback', topic: 'User feedback, hanzo doctor --share bundles, support tickets & inbound forms' },
   { ...base('c-hanzo-support', Class.channel), name: 'hanzo-support', topic: 'Customer support, triage & live escalations' },
@@ -584,12 +588,26 @@ const channels: Channel[] = [
 
 const DIRECT_CLASS = Class.direct
 
-const directs: Channel[] = HANZO_AGENTS.map((a) => ({
-  ...base(`dm-${a.id}`, DIRECT_CLASS),
-  name: a.name,
-  topic: `${a.role} · ${a.department} · ${a.status}`,
-  members: [`bot-${a.id}`, 'p-zach'],
-}))
+const directs: Channel[] = [
+  {
+    ...base('dm-hanzo-dev', DIRECT_CLASS),
+    name: '@hanzo-dev',
+    topic: 'Coding Agent Handoff · Engineering · Online',
+    members: ['bot-dev', 'p-zach'],
+  },
+  {
+    ...base('dm-release-bot', DIRECT_CLASS),
+    name: '@release-bot',
+    topic: 'Deploy & Canary Bot · Operations · Online',
+    members: ['bot-opera', 'p-zach'],
+  },
+  ...HANZO_AGENTS.map((a) => ({
+    ...base(`dm-${a.id}`, DIRECT_CLASS),
+    name: a.name,
+    topic: `${a.role} · ${a.department} · ${a.status}`,
+    members: [`bot-${a.id}`, 'p-zach'],
+  })),
+]
 
 const messages: Message[] = [
   { ...base('m1', Class.message), message: 'Pinned all @hanzogui/* packages to 8.3.5 and moved the user account menu to the bottom-left rail.', attachedTo: 'c-general', modifiedOn: now - 3_600_000, modifiedBy: 'bot-des' },
