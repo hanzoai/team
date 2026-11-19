@@ -25,7 +25,7 @@
 import { Popover, Separator } from '@hanzo/gui'
 import { Screen, Sheet, SheetContent, SizableText, XStack, YStack } from '@hanzo/ui'
 import { OrgMark } from '@hanzo/ui/product'
-import { Check } from '@hanzogui/lucide-icons-2'
+import { Check, Headphones, HeadphoneOff, Mic, MicOff, Settings } from '@hanzogui/lucide-icons-2'
 import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
@@ -353,6 +353,8 @@ const SidebarAccountFooter = ({
   onSignIn: () => void
 }) => {
   const [open, setOpen] = useState(false)
+  const [muted, setMuted] = useState(false)
+  const [deafened, setDeafened] = useState(false)
   const displayUser = user.name.trim() || user.email?.split('@')[0] || 'Account'
   const orgId = currentOrg.name.trim() || 'hanzo'
 
@@ -366,9 +368,12 @@ const SidebarAccountFooter = ({
   }
 
   return (
-    <YStack
-      px={8}
+    <XStack
+      px={6}
       py={6}
+      gap={2}
+      items="center"
+      justify="space-between"
       borderTopWidth={1}
       style={{ borderTopColor: paint.rule }}
       data-testid="sidebar-account-org-footer"
@@ -378,33 +383,36 @@ const SidebarAccountFooter = ({
           <XStack
             {...press(() => setOpen(!open), 'Hanzo Account & Organization Switcher')}
             height={34}
-            px={8}
+            px={6}
+            flex={1}
+            minW={0}
             rounded={round.field}
             items="center"
             justify="space-between"
-            gap={8}
+            gap={6}
             hoverStyle={{ bg: '$hover' }}
             data-testid="sidebar-account-org-pill"
           >
-            <XStack items="center" gap={8} minW={0} flex={1}>
+            <XStack items="center" gap={7} minW={0} flex={1}>
               <YStack position="relative" shrink={0}>
-                <OrgMark org={{ name: displayUser, logo: user.avatar }} size={20} />
+                <OrgMark org={{ name: displayUser, logo: user.avatar }} size={22} />
                 <YStack
                   position="absolute"
                   b={-1}
                   r={-1}
-                  width={6}
-                  height={6}
+                  width={7}
+                  height={7}
                   rounded={round.pill}
-                  style={{ backgroundColor: state.done }}
+                  borderWidth={1.5}
+                  style={{ backgroundColor: state.done, borderColor: paint.sidebar }}
                 />
               </YStack>
               <YStack flex={1} minW={0}>
-                <SizableText fontSize={rung.small} fontWeight="500" color="$ink" numberOfLines={1}>
-                  {displayUser} · hanzo.id
+                <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+                  {displayUser}
                 </SizableText>
                 <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
-                  X-Org-Id: {orgId}
+                  {`Online · ${orgId}`}
                 </SizableText>
               </YStack>
             </XStack>
@@ -547,7 +555,53 @@ const SidebarAccountFooter = ({
           </YStack>
         </Popover.Content>
       </Popover>
-    </YStack>
+
+      {/* Discord-style bottom-left voice/settings quick controls */}
+      <XStack items="center" gap={2} shrink={0} data-testid="sidebar-user-controls">
+        <XStack
+          {...press(() => setMuted((v) => !v), muted ? 'Unmute microphone' : 'Mute microphone')}
+          aria-pressed={muted}
+          minW={26}
+          minH={26}
+          items="center"
+          justify="center"
+          rounded={round.field}
+          hoverStyle={{ bg: '$hover' }}
+          data-testid="sidebar-mic-toggle"
+        >
+          {muted ? <MicOff size={14} color={paint.alert} /> : <Mic size={14} color="$quiet" />}
+        </XStack>
+        <XStack
+          {...press(() => setDeafened((v) => !v), deafened ? 'Undeafen audio' : 'Deafen audio')}
+          aria-pressed={deafened}
+          minW={26}
+          minH={26}
+          items="center"
+          justify="center"
+          rounded={round.field}
+          hoverStyle={{ bg: '$hover' }}
+          data-testid="sidebar-deafen-toggle"
+        >
+          {deafened ? (
+            <HeadphoneOff size={14} color={paint.alert} />
+          ) : (
+            <Headphones size={14} color="$quiet" />
+          )}
+        </XStack>
+        <XStack
+          {...press(onSettings, 'User Settings')}
+          minW={26}
+          minH={26}
+          items="center"
+          justify="center"
+          rounded={round.field}
+          hoverStyle={{ bg: '$hover' }}
+          data-testid="sidebar-settings-trigger"
+        >
+          <Settings size={14} color="$quiet" />
+        </XStack>
+      </XStack>
+    </XStack>
   )
 }
 

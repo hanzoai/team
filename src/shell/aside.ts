@@ -22,7 +22,7 @@ import { useSyncExternalStore } from 'react'
 const KEY = 'team.aside'
 const KIND_KEY = 'team.aside.kind'
 
-export type AsideKind = 'inbox' | 'inspector'
+export type AsideKind = 'inbox' | 'inspector' | 'members'
 
 const remembered = (): boolean => {
   try {
@@ -34,9 +34,11 @@ const remembered = (): boolean => {
 
 const rememberedKind = (): AsideKind => {
   try {
-    return localStorage.getItem(KIND_KEY) === 'inspector' ? 'inspector' : 'inbox'
+    const saved = localStorage.getItem(KIND_KEY)
+    if (saved === 'inspector' || saved === 'members' || saved === 'inbox') return saved
+    return 'members'
   } catch {
-    return 'inbox'
+    return 'members'
   }
 }
 
