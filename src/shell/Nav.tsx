@@ -15,7 +15,7 @@
 import { Popover, Separator } from '@hanzo/gui'
 import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import { OrgMark } from '@hanzo/ui/product'
-import { Check, ChevronDown, Plus, Search } from '@hanzogui/lucide-icons-2'
+import { Check, ChevronDown, PanelLeftClose, Plus, Search } from '@hanzogui/lucide-icons-2'
 import { useState, type ReactNode } from 'react'
 import { Link, useLocation } from 'react-router'
 
@@ -199,50 +199,23 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
           </Popover.Content>
         </Popover>
 
-        <XStack items="center" gap={4} shrink={0}>
-          <XStack
-            {...press(() => {
-              if (typeof window !== 'undefined') {
-                window.dispatchEvent(new KeyboardEvent('keydown', { key: 'k', metaKey: true }))
-              }
-            }, 'Open Command Palette (⌘K)')}
-            height={24}
-            px={7}
-            rounded={round.field}
-            borderWidth={1}
-            borderColor="$edge"
-            bg="$panel"
-            items="center"
-            justify="center"
-            hoverStyle={{ bg: '$hover' }}
-            focusVisibleStyle={RING}
-            data-testid="nav-command-palette-trigger"
-          >
-            <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
-              ⌘K
-            </SizableText>
-          </XStack>
-          <XStack
-            {...press(() => {
-              if (typeof window !== 'undefined') {
-                window.dispatchEvent(new CustomEvent('hanzo:team-toggle-sidebar'))
-              }
-            }, 'Toggle sidebar (⌘B)')}
-            height={24}
-            px={7}
-            rounded={round.field}
-            borderWidth={1}
-            borderColor="$edge"
-            items="center"
-            justify="center"
-            hoverStyle={{ bg: '$hover' }}
-            focusVisibleStyle={RING}
-            data-testid="nav-collapse-sidebar-trigger"
-          >
-            <SizableText fontSize={rung.chip} fontWeight="500" color="$quiet">
-              ⌘B
-            </SizableText>
-          </XStack>
+        <XStack
+          {...press(() => {
+            if (typeof window !== 'undefined') {
+              window.dispatchEvent(new CustomEvent('hanzo:team-toggle-sidebar'))
+            }
+          }, 'Toggle sidebar (⌘B)')}
+          width={24}
+          height={24}
+          rounded={round.field}
+          items="center"
+          justify="center"
+          shrink={0}
+          hoverStyle={{ bg: '$hover' }}
+          focusVisibleStyle={RING}
+          data-testid="nav-collapse-sidebar-trigger"
+        >
+          <PanelLeftClose size={14} color="$soft" />
         </XStack>
       </XStack>
       {children}
@@ -251,9 +224,8 @@ export const Nav = ({ title, children }: { title: string; children: ReactNode })
 }
 
 /**
- * The search field. `$panel` over the ground, so it reads as a well rather than
- * a raised thing — measured at +4 luminance over the ground, the same step the
- * board's panel takes.
+ * The ONE unified search bar (`Search… ⌘K`). Pitch-black recessed well with a
+ * `1px rgba(255,255,255,0.08)` hairline and a clickable `⌘K` command trigger.
  */
 export const Find = ({
   value,
@@ -269,21 +241,21 @@ export const Find = ({
     height={FIELD}
     items="center"
     gap={8}
-    px={12}
+    pl={10}
+    pr={6}
     rounded={round.field}
     borderWidth={1}
-    borderColor="$edge"
-    bg="$panel"
+    style={{ backgroundColor: paint.ground, borderColor: paint.rule }}
     focusWithinStyle={RING}
   >
-    <Search size={16} color="$soft" />
+    <Search size={14} color="$soft" />
     <Input
       flex={1}
       unstyled
       height={FIELD - 2}
       borderWidth={0}
       bg="transparent"
-      fontSize={rung.body}
+      fontSize={rung.small}
       color="$ink"
       placeholderTextColor="$faint"
       placeholder={placeholder}
@@ -291,6 +263,26 @@ export const Find = ({
       onChangeText={onChange}
       data-testid="sidebar-find-input"
     />
+    <XStack
+      {...press(() => {
+        if (typeof window !== 'undefined') {
+          window.dispatchEvent(new CustomEvent('hanzo:team-open-command-palette'))
+        }
+      }, 'Open Command Palette (⌘K)')}
+      height={20}
+      px={5}
+      rounded={round.field}
+      items="center"
+      justify="center"
+      shrink={0}
+      hoverStyle={{ bg: '$hover' }}
+      focusVisibleStyle={RING}
+      data-testid="nav-command-palette-trigger"
+    >
+      <SizableText fontSize={rung.chip} fontWeight="500" color="$faint">
+        ⌘K
+      </SizableText>
+    </XStack>
   </XStack>
 )
 

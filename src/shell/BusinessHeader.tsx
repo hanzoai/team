@@ -110,6 +110,11 @@ export function BusinessHeader({
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape' && searchOpen) {
+        e.preventDefault()
+        setSearchOpen(false)
+        return
+      }
       const action = matchTeamShortcut({
         key: e.key,
         metaKey: e.metaKey,
@@ -125,9 +130,14 @@ export function BusinessHeader({
         setSearchOpen((v) => !v)
       }
     }
+    const onOpenPalette = () => setSearchOpen(true)
     window.addEventListener('keydown', onKey)
-    return () => window.removeEventListener('keydown', onKey)
-  }, [])
+    window.addEventListener('hanzo:team-open-command-palette', onOpenPalette)
+    return () => {
+      window.removeEventListener('keydown', onKey)
+      window.removeEventListener('hanzo:team-open-command-palette', onOpenPalette)
+    }
+  }, [searchOpen])
 
   const roster = usePeople().data ?? []
   const rooms = useRooms().data ?? []
@@ -248,7 +258,7 @@ export function BusinessHeader({
         ) : null}
       </XStack>
 
-      {/* RIGHT CANVAS HEADER SEGMENT: Workspace / Surface context on left, Search ⌘K on right */}
+      {/* RIGHT CANVAS HEADER SEGMENT: Whisper-quiet context on left; compact ⌘K trigger ONLY when sidebar is collapsed */}
       <XStack flex={1} height="100%" pl={12} pr={12} gap="$2" items="center" justify="space-between" minW={0}>
         <XStack items="center" gap={6} minW={0} shrink={1}>
           <Text fontSize={12.5} fontWeight="600" color="$color11" numberOfLines={1}>
@@ -267,131 +277,142 @@ export function BusinessHeader({
         </XStack>
 
         <XStack items="center" justify="flex-end" gap="$1.5" minW={0} shrink={0}>
-          {children ?? (
-            <Popover open={searchOpen} onOpenChange={setSearchOpen} placement="bottom-end" allowFlip stayInFrame>
-              <Popover.Trigger asChild>
-                <XStack
-                  role="button"
-                  tabIndex={0}
-                  cursor="pointer"
-                  width={compact ? 28 : 240}
-                  maxW={compact ? 28 : '38vw'}
-                  height={25}
-                  px={compact ? 0 : '$2'}
-                  rounded={7}
-                  borderWidth={1}
-                  items="center"
-                  justify={compact ? 'center' : 'space-between'}
-                  style={{ backgroundColor: paint.sidebar, borderColor: paint.sidebarRule }}
-                  hoverStyle={{ bg: '$color3' }}
-                  aria-label={`Search ${orgDisplay}`}
-                  data-testid="slack-top-search-trigger"
-                >
-                  {compact ? (
-                    <Search size={13} color="$color10" />
-                  ) : (
-                    <>
-                      <XStack items="center" gap="$1.5" minW={0} flex={1}>
-                        <Search size={12} color="$color10" />
-                        <Text fontSize={12} color="$color10" numberOfLines={1}>
-                          {`Search ${orgDisplay}…`}
-                        </Text>
-                      </XStack>
-                      <Text fontSize={10} fontWeight="600" color="$color9" px="$1" py={1} rounded="$1">
-                        ⌘K
-                      </Text>
-                    </>
-                  )}
-                </XStack>
-              </Popover.Trigger>
-
-              <Popover.Content
-                role="dialog"
-                aria-label="Jump to channel, bot, or surface"
+          {children ??
+            (!navOpen ? (
+              <XStack
+                role="button"
+                tabIndex={0}
+                cursor="pointer"
+                height={24}
+                px={compact ? 6 : 7}
+                gap={5}
+                rounded={7}
                 borderWidth={1}
-                elevation="$4"
-                p="$2"
-                width={460}
-                bg="$background"
-                borderColor="$borderColor"
-                rounded="$4"
-                style={{ zIndex: 100000 }}
+                items="center"
+                justify="center"
+                style={{ backgroundColor: paint.sidebar, borderColor: paint.rule }}
+                hoverStyle={{ bg: '$color3' }}
+                aria-label={`Search ${orgDisplay} (⌘K)`}
+                data-testid="collapsed-search-trigger"
+                onPress={() => setSearchOpen(true)}
+                onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
+                  if (e?.key === 'Enter' || e?.key === ' ') {
+                    e.preventDefault?.()
+                    setSearchOpen(true)
+                  }
+                }}
               >
-                <YStack gap="$2" width="100%">
-                  <XStack
-                    height={34}
-                    px="$2.5"
-                    items="center"
-                    gap="$2"
-                    rounded="$3"
-                    bg="$color2"
-                    borderWidth={1}
-                    borderColor="$borderColor"
-                  >
-                    <Search size={14} color="$color10" />
-                    <Input
-                      flex={1}
-                      height={30}
-                      fontSize={13}
-                      borderWidth={0}
-                      bg="transparent"
-                      placeholder="Jump to a channel, bot or issue board…"
-                      value={query}
-                      onChangeText={setQuery}
-                      autoFocus
-                    />
-                  </XStack>
-
-                  <YStack gap="$0.5" maxH={340} style={{ overflowY: 'auto' }}>
-                    {filteredResults.map((item) => (
-                      <XStack
-                        key={item.id}
-                        role="menuitem"
-                        tabIndex={0}
-                        cursor="pointer"
-                        items="center"
-                        gap="$2.5"
-                        px="$2.5"
-                        py="$1.5"
-                        rounded="$3"
-                        hoverStyle={{ bg: '$color3' }}
-                        onPress={() => jumpTo(item.path)}
-                      >
-                        <YStack
-                          width={24}
-                          height={24}
-                          rounded="$2"
-                          bg="$color3"
-                          items="center"
-                          justify="center"
-                          shrink={0}
-                        >
-                          {item.kind === 'bot' ? (
-                            <Bot size={13} color="$color11" />
-                          ) : item.kind === 'channel' ? (
-                            <Hash size={13} color="$color11" />
-                          ) : (
-                            <SquareCheck size={13} color="$color11" />
-                          )}
-                        </YStack>
-                        <YStack flex={1} minW={0}>
-                          <Text fontSize={12} fontWeight="600" color="$color12" numberOfLines={1}>
-                            {item.label}
-                          </Text>
-                          <Text fontSize={11} color="$color10" numberOfLines={1}>
-                            {item.desc}
-                          </Text>
-                        </YStack>
-                      </XStack>
-                    ))}
-                  </YStack>
-                </YStack>
-              </Popover.Content>
-            </Popover>
-          )}
+                <Search size={12} color="$color10" />
+                {!compact ? (
+                  <Text fontSize={10.5} fontWeight="600" color="$color9">
+                    ⌘K
+                  </Text>
+                ) : null}
+              </XStack>
+            ) : null)}
           {rightSlot}
         </XStack>
       </XStack>
+
+      {searchOpen ? (
+        <YStack
+          position="fixed"
+          t={0}
+          r={0}
+          b={0}
+          l={0}
+          items="center"
+          pt={72}
+          px={16}
+          style={{ backgroundColor: paint.backdrop, zIndex: 100000 }}
+          onPress={() => setSearchOpen(false)}
+          data-testid="team-command-palette-backdrop"
+        >
+          <YStack
+            role="dialog"
+            aria-label="Jump to channel, bot, or surface"
+            width="100%"
+            maxW={460}
+            p="$2"
+            gap="$2"
+            rounded={12}
+            borderWidth={1}
+            style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
+            onPress={(e: { stopPropagation?: () => void }) => e.stopPropagation?.()}
+            data-testid="team-command-palette"
+          >
+            <XStack
+              height={34}
+              px="$2.5"
+              items="center"
+              gap="$2"
+              rounded={8}
+              borderWidth={1}
+              style={{ backgroundColor: paint.ground, borderColor: paint.rule }}
+            >
+              <Search size={14} color="$color10" />
+              <Input
+                flex={1}
+                height={30}
+                fontSize={13}
+                borderWidth={0}
+                bg="transparent"
+                placeholder="Jump to a channel, bot or issue board…"
+                value={query}
+                onChangeText={setQuery}
+                autoFocus
+              />
+              <Text fontSize={10} fontWeight="600" color="$color9">
+                ESC
+              </Text>
+            </XStack>
+
+            <YStack gap="$0.5" maxH={340} style={{ overflowY: 'auto' }}>
+              {filteredResults.map((item) => (
+                <XStack
+                  key={item.id}
+                  role="menuitem"
+                  tabIndex={0}
+                  cursor="pointer"
+                  items="center"
+                  gap="$2.5"
+                  px="$2.5"
+                  py="$1.5"
+                  rounded={8}
+                  hoverStyle={{ bg: '$color3' }}
+                  onPress={() => jumpTo(item.path)}
+                >
+                  <YStack
+                    width={24}
+                    height={24}
+                    rounded={6}
+                    style={{ backgroundColor: paint.panel }}
+                    items="center"
+                    justify="center"
+                    shrink={0}
+                  >
+                    {item.kind === 'bot' ? (
+                      <Bot size={13} color="$color11" />
+                    ) : item.kind === 'channel' ? (
+                      <Hash size={13} color="$color11" />
+                    ) : (
+                      <SquareCheck size={13} color="$color11" />
+                    )}
+                  </YStack>
+                  <YStack flex={1} minW={0}>
+                    <Text fontSize={12} fontWeight="600" color="$color12" numberOfLines={1}>
+                      {item.label}
+                    </Text>
+                    <Text fontSize={11} color="$color10" numberOfLines={1}>
+                      {item.desc}
+                    </Text>
+                  </YStack>
+                </XStack>
+              ))}
+            </YStack>
+          </YStack>
+        </YStack>
+      ) : null}
     </XStack>
   )
 }

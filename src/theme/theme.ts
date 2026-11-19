@@ -25,6 +25,8 @@ export const paint = {
   rule: role('rule'),
   /** Curved inset panel hairline matching hanzo.app & hanzo.bot (`--pane-edge`). */
   paneEdge: role('pane-edge'),
+  /** Modal overlay scrim for command palette / dialogs. */
+  backdrop: role('backdrop'),
 
   /** Unified outer L-frame chrome (38px top bar + 44px icon rail + 240px sidebar). */
   bar: role('bar'),

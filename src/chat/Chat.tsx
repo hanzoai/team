@@ -377,7 +377,7 @@ function Header({
   const asideShowing = useAside()
   const asideKind = useAsideKind()
   return (
-    <YStack borderBottomWidth={1} borderBottomColor="$edge" bg="$panel">
+    <YStack borderBottomWidth={1} style={{ backgroundColor: paint.panel, borderBottomColor: paint.rule }}>
       <XStack px={16} py={8} items="center" justify="space-between" gap={10}>
         {agent ? (
           <XStack flex={1} minW={0} items="center" gap={12}>
@@ -428,16 +428,19 @@ function Header({
           <XStack
             {...press(() => toggleAsideKind('inbox'), 'Toggle Inbox drawer')}
             aria-pressed={asideShowing && asideKind === 'inbox'}
-            px={9}
-            py={5}
+            px={8}
+            py={4}
             rounded={round.field}
-            bg={asideShowing && asideKind === 'inbox' ? '$hover' : '$raised'}
             borderWidth={1}
-            borderColor={asideShowing && asideKind === 'inbox' ? '$bound' : '$edge'}
+            style={{
+              backgroundColor: asideShowing && asideKind === 'inbox' ? paint.rowActive : 'transparent',
+              borderColor: asideShowing && asideKind === 'inbox' ? paint.paneEdge : paint.rule,
+            }}
             items="center"
             gap={6}
             hoverStyle={{ background: '$hover' }}
             focusVisibleStyle={ring}
+            data-testid="chat-header-inbox-trigger"
           >
             <Bell size={13} color={asideShowing && asideKind === 'inbox' ? '$ink' : '$quiet'} />
             <SizableText

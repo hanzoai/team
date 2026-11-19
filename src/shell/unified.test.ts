@@ -17,6 +17,8 @@ import {
 const ROOT = new URL('../', import.meta.url).pathname
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
 const CHANNELS_TSX = readFileSync(join(ROOT, 'chat/Channels.tsx'), 'utf8')
+const CHAT_TSX = readFileSync(join(ROOT, 'chat/Chat.tsx'), 'utf8')
+const HEADER_TSX = readFileSync(join(ROOT, 'shell/BusinessHeader.tsx'), 'utf8')
 const NAV_TSX = readFileSync(join(ROOT, 'shell/Nav.tsx'), 'utf8')
 const SHELL_TSX = readFileSync(join(ROOT, 'shell/Shell.tsx'), 'utf8')
 
@@ -35,6 +37,15 @@ test('Hanzo Team shell geometry & obsidian tokens match Hanzo Dev chrome', () =>
   assert.ok(SHELL_TSX.includes('hanzo.id'))
 })
 
+test('Hanzo Team decomplects to ONE unified search bar (no duplicate top-right search when sidebar is open)', () => {
+  assert.ok(!HEADER_TSX.includes('data-testid="slack-top-search-trigger"'))
+  assert.ok(HEADER_TSX.includes('!navOpen ?'))
+  assert.ok(HEADER_TSX.includes('data-testid="collapsed-search-trigger"'))
+  assert.ok(HEADER_TSX.includes('hanzo:team-open-command-palette'))
+  assert.ok(NAV_TSX.includes('data-testid="sidebar-find-input"'))
+  assert.ok(CHAT_TSX.includes('data-testid="chat-header-inbox-trigger"'))
+})
+
 test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', () => {
   for (const requiredChannel of [
     'general',
@@ -48,7 +59,7 @@ test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', 
       `missing #${requiredChannel} in required channels`,
     )
   }
-  assert.ok(CHANNELS_TSX.includes('Jump to channel or person... ⌘K'))
+  assert.ok(CHANNELS_TSX.includes('placeholder="Search…"'))
   assert.ok(CHANNELS_TSX.includes('Direct &amp; Bot Handoffs'))
   assert.ok(CHANNELS_TSX.includes('New Channel'))
 

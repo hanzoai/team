@@ -101,7 +101,7 @@ export function Channels() {
       <Find
         value={query}
         onChange={setQuery}
-        placeholder="Jump to channel or person... ⌘K"
+        placeholder="Search…"
       />
       <YStack height={8} />
       <Rule />

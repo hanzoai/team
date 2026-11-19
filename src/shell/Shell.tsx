@@ -367,8 +367,8 @@ const SidebarAccountFooter = ({
 
   return (
     <YStack
-      px={10}
-      py={8}
+      px={8}
+      py={6}
       borderTopWidth={1}
       style={{ borderTopColor: paint.rule }}
       data-testid="sidebar-account-org-footer"
@@ -377,12 +377,9 @@ const SidebarAccountFooter = ({
         <Popover.Trigger asChild>
           <XStack
             {...press(() => setOpen(!open), 'Hanzo Account & Organization Switcher')}
-            height={40}
-            px={10}
+            height={34}
+            px={8}
             rounded={round.field}
-            borderWidth={1}
-            borderColor="$edge"
-            bg="$panel"
             items="center"
             justify="space-between"
             gap={8}
@@ -391,30 +388,25 @@ const SidebarAccountFooter = ({
           >
             <XStack items="center" gap={8} minW={0} flex={1}>
               <YStack position="relative" shrink={0}>
-                <OrgMark org={{ name: displayUser, logo: user.avatar }} size={24} />
+                <OrgMark org={{ name: displayUser, logo: user.avatar }} size={20} />
                 <YStack
                   position="absolute"
                   b={-1}
                   r={-1}
-                  width={7}
-                  height={7}
+                  width={6}
+                  height={6}
                   rounded={round.pill}
                   style={{ backgroundColor: state.done }}
                 />
               </YStack>
               <YStack flex={1} minW={0}>
-                <SizableText fontSize={rung.small} fontWeight="600" color="$ink" numberOfLines={1}>
+                <SizableText fontSize={rung.small} fontWeight="500" color="$ink" numberOfLines={1}>
                   {displayUser} · hanzo.id
                 </SizableText>
-                <SizableText fontSize={rung.chip} color="$quiet" numberOfLines={1}>
+                <SizableText fontSize={rung.chip} color="$faint" numberOfLines={1}>
                   X-Org-Id: {orgId}
                 </SizableText>
               </YStack>
-            </XStack>
-            <XStack px={6} py={2} rounded={round.pill} bg="$hover" shrink={0}>
-              <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
-                Team
-              </SizableText>
             </XStack>
           </XStack>
         </Popover.Trigger>
