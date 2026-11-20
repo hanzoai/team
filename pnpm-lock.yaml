@@ -5,6 +5,7 @@ settings:
   excludeLinksFromLockfile: false
 
 overrides:
+  '@hanzo/event': 0.3.69
   '@hanzo/gui': 8.3.5
   '@hanzogui/accordion': 8.3.5
   '@hanzogui/adapt': 8.3.5
@@ -606,7 +607,7 @@ packages:
       '@hanzo/build': '>=0.2.123'
       '@hanzo/composer': '>=0.2.0'
       '@hanzo/design': '>=0.5.39'
-      '@hanzo/event': '>=0.3.56'
+      '@hanzo/event': 0.3.69
       '@hanzo/gui': 8.3.5
       '@hanzo/i18n': '>=0.5.5'
       '@hanzo/iam': '>=0.21.35'
@@ -679,14 +680,6 @@ packages:
   '@hanzo/design@0.5.39':
     resolution: {integrity: sha512-xuwm76nw7xahucWwWNM+qlW2VJoVfM8PQpyhO4p0eK81uzdLQIbzjAGq0k9CJ6+L4KGazd6bKCYfthSRsWA1ow==}
     hasBin: true
-
-  '@hanzo/event@0.3.67':
-    resolution: {integrity: sha512-bjDZOPmgHrxVOH7kaTu1bKE+aU2ZfMEez7oGuyFVijidrioA6DZPQdRqYVd5GxEjV/paPbvFbApqoth1KfIuHA==}
-    peerDependencies:
-      react: '>=19.2.8'
-    peerDependenciesMeta:
-      react:
-        optional: true
 
   '@hanzo/event@0.3.69':
     resolution: {integrity: sha512-M85xTYkCbYlXN01/8ddnyO/u/uQztLdNpoo6AVqmk4sogn83QH8SEKllBu+GfD79SPKtNdZcV1wmQDYIwMbgmA==}
@@ -805,7 +798,7 @@ packages:
       '@hanzo/composer': '>=0.2.0'
       '@hanzo/dashboard': '>=0.2.0'
       '@hanzo/data': '>=1.2.4'
-      '@hanzo/event': '>=0.3.63'
+      '@hanzo/event': 0.3.69
       '@hanzo/gui': 8.3.5
       '@hanzo/i18n': '>=0.4.0'
       '@hanzo/iam': '>=0.21.26'
@@ -3833,12 +3826,6 @@ snapshots:
 
   '@hanzo/design@0.5.39': {}
 
-  '@hanzo/event@0.3.67(react@19.2.8)':
-    dependencies:
-      '@hanzo/events': 0.3.4
-    optionalDependencies:
-      react: 19.2.8
-
   '@hanzo/event@0.3.69(react@19.2.8)':
     dependencies:
       '@hanzo/events': 0.3.4
@@ -3956,7 +3943,7 @@ snapshots:
 
   '@hanzo/observe@0.1.17(react@19.2.8)':
     dependencies:
-      '@hanzo/event': 0.3.67(react@19.2.8)
+      '@hanzo/event': 0.3.69(react@19.2.8)
     optionalDependencies:
       react: 19.2.8
 
@@ -4988,7 +4975,7 @@ snapshots:
 
   '@hanzogui/telemetry@8.3.5(react@19.2.8)':
     dependencies:
-      '@hanzo/event': 0.3.67(react@19.2.8)
+      '@hanzo/event': 0.3.69(react@19.2.8)
       '@hanzo/observe': 0.1.17(react@19.2.8)
       react: 19.2.8
 

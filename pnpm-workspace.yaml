@@ -24,6 +24,7 @@ catalog:
   'typescript': '7.0.2'
   'vite': '^8.2.2'
 overrides:
+  '@hanzo/event': '0.3.69'
   '@hanzo/gui': '8.3.5'
   '@hanzogui/accordion': '8.3.5'
   '@hanzogui/adapt': '8.3.5'
