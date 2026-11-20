@@ -122,9 +122,25 @@ export function Composer({
   return (
     <YStack px={16} pb={12} pt={6} gap={6}>
       {failed ? (
-        <SizableText fontSize="$1" style={{ color: paint.alert }}>
-          {failed}
-        </SizableText>
+        <XStack role="alert" items="center" gap={8} data-testid="composer-failed">
+          <SizableText fontSize="$1" style={{ color: paint.alert }}>
+            Could not reach this conversation. Nothing has been lost — try again shortly.
+          </SizableText>
+          <XStack
+            {...press(() => void send(), 'Try again')}
+            height={24}
+            px={8}
+            rounded={7}
+            items="center"
+            borderWidth={1}
+            borderColor="$edge"
+            hoverStyle={{ bg: '$hover' }}
+          >
+            <SizableText fontSize={12} fontWeight="600" color="$ink">
+              Try again
+            </SizableText>
+          </XStack>
+        </XStack>
       ) : null}
 
       {picking ? (
