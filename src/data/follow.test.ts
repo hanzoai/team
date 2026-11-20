@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { ACCESS, follow, subjectOf } from './follow.ts'
+import { ACCESS, follow, home, subjectOf } from './follow.ts'
 
 /** An unsigned JWT naming `sub`, the shape the SDK stores. */
 const token = (sub: string, n = 0) => {
@@ -45,6 +45,16 @@ test('a tab still settling its first answer is left to settle it', () => {
 test('another key changing is not a move', () => {
   assert.equal(follow('in', 'hanzo_iam_refresh_token', 'r1', null), null)
   assert.equal(follow('out', 'team.theme', null, 'dark'), null)
+})
+
+test('a session that ends elsewhere sends a tab on any page to the front page', () => {
+  assert.equal(home('/chat/general', ''), '/')
+  assert.equal(home('/crm', '?view=pipeline'), '/')
+  assert.equal(home('/', '?channel=x'), '/')
+})
+
+test('a tab already on the front page stays and is only drawn signed out', () => {
+  assert.equal(home('/', ''), null)
 })
 
 test('a subject is read off the token, and a token that names none names nobody', () => {
