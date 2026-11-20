@@ -25,6 +25,14 @@ export const subjectOf = (token: string | null | undefined): string | null => {
   }
 }
 
+/**
+ * Where a tab goes when its session ends somewhere else: the front page, where
+ * a sign-out on hanzo.team itself lands (./away.ts `logout`). null when the tab
+ * is already there, which only has to be drawn signed out.
+ */
+export const home = (pathname: string, search: string): string | null =>
+  pathname === '/' && !search ? null : '/'
+
 /** How this tab stands: `unknown` until its first answer (session.tsx `Standing`). */
 type Standing = 'unknown' | 'out' | 'in'
 

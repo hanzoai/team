@@ -34,7 +34,7 @@ import {
 
 import { away, hinted, logout, loopback, silent, silentRefusal, type How, type Way } from './away.ts'
 import { brand, clientId } from './brand.ts'
-import { ACCESS, follow } from './follow.ts'
+import { ACCESS, follow, home } from './follow.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
 
@@ -164,6 +164,39 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * for want of an identity has settled into an error nothing re-runs — so the
    * screen would simply stay empty. Adopting a principal re-reads the world.
    */
+  const drop = useCallback(() => {
+    setWho(null)
+    setStanding('out')
+    invalidate()
+  }, [])
+
+  /**
+   * A SESSION THAT ENDS ELSEWHERE LANDS WHERE A SIGN-OUT HERE DOES. Signing out
+   * on hanzo.team returns to the front page (./away.ts `logout`). When the
+   * session ends anywhere else — another Hanzo site's sign-out, which IAM tells
+   * this tab by refusing its token, or another hanzo.team tab's — the tab was
+   * drawn signed out where it stood, on a page of the session that had ended.
+   * Now it goes to the front page too (./follow.ts `home`). It is marked as
+   * having asked (`asked`, `SILENT_AT`), so the front page does not send the
+   * browser on to hanzo.ai again at once for a session that may still be ending
+   * there.
+   */
+  const ended = useCallback(() => {
+    iam().clearTokens()
+    asked()
+    try {
+      sessionStorage.setItem(SILENT_AT, String(Date.now()))
+    } catch {
+      /* no store: the probe could not ask anyway */
+    }
+    const to = home(window.location.pathname, window.location.search)
+    if (to === null) {
+      drop()
+      return
+    }
+    window.location.replace(to)
+  }, [drop])
+
   const adopt = useCallback(async () => {
     try {
       const user = await iam().getUser()
@@ -172,23 +205,14 @@ export const Session = ({ children }: { children: ReactNode }) => {
       invalidate()
     } catch (e: unknown) {
       if (refused(e)) {
-        iam().clearTokens()
-        setWho(null)
-        setStanding('out')
-        invalidate()
+        ended()
         return
       }
       setWho(null)
       setStanding('in')
       invalidate()
     }
-  }, [])
-
-  const drop = useCallback(() => {
-    setWho(null)
-    setStanding('out')
-    invalidate()
-  }, [])
+  }, [ended])
 
   const started = useRef(false)
   useEffect(() => {
@@ -271,8 +295,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
         .getUserInfo()
         .catch((e: unknown) => {
           if (!refused(e)) return
-          iam().clearTokens()
-          drop()
+          ended()
         })
     }
     const watch = window.setInterval(seen, WATCH)
@@ -283,16 +306,17 @@ export const Session = ({ children }: { children: ReactNode }) => {
       document.removeEventListener('visibilitychange', seen)
       window.removeEventListener('focus', seen)
     }
-  }, [standing, adopt, drop])
+  }, [standing, adopt, ended])
 
   /**
    * EVERY TAB OF THIS SITE IS ONE SESSION (./follow.ts). Another tab's sign-out
-   * signs this one out at once, and its sign-in signs this one in; a refresh
-   * there changes nothing here. A tab on the callback is finishing its own
-   * sign-in and is left to it. A tab signed out this way does not ask hanzo.ai
-   * for a while (`SILENT_AT`): the sign-out that emptied the store may still be
-   * on its way to IAM, and an ask arriving first would be answered from the
-   * session being ended and sign this tab straight back in.
+   * signs this one out at once, and it lands on the front page as that tab does
+   * (`ended`); another tab's sign-in signs this one in; a refresh there changes
+   * nothing here. A tab on the callback is finishing its own sign-in and is left
+   * to it. A tab signed out this way does not ask hanzo.ai for a while
+   * (`SILENT_AT`): the sign-out that emptied the store may still be on its way to
+   * IAM, and an ask arriving first would be answered from the session being
+   * ended and sign this tab straight back in.
    */
   useEffect(() => {
     const moved = (e: StorageEvent) => {
@@ -305,17 +329,11 @@ export const Session = ({ children }: { children: ReactNode }) => {
         return
       }
       if (next !== 'drop') return
-      try {
-        sessionStorage.setItem(SILENT_AT, String(Date.now()))
-      } catch {
-        /* no store: the probe could not ask anyway */
-      }
-      iam().clearTokens()
-      drop()
+      ended()
     }
     window.addEventListener('storage', moved)
     return () => window.removeEventListener('storage', moved)
-  }, [standing, adopt, drop])
+  }, [standing, adopt, ended])
 
   /**
    * The SDK builds the authorize address and keeps the PKCE verifier and state
