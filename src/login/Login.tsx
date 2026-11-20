@@ -4,6 +4,7 @@ import { SignInPanel } from '@hanzo/ui/auth/panel'
 
 import { type Way } from '~/data/away.ts'
 import { brand } from '~/data/brand.ts'
+import { isDesktopApp } from '~/data/desktop.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
@@ -543,11 +544,117 @@ function HeroDots() {
 
 type Press = 'open'
 
+function HanzoMark({ size = 28 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 67 67" fill="none" aria-hidden="true">
+      <path d="M22.21 67V44.6369H0V67H22.21Z" fill="currentColor" />
+      <path d="M0 44.6369L22.21 46.8285V44.6369H0Z" fill="currentColor" fillOpacity="0.65" />
+      <path d="M66.7038 22.3184H22.2534L0.0878906 44.6367H44.4634L66.7038 22.3184Z" fill="currentColor" />
+      <path d="M22.21 0H0V22.3184H22.21V0Z" fill="currentColor" />
+      <path d="M66.7198 0H44.5098V22.3184H66.7198V0Z" fill="currentColor" />
+      <path d="M66.6753 22.3185L44.5098 20.0822V22.3185H66.6753Z" fill="currentColor" fillOpacity="0.65" />
+      <path d="M66.7198 67V44.6369H44.5098V67H66.7198Z" fill="currentColor" />
+    </svg>
+  )
+}
+
+function HanzoTeamAppIcon({ size = 64 }: { size?: number }) {
+  return (
+    <img
+      src="/logos/hanzo-team-minimal.svg"
+      width={size}
+      height={size}
+      alt="Hanzo Team"
+      data-hanzo-app-icon="hanzo-team"
+      style={{ display: 'block', width: size, height: size }}
+    />
+  )
+}
+
 export const Login = () => {
   const { standing, depart, request } = useSession()
   const [busy, setBusy] = useState<Press | null>(null)
+  const desktop = isDesktopApp()
 
   if (standing === 'in') return null
+
+  if (desktop) {
+    return (
+      <YStack
+        flex={1}
+        minH="100vh"
+        bg={paint.ground}
+        data-slot="desktop-signin"
+        style={{ position: 'relative', overflow: 'hidden' }}
+      >
+        <div
+          aria-hidden="true"
+          data-slot="glow"
+          style={{
+            position: 'absolute',
+            inset: 0,
+            pointerEvents: 'none',
+            backgroundImage: `radial-gradient(ellipse 55% 100% at 50% 0%, ${paint.rule}, transparent 70%)`,
+            backgroundSize: '100% 560px',
+            backgroundRepeat: 'no-repeat',
+            backgroundPosition: 'top',
+          }}
+        />
+        <div
+          data-tauri-drag-region=""
+          style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            right: 0,
+            height: 36,
+            zIndex: 10,
+          }}
+        />
+        <YStack
+          flex={1}
+          items="center"
+          justify="center"
+          px={gap.wide}
+          pt={gap.edge}
+          pb={88}
+          gap={gap.inset}
+          style={{ position: 'relative', zIndex: 1 }}
+        >
+          <YStack width="100%" maxW={400} items="center" gap={gap.inset}>
+            <div style={{ display: 'inline-flex', marginBottom: 4 }}>
+              <HanzoTeamAppIcon size={64} />
+            </div>
+            <SignInPanel
+              bare
+              title={`Sign in to Hanzo ${brand.title}`}
+              line="Channels, issues, docs, and AI teammates in one workspace."
+              request={request}
+              termsHref={`${SITE}/terms`}
+              privacyHref={`${SITE}/privacy`}
+            />
+          </YStack>
+        </YStack>
+        <div
+          data-slot="mark"
+          style={{
+            position: 'absolute',
+            bottom: 32,
+            left: 0,
+            right: 0,
+            display: 'flex',
+            justifyContent: 'center',
+            color: 'var(--muted-foreground)',
+            opacity: 0.72,
+            pointerEvents: 'none',
+            zIndex: 1,
+          }}
+        >
+          <HanzoMark size={26} />
+        </div>
+      </YStack>
+    )
+  }
 
   const go = (press: Press, way: Way) => {
     setBusy(press)
@@ -993,21 +1100,39 @@ const Forward = ({ to }: { to: string }) => {
 
 const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => {
   const productName = `Hanzo ${brand.title}`
+  const desktop = isDesktopApp()
+  if (desktop && !account && !onLeave) {
+    return (
+      <div
+        data-tauri-drag-region=""
+        style={{
+          position: 'sticky',
+          top: 0,
+          left: 0,
+          right: 0,
+          height: 36,
+          zIndex: 40,
+        }}
+      />
+    )
+  }
   return (
     <XStack
       width="100%"
-      minH={68}
+      minH={desktop ? 44 : 68}
       px={gap.wide}
       py={gap.tight}
       items="center"
       justify="space-between"
-      borderBottomWidth={1}
+      borderBottomWidth={desktop ? 0 : 1}
       borderColor={paint.rule}
       bg={paint.ground}
+      data-tauri-drag-region={desktop ? '' : undefined}
       style={{
         position: 'sticky',
         top: 0,
         zIndex: 40,
+        ...(desktop ? { paddingLeft: 84 } : {}),
       }}
     >
       <XStack
@@ -1027,16 +1152,18 @@ const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: (
             {account}
           </SizableText>
         ) : null}
-        <Button
-          size="sm"
-          variant="outline"
-          rounded={round.pill}
-          onPress={() => window.location.assign(`${SITE}/contact-sales`)}
-        >
-          <SizableText size={rung.small} color={paint.ink} fontWeight="500">
-            Contact sales
-          </SizableText>
-        </Button>
+        {desktop ? null : (
+          <Button
+            size="sm"
+            variant="outline"
+            rounded={round.pill}
+            onPress={() => window.location.assign(`${SITE}/contact-sales`)}
+          >
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">
+              Contact sales
+            </SizableText>
+          </Button>
+        )}
         {onLeave ? (
           <Button size="sm" variant="outline" rounded={round.pill} onPress={onLeave}>
             <SizableText size={rung.small} color={paint.ink} fontWeight="500">
@@ -1103,6 +1230,6 @@ const Word = ({
         {children}
       </YStack>
     </YStack>
-    <TeamShowcase onOpen={onOpen} working={working} />
+    {isDesktopApp() ? null : <TeamShowcase onOpen={onOpen} working={working} />}
   </YStack>
 )
