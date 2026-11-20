@@ -2,7 +2,29 @@
 
 mod dock_icon;
 
+/// Before the `ai.hanzo.<app>` identifier scheme this app was `com.hanzo.team`.
+/// WebKit keeps the sign-in session under the bundle identifier, so each
+/// legacy directory is moved into place before the webview opens. A directory
+/// that already exists under the new identifier is never touched.
+#[cfg(target_os = "macos")]
+fn migrate_legacy_data() {
+    let Some(home) = std::env::var_os("HOME") else { return };
+    let library = std::path::Path::new(&home).join("Library");
+    for dir in ["WebKit", "Caches", "Application Support"] {
+        let legacy = library.join(dir).join("com.hanzo.team");
+        let current = library.join(dir).join("ai.hanzo.team");
+        if legacy.is_dir() && !current.exists() {
+            if let Err(e) = std::fs::rename(&legacy, &current) {
+                eprintln!("could not move {legacy:?} to {current:?}: {e}");
+            }
+        }
+    }
+}
+
 fn main() {
+    #[cfg(target_os = "macos")]
+    migrate_legacy_data();
+
     #[cfg(target_os = "linux")]
     {
         if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
