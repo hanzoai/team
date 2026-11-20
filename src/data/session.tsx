@@ -2,7 +2,9 @@
  * Who this browser is, decided once, in one place.
  *
  * This is the only module besides `iam.ts` that touches identity, and `iam.ts`
- * is the only one that imports @hanzo/iam. Everything else asks `useSession`
+ * is the only one that imports @hanzo/iam. (`follow.ts` is the pure rule this
+ * module applies when another tab changes the stored session; it decides, and
+ * acts on nothing.) Everything else asks `useSession`
  * who the visitor is, or asks `http.call` to carry them — so there is exactly
  * one place a credential is obtained, refreshed or thrown away, and a second
  * one cannot appear without moving that import.
@@ -32,6 +34,7 @@ import {
 
 import { away, hinted, logout, loopback, silent, silentRefusal, type How, type Way } from './away.ts'
 import { brand, clientId } from './brand.ts'
+import { ACCESS, follow } from './follow.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
 
@@ -119,8 +122,29 @@ const asked = () => {
   }
 }
 
-/** How long a tab is looked away from before its session is asked about again. */
-const RECHECK = 60_000
+/**
+ * How long a signed-out tab waits between asks of hanzo.ai (`silent`). Each ask
+ * is a page navigation, so it is never made more often than this.
+ */
+const REASK = 60_000
+
+/** When this tab last asked hanzo.ai with no page, or was told not to yet. */
+const SILENT_AT = 'team.silent.at'
+
+/**
+ * How soon a signed-in tab asks IAM about its session again when it is looked
+ * at: soon enough that a sign-out on any Hanzo site shows the moment the tab is
+ * switched to or its window clicked into. The ask is a background userinfo
+ * read, not a page; this only keeps a burst of focus and visibility events to
+ * one read.
+ */
+const RECHECK = 5_000
+
+/**
+ * How often a signed-in tab asks while it stays in view, so two windows side
+ * by side both follow a sign-out made in a third without either being clicked.
+ */
+const WATCH = 30_000
 
 /** Whether IAM refused the token outright: the SDK's userinfo read names the status it got. */
 const refused = (e: unknown): boolean => {
@@ -206,9 +230,10 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * A SIGN-OUT ON ANY HANZO SITE SIGNS THIS TAB OUT. Leaving any first-party
    * site deletes the person's grant to all of them (hanzoai/iam `revokeShared`),
    * and IAM's userinfo then refuses this app's token. A tab already open read it
-   * only when it loaded, so it is read again when the tab is looked at after a
-   * minute or more; a refusal drops the tokens and the tab is signed out. A
-   * network fault or a 5xx signs nobody out.
+   * only when it loaded, so it is read again whenever the tab is switched to or
+   * its window clicked into (`RECHECK` apart) and every `WATCH` while it stays
+   * in view; a refusal drops the tokens and the tab is signed out. A network
+   * fault or a 5xx signs nobody out.
    */
   useEffect(() => {
     if (standing === 'out') {
@@ -224,9 +249,9 @@ export const Session = ({ children }: { children: ReactNode }) => {
           }
           if (navigator.webdriver || AUTOMATED.test(navigator.userAgent) || loopback(window.location.hostname)) return
           try {
-            const prevAt = Number(sessionStorage.getItem('team.silent.at') || '0')
-            if (Date.now() - prevAt < RECHECK) return
-            sessionStorage.setItem('team.silent.at', String(Date.now()))
+            const prevAt = Number(sessionStorage.getItem(SILENT_AT) || '0')
+            if (Date.now() - prevAt < REASK) return
+            sessionStorage.setItem(SILENT_AT, String(Date.now()))
             keepHere()
             window.location.replace(silent(await iam().getSigninUrl({ additionalParams: { prompt: 'none' } })))
           } catch {
@@ -250,8 +275,46 @@ export const Session = ({ children }: { children: ReactNode }) => {
           drop()
         })
     }
+    const watch = window.setInterval(seen, WATCH)
     document.addEventListener('visibilitychange', seen)
-    return () => document.removeEventListener('visibilitychange', seen)
+    window.addEventListener('focus', seen)
+    return () => {
+      window.clearInterval(watch)
+      document.removeEventListener('visibilitychange', seen)
+      window.removeEventListener('focus', seen)
+    }
+  }, [standing, adopt, drop])
+
+  /**
+   * EVERY TAB OF THIS SITE IS ONE SESSION (./follow.ts). Another tab's sign-out
+   * signs this one out at once, and its sign-in signs this one in; a refresh
+   * there changes nothing here. A tab on the callback is finishing its own
+   * sign-in and is left to it. A tab signed out this way does not ask hanzo.ai
+   * for a while (`SILENT_AT`): the sign-out that emptied the store may still be
+   * on its way to IAM, and an ask arriving first would be answered from the
+   * session being ended and sign this tab straight back in.
+   */
+  useEffect(() => {
+    const moved = (e: StorageEvent) => {
+      if (e.storageArea !== window.localStorage) return
+      if (window.location.pathname.startsWith('/auth/')) return
+      const now = window.localStorage.getItem(ACCESS)
+      const next = follow(standing, e.key, e.oldValue, now)
+      if (next === 'adopt') {
+        void adopt()
+        return
+      }
+      if (next !== 'drop') return
+      try {
+        sessionStorage.setItem(SILENT_AT, String(Date.now()))
+      } catch {
+        /* no store: the probe could not ask anyway */
+      }
+      iam().clearTokens()
+      drop()
+    }
+    window.addEventListener('storage', moved)
+    return () => window.removeEventListener('storage', moved)
   }, [standing, adopt, drop])
 
   /**
