@@ -8,6 +8,7 @@
  * user account + preferences live at the bottom-left corner of the Rail.
  * There is NO top-bar app switcher (`H ▾`) and NO duplicate top-bar org/user menu.
  */
+import { DESKTOP_INSET, isDesktopApp } from '~/data/desktop.ts'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Input, Popover, Separator, Text, XStack, YStack } from '@hanzo/gui'
 import {
@@ -97,14 +98,8 @@ export function BusinessHeader({
   const [query, setQuery] = useState('')
   const [barW, setBarW] = useState(() => (typeof window === 'undefined' ? 1200 : window.innerWidth))
   const compact = barW < 680
-  const isDesktop =
-    typeof window !== 'undefined' &&
-    Boolean(
-      (window as unknown as { __TAURI__?: unknown; __TAURI_INTERNALS__?: unknown; hanzoDesktop?: unknown }).__TAURI__ ||
-        (window as unknown as { __TAURI_INTERNALS__?: unknown }).__TAURI_INTERNALS__ ||
-        (window as unknown as { hanzoDesktop?: unknown }).hanzoDesktop ||
-        document.documentElement.dataset.desktop === 'true',
-    )
+  const isDesktop = isDesktopApp()
+  const inset = isDesktop ? DESKTOP_INSET : 0
 
   const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
 
@@ -191,9 +186,9 @@ export function BusinessHeader({
       {/* LEFT FRAME SEGMENT: Sidebar toggle centered over the 48px rail (Back/Forward only in desktop windows) */}
       <XStack
         height="100%"
-        width={navOpen && navSpan ? RAIL + navSpan : RAIL}
-        minW={navOpen && navSpan ? RAIL + navSpan : RAIL}
-        pl={11}
+        width={(navOpen && navSpan ? RAIL + navSpan : RAIL) + inset}
+        minW={(navOpen && navSpan ? RAIL + navSpan : RAIL) + inset}
+        pl={11 + inset}
         pr={8}
         gap={2}
         items="center"
