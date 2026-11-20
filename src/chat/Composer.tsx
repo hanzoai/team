@@ -225,7 +225,7 @@ export function Composer({
         />
 
         <XStack items="center" justify="space-between" pt={2}>
-          <XStack items="center" gap={6} flexWrap="wrap">
+          <XStack flex={1} minW={0} items="center" gap={6} flexWrap="wrap">
             <YStack
               width={26}
               height={26}
@@ -311,6 +311,7 @@ export function Composer({
             cursor={ready ? 'pointer' : 'default'}
             width={30}
             height={30}
+            shrink={0}
             items="center"
             justify="center"
             rounded={15}
