@@ -216,6 +216,11 @@ const config = hanzo(
  */
 export default {
   ...config,
+  // The build's release, stamped on every event by @hanzo/event.
+  define: {
+    ...(config.define as Record<string, string> | undefined),
+    'process.env.NEXT_PUBLIC_HANZO_RELEASE': JSON.stringify((process.env.GITHUB_SHA ?? '').slice(0, 12)),
+  },
   optimizeDeps: {
     rollupOptions: {
       resolve: { extensions: (config.resolve as { extensions: string[] }).extensions },
