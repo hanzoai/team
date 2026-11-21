@@ -2,7 +2,6 @@
  * THE CHAT NAVIGATOR — Unified Hanzo Team left sidebar:
  *  - Search/filter input (`Jump to channel or person... ⌘K`)
  *  - First-class `Channels` list (unread count badges, active channel pill, `+ New Channel`)
- *  - `Direct & Bot Handoffs` list (`@hanzo-dev`, `@release-bot`, team members with presence dots)
  *  - `Hanzo Connect` shared channels, server-backed `Bots`, and `Direct` messages
  */
 import { Input, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
@@ -15,10 +14,7 @@ import { useSpace } from '~/data/space.tsx'
 import { openConnectModal } from '~/shell/ConnectOrgModal.tsx'
 import { ICON, PAD, ROW } from '~/shell/measure.ts'
 import {
-  DEFAULT_CHANNEL_UNREADS,
-  DIRECT_HANDOFF_ROSTER,
   filterChannelItems,
-  filterDirectHandoffs,
   Find,
   Group,
   Nav as Column,
@@ -28,7 +24,7 @@ import {
   Rule,
   surfaceAt,
 } from '~/shell'
-import { paint, round, rung, state } from '~/theme/theme'
+import { paint, round, rung } from '~/theme/theme'
 import { botDm, botsOf, hanzoBot, withPath } from './bots.ts'
 import { createChannel, titled, type Person, type Room } from './chat.ts'
 import { Face } from './Face.tsx'
@@ -44,29 +40,16 @@ export function Channels() {
 
   const [query, setQuery] = useState('')
   const [channelsOpen, setChannelsOpen] = useState(true)
-  const [handoffsOpen, setHandoffsOpen] = useState(true)
   const [connectOpen, setConnectOpen] = useState(true)
   const [botsOpen, setBotsOpen] = useState(true)
   const [creatingChannel, setCreatingChannel] = useState(false)
   const [newChannelName, setNewChannelName] = useState('')
-  const [unreads, setUnreads] = useState<Record<string, number>>(() => ({
-    ...DEFAULT_CHANNEL_UNREADS,
-  }))
 
   useEffect(() => {
     const onNew = () => setCreatingChannel(true)
     window.addEventListener('hanzo:team-new-channel', onNew)
     return () => window.removeEventListener('hanzo:team-new-channel', onNew)
   }, [])
-
-  // Clear unread badge when viewing a channel
-  useEffect(() => {
-    const match = /^\/chat\/([^/]+)/.exec(pathname)
-    const activeId = match?.[1]
-    if (activeId && unreads[activeId]) {
-      setUnreads((prev) => ({ ...prev, [activeId]: 0 }))
-    }
-  }, [pathname, unreads])
 
   const load = useRooms()
   const roster = usePeople().data ?? []
@@ -76,7 +59,6 @@ export function Channels() {
   const channels = shown.filter((r) => r.kind === 'channel')
   const internalChannels = channels.filter((r) => !r.connectedOrgs || r.connectedOrgs.length === 0)
   const connectChannels = channels.filter((r) => r.connectedOrgs && r.connectedOrgs.length > 0)
-  const shownHandoffs = filterDirectHandoffs(DIRECT_HANDOFF_ROSTER, query)
   // A direct message with a bot is reached through the bot's own row, so it is
   // not listed a second time among the people.
   const bots = botsOf(roster)
@@ -122,7 +104,6 @@ export function Channels() {
         {load.phase === 'ready' &&
         all.length > 0 &&
         shown.length === 0 &&
-        shownHandoffs.length === 0 &&
         shownBots.length === 0 ? (
           <Note>{`Nothing matches “${query.trim()}”.`}</Note>
         ) : null}
@@ -209,79 +190,10 @@ export function Channels() {
                 key={r.id}
                 room={r}
                 roster={roster}
-                unreadCount={unreads[r.id] ?? 0}
-                onClearUnread={() => setUnreads((prev) => ({ ...prev, [r.id]: 0 }))}
+                unreadCount={0}
               />
             ))
           : null}
-
-        {/* First-class Direct & Bot Handoffs Section */}
-        {shownHandoffs.length > 0 ? (
-          <>
-            <Rule />
-            <Group
-              count={shownHandoffs.length}
-              open={handoffsOpen}
-              onToggle={() => setHandoffsOpen((v) => !v)}
-            >
-              Direct &amp; Bot Handoffs
-            </Group>
-            {handoffsOpen
-              ? shownHandoffs.map((dm) => {
-                  const to = `/chat/${dm.id}`
-                  const here = pathname === to
-                  const dotBg =
-                    dm.presence === 'online'
-                      ? state.done
-                      : dm.presence === 'busy'
-                        ? state.backlog
-                        : paint.dim
-                  return (
-                    <XStack
-                      key={dm.id}
-                      {...press(() => navigate(to), `${dm.handle} · ${dm.role}`)}
-                      height={ROW - 2}
-                      px={PAD - 2}
-                      mx={6}
-                      gap={8}
-                      items="center"
-                      justify="space-between"
-                      rounded={round.field}
-                      borderWidth={1}
-                      style={
-                        here
-                          ? { backgroundColor: paint.rowActive, borderColor: paint.paneEdge }
-                          : { borderColor: 'transparent' }
-                      }
-                      hoverStyle={here ? undefined : { bg: '$hover' }}
-                      data-testid={`sidebar-handoff-${dm.id}`}
-                    >
-                      <XStack items="center" gap={8} minW={0} flex={1}>
-                        <YStack
-                          width={7}
-                          height={7}
-                          rounded={round.pill}
-                          shrink={0}
-                          style={{ backgroundColor: dotBg }}
-                        />
-                        <SizableText
-                          fontSize={rung.body}
-                          fontWeight={here ? '600' : '400'}
-                          color={here ? '$ink' : '$quiet'}
-                          numberOfLines={1}
-                        >
-                          {dm.handle}
-                        </SizableText>
-                      </XStack>
-                      <SizableText fontSize={rung.chip} color="$faint" shrink={0}>
-                        {dm.role}
-                      </SizableText>
-                    </XStack>
-                  )
-                })
-              : null}
-          </>
-        ) : null}
 
         {load.phase === 'ready' && (!q || connectChannels.length > 0) ? (
           <>

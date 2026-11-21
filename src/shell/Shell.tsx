@@ -146,7 +146,7 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
         openSettingsModal('general')
       } else if (action === 'new-thread') {
         e.preventDefault()
-        reach('/chat/c-general')
+        reach('/chat')
         window.dispatchEvent(new CustomEvent('hanzo:team-new-channel'))
       }
     }

@@ -16,12 +16,8 @@ export {
 export {
   TEAM_SHORTCUTS,
   TEAM_CROSS_APPS,
-  DIRECT_HANDOFF_ROSTER,
-  DEFAULT_CHANNEL_UNREADS,
   matchTeamShortcut,
   filterChannelItems,
-  filterDirectHandoffs,
   type TeamShortcutAction,
   type TeamCrossAppItem,
-  type DirectHandoffEntry,
 } from './unified.ts'

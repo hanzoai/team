@@ -5,11 +5,8 @@ import { test } from 'node:test'
 
 import { NAV, PANE_ROUND } from './measure.ts'
 import {
-  DEFAULT_CHANNEL_UNREADS,
   DEFAULT_REQUIRED_CHANNELS,
-  DIRECT_HANDOFF_ROSTER,
   filterChannelItems,
-  filterDirectHandoffs,
   matchTeamShortcut,
   TEAM_CROSS_APPS,
 } from './unified.ts'
@@ -46,7 +43,7 @@ test('Hanzo Team decomplects to ONE unified search bar (no duplicate top-right s
   assert.ok(CHAT_TSX.includes('data-testid="chat-header-inbox-trigger"'))
 })
 
-test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', () => {
+test('Hanzo Team sidebar declares the required Channels and lists only people and bots the space holds', () => {
   for (const requiredChannel of [
     'general',
     'engineering',
@@ -60,16 +57,23 @@ test('Hanzo Team sidebar declares required Channels and Direct & Bot Handoffs', 
     )
   }
   assert.ok(CHANNELS_TSX.includes('placeholder="Search…"'))
-  assert.ok(CHANNELS_TSX.includes('Direct &amp; Bot Handoffs'))
   assert.ok(CHANNELS_TSX.includes('New Channel'))
-
-  const handles = DIRECT_HANDOFF_ROSTER.map((d) => d.handle)
-  assert.ok(handles.includes('@hanzo-dev'))
-  assert.ok(handles.includes('@release-bot'))
-  assert.equal(DEFAULT_CHANNEL_UNREADS['c-engineering'], 5)
 })
 
-test('filterChannelItems and filterDirectHandoffs filter accurately', () => {
+// A new account's sidebar named four people and bots it did not have (two of them the
+// founders, with presence dots), each a row that opened "No such room", and the palette
+// and the new-channel shortcut reached for a #general no space is made with. Only what
+// the space's own roster and rooms answer is listed or jumped to.
+test('Hanzo Team invents no roster, no unread counts and no room', () => {
+  for (const [name, src] of [['Channels', CHANNELS_TSX], ['BusinessHeader', HEADER_TSX], ['Shell', SHELL_TSX]] as const) {
+    for (const invented of ['DIRECT_HANDOFF_ROSTER', 'DEFAULT_CHANNEL_UNREADS', 'Bot Handoffs', '@release-bot', '@zach', '@antje', 'c-general']) {
+      assert.ok(!src.includes(invented), `${name} still names ${invented}`)
+    }
+  }
+  assert.ok(TEAM_CROSS_APPS.every((a) => a.internalPath !== '/chat/c-general'))
+})
+
+test('filterChannelItems filters accurately', () => {
   const rooms = [
     { name: 'general', topic: 'Company updates' },
     { name: 'engineering', topic: 'Runtime & SDK PRs' },
@@ -77,8 +81,6 @@ test('filterChannelItems and filterDirectHandoffs filter accurately', () => {
   ]
   assert.equal(filterChannelItems(rooms, '#eng').length, 1)
   assert.equal(filterChannelItems(rooms, '#eng')[0]?.name, 'engineering')
-  assert.equal(filterDirectHandoffs(DIRECT_HANDOFF_ROSTER, 'release').length, 1)
-  assert.equal(filterDirectHandoffs(DIRECT_HANDOFF_ROSTER, 'release')[0]?.handle, '@release-bot')
 })
 
 test('matchTeamShortcut handles ⌘B, ⌘K, ⌘,, ⌘/, and ⇧⌘O', () => {

@@ -31,7 +31,7 @@ import { botsOf, withPath } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, ring, round, state } from '~/theme/theme.ts'
 import { RAIL, STEP } from './measure.ts'
-import { DIRECT_HANDOFF_ROSTER, matchTeamShortcut } from './unified.ts'
+import { matchTeamShortcut } from './unified.ts'
 
 function displayName(name?: string, email?: string): string {
   if (name?.trim()) return name.trim()
@@ -145,18 +145,11 @@ export function BusinessHeader({
       desc: 'Agent',
       path: withPath(p),
     }))
-    const handoffItems = DIRECT_HANDOFF_ROSTER.map((dm) => ({
-      id: `handoff-${dm.id}`,
-      kind: dm.kind === 'bot' ? ('bot' as const) : ('surface' as const),
-      label: `${dm.handle} (${dm.name})`,
-      desc: dm.role,
-      path: `/chat/${dm.id}`,
-    }))
     const channelItems = rooms
       .filter((r) => r.kind === 'channel')
       .map((r) => ({ id: r.id, kind: 'channel' as const, label: `#${r.name}`, desc: r.topic ?? '', path: `/chat/${r.id}` }))
     const surfaceItems = JUMP_SURFACES.map((s) => ({ ...s, kind: 'surface' as const }))
-    const all = [...channelItems, ...handoffItems, ...botItems, ...surfaceItems]
+    const all = [...channelItems, ...botItems, ...surfaceItems]
     if (!q) return all.slice(0, 14)
     return all
       .filter((item) => item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q))

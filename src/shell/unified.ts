@@ -3,7 +3,7 @@
  *  - Keyboard shortcuts (`⌘B` toggle sidebar, `⌘K` command palette, `⌘,` settings,
  *    `⌘/` shortcuts dialog, `⇧⌘O` new channel / thread)
  *  - Cross-app switcher items (`Dev`, `Bot`, `Team`, `Console`, `Desktop/Mobile`)
- *  - First-class `Channels` unread counts & `Direct & Bot Handoffs` roster
+ *  - First-class `Channels`; people and bots come from the space's own roster
  *  - `X-Org-Id` organization persistence
  */
 
@@ -39,53 +39,9 @@ export type TeamCrossAppItem = {
 export const TEAM_CROSS_APPS: readonly TeamCrossAppItem[] = [
   { id: 'dev', label: 'Dev', href: 'https://hanzo.ai/dev' },
   { id: 'bot', label: 'Bot', href: 'https://hanzo.bot', internalPath: '/bots' },
-  { id: 'team', label: 'Team', href: 'https://hanzo.team', internalPath: '/chat/c-general' },
+  { id: 'team', label: 'Team', href: 'https://hanzo.team', internalPath: '/chat' },
   { id: 'console', label: 'Console', href: 'https://console.hanzo.ai' },
   { id: 'desktop', label: 'Desktop / Mobile', href: 'https://hanzo.app' },
-] as const
-
-export type DirectHandoffEntry = {
-  id: string
-  handle: string
-  name: string
-  role: string
-  presence: 'online' | 'busy' | 'offline'
-  kind: 'bot' | 'member'
-}
-
-export const DIRECT_HANDOFF_ROSTER: readonly DirectHandoffEntry[] = [
-  {
-    id: 'dm-hanzo-dev',
-    handle: '@hanzo-dev',
-    name: 'Hanzo Dev',
-    role: 'Coding Agent Handoff',
-    presence: 'online',
-    kind: 'bot',
-  },
-  {
-    id: 'dm-release-bot',
-    handle: '@release-bot',
-    name: 'Release Bot',
-    role: 'Deploy & Canary Bot',
-    presence: 'online',
-    kind: 'bot',
-  },
-  {
-    id: 'dm-dev',
-    handle: '@zach',
-    name: 'Zach Kelling',
-    role: 'CTO',
-    presence: 'online',
-    kind: 'member',
-  },
-  {
-    id: 'dm-mark',
-    handle: '@antje',
-    name: 'Antje Worring',
-    role: 'CEO',
-    presence: 'busy',
-    kind: 'member',
-  },
 ] as const
 
 export const DEFAULT_REQUIRED_CHANNELS = [
@@ -95,12 +51,6 @@ export const DEFAULT_REQUIRED_CHANNELS = [
   'approvals',
   'incidents',
 ] as const
-
-export const DEFAULT_CHANNEL_UNREADS: Readonly<Record<string, number>> = {
-  'c-general': 2,
-  'c-engineering': 5,
-  'c-approvals': 3,
-}
 
 export function matchTeamShortcut(e: {
   key?: string
@@ -137,19 +87,5 @@ export function filterChannelItems<T extends { name: string; topic?: string }>(
   return items.filter(
     (item) =>
       item.name.toLowerCase().includes(q) || (item.topic ?? '').toLowerCase().includes(q),
-  )
-}
-
-export function filterDirectHandoffs(
-  items: readonly DirectHandoffEntry[],
-  query: string,
-): DirectHandoffEntry[] {
-  const q = query.trim().toLowerCase()
-  if (!q) return [...items]
-  return items.filter(
-    (d) =>
-      d.handle.toLowerCase().includes(q) ||
-      d.name.toLowerCase().includes(q) ||
-      d.role.toLowerCase().includes(q),
   )
 }
