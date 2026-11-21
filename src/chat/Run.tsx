@@ -59,8 +59,22 @@ export function Run({ author, at, messages, people, reactions, me, onReact, onOp
       </Avatar>
 
       <YStack flex={1} minW={0} gap={2}>
-        <XStack gap={8} items="baseline">
+        <XStack gap={6} items="center">
           <SizableText fontSize="$3" fontWeight="600" color="$ink">{name}</SizableText>
+          {person?.bot ? (
+            <XStack
+              px={4}
+              py={1}
+              rounded="$1"
+              items="center"
+              style={{ backgroundColor: paint.accent }}
+              data-testid="message-app-badge"
+            >
+              <SizableText fontSize={9} lineHeight={11} fontWeight="700" style={{ color: paint.panel }}>
+                APP
+              </SizableText>
+            </XStack>
+          ) : null}
           <SizableText fontSize="$1" color="$dim">{clock(at)}</SizableText>
         </XStack>
 
