@@ -191,10 +191,20 @@ fn main() {
         .setup(|app| {
             dock_icon::init(app.handle())?;
 
+            let start_url = if std::env::var("HANZO_TEAM_OFFLINE").ok().as_deref() == Some("1") {
+                WebviewUrl::App("index.html".into())
+            } else {
+                let raw = std::env::var("HANZO_TEAM_URL")
+                    .unwrap_or_else(|_| "https://hanzo.team".to_string());
+                raw.parse::<tauri::Url>()
+                    .map(WebviewUrl::External)
+                    .unwrap_or_else(|_| WebviewUrl::App("index.html".into()))
+            };
+
             let mut builder = WebviewWindowBuilder::new(
                 app,
                 "main",
-                WebviewUrl::App("index.html".into()),
+                start_url,
             )
             .title("Hanzo Team")
             .inner_size(1440.0, 900.0)
