@@ -201,7 +201,8 @@ export const Preview = () => {
   const scale = Math.max(0.45, Math.min(1.16, hostW / stageW))
   const scaledH = Math.round(stageH * scale)
 
-  // Named cursor choreography per scene & step (kept inside uncovered desktop bounds)
+  // Named cursor choreography per scene & step (kept inside uncovered desktop bounds,
+  // never colliding over the chat composer).
   const cursor =
     scene === 0
       ? step === 0
@@ -210,7 +211,7 @@ export const Preview = () => {
           ? { x: wide ? 316 : 186, y: 184, label: '◆ Dev' }
           : step === 2
             ? { x: wide ? 298 : 174, y: 238, label: '◆ Sci' }
-            : { x: wide ? 344 : 196, y: deskH - 28, label: '◆ Zoe' }
+            : { x: wide ? 344 : 196, y: wide ? 256 : 214, label: '◆ Zoe' }
       : scene === 1
         ? step <= 1
           ? { x: wide ? 336 : 188, y: 158, label: '◆ Dev' }
@@ -363,7 +364,7 @@ export const Preview = () => {
                       height: 20,
                       borderRadius: 999,
                       background: 'var(--pv-send)',
-                      color: 'var(--pv-ink)',
+                      color: 'var(--pv-send-ink)',
                       fontSize: 8,
                       fontWeight: 700,
                       display: 'flex',
@@ -420,7 +421,7 @@ export const Preview = () => {
                                 padding: '1px 4px',
                                 borderRadius: 999,
                                 background: 'var(--pv-send)',
-                                color: 'var(--pv-ink)',
+                                color: 'var(--pv-send-ink)',
                               }}
                             >
                               3
@@ -672,12 +673,12 @@ export const Preview = () => {
                     </div>
 
                     {/* Unified Composer + Full access + Send */}
-                    <div className="hz-pv-composer" style={{ marginRight: wide ? 92 : 118 }}>
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, minWidth: 0 }}>
-                        <Plus size={11} color="var(--pv-mute)" />
+                    <div className="hz-pv-composer" style={{ marginRight: wide ? 92 : 76 }}>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, flex: 1, minWidth: 0, overflow: 'hidden' }}>
+                        <Plus size={11} color="var(--pv-mute)" style={{ flexShrink: 0 }} />
                         <span
                           style={{
-                            fontSize: 8.8,
+                            fontSize: 8.4,
                             color: step === 3 ? 'var(--pv-ink)' : 'var(--pv-mute)',
                             whiteSpace: 'nowrap',
                             overflow: 'hidden',
@@ -695,22 +696,25 @@ export const Preview = () => {
                         </span>
                       </div>
 
-                      <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexShrink: 0 }}>
-                        <span
-                          style={{
-                            display: 'inline-flex',
-                            alignItems: 'center',
-                            gap: 3,
-                            fontSize: 7.8,
-                            fontWeight: 600,
-                            color: 'var(--pv-warn)',
-                          }}
-                        >
-                          <AlertCircle size={9} color="var(--pv-warn)" />
-                          Full access
-                        </span>
+                      <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexShrink: 0 }}>
+                        {wide ? (
+                          <span
+                            style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: 3,
+                              fontSize: 7.5,
+                              fontWeight: 600,
+                              color: 'var(--pv-warn)',
+                              whiteSpace: 'nowrap',
+                            }}
+                          >
+                            <AlertCircle size={8.5} color="var(--pv-warn)" style={{ flexShrink: 0 }} />
+                            Full access
+                          </span>
+                        ) : null}
                         <span className="hz-pv-send">
-                          <ArrowUp size={11} color="var(--pv-ink)" />
+                          <ArrowUp size={11} color="var(--pv-send-ink)" />
                         </span>
                       </div>
                     </div>
@@ -1205,13 +1209,13 @@ export const Preview = () => {
                       height: 15,
                       borderRadius: 999,
                       background: 'var(--pv-send)',
-                      color: 'var(--pv-ink)',
+                      color: 'var(--pv-send-ink)',
                       display: 'inline-flex',
                       alignItems: 'center',
                       justifyContent: 'center',
                     }}
                   >
-                    <ArrowUp size={9} color="var(--pv-ink)" />
+                    <ArrowUp size={9} color="var(--pv-send-ink)" />
                   </span>
                 </div>
                 <div

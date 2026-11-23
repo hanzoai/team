@@ -21,10 +21,12 @@
  */
 
 :root,
+.dark,
+[data-theme='dark'],
 .t_dark {
-  /* ——— unified Hanzo desktop shell ladder (exact parity with hanzo.app & hanzo.bot) ——— */
-  --background: #050505;
-  --pane-floor: #050505;
+  /* ——— unified Hanzo pure-black shell ladder (exact parity with hanzo.app & platform.hanzo.ai) ——— */
+  --background: #000000;
+  --pane-floor: #000000;
   --pane-fill: #0f0f12;
   --side-fill: #09090b;
   --pane-round: 12px;
@@ -45,9 +47,9 @@
   --highlight: #fafafa !important;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #050505;
+  --shell-bar-bg: #000000;
   --shell-bar-border: rgba(255, 255, 255, 0.08);
-  --shell-rail-bg: #050505;
+  --shell-rail-bg: #000000;
   --shell-rail-border: rgba(255, 255, 255, 0.08);
   --shell-rail-active: #1e1e24;
   --shell-rail-fg: #b8b8c2;
@@ -67,8 +69,8 @@
   --chat-user-bg: #242429;
   --chat-user-fg: #fafafa;
 
-  /* ——— surfaces: Unified Hanzo Dev obsidian chrome + unified outer chrome ——— */
-  --team-ground: #050505;             /* outer obsidian shell floor */
+  /* ——— surfaces: Unified Hanzo pure-black outer chrome ——— */
+  --team-ground: #000000;             /* outer pure-black shell floor */
   --team-sidebar: #09090b;            /* 256px collapsible left sidebar */
   --team-panel: #0f0f12;              /* inset rounded stage pane */
   --team-card: #111114;               /* raised card / unread surface */
@@ -218,6 +220,11 @@
 
 html {
   font-size: calc(16px * var(--hanzo-font-scale, 1));
+  background-color: var(--background);
+}
+
+body {
+  background-color: var(--background);
 }
 
 @keyframes hz-marquee-scroll {
@@ -629,6 +636,8 @@ html {
   --pv-composer: #141418;
   --pv-composer-rule: #27272c;
   --pv-send: #fafafa;
+  --pv-send-ink: #09090b;
+  --pv-cursor-bg: #18181c;
   --pv-warn: #d98254;
   --pv-green: #22c55e;
   --pv-green-bg: rgba(34, 197, 94, 0.14);
@@ -640,7 +649,7 @@ html {
   --pv-rose: #f472b6;
   --pv-bezel: #262626;
   --pv-bezel-rim: rgba(255, 255, 255, 0.18);
-  --pv-island: #050505;
+  --pv-island: #000000;
   --pv-dot-red: #ff5f57;
   --pv-dot-yellow: #febc2e;
   --pv-dot-green: #28c840;
@@ -893,14 +902,15 @@ html {
 
 .hz-pv-composer {
   margin: 0 10px 8px;
-  padding: 5px 6px 5px 10px;
+  padding: 5px 6px 5px 9px;
   border-radius: 12px;
   background: var(--pv-composer);
   border: 1px solid var(--pv-composer-rule);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 6px;
+  gap: 5px;
+  overflow: hidden;
 }
 
 .hz-pv-send {
@@ -908,7 +918,7 @@ html {
   height: 20px;
   border-radius: 999px;
   background: var(--pv-send);
-  color: #ffffff;
+  color: var(--pv-send-ink);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -987,12 +997,13 @@ html {
 .hz-pv-cursor-tag {
   padding: 2px 6px;
   border-radius: 999px;
-  background: var(--pv-send);
-  color: #ffffff;
+  background: var(--pv-cursor-bg);
+  border: 1px solid var(--pv-rule-strong);
+  color: var(--pv-ink);
   font-size: 8px;
   font-weight: 700;
   letter-spacing: 0.01em;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.52);
   white-space: nowrap;
 }
 

@@ -15,7 +15,7 @@
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** The app outer obsidian floor (#050505 dark / #ffffff light). */
+  /** The app outer pure-black floor (#000000 dark / #ffffff light). */
   ground: role('ground'),
   /** The inset board, chat, and inbox canvas (#0f0f12 dark / #ffffff light). */
   panel: role('panel'),
