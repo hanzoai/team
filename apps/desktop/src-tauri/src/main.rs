@@ -1,8 +1,37 @@
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
 mod dock_icon;
+mod hanzod;
 
 use tauri::{WebviewUrl, WebviewWindowBuilder};
+
+#[tauri::command]
+async fn team_hanzod_status() -> Result<serde_json::Value, String> {
+    tauri::async_runtime::spawn_blocking(hanzod::status)
+        .await
+        .map_err(|e| format!("hanzod status join error: {e}"))?
+}
+
+#[tauri::command]
+async fn team_hanzod_worker() -> Result<serde_json::Value, String> {
+    tauri::async_runtime::spawn_blocking(hanzod::worker_status)
+        .await
+        .map_err(|e| format!("hanzod worker join error: {e}"))?
+}
+
+#[tauri::command]
+async fn team_hanzod_cluster_up(mode: Option<String>) -> Result<serde_json::Value, String> {
+    tauri::async_runtime::spawn_blocking(move || hanzod::cluster_up(mode))
+        .await
+        .map_err(|e| format!("hanzod cluster_up join error: {e}"))?
+}
+
+#[tauri::command]
+async fn team_hanzod_cluster_down() -> Result<serde_json::Value, String> {
+    tauri::async_runtime::spawn_blocking(hanzod::cluster_down)
+        .await
+        .map_err(|e| format!("hanzod cluster_down join error: {e}"))?
+}
 
 /// Before the `ai.hanzo.<app>` identifier scheme this app was `com.hanzo.team`.
 /// WebKit keeps the sign-in session under the bundle identifier, so each
@@ -189,6 +218,11 @@ fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
+            // Auto-discover and launch unified local hanzod (127.0.0.1:3690) in the background.
+            std::thread::spawn(|| {
+                let _ = hanzod::ensure_hanzod_running();
+            });
+
             dock_icon::init(app.handle())?;
 
             let start_url = if std::env::var("HANZO_TEAM_OFFLINE").ok().as_deref() == Some("1") {
@@ -201,6 +235,7 @@ fn main() {
                     .unwrap_or_else(|_| WebviewUrl::App("index.html".into()))
             };
 
+            #[cfg_attr(not(target_os = "macos"), allow(unused_mut))]
             let mut builder = WebviewWindowBuilder::new(
                 app,
                 "main",
@@ -211,7 +246,8 @@ fn main() {
             .min_inner_size(900.0, 600.0)
             .resizable(true)
             .transparent(false)
-            .center();
+            .center()
+            .initialization_script(hanzod::HANZOD_INIT_SCRIPT);
 
             #[cfg(target_os = "macos")]
             {
@@ -230,6 +266,10 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             dock_icon::get_dock_icon_mode,
             dock_icon::set_dock_icon_mode,
+            team_hanzod_status,
+            team_hanzod_worker,
+            team_hanzod_cluster_up,
+            team_hanzod_cluster_down,
         ])
         .run(tauri::generate_context!())
         .expect("error while running Hanzo Team desktop application");
