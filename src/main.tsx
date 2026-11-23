@@ -5,13 +5,14 @@ import { createRoot } from 'react-dom/client'
 // once, here, so the `--font-sans` token resolves to a real face rather than the
 // system fallback.
 import '@hanzo/font/css'
-// THE ROLES. `src/theme/theme.ts` names them and every component reads them from
-// there; this is where their values arrive. Without it every `var(--team-…)`
-// resolves to nothing and the product paints as unstyled text.
-import '~/theme/tokens.css'
 import { startTags } from '@hanzo/event'
 import { App } from '~/app'
 import { iam } from '~/data/iam.ts'
+// THE ROLES. `src/theme/theme.ts` names them and every component reads them from
+// there; this is where their values arrive. Imported AFTER `~/app` (`@hanzo/ui`)
+// so Hanzo Team's pure `#000000` ground and surface ladder win the CSS cascade
+// over `@hanzo/ui/dist/styles.css`'s `:root { --background: #0a0a0a }`.
+import '~/theme/tokens.css'
 
 // THE TAGS. hanzo.team's Google tag and Meta pixel and the visitor's consent
 // rule are cloud's answer for this host (GET /v1/project/tags); @hanzo/event

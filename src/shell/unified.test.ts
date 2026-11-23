@@ -19,13 +19,21 @@ const HEADER_TSX = readFileSync(join(ROOT, 'shell/BusinessHeader.tsx'), 'utf8')
 const NAV_TSX = readFileSync(join(ROOT, 'shell/Nav.tsx'), 'utf8')
 const SHELL_TSX = readFileSync(join(ROOT, 'shell/Shell.tsx'), 'utf8')
 
-test('Hanzo Team shell geometry & obsidian tokens match Hanzo Dev chrome', () => {
+test('Hanzo Team shell geometry & pure-black tokens match Hanzo App & Platform chrome', () => {
   assert.equal(NAV, 256)
   assert.equal(PANE_ROUND, 12)
-  assert.ok(SHEET.includes('--team-ground: #050505;'))
+  assert.ok(SHEET.includes('--background: #000000;'))
+  assert.ok(SHEET.includes('--team-ground: #000000;'))
   assert.ok(SHEET.includes('--team-sidebar: #09090b;'))
   assert.ok(SHEET.includes('--team-panel: #0f0f12;'))
   assert.ok(SHEET.includes('--team-rule: rgba(255, 255, 255, 0.08);'))
+  assert.ok(SHEET.includes('--pv-send-ink: #09090b;'))
+  assert.ok(SHEET.includes('--pv-cursor-bg: #18181c;'))
+  const mainTsx = readFileSync(join(ROOT, 'main.tsx'), 'utf8')
+  assert.ok(
+    mainTsx.indexOf("import '~/theme/tokens.css'") > mainTsx.indexOf("import { App } from '~/app'"),
+    'tokens.css must be imported after App (@hanzo/ui) so #000000 ground wins the cascade',
+  )
   assert.ok(NAV_TSX.includes('data-testid="sidebar-org-switcher-trigger"'))
   assert.ok(NAV_TSX.includes('ORGANIZATIONS (X-ORG-ID)'))
   assert.ok(NAV_TSX.includes('data-testid="nav-command-palette-trigger"'))
