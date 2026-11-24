@@ -1417,7 +1417,7 @@ dependencies = [
 
 [[package]]
 name = "hanzo-team-desktop"
-version = "1.0.1"
+version = "0.1.44"
 dependencies = [
  "objc2",
  "objc2-app-kit",

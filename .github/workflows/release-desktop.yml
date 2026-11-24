@@ -1,0 +1,329 @@
+name: Release Desktop
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag (e.g. v1.0.1)"
+        required: false
+        default: "v1.0.1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-desktop-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-macos:
+    name: Build macOS Universal (.dmg)
+    runs-on: macos-15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Resolve version
+        id: ver
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          TAG="${INPUT_TAG:-$REF_NAME}"
+          case "$TAG" in
+            v*) VER="${TAG#v}" ;;
+            *) TAG="v1.0.1"; VER="1.0.1" ;;
+          esac
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: aarch64-apple-darwin,x86_64-apple-darwin
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+
+      - name: Build web frontend
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Build universal macOS app & DMG
+        working-directory: apps/desktop/src-tauri
+        env:
+          APPLE_SIGNING_IDENTITY: "-"
+          DESKTOP_VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          set -euo pipefail
+          CFG=$(jq -cn --arg v "$DESKTOP_VERSION" '{version: $v, build: {beforeBuildCommand: ""}}')
+          npx --yes @tauri-apps/cli@2 build --target universal-apple-darwin --bundles app,dmg --config "$CFG" || \
+            npx --yes @tauri-apps/cli@2 build --target universal-apple-darwin --bundles app --config "$CFG"
+
+          APP_PATH="target/universal-apple-darwin/release/bundle/macos/Hanzo Team.app"
+          codesign --force --deep --sign - "$APP_PATH"
+
+          mkdir -p ../../dist-release
+          DMG_FOUND=$(find target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -name "*.dmg" | head -n 1 || true)
+          if [ -n "$DMG_FOUND" ] && [ -f "$DMG_FOUND" ]; then
+            cp "$DMG_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
+          else
+            STAGE_DIR=$(mktemp -d)
+            cp -R "$APP_PATH" "$STAGE_DIR/"
+            ln -s /Applications "$STAGE_DIR/Applications"
+            hdiutil create -volname "Hanzo Team" -srcfolder "$STAGE_DIR" -ov -format UDZO "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
+            rm -rf "$STAGE_DIR"
+          fi
+          cp "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg" "../../dist-release/hanzo-team-macos.dmg"
+          ls -lh ../../dist-release/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-macos
+          path: dist-release/*
+          if-no-files-found: error
+
+  build-windows:
+    name: Build Windows x64 (.exe & .msi)
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Resolve version
+        id: ver
+        shell: bash
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          TAG="${INPUT_TAG:-$REF_NAME}"
+          case "$TAG" in
+            v*) VER="${TAG#v}" ;;
+            *) TAG="v1.0.1"; VER="1.0.1" ;;
+          esac
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+
+      - name: Build web frontend
+        shell: bash
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Build Windows NSIS & MSI installers
+        working-directory: apps/desktop/src-tauri
+        shell: bash
+        env:
+          DESKTOP_VERSION: ${{ steps.ver.outputs.version }}
+        run: |
+          set -euo pipefail
+          CFG=$(jq -cn --arg v "$DESKTOP_VERSION" '{version: $v, build: {beforeBuildCommand: ""}}')
+          npx --yes @tauri-apps/cli@2 build --bundles nsis,msi --config "$CFG" || \
+            npx --yes @tauri-apps/cli@2 build --bundles nsis --config "$CFG"
+
+          mkdir -p ../../dist-release
+          EXE_FOUND=$(find target/release/bundle/nsis -maxdepth 1 -name "*-setup.exe" | head -n 1)
+          cp "$EXE_FOUND" "../../dist-release/hanzo-team-windows-x64-setup.exe"
+          cp "$EXE_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64-setup.exe"
+          cp "$EXE_FOUND" "../../dist-release/Hanzo.Team_${DESKTOP_VERSION}_x64-setup.exe"
+
+          MSI_FOUND=$(find target/release/bundle/msi -maxdepth 1 -name "*.msi" | head -n 1 || true)
+          if [ -n "$MSI_FOUND" ] && [ -f "$MSI_FOUND" ]; then
+            cp "$MSI_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64_en-US.msi"
+            cp "$MSI_FOUND" "../../dist-release/hanzo-team-windows-x64.msi"
+          fi
+          ls -lh ../../dist-release/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-windows
+          path: dist-release/*
+          if-no-files-found: error
+
+  build-linux:
+    name: Build Linux (${{ matrix.arch_label }})
+    runs-on: ${{ matrix.runner }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: ubuntu-24.04
+            arch_label: amd64
+            appimage_arch: x86_64
+          - runner: ubuntu-24.04-arm
+            arch_label: arm64
+            appimage_arch: aarch64
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Resolve version
+        id: ver
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          TAG="${INPUT_TAG:-$REF_NAME}"
+          case "$TAG" in
+            v*) VER="${TAG#v}" ;;
+            *) TAG="v1.0.1"; VER="1.0.1" ;;
+          esac
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+          echo "version=${VER}" >> "$GITHUB_OUTPUT"
+
+      - name: Install Linux system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            build-essential \
+            curl \
+            wget \
+            file \
+            libxdo-dev \
+            libssl-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            squashfs-tools \
+            libfuse2t64 || sudo apt-get install -y libfuse2
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: apps/desktop/src-tauri -> target
+
+      - name: Build web frontend
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm build
+
+      - name: Build Linux deb & AppImage
+        working-directory: apps/desktop/src-tauri
+        env:
+          APPIMAGE_EXTRACT_AND_RUN: "1"
+          NO_STRIP: "true"
+          DESKTOP_VERSION: ${{ steps.ver.outputs.version }}
+          ARCH_LABEL: ${{ matrix.arch_label }}
+          APPIMAGE_ARCH: ${{ matrix.appimage_arch }}
+        run: |
+          set -euo pipefail
+          CFG=$(jq -cn --arg v "$DESKTOP_VERSION" '{version: $v, build: {beforeBuildCommand: ""}}')
+          npx --yes @tauri-apps/cli@2 build --bundles deb --config "$CFG"
+          npx --yes @tauri-apps/cli@2 build --bundles appimage --config "$CFG" || true
+
+          mkdir -p ../../dist-release
+          DEB_FOUND=$(find target/release/bundle/deb -maxdepth 1 -name "*.deb" | head -n 1)
+          cp "$DEB_FOUND" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.deb"
+          cp "$DEB_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.deb"
+
+          APPIMG_FOUND=$(find target/release/bundle/appimage -maxdepth 1 -name "*.AppImage" | head -n 1 || true)
+          if [ -z "$APPIMG_FOUND" ] || [ ! -f "$APPIMG_FOUND" ]; then
+            APPDIR=$(mktemp -d)/HanzoTeam.AppDir
+            mkdir -p "$APPDIR"
+            dpkg-deb -x "$DEB_FOUND" "$APPDIR"
+            cat > "$APPDIR/AppRun" <<'APPRUN'
+          #!/bin/sh
+          HERE="$(dirname "$(readlink -f "$0")")"
+          export PATH="$HERE/usr/bin:$PATH"
+          export LD_LIBRARY_PATH="$HERE/usr/lib:$HERE/usr/lib/x86_64-linux-gnu:$HERE/usr/lib/aarch64-linux-gnu:${LD_LIBRARY_PATH:-}"
+          exec "$HERE/usr/bin/hanzo-team" "$@"
+          APPRUN
+            sed -i 's/^          //' "$APPDIR/AppRun"
+            chmod +x "$APPDIR/AppRun"
+            DESKTOP_FILE=$(find "$APPDIR/usr/share/applications" -name "*.desktop" | head -n 1)
+            cp "$DESKTOP_FILE" "$APPDIR/"
+            cp icons/icon.png "$APPDIR/hanzo-team.png"
+            cp icons/icon.png "$APPDIR/.DirIcon"
+            curl -fsSL -o /tmp/appimagetool "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${APPIMAGE_ARCH}.AppImage"
+            chmod +x /tmp/appimagetool
+            ARCH="$APPIMAGE_ARCH" APPIMAGE_EXTRACT_AND_RUN=1 /tmp/appimagetool "$APPDIR" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+          else
+            cp "$APPIMG_FOUND" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+          fi
+          chmod +x "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+          cp "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.AppImage"
+          ls -lh ../../dist-release/
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: desktop-linux-${{ matrix.arch_label }}
+          path: dist-release/*
+          if-no-files-found: error
+
+  publish-release:
+    name: Publish GitHub Release
+    needs: [build-macos, build-windows, build-linux]
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Resolve tag
+        id: ver
+        env:
+          INPUT_TAG: ${{ inputs.tag }}
+          REF_NAME: ${{ github.ref_name }}
+        run: |
+          TAG="${INPUT_TAG:-$REF_NAME}"
+          case "$TAG" in
+            v*) ;;
+            *) TAG="v1.0.1" ;;
+          esac
+          echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          merge-multiple: true
+
+      - name: Upload assets and mark Latest Release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          TAG: ${{ steps.ver.outputs.tag }}
+        run: |
+          set -euo pipefail
+          ls -lh artifacts/
+          NOTES="Hanzo Team ${TAG} native desktop release for macOS (Universal Apple Silicon + Intel DMG), Windows x64 (NSIS .exe & MSI), and Linux amd64/arm64 (.AppImage & .deb) with canonical 836/1024 Apple-HIG Dock squircle icon."
+          if gh release view "$TAG" -R "$REPO" >/dev/null 2>&1; then
+            gh release upload "$TAG" artifacts/* --clobber -R "$REPO"
+            gh release edit "$TAG" --title "Hanzo Team ${TAG}" --notes "$NOTES" --latest -R "$REPO"
+          else
+            gh release create "$TAG" artifacts/* --title "Hanzo Team ${TAG}" --notes "$NOTES" --latest -R "$REPO"
+          fi

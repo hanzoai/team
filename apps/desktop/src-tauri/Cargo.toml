@@ -1,6 +1,6 @@
 [package]
 name = "hanzo-team-desktop"
-version = "1.0.1"
+version = "0.1.44"
 description = "Hanzo Team desktop application"
 authors = ["Hanzo AI, Inc. <dev@hanzo.ai>"]
 license = "MIT"
