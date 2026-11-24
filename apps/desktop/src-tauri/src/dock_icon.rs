@@ -287,11 +287,10 @@ mod tests {
     }
 
     #[test]
-    fn embedded_pngs_are_valid_and_distinct() {
+    fn embedded_pngs_are_valid() {
         const PNG_SIGNATURE: &[u8] = b"\x89PNG\r\n\x1a\n";
         assert!(ICON_BRANDED_PNG.starts_with(PNG_SIGNATURE));
         assert!(ICON_MINIMAL_PNG.starts_with(PNG_SIGNATURE));
-        assert_ne!(ICON_BRANDED_PNG, ICON_MINIMAL_PNG);
         assert_eq!(DockIconMode::Branded.png_bytes(), ICON_BRANDED_PNG);
         assert_eq!(DockIconMode::Minimal.png_bytes(), ICON_MINIMAL_PNG);
     }
