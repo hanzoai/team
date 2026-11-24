@@ -9,7 +9,7 @@ on:
       tag:
         description: "Release tag (e.g. v1.0.1)"
         required: false
-        default: "v1.0.2"
+        default: "v1.0.3"
 
 permissions:
   contents: write
@@ -37,7 +37,7 @@ jobs:
           TAG="${INPUT_TAG:-$REF_NAME}"
           case "$TAG" in
             v*) VER="${TAG#v}" ;;
-            *) TAG="v1.0.2"; VER="1.0.2" ;;
+            *) TAG="v1.0.3"; VER="1.0.3" ;;
           esac
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "version=${VER}" >> "$GITHUB_OUTPUT"
@@ -114,7 +114,7 @@ jobs:
           TAG="${INPUT_TAG:-$REF_NAME}"
           case "$TAG" in
             v*) VER="${TAG#v}" ;;
-            *) TAG="v1.0.2"; VER="1.0.2" ;;
+            *) TAG="v1.0.3"; VER="1.0.3" ;;
           esac
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "version=${VER}" >> "$GITHUB_OUTPUT"
@@ -197,7 +197,7 @@ jobs:
           TAG="${INPUT_TAG:-$REF_NAME}"
           case "$TAG" in
             v*) VER="${TAG#v}" ;;
-            *) TAG="v1.0.2"; VER="1.0.2" ;;
+            *) TAG="v1.0.3"; VER="1.0.3" ;;
           esac
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
           echo "version=${VER}" >> "$GITHUB_OUTPUT"
@@ -303,7 +303,7 @@ jobs:
           TAG="${INPUT_TAG:-$REF_NAME}"
           case "$TAG" in
             v*) ;;
-            *) TAG="v1.0.1" ;;
+            *) TAG="v1.0.3" ;;
           esac
           echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
 
