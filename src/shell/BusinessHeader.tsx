@@ -8,14 +8,14 @@
  * user account + preferences live at the bottom-left corner of the Rail.
  * There is NO top-bar app switcher (`H ▾`) and NO duplicate top-bar org/user menu.
  */
-import { DESKTOP_INSET, isDesktopApp } from '~/data/desktop.ts'
+import { DESKTOP_INSET, isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Input, Popover, Separator, Text, XStack, YStack } from '@hanzo/gui'
 import {
-  ArrowLeft,
-  ArrowRight,
   Bot,
   Check,
+  ChevronLeft,
+  ChevronRight,
   Hash,
   LogOut,
   PanelLeft,
@@ -99,7 +99,8 @@ export function BusinessHeader({
   const [barW, setBarW] = useState(() => (typeof window === 'undefined' ? 1200 : window.innerWidth))
   const compact = barW < 680
   const isDesktop = isDesktopApp()
-  const inset = isDesktop ? DESKTOP_INSET : 0
+  const isMac = isMacDesktop()
+  const inset = isDesktop && isMac ? DESKTOP_INSET : 0
 
   const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
 
@@ -172,49 +173,86 @@ export function BusinessHeader({
       height={38}
       items="center"
       shrink={0}
-      style={{ backgroundColor: paint.bar }}
+      style={{
+        backgroundColor: paint.bar,
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderBottom: `1px solid ${paint.rule}`,
+      }}
       onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
       data-testid="hanzo-business-header"
     >
-      {/* LEFT FRAME SEGMENT: Sidebar toggle centered over the 48px rail (Back/Forward only in desktop windows) */}
+      {/* LEFT FRAME SEGMENT: Traffic lights / stacked _- menu + Sidebar toggle on left; < > aligned flush with sidebar edge when open */}
       <XStack
         height="100%"
-        width={(navOpen && navSpan ? RAIL + navSpan : RAIL) + inset}
-        minW={(navOpen && navSpan ? RAIL + navSpan : RAIL) + inset}
+        width={navOpen && navSpan ? RAIL + navSpan : undefined}
+        minW={navOpen && navSpan ? RAIL + navSpan : RAIL + inset}
         pl={11 + inset}
-        pr={8}
-        gap={2}
+        pr={navOpen ? 10 : 8}
+        gap={4}
         items="center"
+        justify={navOpen ? 'space-between' : 'flex-start'}
         shrink={0}
       >
-        {leftSlot}
-        {onToggleNav ? (
-          <XStack
-            role="button"
-            tabIndex={0}
-            cursor="pointer"
-            width={26}
-            height={26}
-            rounded={6}
-            items="center"
-            justify="center"
-            hoverStyle={{ bg: '$color3' }}
-            aria-label={navOpen ? 'Collapse sidebar' : 'Expand sidebar'}
-            data-testid="toggle-team-sidebar"
-            onPress={onToggleNav}
-          >
-            <PanelLeft size={15} color="$color10" />
-          </XStack>
-        ) : null}
-        {isDesktop && !compact ? (
-          <>
+        <XStack items="center" gap={4} shrink={0}>
+          {isDesktop && !isMac ? (
             <XStack
               role="button"
               tabIndex={0}
               cursor="pointer"
-              width={26}
-              height={26}
-              rounded={6}
+              width={28}
+              height={28}
+              rounded={8}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$color3' }}
+              aria-label="Application menu"
+              data-slot="desktop-app-menu-trigger"
+              onPress={() => setSearchOpen(true)}
+            >
+              <svg
+                width="15"
+                height="9"
+                viewBox="0 0 19 11"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                aria-hidden="true"
+              >
+                <path d="M1 1h17M1 10h10.7" />
+              </svg>
+            </XStack>
+          ) : null}
+          {leftSlot}
+          {onToggleNav ? (
+            <XStack
+              role="button"
+              tabIndex={0}
+              cursor="pointer"
+              width={28}
+              height={28}
+              rounded={8}
+              items="center"
+              justify="center"
+              hoverStyle={{ bg: '$color3' }}
+              aria-label={navOpen ? 'Collapse sidebar' : 'Expand sidebar'}
+              data-testid="toggle-team-sidebar"
+              onPress={onToggleNav}
+            >
+              <PanelLeft size={15} color="$color10" />
+            </XStack>
+          ) : null}
+        </XStack>
+        {isDesktop && !compact ? (
+          <XStack items="center" gap={4} shrink={0}>
+            <XStack
+              role="button"
+              tabIndex={0}
+              cursor="pointer"
+              width={28}
+              height={28}
+              rounded={8}
               items="center"
               justify="center"
               hoverStyle={{ bg: '$color3' }}
@@ -223,15 +261,15 @@ export function BusinessHeader({
                 if (typeof window !== 'undefined') window.history.back()
               }}
             >
-              <ArrowLeft size={14} color="$color10" />
+              <ChevronLeft size={15} color="$color10" />
             </XStack>
             <XStack
               role="button"
               tabIndex={0}
               cursor="pointer"
-              width={26}
-              height={26}
-              rounded={6}
+              width={28}
+              height={28}
+              rounded={8}
               items="center"
               justify="center"
               hoverStyle={{ bg: '$color3' }}
@@ -240,9 +278,9 @@ export function BusinessHeader({
                 if (typeof window !== 'undefined') window.history.forward()
               }}
             >
-              <ArrowRight size={14} color="$color10" />
+              <ChevronRight size={15} color="$color10" />
             </XStack>
-          </>
+          </XStack>
         ) : null}
       </XStack>
 

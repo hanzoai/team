@@ -28,6 +28,12 @@ export function isDesktopApp(): boolean {
 /** Room the shell's overlay title bar keeps for the macOS traffic lights, top-left. */
 export const DESKTOP_INSET = 80
 
+/** True when running on macOS (where native traffic lights occupy the top-left inset). */
+export function isMacDesktop(): boolean {
+  if (typeof navigator === 'undefined') return true
+  return /Mac|Darwin/i.test(navigator.platform || navigator.userAgent)
+}
+
 /** Canonical web origin used when bundled Tauri serves from `tauri://localhost` or `http://tauri.localhost`. */
 export const CANONICAL_TEAM_ORIGIN = 'https://hanzo.team'
 
