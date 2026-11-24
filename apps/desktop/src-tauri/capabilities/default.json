@@ -1,0 +1,27 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Default capabilities for the Hanzo Team desktop window (including macOS overlay titlebar dragging on local and Hanzo auth origins)",
+  "local": true,
+  "remote": {
+    "urls": [
+      "https://hanzo.ai/*",
+      "https://*.hanzo.ai/*",
+      "https://hanzo.team/*",
+      "https://*.hanzo.team/*",
+      "http://localhost:*/*",
+      "http://127.0.0.1:*/*"
+    ]
+  },
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "core:window:default",
+    "core:window:allow-start-dragging",
+    "core:window:allow-toggle-maximize",
+    "shell:default",
+    "dialog:default",
+    "fs:default",
+    "opener:default"
+  ]
+}

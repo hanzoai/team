@@ -91,7 +91,7 @@ const MACOS_DESKTOP_INIT_SCRIPT: &str = r##"(function () {
     '  top: 0;',
     '  left: 0;',
     '  right: 0;',
-    '  height: 36px;',
+    '  height: 52px;',
     '  z-index: 2147483647;',
     '  background: transparent;',
     '  -webkit-app-region: drag;',
@@ -291,5 +291,14 @@ mod tests {
         assert!(MACOS_DESKTOP_INIT_SCRIPT.contains(
             "M 278 360 H 576 C 634 360 676 402 676 460"
         ));
+    }
+
+    #[test]
+    fn default_capability_allows_window_dragging_and_remote_team_origins() {
+        let cap = include_str!("../capabilities/default.json");
+        assert!(cap.contains("core:window:allow-start-dragging"));
+        assert!(cap.contains("core:window:allow-toggle-maximize"));
+        assert!(cap.contains("https://hanzo.team/*"));
+        assert!(cap.contains("https://hanzo.ai/*"));
     }
 }

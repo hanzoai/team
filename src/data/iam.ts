@@ -18,6 +18,7 @@ import { IAM } from '@hanzo/iam'
 
 import { brand, clientId } from './brand.ts'
 import { callbackPath, loginPath } from './api.ts'
+import { resolveAppOrigin } from './desktop.ts'
 
 /**
  * What a session asks for.
@@ -38,9 +39,9 @@ let engine: IAM | null = null
  */
 export const config = () => {
   // Where the browser already is. A redirect URI is a round trip back to THIS
-  // document, so the origin serving it is the only correct answer — a literal
-  // is right for one port and silently wrong for every other.
-  const here = window.location.origin
+  // document, so the origin serving it is the only correct answer — except when
+  // bundled Tauri opens `tauri://localhost`, which resolves to CANONICAL_TEAM_ORIGIN.
+  const here = resolveAppOrigin(window.location)
   return {
     serverUrl: brand.issuer,
     clientId,
