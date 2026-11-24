@@ -75,19 +75,19 @@ jobs:
           APP_PATH="target/universal-apple-darwin/release/bundle/macos/Hanzo Team.app"
           codesign --force --deep --sign - "$APP_PATH"
 
-          mkdir -p ../../dist-release
+          mkdir -p ../../../dist-release
           DMG_FOUND=$(find target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -name "*.dmg" | head -n 1 || true)
           if [ -n "$DMG_FOUND" ] && [ -f "$DMG_FOUND" ]; then
-            cp "$DMG_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
+            cp "$DMG_FOUND" "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
           else
             STAGE_DIR=$(mktemp -d)
             cp -R "$APP_PATH" "$STAGE_DIR/"
             ln -s /Applications "$STAGE_DIR/Applications"
-            hdiutil create -volname "Hanzo Team" -srcfolder "$STAGE_DIR" -ov -format UDZO "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
+            hdiutil create -volname "Hanzo Team" -srcfolder "$STAGE_DIR" -ov -format UDZO "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg"
             rm -rf "$STAGE_DIR"
           fi
-          cp "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg" "../../dist-release/hanzo-team-macos.dmg"
-          ls -lh ../../dist-release/
+          cp "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_universal.dmg" "../../../dist-release/hanzo-team-macos.dmg"
+          ls -lh ../../../dist-release/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -150,18 +150,18 @@ jobs:
           npx --yes @tauri-apps/cli@2 build --bundles nsis,msi --config "$CFG" || \
             npx --yes @tauri-apps/cli@2 build --bundles nsis --config "$CFG"
 
-          mkdir -p ../../dist-release
+          mkdir -p ../../../dist-release
           EXE_FOUND=$(find target/release/bundle/nsis -maxdepth 1 -name "*-setup.exe" | head -n 1)
-          cp "$EXE_FOUND" "../../dist-release/hanzo-team-windows-x64-setup.exe"
-          cp "$EXE_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64-setup.exe"
-          cp "$EXE_FOUND" "../../dist-release/Hanzo.Team_${DESKTOP_VERSION}_x64-setup.exe"
+          cp "$EXE_FOUND" "../../../dist-release/hanzo-team-windows-x64-setup.exe"
+          cp "$EXE_FOUND" "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64-setup.exe"
+          cp "$EXE_FOUND" "../../../dist-release/Hanzo.Team_${DESKTOP_VERSION}_x64-setup.exe"
 
           MSI_FOUND=$(find target/release/bundle/msi -maxdepth 1 -name "*.msi" | head -n 1 || true)
           if [ -n "$MSI_FOUND" ] && [ -f "$MSI_FOUND" ]; then
-            cp "$MSI_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64_en-US.msi"
-            cp "$MSI_FOUND" "../../dist-release/hanzo-team-windows-x64.msi"
+            cp "$MSI_FOUND" "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_x64_en-US.msi"
+            cp "$MSI_FOUND" "../../../dist-release/hanzo-team-windows-x64.msi"
           fi
-          ls -lh ../../dist-release/
+          ls -lh ../../../dist-release/
 
       - uses: actions/upload-artifact@v4
         with:
@@ -250,10 +250,10 @@ jobs:
           npx --yes @tauri-apps/cli@2 build --bundles deb --config "$CFG"
           npx --yes @tauri-apps/cli@2 build --bundles appimage --config "$CFG" || true
 
-          mkdir -p ../../dist-release
+          mkdir -p ../../../dist-release
           DEB_FOUND=$(find target/release/bundle/deb -maxdepth 1 -name "*.deb" | head -n 1)
-          cp "$DEB_FOUND" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.deb"
-          cp "$DEB_FOUND" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.deb"
+          cp "$DEB_FOUND" "../../../dist-release/hanzo-team-linux-${ARCH_LABEL}.deb"
+          cp "$DEB_FOUND" "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.deb"
 
           APPIMG_FOUND=$(find target/release/bundle/appimage -maxdepth 1 -name "*.AppImage" | head -n 1 || true)
           if [ -z "$APPIMG_FOUND" ] || [ ! -f "$APPIMG_FOUND" ]; then
@@ -275,13 +275,13 @@ jobs:
             cp icons/icon.png "$APPDIR/.DirIcon"
             curl -fsSL -o /tmp/appimagetool "https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-${APPIMAGE_ARCH}.AppImage"
             chmod +x /tmp/appimagetool
-            ARCH="$APPIMAGE_ARCH" APPIMAGE_EXTRACT_AND_RUN=1 /tmp/appimagetool "$APPDIR" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+            ARCH="$APPIMAGE_ARCH" APPIMAGE_EXTRACT_AND_RUN=1 /tmp/appimagetool "$APPDIR" "../../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
           else
-            cp "$APPIMG_FOUND" "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+            cp "$APPIMG_FOUND" "../../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
           fi
-          chmod +x "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
-          cp "../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage" "../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.AppImage"
-          ls -lh ../../dist-release/
+          chmod +x "../../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage"
+          cp "../../../dist-release/hanzo-team-linux-${ARCH_LABEL}.AppImage" "../../../dist-release/Hanzo_Team_${DESKTOP_VERSION}_${ARCH_LABEL}.AppImage"
+          ls -lh ../../../dist-release/
 
       - uses: actions/upload-artifact@v4
         with:
