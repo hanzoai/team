@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Badge, Button, Input, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Bot, Calendar, X } from '@hanzogui/lucide-icons-2'
+import { Bot, X } from '@hanzogui/lucide-icons-2'
 
 import { invalidate } from '~/data/query.ts'
 import { useSpace } from '~/data/space.tsx'

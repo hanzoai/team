@@ -48,9 +48,11 @@ import { Ring } from './board/Ring.tsx'
 import { dot, tone } from './board/tone.ts'
 import {
   chatSourceHref,
+  formatChatSource,
   fromDateInput,
   parseChatSource,
   toDateInput,
+  type ChatSource,
 } from './source.ts'
 
 const AVAILABLE_LABELS = [
