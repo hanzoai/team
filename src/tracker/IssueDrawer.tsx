@@ -14,8 +14,10 @@ import {
   Calendar,
   Check,
   CheckCircle2,
+  ChevronDown,
   ExternalLink,
   FileCheck2,
+  History,
   Plus,
   RotateCcw,
   Send,
@@ -35,6 +37,7 @@ import {
   approveHandoff,
   createHandoff,
   formatHandoff,
+  handoffNextAction,
   issueHandoffPatch,
   parseHandoff,
   requestChanges,
@@ -103,8 +106,10 @@ export function IssueDrawer({
   const [removing, setRemoving] = useState(false)
   const [refused, setRefused] = useState<string | null>(null)
   const [approvalRequired, setApprovalRequired] = useState(handoff?.approvalRequired ?? true)
+  const [handoffNextActionInput, setHandoffNextActionInput] = useState('')
   const [deliverableSummary, setDeliverableSummary] = useState(handoff?.deliverable?.summary ?? '')
   const [deliverableArtifact, setDeliverableArtifact] = useState(handoff?.deliverable?.artifact ?? '')
+  const [showPriorVersions, setShowPriorVersions] = useState(false)
   const [reviewNote, setReviewNote] = useState('')
 
   useEffect(() => {
@@ -122,6 +127,8 @@ export function IssueDrawer({
     setConfirming(false)
     setRefused(null)
     setReviewNote('')
+    setHandoffNextActionInput('')
+    setShowPriorVersions(false)
   }, [issue.id])
 
   const removeIssue = async () => {
@@ -166,6 +173,7 @@ export function IssueDrawer({
       },
       handedOffBy: actorName,
       approvalRequired,
+      nextAction: handoffNextActionInput.trim() || undefined,
       ...(chatSource
         ? {
             sourceRoomId: chatSource.roomId,
@@ -175,6 +183,7 @@ export function IssueDrawer({
         : {}),
     })
     patchIssue(issueHandoffPatch(issue, meta, bodyWithSource(description)))
+    setHandoffNextActionInput('')
     if (approvalRequired) {
       setAsideKind('inbox')
       showAside()
@@ -649,6 +658,16 @@ export function IssueDrawer({
                 )
               })}
             </XStack>
+            <Input
+              data-testid="drawer-handoff-next-action"
+              height={28}
+              fontSize={11}
+              placeholder="Optional next action when handing off..."
+              value={handoffNextActionInput}
+              onChangeText={setHandoffNextActionInput}
+              bg="$raised"
+              borderColor="$edge"
+            />
           </YStack>
 
           {/* Approval Gate & Resulting Deliverable */}
@@ -696,9 +715,14 @@ export function IssueDrawer({
             </XStack>
 
             {handoff ? (
-              <SizableText fontSize={rung.small} color="$soft">
-                {`Owned by ${handoff.owner.kind === 'bot' ? `@${handoff.owner.name}` : handoff.owner.name} · handed off by ${handoff.handedOffBy}`}
-              </SizableText>
+              <YStack gap={3}>
+                <SizableText fontSize={rung.small} color="$soft">
+                  {`Owned by ${handoff.owner.kind === 'bot' ? `@${handoff.owner.name}` : handoff.owner.name} · handed off by ${handoff.handedOffBy}`}
+                </SizableText>
+                <SizableText data-testid="drawer-next-action" fontSize={rung.chip} fontWeight="600" color="$ink">
+                  {`Next action: ${handoffNextAction(handoff)}`}
+                </SizableText>
+              </YStack>
             ) : (
               <SizableText fontSize={rung.small} color="$soft">
                 Pick a teammate or @bot above to hand off work, attach a deliverable, and route it to the Approval Inbox.
@@ -706,25 +730,96 @@ export function IssueDrawer({
             )}
 
             {handoff?.deliverable ? (
-              <YStack p={10} gap={4} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
-                <XStack items="center" justify="space-between" gap={6}>
-                  <XStack items="center" gap={5}>
-                    <FileCheck2 size={13} color={handoff.deliverable.verified ? state.done : paint.ink} />
-                    <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
-                      {handoff.deliverable.verified ? 'Verified deliverable' : 'Submitted deliverable'}
+              <YStack gap={6}>
+                <YStack p={10} gap={4} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                  <XStack items="center" justify="space-between" gap={6}>
+                    <XStack items="center" gap={5}>
+                      <FileCheck2 size={13} color={handoff.deliverable.verified ? state.done : paint.ink} />
+                      <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
+                        {handoff.deliverable.verified ? 'Verified deliverable' : 'Submitted deliverable'}
+                      </SizableText>
+                      <XStack px={6} py={1} rounded={round.pill} bg="$raised" borderWidth={1} borderColor="$edge">
+                        <SizableText fontSize={rung.chip} fontWeight="700" color="$ink">
+                          {`Latest · v${handoff.deliverable.version ?? 1}`}
+                        </SizableText>
+                      </XStack>
+                    </XStack>
+                    <SizableText fontSize={rung.chip} color="$dim">
+                      {handoff.deliverable.completedBy}
                     </SizableText>
                   </XStack>
-                  <SizableText fontSize={rung.chip} color="$dim">
-                    {handoff.deliverable.completedBy}
+                  <SizableText fontSize={rung.small} color="$ink">
+                    {handoff.deliverable.summary}
                   </SizableText>
-                </XStack>
-                <SizableText fontSize={rung.small} color="$ink">
-                  {handoff.deliverable.summary}
-                </SizableText>
-                {handoff.deliverable.artifact ? (
-                  <SizableText fontSize={rung.chip} style={{ color: paint.accent }} numberOfLines={1}>
-                    {handoff.deliverable.artifact}
-                  </SizableText>
+                  {handoff.deliverable.artifact ? (
+                    <SizableText fontSize={rung.chip} style={{ color: paint.accent }} numberOfLines={1}>
+                      {handoff.deliverable.artifact}
+                    </SizableText>
+                  ) : null}
+                </YStack>
+
+                {handoff.deliverableHistory && handoff.deliverableHistory.length > 0 ? (
+                  <YStack gap={5}>
+                    <XStack
+                      role="button"
+                      tabIndex={0}
+                      cursor="pointer"
+                      items="center"
+                      gap={5}
+                      self="flex-start"
+                      px={7}
+                      py={3}
+                      rounded={round.field}
+                      bg="$panel"
+                      borderWidth={1}
+                      borderColor="$edge"
+                      focusVisibleStyle={ring}
+                      onPress={() => setShowPriorVersions((v) => !v)}
+                    >
+                      <History size={11} color="$soft" />
+                      <SizableText fontSize={rung.chip} fontWeight="600" color="$soft">
+                        {`Prior versions (${handoff.deliverableHistory.length})`}
+                      </SizableText>
+                      <ChevronDown
+                        size={11}
+                        color="$soft"
+                        style={{ transform: showPriorVersions ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                      />
+                    </XStack>
+
+                    {showPriorVersions ? (
+                      <YStack gap={5} pl={8} borderLeftWidth={2} borderColor="$edge">
+                        {[...handoff.deliverableHistory].reverse().map((prior) => (
+                          <YStack
+                            key={`v-${prior.version}`}
+                            p={8}
+                            gap={3}
+                            rounded={round.field}
+                            bg="$panel"
+                            borderWidth={1}
+                            borderColor="$edge"
+                          >
+                            <XStack items="center" justify="space-between" gap={6}>
+                              <SizableText fontSize={rung.chip} fontWeight="700" color="$soft">
+                                {`v${prior.version} · ${prior.verified ? 'Verified' : 'Unverified'}`}
+                              </SizableText>
+                              <SizableText fontSize={rung.chip} color="$dim">
+                                {prior.completedBy}
+                              </SizableText>
+                            </XStack>
+                            <SizableText fontSize={rung.chip} color="$ink">
+                              {prior.summary}
+                            </SizableText>
+                            {prior.artifact ? (
+                              <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1}>
+                                {prior.artifact}
+                              </SizableText>
+                            ) : null}
+                          </YStack>
+                        ))}
+                      </YStack>
+                    ) : null}
+                  </YStack>
                 ) : null}
               </YStack>
             ) : null}

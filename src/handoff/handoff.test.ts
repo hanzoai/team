@@ -11,6 +11,7 @@ import {
   handoffChatMessage,
   handoffFromIssue,
   handoffLabels,
+  handoffNextAction,
   issueHandoffPatch,
   mentionSuggestions,
   parseHandoff,
@@ -192,4 +193,154 @@ test('activeMentionQuery, mentionSuggestions, and applyMention prioritize bots a
 
   assert.equal(applyMention('Please check @de', 'Dev'), 'Please check @Dev ')
   assert.equal(applyMention('Check this', 'Sci'), 'Check this @Sci ')
+})
+
+test('handoffNextAction respects explicit override and derives actor-specific next actions by state', () => {
+  const overridden = createHandoff({
+    owner: devBot,
+    handedOffBy: 'Zach',
+    approvalRequired: true,
+    nextAction: 'Run canary check',
+    now: 1_000,
+  })
+  assert.equal(handoffNextAction(overridden), 'Run canary check')
+
+  const noneBot = createHandoff({ owner: devBot, handedOffBy: 'Zach', approvalRequired: false, now: 1_000 })
+  assert.match(handoffNextAction(noneBot), /@Dev/)
+
+  const nonePerson = createHandoff({ owner: ada, handedOffBy: 'Zach', approvalRequired: false, now: 1_000 })
+  assert.match(handoffNextAction(nonePerson), /Ada Lovelace/)
+
+  const pendingNoDeliverable = createHandoff({
+    owner: devBot,
+    handedOffBy: 'Zach',
+    approvalRequired: true,
+    now: 1_000,
+  })
+  assert.match(handoffNextAction(pendingNoDeliverable), /@Dev/)
+
+  const pendingWithDeliverable = submitDeliverable(pendingNoDeliverable, {
+    summary: 'Opened PR #412',
+    now: 2_000,
+  })
+  assert.match(handoffNextAction(pendingWithDeliverable), /Zach/)
+
+  const changesReq = requestChanges(pendingWithDeliverable, {
+    reviewedBy: 'Zach',
+    note: 'Add rollback steps',
+    now: 3_000,
+  })
+  assert.match(handoffNextAction(changesReq), /@Dev/)
+  assert.match(handoffNextAction(changesReq), /revise|resubmit/i)
+
+  const approvedManual = approveHandoff(pendingWithDeliverable, {
+    approvedBy: 'Zach',
+    now: 4_000,
+  })
+  assert.match(handoffNextAction(approvedManual), /Zach/)
+
+  const autoApproved = submitDeliverable(nonePerson, {
+    summary: 'Published Q3 deck',
+    now: 2_000,
+  })
+  assert.match(handoffNextAction(autoApproved), /Ada Lovelace/)
+})
+
+test('handoffChatMessage includes Next action for explicit override and default derived state', () => {
+  const msgExplicit = handoffChatMessage({
+    title: 'Audit mobile checkout',
+    owner: devBot,
+    brief: 'Verify Stripe redirect.',
+    approvalRequired: true,
+    issueKey: 'ENG-42',
+    nextAction: 'Run canary check',
+  })
+  assert.match(msgExplicit, /Next action/i)
+  assert.match(msgExplicit, /Run canary check/)
+
+  const msgDefault = handoffChatMessage({
+    title: 'Audit mobile checkout',
+    owner: devBot,
+    approvalRequired: true,
+  })
+  assert.match(msgDefault, /Next action/i)
+  assert.match(msgDefault, /@Dev/)
+})
+
+test('formatHandoff and parseHandoff round-trip nextAction cleanly', () => {
+  const meta = createHandoff({
+    owner: devBot,
+    handedOffBy: 'Zach',
+    approvalRequired: true,
+    nextAction: 'Deploy to staging after QA',
+    now: 1_000,
+  })
+  const decoded = parseHandoff(formatHandoff('Canary rollout task.', meta))
+  assert.equal(decoded.handoff?.nextAction, 'Deploy to staging after QA')
+  assert.deepEqual(decoded.handoff, meta)
+})
+
+test('submitDeliverable versions deliverables, archives deliverableHistory, and round-trips cleanly', () => {
+  const h0 = createHandoff({
+    owner: devBot,
+    handedOffBy: 'Zach',
+    approvalRequired: true,
+    now: 1_000,
+  })
+
+  const h1 = submitDeliverable(h0, {
+    summary: 'Initial PR #101',
+    artifact: 'https://github.com/hanzoai/team/pull/101',
+    now: 2_000,
+  })
+  assert.equal(h1.deliverable?.version, 1)
+  assert.ok(!h1.deliverableHistory || h1.deliverableHistory.length === 0)
+
+  const h2 = submitDeliverable(h1, {
+    summary: 'Addressed review comments in PR #101',
+    artifact: 'https://github.com/hanzoai/team/pull/101#commit-2',
+    now: 3_000,
+  })
+  assert.equal(h2.deliverable?.version, 2)
+  assert.equal(h2.deliverableHistory?.length, 1)
+  assert.equal(h2.deliverableHistory?.[0]?.version, 1)
+  assert.equal(h2.deliverableHistory?.[0]?.summary, 'Initial PR #101')
+
+  const h3 = submitDeliverable(h2, {
+    summary: 'Final verified build',
+    artifact: 'https://github.com/hanzoai/team/pull/101#commit-3',
+    now: 4_000,
+  })
+  assert.equal(h3.deliverable?.version, 3)
+  assert.deepEqual(
+    h3.deliverableHistory?.map((d) => d.version),
+    [1, 2],
+  )
+
+  const decoded = parseHandoff(formatHandoff('Deliverable evolution', h3))
+  assert.equal(decoded.handoff?.deliverable?.version, 3)
+  assert.deepEqual(
+    decoded.handoff?.deliverableHistory?.map((d) => d.version),
+    [1, 2],
+  )
+  assert.deepEqual(decoded.handoff, h3)
+})
+
+test('parseHandoff defaults legacy deliverable missing version to 1', () => {
+  const legacyPayload = {
+    owner: devBot,
+    handedOffBy: 'Zach',
+    handedOffAt: 1_000,
+    approvalRequired: true,
+    approvalState: 'pending',
+    deliverable: {
+      summary: 'Legacy deliverable without version',
+      completedBy: 'Dev',
+      completedAt: 2_000,
+      verified: false,
+    },
+  }
+  const raw = `Legacy task body\n\n<!-- hanzo:handoff:v1 ${JSON.stringify(legacyPayload)} -->`
+  const decoded = parseHandoff(raw)
+  assert.equal(decoded.handoff?.deliverable?.version, 1)
 })

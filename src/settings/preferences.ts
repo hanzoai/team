@@ -121,6 +121,15 @@ export function resolveEffectiveTheme(theme: HanzoThemePreference): 'light' | 'd
   return 'dark'
 }
 
+const HANZO_PAY_URL = 'https://hanzo.ai/pay'
+
+/** Build the Hanzo Pay billing URL, scoping to `?org=` when an active org is present. */
+export function billingUrl(org?: string | null): string {
+  const clean = org?.trim()
+  if (!clean || clean === 'local') return HANZO_PAY_URL
+  return `${HANZO_PAY_URL}?org=${encodeURIComponent(clean)}`
+}
+
 export function fontScaleFor(font: HanzoFontPreference): string {
   if (font === 'compact') return '0.92'
   if (font === 'large') return '1.08'

@@ -20,6 +20,7 @@ export interface ProjectOption {
 export interface HandoffSubmit {
   title: string
   brief: string
+  nextAction?: string
   owner: HandoffOwner
   approvalRequired: boolean
   projectId?: string
@@ -54,6 +55,7 @@ export function HandoffModal({
 
   const [title, setTitle] = useState(firstLine)
   const [brief, setBrief] = useState(cleanedInitial)
+  const [nextAction, setNextAction] = useState('')
   const [ownerId, setOwnerId] = useState<string>(
     defaultOwnerId && sortedRoster.some((p) => p.id === defaultOwnerId)
       ? defaultOwnerId
@@ -83,6 +85,7 @@ export function HandoffModal({
       await onSubmit({
         title: title.trim(),
         brief: brief.trim(),
+        nextAction: nextAction.trim() || undefined,
         owner: {
           id: selectedPerson.id,
           name: selectedPerson.name,
@@ -179,6 +182,22 @@ export function HandoffModal({
               placeholder="Context, expected deliverable, and verification criteria..."
               value={brief}
               onChangeText={setBrief}
+              bg="$raised"
+              borderColor="$edge"
+            />
+          </YStack>
+
+          <YStack gap={6}>
+            <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+              Next action (optional)
+            </SizableText>
+            <Input
+              data-testid="handoff-next-action-input"
+              height={32}
+              fontSize={12}
+              placeholder="Optional next step (defaults to owner action)..."
+              value={nextAction}
+              onChangeText={setNextAction}
               bg="$raised"
               borderColor="$edge"
             />
