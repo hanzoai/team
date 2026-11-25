@@ -30,6 +30,7 @@ import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
 import { botsOf, withPath } from '~/chat/bots.ts'
 import { usePeople, useRooms } from '~/chat/read.ts'
 import { paint, ring, round, state } from '~/theme/theme.ts'
+import { DesktopAppMenu, DesktopWindowControls, dragDesktopWindow, toggleDesktopMaximize } from './DesktopWindowChrome.tsx'
 import { RAIL, STEP } from './measure.ts'
 import { matchTeamShortcut } from './unified.ts'
 
@@ -170,13 +171,17 @@ export function BusinessHeader({
   return (
     <XStack
       render="header"
-      height={38}
+      height={isDesktop ? 44 : 38}
       items="center"
       shrink={0}
+      data-slot="title-bar"
+      data-tauri-drag-region={isDesktop ? '' : undefined}
+      onMouseDown={isDesktop ? dragDesktopWindow : undefined}
+      onDoubleClick={isDesktop ? toggleDesktopMaximize : undefined}
       style={{
-        backgroundColor: paint.bar,
-        backdropFilter: 'blur(20px)',
-        WebkitBackdropFilter: 'blur(20px)',
+        backgroundColor: paint.ground,
+        backdropFilter: 'none',
+        WebkitBackdropFilter: 'none',
         borderBottom: `1px solid ${paint.rule}`,
       }}
       onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
@@ -193,37 +198,10 @@ export function BusinessHeader({
         items="center"
         justify={navOpen ? 'space-between' : 'flex-start'}
         shrink={0}
+        data-tauri-drag-region={isDesktop ? '' : undefined}
       >
         <XStack items="center" gap={4} shrink={0}>
-          {isDesktop && !isMac ? (
-            <XStack
-              role="button"
-              tabIndex={0}
-              cursor="pointer"
-              width={28}
-              height={28}
-              rounded={8}
-              items="center"
-              justify="center"
-              hoverStyle={{ bg: '$color3' }}
-              aria-label="Application menu"
-              data-slot="desktop-app-menu-trigger"
-              onPress={() => setSearchOpen(true)}
-            >
-              <svg
-                width="15"
-                height="9"
-                viewBox="0 0 19 11"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                aria-hidden="true"
-              >
-                <path d="M1 1h17M1 10h10.7" />
-              </svg>
-            </XStack>
-          ) : null}
+          <DesktopAppMenu onNavigate={jumpTo} />
           {leftSlot}
           {onToggleNav ? (
             <XStack
@@ -238,6 +216,7 @@ export function BusinessHeader({
               hoverStyle={{ bg: '$color3' }}
               aria-label={navOpen ? 'Collapse sidebar' : 'Expand sidebar'}
               data-testid="toggle-team-sidebar"
+              data-tauri-drag-region="false"
               onPress={onToggleNav}
             >
               <PanelLeft size={15} color="$color10" />
@@ -257,6 +236,7 @@ export function BusinessHeader({
               justify="center"
               hoverStyle={{ bg: '$color3' }}
               aria-label="Go back"
+              data-tauri-drag-region="false"
               onPress={() => {
                 if (typeof window !== 'undefined') window.history.back()
               }}
@@ -274,6 +254,7 @@ export function BusinessHeader({
               justify="center"
               hoverStyle={{ bg: '$color3' }}
               aria-label="Go forward"
+              data-tauri-drag-region="false"
               onPress={() => {
                 if (typeof window !== 'undefined') window.history.forward()
               }}
@@ -285,7 +266,17 @@ export function BusinessHeader({
       </XStack>
 
       {/* RIGHT CANVAS HEADER SEGMENT: Whisper-quiet context on left; compact ⌘K trigger ONLY when sidebar is collapsed */}
-      <XStack flex={1} height="100%" pl={12} pr={12} gap="$2" items="center" justify="space-between" minW={0}>
+      <XStack
+        flex={1}
+        height="100%"
+        pl={12}
+        pr={12}
+        gap="$2"
+        items="center"
+        justify="space-between"
+        minW={0}
+        data-tauri-drag-region={isDesktop ? '' : undefined}
+      >
         <XStack items="center" gap={6} minW={0} shrink={1}>
           <Text fontSize={12.5} fontWeight="600" color="$color11" numberOfLines={1}>
             {orgDisplay}
@@ -320,6 +311,7 @@ export function BusinessHeader({
                 hoverStyle={{ bg: '$color3' }}
                 aria-label={`Search ${orgDisplay} (⌘K)`}
                 data-testid="collapsed-search-trigger"
+                data-tauri-drag-region="false"
                 onPress={() => setSearchOpen(true)}
                 onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
                   if (e?.key === 'Enter' || e?.key === ' ') {
@@ -337,6 +329,7 @@ export function BusinessHeader({
               </XStack>
             ) : null)}
           {rightSlot}
+          <DesktopWindowControls />
         </XStack>
       </XStack>
 
@@ -580,7 +573,12 @@ export function RailAccountMenu({
         bg="$background"
         borderColor="$borderColor"
         rounded="$4"
-        style={{ zIndex: 100000 }}
+        style={{
+          backgroundColor: 'var(--hanzo-menu-bg, #121214)',
+          backdropFilter: 'none',
+          WebkitBackdropFilter: 'none',
+          zIndex: 100000,
+        }}
       >
         <YStack gap="$1" width="100%">
           {/* Active Identity Header */}

@@ -7,6 +7,7 @@ import { brand } from '~/data/brand.ts'
 import { isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
+import { DesktopWindowControls, dragDesktopWindow, toggleDesktopMaximize } from '~/shell/DesktopWindowChrome.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
@@ -91,8 +92,10 @@ const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: (
     <header
       data-slot="masthead"
       data-tauri-drag-region={desktop ? '' : undefined}
+      onMouseDown={desktop ? dragDesktopWindow : undefined}
+      onDoubleClick={desktop ? toggleDesktopMaximize : undefined}
       style={{
-        width: '100%', height: 60, paddingLeft: macDesktop ? 84 : 24, paddingRight: 24,
+        width: '100%', height: 60, paddingLeft: macDesktop ? 84 : 24, paddingRight: desktop && !macDesktop ? 12 : 24,
         boxSizing: 'border-box', display: 'flex', alignItems: 'center',
         justifyContent: 'space-between', flexShrink: 0,
       }}
@@ -102,16 +105,15 @@ const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: (
       ) : (
         <a href={SITE} aria-label="Hanzo" style={BRAND_LINK_STYLE}><HanzoWordmark /></a>
       )}
-      {account || onLeave ? (
-        <XStack items="center" gap={gap.tight} shrink={0}>
-          {account ? <SizableText size={rung.small} color={paint.mute}>{account}</SizableText> : null}
-          {onLeave ? (
-            <Button size="sm" variant="outline" rounded={round.pill} onPress={onLeave}>
-              <SizableText size={rung.small} color={paint.ink} fontWeight="500">Sign out</SizableText>
-            </Button>
-          ) : null}
-        </XStack>
-      ) : null}
+      <XStack items="center" gap={gap.tight} shrink={0}>
+        {account ? <SizableText size={rung.small} color={paint.mute}>{account}</SizableText> : null}
+        {onLeave ? (
+          <Button size="sm" variant="outline" rounded={round.pill} onPress={onLeave}>
+            <SizableText size={rung.small} color={paint.ink} fontWeight="500">Sign out</SizableText>
+          </Button>
+        ) : null}
+        <DesktopWindowControls />
+      </XStack>
     </header>
   )
 }

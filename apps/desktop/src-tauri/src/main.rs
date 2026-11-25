@@ -35,8 +35,7 @@ async fn team_hanzod_cluster_down() -> Result<serde_json::Value, String> {
 
 /// Before the `ai.hanzo.<app>` identifier scheme this app was `com.hanzo.team`.
 /// WebKit keeps the sign-in session under the bundle identifier, so each
-/// legacy directory is moved into place before the webview opens. A directory
-/// that already exists under the new identifier is never touched.
+/// legacy directory is moved into place before the webview opens.
 #[cfg(target_os = "macos")]
 fn migrate_legacy_data() {
     let Some(home) = std::env::var_os("HOME") else { return };
@@ -52,149 +51,162 @@ fn migrate_legacy_data() {
     }
 }
 
-#[cfg(any(target_os = "macos", test))]
-const MACOS_DESKTOP_INIT_SCRIPT: &str = r##"(function () {
-  var STYLE_ID = 'hanzo-desktop-macos-chrome';
-  var TEAM_ICON_SVG = '<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 1024 1024" role="img" aria-label="Hanzo Team">'
-    + '<defs>'
-    + '<linearGradient id="hanzo-team-bg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#19191b"/><stop offset="28%" stop-color="#09090a"/><stop offset="100%" stop-color="#000000"/></linearGradient>'
-    + '<radialGradient id="hanzo-team-topGlow" cx="50%" cy="6%" r="65%"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.14"/><stop offset="45%" stop-color="#ffffff" stop-opacity="0.03"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0"/></radialGradient>'
-    + '<linearGradient id="hanzo-team-rimGrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#ffffff" stop-opacity="0.34"/><stop offset="22%" stop-color="#ffffff" stop-opacity="0.12"/><stop offset="75%" stop-color="#ffffff" stop-opacity="0.05"/><stop offset="100%" stop-color="#ffffff" stop-opacity="0.10"/></linearGradient>'
-    + '<linearGradient id="hanzo-team-glyphWhite" gradientUnits="userSpaceOnUse" x1="0" y1="220" x2="0" y2="800"><stop offset="0%" stop-color="#ffffff"/><stop offset="75%" stop-color="#f4f4f7"/><stop offset="100%" stop-color="#d8d8e0"/></linearGradient>'
-    + '<clipPath id="hanzo-team-shellClip"><path d="M 248.00,24.00 L 776.00,24.00 C 905.92,24.00 1000.00,118.08 1000.00,248.00 L 1000.00,776.00 C 1000.00,905.92 905.92,1000.00 776.00,1000.00 L 248.00,1000.00 C 118.08,1000.00 24.00,905.92 24.00,776.00 L 24.00,248.00 C 24.00,118.08 118.08,24.00 248.00,24.00 Z"/></clipPath>'
-    + '</defs>'
-    + '<path d="M 248.00,24.00 L 776.00,24.00 C 905.92,24.00 1000.00,118.08 1000.00,248.00 L 1000.00,776.00 C 1000.00,905.92 905.92,1000.00 776.00,1000.00 L 248.00,1000.00 C 118.08,1000.00 24.00,905.92 24.00,776.00 L 24.00,248.00 C 24.00,118.08 118.08,24.00 248.00,24.00 Z" fill="url(#hanzo-team-bg)"/>'
-    + '<path d="M 248.00,24.00 L 776.00,24.00 C 905.92,24.00 1000.00,118.08 1000.00,248.00 L 1000.00,776.00 C 1000.00,905.92 905.92,1000.00 776.00,1000.00 L 248.00,1000.00 C 118.08,1000.00 24.00,905.92 24.00,776.00 L 24.00,248.00 C 24.00,118.08 118.08,24.00 248.00,24.00 Z" fill="url(#hanzo-team-topGlow)"/>'
-    + '<path d="M 249.00,31.00 L 775.00,31.00 C 901.44,31.00 993.00,122.56 993.00,249.00 L 993.00,775.00 C 993.00,901.44 901.44,993.00 775.00,993.00 L 249.00,993.00 C 122.56,993.00 31.00,901.44 31.00,775.00 L 31.00,249.00 C 31.00,122.56 122.56,31.00 249.00,31.00 Z" fill="none" stroke="url(#hanzo-team-rimGrad)" stroke-width="10"/>'
-    + '<g clip-path="url(#hanzo-team-shellClip)">'
-    + '<path d="M 456 226 H 746 C 804 226 846 268 846 326 V 486 C 846 534 818 570 778 582 L 794 654 C 798 672 778 684 762 674 L 668 614 H 456 C 398 614 356 572 356 514 V 326 C 356 268 398 226 456 226 Z" fill="#c4c4cc"/>'
-    + '<path d="M 278 360 H 576 C 634 360 676 402 676 460 V 618 C 676 676 634 718 576 718 H 366 L 250 794 C 234 804 214 792 218 774 L 234 706 C 198 692 178 658 178 618 V 460 C 178 402 220 360 278 360 Z" fill="#050506" stroke="#050506" stroke-width="44" stroke-linejoin="round"/>'
-    + '<path d="M 278 360 H 576 C 634 360 676 402 676 460 V 618 C 676 676 634 718 576 718 H 366 L 250 794 C 234 804 214 792 218 774 L 234 706 C 198 692 178 658 178 618 V 460 C 178 402 220 360 278 360 Z" fill="url(#hanzo-team-glyphWhite)"/>'
-    + '</g>'
-    + '</svg>';
+#[cfg(target_os = "windows")]
+fn apply_windows_dwm_chrome(window: &tauri::WebviewWindow) {
+    #[link(name = "dwmapi")]
+    extern "system" {
+        fn DwmSetWindowAttribute(
+            hwnd: *mut std::ffi::c_void,
+            dw_attribute: u32,
+            pv_attribute: *const std::ffi::c_void,
+            cb_attribute: u32,
+        ) -> i32;
+    }
+    const DWMWA_USE_IMMERSIVE_DARK_MODE: u32 = 20;
+    const DWMWA_WINDOW_CORNER_PREFERENCE: u32 = 33;
+    const DWMWCP_ROUND: u32 = 2;
+
+    if let Ok(hwnd) = window.hwnd() {
+        let raw = hwnd.0 as *mut std::ffi::c_void;
+        let dark: u32 = 1;
+        let corner: u32 = DWMWCP_ROUND;
+        unsafe {
+            let _ = DwmSetWindowAttribute(
+                raw,
+                DWMWA_USE_IMMERSIVE_DARK_MODE,
+                &dark as *const u32 as *const std::ffi::c_void,
+                std::mem::size_of::<u32>() as u32,
+            );
+            let _ = DwmSetWindowAttribute(
+                raw,
+                DWMWA_WINDOW_CORNER_PREFERENCE,
+                &corner as *const u32 as *const std::ffi::c_void,
+                std::mem::size_of::<u32>() as u32,
+            );
+        }
+    }
+}
+
+/// Cross-platform frameless window chrome script injected on local & remote Hanzo origins.
+/// Ensures `[data-slot="masthead"]` and `[data-slot="title-bar"]` drag/toggle-maximize cleanly,
+/// keeps menus solid `#121214` without backdrop blur, hides duplicate window controls on macOS,
+/// and mounts crisp `28x28` monochrome `- □ ×` `[data-slot="window-controls"]` on Linux/Windows
+/// whenever a remote page (e.g. `hanzo.ai/login`) has not mounted its own.
+const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
+  if (typeof window === 'undefined' || window.__HANZO_TEAM_SHELL_CHROME__) return;
+  window.__HANZO_TEAM_SHELL_CHROME__ = true;
+
+  var isMac = typeof navigator !== 'undefined' && /Mac|Darwin/i.test(navigator.platform || navigator.userAgent);
+  var STYLE_ID = 'hanzo-team-frameless-chrome';
+
+  function invokeWin(cmd) {
+    var w = window;
+    var win = w.__TAURI__ && w.__TAURI__.window && w.__TAURI__.window.getCurrentWindow
+      ? w.__TAURI__.window.getCurrentWindow()
+      : null;
+    var label = (win && win.label) ||
+      (w.__TAURI_INTERNALS__ && w.__TAURI_INTERNALS__.metadata && w.__TAURI_INTERNALS__.metadata.currentWindow && w.__TAURI_INTERNALS__.metadata.currentWindow.label) ||
+      'main';
+    if (w.__TAURI_INTERNALS__ && typeof w.__TAURI_INTERNALS__.invoke === 'function') {
+      return w.__TAURI_INTERNALS__.invoke('plugin:window|' + cmd, { label: label });
+    }
+    if (w.__TAURI__ && w.__TAURI__.core && typeof w.__TAURI__.core.invoke === 'function') {
+      return w.__TAURI__.core.invoke('plugin:window|' + cmd, { label: label });
+    }
+    return Promise.resolve(null);
+  }
 
   var CSS = [
-    '[data-slot="window-controls"] { display: none !important; }',
-    'html[data-hanzo-desktop-auth="true"] header,',
-    'html[data-hanzo-desktop-auth="true"] [data-slot="header"],',
-    'html[data-hanzo-desktop-auth="true"] [data-slot="masthead"],',
-    'html[data-hanzo-desktop-auth="true"] [data-tauri-drag-region]:not([data-hanzo-drag-strip]):has([data-slot="window-controls"]) {',
-    '  display: none !important;',
+    '[role="menu"], [data-slot="desktop-app-menu"], [data-slot="dropdown-menu-content"], [data-slot="popover-content"] {',
+    '  background-color: #121214 !important;',
+    '  backdrop-filter: none !important;',
+    '  -webkit-backdrop-filter: none !important;',
     '}',
-    'html[data-hanzo-desktop-auth="true"] [data-slot="hero"],',
-    'html[data-hanzo-desktop-auth="true"] [data-slot="focus"] {',
-    '  margin-top: 0 !important;',
-    '  min-height: 100svh !important;',
+    isMac ? '[data-slot="window-controls"] { display: none !important; }' : '',
+    isMac ? 'header[data-slot="masthead"] { padding-left: 84px !important; }' : '',
+    '.hz-injected-win-ctrls {',
+    '  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; user-select: none; z-index: 2147483640;',
     '}',
-    '[data-hanzo-drag-strip] {',
-    '  position: fixed;',
-    '  top: 0;',
-    '  left: 0;',
-    '  right: 0;',
-    '  height: 52px;',
-    '  z-index: 2147483647;',
-    '  background: transparent;',
-    '  -webkit-app-region: drag;',
-    '}'
+    '.hz-injected-win-btn {',
+    '  width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; color: #a1a1aa;',
+    '  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;',
+    '  transition: background-color 0.14s ease, color 0.14s ease;',
+    '}',
+    '.hz-injected-win-btn:hover { background: rgba(255,255,255,0.08); color: #fafafa; }',
+    '.hz-injected-win-btn[data-action="close"]:hover { background: #e5484d; color: #fafafa; }'
   ].join('\n');
 
-  function isAuthPage() {
-    var host = (window.location.hostname || '').toLowerCase();
-    var path = (window.location.pathname || '').toLowerCase();
-    var onHanzo = host === 'hanzo.ai' || host === 'www.hanzo.ai' || host.endsWith('.hanzo.ai');
-    return onHanzo && (
-      path === '/login' || path.indexOf('/login/') === 0 ||
-      path === '/signup' || path.indexOf('/signup/') === 0
-    );
-  }
-
-  function ensureStyle() {
-    var root = document.head || document.documentElement;
-    if (!root || document.getElementById(STYLE_ID)) return;
-    var style = document.createElement('style');
-    style.id = STYLE_ID;
-    style.textContent = CSS;
-    root.appendChild(style);
-  }
-
-  function sync() {
+  function ensureChrome() {
     var docEl = document.documentElement;
     if (!docEl) return;
-    ensureStyle();
-
-    var auth = isAuthPage();
-    var nextFlag = auth ? 'true' : 'false';
-    if (docEl.getAttribute('data-hanzo-desktop-auth') !== nextFlag) {
-      docEl.setAttribute('data-hanzo-desktop-auth', nextFlag);
+    docEl.setAttribute('data-desktop', 'true');
+    var root = document.head || docEl;
+    if (root && !document.getElementById(STYLE_ID)) {
+      var style = document.createElement('style');
+      style.id = STYLE_ID;
+      style.textContent = CSS;
+      root.appendChild(style);
     }
+    if (isMac) return;
 
-    var body = document.body;
-    if (!body) return;
+    var bar = document.querySelector('[data-slot="title-bar"], [data-slot="masthead"], [data-testid="hanzo-business-header"]');
+    if (!bar) return;
+    var existing = document.querySelectorAll('[data-slot="window-controls"]');
+    if (existing.length > 0) return;
 
-    var strip = document.querySelector('[data-hanzo-drag-strip]');
-    if (auth) {
-      if (!strip) {
-        strip = document.createElement('div');
-        strip.setAttribute('data-tauri-drag-region', '');
-        strip.setAttribute('data-hanzo-drag-strip', 'true');
-        body.appendChild(strip);
-      }
-
-      if (!document.querySelector('[data-hanzo-app-icon]')) {
-        var heroTitle = document.getElementById('hero-title');
-        if (heroTitle && heroTitle.parentNode) {
-          var wrap = document.createElement('div');
-          wrap.setAttribute('data-hanzo-app-icon', 'hanzo-team');
-          wrap.style.cssText = 'display:flex;justify-content:center;align-items:center;margin:0 auto 14px;width:64px;height:64px;flex-shrink:0;';
-          wrap.innerHTML = TEAM_ICON_SVG;
-          heroTitle.parentNode.insertBefore(wrap, heroTitle);
-        }
-      }
-    } else if (strip && strip.parentNode) {
-      strip.parentNode.removeChild(strip);
-    }
+    var wrap = document.createElement('div');
+    wrap.setAttribute('data-slot', 'window-controls');
+    wrap.setAttribute('data-tauri-drag-region', 'false');
+    wrap.className = 'hz-injected-win-ctrls';
+    wrap.innerHTML =
+      '<button type="button" class="hz-injected-win-btn" data-action="min" data-tauri-drag-region="false" aria-label="Minimize">' +
+        '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="2" y1="6" x2="10" y2="6" stroke-linecap="round"/></svg>' +
+      '</button>' +
+      '<button type="button" class="hz-injected-win-btn" data-action="max" data-tauri-drag-region="false" aria-label="Maximize">' +
+        '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="2" width="8" height="8" rx="1.5"/></svg>' +
+      '</button>' +
+      '<button type="button" class="hz-injected-win-btn" data-action="close" data-tauri-drag-region="false" aria-label="Close">' +
+        '<svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="2.5" y1="2.5" x2="9.5" y2="9.5" stroke-linecap="round"/><line x1="9.5" y1="2.5" x2="2.5" y2="9.5" stroke-linecap="round"/></svg>' +
+      '</button>';
+    wrap.addEventListener('mousedown', function (ev) { ev.stopPropagation(); });
+    wrap.addEventListener('click', function (ev) {
+      var btn = ev.target && ev.target.closest ? ev.target.closest('button[data-action]') : null;
+      if (!btn) return;
+      ev.preventDefault();
+      ev.stopPropagation();
+      var act = btn.getAttribute('data-action');
+      if (act === 'min') invokeWin('minimize');
+      else if (act === 'max') invokeWin('toggle_maximize');
+      else if (act === 'close') invokeWin('close');
+    });
+    bar.appendChild(wrap);
   }
 
-  function install() {
-    sync();
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', sync, { once: true });
-    }
-    window.addEventListener('popstate', sync);
-    if (window.history && window.history.pushState) {
-      var origPush = window.history.pushState;
-      window.history.pushState = function () {
-        var ret = origPush.apply(this, arguments);
-        sync();
-        return ret;
-      };
-    }
-    if (window.history && window.history.replaceState) {
-      var origReplace = window.history.replaceState;
-      window.history.replaceState = function () {
-        var ret = origReplace.apply(this, arguments);
-        sync();
-        return ret;
-      };
-    }
-    if (typeof MutationObserver !== 'undefined') {
-      var scheduled = false;
-      var observer = new MutationObserver(function () {
-        if (scheduled) return;
-        scheduled = true;
-        Promise.resolve().then(function () {
-          scheduled = false;
-          sync();
-        });
+  var INTERACTIVE = 'button, input, select, textarea, label, summary, a:not([data-tauri-drag-region]), [role="button"], [role="link"], [role="menuitem"], [role="tab"], [role="combobox"], [aria-haspopup], [contenteditable="true"], [data-tauri-drag-region="false"], [data-slot="window-controls"], [data-slot="desktop-app-menu"], [data-slot="desktop-app-menu-trigger"]';
+
+  window.addEventListener('mousedown', function (e) {
+    if (e.button !== 0 || !e.target || typeof e.target.closest !== 'function') return;
+    if (!e.target.closest('[data-slot="masthead"], [data-slot="title-bar"], [data-tauri-drag-region], [data-testid="hanzo-business-header"]')) return;
+    if (e.target.closest(INTERACTIVE)) return;
+    if (e.detail === 2) invokeWin('toggle_maximize');
+    else if (e.detail === 1) invokeWin('start_dragging');
+  });
+
+  ensureChrome();
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureChrome, { once: true });
+  }
+  if (typeof MutationObserver !== 'undefined') {
+    var pending = false;
+    new MutationObserver(function () {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(function () {
+        pending = false;
+        ensureChrome();
       });
-      var target = document.documentElement;
-      if (target) {
-        observer.observe(target, { childList: true, subtree: true });
-      }
-    }
+    }).observe(document.documentElement, { childList: true, subtree: true });
   }
-
-  install();
 })();
 "##;
 
@@ -218,7 +230,6 @@ fn main() {
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_opener::init())
         .setup(|app| {
-            // Auto-discover and launch unified local hanzod (127.0.0.1:3690) in the background.
             std::thread::spawn(|| {
                 let _ = hanzod::ensure_hanzod_running();
             });
@@ -235,29 +246,34 @@ fn main() {
                     .unwrap_or_else(|_| WebviewUrl::App("index.html".into()))
             };
 
-            #[cfg_attr(not(target_os = "macos"), allow(unused_mut))]
-            let mut builder = WebviewWindowBuilder::new(
-                app,
-                "main",
-                start_url,
-            )
-            .title("Hanzo Team")
-            .inner_size(1440.0, 900.0)
-            .min_inner_size(900.0, 600.0)
-            .resizable(true)
-            .transparent(false)
-            .center()
-            .initialization_script(hanzod::HANZOD_INIT_SCRIPT);
+            let mut builder = WebviewWindowBuilder::new(app, "main", start_url)
+                .title("Hanzo Team")
+                .inner_size(1440.0, 900.0)
+                .min_inner_size(900.0, 600.0)
+                .resizable(true)
+                .transparent(false)
+                .background_color(tauri::window::Color(0, 0, 0, 255))
+                .center()
+                .initialization_script(hanzod::HANZOD_INIT_SCRIPT)
+                .initialization_script(HANZO_SHELL_CHROME_SCRIPT);
 
             #[cfg(target_os = "macos")]
             {
                 builder = builder
                     .title_bar_style(tauri::TitleBarStyle::Overlay)
-                    .hidden_title(true)
-                    .initialization_script(MACOS_DESKTOP_INIT_SCRIPT);
+                    .hidden_title(true);
             }
 
-            builder.build()?;
+            #[cfg(not(target_os = "macos"))]
+            {
+                builder = builder.decorations(false);
+            }
+
+            let window = builder.build()?;
+            #[cfg(target_os = "windows")]
+            apply_windows_dwm_chrome(&window);
+            let _ = window;
+
             Ok(())
         })
         .on_menu_event(|app, event| {
@@ -277,28 +293,32 @@ fn main() {
 
 #[cfg(test)]
 mod tests {
-    use super::MACOS_DESKTOP_INIT_SCRIPT;
+    use super::HANZO_SHELL_CHROME_SCRIPT;
 
     #[test]
-    fn macos_init_script_hides_window_controls_and_injects_minimal_team_icon() {
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains(r#"[data-slot="window-controls"]"#));
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains("data-tauri-drag-region"));
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains("data-hanzo-app-icon"));
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains("hero-title"));
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains(
-            "M 456 226 H 746 C 804 226 846 268 846 326"
-        ));
-        assert!(MACOS_DESKTOP_INIT_SCRIPT.contains(
-            "M 278 360 H 576 C 634 360 676 402 676 460"
-        ));
+    fn shell_chrome_script_preserves_masthead_and_wires_frameless_window_controls() {
+        assert!(!HANZO_SHELL_CHROME_SCRIPT.contains("[data-slot=\"masthead\"] { display: none"));
+        assert!(!HANZO_SHELL_CHROME_SCRIPT.contains("TEAM_ICON_SVG"));
+        assert!(HANZO_SHELL_CHROME_SCRIPT.contains(r#"data-slot="window-controls""#));
+        assert!(HANZO_SHELL_CHROME_SCRIPT.contains("#121214"));
+        assert!(HANZO_SHELL_CHROME_SCRIPT.contains("start_dragging"));
+        assert!(HANZO_SHELL_CHROME_SCRIPT.contains("toggle_maximize"));
     }
 
     #[test]
-    fn default_capability_allows_window_dragging_and_remote_team_origins() {
+    fn default_capability_grants_full_frameless_window_controls_on_local_and_hanzo_origins() {
         let cap = include_str!("../capabilities/default.json");
-        assert!(cap.contains("core:window:allow-start-dragging"));
-        assert!(cap.contains("core:window:allow-toggle-maximize"));
+        for perm in [
+            "core:window:allow-start-dragging",
+            "core:window:allow-minimize",
+            "core:window:allow-toggle-maximize",
+            "core:window:allow-is-maximized",
+            "core:window:allow-close",
+        ] {
+            assert!(cap.contains(perm), "missing capability {perm}");
+        }
         assert!(cap.contains("https://hanzo.team/*"));
         assert!(cap.contains("https://hanzo.ai/*"));
+        assert!(cap.contains("https://*.hanzo.ai/*"));
     }
 }
