@@ -11,7 +11,7 @@
  * else.
  */
 import { useEffect, useMemo, useState } from 'react'
-import { useParams } from 'react-router'
+import { useParams, useSearchParams } from 'react-router'
 import { XStack, YStack } from '@hanzo/ui'
 
 import { useSpace } from '~/data/space.tsx'
@@ -29,16 +29,32 @@ const viewOf = (asked: string | undefined): View =>
 
 export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const { id, view } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryIssue = searchParams.get('issue')
   const project = useProject(id)
   const { standing } = useSpace()
   const source = useBoard(id, mine) ?? standby(standingIs(standing))
   const add = source.add?.bind(source)
   const people = useCrew(id)
   const [only, setOnly] = useState<Priority[]>([])
-  const [selectedId, setSelectedId] = useState<string | null>(null)
+  const [selectedId, setSelectedId] = useState<string | null>(queryIssue)
   const [liveIssues, setLiveIssues] = useState<Issue[]>([])
   const [createStatus, setCreateStatus] = useState<Status | null>(null)
   const here = viewOf(view)
+
+  useEffect(() => {
+    if (queryIssue) setSelectedId(queryIssue)
+  }, [queryIssue])
+
+  const openIssue = (issueId: string | null) => {
+    setSelectedId(issueId)
+    if (issueId !== queryIssue) {
+      const next = new URLSearchParams(searchParams)
+      if (issueId) next.set('issue', issueId)
+      else next.delete('issue')
+      setSearchParams(next, { replace: true })
+    }
+  }
   // A board spanning every project asks which one a new issue goes in.
   const all = useProjects().data
   const choices = useMemo(
@@ -80,21 +96,21 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
             <Board
               source={source}
               only={only}
-              onOpen={(issue) => setSelectedId(issue.id)}
+              onOpen={(issue) => openIssue(issue.id)}
               onCreateIn={add ? (status) => setCreateStatus(status) : undefined}
             />
           ) : here === 'list' ? (
             <IssueList
               source={source}
               only={only}
-              onOpen={(issue) => setSelectedId(issue.id)}
+              onOpen={(issue) => openIssue(issue.id)}
               onCreateIn={add ? (status) => setCreateStatus(status) : undefined}
             />
           ) : (
             <IssueTimeline
               source={source}
               only={only}
-              onOpen={(issue) => setSelectedId(issue.id)}
+              onOpen={(issue) => openIssue(issue.id)}
             />
           )}
         </YStack>
@@ -103,7 +119,7 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
             issue={selectedIssue}
             source={source}
             people={people}
-            onClose={() => setSelectedId(null)}
+            onClose={() => openIssue(null)}
           />
         ) : null}
       </XStack>

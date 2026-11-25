@@ -32,8 +32,8 @@ import {
   User,
   Users,
 } from '@hanzogui/lucide-icons-2'
-import { useCallback, useMemo, useState } from 'react'
-import { Navigate, useParams } from 'react-router'
+import { useCallback, useEffect, useMemo, useState } from 'react'
+import { Navigate, useParams, useSearchParams } from 'react-router'
 
 import { invalidate, useRead } from '~/data/query.ts'
 import { useSession } from '~/data/session.tsx'
@@ -46,10 +46,11 @@ import {
   handoffLabels,
 } from '~/handoff/handoff.ts'
 import { addHandoffRecord, useRoomHandoffs } from '~/handoff/store.ts'
-import { useBoard, useProjects } from '~/serve.tsx'
+import { useBoard, useCrew, useProjects } from '~/serve.tsx'
 import { useHanzoPreferences } from '~/settings/preferences.ts'
 import { press, setAsideKind, showAside, toggleAsideKind, useAside, useAsideKind, useNotices } from '~/shell'
 import { paint, ring, round, rung, state } from '~/theme/theme'
+import { NewIssueModal } from '~/tracker/IssueDrawer.tsx'
 import { Face } from './Face.tsx'
 import { addable, botIn, hanzoBot, withId } from './bots.ts'
 import { openDm } from './dm.ts'
@@ -73,6 +74,9 @@ const LEGACY_DM_ALIAS: Record<string, string> = {
 
 export function Chat() {
   const { id: rawId } = useParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const queryMsg = searchParams.get('msg')
+  const [focusMsg, setFocusMsg] = useState<string | undefined>(queryMsg ?? undefined)
   const id = rawId ? (LEGACY_DM_ALIAS[rawId] ?? rawId) : rawId
   const { plane, current } = useSpace()
   const rooms = useRooms()
@@ -96,18 +100,33 @@ export function Chat() {
 
   const conversation = useMessages(room?.id ?? null)
   const messages = conversation.data ?? []
+
+  // Highlight and scroll to `?msg=` once loaded, then clear the query param so
+  // new messages resume normal auto-scroll and re-clicking the same inbox link works.
+  useEffect(() => {
+    if (!queryMsg) return
+    setFocusMsg(queryMsg)
+    if (conversation.phase !== 'ready') return
+    const next = new URLSearchParams(searchParams)
+    next.delete('msg')
+    setSearchParams(next, { replace: true })
+    const timer = setTimeout(() => setFocusMsg((cur) => (cur === queryMsg ? undefined : cur)), 4000)
+    return () => clearTimeout(timer)
+  }, [queryMsg, conversation.phase, searchParams, setSearchParams])
   const ids = useMemo(() => messages.map((m) => m.id), [messages])
   const feelings = useReactions(ids)
   useLive(room?.id ?? null)
 
   const [thread, setThread] = useState<string | null>(null)
   const [handoffDraft, setHandoffDraft] = useState<string | null>(null)
+  const [taskMessage, setTaskMessage] = useState<Message | null>(null)
   const parent = messages.find((m) => m.id === thread) ?? null
   const answers = useReplies(parent?.id ?? null)
 
   const { who: sessionUser } = useSession()
   const { chat: chatPrefs } = useHanzoPreferences()
   const boardSource = useBoard()
+  const crew = useCrew()
   const allProjects = useProjects().data ?? []
   const projectOptions = useMemo(
     () =>
@@ -308,7 +327,9 @@ export function Chat() {
           onReact={onReact}
           onOpen={(m) => setThread(m.id)}
           onHandoff={(m) => setHandoffDraft(m.lines.join('\n'))}
+          onCreateTask={boardSource?.add ? (m) => setTaskMessage(m) : undefined}
           open={thread ?? undefined}
+          focusId={focusMsg}
         />
 
         <Composer
@@ -318,6 +339,25 @@ export function Chat() {
           onHandoff={(draft) => setHandoffDraft(draft)}
         />
       </YStack>
+
+      {taskMessage && boardSource?.add ? (
+        <NewIssueModal
+          initialStatus="todo"
+          initialTitle={(taskMessage.lines[0] ?? '').slice(0, 120)}
+          initialDescription={taskMessage.lines.join('\n')}
+          sourceLink={{
+            roomId: room.id,
+            roomName: room.kind === 'direct' ? titled(room, people) : `#${room.name}`,
+            messageId: taskMessage.id,
+          }}
+          people={crew}
+          projects={projectOptions}
+          onCreate={async (status, title, patch) => {
+            await boardSource.add!(status, title, patch)
+          }}
+          onClose={() => setTaskMessage(null)}
+        />
+      ) : null}
 
       {handoffDraft !== null ? (
         <HandoffModal
@@ -345,6 +385,7 @@ export function Chat() {
           onClose={() => setThread(null)}
           onRetry={answers.reload}
           onReact={onReact}
+          onCreateTask={boardSource?.add ? (m) => setTaskMessage(m) : undefined}
           onSend={(text) => reply(plane, room, parent, text, people)}
         />
       ) : null}

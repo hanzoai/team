@@ -11,8 +11,10 @@ import { useNavigate } from 'react-router'
 import { Badge, Button, Input, ScrollArea, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
 import {
   Bot,
+  Calendar,
   Check,
   CheckCircle2,
+  ExternalLink,
   FileCheck2,
   Plus,
   RotateCcw,
@@ -24,7 +26,10 @@ import {
   X,
 } from '@hanzogui/lucide-icons-2'
 
+import { invalidate } from '~/data/query.ts'
 import { useSession } from '~/data/session.tsx'
+import { useSpace } from '~/data/space.tsx'
+import { keys, start as createProject } from '~/data/tracker.ts'
 import {
   approvalLabel,
   approveHandoff,
@@ -41,6 +46,14 @@ import { NAME, PRIORITY, STATUS, type Issue, type IssuePatch, type Person, type 
 import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
 import { dot, tone } from './board/tone.ts'
+import {
+  chatSourceHref,
+  formatChatSource,
+  fromDateInput,
+  parseChatSource,
+  toDateInput,
+  type ChatSource,
+} from './source.ts'
 
 const AVAILABLE_LABELS = [
   'Backend',
@@ -69,13 +82,21 @@ export function IssueDrawer({
   people: Person[]
   onClose: () => void
 }) {
+  const navigate = useNavigate()
   const { who } = useSession()
   const actorName = who?.label || who?.name || 'Teammate'
   const parsed = useMemo(() => parseHandoff(issue.description), [issue.description])
+  const parsedSource = useMemo(() => parseChatSource(parsed.body), [parsed.body])
   const handoff = parsed.handoff
+  const chatSource: ChatSource | null =
+    parsedSource.source ??
+    (handoff?.sourceRoomId && handoff?.sourceRoomName
+      ? { roomId: handoff.sourceRoomId, roomName: handoff.sourceRoomName, messageId: handoff.sourceMessageId }
+      : null)
 
   const [title, setTitle] = useState(issue.title)
-  const [description, setDescription] = useState(parsed.body)
+  const [description, setDescription] = useState(parsedSource.body)
+  const [dueDateStr, setDueDateStr] = useState(toDateInput(issue.dueDate))
   const [customTag, setCustomTag] = useState('')
   const [savedNotice, setSavedNotice] = useState(false)
   const [confirming, setConfirming] = useState(false)
@@ -88,11 +109,14 @@ export function IssueDrawer({
 
   useEffect(() => {
     setTitle(issue.title)
-    setDescription(parsed.body)
+    setDescription(parsedSource.body)
+    setDueDateStr(toDateInput(issue.dueDate))
     setApprovalRequired(parsed.handoff?.approvalRequired ?? true)
     setDeliverableSummary(parsed.handoff?.deliverable?.summary ?? '')
     setDeliverableArtifact(parsed.handoff?.deliverable?.artifact ?? '')
-  }, [issue.id, issue.title, parsed.body, parsed.handoff])
+  }, [issue.id, issue.title, issue.dueDate, parsedSource.body, parsed.handoff])
+
+  const bodyWithSource = (raw: string) => formatChatSource(raw, parsedSource.source)
   // A question asked about one issue is not asked about the next one opened.
   useEffect(() => {
     setConfirming(false)
@@ -128,7 +152,7 @@ export function IssueDrawer({
     const nextTitle = title.trim() || issue.title
     patchIssue({
       title: nextTitle,
-      description: formatHandoff(description, handoff),
+      description: formatHandoff(bodyWithSource(description), handoff),
     })
   }
 
@@ -142,8 +166,15 @@ export function IssueDrawer({
       },
       handedOffBy: actorName,
       approvalRequired,
+      ...(chatSource
+        ? {
+            sourceRoomId: chatSource.roomId,
+            sourceRoomName: chatSource.roomName,
+            sourceMessageId: chatSource.messageId,
+          }
+        : {}),
     })
-    patchIssue(issueHandoffPatch(issue, meta, description))
+    patchIssue(issueHandoffPatch(issue, meta, bodyWithSource(description)))
     if (approvalRequired) {
       setAsideKind('inbox')
       showAside()
@@ -165,13 +196,20 @@ export function IssueDrawer({
         },
         handedOffBy: actorName,
         approvalRequired,
+        ...(chatSource
+          ? {
+              sourceRoomId: chatSource.roomId,
+              sourceRoomName: chatSource.roomName,
+              sourceMessageId: chatSource.messageId,
+            }
+          : {}),
       })
     const next = submitDeliverable(base, {
       summary: clean,
       artifact: deliverableArtifact.trim() || undefined,
       completedBy: base.owner.name,
     })
-    patchIssue(issueHandoffPatch(issue, next, description))
+    patchIssue(issueHandoffPatch(issue, next, bodyWithSource(description)))
     if (next.approvalState === 'pending') {
       setAsideKind('inbox')
       showAside()
@@ -184,7 +222,7 @@ export function IssueDrawer({
       approvedBy: actorName,
       note: reviewNote.trim() || undefined,
     })
-    patchIssue(issueHandoffPatch(issue, next, description))
+    patchIssue(issueHandoffPatch(issue, next, bodyWithSource(description)))
     setReviewNote('')
   }
 
@@ -194,7 +232,7 @@ export function IssueDrawer({
       reviewedBy: actorName,
       note: reviewNote.trim() || 'Please revise and resubmit.',
     })
-    patchIssue(issueHandoffPatch(issue, next, description))
+    patchIssue(issueHandoffPatch(issue, next, bodyWithSource(description)))
     setReviewNote('')
   }
 
@@ -218,7 +256,9 @@ export function IssueDrawer({
   return (
     <YStack
       data-slot="issue-drawer"
-      width={420}
+      width="100%"
+      maxW={420}
+      $md={{ width: 420 }}
       shrink={0}
       borderLeftWidth={1}
       borderColor="$edge"
@@ -394,6 +434,83 @@ export function IssueDrawer({
                 )
               })}
             </XStack>
+          </YStack>
+
+          {/* Source conversation link */}
+          {chatSource ? (
+            <XStack
+              role="button"
+              tabIndex={0}
+              cursor="pointer"
+              px={10}
+              py={6}
+              rounded={round.field}
+              bg="$raised"
+              borderWidth={1}
+              borderColor="$edge"
+              items="center"
+              justify="space-between"
+              gap={8}
+              hoverStyle={{ background: '$hover' }}
+              focusVisibleStyle={ring}
+              onPress={() => navigate(chatSourceHref(chatSource))}
+            >
+              <SizableText fontSize={rung.small} color="$ink" numberOfLines={1}>
+                {`Created from ${chatSource.roomName}`}
+              </SizableText>
+              <XStack items="center" gap={4} shrink={0}>
+                <SizableText fontSize={rung.chip} color="$soft">
+                  Open chat
+                </SizableText>
+                <ExternalLink size={12} color="$soft" />
+              </XStack>
+            </XStack>
+          ) : null}
+
+          {/* Due Date */}
+          <YStack gap={8}>
+            <XStack items="center" justify="space-between">
+              <XStack items="center" gap={6}>
+                <Calendar size={12} color="$dim" />
+                <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+                  Due Date
+                </SizableText>
+              </XStack>
+              {dueDateStr ? (
+                <Button
+                  size="xs"
+                  variant="ghost"
+                  height={20}
+                  px={6}
+                  onPress={() => {
+                    setDueDateStr('')
+                    patchIssue({ dueDate: null })
+                  }}
+                >
+                  Clear
+                </Button>
+              ) : null}
+            </XStack>
+            <input
+              type="date"
+              aria-label="Due date"
+              value={dueDateStr}
+              onChange={(e) => {
+                const next = e.target.value
+                setDueDateStr(next)
+                patchIssue({ dueDate: fromDateInput(next) })
+              }}
+              style={{
+                height: 32,
+                padding: '0 10px',
+                borderRadius: 6,
+                border: `1px solid ${paint.rule}`,
+                backgroundColor: paint.card,
+                color: paint.ink,
+                fontSize: 12,
+                width: '100%',
+              }}
+            />
           </YStack>
 
           {/* Priority Selector */}
@@ -764,12 +881,18 @@ export type Choice = { id: string; name: string; identifier: string }
 
 export function NewIssueModal({
   initialStatus = 'backlog',
+  initialTitle = '',
+  initialDescription = '',
+  sourceLink,
   people,
   projects,
   onCreate,
   onClose,
 }: {
   initialStatus?: Status
+  initialTitle?: string
+  initialDescription?: string
+  sourceLink?: ChatSource
   people: Person[]
   /**
    * The projects to choose between, on a board that spans them all. Absent on
@@ -779,21 +902,47 @@ export function NewIssueModal({
   onCreate: (status: Status, title: string, patch: IssuePatch) => Promise<void>
   onClose: () => void
 }) {
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
+  const { plane } = useSpace()
+  const [title, setTitle] = useState(initialTitle)
+  const [description, setDescription] = useState(initialDescription)
+  const [dueDateStr, setDueDateStr] = useState('')
   const [status, setStatus] = useState<Status>(initialStatus)
   const [priority, setPriority] = useState<Priority>('medium')
   const [assigneeId, setAssigneeId] = useState<string | null>(people[0]?.id ?? null)
   const [labels, setLabels] = useState<string[]>(['Feature'])
   const navigate = useNavigate()
   const [project, setProject] = useState<string | null>(projects?.[0]?.id ?? null)
+  const [creatingProject, setCreatingProject] = useState(false)
   const [submitting, setSubmitting] = useState(false)
   const [failed, setFailed] = useState<string | null>(null)
 
   // The list can arrive after the form opens; take its first project then.
   useEffect(() => {
-    if (projects && !projects.some((p) => p.id === project)) setProject(projects[0]?.id ?? null)
+    if (projects && projects.length > 0 && !projects.some((p) => p.id === project)) {
+      setProject(projects[0]?.id ?? null)
+    }
   }, [projects, project])
+
+  const createDefaultProject = async () => {
+    if (!plane || creatingProject) return
+    setCreatingProject(true)
+    setFailed(null)
+    try {
+      const candidates = ['GEN', 'TASK', 'WORK', 'TEAM', 'MAIN', 'GEN2', 'GEN3']
+      let id: string | null = null
+      for (const identifier of candidates) {
+        id = await createProject(plane, plane.account ?? '', { name: 'General', identifier })
+        if (id) break
+      }
+      invalidate(keys.projects())
+      if (id) setProject(id)
+      else setFailed('Could not create default project — open Projects to create one.')
+    } catch (e) {
+      setFailed(e instanceof Error ? e.message : String(e))
+    } finally {
+      setCreatingProject(false)
+    }
+  }
 
   const placed = !projects || !!project
 
@@ -807,10 +956,13 @@ export function NewIssueModal({
     setSubmitting(true)
     setFailed(null)
     try {
+      const finalDescription = formatChatSource(description.trim(), sourceLink ?? null)
+      const dueDate = fromDateInput(dueDateStr)
       await onCreate(status, clean, {
-        description: description.trim() || undefined,
+        description: finalDescription || undefined,
         priority,
         assigneeId,
+        ...(dueDate !== null ? { dueDate } : {}),
         labels,
         ...(projects && project ? { project } : {}),
       })
@@ -874,9 +1026,16 @@ export function NewIssueModal({
                   <SizableText fontSize={rung.small} color="$soft">
                     There is no project to file this in yet.
                   </SizableText>
-                  <Button size="sm" variant="outline" onPress={() => navigate('/projects?new')}>
-                    New project
-                  </Button>
+                  <XStack gap={6}>
+                    {plane ? (
+                      <Button size="sm" disabled={creatingProject} onPress={() => void createDefaultProject()}>
+                        {creatingProject ? 'Creating…' : 'Create General project'}
+                      </Button>
+                    ) : null}
+                    <Button size="sm" variant="outline" onPress={() => navigate('/projects?new')}>
+                      New project
+                    </Button>
+                  </XStack>
                 </XStack>
               ) : (
                 <XStack gap={6} flexWrap="wrap">
@@ -1005,6 +1164,28 @@ export function NewIssueModal({
                 )
               })}
             </XStack>
+          </YStack>
+
+          <YStack gap={6}>
+            <SizableText fontSize={rung.chip} fontWeight="700" color="$dim" {...caps}>
+              Due Date (optional)
+            </SizableText>
+            <input
+              type="date"
+              aria-label="Due date"
+              value={dueDateStr}
+              onChange={(e) => setDueDateStr(e.target.value)}
+              style={{
+                height: 32,
+                padding: '0 10px',
+                borderRadius: 6,
+                border: `1px solid ${paint.rule}`,
+                backgroundColor: paint.card,
+                color: paint.ink,
+                fontSize: 12,
+                width: '100%',
+              }}
+            />
           </YStack>
 
           <YStack gap={6}>

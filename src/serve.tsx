@@ -13,15 +13,15 @@
  */
 import { useEffect, useMemo } from 'react'
 
-import { Category, Class, Priority as PriorityNum, nameOf, ref, whose, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
-import { see as seeNotice, notices, places } from '~/data/notice.ts'
+import { Category, Class, Priority as PriorityNum, findPerson, nameOf, ref, whose, type Component, type Issue as Doc, type Person as Human, type Project, type Status, type Tag } from '~/data/model.ts'
+import { see as seeNotice, notices, placeIndex } from '~/data/notice.ts'
 import { useRead, type Read } from '~/data/query.ts'
 import type { Plane } from '~/data/socket.ts'
 import { useSpace, type Standing } from '~/data/space.tsx'
 import { amend, components, issues, keys, move, open, people, project as readProject, projects, statuses, tags } from '~/data/tracker.ts'
 import { attach, remove as removeDoc } from '~/data/write.ts'
+import { buildNote } from '~/inbox/build.ts'
 import { serve, useUnseen } from '~/inbox/feed.ts'
-import type { Note, Span } from '~/inbox/note.ts'
 import { setHandoffSpace, syncBoardHandoffs, usePendingApprovals } from '~/handoff/store.ts'
 import { setNotices, setTodo } from '~/shell'
 import type { Standby } from '~/tracker/board/standby.ts'
@@ -87,15 +87,15 @@ const face = (who: Human): Person => ({
  * Order is the whole point — the assignee is the one face that must survive
  * being the only one shown.
  */
-const crew = (issue: Doc, crowd: Map<string, Human>): Person[] => {
+const crew = (issue: Doc, crowd: readonly Human[]): Person[] => {
   const ids = [issue.assignee, ...(issue.collaborators ?? [])].filter((id): id is string => !!id)
   const seen = new Set<string>()
   const out: Person[] = []
   for (const id of ids) {
-    if (seen.has(id)) continue
-    seen.add(id)
-    const who = crowd.get(id)
-    if (who) out.push(face(who))
+    const who = findPerson(crowd, id)
+    if (!who || seen.has(who._id)) continue
+    seen.add(who._id)
+    out.push(face(who))
   }
   return out
 }
@@ -103,7 +103,7 @@ const crew = (issue: Doc, crowd: Map<string, Human>): Person[] => {
 /** What the board reads, gathered once per revision rather than once per card. */
 type World = {
   columns: Map<string, Column>
-  crowd: Map<string, Human>
+  crowd: readonly Human[]
   words: Map<string, string[]>
   parts: Map<string, string>
   project: Project | undefined
@@ -121,6 +121,7 @@ const card = (issue: Doc, world: World): Issue => ({
   labels: world.words.get(issue._id) ?? [],
   done: done(issue),
   people: crew(issue, world.crowd),
+  dueDate: issue.dueDate ?? null,
   origin: issue.component ? named(world.parts.get(issue.component)) : undefined,
   files: issue.attachments ?? 0,
   replies: issue.comments ?? 0,
@@ -166,14 +167,16 @@ const adder = (plane: Plane, space?: string) => async (to: Column, title: string
     number,
     after: work.find((i) => i.status === target._id),
   })
-  if (patch && (patch.description || patch.assigneeId || (patch.labels && patch.labels.length > 0))) {
-    const fresh = await issues(plane, targetSpace)
+  if (patch && (patch.description || patch.assigneeId !== undefined || patch.dueDate !== undefined || (patch.labels && patch.labels.length > 0))) {
+    const [fresh, crowd] = await Promise.all([issues(plane, targetSpace), people(plane)])
     const created = fresh.find((i) => i.number === number && i.title === title)
     if (created) {
+      const resolvedAssignee = patch.assigneeId ? (findPerson(crowd, patch.assigneeId)?._id ?? patch.assigneeId) : null
       await amend(plane, plane.account ?? '', created, {
         ...(patch.description !== undefined ? { description: patch.description } : {}),
+        ...(patch.dueDate !== undefined ? { dueDate: patch.dueDate } : {}),
         ...(patch.assigneeId !== undefined
-          ? { assignee: patch.assigneeId, collaborators: patch.assigneeId ? [patch.assigneeId] : [] }
+          ? { assignee: resolvedAssignee, collaborators: resolvedAssignee ? [resolvedAssignee] : [] }
           : {}),
       })
       if (patch.labels && patch.labels.length > 0) {
@@ -229,15 +232,17 @@ const board = (plane: Plane, space?: string, mine = false): Board => ({
           }
           const world: World = {
             columns: columnsOf(columns as Status[]),
-            crowd: new Map(crowd.map((p) => [p._id, p])),
+            crowd,
             words,
             parts: new Map((parts as Component[]).map((c) => [c._id, c.label])),
             project,
             projects: new Map((allProjects as Project[]).map((p) => [p._id, p])),
           }
           const account = (plane.account ?? '').replace(/^hanzo:/, '')
-          const me = mine ? crowd.find((p) => whose(p, account))?._id : undefined
-          const shown = mine ? work.filter((issue) => !!me && issue.assignee === me) : work
+          const mePerson = mine ? findPerson(crowd, account) : undefined
+          const shown = mine
+            ? work.filter((issue) => Boolean(issue.assignee && mePerson && whose(mePerson, issue.assignee)))
+            : work
           next(shown.map((issue) => card(issue, world)))
         })
         .catch((e: unknown) => live && fail(e instanceof Error ? e : new Error(String(e))))
@@ -281,9 +286,14 @@ const board = (plane: Plane, space?: string, mine = false): Board => ({
       fields.reportedTime = Math.round(Math.max(0, Math.min(1, patch.done)) * est)
     }
     if (patch.assigneeId !== undefined) {
-      fields.assignee = patch.assigneeId
-      const rest = (held.collaborators ?? []).filter((c) => c !== patch.assigneeId)
-      fields.collaborators = patch.assigneeId ? [patch.assigneeId, ...rest] : rest
+      const crowd = await people(plane)
+      const resolved = patch.assigneeId ? (findPerson(crowd, patch.assigneeId)?._id ?? patch.assigneeId) : null
+      fields.assignee = resolved
+      const rest = (held.collaborators ?? []).filter((c) => c !== resolved)
+      fields.collaborators = resolved ? [resolved, ...rest] : rest
+    }
+    if (patch.dueDate !== undefined) {
+      fields.dueDate = patch.dueDate
     }
     if (patch.replies !== undefined) {
       fields.comments = patch.replies
@@ -383,64 +393,6 @@ export const useProject = (id?: string): Project | undefined => {
 }
 
 /**
- * A notification's sentence.
- *
- * The platform stores a reference plus a type and lets a presenter compose the
- * words; there are no presenters here, so the sentence is the runs the
- * documents carry — who acted, and what the notification says. Two of those
- * runs are ENTITIES and the reference emphasises both: the person, and the
- * thing acted on wherever its name falls in the sentence. Whoever the message
- * addresses by name carries the alert hue instead, which is the one run that
- * means it is about you.
- *
- * Splitting on a name the document itself supplies is why this is mechanical
- * rather than a guess about English.
- */
-const MENTION = /(@[\w.-]+)/g
-
-const runs = (text: string, kind: 'strong' | 'mention'): Span[] =>
-  text ? [{ text, [kind]: true }] : []
-
-/** One sentence, with the place's name and any mention lifted out of it. */
-const sentence = (name: string, body: string, place?: string): Span[] => {
-  const spans: Span[] = [{ text: name, strong: true }]
-  const parts = place ? body.split(place) : [body]
-  parts.forEach((part, i) => {
-    if (i > 0) spans.push(...runs(place!, 'strong'))
-    for (const run of part.split(MENTION)) {
-      if (!run) continue
-      if (run.startsWith('@')) spans.push(...runs(run, 'mention'))
-      else spans.push({ text: run })
-    }
-  })
-  return spans.map((s, i) => (i === 1 && s.text ? { ...s, text: ` ${s.text}` } : s))
-}
-
-const note = (
-  row: Awaited<ReturnType<typeof notices>>[number],
-  crowd: Map<string, Human>,
-  where: Map<string, string>,
-): Note => {
-  const actor = crowd.get(String(row.modifiedBy ?? ''))
-  const name = actor ? nameOf(actor) : 'Somebody'
-  const place = where.get(String(row.attachedTo ?? ''))
-  return {
-    id: row._id,
-    kind:
-      row.attachedToClass === Class.channel ||
-      row.attachedToClass === Class.direct ||
-      row.attachedToClass === Class.message
-        ? 'chat'
-        : 'task',
-    actor: { name, face: actor?.avatar ?? undefined },
-    line: sentence(name, row.body ?? row.title ?? '', place),
-    at: row.modifiedOn,
-    place,
-    seen: row.isViewed,
-  }
-}
-
-/**
  * Hand the inbox its backend.
  *
  * The feed keeps one source at module scope, so this is an effect rather than a
@@ -466,13 +418,12 @@ export const Serve = () => {
     const space = current.uuid
     serve({
       async list() {
-        const [rows, crowd, where] = await Promise.all([
+        const [rows, crowd] = await Promise.all([
           notices(plane, space),
           people(plane),
-          places(plane, space),
         ])
-        const byPerson = new Map(crowd.map((p) => [p._id, p]))
-        return rows.map((row) => note(row, byPerson, where))
+        const where = await placeIndex(plane, space, crowd, rows)
+        return rows.map((row) => buildNote(row, crowd, where))
       },
       async see(id: string) {
         const rows = await notices(plane, space)

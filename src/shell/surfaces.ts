@@ -14,7 +14,7 @@
  * The order is the rail's: chat, bots, tracker, CRM, with the bell above them and the
  * add control below.
  */
-import { Bot, Briefcase, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { Bot, Briefcase, Home, MessagesSquare, SquareCheck } from '@hanzogui/lucide-icons-2'
 
 /** Any glyph from the icon set. Named off one of them, because the set's own
  *  component type is not exported and restating it here would be a second
@@ -33,6 +33,7 @@ export type Surface = {
 }
 
 export const SURFACES: readonly Surface[] = [
+  { id: 'home', label: 'Home', icon: Home, path: '/home' },
   { id: 'chat', label: 'Chat', icon: MessagesSquare, path: '/chat' },
   // A hand-off: /bots opens hanzo.bot, where one bot is worked with up close.
   { id: 'bots', label: 'Bots on hanzo.bot', icon: Bot, path: '/bots' },
@@ -46,5 +47,6 @@ export const surfaceAt = (pathname: string): Surface | undefined =>
     (s) =>
       pathname === s.path ||
       pathname.startsWith(`${s.path}/`) ||
+      (s.id === 'home' && (pathname === '/overview' || pathname.startsWith('/overview/'))) ||
       (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname === '/projects/' || pathname.startsWith('/projects/'))),
   )

@@ -32,6 +32,7 @@ export function Thread({
   onClose,
   onRetry,
   onReact,
+  onCreateTask,
   onSend,
 }: {
   room: Room
@@ -45,6 +46,7 @@ export function Thread({
   onClose: () => void
   onRetry: () => void
   onReact: (m: Message, emoji: string) => void
+  onCreateTask?: (m: Message) => void
   onSend: (text: string) => Promise<void>
 }) {
   return (
@@ -77,6 +79,7 @@ export function Thread({
           me={me}
           onReact={onReact}
           onOpen={() => {}}
+          onCreateTask={onCreateTask}
         />
       </YStack>
 
@@ -91,6 +94,7 @@ export function Thread({
         onRetry={onRetry}
         onReact={onReact}
         onOpen={() => {}}
+        onCreateTask={onCreateTask}
       />
 
       <Composer placeholder="Reply…" people={people} onSend={onSend} />

@@ -19,6 +19,7 @@ import { People } from './board/People.tsx'
 import { Ring } from './board/Ring.tsx'
 import { dot, tone } from './board/tone.ts'
 import { STATUS, type Issue, type Priority, type Source, type Status } from './board/model.ts'
+import { dueWeekIndex, formatDueDate, isOverdue, timelineWeeks } from './source.ts'
 
 const CHIP = { minHeight: 18, height: 18, paddingHorizontal: 8, borderRadius: 9999 } as const
 const cap = (s: string): string => s[0]!.toUpperCase() + s.slice(1)
@@ -108,7 +109,7 @@ export const IssueList = ({
 
   return (
     <ScrollArea flex={1} minH={0}>
-      <YStack p={24} gap={20}>
+      <YStack p={16} $md={{ p: 24 }} gap={20}>
         {columns(showing).map((column) => (
           <YStack
             key={column.status}
@@ -157,6 +158,8 @@ export const IssueList = ({
             {/* Rows */}
             {column.issues.map((issue, idx) => {
               const chips = issue.priority ? [cap(issue.priority), ...issue.labels] : issue.labels
+              const dueText = formatDueDate(issue.dueDate)
+              const overdue = isOverdue(issue.dueDate, issue.status)
               return (
                 <YStack key={issue.id}>
                   {idx > 0 ? <Separator borderColor="$edge" /> : null}
@@ -164,7 +167,8 @@ export const IssueList = ({
                     px={16}
                     py={10}
                     items="center"
-                    gap={12}
+                    gap={10}
+                    flexWrap="wrap"
                     cursor={onOpen ? 'pointer' : 'default'}
                     hoverStyle={{ background: '$hover' }}
                     onPress={() => onOpen?.(issue)}
@@ -208,7 +212,7 @@ export const IssueList = ({
                       fontSize={rung.body}
                       color="$ink"
                       flex={1}
-                      minW={160}
+                      minW={140}
                       numberOfLines={1}
                     >
                       {issue.title}
@@ -216,6 +220,13 @@ export const IssueList = ({
 
                     {/* Chips */}
                     <XStack gap={gap.tight} items="center" flexWrap="wrap">
+                      {dueText ? (
+                        <XStack px={7} height={18} rounded={9999} bg="$panel" borderWidth={1} borderColor="$edge" items="center">
+                          <SizableText fontSize={rung.chip} fontWeight={overdue ? '700' : '500'} style={{ color: overdue ? paint.alert : paint.mute }}>
+                            {dueText}
+                          </SizableText>
+                        </XStack>
+                      ) : null}
                       {chips.map((label) => {
                         const { background, color } = tone(label, issue.priority)
                         return (
@@ -262,8 +273,13 @@ export const IssueList = ({
                     </XStack>
 
                     {/* People */}
-                    <XStack width={76} justify="flex-end" shrink={0}>
+                    <XStack items="center" gap={6} justify="flex-end" shrink={0}>
                       <People people={issue.people} size={24} show={3} />
+                      {issue.people[0]?.name ? (
+                        <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1} maxW={96}>
+                          {issue.people[0].bot ? `@${issue.people[0].name}` : issue.people[0].name}
+                        </SizableText>
+                      ) : null}
                     </XStack>
                   </XStack>
                 </YStack>
@@ -274,29 +290,6 @@ export const IssueList = ({
       </YStack>
     </ScrollArea>
   )
-}
-
-const SPRINT_WEEKS = [
-  { id: 'w1', label: 'W1 · Oct 20', sub: 'Sprint 14' },
-  { id: 'w2', label: 'W2 · Oct 27', sub: 'Sprint 14' },
-  { id: 'w3', label: 'W3 · Nov 03', sub: 'Current · Active', now: true },
-  { id: 'w4', label: 'W4 · Nov 10', sub: 'Sprint 15' },
-  { id: 'w5', label: 'W5 · Nov 17', sub: 'Sprint 15' },
-  { id: 'w6', label: 'W6 · Nov 24', sub: 'Release Cut' },
-] as const
-
-const spanForStatus = (status: Status, idx: number): { start: number; span: number } => {
-  switch (status) {
-    case 'done':
-      return { start: idx % 2 === 0 ? 0 : 1, span: 2 }
-    case 'progress':
-      return { start: 1 + (idx % 2), span: 2 }
-    case 'todo':
-      return { start: 2 + (idx % 2), span: 2 }
-    case 'backlog':
-    default:
-      return { start: 3 + (idx % 2), span: 2 }
-  }
 }
 
 export const IssueTimeline = ({
@@ -350,10 +343,9 @@ export const IssueTimeline = ({
     )
   }
 
-  const baseFiltered = only?.length
+  const showing = only?.length
     ? issues.filter((i) => i.priority && only.includes(i.priority))
     : issues
-  const showing = baseFiltered
 
   if (showing.length === 0) {
     return (
@@ -361,154 +353,221 @@ export const IssueTimeline = ({
         <EmptyState
           icon={CalendarDays}
           title="No issues on timeline"
-          description="Scheduled issues and sprint milestones appear here across weeks."
+          description="Set a due date on any issue to plot it across upcoming weeks."
         />
       </YStack>
     )
   }
 
+  const weeks = timelineWeeks(Date.now(), 6)
+  const scheduled = showing.filter((i) => dueWeekIndex(i.dueDate, weeks) >= 0)
+  const later = showing.filter((i) => Boolean(i.dueDate) && dueWeekIndex(i.dueDate, weeks) < 0)
+  const unscheduled = showing.filter((i) => !i.dueDate)
+
   return (
     <ScrollArea flex={1} minH={0}>
-      <YStack p={24} gap={16}>
-        <YStack
-          rounded={round.card}
-          borderWidth={1}
-          borderColor="$edge"
-          bg="$background"
-          overflow="hidden"
-        >
-          {/* Timeline Header */}
-          <XStack bg="$panel" borderBottomWidth={1} borderColor="$edge" height={48} items="center">
-            <XStack width={280} shrink={0} px={16} items="center" justify="space-between" borderRightWidth={1} borderColor="$edge" height="100%">
-              <SizableText fontSize={rung.small} fontWeight="700" color="$ink" {...caps}>
-                Issue / Assignee
-              </SizableText>
-              <SizableText fontSize={rung.chip} color="$soft">
-                {showing.length} tracked
-              </SizableText>
-            </XStack>
-            <XStack flex={1} height="100%">
-              {SPRINT_WEEKS.map((w) => (
-                <YStack
-                  key={w.id}
-                  flex={1}
-                  px={10}
-                  justify="center"
-                  borderRightWidth={1}
-                  borderColor="$edge"
-                  bg={'now' in w && w.now ? '$hover' : 'transparent'}
-                >
-                  <XStack items="center" gap={6}>
-                    {'now' in w && w.now ? (
-                      <YStack width={6} height={6} rounded={9999} style={{ backgroundColor: paint.accent }} />
-                    ) : null}
-                    <SizableText fontSize={rung.small} fontWeight="600" color={'now' in w && w.now ? '$ink' : '$soft'}>
-                      {w.label}
-                    </SizableText>
-                  </XStack>
-                  <SizableText fontSize={rung.chip} color="$quiet">
-                    {w.sub}
-                  </SizableText>
-                </YStack>
-              ))}
-            </XStack>
-          </XStack>
-
-          {/* Timeline Rows */}
-          {showing.map((issue, idx) => {
-            const { start, span } = spanForStatus(issue.status, idx)
-            const leftPct = (start / SPRINT_WEEKS.length) * 100
-            const widthPct = (span / SPRINT_WEEKS.length) * 100
-            const pctDone = Math.round((issue.done ?? (issue.status === 'done' ? 1 : 0.25)) * 100)
-
-            return (
-              <YStack key={issue.id}>
-                {idx > 0 ? <Separator borderColor="$edge" /> : null}
-                <XStack height={46} items="center" hoverStyle={{ background: '$hover' }}>
-                  {/* Left Meta Column */}
-                  <XStack
-                    width={280}
-                    shrink={0}
-                    px={16}
-                    gap={8}
-                    items="center"
+      <YStack p={16} $md={{ p: 24 }} gap={16}>
+        {scheduled.length > 0 ? (
+          <YStack
+            rounded={round.card}
+            borderWidth={1}
+            borderColor="$edge"
+            bg="$background"
+            style={{ overflowX: 'auto' }}
+          >
+            <YStack minW={720}>
+            {/* Real Calendar Header */}
+            <XStack bg="$panel" borderBottomWidth={1} borderColor="$edge" height={48} items="center">
+              <XStack width={240} shrink={0} px={16} items="center" justify="space-between" borderRightWidth={1} borderColor="$edge" height="100%">
+                <SizableText fontSize={rung.small} fontWeight="700" color="$ink" {...caps}>
+                  Scheduled Issues
+                </SizableText>
+                <SizableText fontSize={rung.chip} color="$soft">
+                  {scheduled.length}
+                </SizableText>
+              </XStack>
+              <XStack flex={1} height="100%" minW={0}>
+                {weeks.map((w) => (
+                  <YStack
+                    key={w.id}
+                    flex={1}
+                    px={8}
+                    justify="center"
                     borderRightWidth={1}
                     borderColor="$edge"
-                    height="100%"
-                    cursor={onOpen ? 'pointer' : 'default'}
-                    onPress={() => onOpen?.(issue)}
+                    bg={w.now ? '$hover' : 'transparent'}
                   >
-                    <YStack
-                      width={8}
-                      height={8}
-                      rounded={9999}
-                      shrink={0}
-                      style={{ backgroundColor: dot[issue.status] }}
-                    />
-                    <SizableText fontSize={rung.chip} fontWeight="600" color="$soft" width={54} shrink={0}>
-                      {issue.key}
-                    </SizableText>
-                    <SizableText fontSize={rung.small} color="$ink" flex={1} numberOfLines={1}>
-                      {issue.title}
-                    </SizableText>
-                    <People people={issue.people} size={20} show={1} />
-                  </XStack>
-
-                  {/* Right Gantt Track */}
-                  <XStack flex={1} height="100%" position="relative" items="center">
-                    {/* Grid columns background */}
-                    {SPRINT_WEEKS.map((w) => (
-                      <YStack
-                        key={w.id}
-                        flex={1}
-                        height="100%"
-                        borderRightWidth={1}
-                        borderColor="$edge"
-                        bg={'now' in w && w.now ? '$panel' : 'transparent'}
-                      />
-                    ))}
-
-                    {/* Gantt Bar */}
-                    <XStack
-                      {...press(() => advance(issue), `${issue.key} (${pctDone}% done) — click to advance status`)}
-                      position="absolute"
-                      style={{
-                        left: `${leftPct + 1}%`,
-                        width: `${widthPct - 2}%`,
-                      }}
-                      height={26}
-                      rounded={round.field}
-                      bg="$panel"
-                      borderWidth={1}
-                      borderColor="$edge"
-                      overflow="hidden"
-                      items="center"
-                      px={8}
-                      justify="space-between"
-                    >
-                      <YStack
-                        position="absolute"
-                        l={0}
-                        t={0}
-                        b={0}
-                        width={`${pctDone}%`}
-                        opacity={0.22}
-                        pointerEvents="none"
-                        style={{ backgroundColor: dot[issue.status] }}
-                      />
-                      <SizableText fontSize={rung.chip} fontWeight="600" color="$ink" numberOfLines={1} z={1}>
-                        {issue.title}
-                      </SizableText>
-                      <SizableText fontSize={rung.chip} color="$soft" shrink={0} ml={6} z={1}>
-                        {pctDone}%
+                    <XStack items="center" gap={6}>
+                      {w.now ? (
+                        <YStack width={6} height={6} rounded={9999} style={{ backgroundColor: paint.accent }} />
+                      ) : null}
+                      <SizableText fontSize={rung.small} fontWeight="600" color={w.now ? '$ink' : '$soft'} numberOfLines={1}>
+                        {w.label}
                       </SizableText>
                     </XStack>
+                    <SizableText fontSize={rung.chip} color="$quiet" numberOfLines={1}>
+                      {w.sub}
+                    </SizableText>
+                  </YStack>
+                ))}
+              </XStack>
+            </XStack>
+
+            {scheduled.map((issue, idx) => {
+              const col = dueWeekIndex(issue.dueDate, weeks)
+              const leftPct = (col / weeks.length) * 100
+              const widthPct = 100 / weeks.length
+              const overdue = isOverdue(issue.dueDate, issue.status)
+              const dueLabel = formatDueDate(issue.dueDate)
+
+              return (
+                <YStack key={issue.id}>
+                  {idx > 0 ? <Separator borderColor="$edge" /> : null}
+                  <XStack height={46} items="center" hoverStyle={{ background: '$hover' }}>
+                    <XStack
+                      width={240}
+                      shrink={0}
+                      px={16}
+                      gap={8}
+                      items="center"
+                      borderRightWidth={1}
+                      borderColor="$edge"
+                      height="100%"
+                      cursor={onOpen ? 'pointer' : 'default'}
+                      onPress={() => onOpen?.(issue)}
+                    >
+                      <YStack
+                        width={8}
+                        height={8}
+                        rounded={9999}
+                        shrink={0}
+                        style={{ backgroundColor: dot[issue.status] }}
+                      />
+                      <SizableText fontSize={rung.chip} fontWeight="600" color="$soft" width={54} shrink={0}>
+                        {issue.key}
+                      </SizableText>
+                      <SizableText fontSize={rung.small} color="$ink" flex={1} numberOfLines={1}>
+                        {issue.title}
+                      </SizableText>
+                      <People people={issue.people} size={20} show={1} />
+                    </XStack>
+
+                    <XStack flex={1} height="100%" position="relative" items="center">
+                      {weeks.map((w) => (
+                        <YStack
+                          key={w.id}
+                          flex={1}
+                          height="100%"
+                          borderRightWidth={1}
+                          borderColor="$edge"
+                          bg={w.now ? '$panel' : 'transparent'}
+                        />
+                      ))}
+
+                      <XStack
+                        {...press(() => advance(issue), `${issue.key} due ${dueLabel} — click to advance status`)}
+                        position="absolute"
+                        style={{
+                          left: `${leftPct + 0.8}%`,
+                          width: `${widthPct - 1.6}%`,
+                        }}
+                        height={26}
+                        rounded={round.field}
+                        bg="$panel"
+                        borderWidth={1}
+                        borderColor={overdue ? paint.alert : '$edge'}
+                        overflow="hidden"
+                        items="center"
+                        px={8}
+                        justify="space-between"
+                      >
+                        <SizableText fontSize={rung.chip} fontWeight="600" color="$ink" numberOfLines={1}>
+                          {dueLabel}
+                        </SizableText>
+                      </XStack>
+                    </XStack>
                   </XStack>
+                </YStack>
+              )
+            })}
+            </YStack>
+          </YStack>
+        ) : null}
+
+        {later.length > 0 ? (
+          <YStack rounded={round.card} borderWidth={1} borderColor="$edge" bg="$background" overflow="hidden">
+            <XStack px={16} height={40} items="center" justify="space-between" bg="$panel" borderBottomWidth={1} borderColor="$edge">
+              <SizableText fontSize={rung.small} fontWeight="700" color="$ink" {...caps}>
+                Later (beyond 6 weeks)
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$dim">
+                {later.length}
+              </SizableText>
+            </XStack>
+            {later.map((issue, idx) => (
+              <YStack key={issue.id}>
+                {idx > 0 ? <Separator borderColor="$edge" /> : null}
+                <XStack
+                  px={16}
+                  py={10}
+                  items="center"
+                  gap={10}
+                  cursor={onOpen ? 'pointer' : 'default'}
+                  hoverStyle={{ background: '$hover' }}
+                  onPress={() => onOpen?.(issue)}
+                >
+                  <YStack width={8} height={8} rounded={9999} shrink={0} style={{ backgroundColor: dot[issue.status] }} />
+                  <SizableText fontSize={rung.small} fontWeight="600" color="$soft" width={64} shrink={0}>
+                    {issue.key}
+                  </SizableText>
+                  <SizableText fontSize={rung.body} color="$ink" flex={1} numberOfLines={1}>
+                    {issue.title}
+                  </SizableText>
+                  <SizableText fontSize={rung.chip} color="$soft" shrink={0}>
+                    {formatDueDate(issue.dueDate)}
+                  </SizableText>
+                  <People people={issue.people} size={20} show={2} />
                 </XStack>
               </YStack>
-            )
-          })}
-        </YStack>
+            ))}
+          </YStack>
+        ) : null}
+
+        {unscheduled.length > 0 ? (
+          <YStack rounded={round.card} borderWidth={1} borderColor="$edge" bg="$background" overflow="hidden">
+            <XStack px={16} height={40} items="center" justify="space-between" bg="$panel" borderBottomWidth={1} borderColor="$edge">
+              <SizableText fontSize={rung.small} fontWeight="700" color="$ink" {...caps}>
+                Unscheduled (no due date)
+              </SizableText>
+              <SizableText fontSize={rung.chip} color="$dim">
+                {`${unscheduled.length} — open an issue to set a due date`}
+              </SizableText>
+            </XStack>
+            {unscheduled.map((issue, idx) => (
+              <YStack key={issue.id}>
+                {idx > 0 ? <Separator borderColor="$edge" /> : null}
+                <XStack
+                  px={16}
+                  py={10}
+                  items="center"
+                  gap={10}
+                  cursor={onOpen ? 'pointer' : 'default'}
+                  hoverStyle={{ background: '$hover' }}
+                  onPress={() => onOpen?.(issue)}
+                >
+                  <YStack width={8} height={8} rounded={9999} shrink={0} style={{ backgroundColor: dot[issue.status] }} />
+                  <SizableText fontSize={rung.small} fontWeight="600" color="$soft" width={64} shrink={0}>
+                    {issue.key}
+                  </SizableText>
+                  <SizableText fontSize={rung.body} color="$ink" flex={1} numberOfLines={1}>
+                    {issue.title}
+                  </SizableText>
+                  <People people={issue.people} size={20} show={2} />
+                </XStack>
+              </YStack>
+            ))}
+          </YStack>
+        ) : null}
       </YStack>
     </ScrollArea>
   )

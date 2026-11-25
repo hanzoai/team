@@ -49,6 +49,8 @@ export interface Issue {
   done?: number
   origin?: Origin
   people: Person[]
+  /** Optional due date as Unix ms timestamp (#395). */
+  dueDate?: number | null
   files: number
   replies: number
   /** A cover image, above the title. */
@@ -62,6 +64,7 @@ export interface IssuePatch {
   priority?: Priority | null
   done?: number
   assigneeId?: string | null
+  dueDate?: number | null
   labels?: string[]
   replies?: number
   /**

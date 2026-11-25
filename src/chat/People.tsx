@@ -9,6 +9,7 @@
  *
  * It wants a shared home. Until it has one this is the single import to move.
  */
+import { bareAccount } from '~/data/model.ts'
 import { People as Faces } from '~/tracker/board/People.tsx'
 import type { Person } from './chat.ts'
 import { nameOf } from './read.ts'
@@ -26,6 +27,6 @@ export function People({ members, people }: { members: string[]; people: Person[
 }
 
 const faceOf = (people: Person[], id: string): string | undefined => {
-  const bare = id.startsWith('hanzo:') ? id.slice('hanzo:'.length) : id
-  return people.find((p) => p.id === bare || p.id === id)?.avatar
+  const bare = bareAccount(id)
+  return people.find((p) => p.id === id || p.id === bare || bareAccount(p.id) === bare)?.avatar
 }

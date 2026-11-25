@@ -26,6 +26,7 @@ import {
   YStack,
 } from '@hanzo/ui'
 import { useState, type ReactNode } from 'react'
+import { useNavigate } from 'react-router'
 
 import { useHandoffs, usePendingApprovals } from '~/handoff/store.ts'
 import { hideAside } from '~/shell/aside.ts'
@@ -97,6 +98,7 @@ const ApprovalsFeed = ({ filter }: { filter: Filter }) => {
 }
 
 const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
+  const navigate = useNavigate()
   const feed = useNotes()
   const pendingApprovals = usePendingApprovals()
 
@@ -153,7 +155,14 @@ const Feed = ({ tab, filter }: { tab: Tab; filter: Filter }) => {
           ? pendingApprovals.map((rec) => <ApprovalCard key={rec.id} record={rec} />)
           : null}
         {notes.map((n) => (
-          <Row key={n.id} note={n} onSee={see} />
+          <Row
+            key={n.id}
+            note={n}
+            onSee={see}
+            onOpen={(item) => {
+              if (item.to) navigate(item.to)
+            }}
+          />
         ))}
       </YStack>
     </ScrollArea>

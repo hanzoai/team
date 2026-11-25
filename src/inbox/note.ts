@@ -51,6 +51,8 @@ export type Note = {
    * drops the separator with it rather than painting a bullet after nothing.
    */
   place?: string
+  /** Destination route opened when the notification is clicked (#394/#400). */
+  to?: string
   seen: boolean
 }
 

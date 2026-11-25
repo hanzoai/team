@@ -14,9 +14,11 @@
  * hover, the system outline for focus — so they read as this product even
  * though nothing was copied.
  */
+import { useEffect, useRef, useState } from 'react'
 import { Avatar, AvatarFallback, AvatarImage, SizableText, XStack, YStack } from '@hanzo/ui'
-import { MessageSquare, Send, SmilePlus } from '@hanzogui/lucide-icons-2'
+import { MessageSquare, Send, SmilePlus, SquareCheck } from '@hanzogui/lucide-icons-2'
 
+import { bareAccount } from '~/data/model.ts'
 import { paint } from '~/theme/theme.ts'
 import { press } from '~/shell'
 
@@ -41,13 +43,18 @@ export type RunProps = {
   onReact: (message: Message, emoji: string) => void
   onOpen: (message: Message) => void
   onHandoff?: (message: Message) => void
+  /** Create a tracker task linked directly to this message (#396). */
+  onCreateTask?: (message: Message) => void
   /** The message whose thread is open, so its row can say so. */
   open?: string
+  /** A message navigated to from Inbox (`?msg=<id>`), scrolled and highlighted (#394/#400). */
+  focusId?: string
 }
 
-export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, onHandoff, open }: RunProps) {
+export function Run({ author, at, messages, people, reactions, me, onReact, onOpen, onHandoff, onCreateTask, open, focusId }: RunProps) {
   const name = nameOf(people, author)
-  const person = people.find((p) => p.name === name)
+  const bare = bareAccount(author)
+  const person = people.find((p) => p.id === author || p.id === bare || bareAccount(p.id) === bare)
 
   return (
     <XStack px={16} pt={10} gap={10} items="flex-start">
@@ -87,7 +94,9 @@ export function Run({ author, at, messages, people, reactions, me, onReact, onOp
             onReact={onReact}
             onOpen={onOpen}
             onHandoff={onHandoff}
+            onCreateTask={onCreateTask}
             open={open === m.id}
+            focused={focusId === m.id}
           />
         ))}
       </YStack>
@@ -109,7 +118,9 @@ function Said({
   onReact,
   onOpen,
   onHandoff,
+  onCreateTask,
   open,
+  focused,
 }: {
   message: Message
   reactions: Reaction[]
@@ -117,21 +128,34 @@ function Said({
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
   onHandoff?: (m: Message) => void
+  onCreateTask?: (m: Message) => void
   open: boolean
+  focused: boolean
 }) {
   const groups = tally(reactions)
   const own = Boolean(me) && message.author === me
+  const anchor = useRef<HTMLDivElement | null>(null)
+  const [picked, setPicked] = useState(false)
+
+  useEffect(() => {
+    if (focused) anchor.current?.scrollIntoView({ block: 'center', behavior: 'smooth' })
+  }, [focused])
 
   return (
     <YStack
       group
       position="relative"
-      pr={72}
+      pr={124}
       py={2}
+      px={focused ? 6 : 0}
       rounded="$1"
-      bg={open ? '$hover' : 'transparent'}
+      bg={focused || open || picked ? '$hover' : 'transparent'}
+      borderWidth={focused ? 1 : 0}
+      borderColor={focused ? paint.accent : 'transparent'}
       hoverStyle={{ background: '$hover' }}
+      onPress={() => setPicked((v) => !v)}
     >
+      <div ref={anchor} />
       <YStack
         self={own ? 'flex-start' : undefined}
         px={own ? 12 : 0}
@@ -214,7 +238,7 @@ function Said({
         t={0}
         r={8}
         gap={2}
-        opacity={0}
+        opacity={picked ? 1 : 0}
         $group-hover={{ opacity: 1 }}
         focusWithinStyle={{ opacity: 1 }}
       >
@@ -224,6 +248,11 @@ function Said({
         <Control label="Reply in thread" onPress={() => onOpen(message)}>
           <MessageSquare size={15} color="$soft" />
         </Control>
+        {onCreateTask ? (
+          <Control label="Create task" onPress={() => onCreateTask(message)}>
+            <SquareCheck size={14} color="$soft" />
+          </Control>
+        ) : null}
         {onHandoff ? (
           <Control label="Hand off work" onPress={() => onHandoff(message)}>
             <Send size={14} color="$soft" />

@@ -12,6 +12,7 @@
  */
 import { useEffect } from 'react'
 
+import { bareAccount, isUuid } from '~/data/model.ts'
 import { useSpace } from '~/data/space.tsx'
 import { invalidate, useRead, type Read } from '~/data/query.ts'
 import { messages, people, reactions, replies, rooms, touches, type Message, type Person, type Reaction, type Room } from './chat.ts'
@@ -80,14 +81,20 @@ export const useLive = (room: string | null) => {
   }, [plane, room])
 }
 
-/** What to call somebody. The uuid is the fallback, never a blank. */
+/** What to call somebody. Never exposes a raw 36-char UUID (#393). */
 export const nameOf = (people: Person[], id: string): string => {
-  const bare = id.startsWith('hanzo:') ? id.slice('hanzo:'.length) : id
-  return people.find((p) => p.id === bare || p.id === id)?.name || short(bare)
+  const bare = bareAccount(id)
+  const hit = people.find((p) => p.id === id || p.id === bare || bareAccount(p.id) === bare)
+  if (hit?.name && !isUuid(hit.name)) return hit.name
+  return short(bare)
 }
 
-/** A uuid nobody has a name for, shortened so it does not dominate a row. */
-const short = (id: string): string => (id.length > 12 ? `${id.slice(0, 8)}…` : id) || 'Someone'
+/** A uuid nobody has a name for, shortened cleanly so raw UUIDs never appear. */
+const short = (id: string): string => {
+  if (!id) return 'Team member'
+  if (isUuid(id)) return `Member · ${id.slice(0, 6)}`
+  return id.length > 12 ? `${id.slice(0, 8)}…` : id
+}
 
 /** The two letters a fallback avatar draws. */
 export const initials = (name: string): string =>
