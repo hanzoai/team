@@ -80,7 +80,7 @@ export function Home() {
       <YStack p={16} $md={{ p: 24 }} gap={20} maxW={1080} width="100%" mx="auto">
         {/* Header */}
         <XStack items="center" justify="space-between" gap={12} flexWrap="wrap">
-          <YStack gap={4}>
+          <YStack gap={4} flex={1} minW={180} maxW="100%">
             <SizableText fontSize="$6" fontWeight="700" color="$ink">
               {current?.name ? `${current.name} Home` : 'Workspace Home'}
             </SizableText>

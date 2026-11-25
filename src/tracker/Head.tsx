@@ -86,7 +86,7 @@ export const Head = ({ trail, title, base, here, people, only, onOnly, onAdd }: 
 
     <YStack height={REST} />
 
-    <XStack px={INSET - 6} height={TABS} items="flex-end" gap={4}>
+    <XStack px={INSET - 6} minH={TABS} items="flex-end" flexWrap="wrap" gap={4}>
       {VIEWS.map((v) => (
         <Tab key={v.id} to={v.id === 'kanban' ? base : `${base}/${v.id}`} here={v.id === here}>
           <v.icon size={16} color={v.id === here ? '$ink' : '$soft'} />
