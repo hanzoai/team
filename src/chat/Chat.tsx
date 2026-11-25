@@ -44,6 +44,7 @@ import {
   formatHandoff,
   handoffChatMessage,
   handoffLabels,
+  handoffNextAction,
 } from '~/handoff/handoff.ts'
 import { addHandoffRecord, useRoomHandoffs } from '~/handoff/store.ts'
 import { useBoard, useCrew, useProjects } from '~/serve.tsx'
@@ -151,6 +152,7 @@ export function Chat() {
         owner: payload.owner,
         handedOffBy,
         approvalRequired: payload.approvalRequired,
+        nextAction: payload.nextAction,
         sourceRoomId: room.id,
         sourceRoomName: roomName,
         now,
@@ -166,6 +168,7 @@ export function Chat() {
           owner: payload.owner,
           brief: payload.brief,
           approvalRequired: payload.approvalRequired,
+          nextAction: handoffNextAction(meta),
           issueKey: proj ? `${proj.identifier}` : undefined,
         }),
         people,

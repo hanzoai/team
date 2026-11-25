@@ -20,7 +20,7 @@ import {
 } from '@hanzogui/lucide-icons-2'
 
 import { useSession } from '~/data/session.tsx'
-import { approvalLabel, type HandoffRecord } from '~/handoff/handoff.ts'
+import { approvalLabel, handoffNextAction, type HandoffRecord } from '~/handoff/handoff.ts'
 import {
   approveHandoffRecord,
   requestHandoffChanges,
@@ -207,6 +207,11 @@ export function ApprovalCard({ record }: { record: HandoffRecord }) {
           </XStack>
         ) : null}
       </XStack>
+
+      {/* Next action alongside owner */}
+      <SizableText data-testid="approval-next-action" size={rung.chip} color={paint.mute}>
+        {`Next action: ${handoffNextAction(meta)}`}
+      </SizableText>
 
       {/* Resulting deliverable */}
       {meta.deliverable ? (

@@ -48,5 +48,5 @@ export const surfaceAt = (pathname: string): Surface | undefined =>
       pathname === s.path ||
       pathname.startsWith(`${s.path}/`) ||
       (s.id === 'home' && (pathname === '/overview' || pathname.startsWith('/overview/'))) ||
-      (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname === '/projects/' || pathname.startsWith('/projects/'))),
+      (s.id === 'tracker' && (pathname === '/mine' || pathname.startsWith('/mine/') || pathname === '/projects' || pathname === '/projects/' || pathname.startsWith('/projects/') || pathname === '/files' || pathname.startsWith('/files/'))),
   )

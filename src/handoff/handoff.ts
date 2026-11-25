@@ -24,6 +24,7 @@ export interface HandoffOwner {
 }
 
 export interface Deliverable {
+  version: number
   summary: string
   artifact?: string
   completedBy: string
@@ -37,10 +38,12 @@ export interface HandoffMeta {
   handedOffAt: number
   approvalRequired: boolean
   approvalState: ApprovalState
+  nextAction?: string
   approvalNote?: string
   approvedBy?: string
   approvedAt?: number
   deliverable?: Deliverable
+  deliverableHistory?: Deliverable[]
   sourceRoomId?: string
   sourceRoomName?: string
   sourceMessageId?: string
@@ -71,6 +74,26 @@ const MANAGED_LABELS = new Set([
 const isRecord = (v: unknown): v is Record<string, unknown> =>
   typeof v === 'object' && v !== null && !Array.isArray(v)
 
+const parseDeliverable = (
+  raw: unknown,
+  fallbackOwner: string,
+  fallbackVersion: number,
+): Deliverable | undefined => {
+  if (!isRecord(raw) || typeof raw.summary !== 'string' || !raw.summary.trim()) return undefined
+  const version =
+    typeof raw.version === 'number' && Number.isFinite(raw.version) && raw.version >= 1
+      ? Math.floor(raw.version)
+      : fallbackVersion
+  return {
+    version,
+    summary: raw.summary.trim(),
+    ...(typeof raw.artifact === 'string' && raw.artifact.trim() ? { artifact: raw.artifact.trim() } : {}),
+    completedBy: typeof raw.completedBy === 'string' ? raw.completedBy : fallbackOwner,
+    completedAt: typeof raw.completedAt === 'number' ? raw.completedAt : Date.now(),
+    verified: raw.verified === true,
+  }
+}
+
 const VALID_STATES = new Set<ApprovalState>(['none', 'pending', 'approved', 'changes_requested'])
 
 /** Extract structured handoff metadata from an issue description, returning clean prose + meta. */
@@ -99,18 +122,18 @@ export function parseHandoff(description: string | undefined): {
         ? (parsed.approvalState as ApprovalState)
         : 'none'
 
-    let deliverable: Deliverable | undefined
-    if (isRecord(parsed.deliverable) && typeof parsed.deliverable.summary === 'string' && parsed.deliverable.summary.trim()) {
-      deliverable = {
-        summary: parsed.deliverable.summary.trim(),
-        artifact: typeof parsed.deliverable.artifact === 'string' && parsed.deliverable.artifact.trim()
-          ? parsed.deliverable.artifact.trim()
-          : undefined,
-        completedBy: typeof parsed.deliverable.completedBy === 'string' ? parsed.deliverable.completedBy : ownerName,
-        completedAt: typeof parsed.deliverable.completedAt === 'number' ? parsed.deliverable.completedAt : Date.now(),
-        verified: parsed.deliverable.verified === true,
+    const deliverableHistory: Deliverable[] = []
+    if (Array.isArray(parsed.deliverableHistory)) {
+      for (const item of parsed.deliverableHistory) {
+        const entry = parseDeliverable(item, ownerName, deliverableHistory.length + 1)
+        if (entry) deliverableHistory.push(entry)
       }
     }
+
+    const deliverable = parseDeliverable(parsed.deliverable, ownerName, deliverableHistory.length + 1)
+    const nextAction = typeof parsed.nextAction === 'string' && parsed.nextAction.trim()
+      ? parsed.nextAction.trim()
+      : undefined
 
     const handoff: HandoffMeta = {
       owner: {
@@ -123,10 +146,12 @@ export function parseHandoff(description: string | undefined): {
       handedOffAt: typeof parsed.handedOffAt === 'number' ? parsed.handedOffAt : Date.now(),
       approvalRequired: parsed.approvalRequired === true,
       approvalState,
+      ...(nextAction ? { nextAction } : {}),
       ...(typeof parsed.approvalNote === 'string' && parsed.approvalNote ? { approvalNote: parsed.approvalNote } : {}),
       ...(typeof parsed.approvedBy === 'string' && parsed.approvedBy ? { approvedBy: parsed.approvedBy } : {}),
       ...(typeof parsed.approvedAt === 'number' ? { approvedAt: parsed.approvedAt } : {}),
       ...(deliverable ? { deliverable } : {}),
+      ...(deliverableHistory.length > 0 ? { deliverableHistory } : {}),
       ...(typeof parsed.sourceRoomId === 'string' && parsed.sourceRoomId ? { sourceRoomId: parsed.sourceRoomId } : {}),
       ...(typeof parsed.sourceRoomName === 'string' && parsed.sourceRoomName ? { sourceRoomName: parsed.sourceRoomName } : {}),
       ...(typeof parsed.sourceMessageId === 'string' && parsed.sourceMessageId ? { sourceMessageId: parsed.sourceMessageId } : {}),
@@ -147,29 +172,57 @@ export function formatHandoff(body: string, handoff: HandoffMeta | null): string
   return clean ? `${clean}\n\n${footer}` : footer
 }
 
+/** Format owner handle for humans and bots (`@Bot` vs `First Last`). */
+const ownerActor = (owner: Pick<HandoffOwner, 'name' | 'kind'>): string =>
+  owner.kind === 'bot' ? `@${owner.name.trim()}` : owner.name.trim()
+
+/** Compute the explicit or state-derived next action naming the responsible actor. */
+export function handoffNextAction(meta: HandoffMeta): string {
+  if (meta.nextAction?.trim()) return meta.nextAction.trim()
+  const actor = ownerActor(meta.owner)
+  const reviewer = meta.handedOffBy.trim() || 'Reviewer'
+  switch (meta.approvalState) {
+    case 'approved':
+      return meta.approvedBy && meta.approvedBy !== 'Auto-approved'
+        ? `Approved by ${meta.approvedBy} — complete`
+        : `Completed by ${actor} (auto-approved)`
+    case 'changes_requested':
+      return `${actor}: revise and resubmit deliverable`
+    case 'pending':
+      return meta.deliverable
+        ? `${reviewer}: review deliverable and approve or request changes`
+        : `${actor}: complete work and submit deliverable for approval`
+    default:
+      return `${actor}: complete work and submit deliverable`
+  }
+}
+
 /** Initiate a handoff to a person or `@bot`. */
 export function createHandoff(input: {
   owner: HandoffOwner
   handedOffBy: string
   approvalRequired: boolean
+  nextAction?: string
   sourceRoomId?: string
   sourceRoomName?: string
   sourceMessageId?: string
   now?: number
 }): HandoffMeta {
+  const nextAction = input.nextAction?.trim()
   return {
     owner: { ...input.owner },
     handedOffBy: input.handedOffBy.trim() || 'Teammate',
     handedOffAt: input.now ?? Date.now(),
     approvalRequired: input.approvalRequired,
     approvalState: input.approvalRequired ? 'pending' : 'none',
+    ...(nextAction ? { nextAction } : {}),
     ...(input.sourceRoomId ? { sourceRoomId: input.sourceRoomId } : {}),
     ...(input.sourceRoomName ? { sourceRoomName: input.sourceRoomName } : {}),
     ...(input.sourceMessageId ? { sourceMessageId: input.sourceMessageId } : {}),
   }
 }
 
-/** Attach or update the resulting deliverable. Moves to `pending` when approval is required, else `approved`. */
+/** Attach or update the resulting deliverable, archiving any prior version into `deliverableHistory`. */
 export function submitDeliverable(
   meta: HandoffMeta,
   input: { summary: string; artifact?: string; completedBy?: string; now?: number },
@@ -179,11 +232,24 @@ export function submitDeliverable(
   const now = input.now ?? Date.now()
   const completedBy = input.completedBy?.trim() || meta.owner.name
   const autoApproved = !meta.approvalRequired
+  const { nextAction: _staleNextAction, ...rest } = meta
+  const priorHistory = meta.deliverableHistory ?? []
+  const prior = meta.deliverable
+  const priorVersion = prior
+    ? (typeof prior.version === 'number' && prior.version >= 1 ? prior.version : priorHistory.length + 1)
+    : 0
+  const deliverableHistory = prior
+    ? [...priorHistory, { ...prior, version: priorVersion }]
+    : priorHistory
+  const version = prior ? priorVersion + 1 : 1
+
   return {
-    ...meta,
+    ...rest,
     approvalState: autoApproved ? 'approved' : 'pending',
     ...(autoApproved ? { approvedBy: 'Auto-approved', approvedAt: now } : {}),
+    ...(deliverableHistory.length > 0 ? { deliverableHistory } : {}),
     deliverable: {
+      version,
       summary,
       ...(input.artifact?.trim() ? { artifact: input.artifact.trim() } : {}),
       completedBy,
@@ -199,8 +265,9 @@ export function approveHandoff(
   input: { approvedBy: string; note?: string; now?: number },
 ): HandoffMeta {
   const now = input.now ?? Date.now()
+  const { nextAction: _staleNextAction, ...rest } = meta
   return {
-    ...meta,
+    ...rest,
     approvalState: 'approved',
     approvedBy: input.approvedBy.trim() || 'Reviewer',
     approvedAt: now,
@@ -215,8 +282,9 @@ export function requestChanges(
   input: { reviewedBy: string; note: string; now?: number },
 ): HandoffMeta {
   const note = input.note.trim()
+  const { nextAction: _staleNextAction, ...rest } = meta
   return {
-    ...meta,
+    ...rest,
     approvalState: 'changes_requested',
     approvedBy: input.reviewedBy.trim() || 'Reviewer',
     approvedAt: input.now ?? Date.now(),
@@ -277,12 +345,17 @@ export function handoffChatMessage(input: {
   brief?: string
   approvalRequired: boolean
   issueKey?: string
+  nextAction?: string
 }): string {
   const handle = `@${input.owner.name.trim()}`
   const ref = input.issueKey ? `[${input.issueKey}] ` : ''
   const gate = input.approvalRequired ? 'Approval required before completion.' : 'Full access (auto-approve).'
+  const next =
+    input.nextAction?.trim() ||
+    `${ownerActor(input.owner)}: complete work and submit deliverable${input.approvalRequired ? ' for approval' : ''}`
   const lines = [`${handle} Handoff: ${ref}${input.title.trim()}`]
   if (input.brief?.trim()) lines.push(input.brief.trim())
+  lines.push(`Next action: ${next}`)
   lines.push(gate)
   return lines.join('\n')
 }

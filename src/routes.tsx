@@ -23,6 +23,7 @@ import { Navigate, useParams } from 'react-router'
 import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
+import { Files } from '~/handoff/Files.tsx'
 import { Home } from '~/home/Home.tsx'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
@@ -109,7 +110,7 @@ export const routes: RouteObject[] = [
   { path: '/meet', element: <Navigate to="/chat" replace /> },
   { path: '/inbox', element: <Navigate to="/chat" replace /> },
   { path: '/docs', element: <Navigate to="/chat" replace /> },
-  { path: '/files', element: <Navigate to="/chat" replace /> },
+  { path: '/files', element: tracker(<Files />) },
   { path: '/mail', element: <Navigate to="/chat" replace /> },
   { path: '/admin', element: <Navigate to="/chat" replace /> },
   { path: '/settings', element: <Navigate to="/chat" replace /> },

@@ -22,6 +22,7 @@ import { useSpace } from '~/data/space.tsx'
 import { TEAM_SHORTCUTS } from '~/shell/unified.ts'
 import { paint, round, rung } from '~/theme/theme.ts'
 import {
+  billingUrl,
   useHanzoPreferences,
   type HanzoDensityPreference,
   type HanzoEffortPreference,
@@ -642,7 +643,7 @@ export function SettingsModal(_props: {
                           size="sm"
                           variant="outline"
                           rounded={round.field}
-                          onPress={() => window.open('https://billing.hanzo.ai', '_blank', 'noopener,noreferrer')}
+                          onPress={() => window.open(billingUrl(guest ? null : current?.org), '_blank', 'noopener,noreferrer')}
                         >
                           <SizableText size={rung.small} color={paint.ink}>Open Billing</SizableText>
                         </Button>
