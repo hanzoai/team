@@ -102,8 +102,11 @@ export function ApprovalCard({ record }: { record: HandoffRecord }) {
   }
 
   const openOrigin = () => {
-    if (record.issueId) navigate('/issues')
-    else if (meta.sourceRoomId) navigate(`/chat/${meta.sourceRoomId}`)
+    if (record.issueId) navigate(`/issues?issue=${encodeURIComponent(record.issueId)}`)
+    else if (meta.sourceRoomId) {
+      const base = `/chat/${encodeURIComponent(meta.sourceRoomId)}`
+      navigate(meta.sourceMessageId ? `${base}?msg=${encodeURIComponent(meta.sourceMessageId)}` : base)
+    }
   }
 
   return (

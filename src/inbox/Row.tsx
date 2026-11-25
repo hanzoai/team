@@ -67,13 +67,18 @@ export type RowProps = {
   note: Note
   /** Reading it clears it. What that means belongs to the feed, not here. */
   onSee: (id: string) => void
+  /** Clicking a row opens the conversation or issue it refers to (#394/#400). */
+  onOpen?: (note: Note) => void
 }
 
-export const Row = ({ note, onSee }: RowProps) => (
+export const Row = ({ note, onSee, onOpen }: RowProps) => (
   <XStack
     data-parity-key="inbox.row"
     data-seen={note.seen ? 'yes' : 'no'}
-    {...press(() => onSee(note.id), note.line.map((s) => s.text).join(''))}
+    {...press(() => {
+      onSee(note.id)
+      onOpen?.(note)
+    }, note.line.map((s) => s.text).join(''))}
     px={PAD}
     py={gap.inset}
     gap={gap.tight}

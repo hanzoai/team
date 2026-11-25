@@ -23,6 +23,7 @@ import { Navigate, useParams } from 'react-router'
 import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
 import { AgentPane, Chat, Channels } from '~/chat'
 import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
+import { Home } from '~/home/Home.tsx'
 import { Inbox } from '~/inbox'
 import { Nav } from '~/nav'
 import { Shell } from '~/shell'
@@ -64,6 +65,8 @@ export const routes: RouteObject[] = [
   { path: '/auth', element: <Landing /> },
   { path: '/auth/callback', element: <Landing /> },
 
+  { path: '/home', element: tracker(<Home />) },
+  { path: '/overview', element: tracker(<Home />) },
   { path: '/issues', element: tracker(<Tracker />) },
   { path: '/issues/:view', element: tracker(<Tracker />) },
   { path: '/mine', element: tracker(<Tracker mine />) },
@@ -96,7 +99,6 @@ export const routes: RouteObject[] = [
   { path: '/crm/:tab/:id', element: crm(<CrmScreen />) },
 
   // Surfaces that held only invented content are gone; their addresses land on something real.
-  { path: '/overview', element: <Navigate to="/chat" replace /> },
   { path: '/agents', element: <Navigate to="/chat" replace /> },
   { path: '/agents/:id', element: <Navigate to="/chat" replace /> },
   { path: '/apps', element: <Navigate to="/chat" replace /> },

@@ -136,9 +136,19 @@ export type Person = Doc & {
   name: string
   avatar?: string | null
   city?: string
+  email?: string
   /** The account this person is, for a member of the org; absent on a contact. */
   personUuid?: string
 }
+
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i
+
+/** Strip `hanzo:` or `person-` prefix from an account/person reference (#393/#394). */
+export const bareAccount = (ref: string): string =>
+  ref.trim().replace(/^hanzo:/i, '').replace(/^person-/i, '')
+
+/** Whether a raw string is a UUID (bare or prefixed with `hanzo:`/`person-`). */
+export const isUuid = (s: string): boolean => UUID_RE.test(bareAccount(s))
 
 /**
  * Whether a person is the one an account names.
@@ -148,8 +158,26 @@ export type Person = Doc & {
  * (`person-<account>`, apps/team PersonRef), and older rows that name the
  * person's id directly.
  */
-export const whose = (person: Pick<Person, '_id' | 'personUuid'>, account: string) =>
-  !!account && (person.personUuid === account || person._id === account || person._id === `person-${account}`)
+export const whose = (person: Pick<Person, '_id' | 'personUuid'>, account: string) => {
+  const bare = bareAccount(account)
+  return (
+    !!bare &&
+    (person.personUuid === bare ||
+      person._id === bare ||
+      person._id === account ||
+      person._id === `person-${bare}` ||
+      bareAccount(person._id) === bare)
+  )
+}
+
+/** Find a person in a roster by `_id`, `personUuid`, `hanzo:<uuid>`, or `person-<uuid>`. */
+export const findPerson = <T extends Pick<Person, '_id' | 'personUuid'>>(
+  crowd: readonly T[],
+  ref: string | undefined | null,
+): T | undefined => {
+  if (!ref) return undefined
+  return crowd.find((p) => p._id === ref || whose(p, ref))
+}
 
 export type Channel = Doc & {
   name: string
@@ -181,12 +209,26 @@ export type Notice = Doc & {
   types?: string[]
 }
 
-/** A person's name as said: the server stores `Last,First` (`,name` for a bot). */
-export const nameOf = (person: { name?: string } | undefined | null): string => {
+/** A person's name as said: the server stores `Last,First` (`,name` for a bot), never exposing a raw UUID (#393). */
+export const nameOf = (
+  person: { name?: string; _id?: string; personUuid?: string; email?: string } | undefined | null,
+): string => {
   const raw = person?.name ?? ''
-  if (!raw.includes(',')) return raw.trim()
-  const [last, first] = raw.split(',')
-  return [first, last].map((x) => x?.trim()).filter(Boolean).join(' ')
+  const formatted = raw.includes(',')
+    ? (() => {
+        const [last, first] = raw.split(',')
+        return [first, last].map((x) => x?.trim()).filter(Boolean).join(' ')
+      })()
+    : raw.trim()
+  if (formatted && !isUuid(formatted)) return formatted
+  const email = typeof person?.email === 'string' ? person.email.trim() : ''
+  if (email.includes('@')) {
+    const local = email.split('@')[0]?.trim()
+    if (local && !isUuid(local)) return local
+  }
+  const seed = bareAccount(formatted || person?.personUuid || person?._id || '')
+  if (seed) return `Member · ${seed.slice(0, 6)}`
+  return ''
 }
 
 /** `PROJ-42`, the id a person actually quotes. */

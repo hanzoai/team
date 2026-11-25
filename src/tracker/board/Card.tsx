@@ -1,7 +1,8 @@
 import type { DragEvent } from 'react'
 import { Badge, Image, Separator, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Bot, CheckCircle2, FileCheck2, MessageSquare, Paperclip, ShieldAlert } from '@hanzogui/lucide-icons-2'
+import { Bot, Calendar, CheckCircle2, FileCheck2, MessageSquare, Paperclip, ShieldAlert } from '@hanzogui/lucide-icons-2'
 import { approvalLabel, parseHandoff } from '../../handoff/handoff.ts'
+import { formatDueDate, isOverdue, parseChatSource } from '../source.ts'
 import { Count } from './Count.tsx'
 import { People } from './People.tsx'
 import { Ring } from './Ring.tsx'
@@ -34,8 +35,13 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
   onDragEnd?: (e: DragEvent) => void
 }) => {
   const chips = issue.priority ? [cap(issue.priority), ...issue.labels] : issue.labels
-  const { handoff } = parseHandoff(issue.description)
+  const { handoff, body } = parseHandoff(issue.description)
+  const { source: chatSource } = parseChatSource(body)
   const ownerBot = handoff?.owner.kind === 'bot' || issue.people[0]?.bot === true
+  const ownerName = issue.people[0]?.name || (handoff ? handoff.owner.name : '')
+  const dueText = formatDueDate(issue.dueDate)
+  const overdue = isOverdue(issue.dueDate, issue.status)
+  const sourceLabel = chatSource?.roomName || handoff?.sourceRoomName
 
   return (
     <YStack
@@ -132,8 +138,8 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
           </XStack>
         ) : null}
 
-        {issue.done !== undefined || issue.origin ? (
-          <XStack items="center" gap="$4" mt="$2">
+        {issue.done !== undefined || issue.origin || dueText || sourceLabel ? (
+          <XStack items="center" gap="$3" mt="$2" flexWrap="wrap">
             {issue.done !== undefined ? (
               <XStack items="center" gap={4}>
                 <Ring done={issue.done} />
@@ -142,6 +148,19 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
                 </SizableText>
               </XStack>
             ) : null}
+            {dueText ? (
+              <XStack items="center" gap={4} px={6} py={1} rounded={round.field} bg="$panel" borderWidth={1} borderColor="$edge">
+                <Calendar size={11} color={overdue ? paint.alert : paint.dim} />
+                <SizableText fontSize={rung.chip} fontWeight={overdue ? '700' : '500'} style={{ color: overdue ? paint.alert : paint.mute }}>
+                  {dueText}
+                </SizableText>
+              </XStack>
+            ) : null}
+            {sourceLabel ? (
+              <SizableText fontSize={rung.chip} color="$dim" numberOfLines={1}>
+                {`From ${sourceLabel}`}
+              </SizableText>
+            ) : null}
             {issue.origin ? <Origin name={issue.origin.name} mark={issue.origin.mark} /> : null}
           </XStack>
         ) : null}
@@ -149,9 +168,16 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
 
       <Separator />
 
-      <XStack height={FOOT} px={PAD} items="center" justify="space-between">
-        <People people={issue.people} />
-        <XStack items="center" gap="$3">
+      <XStack height={FOOT} px={PAD} items="center" justify="space-between" gap={8}>
+        <XStack items="center" gap={6} flex={1} minW={0}>
+          <People people={issue.people} />
+          {ownerName ? (
+            <SizableText fontSize={rung.chip} color="$soft" numberOfLines={1} flex={1} minW={0}>
+              {ownerBot ? `@${ownerName.replace(/^@/, '')}` : ownerName}
+            </SizableText>
+          ) : null}
+        </XStack>
+        <XStack items="center" gap="$3" shrink={0}>
           <Count glyph={<Paperclip size={12} color="$dim" />} n={issue.files} label="attachments" />
           <Count glyph={<MessageSquare size={12} color="$dim" />} n={issue.replies} label="replies" />
         </XStack>

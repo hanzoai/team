@@ -33,7 +33,9 @@ export type ListProps = {
   onReact: (m: Message, emoji: string) => void
   onOpen: (m: Message) => void
   onHandoff?: (m: Message) => void
+  onCreateTask?: (m: Message) => void
   open?: string
+  focusId?: string
 }
 
 export function List({
@@ -48,13 +50,15 @@ export function List({
   onReact,
   onOpen,
   onHandoff,
+  onCreateTask,
   open,
+  focusId,
 }: ListProps) {
   if (phase === 'loading') return <Waiting />
   if (phase === 'failure') return <Failed error={error} onRetry={onRetry} />
   if (messages.length === 0) return <Nothing room={room} />
 
-  return <Said {...{ messages, people, reactions, me, onReact, onOpen, onHandoff, open }} />
+  return <Said {...{ messages, people, reactions, me, onReact, onOpen, onHandoff, onCreateTask, open, focusId }} />
 }
 
 /**
@@ -71,17 +75,17 @@ function Said({
   onReact,
   onOpen,
   onHandoff,
+  onCreateTask,
   open,
+  focusId,
 }: Omit<ListProps, 'room' | 'phase' | 'error' | 'onRetry'>) {
   const end = useRef<HTMLElement | null>(null)
 
-  // Follow the end when something new arrives. Keyed on the LAST id rather than
-  // the length, so an edit does not scroll and a message removed does not
-  // either — only something actually said.
+  // Follow the end when something new arrives, unless a specific message is focused via `?msg=`.
   const last = messages[messages.length - 1]?.id
   useEffect(() => {
-    end.current?.scrollIntoView({ block: 'end' })
-  }, [last])
+    if (!focusId) end.current?.scrollIntoView({ block: 'end' })
+  }, [last, focusId])
 
   return (
     <YStack flex={1} minH={0} style={{ overflowY: 'auto' }}>
@@ -101,7 +105,9 @@ function Said({
               onReact={onReact}
               onOpen={onOpen}
               onHandoff={onHandoff}
+              onCreateTask={onCreateTask}
               open={open}
+              focusId={focusId}
             />
           ),
         )}

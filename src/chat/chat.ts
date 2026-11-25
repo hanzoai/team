@@ -3,7 +3,7 @@
  *
  * Everything here goes through the space's plane — one socket, `src/data`.
  */
-import { Class as ModelClass, Tx, nameOf } from '~/data/model.ts'
+import { Class as ModelClass, Tx, bareAccount, nameOf } from '~/data/model.ts'
 import type { Plane, Wire } from '~/data/socket.ts'
 import { lines, markup } from './text.ts'
 
@@ -39,7 +39,10 @@ export type Room = {
 export const titled = (room: Pick<Room, 'name' | 'members'>, roster: readonly Person[]): string =>
   room.name ||
   room.members
-    .map((m) => roster.find((p) => p.id === m)?.name)
+    .map((m) => {
+      const bare = bareAccount(m)
+      return roster.find((p) => p.id === m || p.id === bare || bareAccount(p.id) === bare)?.name
+    })
     .filter((n): n is string => Boolean(n))
     .join(', ')
 
@@ -192,7 +195,12 @@ export const people = async (plane: Plane): Promise<Person[]> => {
   const docs = await plane.find<Doc>(Class.person)
   return docs.map((d) => ({
     id: str(d.personUuid) || str(d._id),
-    name: spoken(str(d.name)),
+    name: nameOf({
+      name: str(d.name),
+      _id: str(d._id),
+      personUuid: str(d.personUuid) || undefined,
+      email: str(d.email) || undefined,
+    }).replace(/\s+/g, ' '),
     avatar: str(d.avatar) || undefined,
     // The server projects an agent member with the position `Agent` (cloud apps/team projections.go).
     bot: positionOf(d) === 'Agent' || undefined,

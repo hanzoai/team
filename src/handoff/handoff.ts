@@ -10,6 +10,7 @@
  * transactor plane without requiring a server schema migration.
  */
 import type { Issue, IssuePatch, Status } from '../tracker/board/model.ts'
+import { parseChatSource } from '../tracker/source.ts'
 
 export type ApprovalState = 'none' | 'pending' | 'approved' | 'changes_requested'
 
@@ -42,6 +43,7 @@ export interface HandoffMeta {
   deliverable?: Deliverable
   sourceRoomId?: string
   sourceRoomName?: string
+  sourceMessageId?: string
 }
 
 export interface HandoffRecord {
@@ -127,6 +129,7 @@ export function parseHandoff(description: string | undefined): {
       ...(deliverable ? { deliverable } : {}),
       ...(typeof parsed.sourceRoomId === 'string' && parsed.sourceRoomId ? { sourceRoomId: parsed.sourceRoomId } : {}),
       ...(typeof parsed.sourceRoomName === 'string' && parsed.sourceRoomName ? { sourceRoomName: parsed.sourceRoomName } : {}),
+      ...(typeof parsed.sourceMessageId === 'string' && parsed.sourceMessageId ? { sourceMessageId: parsed.sourceMessageId } : {}),
     }
     return { body, handoff }
   } catch {
@@ -151,6 +154,7 @@ export function createHandoff(input: {
   approvalRequired: boolean
   sourceRoomId?: string
   sourceRoomName?: string
+  sourceMessageId?: string
   now?: number
 }): HandoffMeta {
   return {
@@ -161,6 +165,7 @@ export function createHandoff(input: {
     approvalState: input.approvalRequired ? 'pending' : 'none',
     ...(input.sourceRoomId ? { sourceRoomId: input.sourceRoomId } : {}),
     ...(input.sourceRoomName ? { sourceRoomName: input.sourceRoomName } : {}),
+    ...(input.sourceMessageId ? { sourceMessageId: input.sourceMessageId } : {}),
   }
 }
 
@@ -336,8 +341,9 @@ export function applyMention(text: string, candidateName: string): string {
 
 /** Convert an Issue with handoff metadata into a `HandoffRecord`, or null if none. */
 export function handoffFromIssue(issue: Issue): HandoffRecord | null {
-  const { body, handoff } = parseHandoff(issue.description)
+  const { body: rawBody, handoff } = parseHandoff(issue.description)
   if (!handoff) return null
+  const { body } = parseChatSource(rawBody)
   return {
     id: `issue:${issue.id}`,
     issueId: issue.id,
