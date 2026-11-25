@@ -38,7 +38,9 @@ async fn team_hanzod_cluster_down() -> Result<serde_json::Value, String> {
 /// legacy directory is moved into place before the webview opens.
 #[cfg(target_os = "macos")]
 fn migrate_legacy_data() {
-    let Some(home) = std::env::var_os("HOME") else { return };
+    let Some(home) = std::env::var_os("HOME") else {
+        return;
+    };
     let library = std::path::Path::new(&home).join("Library");
     for dir in ["WebKit", "Caches", "Application Support"] {
         let legacy = library.join(dir).join("com.hanzo.team");
@@ -96,10 +98,10 @@ fn team_set_window_mode(window: tauri::WebviewWindow, mode: String) -> Result<()
             .map_err(|e| e.to_string())?;
         let _ = window.center();
     } else {
-        let _ = window.set_min_size(Some(tauri::LogicalSize::new(900.0, 600.0)));
         window
             .set_size(tauri::LogicalSize::new(1360.0, 860.0))
             .map_err(|e| e.to_string())?;
+        let _ = window.set_min_size(Some(tauri::LogicalSize::new(900.0, 600.0)));
         let _ = window.center();
     }
     Ok(())
@@ -309,8 +311,8 @@ fn main() {
 
             let mut builder = WebviewWindowBuilder::new(app, "main", start_url)
                 .title("Hanzo Team")
-                .inner_size(460.0, 640.0)
-                .min_inner_size(400.0, 560.0)
+                .inner_size(1360.0, 860.0)
+                .min_inner_size(900.0, 600.0)
                 .resizable(true)
                 .center()
                 .initialization_script(hanzod::HANZOD_INIT_SCRIPT)
