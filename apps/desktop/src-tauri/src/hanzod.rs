@@ -50,7 +50,11 @@ pub fn candidate_hanzod_paths(
     env_bin: Option<&str>,
     path_env: Option<&str>,
 ) -> Vec<PathBuf> {
-    let bin_name = if cfg!(windows) { "hanzod.exe" } else { "hanzod" };
+    let bin_name = if cfg!(windows) {
+        "hanzod.exe"
+    } else {
+        "hanzod"
+    };
     let mut out = Vec::new();
 
     if let Some(explicit) = env_bin.map(str::trim).filter(|s| !s.is_empty()) {
@@ -127,7 +131,11 @@ pub fn resolve_hanzo_token() -> Option<String> {
         let home = PathBuf::from(home);
         dirs_to_check.push(home.join(".hanzo"));
         dirs_to_check.push(home.join(".local").join("share").join("hanzo"));
-        dirs_to_check.push(home.join("Library").join("Application Support").join("hanzo"));
+        dirs_to_check.push(
+            home.join("Library")
+                .join("Application Support")
+                .join("hanzo"),
+        );
     }
 
     for dir in dirs_to_check {
@@ -320,8 +328,7 @@ pub fn http_json_request(
         return Ok(json!({ "ok": true }));
     }
 
-    serde_json::from_slice(&decoded)
-        .map_err(|e| format!("invalid JSON from hanzod {path}: {e}"))
+    serde_json::from_slice(&decoded).map_err(|e| format!("invalid JSON from hanzod {path}: {e}"))
 }
 
 pub fn status() -> Result<Value, String> {
@@ -346,7 +353,13 @@ pub fn cluster_up(mode: Option<String>) -> Result<Value, String> {
         Some(m) => json!({ "mode": m }),
         None => json!({}),
     };
-    http_json_request(&addr, "POST", "/v1/cluster/up", Some(&payload), token.as_deref())
+    http_json_request(
+        &addr,
+        "POST",
+        "/v1/cluster/up",
+        Some(&payload),
+        token.as_deref(),
+    )
 }
 
 pub fn cluster_down() -> Result<Value, String> {
@@ -354,7 +367,13 @@ pub fn cluster_down() -> Result<Value, String> {
     let addr = configured_hanzod_addr();
     let token = resolve_hanzo_token();
     let payload = json!({});
-    http_json_request(&addr, "POST", "/v1/cluster/down", Some(&payload), token.as_deref())
+    http_json_request(
+        &addr,
+        "POST",
+        "/v1/cluster/down",
+        Some(&payload),
+        token.as_deref(),
+    )
 }
 
 #[cfg(test)]

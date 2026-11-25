@@ -176,7 +176,10 @@ pub fn apply_mode<R: Runtime>(_app: &AppHandle<R>, _mode: DockIconMode) -> Resul
 }
 
 #[cfg(target_os = "macos")]
-fn install_macos_menu<R: Runtime>(app: &AppHandle<R>, initial_mode: DockIconMode) -> tauri::Result<()> {
+fn install_macos_menu<R: Runtime>(
+    app: &AppHandle<R>,
+    initial_mode: DockIconMode,
+) -> tauri::Result<()> {
     let menu = Menu::default(app)?;
     let branded_item = CheckMenuItem::with_id(
         app,
@@ -194,12 +197,8 @@ fn install_macos_menu<R: Runtime>(app: &AppHandle<R>, initial_mode: DockIconMode
         initial_mode == DockIconMode::Minimal,
         None::<&str>,
     )?;
-    let dock_submenu = Submenu::with_items(
-        app,
-        "Dock Icon",
-        true,
-        &[&branded_item, &minimal_item],
-    )?;
+    let dock_submenu =
+        Submenu::with_items(app, "Dock Icon", true, &[&branded_item, &minimal_item])?;
 
     if let Some(first_item) = menu.items()?.into_iter().next() {
         if let Some(app_submenu) = first_item.as_submenu() {
@@ -298,10 +297,22 @@ mod tests {
     #[test]
     fn parse_accepts_valid_modes_and_rejects_unknown() {
         assert_eq!(DockIconMode::default(), DockIconMode::Branded);
-        assert_eq!(DockIconMode::parse("branded").unwrap(), DockIconMode::Branded);
-        assert_eq!(DockIconMode::parse("minimal").unwrap(), DockIconMode::Minimal);
-        assert_eq!(DockIconMode::parse("  MINIMAL \n").unwrap(), DockIconMode::Minimal);
-        assert_eq!("branded".parse::<DockIconMode>().unwrap(), DockIconMode::Branded);
+        assert_eq!(
+            DockIconMode::parse("branded").unwrap(),
+            DockIconMode::Branded
+        );
+        assert_eq!(
+            DockIconMode::parse("minimal").unwrap(),
+            DockIconMode::Minimal
+        );
+        assert_eq!(
+            DockIconMode::parse("  MINIMAL \n").unwrap(),
+            DockIconMode::Minimal
+        );
+        assert_eq!(
+            "branded".parse::<DockIconMode>().unwrap(),
+            DockIconMode::Branded
+        );
         assert_eq!(DockIconMode::Branded.as_str(), "branded");
         assert_eq!(DockIconMode::Minimal.as_str(), "minimal");
         assert!(DockIconMode::parse("").is_err());
