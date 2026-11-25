@@ -5,3 +5,6 @@ dist/
 LLM.md
 /public/agents
 /public/bots
+/public/memoji
+/public/personas
+/dist-release

@@ -1,64 +1,35 @@
 /**
- * EVERY ADDRESS THIS CLIENT ANSWERS, and the only module that knows both a
- * navigator and a view.
+ * EVERY ADDRESS HANZO TEAM v1.1.0 ANSWERS.
  *
- * The shell is composed HERE rather than inside each surface, so a surface
- * cannot forget it and no two surfaces can draw it differently — one rail, one
- * navigator column, one aside, whatever screen is showing. A surface component
- * renders only its own region.
- *
- * The rail's list lives in `~/shell/surfaces`, and the paths below are that
- * table's. A surface reachable from the rail and missing here is a glyph that
- * goes nowhere, which is exactly what one declaration prevents.
- *
- * A board's default view is the board's own address, so Kanban has one address
- * and not two. The splat ranks last and catches every address this product ever
- * answered and no longer does, so a stale bookmark is a redirect rather than
- * the router's own error page.
+ * Composes the unified 4-column Discord × Mattermost × Hanzo v8.8 `<Shell>` once
+ * around every workspace stage. Default `/` lands directly on `#engineering`.
  */
 import type { ReactNode } from 'react'
 import type { RouteObject } from 'react-router'
 import { Navigate, useParams } from 'react-router'
 
 import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
-import { AgentPane, Chat, Channels } from '~/chat'
-import { CrmNav, CrmScreen, RETIRED, Retired } from '~/crm/Crm'
+import { EngineeringStage } from '~/chat/EngineeringStage.tsx'
+import { CrmScreen, RETIRED, Retired } from '~/crm/Crm'
 import { Files } from '~/handoff/Files.tsx'
-import { Home } from '~/home/Home.tsx'
-import { Inbox } from '~/inbox'
-import { Nav } from '~/nav'
 import { Shell } from '~/shell'
-import { Tracker } from '~/tracker'
 import { AllProjectsScreen } from '~/tracker/ProjectsWorkspace'
+import { HomeWorkspace } from '~/workspaces/HomeWorkspace.tsx'
+import { InboxWorkspace } from '~/workspaces/InboxWorkspace.tsx'
+import { MemoryWorkspace } from '~/workspaces/MemoryWorkspace.tsx'
+import { OfficeWorkspace } from '~/workspaces/OfficeWorkspace.tsx'
+import { SpacesWorkspace } from '~/workspaces/SpacesWorkspace.tsx'
+import { ThreadsWorkspace } from '~/workspaces/ThreadsWorkspace.tsx'
+import { WorkWorkspace } from '~/workspaces/WorkWorkspace.tsx'
 
 const ProjectRoot = () => {
   const { id } = useParams()
   return <Navigate to={id ? `/projects/${id}/issues` : '/projects'} replace />
 }
 
-/**
- * Where a visit starts: the thread-focused workspace (`/chat`), with the
- * left organization rail, channel & bot navigator, active conversation, and agent pane.
- */
-const Landing = () => <Navigate to="/chat" replace />
+const Landing = () => <Navigate to="/chat/engineering" replace />
 
-const tracker = (view: ReactNode) => (
-  <Shell nav={<Nav />} aside={<Inbox />}>
-    {view}
-  </Shell>
-)
-
-const chat = (view: ReactNode) => (
-  <Shell nav={<Channels />} aside={<AgentPane />}>
-    {view}
-  </Shell>
-)
-
-const crm = (view: ReactNode) => (
-  <Shell nav={<CrmNav />}>
-    {view}
-  </Shell>
-)
+const stage = (view: ReactNode) => <Shell>{view}</Shell>
 
 export const routes: RouteObject[] = [
   { path: '/', element: <Landing /> },
@@ -66,55 +37,44 @@ export const routes: RouteObject[] = [
   { path: '/auth', element: <Landing /> },
   { path: '/auth/callback', element: <Landing /> },
 
-  { path: '/home', element: tracker(<Home />) },
-  { path: '/overview', element: tracker(<Home />) },
-  { path: '/issues', element: tracker(<Tracker />) },
-  { path: '/issues/:view', element: tracker(<Tracker />) },
-  { path: '/mine', element: tracker(<Tracker mine />) },
-  { path: '/mine/:view', element: tracker(<Tracker mine />) },
-  { path: '/projects', element: tracker(<AllProjectsScreen />) },
+  // Hanzo v8.8 Core Workspaces
+  { path: '/home', element: stage(<HomeWorkspace />) },
+  { path: '/overview', element: <Navigate to="/home" replace /> },
+  { path: '/inbox', element: stage(<InboxWorkspace />) },
+  { path: '/threads', element: stage(<ThreadsWorkspace />) },
+  { path: '/office', element: stage(<OfficeWorkspace />) },
+  { path: '/meet', element: <Navigate to="/office" replace /> },
+  { path: '/meet/:room', element: <Navigate to="/office" replace /> },
+  { path: '/spaces', element: stage(<SpacesWorkspace />) },
+  { path: '/spaces/:id', element: stage(<SpacesWorkspace />) },
+  { path: '/files', element: stage(<Files />) },
+  { path: '/docs', element: <Navigate to="/spaces" replace /> },
+  { path: '/memory', element: stage(<MemoryWorkspace />) },
+
+  // Discord × Mattermost Channels & DMs
+  { path: '/chat', element: <Navigate to="/chat/engineering" replace /> },
+  { path: '/chat/:id', element: stage(<EngineeringStage />) },
+
+  // Linear-grade Issues, Kanban, List, Timeline & YAML Objectives
+  { path: '/issues', element: stage(<WorkWorkspace />) },
+  { path: '/issues/:view', element: stage(<WorkWorkspace />) },
+  { path: '/mine', element: stage(<WorkWorkspace mine />) },
+  { path: '/mine/:view', element: stage(<WorkWorkspace mine />) },
+  { path: '/projects', element: stage(<AllProjectsScreen />) },
   { path: '/projects/:id', element: <ProjectRoot /> },
-  { path: '/projects/:id/issues', element: tracker(<Tracker />) },
-  { path: '/projects/:id/issues/:view', element: tracker(<Tracker />) },
+  { path: '/projects/:id/issues', element: stage(<WorkWorkspace />) },
+  { path: '/projects/:id/issues/:view', element: stage(<WorkWorkspace />) },
   { path: '/projects/:id/:page', element: <ProjectRoot /> },
 
-  { path: '/chat', element: chat(<Chat />) },
-  { path: '/chat/:id', element: chat(<Chat />) },
-
-  // One bot up close is hanzo.bot's app; this address hands over to it, in the
-  // open space's org. Bots as teammates are in Chat.
-  {
-    path: '/bots',
-    element: (
-      <Shell nav={null}>
-        <ToHanzoBot />
-      </Shell>
-    ),
-  },
-
-  // The CRM (@hanzo/crm): People at /crm, each object at /crm/:tab, a record at /crm/:tab/:id.
-  // An address the CRM replaced (/crm/leads, /crm/customers) lands inside it on what replaced it.
-  { path: '/crm', element: crm(<CrmScreen />) },
+  // Bots & CRM
+  { path: '/bots', element: stage(<ToHanzoBot />) },
+  { path: '/agents', element: <Navigate to="/office" replace /> },
+  { path: '/agents/:id', element: stage(<OfficeWorkspace />) },
+  { path: '/crm', element: stage(<CrmScreen />) },
   ...RETIRED.map((s) => ({ path: `/crm/${s}`, element: <Retired /> })),
-  { path: '/crm/:tab', element: crm(<CrmScreen />) },
-  { path: '/crm/:tab/:id', element: crm(<CrmScreen />) },
+  { path: '/crm/:tab', element: stage(<CrmScreen />) },
+  { path: '/crm/:tab/:id', element: stage(<CrmScreen />) },
 
-  // Surfaces that held only invented content are gone; their addresses land on something real.
-  { path: '/agents', element: <Navigate to="/chat" replace /> },
-  { path: '/agents/:id', element: <Navigate to="/chat" replace /> },
-  { path: '/apps', element: <Navigate to="/chat" replace /> },
-  { path: '/apps/:appId', element: <Navigate to="/chat" replace /> },
-  { path: '/calendar', element: <Navigate to="/chat" replace /> },
-  { path: '/cal', element: <Navigate to="/chat" replace /> },
-  { path: '/time', element: <Navigate to="/chat" replace /> },
-  { path: '/meet', element: <Navigate to="/chat" replace /> },
-  { path: '/inbox', element: <Navigate to="/chat" replace /> },
-  { path: '/docs', element: <Navigate to="/chat" replace /> },
-  { path: '/files', element: tracker(<Files />) },
-  { path: '/mail', element: <Navigate to="/chat" replace /> },
-  { path: '/admin', element: <Navigate to="/chat" replace /> },
-  { path: '/settings', element: <Navigate to="/chat" replace /> },
   { path: '/people', element: <Navigate to="/crm" replace /> },
-
-  { path: '*', element: <Navigate to="/chat" replace /> },
+  { path: '*', element: <Navigate to="/chat/engineering" replace /> },
 ]

@@ -33,9 +33,6 @@ async fn team_hanzod_cluster_down() -> Result<serde_json::Value, String> {
         .map_err(|e| format!("hanzod cluster_down join error: {e}"))?
 }
 
-/// Before the `ai.hanzo.<app>` identifier scheme this app was `com.hanzo.team`.
-/// WebKit keeps the sign-in session under the bundle identifier, so each
-/// legacy directory is moved into place before the webview opens.
 #[cfg(target_os = "macos")]
 fn migrate_legacy_data() {
     let Some(home) = std::env::var_os("HOME") else {
@@ -97,21 +94,28 @@ fn team_set_window_mode(window: tauri::WebviewWindow, mode: String) -> Result<()
             .set_size(tauri::LogicalSize::new(460.0, 640.0))
             .map_err(|e| e.to_string())?;
         let _ = window.center();
-    } else {
+    } else if mode == "mini" {
+        let _ = window.set_min_size(Some(tauri::LogicalSize::new(320.0, 420.0)));
         window
-            .set_size(tauri::LogicalSize::new(1360.0, 860.0))
+            .set_size(tauri::LogicalSize::new(340.0, 560.0))
             .map_err(|e| e.to_string())?;
+    } else {
         let _ = window.set_min_size(Some(tauri::LogicalSize::new(900.0, 600.0)));
-        let _ = window.center();
+        let needs_expand = window
+            .inner_size()
+            .map(|sz| sz.width < 900 || sz.height < 600)
+            .unwrap_or(true);
+        if needs_expand {
+            window
+                .set_size(tauri::LogicalSize::new(1440.0, 900.0))
+                .map_err(|e| e.to_string())?;
+            let _ = window.center();
+        }
     }
     Ok(())
 }
 
 /// Cross-platform frameless window chrome script injected on local & remote Hanzo origins.
-/// Ensures `[data-slot="masthead"]` and `[data-slot="title-bar"]` drag/toggle-maximize cleanly,
-/// keeps menus solid `#121214` without backdrop blur, hides duplicate window controls on macOS,
-/// and mounts crisp `28x28` monochrome `- □ ×` `[data-slot="window-controls"]` on Linux/Windows
-/// whenever a remote page (e.g. `hanzo.ai/login`) has not mounted its own.
 const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
   if (typeof window === 'undefined' || window.__HANZO_TEAM_SHELL_CHROME__) return;
   window.__HANZO_TEAM_SHELL_CHROME__ = true;
@@ -168,15 +172,15 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
     '  -webkit-backdrop-filter: none !important;',
     '}',
     'header[data-slot="masthead"] [data-slot="wordmark"] { display: none !important; }',
-    '[data-slot="title-bar"], [data-testid="hanzo-business-header"] { border-bottom: none !important; }',
-    '[data-testid="hanzo-business-header"] > div:nth-child(2) > div:first-child { visibility: hidden !important; pointer-events: none !important; }',
-    isLinux ? 'html:not([data-maximized="true"]), html:not([data-maximized="true"]) body { background: transparent !important; }' : '',
-    isLinux ? 'html:not([data-maximized="true"]) body { border-radius: 12px !important; overflow: hidden !important; }' : '',
-    isLinux ? 'html:not([data-maximized="true"]) #root { width: 100%; background-color: var(--bg-canvas, #000000); border-radius: 12px !important; overflow: hidden !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10); }' : '',
-    isLinux ? 'html.light:not([data-maximized="true"]) #root { background-color: var(--bg-canvas, #ffffff); box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); }' : '',
-    isLinux ? '@media (max-width: 640px) { html:not([data-maximized="true"]) body, html:not([data-maximized="true"]) #root { border-radius: 24px !important; } }' : '',
-    isLinux ? 'html[data-window-mode="login"]:not([data-maximized="true"]) body, html[data-window-mode="login"]:not([data-maximized="true"]) #root { border-radius: 24px !important; }' : '',
-    isLinux ? 'html[data-maximized="true"] body, html[data-maximized="true"] #root { border-radius: 0 !important; box-shadow: none !important; }' : '',
+    isLinux ? 'html:not([data-maximized="true"]), html:not([data-maximized="true"]) body { background: transparent !important; background-color: transparent !important; }' : '',
+    isLinux ? 'html:not([data-maximized="true"]) #root { position: relative; width: 100%; height: 100dvh; background-color: var(--team-ground, #000000); border-radius: 12px !important; overflow: hidden !important; }' : '',
+    isLinux ? 'html:not([data-maximized="true"]) #root::after { content: ""; position: absolute; inset: 0; border-radius: inherit; border: 1px solid rgba(255, 255, 255, 0.10); pointer-events: none; z-index: 2147483645; }' : '',
+    isLinux ? 'html.light:not([data-maximized="true"]) #root { background-color: var(--team-ground, #ffffff); }' : '',
+    isLinux ? 'html.light:not([data-maximized="true"]) #root::after { border-color: rgba(0, 0, 0, 0.12); }' : '',
+    isLinux ? '@media (max-width: 640px) { html:not([data-maximized="true"]) #root { border-radius: 24px !important; } }' : '',
+    isLinux ? 'html[data-window-mode="login"]:not([data-maximized="true"]) #root { border-radius: 24px !important; }' : '',
+    isLinux ? 'html[data-maximized="true"] #root { border-radius: 0 !important; }' : '',
+    isLinux ? 'html[data-maximized="true"] #root::after { display: none !important; }' : '',
     isMac ? '[data-slot="window-controls"] { display: none !important; }' : '',
     '.hz-injected-win-ctrls {',
     '  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; user-select: none; z-index: 2147483640;',
@@ -201,9 +205,10 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
       style.textContent = CSS;
       root.appendChild(style);
     }
+    var currentAttr = docEl.getAttribute('data-window-mode');
     var hasWorkspace = Boolean(document.querySelector('[data-testid="hanzo-business-header"], [data-slot="title-bar"]'));
     var hasMasthead = !hasWorkspace && Boolean(document.querySelector('[data-slot="masthead"], [data-slot="desktop-signin"], [data-slot="signin"]'));
-    var desiredMode = hasWorkspace ? 'workspace' : (hasMasthead ? 'login' : null);
+    var desiredMode = currentAttr === 'mini' ? 'mini' : (hasWorkspace ? 'workspace' : (hasMasthead ? 'login' : null));
     if (desiredMode && desiredMode !== lastMode) {
       lastMode = desiredMode;
       docEl.setAttribute('data-window-mode', desiredMode);
@@ -268,8 +273,7 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
       requestAnimationFrame(function () {
         pending = false;
         syncMaximized();
-  window.addEventListener('resize', syncMaximized);
-  ensureChrome();
+        ensureChrome();
       });
     }).observe(document.documentElement, { childList: true, subtree: true });
   }
@@ -299,24 +303,43 @@ fn main() {
 
             dock_icon::init(app.handle())?;
 
-            let start_url = if std::env::var("HANZO_TEAM_OFFLINE").ok().as_deref() == Some("1") {
-                WebviewUrl::App("index.html".into())
-            } else {
-                let raw = std::env::var("HANZO_TEAM_URL")
-                    .unwrap_or_else(|_| "https://hanzo.team".to_string());
-                raw.parse::<tauri::Url>()
-                    .map(WebviewUrl::External)
-                    .unwrap_or_else(|_| WebviewUrl::App("index.html".into()))
+            let start_url = match std::env::var("HANZO_TEAM_URL")
+                .ok()
+                .map(|s| s.trim().to_string())
+                .filter(|s| !s.is_empty())
+            {
+                Some(raw) if std::env::var("HANZO_TEAM_OFFLINE").ok().as_deref() != Some("1") => {
+                    raw.parse::<tauri::Url>()
+                        .map(WebviewUrl::External)
+                        .unwrap_or_else(|_| WebviewUrl::App("index.html".into()))
+                }
+                _ => WebviewUrl::App("index.html".into()),
             };
+
+            let route_script = std::env::var("HANZO_TEAM_ROUTE")
+                .ok()
+                .map(|r| r.trim().to_string())
+                .filter(|r| !r.is_empty())
+                .map(|r| {
+                    let path = if r.starts_with('/') { r } else { format!("/{r}") };
+                    format!(
+                        "(function(){{ try {{ if (!window.__HANZO_ROUTE_APPLIED__) {{ window.__HANZO_ROUTE_APPLIED__ = true; window.history.replaceState(null, '', {:?}); }} }} catch(_e){{}} }})();",
+                        path
+                    )
+                });
 
             let mut builder = WebviewWindowBuilder::new(app, "main", start_url)
                 .title("Hanzo Team")
-                .inner_size(1360.0, 860.0)
+                .inner_size(1440.0, 900.0)
                 .min_inner_size(900.0, 600.0)
                 .resizable(true)
                 .center()
                 .initialization_script(hanzod::HANZOD_INIT_SCRIPT)
                 .initialization_script(HANZO_SHELL_CHROME_SCRIPT);
+
+            if let Some(script) = route_script {
+                builder = builder.initialization_script(&script);
+            }
 
             #[cfg(target_os = "macos")]
             {
@@ -376,6 +399,7 @@ mod tests {
         assert!(HANZO_SHELL_CHROME_SCRIPT.contains("#121214"));
         assert!(HANZO_SHELL_CHROME_SCRIPT.contains("start_dragging"));
         assert!(HANZO_SHELL_CHROME_SCRIPT.contains("toggle_maximize"));
+        assert!(HANZO_SHELL_CHROME_SCRIPT.contains("border-radius: 12px !important;"));
     }
 
     #[test]

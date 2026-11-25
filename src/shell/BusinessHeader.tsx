@@ -1,54 +1,42 @@
 'use client'
 
 /**
- * BusinessHeader — compact Slack-style top navigation bar (36px) + RailAccountMenu
- * for the bottom-left rail (matching Slack, Hanzo Desktop, and Hanzo Bot).
+ * Top 38px `#000000` Frameless Desktop Bar + Centered `#141417` Omnibox (`Ctrl+K`)
  *
- * Organization switching lives on the vertical left Rail (`Rail.tsx`), and the
- * user account + preferences live at the bottom-left corner of the Rail.
- * There is NO top-bar app switcher (`H ▾`) and NO duplicate top-bar org/user menu.
+ * Left:   [F-menu], [PanelLeft], [<], [>]
+ * Center: Sleek `#141417` `Search or ask anything` omnibox (channels, threads, issues, spaces, memory, or @vi)
+ * Right:  `— □ ×` native Tauri window controls
  */
 import { DESKTOP_INSET, isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
 import { useEffect, useMemo, useState, type ReactNode } from 'react'
 import { Input, Popover, Separator, Text, XStack, YStack } from '@hanzo/gui'
 import {
+  ArrowRight,
   Bot,
   Check,
   ChevronLeft,
   ChevronRight,
+  FileText,
   Hash,
-  LogOut,
   PanelLeft,
-  Plus,
   Search,
   Settings,
-  Share2,
+  Smartphone,
+  Sparkles,
   SquareCheck,
-  UserPlus,
+  X,
 } from '@hanzogui/lucide-icons-2'
 import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
-import { botsOf, withPath } from '~/chat/bots.ts'
-import { usePeople, useRooms } from '~/chat/read.ts'
-import { paint, ring, round, state } from '~/theme/theme.ts'
+import { paint, ring } from '~/theme/theme.ts'
+import {
+  sendWorkspaceMessage,
+  setPhoneModalOpen,
+  useWorkspace,
+} from '~/workspace/store.ts'
 import { DesktopAppMenu, DesktopWindowControls, dragDesktopWindow, toggleDesktopMaximize } from './DesktopWindowChrome.tsx'
-import { RAIL, STEP } from './measure.ts'
+import { STEP } from './measure.ts'
+import { press } from './press.ts'
 import { matchTeamShortcut } from './unified.ts'
-
-function displayName(name?: string, email?: string): string {
-  if (name?.trim()) return name.trim()
-  const local = email?.split('@')[0]
-  return local?.trim() || ''
-}
-
-function avatarInitials(name?: string, email?: string): string {
-  const clean = displayName(name, email).replace(/,/g, ' ').trim()
-  if (!clean) return 'HZ'
-  const parts = clean.split(/\s+/).filter(Boolean)
-  if (parts.length >= 2) {
-    return `${parts[0][0] ?? ''}${parts[parts.length - 1][0] ?? ''}`.toUpperCase()
-  }
-  return clean.slice(0, 2).toUpperCase()
-}
 
 export type BusinessHeaderAccount = {
   sub: string
@@ -76,40 +64,37 @@ export type BusinessHeaderProps = {
   onNavigate?: (path: string) => void
 }
 
-/** What the omnibar can open besides rooms and bots: surfaces that have real data. */
-const JUMP_SURFACES = [
-  { id: 'chat', label: 'Chat — Channels & threads', desc: 'Workspace channels, threads & teammates', path: '/chat' },
-  { id: 'issues', label: 'Tracker — All issues', desc: 'Kanban board, list & project issues', path: '/issues' },
-  { id: 'projects', label: 'Projects', desc: 'Every project in this space', path: '/projects' },
-  { id: 'crm', label: 'CRM', desc: 'Investors, contacts & pipeline', path: '/crm/investors' },
+const OMNIBOX_WORKSPACES = [
+  { id: 'ws-home', kind: 'surface' as const, label: 'Home — Executive Briefing', desc: '12 completed · 6 in progress · 4 need attention', path: '/home' },
+  { id: 'ws-inbox', kind: 'surface' as const, label: 'Inbox — Mentions & Agent Approvals', desc: 'Unified approvals, thread replies & PR gates', path: '/inbox' },
+  { id: 'ws-threads', kind: 'surface' as const, label: 'Threads — Followed Discussions', desc: 'Active engineering & incident threads', path: '/threads' },
+  { id: 'ws-office', kind: 'surface' as const, label: 'Office — Virtual HQ & Skyscraper Elevator', desc: 'F4 Exec · F3 Eng · F2 Research · F1 GTM', path: '/office' },
+  { id: 'ws-work', kind: 'surface' as const, label: 'Work — Issues, Kanban & YAML Objectives', desc: 'TEAM-101..TEAM-106 & executable tasks', path: '/issues' },
+  { id: 'ws-spaces', kind: 'surface' as const, label: 'Spaces — Interactive Deliverables', desc: 'Versioned specs, benchmarks & release checklists', path: '/spaces' },
+  { id: 'ws-memory', kind: 'surface' as const, label: 'Memory — Organizational Knowledge Graph', desc: 'ADRs, runbooks & shared cross-agent context', path: '/memory' },
 ]
 
 export function BusinessHeader({
-  currentOrg,
-  navSpan,
   navOpen = false,
   onToggleNav,
-  surfaceTitle: _surfaceTitle,
   leftSlot,
-  children,
   rightSlot,
   onNavigate,
 }: BusinessHeaderProps) {
   const [searchOpen, setSearchOpen] = useState(false)
   const [query, setQuery] = useState('')
-  const [barW, setBarW] = useState(() => (typeof window === 'undefined' ? 1200 : window.innerWidth))
-  const compact = barW < 680
+  const [viAnswer, setViAnswer] = useState<string | null>(null)
+  const { channels, roster, spaces, memory, phoneModalOpen } = useWorkspace()
   const isDesktop = isDesktopApp()
   const isMac = isMacDesktop()
   const inset = isDesktop && isMac ? DESKTOP_INSET : 0
 
-  const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
-
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && searchOpen) {
+      if (e.key === 'Escape' && (searchOpen || phoneModalOpen)) {
         e.preventDefault()
         setSearchOpen(false)
+        setPhoneModalOpen(false)
         return
       }
       const action = matchTeamShortcut({
@@ -134,191 +119,198 @@ export function BusinessHeader({
       window.removeEventListener('keydown', onKey)
       window.removeEventListener('hanzo:team-open-command-palette', onOpenPalette)
     }
-  }, [searchOpen])
+  }, [searchOpen, phoneModalOpen])
 
-  const roster = usePeople().data ?? []
-  const rooms = useRooms().data ?? []
   const filteredResults = useMemo(() => {
     const q = query.trim().toLowerCase()
-    const botItems = botsOf(roster).map((p) => ({
-      id: `bot-${p.id}`,
-      kind: 'bot' as const,
-      label: p.name,
-      desc: 'Agent',
-      path: withPath(p),
-    }))
-    const channelItems = rooms
-      .filter((r) => r.kind === 'channel')
-      .map((r) => ({ id: r.id, kind: 'channel' as const, label: `#${r.name}`, desc: r.topic ?? '', path: `/chat/${r.id}` }))
-    const surfaceItems = JUMP_SURFACES.map((s) => ({ ...s, kind: 'surface' as const }))
-    const all = [...channelItems, ...botItems, ...surfaceItems]
-    if (!q) return all.slice(0, 14)
+    const chItems = channels
+      .filter((c) => c.kind === 'channel')
+      .map((c) => ({
+        id: `ch-${c.id}`,
+        kind: 'channel' as const,
+        label: `# ${c.name}`,
+        desc: c.topic,
+        path: `/chat/${c.id}`,
+      }))
+    const botItems = roster
+      .filter((m) => m.bot)
+      .map((m) => ({
+        id: `bot-${m.id}`,
+        kind: 'bot' as const,
+        label: `@${m.handle} (${m.name})`,
+        desc: m.activity,
+        path: `/chat/dm-${m.handle}`,
+      }))
+    const docItems = [
+      ...spaces.map((s) => ({
+        id: `sp-${s.id}`,
+        kind: 'doc' as const,
+        label: s.title,
+        desc: `Space · ${s.version}`,
+        path: `/spaces/${s.id}`,
+      })),
+      ...memory.map((m) => ({
+        id: `mem-${m.id}`,
+        kind: 'doc' as const,
+        label: m.title,
+        desc: `Memory · ${m.category}`,
+        path: '/memory',
+      })),
+    ]
+    const all = [...OMNIBOX_WORKSPACES, ...chItems, ...botItems, ...docItems]
+    if (!q) return all.slice(0, 12)
     return all
       .filter((item) => item.label.toLowerCase().includes(q) || item.desc.toLowerCase().includes(q))
-      .slice(0, 14)
-  }, [query, roster, rooms])
+      .slice(0, 12)
+  }, [query, channels, roster, spaces, memory])
 
   const jumpTo = (path: string) => {
     setSearchOpen(false)
     setQuery('')
-    if (onNavigate) {
-      onNavigate(path)
-    } else if (typeof window !== 'undefined') {
-      window.location.assign(path)
-    }
+    setViAnswer(null)
+    if (onNavigate) onNavigate(path)
+    else if (typeof window !== 'undefined') window.location.assign(path)
+  }
+
+  const askViNow = () => {
+    const clean = query.trim()
+    if (!clean) return
+    sendWorkspaceMessage('dm-vi', clean)
+    setViAnswer(
+      `@vi: Processed "${clean}" — 12 tasks completed today, v1.1.0 RC is green in #engineering, and 3 Zen 6 router evals are ready in Spaces.`,
+    )
   }
 
   return (
     <XStack
       render="header"
-      height={isDesktop ? 44 : 38}
+      height={38}
+      px={8}
       items="center"
+      justify="space-between"
       shrink={0}
+      borderBottomWidth={1}
       data-slot="title-bar"
       data-tauri-drag-region={isDesktop ? '' : undefined}
       onMouseDown={isDesktop ? dragDesktopWindow : undefined}
       onDoubleClick={isDesktop ? toggleDesktopMaximize : undefined}
       style={{
         backgroundColor: paint.ground,
+        borderBottomColor: paint.barRule,
         backdropFilter: 'none',
         WebkitBackdropFilter: 'none',
-        borderBottom: 'none',
       }}
-      onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
       data-testid="hanzo-business-header"
     >
-      {/* LEFT FRAME SEGMENT: Traffic lights / stacked _- menu + Sidebar toggle on left; < > aligned flush with sidebar edge when open */}
+      {/* LEFT: [F-menu], [PanelLeft], [<], [>] */}
       <XStack
-        height="100%"
-        width={navOpen && navSpan ? RAIL + navSpan : undefined}
-        minW={navOpen && navSpan ? RAIL + navSpan : RAIL + inset}
-        pl={14 + inset}
-        pr={navOpen ? 10 : 8}
-        gap={4}
         items="center"
-        justify={navOpen ? 'space-between' : 'flex-start'}
+        gap={3}
+        pl={inset}
+        minW={148}
         shrink={0}
         data-tauri-drag-region={isDesktop ? '' : undefined}
       >
-        <XStack items="center" gap={4} shrink={0}>
-          <DesktopAppMenu onNavigate={jumpTo} />
-          {leftSlot}
-          {onToggleNav ? (
-            <XStack
-              role="button"
-              tabIndex={0}
-              cursor="pointer"
-              width={28}
-              height={28}
-              rounded={8}
-              items="center"
-              justify="center"
-              hoverStyle={{ bg: '$color3' }}
-              aria-label={navOpen ? 'Collapse sidebar' : 'Expand sidebar'}
-              data-testid="toggle-team-sidebar"
-              data-tauri-drag-region="false"
-              onPress={onToggleNav}
-            >
-              <PanelLeft size={15} color="$color10" />
-            </XStack>
-          ) : null}
-        </XStack>
-        {isDesktop && !compact ? (
-          <XStack items="center" gap={4} shrink={0}>
-            <XStack
-              role="button"
-              tabIndex={0}
-              cursor="pointer"
-              width={28}
-              height={28}
-              rounded={8}
-              items="center"
-              justify="center"
-              hoverStyle={{ bg: '$color3' }}
-              aria-label="Go back"
-              data-tauri-drag-region="false"
-              onPress={() => {
-                if (typeof window !== 'undefined') window.history.back()
-              }}
-            >
-              <ChevronLeft size={15} color="$color10" />
-            </XStack>
-            <XStack
-              role="button"
-              tabIndex={0}
-              cursor="pointer"
-              width={28}
-              height={28}
-              rounded={8}
-              items="center"
-              justify="center"
-              hoverStyle={{ bg: '$color3' }}
-              aria-label="Go forward"
-              data-tauri-drag-region="false"
-              onPress={() => {
-                if (typeof window !== 'undefined') window.history.forward()
-              }}
-            >
-              <ChevronRight size={15} color="$color10" />
-            </XStack>
+        <DesktopAppMenu onNavigate={jumpTo} />
+        {leftSlot}
+        {onToggleNav ? (
+          <XStack
+            {...press(onToggleNav, navOpen ? 'Collapse sidebar (Ctrl+B)' : 'Expand sidebar (Ctrl+B)')}
+            width={26}
+            height={26}
+            rounded={6}
+            items="center"
+            justify="center"
+            hoverStyle={{ background: paint.hover }}
+            data-testid="toggle-team-sidebar"
+            data-tauri-drag-region="false"
+          >
+            <PanelLeft size={14} color={paint.mute} />
           </XStack>
         ) : null}
+        <XStack
+          {...press(() => {
+            if (typeof window !== 'undefined') window.history.back()
+          }, 'Go back')}
+          width={24}
+          height={24}
+          rounded={6}
+          items="center"
+          justify="center"
+          hoverStyle={{ background: paint.hover }}
+          data-tauri-drag-region="false"
+        >
+          <ChevronLeft size={14} color={paint.dim} />
+        </XStack>
+        <XStack
+          {...press(() => {
+            if (typeof window !== 'undefined') window.history.forward()
+          }, 'Go forward')}
+          width={24}
+          height={24}
+          rounded={6}
+          items="center"
+          justify="center"
+          hoverStyle={{ background: paint.hover }}
+          data-tauri-drag-region="false"
+        >
+          <ChevronRight size={14} color={paint.dim} />
+        </XStack>
       </XStack>
 
-      {/* RIGHT CANVAS HEADER SEGMENT: Whisper-quiet context on left; compact ⌘K trigger ONLY when sidebar is collapsed */}
+      {/* CENTER: Sleek omnibox (`Search or ask anything` · Ctrl+K) */}
       <XStack
         flex={1}
-        height="100%"
-        pl={12}
-        pr={14}
-        gap="$2"
         items="center"
-        justify="space-between"
+        justify="center"
+        px={12}
         minW={0}
         data-tauri-drag-region={isDesktop ? '' : undefined}
       >
-        <XStack flex={1} minW={0} data-tauri-drag-region={isDesktop ? '' : undefined} />
-
-        <XStack items="center" justify="flex-end" gap="$1.5" minW={0} shrink={0}>
-          {children ??
-            (!navOpen ? (
-              <XStack
-                role="button"
-                tabIndex={0}
-                cursor="pointer"
-                height={24}
-                px={compact ? 6 : 7}
-                gap={5}
-                rounded={7}
-                borderWidth={1}
-                items="center"
-                justify="center"
-                style={{ backgroundColor: paint.sidebar, borderColor: paint.rule }}
-                hoverStyle={{ bg: '$color3' }}
-                aria-label={`Search ${orgDisplay} (⌘K)`}
-                data-testid="collapsed-search-trigger"
-                data-tauri-drag-region="false"
-                onPress={() => setSearchOpen(true)}
-                onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-                  if (e?.key === 'Enter' || e?.key === ' ') {
-                    e.preventDefault?.()
-                    setSearchOpen(true)
-                  }
-                }}
-              >
-                <Search size={12} color="$color10" />
-                {!compact ? (
-                  <Text fontSize={10.5} fontWeight="600" color="$color9">
-                    ⌘K
-                  </Text>
-                ) : null}
-              </XStack>
-            ) : null)}
-          {rightSlot}
-          <DesktopWindowControls />
+        <XStack
+          {...press(() => setSearchOpen(true), 'Search or ask anything (Ctrl+K)')}
+          width="100%"
+          maxW={420}
+          height={26}
+          px={10}
+          rounded={7}
+          borderWidth={1}
+          items="center"
+          justify="center"
+          gap={7}
+          style={{
+            backgroundColor: paint.omnibox,
+            borderColor: paint.omniboxEdge,
+          }}
+          hoverStyle={{ borderColor: paint.border }}
+          focusVisibleStyle={ring}
+          data-testid="top-omnibox-trigger"
+          data-tauri-drag-region="false"
+        >
+          <Search size={12} color={paint.dim} />
+          <Text fontSize={12} color={paint.mute} numberOfLines={1}>
+            Search or ask anything
+          </Text>
+          <Text fontSize={10.5} color={paint.dim} style={{ marginLeft: 4 }}>
+            Ctrl+K
+          </Text>
         </XStack>
       </XStack>
 
+      {/* RIGHT: Window controls */}
+      <XStack
+        items="center"
+        justify="flex-end"
+        gap={6}
+        minW={148}
+        shrink={0}
+        data-tauri-drag-region={isDesktop ? '' : undefined}
+      >
+        {rightSlot}
+        <DesktopWindowControls />
+      </XStack>
+
+      {/* OMNIBOX MODAL */}
       {searchOpen ? (
         <YStack
           position="fixed"
@@ -327,7 +319,7 @@ export function BusinessHeader({
           b={0}
           l={0}
           items="center"
-          pt={72}
+          pt={64}
           px={16}
           style={{ backgroundColor: paint.backdrop, zIndex: 100000 }}
           onPress={() => setSearchOpen(false)}
@@ -335,11 +327,11 @@ export function BusinessHeader({
         >
           <YStack
             role="dialog"
-            aria-label="Jump to channel, bot, or surface"
+            aria-label="Search or ask anything"
             width="100%"
-            maxW={460}
-            p="$2"
-            gap="$2"
+            maxW={520}
+            p={10}
+            gap={8}
             rounded={12}
             borderWidth={1}
             style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
@@ -347,45 +339,98 @@ export function BusinessHeader({
             data-testid="team-command-palette"
           >
             <XStack
-              height={34}
-              px="$2.5"
+              height={36}
+              px={10}
               items="center"
-              gap="$2"
+              gap={8}
               rounded={8}
               borderWidth={1}
-              style={{ backgroundColor: paint.ground, borderColor: paint.rule }}
+              style={{ backgroundColor: paint.omnibox, borderColor: paint.omniboxEdge }}
             >
-              <Search size={14} color="$color10" />
+              <Search size={14} color={paint.mute} />
               <Input
                 flex={1}
-                height={30}
+                height={32}
                 fontSize={13}
                 borderWidth={0}
                 bg="transparent"
-                placeholder="Jump to a channel, bot or issue board…"
+                color={paint.ink}
+                placeholder="Search channels, threads, issues, spaces, memory, or ask @vi…"
                 value={query}
-                onChangeText={setQuery}
+                onChangeText={(v: string) => {
+                  setQuery(v)
+                  setViAnswer(null)
+                }}
+                onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
+                  if (e.key === 'Enter' && query.trim()) {
+                    e.preventDefault?.()
+                    if (filteredResults.length > 0 && !query.trim().startsWith('@vi') && !query.trim().endsWith('?')) {
+                      jumpTo(filteredResults[0]!.path)
+                    } else {
+                      askViNow()
+                    }
+                  }
+                }}
                 autoFocus
               />
-              <Text fontSize={10} fontWeight="600" color="$color9">
+              <Text fontSize={10} fontWeight="600" color={paint.dim}>
                 ESC
               </Text>
             </XStack>
 
-            <YStack gap="$0.5" maxH={340} style={{ overflowY: 'auto' }}>
+            {query.trim() ? (
+              <XStack
+                {...press(askViNow, `Ask @vi: ${query}`)}
+                px={10}
+                py={7}
+                rounded={8}
+                borderWidth={1}
+                items="center"
+                justify="space-between"
+                gap={8}
+                style={{ backgroundColor: paint.card, borderColor: paint.border }}
+                hoverStyle={{ background: paint.hover }}
+              >
+                <XStack items="center" gap={8} flex={1} minW={0}>
+                  <Sparkles size={14} color={paint.ink} />
+                  <Text fontSize={12.5} fontWeight="600" color={paint.ink} numberOfLines={1}>
+                    {`Ask @vi: "${query.trim()}"`}
+                  </Text>
+                </XStack>
+                <ArrowRight size={13} color={paint.mute} />
+              </XStack>
+            ) : null}
+
+            {viAnswer ? (
+              <YStack
+                p={10}
+                rounded={8}
+                borderWidth={1}
+                gap={6}
+                style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+              >
+                <Text fontSize={12.5} color={paint.ink}>
+                  {viAnswer}
+                </Text>
+                <XStack {...press(() => jumpTo('/chat/dm-vi'), 'Open @vi DM')} items="center" gap={4}>
+                  <Text fontSize={11.5} fontWeight="600" color={paint.mute}>
+                    Continue in @vi DM →
+                  </Text>
+                </XStack>
+              </YStack>
+            ) : null}
+
+            <YStack gap={2} maxH={320} style={{ overflowY: 'auto' }}>
               {filteredResults.map((item) => (
                 <XStack
                   key={item.id}
-                  role="menuitem"
-                  tabIndex={0}
-                  cursor="pointer"
+                  {...press(() => jumpTo(item.path), item.label)}
                   items="center"
-                  gap="$2.5"
-                  px="$2.5"
-                  py="$1.5"
+                  gap={10}
+                  px={10}
+                  py={6}
                   rounded={8}
-                  hoverStyle={{ bg: '$color3' }}
-                  onPress={() => jumpTo(item.path)}
+                  hoverStyle={{ background: paint.hover }}
                 >
                   <YStack
                     width={24}
@@ -397,24 +442,98 @@ export function BusinessHeader({
                     shrink={0}
                   >
                     {item.kind === 'bot' ? (
-                      <Bot size={13} color="$color11" />
+                      <Bot size={13} color={paint.mute} />
                     ) : item.kind === 'channel' ? (
-                      <Hash size={13} color="$color11" />
+                      <Hash size={13} color={paint.mute} />
+                    ) : item.kind === 'doc' ? (
+                      <FileText size={13} color={paint.mute} />
                     ) : (
-                      <SquareCheck size={13} color="$color11" />
+                      <SquareCheck size={13} color={paint.mute} />
                     )}
                   </YStack>
                   <YStack flex={1} minW={0}>
-                    <Text fontSize={12} fontWeight="600" color="$color12" numberOfLines={1}>
+                    <Text fontSize={12.5} fontWeight="600" color={paint.ink} numberOfLines={1}>
                       {item.label}
                     </Text>
-                    <Text fontSize={11} color="$color10" numberOfLines={1}>
+                    <Text fontSize={11} color={paint.dim} numberOfLines={1}>
                       {item.desc}
                     </Text>
                   </YStack>
                 </XStack>
               ))}
             </YStack>
+          </YStack>
+        </YStack>
+      ) : null}
+
+      {/* GET HANZO ON YOUR PHONE MODAL */}
+      {phoneModalOpen ? (
+        <YStack
+          position="fixed"
+          t={0}
+          r={0}
+          b={0}
+          l={0}
+          items="center"
+          justify="center"
+          px={16}
+          style={{ backgroundColor: paint.backdrop, zIndex: 100001 }}
+          onPress={() => setPhoneModalOpen(false)}
+        >
+          <YStack
+            role="dialog"
+            aria-label="Get Hanzo on your phone"
+            width="100%"
+            maxW={360}
+            p={18}
+            gap={12}
+            rounded={14}
+            borderWidth={1}
+            style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
+            onPress={(e: { stopPropagation?: () => void }) => e.stopPropagation?.()}
+          >
+            <XStack items="center" justify="space-between">
+              <XStack items="center" gap={8}>
+                <Smartphone size={16} color={paint.ink} />
+                <Text fontSize={14} fontWeight="600" color={paint.ink}>
+                  Get Hanzo Team on your phone
+                </Text>
+              </XStack>
+              <XStack {...press(() => setPhoneModalOpen(false), 'Close')} width={24} height={24} items="center" justify="center" rounded={6}>
+                <X size={14} color={paint.dim} />
+              </XStack>
+            </XStack>
+            <Text fontSize={12.5} color={paint.mute}>
+              Approve agent deployments, hop into voice huddles, and review briefings from iOS or Android (`hanzo.team/mobile`).
+            </Text>
+            <XStack gap={8}>
+              <XStack
+                flex={1}
+                py={8}
+                rounded={8}
+                borderWidth={1}
+                items="center"
+                justify="center"
+                style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+              >
+                <Text fontSize={12} fontWeight="600" color={paint.ink}>
+                  iOS App Store
+                </Text>
+              </XStack>
+              <XStack
+                flex={1}
+                py={8}
+                rounded={8}
+                borderWidth={1}
+                items="center"
+                justify="center"
+                style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+              >
+                <Text fontSize={12} fontWeight="600" color={paint.ink}>
+                  Android APK
+                </Text>
+              </XStack>
+            </XStack>
           </YStack>
         </YStack>
       ) : null}
@@ -442,385 +561,71 @@ export type RailAccountMenuProps = {
   onSignOut?: () => void
 }
 
-/**
- * Bottom-left user account avatar + popover menu (matching Slack, Hanzo Desktop & Hanzo Bot).
- */
 export function RailAccountMenu({
   user,
   currentOrg,
   orgs = [],
   onSelectOrg,
-  onCreateOrg,
-  onConnectOrg,
-  accounts = [],
-  onSwitchAccount,
-  onAddAccount,
   onSettings,
-  onSignOut,
 }: RailAccountMenuProps) {
   const [open, setOpen] = useState(false)
-
-  const orgDisplay = currentOrg?.displayName?.trim() || currentOrg?.name || 'Hanzo AI'
-  const userName = displayName(user?.name, user?.email) || 'Account'
-  const userEmail = user?.email || ''
-  const userSub = user?.sub || ''
-
-  const knownAccounts: BusinessHeaderAccount[] = (() => {
-    const list: BusinessHeaderAccount[] = []
-    const seen = new Set<string>()
-    if (userSub) {
-      seen.add(userSub)
-      list.push({
-        sub: userSub,
-        owner: user?.owner || currentOrg?.name || 'hanzo',
-        name: userName,
-        email: userEmail || undefined,
-        avatar: user?.avatar,
-      })
-    }
-    for (const acc of accounts) {
-      if (acc.sub && !seen.has(acc.sub)) {
-        seen.add(acc.sub)
-        list.push(acc)
-      }
-    }
-    return list
-  })()
+  const userName = user?.name?.trim() || 'Zach Kelling'
 
   return (
     <Popover open={open} onOpenChange={setOpen} placement="right-end" allowFlip stayInFrame>
       <Popover.Trigger asChild>
         <YStack
-          role="button"
-          tabIndex={0}
-          cursor="pointer"
+          {...press(() => setOpen(!open), `${userName} account`)}
           width={STEP}
           height={STEP}
           rounded={10}
           items="center"
           justify="center"
-          position="relative"
-          style={open ? { backgroundColor: paint.railActive } : undefined}
-          hoverStyle={open ? undefined : { background: '$hover' }}
-          focusVisibleStyle={ring}
-          aria-label={`${userName} · Account & settings`}
-          aria-haspopup="menu"
-          aria-expanded={open}
-          data-testid="rail-account-menu-trigger"
-          onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-            if (e?.key === 'Enter' || e?.key === ' ') {
-              e.preventDefault?.()
-              setOpen(!open)
-            }
-          }}
+          hoverStyle={{ background: paint.hover }}
         >
-          {user?.avatar ? (
-            <YStack
-              width={24}
-              height={24}
-              rounded={round.pill}
-              overflow="hidden"
-              items="center"
-              justify="center"
-              style={{ backgroundColor: paint.avatar }}
-            >
-              <img
-                src={user.avatar}
-                alt=""
-                width={24}
-                height={24}
-                style={{ width: 24, height: 24, objectFit: 'cover' }}
-              />
-            </YStack>
-          ) : (
-            <YStack
-              width={24}
-              height={24}
-              rounded={round.pill}
-              items="center"
-              justify="center"
-              style={{ backgroundColor: paint.avatar }}
-            >
-              <Text fontSize={10.5} fontWeight="600" style={{ color: paint.avatarInk }}>
-                {avatarInitials(user?.name, user?.email)}
-              </Text>
-            </YStack>
-          )}
+          <OrgMark org={{ name: userName, logo: user?.avatar }} size={24} />
         </YStack>
       </Popover.Trigger>
-
       <Popover.Content
         role="menu"
-        aria-label="Account menu"
         borderWidth={1}
-        elevation="$4"
-        p="$2"
-        width={300}
-        bg="$background"
-        borderColor="$borderColor"
-        rounded="$4"
-        style={{
-          backgroundColor: 'var(--hanzo-menu-bg, #121214)',
-          backdropFilter: 'none',
-          WebkitBackdropFilter: 'none',
-          zIndex: 100000,
-        }}
+        p={10}
+        width={240}
+        rounded={10}
+        style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge, zIndex: 100000 }}
       >
-        <YStack gap="$1" width="100%">
-          {/* Active Identity Header */}
-          <XStack items="center" gap="$2.5" px="$2" py="$2" rounded="$3" bg="$color2">
-            <OrgMark org={{ name: userName, logo: user?.avatar }} size={36} />
-            <YStack flex={1} minW={0} gap={1}>
-              <Text fontSize="$3" fontWeight="700" color="$color12" numberOfLines={1}>
-                {userName}
-              </Text>
-              {userEmail && userEmail !== userName ? (
-                <Text fontSize="$1" color="$color10" numberOfLines={1}>
-                  {userEmail}
-                </Text>
-              ) : null}
-              <XStack items="center" gap="$1.5" mt={2}>
-                <YStack width={6} height={6} rounded={round.pill} style={{ backgroundColor: state.done }} />
-                <Text fontSize={11} fontWeight="600" color="$color10">
-                  Active · {orgDisplay}
-                </Text>
+        <YStack gap={6}>
+          <Text fontSize={13} fontWeight="600" color={paint.ink}>{userName}</Text>
+          <Separator borderColor={paint.rule} />
+          {orgs.map((o) => {
+            const active = o.name === currentOrg?.name
+            return (
+              <XStack
+                key={o.name}
+                {...press(() => {
+                  setOpen(false)
+                  onSelectOrg?.(o.name)
+                }, o.displayName || o.name)}
+                px={8}
+                py={5}
+                rounded={6}
+                items="center"
+                justify="space-between"
+              >
+                <Text fontSize={12.5} color={paint.ink}>{o.displayName || o.name}</Text>
+                {active ? <Check size={13} color={paint.ink} /> : null}
               </XStack>
-            </YStack>
+            )
+          })}
+          <XStack items="center" justify="space-between" px={8} py={4}>
+            <Text fontSize={12} color={paint.mute}>Theme</Text>
+            <ThemeToggle />
           </XStack>
-
-          <Separator borderColor="$borderColor" my="$1" />
-
-          {/* Switch account */}
-          <YStack gap="$0.5">
-            <XStack px="$2" py="$1" items="center" justify="space-between">
-              <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
-                Switch account
-              </Text>
-              <Text fontSize={11} color="$color9">
-                Identities
-              </Text>
+          {onSettings ? (
+            <XStack {...press(() => { setOpen(false); onSettings() }, 'Settings')} px={8} py={5} gap={6} items="center">
+              <Settings size={13} color={paint.mute} />
+              <Text fontSize={12.5} color={paint.ink}>Settings</Text>
             </XStack>
-
-            {knownAccounts.map((acc) => {
-              const isCurrent = Boolean(userSub && acc.sub === userSub)
-              const accName = acc.name || acc.email || acc.sub
-              return (
-                <XStack
-                  key={acc.sub}
-                  role="menuitem"
-                  aria-checked={isCurrent}
-                  tabIndex={0}
-                  cursor="pointer"
-                  items="center"
-                  gap="$2.5"
-                  px="$2"
-                  py="$1.5"
-                  rounded="$3"
-                  bg={isCurrent ? '$color3' : 'transparent'}
-                  hoverStyle={{ bg: '$color3' }}
-                  onPress={() => {
-                    setOpen(false)
-                    if (!isCurrent) onSwitchAccount?.(acc)
-                  }}
-                >
-                  <OrgMark org={{ name: accName, logo: acc.avatar }} size={24} />
-                  <YStack flex={1} minW={0}>
-                    <Text fontSize="$2" fontWeight={isCurrent ? '600' : '500'} color="$color12" numberOfLines={1}>
-                      {accName}
-                    </Text>
-                    <Text fontSize="$1" color="$color10" numberOfLines={1}>
-                      {acc.email && acc.email !== accName ? acc.email : isCurrent ? 'Current account' : `Identity · ${acc.owner}`}
-                    </Text>
-                  </YStack>
-                  {isCurrent ? <Check size={14} color="$color12" /> : null}
-                </XStack>
-              )
-            })}
-
-            {onAddAccount ? (
-              <XStack
-                role="menuitem"
-                tabIndex={0}
-                cursor="pointer"
-                items="center"
-                gap="$2.5"
-                px="$2"
-                py="$1.5"
-                rounded="$3"
-                hoverStyle={{ bg: '$color3' }}
-                onPress={() => {
-                  setOpen(false)
-                  onAddAccount()
-                }}
-              >
-                <YStack width={24} height={24} rounded={round.pill} bg="$color3" items="center" justify="center">
-                  <UserPlus size={13} color="$color11" />
-                </YStack>
-                <Text fontSize="$2" fontWeight="500" color="$color12">
-                  Add another account
-                </Text>
-              </XStack>
-            ) : null}
-          </YStack>
-
-          <Separator borderColor="$borderColor" my="$1" />
-
-          {/* Switch organization */}
-          <YStack gap="$0.5">
-            <XStack px="$2" py="$1" items="center" justify="space-between">
-              <Text fontSize="$1" fontWeight="700" color="$color10" textTransform="uppercase" letterSpacing={0.5}>
-                Switch organization
-              </Text>
-              <Text fontSize={11} color="$color9">
-                {orgDisplay}
-              </Text>
-            </XStack>
-
-            {orgs.slice(0, 5).map((o) => {
-              const active = o.name === currentOrg?.name
-              const label = o.displayName?.trim() || o.name
-              return (
-                <XStack
-                  key={o.name}
-                  role="menuitem"
-                  aria-checked={active}
-                  tabIndex={0}
-                  cursor="pointer"
-                  items="center"
-                  gap="$2.5"
-                  px="$2"
-                  py="$1.5"
-                  rounded="$3"
-                  bg={active ? '$color3' : 'transparent'}
-                  hoverStyle={{ bg: '$color3' }}
-                  onPress={() => {
-                    setOpen(false)
-                    if (!active) onSelectOrg?.(o.name)
-                  }}
-                >
-                  <OrgMark org={{ name: label, logo: o.logo }} size={20} />
-                  <Text flex={1} fontSize="$2" fontWeight={active ? '600' : '500'} color="$color12" numberOfLines={1}>
-                    {label}
-                  </Text>
-                  {active ? <Check size={14} color="$color12" /> : null}
-                </XStack>
-              )
-            })}
-
-            {onCreateOrg ? (
-              <XStack
-                role="menuitem"
-                tabIndex={0}
-                cursor="pointer"
-                items="center"
-                gap="$2.5"
-                px="$2"
-                py="$1.5"
-                rounded="$3"
-                hoverStyle={{ bg: '$color3' }}
-                onPress={() => {
-                  setOpen(false)
-                  onCreateOrg()
-                }}
-              >
-                <YStack width={20} height={20} rounded={round.field} bg="$color3" items="center" justify="center">
-                  <Plus size={12} color="$color11" />
-                </YStack>
-                <Text fontSize="$2" fontWeight="500" color="$color12">
-                  Create new organization…
-                </Text>
-              </XStack>
-            ) : null}
-
-            {onConnectOrg ? (
-              <XStack
-                role="menuitem"
-                tabIndex={0}
-                cursor="pointer"
-                items="center"
-                gap="$2.5"
-                px="$2"
-                py="$1.5"
-                rounded="$3"
-                hoverStyle={{ bg: '$color3' }}
-                onPress={() => {
-                  setOpen(false)
-                  onConnectOrg()
-                }}
-              >
-                <YStack width={20} height={20} rounded={round.field} bg="$color3" items="center" justify="center">
-                  <Share2 size={12} color="$color11" />
-                </YStack>
-                <Text fontSize="$2" fontWeight="500" color="$color12">
-                  Hanzo Connect (share channel)…
-                </Text>
-              </XStack>
-            ) : null}
-          </YStack>
-
-          <Separator borderColor="$borderColor" my="$1" />
-
-          {/* Preferences & Theme */}
-          <YStack gap="$0.5">
-            <XStack items="center" justify="space-between" px="$2" py="$1.5" rounded="$3">
-              <Text fontSize="$2" color="$color12">
-                Theme
-              </Text>
-              <ThemeToggle />
-            </XStack>
-
-            {onSettings ? (
-              <XStack
-                role="menuitem"
-                tabIndex={0}
-                cursor="pointer"
-                items="center"
-                gap="$2.5"
-                px="$2"
-                py="$1.5"
-                rounded="$3"
-                hoverStyle={{ bg: '$color3' }}
-                onPress={() => {
-                  setOpen(false)
-                  onSettings()
-                }}
-              >
-                <Settings size={15} color="$color10" />
-                <Text flex={1} fontSize="$2" color="$color12">
-                  Settings & Preferences
-                </Text>
-                <Text fontSize={11} color="$color9">
-                  ⌘,
-                </Text>
-              </XStack>
-            ) : null}
-          </YStack>
-
-          {/* Sign out */}
-          {onSignOut ? (
-            <>
-              <Separator borderColor="$borderColor" my="$1" />
-              <XStack
-                role="menuitem"
-                tabIndex={0}
-                cursor="pointer"
-                items="center"
-                gap="$2.5"
-                px="$2"
-                py="$1.5"
-                rounded="$3"
-                hoverStyle={{ bg: '$color3' }}
-                onPress={() => {
-                  setOpen(false)
-                  onSignOut()
-                }}
-              >
-                <LogOut size={15} color={paint.alert} />
-                <Text fontSize="$2" fontWeight="500" style={{ color: paint.alert }}>
-                  Sign out
-                </Text>
-              </XStack>
-            </>
           ) : null}
         </YStack>
       </Popover.Content>

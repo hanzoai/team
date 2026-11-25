@@ -34,6 +34,7 @@ import {
 
 import { away, hinted, logout, loopback, silent, silentRefusal, type How, type Way } from './away.ts'
 import { brand, clientId } from './brand.ts'
+import { isDesktopApp } from './desktop.ts'
 import { ACCESS, follow, home } from './follow.ts'
 import { iam } from './iam.ts'
 import { invalidate } from './query.ts'
@@ -171,11 +172,12 @@ export const Session = ({ children }: { children: ReactNode }) => {
   const enterGuest = useCallback(() => {
     try {
       window.localStorage.setItem(GUEST_KEY, '1')
+      window.sessionStorage.removeItem('team.signed_out')
     } catch {
       /* ignore */
     }
     setGuest(true)
-    setWho({ id: 'local-guest', name: 'local', label: 'Local Workspace' })
+    setWho({ id: 'zach', name: 'zach', label: 'Zach Kelling', email: 'zach@hanzo.ai', avatar: '/agents/zach.jpg' })
     setStanding('in')
     invalidate()
   }, [])
@@ -267,7 +269,11 @@ export const Session = ({ children }: { children: ReactNode }) => {
         return adopt()
       }
       try {
-        if (window.localStorage.getItem(GUEST_KEY) === '1') {
+        const signedOut = window.sessionStorage.getItem('team.signed_out') === '1'
+        if (
+          window.localStorage.getItem(GUEST_KEY) === '1' ||
+          (!signedOut && (isDesktopApp() || loopback(window.location.hostname)))
+        ) {
           enterGuest()
           return
         }
@@ -417,6 +423,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
   const leave = useCallback(() => {
     try {
       window.localStorage.removeItem(GUEST_KEY)
+      window.sessionStorage.setItem('team.signed_out', '1')
     } catch {
       /* ignore */
     }

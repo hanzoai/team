@@ -1,53 +1,48 @@
 /**
- * THE RAIL — the app's spine: the inbox bell, one glyph per surface, the quick
- * launcher, and the user account menu anchored at the bottom-left corner (matching
- * Slack, Hanzo Desktop, and Hanzo Bot).
+ * COL 1 — Discord-Style Guild / Organization Rail (`56px`, `#000000`, `1px` `#1a1a1e` right border)
  *
- * The selected surface is a SOFT GLOW behind its glyph and a brighter glyph, not
- * a plate and not a pill.
+ * - Top squircle: Official 7-path `@hanzo/logo` mark (Home / Command Center)
+ * - `1px` divider
+ * - Org squircles: `H` Hanzo [active white left pill], `L` Lux, `Z` Zoo, `S` Science
+ * - `+` Create / Join Organization
  */
-import { ScrollArea, Separator, SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
-import { OrgMark } from '@hanzo/ui/product'
-import { Bell, Plus, SlidersHorizontal } from '@hanzogui/lucide-icons-2'
-import type { ReactNode } from 'react'
+import { SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
+import { Plus } from '@hanzogui/lucide-icons-2'
 import { useLocation } from 'react-router'
 
-import { RailAccountMenu, type RailAccountMenuProps } from './BusinessHeader.tsx'
-import { useNotices } from './counts.ts'
-import { ICON, PAD, RAIL, STEP } from './measure.ts'
+import { paint, ring, round } from '~/theme/theme.ts'
+import { selectGuildOrg, useWorkspace } from '~/workspace/store.ts'
+import type { RailAccountMenuProps } from './BusinessHeader.tsx'
+import { openConnectModal } from './ConnectOrgModal.tsx'
+import { RAIL, STEP } from './measure.ts'
 import { press } from './press.ts'
-import { surfaceAt, SURFACES } from './surfaces.ts'
-import { paint, round } from '~/theme/theme'
-
-const RING = { outlineColor: '$outlineColor', outlineWidth: 2, outlineStyle: 'solid' } as const
-
-/** Crisp 32x32 rounded-8px active pill matching hanzo.app and hanzo.bot. */
-const ACTIVE_PILL = { backgroundColor: paint.railActive }
-
-/** The one hue gui has no token for. Addressed-to-you is a categorical colour and
- *  it is `~/theme`'s, so it arrives as CSS rather than as a prop. */
-const DOT = { background: paint.alert }
 
 export type RailProps = {
-  /** Whether the aside is showing, so the bell can say so. */
-  notices: boolean
-  onNotices: () => void
-  /** The shell decides what a surface tap means: at this width it may open the
-   *  navigator's drawer rather than go where you already are. */
+  notices?: boolean
+  onNotices?: () => void
   onSurface: (path: string) => void
-  /** Account menu props rendered at the bottom-left corner of the rail. */
   account?: RailAccountMenuProps
 }
 
-export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
+/** Official 7-path `@hanzo/logo` mark */
+export function HanzoLogoMark({ size = 20 }: { size?: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 67 67" fill="none" aria-hidden="true">
+      <path d="M22.21 67V44.6369H0V67H22.21Z" fill="currentColor" />
+      <path d="M0 44.6369L22.21 46.8285V44.6369H0Z" fill="currentColor" fillOpacity="0.65" />
+      <path d="M66.7038 22.3184H22.2534L0.0878906 44.6367H44.4634L66.7038 22.3184Z" fill="currentColor" />
+      <path d="M22.21 0H0V22.3184H22.21V0Z" fill="currentColor" />
+      <path d="M66.7198 0H44.5098V22.3184H66.7198V0Z" fill="currentColor" />
+      <path d="M66.6753 22.3185L44.5098 20.0822V22.3185H66.6753Z" fill="currentColor" fillOpacity="0.65" />
+      <path d="M66.7198 67V44.6369H44.5098V67H66.7198Z" fill="currentColor" />
+    </svg>
+  )
+}
+
+export const Rail = ({ onSurface, account }: RailProps) => {
   const { pathname } = useLocation()
-  const waiting = useNotices()
-  const orgItems =
-    account?.orgs && account.orgs.length > 0
-      ? account.orgs
-      : account?.currentOrg?.name || account?.currentOrg?.displayName
-        ? [account.currentOrg]
-        : []
+  const { orgs, activeOrgId } = useWorkspace()
+  const onHome = pathname === '/home'
 
   return (
     <YStack
@@ -56,169 +51,133 @@ export const Rail = ({ notices, onNotices, onSurface, account }: RailProps) => {
       height="100%"
       items="center"
       justify="space-between"
-      pt={2}
-      pb={2}
-      style={{ backgroundColor: paint.rail }}
+      py={10}
+      borderRightWidth={1}
+      style={{ backgroundColor: paint.rail, borderRightColor: paint.railRule }}
       data-parity-key="shell.rail"
+      data-testid="guild-org-rail"
     >
-      <ScrollArea flex={1} minH={0} width="100%">
-        <YStack items="center" width="100%" gap={4}>
-          {orgItems.length > 0 ? (
-            <>
-              <YStack items="center" width="100%" gap={5} data-parity-key="shell.orgs">
-                {orgItems.slice(0, 5).map((org) => {
-                  const active = org.name === account?.currentOrg?.name || orgItems.length === 1
-                  const label = org.displayName?.trim() || org.name || 'Workspace'
-                  return (
-                    <Tooltip key={org.name || label}>
-                      <TooltipTrigger>
-                        <YStack
-                          {...press(() => account?.onSelectOrg?.(org.name), `${label} organization`)}
-                          width={STEP}
-                          height={STEP}
-                          rounded={10}
-                          items="center"
-                          justify="center"
-                          position="relative"
-                          style={active ? ACTIVE_PILL : undefined}
-                          hoverStyle={active ? undefined : { background: '$hover' }}
-                          focusVisibleStyle={RING}
-                        >
-                          {active ? (
-                            <YStack
-                              position="absolute"
-                              l={-6}
-                              width={3}
-                              height={16}
-                              rounded={round.pill}
-                              style={{ backgroundColor: paint.railFgActive }}
-                            />
-                          ) : null}
-                          <OrgMark org={{ name: label, logo: org.logo }} size={22} />
-                        </YStack>
-                      </TooltipTrigger>
-                      <TooltipContent>{label}</TooltipContent>
-                    </Tooltip>
-                  )
-                })}
-                {account?.onConnectOrg ? (
-                  <Tooltip>
-                    <TooltipTrigger>
-                      <YStack
-                        {...press(account.onConnectOrg, 'Connect or switch organization')}
-                        width={28}
-                        height={28}
-                        rounded={8}
-                        items="center"
-                        justify="center"
-                        hoverStyle={{ background: '$hover' }}
-                        focusVisibleStyle={RING}
-                      >
-                        <Plus size={15} color={paint.railFg} />
-                      </YStack>
-                    </TooltipTrigger>
-                    <TooltipContent>Connect organization</TooltipContent>
-                  </Tooltip>
-                ) : null}
-              </YStack>
-
-              <Rule />
-            </>
-          ) : null}
-
-          <Slot
-            label={
-              waiting > 0
-                ? `${notices ? 'Hide' : 'Show'} Activity (${waiting} unread)`
-                : notices
-                  ? 'Hide Activity'
-                  : 'Show Activity'
-            }
-            pressed={notices}
-            onPress={onNotices}
-          >
-            <Bell size={ICON} color={notices ? paint.railFgActive : paint.railFg} />
-            {waiting > 0 ? (
+      <YStack items="center" width="100%" gap={8}>
+        {/* Top Squircle: Official 7-path Hanzo Command Center / Home */}
+        <Tooltip>
+          <TooltipTrigger>
+            <YStack width="100%" items="center" justify="center" position="relative">
+              {onHome ? (
+                <YStack
+                  position="absolute"
+                  l={0}
+                  width={3.5}
+                  height={20}
+                  rounded={round.pill}
+                  style={{ backgroundColor: paint.railFgActive }}
+                />
+              ) : null}
               <YStack
-                position="absolute"
-                t={2}
-                r={2}
-                minW={14}
-                height={14}
-                px={3}
-                rounded={round.pill}
+                {...press(() => onSurface('/home'), 'Hanzo Command Center (Home)')}
+                width={STEP}
+                height={STEP}
+                rounded={12}
                 items="center"
                 justify="center"
-                style={DOT}
+                borderWidth={1}
+                style={{
+                  backgroundColor: onHome ? paint.railActive : paint.elevated,
+                  borderColor: onHome ? paint.border : paint.rule,
+                  color: paint.railFgActive,
+                }}
+                hoverStyle={{ background: paint.railActive }}
+                focusVisibleStyle={ring}
+                data-testid="guild-rail-home"
               >
-                <SizableText
-                  fontSize={9}
-                  lineHeight={11}
-                  fontWeight="700"
-                  style={{ color: paint.panel }}
-                >
-                  {waiting}
-                </SizableText>
+                <HanzoLogoMark size={19} />
               </YStack>
-            ) : null}
-          </Slot>
+            </YStack>
+          </TooltipTrigger>
+          <TooltipContent>Hanzo Command Center · Home</TooltipContent>
+        </Tooltip>
 
-          <Rule />
+        {/* 1px Guild Divider */}
+        <YStack width={28} height={1} style={{ backgroundColor: paint.railRule }} />
 
-          {SURFACES.map((s) => {
-            const here = surfaceAt(pathname)?.id === s.id
+        {/* Organization Squircles: H (Hanzo), L (Lux), Z (Zoo), S (Science) */}
+        <YStack items="center" width="100%" gap={8} data-parity-key="shell.orgs">
+          {orgs.map((org) => {
+            const active = org.id === activeOrgId
             return (
-              <Slot key={s.id} label={s.label} here={here} onPress={() => onSurface(s.path)}>
-                <s.icon size={ICON} color={here ? paint.railFgActive : paint.railFg} />
-              </Slot>
+              <Tooltip key={org.id}>
+                <TooltipTrigger>
+                  <YStack width="100%" items="center" justify="center" position="relative">
+                    {active ? (
+                      <YStack
+                        position="absolute"
+                        l={0}
+                        width={3.5}
+                        height={22}
+                        rounded={round.pill}
+                        style={{ backgroundColor: paint.railFgActive }}
+                        data-testid={`guild-pill-${org.id}`}
+                      />
+                    ) : null}
+                    <YStack
+                      {...press(() => {
+                        selectGuildOrg(org.id)
+                        account?.onSelectOrg?.(org.id)
+                      }, `${org.name} organization`)}
+                      width={STEP}
+                      height={STEP}
+                      rounded={active ? 12 : 19}
+                      items="center"
+                      justify="center"
+                      borderWidth={1}
+                      style={{
+                        backgroundColor: active ? paint.railActive : paint.surface,
+                        borderColor: active ? paint.border : paint.rule,
+                      }}
+                      hoverStyle={{ background: paint.railActive }}
+                      focusVisibleStyle={ring}
+                      data-testid={`guild-org-${org.id}`}
+                    >
+                      <SizableText
+                        fontSize={13}
+                        fontWeight={active ? '700' : '600'}
+                        style={{ color: active ? paint.railFgActive : paint.railFg }}
+                      >
+                        {org.letter}
+                      </SizableText>
+                    </YStack>
+                  </YStack>
+                </TooltipTrigger>
+                <TooltipContent>{`${org.name} — ${org.subtitle}`}</TooltipContent>
+              </Tooltip>
             )
           })}
-        </YStack>
-      </ScrollArea>
 
-      <YStack items="center" width="100%" gap={6} pt={6}>
-        {account?.onSettings ? (
-          <Slot label="Preferences (⌘,)" onPress={account.onSettings}>
-            <SlidersHorizontal size={16} color={paint.railFg} />
-          </Slot>
-        ) : null}
-        <RailAccountMenu {...account} />
+          {/* + Create / Join Organization */}
+          <Tooltip>
+            <TooltipTrigger>
+              <YStack
+                {...press(() => {
+                  if (account?.onConnectOrg) account.onConnectOrg()
+                  else openConnectModal('connect')
+                }, 'Create or join organization')}
+                width={STEP}
+                height={STEP}
+                rounded={19}
+                items="center"
+                justify="center"
+                borderWidth={1}
+                style={{ backgroundColor: paint.surface, borderColor: paint.rule }}
+                hoverStyle={{ background: paint.railActive }}
+                focusVisibleStyle={ring}
+                data-testid="guild-org-add"
+              >
+                <Plus size={16} color={paint.railFg} />
+              </YStack>
+            </TooltipTrigger>
+            <TooltipContent>Create or join organization</TooltipContent>
+          </Tooltip>
+        </YStack>
       </YStack>
     </YStack>
-  )
-}
-
-const Rule = () => <Separator width={RAIL - PAD * 2} my={4} borderColor="$edge" />
-
-const Slot = ({ label, here = false, pressed, onPress, children }: {
-  label: string
-  here?: boolean
-  pressed?: boolean
-  onPress: () => void
-  children: ReactNode
-}) => {
-  const active = Boolean(here || pressed)
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <YStack
-          {...press(onPress, label)}
-          aria-current={here ? 'page' : undefined}
-          aria-pressed={pressed}
-          width={STEP}
-          height={STEP}
-          items="center"
-          justify="center"
-          position="relative"
-          rounded={10}
-          style={active ? ACTIVE_PILL : undefined}
-          hoverStyle={active ? undefined : { background: '$hover' }}
-          focusVisibleStyle={RING}
-        >
-          {children}
-        </YStack>
-      </TooltipTrigger>
-      <TooltipContent>{label}</TooltipContent>
-    </Tooltip>
   )
 }

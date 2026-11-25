@@ -15,9 +15,9 @@ import { useParams, useSearchParams } from 'react-router'
 import { XStack, YStack } from '@hanzo/ui'
 
 import { useSpace } from '~/data/space.tsx'
-import { standingIs, useBoard, useCrew, useProject, useProjects } from '~/serve'
+import { useBoard, useCrew, useProject, useProjects } from '~/serve'
+import { getLocalCrew, localBoardSource } from '~/workspace/board.ts'
 import { Board } from './board/Board.tsx'
-import { standby } from './board/standby.ts'
 import type { Issue, Priority, Status } from './board/model.ts'
 import { Head, VIEWS, type Step, type View } from './Head.tsx'
 import { IssueDrawer, NewIssueModal } from './IssueDrawer.tsx'
@@ -32,10 +32,12 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const queryIssue = searchParams.get('issue')
   const project = useProject(id)
-  const { standing } = useSpace()
-  const source = useBoard(id, mine) ?? standby(standingIs(standing))
+  const { plane } = useSpace()
+  const cloudBoard = useBoard(id, mine)
+  const source = plane && cloudBoard ? cloudBoard : localBoardSource
   const add = source.add?.bind(source)
-  const people = useCrew(id)
+  const cloudCrew = useCrew(id)
+  const people = cloudCrew.length > 0 ? cloudCrew : getLocalCrew()
   const [only, setOnly] = useState<Priority[]>([])
   const [selectedId, setSelectedId] = useState<string | null>(queryIssue)
   const [liveIssues, setLiveIssues] = useState<Issue[]>([])

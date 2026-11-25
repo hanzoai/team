@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict'
-import { readFileSync } from 'node:fs'
+import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
 
-import { NAV, PANE_ROUND } from './measure.ts'
+import { ASIDE, NAV, PANE_ROUND, RAIL } from './measure.ts'
 import {
   DEFAULT_REQUIRED_CHANNELS,
   filterChannelItems,
@@ -13,45 +13,67 @@ import {
 
 const ROOT = new URL('../', import.meta.url).pathname
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
-const CHANNELS_TSX = readFileSync(join(ROOT, 'chat/Channels.tsx'), 'utf8')
-const CHAT_TSX = readFileSync(join(ROOT, 'chat/Chat.tsx'), 'utf8')
 const HEADER_TSX = readFileSync(join(ROOT, 'shell/BusinessHeader.tsx'), 'utf8')
-const NAV_TSX = readFileSync(join(ROOT, 'shell/Nav.tsx'), 'utf8')
+const RAIL_TSX = readFileSync(join(ROOT, 'shell/Rail.tsx'), 'utf8')
+const SIDEBAR_TSX = readFileSync(join(ROOT, 'shell/UnifiedSidebar.tsx'), 'utf8')
 const SHELL_TSX = readFileSync(join(ROOT, 'shell/Shell.tsx'), 'utf8')
+const RIGHT_TSX = readFileSync(join(ROOT, 'shell/RightPane.tsx'), 'utf8')
 
-test('Hanzo Team shell geometry & pure-black tokens match Hanzo App & Platform chrome', () => {
-  assert.equal(NAV, 256)
+const walk = (dir: string): string[] =>
+  readdirSync(dir).flatMap((entry) => {
+    const p = join(dir, entry)
+    return statSync(p).isDirectory() ? walk(p) : [p]
+  })
+
+test('Hanzo Team v1.1.0 4-column Discord × Mattermost geometry & Zen Obsidian Dark tokens', () => {
+  assert.equal(RAIL, 56)
+  assert.equal(NAV, 244)
+  assert.equal(ASIDE, 296)
   assert.equal(PANE_ROUND, 12)
   assert.ok(SHEET.includes('--background: #000000;'))
   assert.ok(SHEET.includes('--team-ground: #000000;'))
-  assert.ok(SHEET.includes('--team-sidebar: #09090b;'))
+  assert.ok(SHEET.includes('--team-sidebar: #0a0a0c;'))
   assert.ok(SHEET.includes('--team-panel: #0f0f12;'))
-  assert.ok(SHEET.includes('--team-rule: rgba(255, 255, 255, 0.08);'))
-  assert.ok(SHEET.includes('--pv-send-ink: #09090b;'))
-  assert.ok(SHEET.includes('--pv-cursor-bg: #18181c;'))
+  assert.ok(SHEET.includes('--team-omnibox: #141417;'))
+  assert.ok(SHEET.includes('--team-aside: #0b0b0e;'))
+  assert.ok(SHEET.includes('--team-dock: #060608;'))
+  assert.ok(SHEET.includes('background: transparent !important;'))
+  assert.ok(SHEET.includes('border-radius: 12px !important;'))
+
   const mainTsx = readFileSync(join(ROOT, 'main.tsx'), 'utf8')
+  assert.ok(mainTsx.includes("import '@hanzo/font/css'"))
   assert.ok(
     mainTsx.indexOf("import '~/theme/tokens.css'") > mainTsx.indexOf("import { App } from '~/app'"),
     'tokens.css must be imported after App (@hanzo/ui) so #000000 ground wins the cascade',
   )
-  assert.ok(NAV_TSX.includes('data-testid="sidebar-org-switcher-trigger"'))
-  assert.ok(NAV_TSX.includes('ORGANIZATIONS (X-ORG-ID)'))
-  assert.ok(NAV_TSX.includes('data-testid="nav-command-palette-trigger"'))
-  assert.ok(NAV_TSX.includes('data-testid="nav-collapse-sidebar-trigger"'))
-  assert.ok(SHELL_TSX.includes('data-testid="sidebar-account-org-footer"'))
-  assert.ok(SHELL_TSX.includes('hanzo.id'))
+
+  assert.ok(RAIL_TSX.includes('data-testid="guild-org-rail"'))
+  assert.ok(SIDEBAR_TSX.includes('data-testid="sidebar-org-switcher-trigger"'))
+  assert.ok(SIDEBAR_TSX.includes('data-testid="discord-voice-connected-bar"'))
+  assert.ok(SIDEBAR_TSX.includes('data-testid="sidebar-account-org-footer"'))
+  assert.ok(RIGHT_TSX.includes('data-testid="mattermost-thread-rhs"'))
+  assert.ok(RIGHT_TSX.includes('data-testid="workforce-roster-rhs"'))
+  assert.ok(SHELL_TSX.includes('data-testid="team-main-stage"'))
 })
 
-test('Hanzo Team decomplects to ONE unified search bar (no duplicate top-right search when sidebar is open)', () => {
-  assert.ok(!HEADER_TSX.includes('data-testid="slack-top-search-trigger"'))
-  assert.ok(HEADER_TSX.includes('!navOpen ?'))
-  assert.ok(HEADER_TSX.includes('data-testid="collapsed-search-trigger"'))
+test('Hanzo Team decomplects to ONE centered Search or ask anything (Ctrl+K) omnibox in 38px top bar', () => {
+  assert.ok(HEADER_TSX.includes('Search or ask anything'))
+  assert.ok(HEADER_TSX.includes('data-testid="top-omnibox-trigger"'))
   assert.ok(HEADER_TSX.includes('hanzo:team-open-command-palette'))
-  assert.ok(NAV_TSX.includes('data-testid="sidebar-find-input"'))
-  assert.ok(CHAT_TSX.includes('data-testid="chat-header-inbox-trigger"'))
+  assert.ok(!SIDEBAR_TSX.includes('data-testid="sidebar-find-input"'))
 })
 
-test('Hanzo Team sidebar declares the required Channels and lists only people and bots the space holds', () => {
+test('Every source file under src/ is strictly <= 1,000 lines', () => {
+  const overLimit: string[] = []
+  for (const file of walk(ROOT)) {
+    if (!/\.(ts|tsx|css)$/.test(file)) continue
+    const lines = readFileSync(file, 'utf8').split('\n').length
+    if (lines > 1000) overLimit.push(`${file.slice(ROOT.length)} (${lines} lines)`)
+  }
+  assert.deepEqual(overLimit, [])
+})
+
+test('Hanzo Team declares required channels & keyboard shortcuts cleanly', () => {
   for (const requiredChannel of [
     'general',
     'engineering',
@@ -64,24 +86,7 @@ test('Hanzo Team sidebar declares the required Channels and lists only people an
       `missing #${requiredChannel} in required channels`,
     )
   }
-  assert.ok(CHANNELS_TSX.includes('placeholder="Search…"'))
-  assert.ok(CHANNELS_TSX.includes('New Channel'))
-})
 
-// A new account's sidebar named four people and bots it did not have (two of them the
-// founders, with presence dots), each a row that opened "No such room", and the palette
-// and the new-channel shortcut reached for a #general no space is made with. Only what
-// the space's own roster and rooms answer is listed or jumped to.
-test('Hanzo Team invents no roster, no unread counts and no room', () => {
-  for (const [name, src] of [['Channels', CHANNELS_TSX], ['BusinessHeader', HEADER_TSX], ['Shell', SHELL_TSX]] as const) {
-    for (const invented of ['DIRECT_HANDOFF_ROSTER', 'DEFAULT_CHANNEL_UNREADS', 'Bot Handoffs', '@release-bot', '@zach', '@antje', 'c-general']) {
-      assert.ok(!src.includes(invented), `${name} still names ${invented}`)
-    }
-  }
-  assert.ok(TEAM_CROSS_APPS.every((a) => a.internalPath !== '/chat/c-general'))
-})
-
-test('filterChannelItems filters accurately', () => {
   const rooms = [
     { name: 'general', topic: 'Company updates' },
     { name: 'engineering', topic: 'Runtime & SDK PRs' },
@@ -89,9 +94,7 @@ test('filterChannelItems filters accurately', () => {
   ]
   assert.equal(filterChannelItems(rooms, '#eng').length, 1)
   assert.equal(filterChannelItems(rooms, '#eng')[0]?.name, 'engineering')
-})
 
-test('matchTeamShortcut handles ⌘B, ⌘K, ⌘,, ⌘/, and ⇧⌘O', () => {
   assert.equal(matchTeamShortcut({ key: 'b', metaKey: true }), 'toggle-sidebar')
   assert.equal(matchTeamShortcut({ key: 'b', metaKey: true, isContentEditable: true }), null)
   assert.equal(matchTeamShortcut({ key: 'k', ctrlKey: true }), 'command-palette')

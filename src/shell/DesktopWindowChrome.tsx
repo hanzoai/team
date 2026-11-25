@@ -4,6 +4,14 @@ import { useEffect, useRef, useState, type CSSProperties, type MouseEvent as Rea
 import { isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
 import { openSettingsModal } from '~/settings/SettingsModal.tsx'
 import { useHanzoPreferences } from '~/settings/preferences.ts'
+import {
+  selectGuildOrg,
+  setAppearanceMode,
+  setPhoneModalOpen,
+  useWorkspace,
+  type AppearanceMode,
+} from '~/workspace/store.ts'
+import { openConnectModal } from './ConnectOrgModal.tsx'
 
 const CLOSE_HOVER = 'var(--state-error, #e5484d)'
 const CLOSE_FG = 'var(--hanzo-close-fg, #ffffff)'
@@ -67,20 +75,39 @@ function invokeWindowCmd(cmd: string, extra?: Record<string, unknown>): Promise<
   return Promise.resolve(null)
 }
 
-let lastWindowMode: 'login' | 'workspace' | null = null
+export type TeamWindowMode = 'login' | 'workspace' | 'mini'
 
-export function setTeamDesktopWindowMode(mode: 'login' | 'workspace') {
+let lastWindowMode: TeamWindowMode | null = null
+
+export function getTeamDesktopWindowMode(): TeamWindowMode {
+  if (typeof document !== 'undefined') {
+    const m = document.documentElement.dataset.windowMode
+    if (m === 'login' || m === 'mini' || m === 'workspace') return m
+  }
+  return lastWindowMode ?? 'workspace'
+}
+
+export function setTeamDesktopWindowMode(mode: TeamWindowMode) {
   if (typeof document !== 'undefined') {
     document.documentElement.dataset.windowMode = mode
   }
   if (!isDesktopApp() || lastWindowMode === mode) return
   lastWindowMode = mode
   void invokeWindowCmd('team_set_window_mode', { mode }).catch(() => {
-    const size = mode === 'login' ? { width: 460, height: 640 } : { width: 1360, height: 860 }
-    const min = mode === 'login' ? { width: 400, height: 560 } : { width: 900, height: 600 }
+    const size =
+      mode === 'login'
+        ? { width: 460, height: 640 }
+        : mode === 'mini'
+          ? { width: 340, height: 560 }
+          : { width: 1440, height: 900 }
+    const min =
+      mode === 'login'
+        ? { width: 400, height: 560 }
+        : mode === 'mini'
+          ? { width: 320, height: 420 }
+          : { width: 900, height: 600 }
     void invokeWindowCmd('plugin:window|set_min_size', { value: { Logical: min } })
     void invokeWindowCmd('plugin:window|set_size', { value: { Logical: size } })
-    void invokeWindowCmd('plugin:window|center')
   })
 }
 
@@ -278,23 +305,31 @@ export function DesktopWindowControls() {
 }
 
 const APP_MENU_NAV = [
-  { label: 'Home', path: '/' },
-  { label: 'Channels', path: '/chat' },
-  { label: 'Issues', path: '/issues' },
-  { label: 'Docs', path: '/docs' },
+  { label: 'Home Briefing', path: '/home' },
+  { label: 'Engineering (#engineering)', path: '/chat/engineering' },
+  { label: 'Office Virtual HQ', path: '/office' },
+  { label: 'Inbox & Approvals', path: '/inbox' },
+  { label: 'Work & Objectives', path: '/issues' },
+  { label: 'Spaces & Artifacts', path: '/spaces' },
 ] as const
+
+const APPEARANCE_MODES: readonly { id: AppearanceMode; label: string }[] = [
+  { id: 'zen', label: 'Zen' },
+  { id: 'clay', label: 'Clay' },
+  { id: 'light', label: 'Light' },
+]
 
 export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => void }) {
   const { effectiveTheme } = useHanzoPreferences()
+  const { orgs, activeOrgId, appearanceMode } = useWorkspace()
   const pal = menuPalette(effectiveTheme === 'light')
   const [open, setOpen] = useState(false)
   const [hoverTrigger, setHoverTrigger] = useState(false)
   const [hoverIdx, setHoverIdx] = useState<string | null>(null)
   const wrapRef = useRef<HTMLDivElement | null>(null)
-  const active = isDesktopApp() && !isMacDesktop()
+  const isMac = isMacDesktop()
 
   useEffect(() => {
-    if (!active) return
     const onDocDown = (e: MouseEvent) => {
       if (open && wrapRef.current && !wrapRef.current.contains(e.target as Node)) setOpen(false)
     }
@@ -304,7 +339,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
         e.preventDefault()
         window.location.reload()
       }
-      if (e.altKey && e.key === 'F4') {
+      if (isDesktopApp() && e.altKey && e.key === 'F4') {
         e.preventDefault()
         closeDesktopWindow()
       }
@@ -315,13 +350,13 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
       document.removeEventListener('mousedown', onDocDown)
       window.removeEventListener('keydown', onKey)
     }
-  }, [active, open])
+  }, [open])
 
-  if (!active) return null
+  if (isMac) return null
 
   const rowStyle = (id: string): CSSProperties => ({
     width: '100%',
-    height: 31,
+    height: 30,
     padding: '0 10px',
     borderRadius: 7,
     border: 'none',
@@ -351,13 +386,15 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
         onClick={() => setOpen((v) => !v)}
         style={{
           ...CTRL_BTN_BASE,
+          width: 26,
+          height: 26,
           borderRadius: 6,
           backgroundColor: open || hoverTrigger ? pal.hover : 'transparent',
           color: open || hoverTrigger ? pal.fg : pal.muted,
         }}
       >
-        <svg width="15" height="9" viewBox="0 0 19 11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
-          <path d="M1 1h17M1 10h10.7" />
+        <svg width="14" height="9" viewBox="0 0 19 11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
+          <path d="M1 1.5h17M1 9.5h10.7" />
         </svg>
       </button>
 
@@ -369,10 +406,10 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
           data-tauri-drag-region="false"
           style={{
             position: 'fixed',
-            top: 42,
-            left: 10,
-            minWidth: 228,
-            padding: 5,
+            top: 40,
+            left: 8,
+            minWidth: 248,
+            padding: 6,
             borderRadius: 10,
             backgroundColor: pal.bg,
             backdropFilter: 'none',
@@ -385,6 +422,106 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
             gap: 2,
           }}
         >
+          <button
+            type="button"
+            role="menuitem"
+            onMouseEnter={() => setHoverIdx('phone')}
+            onMouseLeave={() => setHoverIdx(null)}
+            onClick={() => {
+              setOpen(false)
+              setPhoneModalOpen(true)
+            }}
+            style={rowStyle('phone')}
+          >
+            <span>Get Hanzo on your phone</span>
+            <span style={{ fontSize: 10.5, color: pal.muted }}>iOS · Android</span>
+          </button>
+
+          <div style={{ height: 1, margin: '4px 5px', backgroundColor: pal.border }} />
+
+          <div style={{ padding: '2px 10px', fontSize: 10.5, fontWeight: 600, color: pal.muted, letterSpacing: '0.06em' }}>
+            SWITCH ORGANIZATION
+          </div>
+          <div style={{ display: 'flex', gap: 4, padding: '2px 8px 4px' }}>
+            {orgs.map((o) => {
+              const active = o.id === activeOrgId
+              return (
+                <button
+                  key={o.id}
+                  type="button"
+                  onClick={() => {
+                    selectGuildOrg(o.id)
+                    setOpen(false)
+                  }}
+                  style={{
+                    flex: 1,
+                    height: 26,
+                    borderRadius: 6,
+                    border: `1px solid ${pal.border}`,
+                    backgroundColor: active ? pal.hover : 'transparent',
+                    color: active ? pal.fg : pal.muted,
+                    fontSize: 11.5,
+                    fontWeight: active ? 700 : 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {o.name}
+                </button>
+              )
+            })}
+            <button
+              type="button"
+              aria-label="Connect organization"
+              onClick={() => {
+                setOpen(false)
+                openConnectModal('connect')
+              }}
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: 6,
+                border: `1px solid ${pal.border}`,
+                backgroundColor: 'transparent',
+                color: pal.muted,
+                fontSize: 13,
+                cursor: 'pointer',
+              }}
+            >
+              +
+            </button>
+          </div>
+
+          <div style={{ padding: '2px 10px', fontSize: 10.5, fontWeight: 600, color: pal.muted, letterSpacing: '0.06em' }}>
+            APPEARANCE
+          </div>
+          <div style={{ display: 'flex', gap: 4, padding: '2px 8px 4px' }}>
+            {APPEARANCE_MODES.map((m) => {
+              const active = appearanceMode === m.id
+              return (
+                <button
+                  key={m.id}
+                  type="button"
+                  onClick={() => setAppearanceMode(m.id)}
+                  style={{
+                    flex: 1,
+                    height: 26,
+                    borderRadius: 6,
+                    border: `1px solid ${pal.border}`,
+                    backgroundColor: active ? pal.hover : 'transparent',
+                    color: active ? pal.fg : pal.muted,
+                    fontSize: 11.5,
+                    fontWeight: active ? 600 : 500,
+                    cursor: 'pointer',
+                  }}
+                >
+                  {m.label}
+                </button>
+              )
+            })}
+          </div>
+
+          <div style={{ height: 1, margin: '4px 5px', backgroundColor: pal.border }} />
+
           {APP_MENU_NAV.map((item) => (
             <button
               key={item.path}
@@ -401,6 +538,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
               <span>{item.label}</span>
             </button>
           ))}
+
           <div style={{ height: 1, margin: '4px 5px', backgroundColor: pal.border }} />
           <button
             type="button"
@@ -457,20 +595,22 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
             <span>Reload window</span>
             <span style={{ fontSize: 11, color: pal.muted }}>Ctrl+R</span>
           </button>
-          <button
-            type="button"
-            role="menuitem"
-            onMouseEnter={() => setHoverIdx('quit')}
-            onMouseLeave={() => setHoverIdx(null)}
-            onClick={() => {
-              setOpen(false)
-              closeDesktopWindow()
-            }}
-            style={rowStyle('quit')}
-          >
-            <span>Quit</span>
-            <span style={{ fontSize: 11, color: pal.muted }}>Alt+F4</span>
-          </button>
+          {isDesktopApp() ? (
+            <button
+              type="button"
+              role="menuitem"
+              onMouseEnter={() => setHoverIdx('quit')}
+              onMouseLeave={() => setHoverIdx(null)}
+              onClick={() => {
+                setOpen(false)
+                closeDesktopWindow()
+              }}
+              style={rowStyle('quit')}
+            >
+              <span>Quit</span>
+              <span style={{ fontSize: 11, color: pal.muted }}>Alt+F4</span>
+            </button>
+          ) : null}
         </div>
       ) : null}
     </div>
