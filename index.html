@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en" data-theme="dark">
+<html lang="en" class="dark" data-theme="dark" style="background-color:#000000;color-scheme:dark">
   <head>
     <meta charset="utf-8" />
     <base href="/" />
@@ -16,7 +16,7 @@
           var raw = localStorage.getItem('hanzo.appearance')
           var parsed = raw ? JSON.parse(raw) : null
           var pref = parsed && (parsed.theme === 'light' || parsed.theme === 'dark' || parsed.theme === 'system') ? parsed.theme : 'dark'
-          var resolved = pref === 'system' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : pref
+          var resolved = pref === 'light' ? 'light' : pref === 'system' ? (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark') : 'dark'
           var root = document.documentElement
           root.dataset.theme = resolved
           root.classList.toggle('dark', resolved === 'dark')

@@ -4,10 +4,16 @@ import { Button, SizableText, Spinner, XStack, YStack } from '@hanzo/ui'
 import { SignInPanel } from '@hanzo/ui/auth/panel'
 
 import { brand } from '~/data/brand.ts'
-import { isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
+import { isDesktopApp } from '~/data/desktop.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
-import { DesktopWindowControls, dragDesktopWindow, toggleDesktopMaximize } from '~/shell/DesktopWindowChrome.tsx'
+import { useHanzoPreferences } from '~/settings/preferences.ts'
+import {
+  DesktopWindowControls,
+  dragDesktopWindow,
+  setTeamDesktopWindowMode,
+  toggleDesktopMaximize,
+} from '~/shell/DesktopWindowChrome.tsx'
 import { gap, paint, round, rung } from '~/theme/theme.ts'
 
 import { Callback } from './Callback.tsx'
@@ -15,36 +21,25 @@ import { cart, START } from './start.ts'
 
 const CALLBACK = '/auth/callback'
 const SITE = 'https://hanzo.ai'
-const LOGIN_BG = 'var(--hanzo-login-bg, #000000)'
-const LOGIN_FG = 'var(--hanzo-login-fg, #fafafa)'
-const LOGIN_MUTED = 'var(--hanzo-login-muted, #a1a1aa)'
 
-const SHELL_STYLE: CSSProperties = {
-  flex: 1, minHeight: '100dvh', width: '100%', backgroundColor: LOGIN_BG, color: LOGIN_FG,
-  padding: '0 0 20px', boxSizing: 'border-box', display: 'flex', flexDirection: 'column',
-  alignItems: 'center', justifyContent: 'space-between',
+function canSkipSignIn(): boolean {
+  if (isDesktopApp()) return true
+  if (typeof window === 'undefined') return false
+  const h = window.location.hostname
+  return h === 'localhost' || h === '127.0.0.1'
 }
 
 const MAIN_STYLE: CSSProperties = {
-  width: '100%', maxWidth: 420, margin: 'auto', padding: '24px 16px', boxSizing: 'border-box',
-  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 16,
-}
-
-const BRAND_LINK_STYLE: CSSProperties = {
-  display: 'inline-flex', alignItems: 'center', height: 34, color: LOGIN_FG, textDecoration: 'none',
-}
-
-const WORDMARK_STYLE: CSSProperties = {
-  display: 'inline-block', fontSize: 28, fontWeight: 700, letterSpacing: '-0.04em',
-  lineHeight: 1, color: LOGIN_FG, transform: 'translateY(-0.08em)',
+  width: '100%', maxWidth: 380, margin: 'auto', padding: '12px 20px', boxSizing: 'border-box',
+  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 14,
 }
 
 const FOOTER_STYLE: CSSProperties = {
-  width: '100%', padding: '12px 24px 0', boxSizing: 'border-box', display: 'flex',
-  flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 8, flexShrink: 0,
+  width: '100%', padding: '8px 20px 0', boxSizing: 'border-box',
+  display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0,
 }
 
-function HanzoMark({ size = 22 }: { size?: number }) {
+function HanzoMark({ size = 20 }: { size?: number }) {
   return (
     <svg width={size} height={size} viewBox="0 0 67 67" fill="none" aria-hidden="true">
       <path d="M22.21 67V44.6369H0V67H22.21Z" fill="currentColor" />
@@ -56,10 +51,6 @@ function HanzoMark({ size = 22 }: { size?: number }) {
       <path d="M66.7198 67V44.6369H44.5098V67H66.7198Z" fill="currentColor" />
     </svg>
   )
-}
-
-function HanzoWordmark() {
-  return <span data-size="28" data-slot="wordmark" style={WORDMARK_STYLE}>hanzo</span>
 }
 
 function HanzoTeamAppIcon({ size = 64 }: { size?: number }) {
@@ -75,18 +66,18 @@ function HanzoTeamAppIcon({ size = 64 }: { size?: number }) {
   )
 }
 
-function LoginFooter() {
+function LoginFooter({ fg }: { fg: string }) {
   return (
     <footer data-slot="footer" style={FOOTER_STYLE}>
-      <span style={{ display: 'inline-flex', color: LOGIN_FG }}><HanzoMark size={22} /></span>
-      <span style={{ fontSize: 12, lineHeight: '16px', color: LOGIN_MUTED }}>© 2026 Hanzo AI</span>
+      <span style={{ display: 'inline-flex', color: fg, opacity: 0.9 }}>
+        <HanzoMark size={20} />
+      </span>
     </footer>
   )
 }
 
 const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => {
   const desktop = isDesktopApp()
-  const macDesktop = desktop && isMacDesktop()
 
   return (
     <header
@@ -95,16 +86,16 @@ const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: (
       onMouseDown={desktop ? dragDesktopWindow : undefined}
       onDoubleClick={desktop ? toggleDesktopMaximize : undefined}
       style={{
-        width: '100%', height: 60, paddingLeft: macDesktop ? 84 : 24, paddingRight: desktop && !macDesktop ? 12 : 24,
-        boxSizing: 'border-box', display: 'flex', alignItems: 'center',
-        justifyContent: 'space-between', flexShrink: 0,
+        width: '100%',
+        height: 44,
+        paddingInline: 14,
+        boxSizing: 'border-box',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        flexShrink: 0,
       }}
     >
-      {desktop ? (
-        <div data-tauri-drag-region="" style={{ ...BRAND_LINK_STYLE, userSelect: 'none' }}><HanzoWordmark /></div>
-      ) : (
-        <a href={SITE} aria-label="Hanzo" style={BRAND_LINK_STYLE}><HanzoWordmark /></a>
-      )}
       <XStack items="center" gap={gap.tight} shrink={0}>
         {account ? <SizableText size={rung.small} color={paint.mute}>{account}</SizableText> : null}
         {onLeave ? (
@@ -129,20 +120,46 @@ function LoginShell({
   onLeave?: () => void
   children: ReactNode
 }) {
+  const { effectiveTheme } = useHanzoPreferences()
+  const isLight = effectiveTheme === 'light'
+  const bg = isLight ? 'var(--hanzo-login-bg-light, #fafafa)' : 'var(--hanzo-login-bg, #000000)'
+  const fg = isLight ? 'var(--hanzo-login-fg-light, #09090b)' : 'var(--hanzo-login-fg, #fafafa)'
+
   return (
-    <Theme name="dark">
-      <div className="dark t_dark" data-theme="dark" data-slot={slot} style={SHELL_STYLE}>
+    <Theme name={effectiveTheme}>
+      <div
+        className={isLight ? 'light t_light' : 'dark t_dark'}
+        data-theme={effectiveTheme}
+        data-slot={slot}
+        style={{
+          flex: 1,
+          minHeight: '100dvh',
+          width: '100%',
+          backgroundColor: bg,
+          color: fg,
+          padding: '0 0 16px',
+          boxSizing: 'border-box',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+        }}
+      >
         <GateHeader account={account} onLeave={onLeave} />
         <main style={MAIN_STYLE}>{children}</main>
-        <LoginFooter />
+        <LoginFooter fg={fg} />
       </div>
     </Theme>
   )
 }
 
 export const Login = () => {
-  const { standing, request } = useSession()
+  const { standing, request, enterGuest } = useSession()
+  const { effectiveTheme } = useHanzoPreferences()
   if (standing === 'in') return null
+
+  const isLight = effectiveTheme === 'light'
+  const showGuest = canSkipSignIn()
 
   return (
     <LoginShell slot={isDesktopApp() ? 'desktop-signin' : 'signin'}>
@@ -155,6 +172,39 @@ export const Login = () => {
         termsHref={`${SITE}/terms`}
         privacyHref={`${SITE}/privacy`}
       />
+      {showGuest ? (
+        <button
+          id="continue-without-login"
+          type="button"
+          onClick={() => {
+            enterGuest()
+            setTeamDesktopWindowMode('workspace')
+          }}
+          style={{
+            width: '100%',
+            height: 40,
+            marginTop: -4,
+            borderRadius: 10,
+            border: isLight
+              ? '1px solid var(--hanzo-guest-border-light, rgba(0, 0, 0, 0.12))'
+              : '1px solid var(--hanzo-guest-border, rgba(255, 255, 255, 0.14))',
+            backgroundColor: isLight
+              ? 'var(--hanzo-guest-bg-light, #f4f4f5)'
+              : 'var(--hanzo-guest-bg, #121214)',
+            color: isLight
+              ? 'var(--hanzo-guest-fg-light, #27272a)'
+              : 'var(--hanzo-guest-fg, #e4e4e7)',
+            fontSize: 13.5,
+            fontWeight: 500,
+            cursor: 'pointer',
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          Continue without signing in
+        </button>
+      ) : null}
     </LoginShell>
   )
 }
@@ -177,10 +227,21 @@ const safeSet = (k: string, v: string | null) => {
 }
 
 export const AuthGate = ({ children }: { children: ReactNode }) => {
-  const { standing: session, who, depart, leave } = useSession()
+  const { standing: session, who, guest, depart, leave } = useSession()
   const { standing: space, refusal, enrolNow, enrolment } = useSpace()
   const [enrolling, setEnrolling] = useState(false)
   const [autoFallback, setAutoFallback] = useState(false)
+
+  const inWorkspace =
+    window.location.pathname !== CALLBACK &&
+    window.location.pathname !== START &&
+    session === 'in' &&
+    (guest || (space !== 'stranger' && space !== 'refused' && space !== 'unknown'))
+
+  useEffect(() => {
+    if (session === 'unknown') return
+    setTeamDesktopWindowMode(inWorkspace ? 'workspace' : 'login')
+  }, [inWorkspace, session])
 
   useEffect(() => {
     if (space === 'settled') {
@@ -190,7 +251,7 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
   }, [space])
 
   useEffect(() => {
-    if (session !== 'in' || space !== 'stranger') return
+    if (session !== 'in' || guest || space !== 'stranger') return
     if (safeGet(ENROL_TRIED) === '1') {
       setAutoFallback(true)
       return
@@ -204,12 +265,13 @@ export const AuthGate = ({ children }: { children: ReactNode }) => {
         if (!ok) setAutoFallback(true)
       }
     })
-  }, [session, space, enrolNow, enrolment])
+  }, [session, guest, space, enrolNow, enrolment])
 
   if (window.location.pathname === CALLBACK) return <Callback />
   if (window.location.pathname === START) return <Forward to={cart(window.location.search, window.location.origin)} />
   if (session === 'unknown') return <Waiting />
   if (session === 'out') return <Login />
+  if (guest) return <>{children}</>
 
   const account = who?.email ?? who?.label ?? null
   const runEnrol = () => {

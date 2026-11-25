@@ -89,7 +89,7 @@ export function BusinessHeader({
   navSpan,
   navOpen = false,
   onToggleNav,
-  surfaceTitle,
+  surfaceTitle: _surfaceTitle,
   leftSlot,
   children,
   rightSlot,
@@ -182,7 +182,7 @@ export function BusinessHeader({
         backgroundColor: paint.ground,
         backdropFilter: 'none',
         WebkitBackdropFilter: 'none',
-        borderBottom: `1px solid ${paint.rule}`,
+        borderBottom: 'none',
       }}
       onLayout={(e: { nativeEvent: { layout: { width: number } } }) => setBarW(e.nativeEvent.layout.width)}
       data-testid="hanzo-business-header"
@@ -192,7 +192,7 @@ export function BusinessHeader({
         height="100%"
         width={navOpen && navSpan ? RAIL + navSpan : undefined}
         minW={navOpen && navSpan ? RAIL + navSpan : RAIL + inset}
-        pl={11 + inset}
+        pl={14 + inset}
         pr={navOpen ? 10 : 8}
         gap={4}
         items="center"
@@ -270,28 +270,14 @@ export function BusinessHeader({
         flex={1}
         height="100%"
         pl={12}
-        pr={12}
+        pr={14}
         gap="$2"
         items="center"
         justify="space-between"
         minW={0}
         data-tauri-drag-region={isDesktop ? '' : undefined}
       >
-        <XStack items="center" gap={6} minW={0} shrink={1}>
-          <Text fontSize={12.5} fontWeight="600" color="$color11" numberOfLines={1}>
-            {orgDisplay}
-          </Text>
-          {surfaceTitle && !compact ? (
-            <>
-              <Text fontSize={12} color="$color9">
-                /
-              </Text>
-              <Text fontSize={12.5} fontWeight="500" color="$color10" numberOfLines={1}>
-                {surfaceTitle}
-              </Text>
-            </>
-          ) : null}
-        </XStack>
+        <XStack flex={1} minW={0} data-tauri-drag-region={isDesktop ? '' : undefined} />
 
         <XStack items="center" justify="flex-end" gap="$1.5" minW={0} shrink={0}>
           {children ??

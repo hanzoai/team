@@ -31,8 +31,8 @@ export const SCALE = 1.5
 export const RAIL = 48
 /** The navigator. Unified 256px collapsible sidebar (⌘B), dragged by the grip, a drawer when narrow. */
 export const NAV = 256
-export const NAV_MIN = 220
-export const NAV_MAX = 380
+export const NAV_MIN = 180
+export const NAV_MAX = 420
 /** The dismissible right panel. */
 export const ASIDE = 284
 

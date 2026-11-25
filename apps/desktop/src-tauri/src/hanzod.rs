@@ -179,6 +179,12 @@ pub fn ensure_hanzod_running() -> Result<String, String> {
     cmd.stdin(Stdio::null())
         .stdout(Stdio::null())
         .stderr(Stdio::null());
+    #[cfg(target_os = "windows")]
+    {
+        use std::os::windows::process::CommandExt;
+        const CREATE_NO_WINDOW: u32 = 0x0800_0000;
+        cmd.creation_flags(CREATE_NO_WINDOW);
+    }
     if addr != DEFAULT_HANZOD_ADDR {
         cmd.env("HANZOD_HTTP_ADDR", &addr);
     }

@@ -90,7 +90,7 @@ const LAST = 'team.space'
 const ENROLMENT = `${team.account}/auth/openid`
 
 export const Space = ({ children }: { children: ReactNode }) => {
-  const { standing: session } = useSession()
+  const { standing: session, guest } = useSession()
   const [standing, setStanding] = useState<Standing>('unknown')
   const [all, setAll] = useState<SpaceRow[]>([])
   const [slug, setSlug] = useState<string | null>(() => localStorage.getItem(LAST))
@@ -119,15 +119,23 @@ export const Space = ({ children }: { children: ReactNode }) => {
   }, [applyRows])
 
   const asked = useRef(false)
-  const prevSession = useRef(session)
+  const prevKey = useRef(`${session}:${String(guest)}`)
   useEffect(() => {
-    if (prevSession.current !== session) {
+    const nextKey = `${session}:${String(guest)}`
+    if (prevKey.current !== nextKey) {
       asked.current = false
       invalidate()
     }
-    prevSession.current = session
+    prevKey.current = nextKey
     if (session === 'unknown' || asked.current) return
     asked.current = true
+    if (guest) {
+      setRefusal(null)
+      setAll([{ uuid: 'local', name: 'Local Workspace', url: 'local', org: 'local', isDisabled: false }])
+      setSlug('local')
+      setStanding('settled')
+      return
+    }
     void (async () => {
       // Signed out has no spaces. Nothing stands in for them: a failed read is a refusal.
       let rows = await (session === 'in' ? listSpaces() : Promise.resolve([] as SpaceRow[])).catch(
@@ -143,10 +151,10 @@ export const Space = ({ children }: { children: ReactNode }) => {
       }
       applyRows(rows)
     })()
-  }, [session, applyRows])
+  }, [session, guest, applyRows])
 
   useEffect(() => {
-    if (!slug) return
+    if (!slug || guest) return
     localStorage.setItem(LAST, slug)
     const next = new Socket(slug)
     setPlane(next)

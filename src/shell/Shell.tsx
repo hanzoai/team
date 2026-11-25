@@ -65,7 +65,24 @@ export const Shell = ({ nav, children, aside }: ShellProps) => {
   const [width, setWidth] = useState(() =>
     typeof window === 'undefined' ? INLINE_ASIDE : window.innerWidth,
   )
-  const [span, setSpan] = useState(NAV)
+  const [span, setSpanState] = useState(() => {
+    try {
+      if (typeof window === 'undefined') return NAV
+      const saved = Number(window.localStorage.getItem('hanzo.team.sidebar.width'))
+      return Number.isFinite(saved) && saved >= NAV_MIN && saved <= NAV_MAX ? saved : NAV
+    } catch {
+      return NAV
+    }
+  })
+  const setSpan = useCallback((next: number) => {
+    const clamped = Math.min(NAV_MAX, Math.max(NAV_MIN, next))
+    setSpanState(clamped)
+    try {
+      window.localStorage.setItem('hanzo.team.sidebar.width', String(Math.round(clamped)))
+    } catch {
+      // ignore storage errors
+    }
+  }, [])
   const [navCollapsed, setNavCollapsed] = useState(() => {
     try {
       return typeof window !== 'undefined' && window.localStorage.getItem('hanzo.team.sidebar.collapsed') === 'true'

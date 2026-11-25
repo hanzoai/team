@@ -87,6 +87,24 @@ fn apply_windows_dwm_chrome(window: &tauri::WebviewWindow) {
     }
 }
 
+#[tauri::command]
+fn team_set_window_mode(window: tauri::WebviewWindow, mode: String) -> Result<(), String> {
+    if mode == "login" {
+        let _ = window.set_min_size(Some(tauri::LogicalSize::new(400.0, 560.0)));
+        window
+            .set_size(tauri::LogicalSize::new(460.0, 640.0))
+            .map_err(|e| e.to_string())?;
+        let _ = window.center();
+    } else {
+        let _ = window.set_min_size(Some(tauri::LogicalSize::new(900.0, 600.0)));
+        window
+            .set_size(tauri::LogicalSize::new(1360.0, 860.0))
+            .map_err(|e| e.to_string())?;
+        let _ = window.center();
+    }
+    Ok(())
+}
+
 /// Cross-platform frameless window chrome script injected on local & remote Hanzo origins.
 /// Ensures `[data-slot="masthead"]` and `[data-slot="title-bar"]` drag/toggle-maximize cleanly,
 /// keeps menus solid `#121214` without backdrop blur, hides duplicate window controls on macOS,
@@ -97,7 +115,20 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
   window.__HANZO_TEAM_SHELL_CHROME__ = true;
 
   var isMac = typeof navigator !== 'undefined' && /Mac|Darwin/i.test(navigator.platform || navigator.userAgent);
+  var isLinux = !isMac && typeof navigator !== 'undefined' && /Linux/i.test(navigator.platform || navigator.userAgent);
   var STYLE_ID = 'hanzo-team-frameless-chrome';
+  var lastMode = null;
+
+  function invokeCore(cmd, args) {
+    var w = window;
+    if (w.__TAURI_INTERNALS__ && typeof w.__TAURI_INTERNALS__.invoke === 'function') {
+      return w.__TAURI_INTERNALS__.invoke(cmd, args || {});
+    }
+    if (w.__TAURI__ && w.__TAURI__.core && typeof w.__TAURI__.core.invoke === 'function') {
+      return w.__TAURI__.core.invoke(cmd, args || {});
+    }
+    return Promise.resolve(null);
+  }
 
   function invokeWin(cmd) {
     var w = window;
@@ -107,33 +138,53 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
     var label = (win && win.label) ||
       (w.__TAURI_INTERNALS__ && w.__TAURI_INTERNALS__.metadata && w.__TAURI_INTERNALS__.metadata.currentWindow && w.__TAURI_INTERNALS__.metadata.currentWindow.label) ||
       'main';
-    if (w.__TAURI_INTERNALS__ && typeof w.__TAURI_INTERNALS__.invoke === 'function') {
-      return w.__TAURI_INTERNALS__.invoke('plugin:window|' + cmd, { label: label });
-    }
-    if (w.__TAURI__ && w.__TAURI__.core && typeof w.__TAURI__.core.invoke === 'function') {
-      return w.__TAURI__.core.invoke('plugin:window|' + cmd, { label: label });
-    }
-    return Promise.resolve(null);
+    return invokeCore('plugin:window|' + cmd, { label: label });
+  }
+
+  function syncMaximized() {
+    Promise.resolve(invokeWin('is_maximized')).then(function (v) {
+      if (document.documentElement) {
+        document.documentElement.setAttribute('data-maximized', v ? 'true' : 'false');
+      }
+    }).catch(function () {});
   }
 
   var CSS = [
+    ':root, html.dark, [data-theme="dark"] {',
+    '  --hanzo-menu-bg: #121214; --hanzo-menu-fg: #fafafa; --hanzo-menu-muted: #a1a1aa;',
+    '  --hanzo-menu-hover: rgba(255, 255, 255, 0.08); --hanzo-menu-border: rgba(255, 255, 255, 0.12);',
+    '  --hanzo-menu-shadow: rgba(0, 0, 0, 0.72);',
+    '}',
+    'html.light, [data-theme="light"] {',
+    '  --hanzo-menu-bg: #ffffff; --hanzo-menu-fg: #09090b; --hanzo-menu-muted: #52525b;',
+    '  --hanzo-menu-hover: rgba(0, 0, 0, 0.06); --hanzo-menu-border: rgba(0, 0, 0, 0.10);',
+    '  --hanzo-menu-shadow: rgba(0, 0, 0, 0.14);',
+    '}',
     '[role="menu"], [data-slot="desktop-app-menu"], [data-slot="dropdown-menu-content"], [data-slot="popover-content"] {',
-    '  background-color: #121214 !important;',
+    '  background-color: var(--hanzo-menu-bg, #121214) !important;',
     '  backdrop-filter: none !important;',
     '  -webkit-backdrop-filter: none !important;',
     '}',
+    'header[data-slot="masthead"] [data-slot="wordmark"] { display: none !important; }',
+    '[data-slot="title-bar"], [data-testid="hanzo-business-header"] { border-bottom: none !important; }',
+    '[data-testid="hanzo-business-header"] > div:nth-child(2) > div:first-child { visibility: hidden !important; pointer-events: none !important; }',
+    isLinux ? 'html { background: transparent !important; }' : '',
+    isLinux ? 'html:not([data-maximized="true"]) body { border-radius: 12px !important; overflow: hidden !important; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.10); }' : '',
+    isLinux ? 'html.light:not([data-maximized="true"]) body { box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.12); }' : '',
+    isLinux ? '@media (max-width: 640px) { html:not([data-maximized="true"]) body { border-radius: 24px !important; } }' : '',
+    isLinux ? 'html[data-window-mode="login"]:not([data-maximized="true"]) body { border-radius: 24px !important; }' : '',
+    isLinux ? 'html[data-maximized="true"] body { border-radius: 0 !important; box-shadow: none !important; }' : '',
     isMac ? '[data-slot="window-controls"] { display: none !important; }' : '',
-    isMac ? 'header[data-slot="masthead"] { padding-left: 84px !important; }' : '',
     '.hz-injected-win-ctrls {',
     '  display: inline-flex; align-items: center; gap: 4px; margin-left: auto; flex-shrink: 0; user-select: none; z-index: 2147483640;',
     '}',
     '.hz-injected-win-btn {',
-    '  width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; color: #a1a1aa;',
+    '  width: 28px; height: 28px; border-radius: 6px; border: none; background: transparent; color: var(--hanzo-menu-muted, #a1a1aa);',
     '  display: inline-flex; align-items: center; justify-content: center; cursor: pointer; padding: 0;',
     '  transition: background-color 0.14s ease, color 0.14s ease;',
     '}',
-    '.hz-injected-win-btn:hover { background: rgba(255,255,255,0.08); color: #fafafa; }',
-    '.hz-injected-win-btn[data-action="close"]:hover { background: #e5484d; color: #fafafa; }'
+    '.hz-injected-win-btn:hover { background: var(--hanzo-menu-hover, rgba(255,255,255,0.08)); color: var(--hanzo-menu-fg, #fafafa); }',
+    '.hz-injected-win-btn[data-action="close"]:hover { background: #e5484d; color: #ffffff; }'
   ].join('\n');
 
   function ensureChrome() {
@@ -146,6 +197,14 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
       style.id = STYLE_ID;
       style.textContent = CSS;
       root.appendChild(style);
+    }
+    var hasWorkspace = Boolean(document.querySelector('[data-testid="hanzo-business-header"], [data-slot="title-bar"]'));
+    var hasMasthead = !hasWorkspace && Boolean(document.querySelector('[data-slot="masthead"], [data-slot="desktop-signin"], [data-slot="signin"]'));
+    var desiredMode = hasWorkspace ? 'workspace' : (hasMasthead ? 'login' : null);
+    if (desiredMode && desiredMode !== lastMode) {
+      lastMode = desiredMode;
+      docEl.setAttribute('data-window-mode', desiredMode);
+      invokeCore('team_set_window_mode', { mode: desiredMode });
     }
     if (isMac) return;
 
@@ -192,6 +251,8 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
     else if (e.detail === 1) invokeWin('start_dragging');
   });
 
+  syncMaximized();
+  window.addEventListener('resize', syncMaximized);
   ensureChrome();
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', ensureChrome, { once: true });
@@ -203,7 +264,9 @@ const HANZO_SHELL_CHROME_SCRIPT: &str = r##"(function () {
       pending = true;
       requestAnimationFrame(function () {
         pending = false;
-        ensureChrome();
+        syncMaximized();
+  window.addEventListener('resize', syncMaximized);
+  ensureChrome();
       });
     }).observe(document.documentElement, { childList: true, subtree: true });
   }
@@ -218,9 +281,6 @@ fn main() {
     {
         if std::env::var_os("WEBKIT_DISABLE_DMABUF_RENDERER").is_none() {
             std::env::set_var("WEBKIT_DISABLE_DMABUF_RENDERER", "1");
-        }
-        if std::env::var_os("WEBKIT_DISABLE_COMPOSITING_MODE").is_none() {
-            std::env::set_var("WEBKIT_DISABLE_COMPOSITING_MODE", "1");
         }
     }
 
@@ -248,11 +308,9 @@ fn main() {
 
             let mut builder = WebviewWindowBuilder::new(app, "main", start_url)
                 .title("Hanzo Team")
-                .inner_size(1440.0, 900.0)
-                .min_inner_size(900.0, 600.0)
+                .inner_size(460.0, 640.0)
+                .min_inner_size(400.0, 560.0)
                 .resizable(true)
-                .transparent(false)
-                .background_color(tauri::window::Color(0, 0, 0, 255))
                 .center()
                 .initialization_script(hanzod::HANZOD_INIT_SCRIPT)
                 .initialization_script(HANZO_SHELL_CHROME_SCRIPT);
@@ -260,13 +318,24 @@ fn main() {
             #[cfg(target_os = "macos")]
             {
                 builder = builder
+                    .background_color(tauri::window::Color(0, 0, 0, 255))
                     .title_bar_style(tauri::TitleBarStyle::Overlay)
                     .hidden_title(true);
             }
 
-            #[cfg(not(target_os = "macos"))]
+            #[cfg(target_os = "linux")]
             {
-                builder = builder.decorations(false);
+                builder = builder
+                    .decorations(false)
+                    .transparent(true)
+                    .background_color(tauri::window::Color(0, 0, 0, 0));
+            }
+
+            #[cfg(all(not(target_os = "macos"), not(target_os = "linux")))]
+            {
+                builder = builder
+                    .decorations(false)
+                    .background_color(tauri::window::Color(0, 0, 0, 255));
             }
 
             let window = builder.build()?;
@@ -282,6 +351,7 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             dock_icon::get_dock_icon_mode,
             dock_icon::set_dock_icon_mode,
+            team_set_window_mode,
             team_hanzod_status,
             team_hanzod_worker,
             team_hanzod_cluster_up,

@@ -55,6 +55,9 @@ export type Person = {
 export type Session = {
   standing: Standing
   who: Person | null
+  guest: boolean
+  /** Enter local workspace without cloud sign-in (desktop / localhost). */
+  enterGuest: () => void
   /**
    * Leave for hanzo.ai to sign in (or make an account, or choose another one)
    * with this app's own request. Rejects only when the request cannot be made,
@@ -152,9 +155,30 @@ const refused = (e: unknown): boolean => {
   return msg.includes('(401)') || msg.includes('(403)')
 }
 
+const GUEST_KEY = 'team.guest'
+
 export const Session = ({ children }: { children: ReactNode }) => {
   const [standing, setStanding] = useState<Standing>('unknown')
   const [who, setWho] = useState<Person | null>(null)
+  const [guest, setGuest] = useState<boolean>(() => {
+    try {
+      return typeof window !== 'undefined' && window.localStorage.getItem(GUEST_KEY) === '1'
+    } catch {
+      return false
+    }
+  })
+
+  const enterGuest = useCallback(() => {
+    try {
+      window.localStorage.setItem(GUEST_KEY, '1')
+    } catch {
+      /* ignore */
+    }
+    setGuest(true)
+    setWho({ id: 'local-guest', name: 'local', label: 'Local Workspace' })
+    setStanding('in')
+    invalidate()
+  }, [])
 
   /**
    * Adopt a session.
@@ -165,6 +189,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * screen would simply stay empty. Adopting a principal re-reads the world.
    */
   const drop = useCallback(() => {
+    setGuest(false)
     setWho(null)
     setStanding('out')
     invalidate()
@@ -232,7 +257,23 @@ export const Session = ({ children }: { children: ReactNode }) => {
       const token = await iam()
         .getValidAccessToken()
         .catch(() => null)
-      if (token) return adopt()
+      if (token) {
+        try {
+          window.localStorage.removeItem(GUEST_KEY)
+        } catch {
+          /* ignore */
+        }
+        setGuest(false)
+        return adopt()
+      }
+      try {
+        if (window.localStorage.getItem(GUEST_KEY) === '1') {
+          enterGuest()
+          return
+        }
+      } catch {
+        /* ignore */
+      }
       // No tokens here, and maybe a session on hanzo.ai from any Hanzo site: ask
       // it once, with no page (./away.ts `silent`). Signed in, `land` redeems the
       // code; not, the callback brings the visitor back here signed out.
@@ -286,7 +327,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
       document.addEventListener('visibilitychange', probe)
       return () => document.removeEventListener('visibilitychange', probe)
     }
-    if (standing !== 'in') return
+    if (standing !== 'in' || guest) return
     let last = Date.now()
     const seen = () => {
       if (document.visibilityState !== 'visible' || Date.now() - last < RECHECK) return
@@ -374,6 +415,15 @@ export const Session = ({ children }: { children: ReactNode }) => {
    * the next sign-in is silent.
    */
   const leave = useCallback(() => {
+    try {
+      window.localStorage.removeItem(GUEST_KEY)
+    } catch {
+      /* ignore */
+    }
+    if (guest) {
+      drop()
+      return
+    }
     const client = iam()
     const access = client.getAccessToken()
     const refresh = client.getRefreshToken()
@@ -398,7 +448,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
         window.location.assign(logout(brand.issuer, clientId, window.location.origin))
       }
     })()
-  }, [drop])
+  }, [drop, guest])
 
   const land = useCallback(async () => {
     const where = take()
@@ -412,8 +462,8 @@ export const Session = ({ children }: { children: ReactNode }) => {
   }, [adopt])
 
   const value = useMemo<Session>(
-    () => ({ standing, who, depart, request, leave, land }),
-    [standing, who, depart, request, leave, land],
+    () => ({ standing, who, guest, enterGuest, depart, request, leave, land }),
+    [standing, who, guest, enterGuest, depart, request, leave, land],
   )
 
   return <Held.Provider value={value}>{children}</Held.Provider>

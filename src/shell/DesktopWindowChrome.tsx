@@ -2,14 +2,31 @@
 
 import { useEffect, useRef, useState, type CSSProperties, type MouseEvent as ReactMouseEvent } from 'react'
 import { isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
+import { openSettingsModal } from '~/settings/SettingsModal.tsx'
+import { useHanzoPreferences } from '~/settings/preferences.ts'
 
-const MENU_BG = 'var(--hanzo-menu-bg, #121214)'
-const MENU_FG = 'var(--hanzo-menu-fg, #fafafa)'
-const MENU_MUTED = 'var(--hanzo-menu-muted, #a1a1aa)'
-const MENU_HOVER = 'var(--hanzo-menu-hover, rgba(255, 255, 255, 0.08))'
-const MENU_BORDER = 'var(--hanzo-menu-border, rgba(255, 255, 255, 0.12))'
-const MENU_SHADOW = 'var(--hanzo-menu-shadow, rgba(0, 0, 0, 0.68))'
 const CLOSE_HOVER = 'var(--state-error, #e5484d)'
+const CLOSE_FG = 'var(--hanzo-close-fg, #ffffff)'
+
+function menuPalette(isLight: boolean) {
+  return isLight
+    ? {
+        bg: 'var(--hanzo-menu-bg-light, #ffffff)',
+        fg: 'var(--hanzo-menu-fg-light, #09090b)',
+        muted: 'var(--hanzo-menu-muted-light, #52525b)',
+        hover: 'var(--hanzo-menu-hover-light, rgba(0, 0, 0, 0.06))',
+        border: 'var(--hanzo-menu-border-light, rgba(0, 0, 0, 0.10))',
+        shadow: 'var(--hanzo-menu-shadow-light, rgba(0, 0, 0, 0.14))',
+      }
+    : {
+        bg: 'var(--hanzo-menu-bg, #121214)',
+        fg: 'var(--hanzo-menu-fg, #fafafa)',
+        muted: 'var(--hanzo-menu-muted, #a1a1aa)',
+        hover: 'var(--hanzo-menu-hover, rgba(255, 255, 255, 0.08))',
+        border: 'var(--hanzo-menu-border, rgba(255, 255, 255, 0.12))',
+        shadow: 'var(--hanzo-menu-shadow, rgba(0, 0, 0, 0.72))',
+      }
+}
 
 type TauriWin = {
   label?: string
@@ -30,7 +47,7 @@ function getTauriWindow(): TauriWin | null {
   }
 }
 
-function invokeWindowCmd(cmd: string): Promise<unknown> {
+function invokeWindowCmd(cmd: string, extra?: Record<string, unknown>): Promise<unknown> {
   if (typeof window === 'undefined') return Promise.resolve(null)
   const w = window as unknown as {
     __TAURI_INTERNALS__?: {
@@ -44,9 +61,27 @@ function invokeWindowCmd(cmd: string): Promise<unknown> {
     w.__TAURI_INTERNALS__?.metadata?.currentWindow?.label ||
     w.__TAURI_INTERNALS__?.metadata?.currentWebview?.windowLabel ||
     'main'
-  if (w.__TAURI_INTERNALS__?.invoke) return w.__TAURI_INTERNALS__.invoke(cmd, { label })
-  if (w.__TAURI__?.core?.invoke) return w.__TAURI__.core.invoke(cmd, { label })
+  const payload = { label, ...extra }
+  if (w.__TAURI_INTERNALS__?.invoke) return w.__TAURI_INTERNALS__.invoke(cmd, payload)
+  if (w.__TAURI__?.core?.invoke) return w.__TAURI__.core.invoke(cmd, payload)
   return Promise.resolve(null)
+}
+
+let lastWindowMode: 'login' | 'workspace' | null = null
+
+export function setTeamDesktopWindowMode(mode: 'login' | 'workspace') {
+  if (typeof document !== 'undefined') {
+    document.documentElement.dataset.windowMode = mode
+  }
+  if (!isDesktopApp() || lastWindowMode === mode) return
+  lastWindowMode = mode
+  void invokeWindowCmd('team_set_window_mode', { mode }).catch(() => {
+    const size = mode === 'login' ? { width: 460, height: 640 } : { width: 1360, height: 860 }
+    const min = mode === 'login' ? { width: 400, height: 560 } : { width: 900, height: 600 }
+    void invokeWindowCmd('plugin:window|set_min_size', { value: { Logical: min } })
+    void invokeWindowCmd('plugin:window|set_size', { value: { Logical: size } })
+    void invokeWindowCmd('plugin:window|center')
+  })
 }
 
 const INTERACTIVE_SELECTOR = [
@@ -107,13 +142,18 @@ export function closeDesktopWindow() {
   else void invokeWindowCmd('plugin:window|close')
 }
 
+function syncDocMaximized(max: boolean) {
+  if (typeof document !== 'undefined') {
+    document.documentElement.dataset.maximized = max ? 'true' : 'false'
+  }
+}
+
 const CTRL_BTN_BASE: CSSProperties = {
   width: 28,
   height: 28,
   borderRadius: 6,
   border: 'none',
   background: 'transparent',
-  color: MENU_MUTED,
   display: 'inline-flex',
   alignItems: 'center',
   justifyContent: 'center',
@@ -123,6 +163,8 @@ const CTRL_BTN_BASE: CSSProperties = {
 }
 
 export function DesktopWindowControls() {
+  const { effectiveTheme } = useHanzoPreferences()
+  const pal = menuPalette(effectiveTheme === 'light')
   const [mounted, setMounted] = useState(false)
   const [maximized, setMaximized] = useState(false)
   const [hovered, setHovered] = useState<'min' | 'max' | 'close' | null>(null)
@@ -135,7 +177,11 @@ export function DesktopWindowControls() {
       const win = getTauriWindow()
       const p = win?.isMaximized ? win.isMaximized() : invokeWindowCmd('plugin:window|is_maximized')
       void Promise.resolve(p)
-        .then((v) => setMaximized(Boolean(v)))
+        .then((v) => {
+          const next = Boolean(v)
+          setMaximized(next)
+          syncDocMaximized(next)
+        })
         .catch(() => {})
     }
     sync()
@@ -165,8 +211,8 @@ export function DesktopWindowControls() {
         }}
         style={{
           ...CTRL_BTN_BASE,
-          backgroundColor: hovered === 'min' ? MENU_HOVER : 'transparent',
-          color: hovered === 'min' ? MENU_FG : MENU_MUTED,
+          backgroundColor: hovered === 'min' ? pal.hover : 'transparent',
+          color: hovered === 'min' ? pal.fg : pal.muted,
         }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -184,12 +230,18 @@ export function DesktopWindowControls() {
           const act = win?.toggleMaximize
             ? win.toggleMaximize().catch(() => invokeWindowCmd('plugin:window|toggle_maximize'))
             : invokeWindowCmd('plugin:window|toggle_maximize')
-          void Promise.resolve(act).then(() => setMaximized((m) => !m))
+          void Promise.resolve(act).then(() =>
+            setMaximized((m) => {
+              const next = !m
+              syncDocMaximized(next)
+              return next
+            }),
+          )
         }}
         style={{
           ...CTRL_BTN_BASE,
-          backgroundColor: hovered === 'max' ? MENU_HOVER : 'transparent',
-          color: hovered === 'max' ? MENU_FG : MENU_MUTED,
+          backgroundColor: hovered === 'max' ? pal.hover : 'transparent',
+          color: hovered === 'max' ? pal.fg : pal.muted,
         }}
       >
         {maximized ? (
@@ -213,7 +265,7 @@ export function DesktopWindowControls() {
         style={{
           ...CTRL_BTN_BASE,
           backgroundColor: hovered === 'close' ? CLOSE_HOVER : 'transparent',
-          color: hovered === 'close' ? MENU_FG : MENU_MUTED,
+          color: hovered === 'close' ? CLOSE_FG : pal.muted,
         }}
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5">
@@ -233,7 +285,10 @@ const APP_MENU_NAV = [
 ] as const
 
 export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => void }) {
+  const { effectiveTheme } = useHanzoPreferences()
+  const pal = menuPalette(effectiveTheme === 'light')
   const [open, setOpen] = useState(false)
+  const [hoverTrigger, setHoverTrigger] = useState(false)
   const [hoverIdx, setHoverIdx] = useState<string | null>(null)
   const wrapRef = useRef<HTMLDivElement | null>(null)
   const active = isDesktopApp() && !isMacDesktop()
@@ -245,7 +300,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
     }
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && open) setOpen(false)
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'r') {
+      if ((e.ctrlKey || e.metaKey) && !e.shiftKey && e.key.toLowerCase() === 'r') {
         e.preventDefault()
         window.location.reload()
       }
@@ -266,13 +321,13 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
 
   const rowStyle = (id: string): CSSProperties => ({
     width: '100%',
-    height: 32,
+    height: 31,
     padding: '0 10px',
-    borderRadius: 6,
+    borderRadius: 7,
     border: 'none',
-    backgroundColor: hoverIdx === id ? MENU_HOVER : 'transparent',
-    color: MENU_FG,
-    fontSize: 13,
+    backgroundColor: hoverIdx === id ? pal.hover : 'transparent',
+    color: pal.fg,
+    fontSize: 12.5,
     fontWeight: 500,
     display: 'flex',
     alignItems: 'center',
@@ -291,12 +346,14 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
         data-slot="desktop-app-menu-trigger"
         data-tauri-drag-region="false"
         onMouseDown={(e) => e.stopPropagation()}
+        onMouseEnter={() => setHoverTrigger(true)}
+        onMouseLeave={() => setHoverTrigger(false)}
         onClick={() => setOpen((v) => !v)}
         style={{
           ...CTRL_BTN_BASE,
-          borderRadius: 8,
-          backgroundColor: open ? MENU_HOVER : 'transparent',
-          color: open ? MENU_FG : MENU_MUTED,
+          borderRadius: 6,
+          backgroundColor: open || hoverTrigger ? pal.hover : 'transparent',
+          color: open || hoverTrigger ? pal.fg : pal.muted,
         }}
       >
         <svg width="15" height="9" viewBox="0 0 19 11" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" aria-hidden="true">
@@ -312,16 +369,16 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
           data-tauri-drag-region="false"
           style={{
             position: 'fixed',
-            top: 40,
+            top: 42,
             left: 10,
-            minWidth: 212,
-            padding: 6,
+            minWidth: 228,
+            padding: 5,
             borderRadius: 10,
-            backgroundColor: MENU_BG,
+            backgroundColor: pal.bg,
             backdropFilter: 'none',
             WebkitBackdropFilter: 'none',
-            border: `1px solid ${MENU_BORDER}`,
-            boxShadow: `0 16px 40px ${MENU_SHADOW}`,
+            border: `1px solid ${pal.border}`,
+            boxShadow: `0 16px 40px ${pal.shadow}`,
             zIndex: 200000,
             display: 'flex',
             flexDirection: 'column',
@@ -344,7 +401,48 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
               <span>{item.label}</span>
             </button>
           ))}
-          <div style={{ height: 1, margin: '4px 4px', backgroundColor: MENU_BORDER }} />
+          <div style={{ height: 1, margin: '4px 5px', backgroundColor: pal.border }} />
+          <button
+            type="button"
+            role="menuitem"
+            onMouseEnter={() => setHoverIdx('node')}
+            onMouseLeave={() => setHoverIdx(null)}
+            onClick={() => {
+              setOpen(false)
+              openSettingsModal('node')
+            }}
+            style={rowStyle('node')}
+          >
+            <span>Local Models &amp; Node</span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onMouseEnter={() => setHoverIdx('account')}
+            onMouseLeave={() => setHoverIdx(null)}
+            onClick={() => {
+              setOpen(false)
+              openSettingsModal('account')
+            }}
+            style={rowStyle('account')}
+          >
+            <span>Account &amp; Usage</span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
+            onMouseEnter={() => setHoverIdx('settings')}
+            onMouseLeave={() => setHoverIdx(null)}
+            onClick={() => {
+              setOpen(false)
+              openSettingsModal('general')
+            }}
+            style={rowStyle('settings')}
+          >
+            <span>Settings</span>
+            <span style={{ fontSize: 11, color: pal.muted }}>Ctrl+,</span>
+          </button>
+          <div style={{ height: 1, margin: '4px 5px', backgroundColor: pal.border }} />
           <button
             type="button"
             role="menuitem"
@@ -357,7 +455,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
             style={rowStyle('reload')}
           >
             <span>Reload window</span>
-            <span style={{ fontSize: 11, color: MENU_MUTED }}>Ctrl+R</span>
+            <span style={{ fontSize: 11, color: pal.muted }}>Ctrl+R</span>
           </button>
           <button
             type="button"
@@ -371,7 +469,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
             style={rowStyle('quit')}
           >
             <span>Quit</span>
-            <span style={{ fontSize: 11, color: MENU_MUTED }}>Alt+F4</span>
+            <span style={{ fontSize: 11, color: pal.muted }}>Alt+F4</span>
           </button>
         </div>
       ) : null}
