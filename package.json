@@ -26,7 +26,7 @@
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
     "test": "node --test --experimental-strip-types 'src/**/*.test.ts'",
-    "test:bundle": "node scripts/check-bundle-no-mocks.mjs",
+    "test:bundle": "node --test scripts/check-bundle-no-mocks.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
