@@ -1,6 +1,7 @@
 /**
  * Hanzo Memory Workspace (`/memory`)
- * Organizational knowledge graph, ADRs, runbooks & shared cross-agent sessions.
+ *
+ * Aggregates real workspace documents and active workspace agents from live backends.
  */
 import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import { Brain, Search } from '@hanzogui/lucide-icons-2'
@@ -9,11 +10,11 @@ import { useNavigate } from 'react-router'
 
 import { press } from '~/shell/press.ts'
 import { paint } from '~/theme/theme.ts'
-import { sendWorkspaceMessage, useWorkspace } from '~/workspace/store.ts'
+import { useWorkspace } from '~/workspace/store.ts'
 
 export function MemoryWorkspace() {
   const navigate = useNavigate()
-  const { memory } = useWorkspace()
+  const { memory, hydrating } = useWorkspace()
   const [filter, setFilter] = useState('')
 
   const q = filter.trim().toLowerCase()
@@ -41,7 +42,7 @@ export function MemoryWorkspace() {
             Memory
           </SizableText>
           <SizableText fontSize={12} style={{ color: paint.dim }}>
-            Organizational knowledge graph &amp; shared cross-agent context
+            Workspace documents &amp; active agent context
           </SizableText>
         </XStack>
 
@@ -64,7 +65,7 @@ export function MemoryWorkspace() {
             bg="transparent"
             fontSize={12}
             color={paint.ink}
-            placeholder="Filter ADRs, runbooks…"
+            placeholder="Filter docs & agents…"
             value={filter}
             onChangeText={setFilter}
           />
@@ -73,65 +74,81 @@ export function MemoryWorkspace() {
 
       <ScrollArea flex={1} minH={0}>
         <YStack p={20} gap={10} maxW={780}>
-          {shown.map((node) => (
-            <YStack
-              key={node.id}
-              p={14}
-              rounded={10}
-              borderWidth={1}
-              gap={8}
-              style={{ backgroundColor: paint.card, borderColor: paint.border }}
-            >
-              <XStack items="center" justify="space-between" gap={8}>
-                <XStack items="center" gap={8}>
-                  <XStack px={6} py={1.5} rounded={4} style={{ backgroundColor: paint.elevated }}>
-                    <SizableText fontSize={10} fontWeight="700" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
-                      {node.category}
-                    </SizableText>
-                  </XStack>
-                  <SizableText fontSize={13.5} fontWeight="700" style={{ color: paint.ink }}>
-                    {node.title}
-                  </SizableText>
-                </XStack>
-                <SizableText fontSize={11} style={{ color: paint.dim }}>
-                  {`@${node.ownerHandle} · ${node.updatedAt}`}
-                </SizableText>
-              </XStack>
-
-              <SizableText fontSize={12.5} lineHeight={19} style={{ color: paint.fg }}>
-                {node.summary}
+          {hydrating && shown.length === 0 ? (
+            <YStack p={20} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+              <SizableText fontSize={13} style={{ color: paint.dim }}>
+                Loading workspace knowledge…
               </SizableText>
-
-              <XStack items="center" justify="space-between">
-                <XStack gap={5} flexWrap="wrap">
-                  {node.tags.map((tg) => (
-                    <XStack key={tg} px={6} py={1} rounded={4} style={{ backgroundColor: paint.surface }}>
-                      <SizableText fontSize={10.5} style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>
-                        {`#${tg}`}
+            </YStack>
+          ) : shown.length === 0 ? (
+            <YStack p={24} rounded={10} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+              <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }}>
+                {q ? 'No matching items' : 'No documents or agents indexed yet'}
+              </SizableText>
+              <SizableText fontSize={12.5} style={{ color: paint.dim }}>
+                Create documents in Spaces or bots in the Virtual Office to populate workspace memory.
+              </SizableText>
+            </YStack>
+          ) : (
+            shown.map((node) => (
+              <YStack
+                key={node.id}
+                p={14}
+                rounded={10}
+                borderWidth={1}
+                gap={8}
+                style={{ backgroundColor: paint.card, borderColor: paint.border }}
+              >
+                <XStack items="center" justify="space-between" gap={8}>
+                  <XStack items="center" gap={8}>
+                    <XStack px={6} py={1.5} rounded={4} style={{ backgroundColor: paint.elevated }}>
+                      <SizableText fontSize={10} fontWeight="700" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
+                        {node.category}
                       </SizableText>
                     </XStack>
-                  ))}
-                </XStack>
-
-                <XStack
-                  {...press(() => {
-                    sendWorkspaceMessage('engineering', `Referenced Memory **${node.title}**: ${node.summary}`)
-                    navigate('/chat/engineering')
-                  }, 'Share to #engineering')}
-                  px={9}
-                  py={4}
-                  rounded={6}
-                  borderWidth={1}
-                  style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-                  hoverStyle={{ background: paint.hover }}
-                >
-                  <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
-                    Cite in #engineering →
+                    <SizableText fontSize={13.5} fontWeight="700" style={{ color: paint.ink }}>
+                      {node.title}
+                    </SizableText>
+                  </XStack>
+                  <SizableText fontSize={11} style={{ color: paint.dim }}>
+                    {`@${node.ownerHandle} · ${node.updatedAt}`}
                   </SizableText>
                 </XStack>
-              </XStack>
-            </YStack>
-          ))}
+
+                <SizableText fontSize={12.5} lineHeight={19} style={{ color: paint.fg }}>
+                  {node.summary}
+                </SizableText>
+
+                <XStack items="center" justify="space-between">
+                  <XStack gap={5} flexWrap="wrap">
+                    {node.tags.map((tg) => (
+                      <XStack key={tg} px={6} py={1} rounded={4} style={{ backgroundColor: paint.surface }}>
+                        <SizableText fontSize={10.5} style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>
+                          {`#${tg}`}
+                        </SizableText>
+                      </XStack>
+                    ))}
+                  </XStack>
+
+                  {node.targetPath ? (
+                    <XStack
+                      {...press(() => navigate(node.targetPath!), `Open ${node.title}`)}
+                      px={9}
+                      py={4}
+                      rounded={6}
+                      borderWidth={1}
+                      style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+                      hoverStyle={{ background: paint.hover }}
+                    >
+                      <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
+                        Open →
+                      </SizableText>
+                    </XStack>
+                  ) : null}
+                </XStack>
+              </YStack>
+            ))
+          )}
         </YStack>
       </ScrollArea>
     </YStack>

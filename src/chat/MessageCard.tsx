@@ -36,9 +36,12 @@ import { paint, ring, round, state } from '~/theme/theme.ts'
 import { localBoardSource } from '~/workspace/board.ts'
 import {
   approveDeployRelease,
+  dismissFailedMessage,
   openThreadPane,
+  sendWorkspaceMessage,
   toggleMessageReaction,
   togglePinMessage,
+  useWorkspace,
   type ChatMessageItem,
   type RosterMember,
 } from '~/workspace/store.ts'
@@ -169,6 +172,7 @@ export function MessageCard({
   renderMath?: boolean
 }) {
   const navigate = useNavigate()
+  const { currentUser } = useWorkspace()
   const [hovered, setHovered] = useState(false)
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null)
   const [diffOpen, setDiffOpen] = useState(false)
@@ -411,7 +415,7 @@ export function MessageCard({
                         sourcePath: `/chat/${message.roomId}`,
                         agentHandle: parsed.agentHandle,
                         title: parsed.title,
-                        handedOffBy: 'Zach Kelling',
+                        handedOffBy: currentUser?.name || 'Teammate',
                       })
                     }, `Run @${parsed.agentHandle}`)}
                     px={8}
@@ -577,8 +581,42 @@ export function MessageCard({
           </XStack>
         ) : null}
 
-        {/* Mattermost Simultaneous Thread Summary Bar (`3 replies · Last reply 2m ago -> View thread`) */}
-        {message.replies.length > 0 ? (
+        {/* Pending or failed send feedback */}
+        {message.failed ? (
+          <XStack items="center" gap={8} pt={2}>
+            <SizableText fontSize={11.5} style={{ color: paint.alert }}>
+              {`Failed to send: ${message.failed}`}
+            </SizableText>
+            <XStack
+              {...press(() => {
+                dismissFailedMessage(message.id)
+                void sendWorkspaceMessage(message.roomId, message.body)
+              }, 'Try again')}
+              px={7}
+              py={2}
+              rounded={4}
+              borderWidth={1}
+              style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+            >
+              <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
+                Try again
+              </SizableText>
+            </XStack>
+            <XStack
+              {...press(() => dismissFailedMessage(message.id), 'Dismiss')}
+              px={6}
+              py={2}
+              rounded={4}
+            >
+              <SizableText fontSize={11} style={{ color: paint.dim }}>
+                Dismiss
+              </SizableText>
+            </XStack>
+          </XStack>
+        ) : null}
+
+        {/* Mattermost Simultaneous Thread Summary Bar */}
+        {Math.max(message.replyCount, message.replies.length) > 0 ? (
           <XStack
             {...press(() => openThreadPane(message.roomId, message.id), 'Open thread in right pane')}
             mt={2}
@@ -593,17 +631,23 @@ export function MessageCard({
             focusVisibleStyle={ring}
             data-testid={`open-thread-bar-${message.id}`}
           >
-            <XStack items="center" gap={-4}>
-              {message.replies.slice(0, 3).map((rep) => {
-                const repMember = roster.find((m) => m.id === rep.authorId) ?? roster[0]!
-                return <MemberPortrait key={rep.id} member={repMember} size={18} />
-              })}
-            </XStack>
+            {message.replies.length > 0 ? (
+              <XStack items="center" gap={-4}>
+                {message.replies.slice(0, 3).map((rep) => {
+                  const repMember = roster.find((m) => m.id === rep.authorId) ?? {
+                    name: 'Member',
+                    shortName: 'M',
+                    bot: false,
+                  }
+                  return <MemberPortrait key={rep.id} member={repMember} size={18} />
+                })}
+              </XStack>
+            ) : null}
             <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
-              {`${message.replies.length} ${message.replies.length === 1 ? 'reply' : 'replies'}`}
+              {`${Math.max(message.replyCount, message.replies.length)} ${Math.max(message.replyCount, message.replies.length) === 1 ? 'reply' : 'replies'}`}
             </SizableText>
             <SizableText fontSize={11.5} style={{ color: paint.dim }}>
-              Last reply 2m ago → View thread
+              View thread →
             </SizableText>
           </XStack>
         ) : null}

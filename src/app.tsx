@@ -8,6 +8,7 @@ import { Space } from '~/data/space.tsx'
 import { routes } from '~/routes'
 import { AuthGate } from '~/login/Login.tsx'
 import { Serve } from '~/serve.tsx'
+import { WorkspaceBridge } from '~/workspace/WorkspaceBridge.tsx'
 import {
   applyTeamSettingsToDocument,
   readTeamSettings,
@@ -36,6 +37,7 @@ export const App = () => (
     <TooltipProvider delay={HINT}>
       <Session>
         <Space>
+          <WorkspaceBridge />
           <Serve />
           <AuthGate>
             <BrowserRouter>

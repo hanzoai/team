@@ -9,30 +9,73 @@ import {
   getAgentByHandle,
   getWorkforceAgents,
   interruptAgent,
+  mapBackendAgents,
   resetWorkforceStore,
   setHumanPresence,
+  setWorkforceAgents,
 } from './workforce.ts'
 
-test('Workforce registry covers all 6 HQ departments and Zen 6 / Enso models', () => {
+test('Workforce store starts empty (no static fake agents) and maps backend /v1/agents + /v1/bot/members', () => {
   resetWorkforceStore()
   assert.equal(DEPARTMENTS.length, 6)
-  const agents = getWorkforceAgents()
-  assert.equal(agents.length, 24)
-  for (const dept of DEPARTMENTS) {
-    assert.ok(agents.some((a) => a.department === dept.id), `missing specialist for ${dept.id}`)
-  }
-  for (const h of ['dev', 'core', 'db', 'qa', 'sci', 'algo', 'data', 'des', 'mana', 'cyber', 'opera', 'vi']) {
-    assert.ok(getAgentByHandle(`@${h}`), `missing @${h}`)
-  }
-  // Never reference obsolete model generations
-  for (const a of agents) {
-    assert.match(a.model, /^(zen6-coder|zen6-ultra|enso-auto)$/)
-  }
+  assert.equal(getWorkforceAgents().length, 0)
+
+  const mapped = mapBackendAgents(
+    [
+      {
+        id: 'agent_1',
+        name: 'dev',
+        model: 'zen6-coder',
+        description: 'Systems engineering agent',
+        status: 'ready',
+        executionMode: 'one-shot',
+        runCount: 4,
+      },
+      {
+        id: 'agent_retired',
+        name: 'old',
+        model: 'zen6-coder',
+        status: 'retired',
+      },
+    ],
+    [
+      {
+        id: 'agent_1',
+        name: 'dev',
+        userId: '22222222-2222-2222-2222-222222222222',
+        personRef: 'person-22222222-2222-2222-2222-222222222222',
+        active: true,
+      },
+      {
+        id: 'agent_2',
+        name: 'qa',
+        userId: '33333333-3333-3333-3333-333333333333',
+        personRef: 'person-33333333-3333-3333-3333-333333333333',
+        active: true,
+      },
+    ],
+  )
+
+  setWorkforceAgents(mapped)
+  assert.equal(getWorkforceAgents().length, 2)
+  assert.equal(getAgentByHandle('@dev')?.userId, '22222222-2222-2222-2222-222222222222')
+  assert.equal(getAgentByHandle('qa')?.id, 'agent_2')
+  assert.equal(getAgentByHandle('old'), undefined)
 })
 
 test('assignToAgent, approveAgentTask, interruptAgent, and opt-in presence update state cleanly', () => {
   resetWorkforceStore()
-  const assigned = assignToAgent('@core', 'Benchmark QUIC transport framing', '/spaces/zen6-eval-report')
+  setWorkforceAgents(
+    mapBackendAgents(
+      [
+        { id: 'a1', name: 'core', model: 'zen6-coder', status: 'ready' },
+        { id: 'a2', name: 'qa', model: 'zen6-coder', status: 'ready' },
+      ],
+      [],
+    ),
+  )
+
+  const assigned = assignToAgent('@core', 'Benchmark QUIC transport framing', '/spaces/eval')
   assert.ok(assigned)
   assert.equal(assigned.state, 'executing')
   assert.equal(assigned.currentAssignment, 'Benchmark QUIC transport framing')
@@ -41,7 +84,7 @@ test('assignToAgent, approveAgentTask, interruptAgent, and opt-in presence updat
   const paused = interruptAgent('core')
   assert.ok(paused)
   assert.equal(paused.state, 'idle')
-  assert.equal(agentStateLabel(paused.state), 'Idle · Event-driven')
+  assert.equal(agentStateLabel(paused.state), 'Ready')
 
   const approved = approveAgentTask('@qa')
   assert.ok(approved)

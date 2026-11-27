@@ -53,7 +53,7 @@ export const routes: RouteObject[] = [
   { path: '/memory', element: stage(<MemoryWorkspace />) },
 
   // Discord × Mattermost Channels & DMs
-  { path: '/chat', element: <Navigate to="/chat/engineering" replace /> },
+  { path: '/chat', element: stage(<EngineeringStage />) },
   { path: '/chat/:id', element: stage(<EngineeringStage />) },
 
   // Linear-grade Issues, Kanban, List, Timeline & YAML Objectives
@@ -77,5 +77,5 @@ export const routes: RouteObject[] = [
   { path: '/crm/:tab/:id', element: stage(<CrmScreen />) },
 
   { path: '/people', element: <Navigate to="/crm" replace /> },
-  { path: '*', element: <Navigate to="/chat/engineering" replace /> },
+  { path: '*', element: <Navigate to="/chat" replace /> },
 ]

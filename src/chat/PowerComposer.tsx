@@ -80,19 +80,19 @@ export function PowerComposer({
     const clean = text.trim()
     if (!clean) return
     if (clean.startsWith('/huddle')) {
-      joinVoiceRoom('eng-pairing')
-      sendWorkspaceMessage(roomId, 'Started voice huddle in **Eng Pairing** — hop in!')
+      void joinVoiceRoom(roomId)
+      void sendWorkspaceMessage(roomId, `Started voice huddle in ${isDm ? roomName : `#${roomName}`} — hop in!`)
       setText('')
       return
     }
     if (clean.startsWith('/issue')) {
       const title = clean.replace(/^\/issue\s*/, '').trim() || 'Follow-up engineering task'
       void localBoardSource.add?.('todo', title)
-      sendWorkspaceMessage(roomId, `Created tracker issue: **${title}**`)
+      void sendWorkspaceMessage(roomId, `Created tracker issue: **${title}**`)
       setText('')
       return
     }
-    sendWorkspaceMessage(roomId, clean)
+    void sendWorkspaceMessage(roomId, clean)
     setText('')
   }
 
@@ -168,8 +168,8 @@ export function PowerComposer({
           {/* Left Power Tools: [+], [@], [/], [Aa], [☑️] */}
           <XStack items="center" gap={3}>
             <ComposerToolBtn
-              label="Attach snippet"
-              onPress={() => setText((prev) => `${prev}${prev ? '\n' : ''}Attached build artifact: \`hanzo-team-v1.1.0\``)}
+              label="Insert quote"
+              onPress={() => setText((prev) => `${prev}${prev ? '\n' : ''}> `)}
             >
               <Plus size={14} color={paint.mute} />
             </ComposerToolBtn>
@@ -199,26 +199,35 @@ export function PowerComposer({
                 style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge, zIndex: 100000 }}
               >
                 <YStack gap={2}>
-                  {roster.slice(0, 8).map((m) => (
-                    <XStack
-                      key={m.id}
-                      {...press(() => {
-                        setMentionOpen(false)
-                        setText((prev) => `${prev}${prev && !prev.endsWith(' ') ? ' ' : ''}@${m.handle} `)
-                      }, `Mention @${m.handle}`)}
-                      px={8}
-                      py={5}
-                      rounded={6}
-                      items="center"
-                      gap={8}
-                      hoverStyle={{ background: paint.hover }}
-                    >
-                      <MemberPortrait member={m} size={20} />
-                      <SizableText fontSize={12.5} fontWeight="500" style={{ color: paint.ink }} flex={1}>
-                        {m.bot ? `@${m.handle}` : m.name}
-                      </SizableText>
-                    </XStack>
-                  ))}
+                  {roster.length === 0 ? (
+                    <SizableText px={8} py={5} fontSize={12} style={{ color: paint.dim }}>
+                      No workspace members loaded
+                    </SizableText>
+                  ) : (
+                    [...roster]
+                      .sort((a, b) => Number(b.bot) - Number(a.bot) || a.name.localeCompare(b.name))
+                      .slice(0, 12)
+                      .map((m) => (
+                        <XStack
+                          key={m.id}
+                          {...press(() => {
+                            setMentionOpen(false)
+                            setText((prev) => `${prev}${prev && !prev.endsWith(' ') ? ' ' : ''}@${m.handle} `)
+                          }, `Mention @${m.handle}`)}
+                          px={8}
+                          py={5}
+                          rounded={6}
+                          items="center"
+                          gap={8}
+                          hoverStyle={{ background: paint.hover }}
+                        >
+                          <MemberPortrait member={m} size={20} />
+                          <SizableText fontSize={12.5} fontWeight="500" style={{ color: paint.ink }} flex={1} numberOfLines={1}>
+                            {m.bot ? `@${m.handle}` : m.name}
+                          </SizableText>
+                        </XStack>
+                      ))
+                  )}
                 </YStack>
               </Popover.Content>
             </Popover>

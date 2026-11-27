@@ -1,11 +1,7 @@
 /**
- * Hanzo Team v8.8 Home Executive Briefing Workspace
- * Matches `uploaded_media_0_1795584722435.png` pixel-for-pixel:
- * - `Home` 44px quiet header
- * - `Good morning.` / `Your team has been making progress.`
- * - `12 Completed` · `6 In progress` · `4 Need attention` summary cards
- * - `Needs your attention` rows (`DEV`, `SCI`, `VI`) with chevron drill-down
- * - Unified `What should we accomplish today?` `@agent` composer (`enso-auto` · `Auto` · `[↑]`)
+ * Hanzo Team Home Workspace (`/home`)
+ *
+ * Wired to real workspace channels, members, agents, and `/v1/team/inbox` notifications.
  */
 import { Popover } from '@hanzo/gui'
 import { ScrollArea, SizableText, Textarea, XStack, YStack } from '@hanzo/ui'
@@ -17,6 +13,7 @@ import { press } from '~/shell/press.ts'
 import { useTeamSettings } from '~/settings/preferences.ts'
 import { paint, ring, round } from '~/theme/theme.ts'
 import {
+  markAttentionRead,
   sendWorkspaceMessage,
   setComposerModel,
   useWorkspace,
@@ -25,9 +22,16 @@ import {
 
 const MODELS: readonly ComposerModel[] = ['enso', 'zen6-coder', 'zen6-ultra']
 
+function greetingByHour(): string {
+  const h = new Date().getHours()
+  if (h < 12) return 'Good morning'
+  if (h < 18) return 'Good afternoon'
+  return 'Good evening'
+}
+
 export function HomeWorkspace() {
   const navigate = useNavigate()
-  const { attention, composerModel, roster } = useWorkspace()
+  const { attention, inboxUnread, composerModel, roster, channels, currentUser, hydrating } = useWorkspace()
   const { settings, chat } = useTeamSettings()
   const effortLabel =
     settings.effortDisplay === 'bars'
@@ -38,20 +42,34 @@ export function HomeWorkspace() {
           : '▮▮▯'
       : 'Auto'
   const [prompt, setPrompt] = useState('')
-  const [dispatchedNote, setDispatchedNote] = useState<string | null>(null)
+  const [dispatchedNote, setDispatchedNote] = useState<{ text: string; channelId: string; channelName: string } | null>(null)
   const [modelOpen, setModelOpen] = useState(false)
 
-  const submitObjective = () => {
+  const primaryChannel =
+    channels.find((c) => c.kind === 'channel' && c.name.toLowerCase() === 'general') ??
+    channels.find((c) => c.kind === 'channel') ??
+    channels[0] ??
+    null
+  const publicChannelCount = channels.filter((c) => c.kind === 'channel').length
+  const activeBotsCount = roster.filter((r) => r.bot).length
+  const firstName = currentUser?.name?.split(/\s+/)[0] || ''
+
+  const submitObjective = async () => {
     const clean = prompt.trim()
-    if (!clean) return
-    sendWorkspaceMessage('engineering', clean)
+    if (!clean || !primaryChannel) return
     setPrompt('')
-    setDispatchedNote(`Dispatched to @vi (${composerModel}) — live run active in #engineering.`)
+    const sent = await sendWorkspaceMessage(primaryChannel.id, clean)
+    if (sent) {
+      setDispatchedNote({
+        text: `Sent to #${primaryChannel.name}.`,
+        channelId: primaryChannel.id,
+        channelName: primaryChannel.name,
+      })
+    }
   }
 
   return (
     <YStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }} data-testid="home-v88-workspace">
-      {/* 44px Header matching v8.8 reference */}
       <XStack
         height={44}
         px={22}
@@ -74,7 +92,7 @@ export function HomeWorkspace() {
           gap={26}
           style={{ marginInline: 'auto' }}
         >
-          {/* Executive Greeting */}
+          {/* Real Greeting */}
           <YStack gap={4}>
             <SizableText
               fontSize={28}
@@ -82,82 +100,95 @@ export function HomeWorkspace() {
               fontWeight="600"
               style={{ color: paint.ink, letterSpacing: -0.5 }}
             >
-              Good morning.
+              {firstName ? `${greetingByHour()}, ${firstName}.` : `${greetingByHour()}.`}
             </SizableText>
             <SizableText fontSize={13.5} style={{ color: paint.dim }}>
-              Your team has been making progress.
+              {hydrating
+                ? 'Syncing live workspace activity…'
+                : `${publicChannelCount} ${publicChannelCount === 1 ? 'channel' : 'channels'} · ${activeBotsCount} ${activeBotsCount === 1 ? 'bot' : 'bots'} ready`}
             </SizableText>
           </YStack>
 
-          {/* 3 Metric Cards: 12 Completed · 6 In progress · 4 Need attention */}
+          {/* 3 Real Metric Tiles */}
           <XStack gap={12} flexWrap="wrap">
             <MetricTile
-              count="12"
-              label="Completed"
-              onPress={() => navigate('/issues')}
+              count={String(publicChannelCount)}
+              label="Channels"
+              onPress={() => navigate(primaryChannel ? `/chat/${primaryChannel.id}` : '/chat')}
             />
             <MetricTile
-              count="6"
-              label="In progress"
+              count={String(activeBotsCount)}
+              label="Active bots"
               onPress={() => navigate('/office')}
             />
             <MetricTile
-              count={String(Math.max(4, attention.filter((a) => !a.resolved).length + 1))}
-              label="Need attention"
+              count={String(inboxUnread)}
+              label="Unread inbox"
               onPress={() => navigate('/inbox')}
             />
           </XStack>
 
-          {/* Needs your attention */}
+          {/* Real Inbox / Attention Rows */}
           <YStack gap={8}>
             <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }} pb={4}>
               Needs your attention
             </SizableText>
 
-            <YStack>
-              {attention.map((item, idx) => (
-                <XStack
-                  key={item.id}
-                  {...press(() => navigate(item.targetPath), item.title)}
-                  py={13}
-                  px={6}
-                  items="center"
-                  justify="space-between"
-                  gap={14}
-                  borderBottomWidth={idx < attention.length - 1 ? 1 : 0}
-                  style={{ borderBottomColor: paint.rule }}
-                  hoverStyle={{ background: paint.rowHover }}
-                  focusVisibleStyle={ring}
-                  data-testid={`home-attention-${item.id}`}
-                >
-                  <XStack items="center" gap={13} flex={1} minW={0}>
-                    <YStack
-                      width={34}
-                      height={34}
-                      rounded={round.pill}
-                      borderWidth={1}
-                      items="center"
-                      justify="center"
-                      shrink={0}
-                      style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-                    >
-                      <SizableText fontSize={10} fontWeight="700" style={{ color: paint.mute, letterSpacing: 0.4 }}>
-                        {item.badgeText}
-                      </SizableText>
-                    </YStack>
-                    <YStack flex={1} minW={0} gap={2}>
-                      <SizableText fontSize={13.5} fontWeight="500" style={{ color: paint.ink }} numberOfLines={1}>
-                        {item.title}
-                      </SizableText>
-                      <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1}>
-                        {item.resolved ? '✓ Approved & deployed' : item.subtitle}
-                      </SizableText>
-                    </YStack>
+            {attention.length === 0 ? (
+              <YStack p={16} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+                <SizableText fontSize={13} style={{ color: paint.dim }}>
+                  {hydrating ? 'Loading inbox notifications…' : 'All caught up — no unread mentions or notifications.'}
+                </SizableText>
+              </YStack>
+            ) : (
+              <YStack>
+                {attention.slice(0, 6).map((item, idx) => (
+                  <XStack
+                    key={item.id}
+                    {...press(() => {
+                      if (!item.read) void markAttentionRead(item.id)
+                      navigate(item.targetPath)
+                    }, item.title)}
+                    py={13}
+                    px={6}
+                    items="center"
+                    justify="space-between"
+                    gap={14}
+                    borderBottomWidth={idx < Math.min(attention.length, 6) - 1 ? 1 : 0}
+                    style={{ borderBottomColor: paint.rule }}
+                    hoverStyle={{ background: paint.rowHover }}
+                    focusVisibleStyle={ring}
+                    data-testid={`home-attention-${item.id}`}
+                  >
+                    <XStack items="center" gap={13} flex={1} minW={0}>
+                      <YStack
+                        width={34}
+                        height={34}
+                        rounded={round.pill}
+                        borderWidth={1}
+                        items="center"
+                        justify="center"
+                        shrink={0}
+                        style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+                      >
+                        <SizableText fontSize={10} fontWeight="700" style={{ color: paint.mute, letterSpacing: 0.4 }}>
+                          {item.badgeText}
+                        </SizableText>
+                      </YStack>
+                      <YStack flex={1} minW={0} gap={2}>
+                        <SizableText fontSize={13.5} fontWeight={item.read ? '400' : '600'} style={{ color: paint.ink }} numberOfLines={1}>
+                          {item.title}
+                        </SizableText>
+                        <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1}>
+                          {item.subtitle}
+                        </SizableText>
+                      </YStack>
+                    </XStack>
+                    <ChevronRight size={15} color={paint.dim} />
                   </XStack>
-                  <ChevronRight size={15} color={paint.dim} />
-                </XStack>
-              ))}
-            </YStack>
+                ))}
+              </YStack>
+            )}
           </YStack>
 
           {dispatchedNote ? (
@@ -171,17 +202,17 @@ export function HomeWorkspace() {
               style={{ backgroundColor: paint.card, borderColor: paint.border }}
             >
               <SizableText fontSize={12} style={{ color: paint.speaking }}>
-                {dispatchedNote}
+                {dispatchedNote.text}
               </SizableText>
-              <XStack {...press(() => navigate('/chat/engineering'), 'View in #engineering')}>
+              <XStack {...press(() => navigate(`/chat/${dispatchedNote.channelId}`), `Open #${dispatchedNote.channelName}`)}>
                 <SizableText fontSize={11.5} fontWeight="600" style={{ color: paint.ink }}>
-                  Open #engineering →
+                  {`Open #${dispatchedNote.channelName} →`}
                 </SizableText>
               </XStack>
             </XStack>
           ) : null}
 
-          {/* Unified Hanzo v8.8 Composer (`What should we accomplish today?`) */}
+          {/* Unified Quick Dispatch Composer */}
           <YStack
             mt={8}
             px={16}
@@ -202,7 +233,11 @@ export function HomeWorkspace() {
               bg="transparent"
               fontSize={13.5}
               color={paint.ink}
-              placeholder="What should we accomplish today?"
+              placeholder={
+                primaryChannel
+                  ? `Message #${primaryChannel.name} or @mention a workspace bot…`
+                  : 'Create a channel first to dispatch messages…'
+              }
               value={prompt}
               onChangeText={setPrompt}
               onKeyDown={(e: { nativeEvent?: { key?: string; metaKey?: boolean; ctrlKey?: boolean }; key?: string; shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean; preventDefault?: () => void }) => {
@@ -210,7 +245,7 @@ export function HomeWorkspace() {
                 const mod = Boolean(e.metaKey || e.ctrlKey || e.nativeEvent?.metaKey || e.nativeEvent?.ctrlKey)
                 if (k === 'Enter' && (settings.enterToSend === 'mod-enter' ? mod : !e.shiftKey)) {
                   e.preventDefault?.()
-                  submitObjective()
+                  void submitObjective()
                 }
               }}
             />
@@ -218,7 +253,10 @@ export function HomeWorkspace() {
             <XStack items="center" justify="space-between">
               <XStack items="center" gap={10}>
                 <XStack
-                  {...press(() => setPrompt((p) => `${p}${p ? '\n' : ''}- [ ] @dev `), 'Add executable task')}
+                  {...press(() => {
+                    const botHandle = roster.find((r) => r.bot)?.handle
+                    setPrompt((p) => `${p}${p ? '\n' : ''}- [ ] ${botHandle ? `@${botHandle} ` : ''}`)
+                  }, 'Add executable task')}
                   width={26}
                   height={26}
                   rounded={13}
@@ -230,8 +268,10 @@ export function HomeWorkspace() {
                 </XStack>
                 <XStack
                   {...press(() => {
-                    const nextBot = roster.find((r) => r.bot)?.handle ?? 'vi'
-                    setPrompt((p) => `${p}${p && !p.endsWith(' ') ? ' ' : ''}@${nextBot} `)
+                    const nextBot = roster.find((r) => r.bot)?.handle
+                    if (nextBot) {
+                      setPrompt((p) => `${p}${p && !p.endsWith(' ') ? ' ' : ''}@${nextBot} `)
+                    }
                   }, 'Mention specialist')}
                   width={26}
                   height={26}
@@ -304,12 +344,13 @@ export function HomeWorkspace() {
                 </SizableText>
 
                 <YStack
-                  {...press(submitObjective, 'Submit')}
+                  {...press(() => void submitObjective(), 'Submit')}
                   width={30}
                   height={30}
                   rounded={15}
                   items="center"
                   justify="center"
+                  opacity={primaryChannel && prompt.trim() ? 1 : 0.6}
                   style={{ backgroundColor: paint.composerAccent }}
                   focusVisibleStyle={ring}
                 >

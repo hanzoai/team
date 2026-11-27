@@ -30,6 +30,7 @@ import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
 import { openSettingsModal } from '~/settings/SettingsModal.tsx'
 import { paint, ring } from '~/theme/theme.ts'
 import {
+  openDmWithMember,
   sendWorkspaceMessage,
   setPhoneModalOpen,
   useWorkspace,
@@ -66,13 +67,13 @@ export type BusinessHeaderProps = {
 }
 
 const OMNIBOX_WORKSPACES = [
-  { id: 'ws-home', kind: 'surface' as const, label: 'Home — Executive Briefing', desc: '12 completed · 6 in progress · 4 need attention', path: '/home' },
-  { id: 'ws-inbox', kind: 'surface' as const, label: 'Inbox — Mentions & Agent Approvals', desc: 'Unified approvals, thread replies & PR gates', path: '/inbox' },
-  { id: 'ws-threads', kind: 'surface' as const, label: 'Threads — Followed Discussions', desc: 'Active engineering & incident threads', path: '/threads' },
-  { id: 'ws-office', kind: 'surface' as const, label: 'Office — Virtual HQ & Skyscraper Elevator', desc: 'F4 Exec · F3 Eng · F2 Research · F1 GTM', path: '/office' },
-  { id: 'ws-work', kind: 'surface' as const, label: 'Work — Issues, Kanban & YAML Objectives', desc: 'TEAM-101..TEAM-106 & executable tasks', path: '/issues' },
-  { id: 'ws-spaces', kind: 'surface' as const, label: 'Spaces — Interactive Deliverables', desc: 'Versioned specs, benchmarks & release checklists', path: '/spaces' },
-  { id: 'ws-memory', kind: 'surface' as const, label: 'Memory — Organizational Knowledge Graph', desc: 'ADRs, runbooks & shared cross-agent context', path: '/memory' },
+  { id: 'ws-home', kind: 'surface' as const, label: 'Home — Workspace Briefing', desc: 'Overview, inbox notifications & quick dispatch', path: '/home' },
+  { id: 'ws-inbox', kind: 'surface' as const, label: 'Inbox — Mentions & Notifications', desc: 'Mentions, direct messages & thread replies', path: '/inbox' },
+  { id: 'ws-threads', kind: 'surface' as const, label: 'Threads — Followed Discussions', desc: 'Active channel discussions & replies', path: '/threads' },
+  { id: 'ws-office', kind: 'surface' as const, label: 'Office — Virtual HQ & Live Voice', desc: 'LiveKit rooms, humans & AI agents', path: '/office' },
+  { id: 'ws-work', kind: 'surface' as const, label: 'Work — Issues & Kanban Board', desc: 'Tracked issues, projects & objectives', path: '/issues' },
+  { id: 'ws-spaces', kind: 'surface' as const, label: 'Spaces — Workspace Documents', desc: 'Teamspaces & collaborative docs', path: '/spaces' },
+  { id: 'ws-memory', kind: 'surface' as const, label: 'Memory — Knowledge & Agents', desc: 'Workspace docs & agent directory', path: '/memory' },
 ]
 
 export function BusinessHeader({
@@ -140,14 +141,14 @@ export function BusinessHeader({
         kind: 'bot' as const,
         label: `@${m.handle} (${m.name})`,
         desc: m.activity,
-        path: `/chat/dm-${m.handle}`,
+        path: `/chat/with-${m.id}`,
       }))
     const docItems = [
       ...spaces.map((s) => ({
         id: `sp-${s.id}`,
         kind: 'doc' as const,
         label: s.title,
-        desc: `Space · ${s.version}`,
+        desc: `Doc · ${s.teamspaceName}`,
         path: `/spaces/${s.id}`,
       })),
       ...memory.map((m) => ({
@@ -155,7 +156,7 @@ export function BusinessHeader({
         kind: 'doc' as const,
         label: m.title,
         desc: `Memory · ${m.category}`,
-        path: '/memory',
+        path: m.targetPath || '/memory',
       })),
     ]
     const all = [...OMNIBOX_WORKSPACES, ...chItems, ...botItems, ...docItems]
@@ -173,13 +174,28 @@ export function BusinessHeader({
     else if (typeof window !== 'undefined') window.location.assign(path)
   }
 
-  const askViNow = () => {
+  const askViNow = async () => {
     const clean = query.trim()
     if (!clean) return
-    sendWorkspaceMessage('dm-vi', clean)
-    setViAnswer(
-      `@vi: Processed "${clean}" — 12 tasks completed today, v1.1.0 RC is green in #engineering, and 3 Zen 6 router evals are ready in Spaces.`,
-    )
+    const targetBot =
+      roster.find((m) => m.bot && m.handle === 'vi') ??
+      roster.find((m) => m.bot)
+    if (targetBot) {
+      setViAnswer(`Sending to @${targetBot.handle}…`)
+      const dmId = await openDmWithMember(targetBot.id).catch(() => null)
+      if (dmId) {
+        await sendWorkspaceMessage(dmId, clean)
+        jumpTo(`/chat/${dmId}`)
+        return
+      }
+    }
+    const primaryChannel = channels.find((c) => c.kind === 'channel') ?? channels[0]
+    if (primaryChannel) {
+      await sendWorkspaceMessage(primaryChannel.id, clean)
+      jumpTo(`/chat/${primaryChannel.id}`)
+      return
+    }
+    setViAnswer('No workspace channel or agent available to send to yet.')
   }
 
   return (
@@ -588,7 +604,7 @@ export function RailAccountMenu({
   onSettings,
 }: RailAccountMenuProps) {
   const [open, setOpen] = useState(false)
-  const userName = user?.name?.trim() || 'Zach Kelling'
+  const userName = user?.name?.trim() || 'Account'
 
   return (
     <Popover open={open} onOpenChange={setOpen} placement="right-end" allowFlip stayInFrame>

@@ -101,6 +101,22 @@ export const team = {
   get dms(): string {
     return `${resolveApiOrigin()}/v1/team/dms`
   },
+  /** Space roster: humans and agents. */
+  get members(): string {
+    return `${resolveApiOrigin()}/v1/team/members`
+  },
+  /** Caller's inbox notifications (mentions, DMs, replies). */
+  get inbox(): string {
+    return `${resolveApiOrigin()}/v1/team/inbox`
+  },
+  /** Space document tree & teamspaces. */
+  get docs(): string {
+    return `${resolveApiOrigin()}/v1/team/docs`
+  },
+  /** Individual message mutations (replies, reactions, edit, delete). */
+  get messages(): string {
+    return `${resolveApiOrigin()}/v1/team/messages`
+  },
   /** Per-space file storage. */
   get files(): string {
     return `${resolveApiOrigin()}/v1/team/files`
@@ -108,6 +124,38 @@ export const team = {
   /** The plan, the seats and the guest cap. */
   get plan(): string {
     return `${resolveApiOrigin()}/v1/team/billing/plan`
+  },
+}
+
+/** Meet / Virtual Office / LiveKit signaling plane (`/v1/meet/*`). */
+export const meet = {
+  get health(): string {
+    return `${resolveApiOrigin()}/v1/meet/health`
+  },
+  get session(): string {
+    return `${resolveApiOrigin()}/v1/meet/session`
+  },
+  get call(): string {
+    return `${resolveApiOrigin()}/v1/meet/call`
+  },
+  get getToken(): string {
+    return `${resolveApiOrigin()}/v1/meet/getToken`
+  },
+  get record(): string {
+    return `${resolveApiOrigin()}/v1/meet/record`
+  },
+}
+
+/** Cloud Agents & Bot Members plane (`/v1/agents`, `/v1/bot/members`). */
+export const agents = {
+  get list(): string {
+    return `${resolveApiOrigin()}/v1/agents`
+  },
+  get legacyList(): string {
+    return `${resolveApiOrigin()}/v1/agent`
+  },
+  get botMembers(): string {
+    return `${resolveApiOrigin()}/v1/bot/members`
   },
 }
 

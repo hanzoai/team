@@ -36,7 +36,7 @@ export type ShellProps = {
 
 const VIEW_SHORTCUT_PATHS: Record<string, string> = {
   'view-1': '/home',
-  'view-2': '/chat/engineering',
+  'view-2': '/chat',
   'view-3': '/inbox',
   'view-4': '/threads',
   'view-5': '/issues',
@@ -132,7 +132,7 @@ export const Shell = ({ children }: ShellProps) => {
         openSettingsModal('general')
       } else if (action === 'new-thread') {
         e.preventDefault()
-        reach('/chat/engineering')
+        reach('/chat')
       } else if (action in VIEW_SHORTCUT_PATHS) {
         e.preventDefault()
         reach(VIEW_SHORTCUT_PATHS[action]!)
@@ -149,21 +149,21 @@ export const Shell = ({ children }: ShellProps) => {
 
   const activeOrg = current ?? all[0]
   const resolvedName =
-    who && !guest && who.label && who.label !== 'Local Workspace'
-      ? who.label
-      : 'Zach Kelling'
+    who && !guest && (who.label || who.name || who.email)
+      ? (who.label || who.name || who.email)!
+      : who?.label || 'Workspace Member'
 
   const userIdentity = {
-    sub: who?.id || 'zach',
+    sub: who?.id || '',
     name: resolvedName,
-    email: who?.email || 'zach@hanzo.ai',
-    avatar: who?.avatar || '/agents/zach.jpg',
-    owner: activeOrg?.org ?? 'hanzo',
+    email: who?.email || '',
+    avatar: who?.avatar,
+    owner: activeOrg?.org ?? '',
   }
 
   const currentOrgInfo = {
-    name: activeOrg?.url ?? 'hanzo',
-    displayName: activeOrg?.name ?? 'Hanzo',
+    name: activeOrg?.url ?? '',
+    displayName: activeOrg?.name ?? 'Workspace',
   }
   const orgList = all.map((s) => ({ name: s.url, displayName: s.name }))
 

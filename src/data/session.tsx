@@ -177,7 +177,7 @@ export const Session = ({ children }: { children: ReactNode }) => {
       /* ignore */
     }
     setGuest(true)
-    setWho({ id: 'zach', name: 'zach', label: 'Zach Kelling', email: 'zach@hanzo.ai', avatar: '/agents/zach.jpg' })
+    setWho({ id: 'local', name: 'local', label: 'Local Workspace' })
     setStanding('in')
     invalidate()
   }, [])

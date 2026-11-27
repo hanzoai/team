@@ -1,86 +1,182 @@
 /**
- * Roam-Inspired Virtual Office Bento HQ + Multi-Floor Skyscraper Elevator (`/office`)
+ * Virtual Office HQ (`/office`)
  *
- * Matches `uploaded_media_2_1795584722435.jpg` & `uploaded_media_3_1795584722435.jpg`:
- * - Interactive Bento Floor Map: Individual & Pair Desks, `Theater` All-Hands Stage + audience
- *   seating dots, `Meeting Room` (`Eng Pairing`), and `Ship Velocity Leaderboard`
- * - Click any human or specialist head to `Wave 👋`, `Knock 🚪`, or `Chat 💬`
- * - Right 268px Multi-Floor Skyscraper Elevator (`F4 Executive · F3 Engineering · F2 Research · F1 GTM`)
- * - Bottom Floating Roam Presence & Voice Control Bar
+ * Wired to live production backends:
+ * - Voice/Video Rooms (`Theater`, `Meeting Room`, `Engineering Huddle`):
+ *   `GET /v1/meet/session`, `GET /v1/meet/call`, `POST /v1/meet/getToken` + `livekit-client` (`wss://live.hanzo.ai`)
+ * - Humans & AI Agents: `GET /v1/team/members`, `GET /v1/agents`, `GET /v1/bot/members`
+ * - Create Bot (`POST /v1/agents`), Run Bot (`POST /v1/agents/:id/run`), Delete Bot (`DELETE /v1/agents/:id`)
  */
-import { Popover } from '@hanzo/gui'
 import { ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import {
+  Bot,
   Building2,
   DoorOpen,
-  Hand,
-  MessageCircle,
   Mic,
   MicOff,
   MonitorUp,
-  Trophy,
+  PhoneOff,
+  Plus,
+  Users,
   Video,
+  VideoOff,
+  Volume2,
 } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
+import {
+  createWorkforceAgent,
+  deleteWorkforceAgent,
+  runWorkforceAgent,
+} from '~/agents/workforce.ts'
 import { MemberPortrait } from '~/shell/UnifiedSidebar.tsx'
 import { press } from '~/shell/press.ts'
-import { paint, ring, round } from '~/theme/theme.ts'
+import { paint } from '~/theme/theme.ts'
 import {
   joinVoiceRoom,
   leaveVoiceRoom,
-  OFFICE_DESKS,
-  selectOfficeFloor,
+  openDmWithMember,
+  refreshRosterFromBackend,
+  sendWorkspaceMessage,
+  toggleCameraOn,
   toggleScreenShare,
   toggleVoiceMute,
   triggerOfficeInteraction,
   useWorkspace,
   type RosterMember,
 } from '~/workspace/store.ts'
+import { CreateBotModal, LiveRoomCard, MemberDeskCard, RunBotModal } from './OfficeParts.tsx'
 
-const FLOORS = [
-  { id: 'F4' as const, name: 'F4 · Executive & Ops', dept: 'Exec & Security' },
-  { id: 'F3' as const, name: 'F3 · R&D & Engineering', dept: 'R&D' },
-  { id: 'F2' as const, name: 'F2 · Research & Science', dept: 'Science' },
-  { id: 'F1' as const, name: 'F1 · Commercial & GTM', dept: 'Commercial' },
-]
+type FilterMode = 'all' | 'humans' | 'bots'
 
 export function OfficeWorkspace() {
   const navigate = useNavigate()
   const {
+    orgs,
+    activeOrgId,
     roster,
-    selectedFloor,
+    voiceRooms,
     officeBanner,
     connectedVoiceId,
+    voiceStatus,
+    voiceError,
+    voiceServerHost,
+    meetReady,
     micMuted,
+    cameraOn,
     screenSharing,
+    hydrating,
   } = useWorkspace()
 
-  const visibleDesks =
-    selectedFloor === 'ALL'
-      ? OFFICE_DESKS
-      : OFFICE_DESKS.filter((d) => d.floor === selectedFloor)
+  const [filter, setFilter] = useState<FilterMode>('all')
+  const [createOpen, setCreateOpen] = useState(false)
+  const [botName, setBotName] = useState('')
+  const [botModel, setBotModel] = useState('zen6-coder')
+  const [botDesc, setBotDesc] = useState('')
+  const [botInstructions, setBotInstructions] = useState('')
+  const [createBusy, setCreateBusy] = useState(false)
+  const [createErr, setCreateErr] = useState<string | null>(null)
 
-  const theaterSpeakers = ['zach', 'vi', 'mana']
-    .map((id) => roster.find((m) => m.id === id))
-    .filter((m): m is RosterMember => Boolean(m))
+  const [runTarget, setRunTarget] = useState<RosterMember | null>(null)
+  const [runPrompt, setRunPrompt] = useState('')
+  const [runBusy, setRunBusy] = useState(false)
+  const [runResult, setRunResult] = useState<{ status: string; output?: string; error?: string } | null>(null)
 
-  const meetingPeople = ['zach', 'dev', 'alex']
-    .map((id) => roster.find((m) => m.id === id))
-    .filter((m): m is RosterMember => Boolean(m))
+  const activeOrg = orgs.find((o) => o.id === activeOrgId) ?? orgs[0] ?? null
+  const humans = roster.filter((m) => !m.bot)
+  const bots = roster.filter((m) => m.bot)
+  const visibleMembers =
+    filter === 'humans' ? humans : filter === 'bots' ? bots : [...humans, ...bots]
 
-  const topShippers = [
-    { rank: '1', member: roster.find((m) => m.id === 'dev')!, stat: '14 PRs merged' },
-    { rank: '2', member: roster.find((m) => m.id === 'zach')!, stat: '9 releases' },
-    { rank: '3', member: roster.find((m) => m.id === 'sci')!, stat: '6 eval sweeps' },
-  ]
+  const theaterRoom = voiceRooms.find((r) => r.id === 'office-theater') ?? voiceRooms[0]
+  const meetingRoom = voiceRooms.find((r) => r.id === 'office-meeting') ?? voiceRooms[1]
+  const huddleRoom = voiceRooms.find((r) => r.id === 'office-huddle') ?? voiceRooms[2]
+
+  const openChatWith = async (member: RosterMember) => {
+    triggerOfficeInteraction(member.name, 'chat')
+    const dmId = await openDmWithMember(member.id).catch(() => null)
+    navigate(dmId ? `/chat/${dmId}` : `/chat/with-${member.id}`)
+  }
+
+  const sendPing = async (member: RosterMember, kind: 'wave' | 'knock') => {
+    triggerOfficeInteraction(member.name, kind)
+    const dmId = await openDmWithMember(member.id).catch(() => null)
+    if (dmId) {
+      const text =
+        kind === 'wave'
+          ? 'Waved at you from the Virtual Office.'
+          : 'Knocked on your Virtual Office desk — free to hop into the Meeting Room?'
+      void sendWorkspaceMessage(dmId, text)
+    }
+  }
+
+  const handleCreateBot = async () => {
+    const cleanName = botName.trim()
+    const cleanInstr = botInstructions.trim() || `You are ${cleanName}, a helpful workspace agent.`
+    if (!cleanName || createBusy) return
+    setCreateBusy(true)
+    setCreateErr(null)
+    try {
+      await createWorkforceAgent({
+        name: cleanName,
+        model: botModel.trim() || undefined,
+        description: botDesc.trim() || undefined,
+        instructions: cleanInstr,
+      })
+      await refreshRosterFromBackend()
+      setBotName('')
+      setBotDesc('')
+      setBotInstructions('')
+      setCreateOpen(false)
+    } catch (err) {
+      setCreateErr(err instanceof Error ? err.message : 'Failed to create bot')
+    } finally {
+      setCreateBusy(false)
+    }
+  }
+
+  const handleRunBot = async () => {
+    if (!runTarget || !runPrompt.trim() || runBusy) return
+    setRunBusy(true)
+    setRunResult(null)
+    try {
+      const ref = runTarget.agentId || runTarget.name
+      setRunResult(await runWorkforceAgent(ref, runPrompt.trim()))
+    } catch (err) {
+      setRunResult({ status: 'error', error: err instanceof Error ? err.message : 'Agent run failed' })
+    } finally {
+      setRunBusy(false)
+    }
+  }
+
+  const handleDeleteBot = async (member: RosterMember) => {
+    try {
+      await deleteWorkforceAgent(member.agentId || member.name)
+      await refreshRosterFromBackend()
+    } catch (err) {
+      triggerOfficeInteraction(err instanceof Error ? `Delete failed: ${err.message}` : 'Delete failed', 'wave')
+    }
+  }
+
+  const statusBadgeText =
+    voiceStatus === 'connected'
+      ? `Connected · ${voiceServerHost || 'LiveKit'}`
+      : voiceStatus === 'connecting'
+        ? 'Connecting to LiveKit…'
+        : voiceStatus === 'reconnecting'
+          ? 'Reconnecting…'
+          : voiceStatus === 'error'
+            ? 'Connection Error'
+            : meetReady === false
+              ? 'Meet Unconfigured'
+              : voiceServerHost
+                ? `Ready · ${voiceServerHost}`
+                : 'Ready'
 
   return (
     <XStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }} data-testid="office-roam-workspace">
-      {/* LEFT / MAIN: Bento Virtual HQ Map + Floating Bottom Dock */}
       <YStack flex={1} minW={0} minH={0} position="relative">
-        {/* 44px Header */}
         <XStack
           height={44}
           px={18}
@@ -93,22 +189,36 @@ export function OfficeWorkspace() {
           <XStack items="center" gap={8} flex={1} minW={0}>
             <Building2 size={15} color={paint.ink} />
             <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }} shrink={0}>
-              Virtual HQ · Hanzo Tower
+              {`Virtual HQ · ${activeOrg?.name || 'Workspace'}`}
             </SizableText>
             <YStack width={1} height={13} style={{ backgroundColor: paint.rule }} shrink={0} />
-            <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1} flex={1}>
-              Click any teammate or bot head to wave, knock, or chat
+            <SizableText
+              fontSize={11.5}
+              fontWeight="600"
+              style={{
+                color:
+                  voiceStatus === 'connected' ? paint.speaking : voiceStatus === 'error' ? paint.alert : paint.dim,
+                fontFamily: 'var(--font-mono)',
+              }}
+              numberOfLines={1}
+            >
+              {statusBadgeText}
             </SizableText>
           </XStack>
 
-          {/* Floor Filter Pills */}
-          <XStack items="center" gap={4} shrink={0}>
-            {(['ALL', 'F4', 'F3', 'F2', 'F1'] as const).map((fl) => {
-              const active = selectedFloor === fl
+          <XStack items="center" gap={5} shrink={0}>
+            {(
+              [
+                { id: 'all', label: `All (${roster.length})` },
+                { id: 'humans', label: `Humans (${humans.length})` },
+                { id: 'bots', label: `Bots (${bots.length})` },
+              ] as const
+            ).map((f) => {
+              const active = filter === f.id
               return (
                 <XStack
-                  key={fl}
-                  {...press(() => selectOfficeFloor(fl), `Floor ${fl}`)}
+                  key={f.id}
+                  {...press(() => setFilter(f.id), f.label)}
                   height={24}
                   px={9}
                   rounded={6}
@@ -121,23 +231,43 @@ export function OfficeWorkspace() {
                   hoverStyle={{ background: paint.hover }}
                 >
                   <SizableText fontSize={11} fontWeight={active ? '700' : '500'} style={{ color: active ? paint.ink : paint.mute }}>
-                    {fl === 'ALL' ? 'All Floors' : fl}
+                    {f.label}
                   </SizableText>
                 </XStack>
               )
             })}
+
+            <XStack
+              {...press(() => {
+                setCreateErr(null)
+                setCreateOpen(true)
+              }, 'Create Bot')}
+              height={24}
+              px={9}
+              rounded={6}
+              items="center"
+              gap={4}
+              style={{ backgroundColor: paint.ink }}
+              data-testid="office-create-bot-btn"
+            >
+              <Plus size={11} color={paint.ground} />
+              <SizableText fontSize={11} fontWeight="700" style={{ color: paint.ground }}>
+                New Bot
+              </SizableText>
+            </XStack>
           </XStack>
         </XStack>
 
+        {voiceStatus === 'error' && voiceError ? (
+          <XStack px={18} py={7} borderBottomWidth={1} style={{ backgroundColor: paint.card, borderBottomColor: paint.rule }}>
+            <SizableText fontSize={12} style={{ color: paint.alert }}>
+              {`Voice connection failed: ${voiceError}`}
+            </SizableText>
+          </XStack>
+        ) : null}
+
         {officeBanner ? (
-          <XStack
-            px={18}
-            py={6}
-            items="center"
-            justify="space-between"
-            borderBottomWidth={1}
-            style={{ backgroundColor: paint.voiceBg, borderBottomColor: paint.voiceEdge }}
-          >
+          <XStack px={18} py={6} borderBottomWidth={1} style={{ backgroundColor: paint.voiceBg, borderBottomColor: paint.voiceEdge }}>
             <SizableText fontSize={12} fontWeight="600" style={{ color: paint.speaking }}>
               {officeBanner.text}
             </SizableText>
@@ -145,291 +275,111 @@ export function OfficeWorkspace() {
         ) : null}
 
         <ScrollArea flex={1} minH={0}>
-          <YStack p={16} pb={76} gap={12}>
-            {/* Row 1: Individual & Pair Desks (Roam Bento Top Grid) */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fill, minmax(148px, 1fr))',
-                gap: 10,
-              }}
-            >
-              {visibleDesks.slice(0, 6).map((desk) => (
-                <DeskTileCard
-                  key={desk.id}
-                  label={desk.label}
-                  floor={desk.floor}
-                  toolTag={desk.toolTag}
-                  activeRing={desk.activeRing}
-                  statusLine={desk.statusLine}
-                  members={desk.occupants
-                    .map((id) => roster.find((r) => r.id === id))
-                    .filter((m): m is RosterMember => Boolean(m))}
-                  onChat={(m) => navigate(`/chat/dm-${m.id}`)}
+          <YStack p={16} pb={84} gap={14}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: 10 }}>
+              {theaterRoom ? (
+                <LiveRoomCard
+                  testId="office-theater-room"
+                  title="Theater"
+                  subtitle={connectedVoiceId === theaterRoom.id ? statusBadgeText : 'All-hands LiveKit stage'}
+                  room={theaterRoom}
+                  roster={roster}
+                  connected={connectedVoiceId === theaterRoom.id}
+                  connecting={connectedVoiceId === theaterRoom.id && voiceStatus === 'connecting'}
+                  joinLabel="Take Stage"
+                  leaveLabel="Leave Stage"
+                  onToggle={() => void (connectedVoiceId === theaterRoom.id ? leaveVoiceRoom() : joinVoiceRoom(theaterRoom.id))}
                 />
-              ))}
+              ) : null}
+              {meetingRoom ? (
+                <LiveRoomCard
+                  testId="office-meeting-room"
+                  title="Meeting Room"
+                  subtitle={connectedVoiceId === meetingRoom.id ? statusBadgeText : 'Drop-in LiveKit audio & video'}
+                  room={meetingRoom}
+                  roster={roster}
+                  connected={connectedVoiceId === meetingRoom.id}
+                  connecting={connectedVoiceId === meetingRoom.id && voiceStatus === 'connecting'}
+                  joinLabel="Drop In"
+                  leaveLabel="Leave Room"
+                  onToggle={() => void (connectedVoiceId === meetingRoom.id ? leaveVoiceRoom() : joinVoiceRoom(meetingRoom.id))}
+                />
+              ) : null}
+              {huddleRoom ? (
+                <LiveRoomCard
+                  testId="office-huddle-room"
+                  title="Engineering Huddle"
+                  subtitle={connectedVoiceId === huddleRoom.id ? statusBadgeText : 'Pairing & screen share'}
+                  room={huddleRoom}
+                  roster={roster}
+                  connected={connectedVoiceId === huddleRoom.id}
+                  connecting={connectedVoiceId === huddleRoom.id && voiceStatus === 'connecting'}
+                  joinLabel="Join Huddle"
+                  leaveLabel="Leave Huddle"
+                  onToggle={() => void (connectedVoiceId === huddleRoom.id ? leaveVoiceRoom() : joinVoiceRoom(huddleRoom.id))}
+                />
+              ) : null}
             </div>
 
-            {/* Row 2: Central Roam Bento Feature Rooms (`Theater` + `Meeting Room` + `Ship Leaderboard`) */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
-                gap: 10,
-              }}
-            >
-              {/* THEATER ALL-HANDS STAGE */}
-              <YStack
-                p={14}
-                rounded={12}
-                borderWidth={1}
-                gap={12}
-                style={{ backgroundColor: paint.card, borderColor: paint.border }}
-                data-testid="office-theater-room"
-              >
-                <XStack items="center" justify="space-between">
-                  <SizableText fontSize={13} fontWeight="700" style={{ color: paint.ink }}>
-                    Theater
+            <YStack gap={8}>
+              <SizableText fontSize={12} fontWeight="700" style={{ color: paint.mute, letterSpacing: 0.4 }}>
+                {filter === 'humans'
+                  ? `HUMANS (${humans.length})`
+                  : filter === 'bots'
+                    ? `AI WORKFORCE (${bots.length})`
+                    : `WORKSPACE DESKS (${visibleMembers.length})`}
+              </SizableText>
+
+              {hydrating && visibleMembers.length === 0 ? (
+                <YStack p={20} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+                  <SizableText fontSize={13} style={{ color: paint.dim }}>
+                    Loading workspace members and bots…
                   </SizableText>
-                  <XStack
-                    {...press(() => joinVoiceRoom('all-hands'), 'Join Theater Stage')}
-                    px={8}
-                    py={2.5}
-                    rounded={5}
-                    borderWidth={1}
-                    style={{
-                      backgroundColor: connectedVoiceId === 'all-hands' ? paint.speakingBg : paint.elevated,
-                      borderColor: connectedVoiceId === 'all-hands' ? paint.voiceEdge : paint.border,
-                    }}
-                  >
-                    <SizableText
-                      fontSize={10.5}
-                      fontWeight="600"
-                      style={{ color: connectedVoiceId === 'all-hands' ? paint.speaking : paint.mute }}
-                    >
-                      {connectedVoiceId === 'all-hands' ? 'On Stage' : 'Take Stage'}
-                    </SizableText>
-                  </XStack>
-                </XStack>
-
-                {/* Speaker Podium */}
-                <XStack
-                  py={12}
-                  px={10}
-                  rounded={10}
-                  items="center"
-                  justify="center"
-                  gap={14}
-                  style={{ backgroundColor: paint.elevated }}
-                >
-                  {theaterSpeakers.map((sp) => (
-                    <InteractiveHead
-                      key={sp.id}
-                      member={sp}
-                      size={44}
-                      speaking={sp.id === 'vi'}
-                      onChat={() => navigate(`/chat/dm-${sp.id}`)}
-                    />
-                  ))}
-                </XStack>
-
-                {/* Audience Seating Dots (Roam signature theater rows) */}
-                <YStack gap={5} pt={2}>
-                  {[0, 1, 2].map((row) => (
-                    <XStack key={row} items="center" justify="space-between" gap={6}>
-                      {[3, 4, 2, 3, 4].map((dots, col) => (
-                        <XStack
-                          key={col}
-                          flex={1}
-                          height={12}
-                          rounded={6}
-                          items="center"
-                          justify="center"
-                          gap={3}
-                          style={{ backgroundColor: paint.surface }}
-                        >
-                          {Array.from({ length: dots }).map((_, d) => (
-                            <YStack
-                              key={d}
-                              width={2.5}
-                              height={2.5}
-                              rounded={round.pill}
-                              style={{ backgroundColor: paint.dim }}
-                            />
-                          ))}
-                        </XStack>
-                      ))}
-                    </XStack>
-                  ))}
                 </YStack>
-              </YStack>
-
-              {/* MEETING ROOM (`Eng Pairing`) */}
-              <YStack
-                p={14}
-                rounded={12}
-                borderWidth={1}
-                justify="space-between"
-                gap={12}
-                style={{
-                  backgroundColor: paint.card,
-                  borderColor: connectedVoiceId === 'eng-pairing' ? paint.voiceEdge : paint.border,
-                }}
-                data-testid="office-meeting-room"
-              >
-                <XStack items="center" justify="space-between">
-                  <YStack>
-                    <SizableText fontSize={13} fontWeight="700" style={{ color: paint.ink }}>
-                      Meeting Room
-                    </SizableText>
-                    <SizableText fontSize={11} style={{ color: paint.speaking }}>
-                      Eng Pairing · Live 14ms
-                    </SizableText>
-                  </YStack>
-                  <Video size={14} color={paint.mute} />
-                </XStack>
-
-                <XStack items="center" gap={10} py={8}>
-                  {meetingPeople.map((mp) => (
-                    <InteractiveHead
-                      key={mp.id}
-                      member={mp}
-                      size={42}
-                      speaking={mp.id === 'dev'}
-                      onChat={() => navigate(`/chat/dm-${mp.id}`)}
+              ) : visibleMembers.length === 0 ? (
+                <YStack p={20} rounded={10} borderWidth={1} gap={8} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+                  <SizableText fontSize={13} fontWeight="600" style={{ color: paint.ink }}>
+                    {filter === 'bots' ? 'No bots created in this organization yet.' : 'No members in this view.'}
+                  </SizableText>
+                  <SizableText fontSize={12} style={{ color: paint.dim }}>
+                    Create a bot with the "+ New Bot" button above to add an AI teammate to this workspace.
+                  </SizableText>
+                </YStack>
+              ) : (
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(196px, 1fr))', gap: 10 }}>
+                  {visibleMembers.map((member) => (
+                    <MemberDeskCard
+                      key={member.id}
+                      member={member}
+                      onChat={() => void openChatWith(member)}
+                      onWave={() => void sendPing(member, 'wave')}
+                      onKnock={() => void sendPing(member, 'knock')}
+                      onRun={
+                        member.bot
+                          ? () => {
+                              setRunTarget(member)
+                              setRunPrompt('')
+                              setRunResult(null)
+                            }
+                          : undefined
+                      }
+                      onDelete={member.bot ? () => void handleDeleteBot(member) : undefined}
                     />
                   ))}
-                </XStack>
-
-                <XStack
-                  {...press(
-                    () => (connectedVoiceId === 'eng-pairing' ? leaveVoiceRoom() : joinVoiceRoom('eng-pairing')),
-                    'Toggle Meeting Room',
-                  )}
-                  py={6}
-                  rounded={7}
-                  borderWidth={1}
-                  items="center"
-                  justify="center"
-                  style={{
-                    backgroundColor: connectedVoiceId === 'eng-pairing' ? paint.speakingBg : paint.elevated,
-                    borderColor: connectedVoiceId === 'eng-pairing' ? paint.voiceEdge : paint.border,
-                  }}
-                >
-                  <SizableText
-                    fontSize={11.5}
-                    fontWeight="600"
-                    style={{ color: connectedVoiceId === 'eng-pairing' ? paint.speaking : paint.ink }}
-                  >
-                    {connectedVoiceId === 'eng-pairing' ? 'Connected · Leave Room' : 'Drop In Instantly'}
-                  </SizableText>
-                </XStack>
-              </YStack>
-
-              {/* SHIP VELOCITY LEADERBOARD (Roam Game/Velocity Room) */}
-              <YStack
-                p={14}
-                rounded={12}
-                borderWidth={1}
-                justify="space-between"
-                gap={10}
-                style={{ backgroundColor: paint.card, borderColor: paint.border }}
-              >
-                <XStack items="center" justify="space-between">
-                  <SizableText fontSize={13} fontWeight="700" style={{ color: paint.ink }}>
-                    Velocity Lounge
-                  </SizableText>
-                  <Trophy size={14} color={paint.sevInk} />
-                </XStack>
-
-                <XStack
-                  py={10}
-                  px={8}
-                  rounded={10}
-                  items="center"
-                  justify="space-around"
-                  style={{ backgroundColor: paint.elevated }}
-                >
-                  {topShippers.map((ts) => (
-                    <YStack key={ts.rank} items="center" gap={4}>
-                      <InteractiveHead
-                        member={ts.member}
-                        size={38}
-                        onChat={() => navigate(`/chat/dm-${ts.member.id}`)}
-                      />
-                      <XStack px={6} py={1} rounded={8} style={{ backgroundColor: paint.surface }}>
-                        <SizableText fontSize={10} fontWeight="700" style={{ color: paint.sevInk }}>
-                          {`#${ts.rank}`}
-                        </SizableText>
-                      </XStack>
-                    </YStack>
-                  ))}
-                </XStack>
-
-                <XStack
-                  {...press(() => navigate('/issues'), 'Open Work Leaderboard')}
-                  items="center"
-                  justify="space-between"
-                >
-                  <SizableText fontSize={11.5} style={{ color: paint.dim }}>
-                    Sprint Leaderboard ›
-                  </SizableText>
-                  <SizableText fontSize={11} style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>
-                    29 shipped
-                  </SizableText>
-                </XStack>
-              </YStack>
-            </div>
-
-            {/* Row 3: Remaining Desks */}
-            {visibleDesks.length > 6 ? (
-              <div
-                style={{
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fill, minmax(148px, 1fr))',
-                  gap: 10,
-                }}
-              >
-                {visibleDesks.slice(6).map((desk) => (
-                  <DeskTileCard
-                    key={desk.id}
-                    label={desk.label}
-                    floor={desk.floor}
-                    toolTag={desk.toolTag}
-                    activeRing={desk.activeRing}
-                    statusLine={desk.statusLine}
-                    members={desk.occupants
-                      .map((id) => roster.find((r) => r.id === id))
-                      .filter((m): m is RosterMember => Boolean(m))}
-                    onChat={(m) => navigate(`/chat/dm-${m.id}`)}
-                  />
-                ))}
-              </div>
-            ) : null}
+                </div>
+              )}
+            </YStack>
           </YStack>
         </ScrollArea>
 
-        {/* Bottom Floating Roam Presence & Quick Controls Bar */}
-        <XStack
-          position="absolute"
-          b={14}
-          l={0}
-          r={0}
-          items="center"
-          justify="center"
-          pointerEvents="box-none"
-        >
-          <XStack
-            px={12}
-            py={6}
-            gap={10}
-            rounded={20}
-            borderWidth={1}
-            items="center"
-            style={{ backgroundColor: paint.sidebar, borderColor: paint.border }}
-          >
+        {/* Bottom Floating LiveKit Controls */}
+        <XStack position="absolute" b={14} l={0} r={0} items="center" justify="center" pointerEvents="box-none">
+          <XStack px={12} py={6} gap={10} rounded={20} borderWidth={1} items="center" style={{ backgroundColor: paint.sidebar, borderColor: paint.border }}>
             <XStack
-              {...press(() => (connectedVoiceId ? leaveVoiceRoom() : joinVoiceRoom('eng-pairing')), 'Door / Room')}
+              {...press(
+                () => void (connectedVoiceId ? leaveVoiceRoom() : joinVoiceRoom('office-meeting')),
+                connectedVoiceId ? 'Leave Voice Room' : 'Join Meeting Room',
+              )}
               width={28}
               height={28}
               rounded={14}
@@ -437,320 +387,147 @@ export function OfficeWorkspace() {
               justify="center"
               hoverStyle={{ background: paint.hover }}
             >
-              <DoorOpen size={14} color={connectedVoiceId ? paint.speaking : paint.mute} />
+              {connectedVoiceId ? <PhoneOff size={14} color={paint.alert} /> : <DoorOpen size={14} color={paint.mute} />}
             </XStack>
-            <XStack
-              {...press(toggleVoiceMute, 'Toggle Mic')}
-              width={28}
-              height={28}
-              rounded={14}
-              items="center"
-              justify="center"
-              hoverStyle={{ background: paint.hover }}
-            >
+            <XStack {...press(toggleVoiceMute, micMuted ? 'Unmute Mic' : 'Mute Mic')} width={28} height={28} rounded={14} items="center" justify="center" hoverStyle={{ background: paint.hover }}>
               {micMuted ? <MicOff size={14} color={paint.alert} /> : <Mic size={14} color={paint.ink} />}
             </XStack>
-            <XStack
-              {...press(toggleScreenShare, 'Share Screen')}
-              width={28}
-              height={28}
-              rounded={14}
-              items="center"
-              justify="center"
-              hoverStyle={{ background: paint.hover }}
-            >
-              <MonitorUp size={14} color={screenSharing ? paint.speaking : paint.mute} />
+            <XStack {...press(toggleCameraOn, cameraOn ? 'Turn Camera Off' : 'Turn Camera On')} width={28} height={28} rounded={14} items="center" justify="center" hoverStyle={{ background: paint.hover }}>
+              {cameraOn ? <Video size={14} color={paint.speaking} /> : <VideoOff size={14} color={paint.mute} />}
             </XStack>
-            <XStack
-              {...press(() => triggerOfficeInteraction('Engineering Floor', 'wave'), 'Wave to floor')}
-              width={28}
-              height={28}
-              rounded={14}
-              items="center"
-              justify="center"
-              hoverStyle={{ background: paint.hover }}
-            >
-              <Hand size={14} color={paint.sevInk} />
+            <XStack {...press(toggleScreenShare, screenSharing ? 'Stop Screen Share' : 'Share Screen')} width={28} height={28} rounded={14} items="center" justify="center" hoverStyle={{ background: paint.hover }}>
+              <MonitorUp size={14} color={screenSharing ? paint.speaking : paint.mute} />
             </XStack>
           </XStack>
         </XStack>
       </YStack>
 
-      {/* RIGHT COLUMN: Multi-Floor Skyscraper Elevator (`uploaded_media_3_1795584722435.jpg`) */}
-      <YStack
-        width={268}
-        shrink={0}
-        minH={0}
-        borderLeftWidth={1}
-        style={{ backgroundColor: paint.aside, borderLeftColor: paint.sidebarRule }}
-        data-testid="office-skyscraper-elevator"
-      >
-        <XStack
-          height={44}
-          px={14}
-          items="center"
-          justify="space-between"
-          borderBottomWidth={1}
-          style={{ borderBottomColor: paint.rule }}
-        >
+      {/* Right Column: Live Rooms & Roster */}
+      <YStack width={268} shrink={0} minH={0} borderLeftWidth={1} style={{ backgroundColor: paint.aside, borderLeftColor: paint.sidebarRule }} data-testid="office-skyscraper-elevator">
+        <XStack height={44} px={14} items="center" justify="space-between" borderBottomWidth={1} style={{ borderBottomColor: paint.rule }}>
           <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ink }}>
-            Elevator · 4 Floors
+            Live Rooms &amp; Roster
           </SizableText>
-          <SizableText fontSize={11} style={{ color: paint.dim }}>
-            Skyscraper View
+          <SizableText fontSize={11} style={{ color: paint.dim, fontFamily: 'var(--font-mono)' }}>
+            {`${roster.length}`}
           </SizableText>
         </XStack>
 
         <ScrollArea flex={1} minH={0}>
-          <YStack p={10} gap={10}>
-            {FLOORS.map((fl) => {
-              const desksOnFloor = OFFICE_DESKS.filter((d) => d.floor === fl.id)
-              const selected = selectedFloor === fl.id
-              return (
-                <YStack
-                  key={fl.id}
-                  {...press(
-                    () => selectOfficeFloor(selected ? 'ALL' : fl.id),
-                    `Focus ${fl.name}`,
-                  )}
-                  p={10}
-                  gap={8}
-                  rounded={10}
-                  borderWidth={1}
-                  style={{
-                    backgroundColor: selected ? paint.elevated : paint.card,
-                    borderColor: selected ? paint.ink : paint.border,
-                  }}
-                  hoverStyle={{ background: paint.elevated }}
-                  focusVisibleStyle={ring}
-                  data-testid={`elevator-floor-${fl.id}`}
-                >
-                  <XStack items="center" justify="space-between">
-                    <SizableText fontSize={12} fontWeight="700" style={{ color: paint.ink }}>
-                      {fl.dept}
-                    </SizableText>
-                    <SizableText fontSize={10.5} fontWeight="600" style={{ color: paint.dim, fontFamily: 'var(--font-mono)' }}>
-                      {fl.id}
+          <YStack p={12} gap={14}>
+            <YStack gap={6}>
+              <SizableText fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
+                LIVEKIT ROOMS
+              </SizableText>
+              {voiceRooms.map((vr) => {
+                const joined = connectedVoiceId === vr.id
+                return (
+                  <XStack
+                    key={vr.id}
+                    {...press(() => void (joined ? leaveVoiceRoom() : joinVoiceRoom(vr.id)), joined ? `Leave ${vr.name}` : `Join ${vr.name}`)}
+                    p={9}
+                    rounded={8}
+                    borderWidth={1}
+                    items="center"
+                    justify="space-between"
+                    style={{ backgroundColor: joined ? paint.speakingBg : paint.card, borderColor: joined ? paint.voiceEdge : paint.border }}
+                    hoverStyle={{ background: paint.elevated }}
+                  >
+                    <XStack items="center" gap={7} flex={1} minW={0}>
+                      <Volume2 size={13} color={joined ? paint.speaking : paint.mute} />
+                      <SizableText fontSize={12} fontWeight="600" style={{ color: joined ? paint.speaking : paint.ink }} numberOfLines={1}>
+                        {vr.name}
+                      </SizableText>
+                    </XStack>
+                    <SizableText fontSize={10.5} style={{ color: joined ? paint.speaking : paint.dim }}>
+                      {joined ? `${vr.participants.length} live` : 'Join'}
                     </SizableText>
                   </XStack>
+                )
+              })}
+            </YStack>
 
-                  {/* Miniature Floor Grid with Live Occupant Heads */}
-                  <div
-                    style={{
-                      display: 'grid',
-                      gridTemplateColumns: 'repeat(3, minmax(0, 1fr))',
-                      gap: 5,
-                    }}
-                  >
-                    {desksOnFloor.map((d) => (
-                      <XStack
-                        key={d.id}
-                        p={5}
-                        minH={32}
-                        rounded={6}
-                        borderWidth={1}
-                        items="center"
-                        justify="center"
-                        gap={3}
-                        style={{ backgroundColor: paint.surface, borderColor: paint.rule }}
-                      >
-                        {d.occupants.map((occId) => {
-                          const m = roster.find((r) => r.id === occId)
-                          if (!m) return null
-                          return <MemberPortrait key={occId} member={m} size={18} speaking={Boolean(m.speaking)} />
-                        })}
-                      </XStack>
-                    ))}
-                  </div>
-                </YStack>
-              )
-            })}
+            <YStack gap={6}>
+              <XStack items="center" justify="space-between">
+                <SizableText fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
+                  {`AI AGENTS (${bots.length})`}
+                </SizableText>
+                <Bot size={12} color={paint.dim} />
+              </XStack>
+              {bots.length === 0 ? (
+                <SizableText fontSize={11.5} style={{ color: paint.dim }}>
+                  No bots yet.
+                </SizableText>
+              ) : (
+                bots.map((b) => (
+                  <XStack key={b.id} {...press(() => void openChatWith(b), `Chat with @${b.handle}`)} px={8} py={6} rounded={7} items="center" gap={7} hoverStyle={{ background: paint.rowHover }}>
+                    <MemberPortrait member={b} size={22} />
+                    <YStack flex={1} minW={0}>
+                      <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }} numberOfLines={1}>
+                        {`@${b.handle}`}
+                      </SizableText>
+                      <SizableText fontSize={10.5} style={{ color: paint.dim }} numberOfLines={1}>
+                        {b.model || 'Agent'}
+                      </SizableText>
+                    </YStack>
+                  </XStack>
+                ))
+              )}
+            </YStack>
+
+            <YStack gap={6}>
+              <XStack items="center" justify="space-between">
+                <SizableText fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
+                  {`HUMANS (${humans.length})`}
+                </SizableText>
+                <Users size={12} color={paint.dim} />
+              </XStack>
+              {humans.map((h) => (
+                <XStack key={h.id} {...press(() => void openChatWith(h), `Chat with ${h.name}`)} px={8} py={6} rounded={7} items="center" gap={7} hoverStyle={{ background: paint.rowHover }}>
+                  <MemberPortrait member={h} size={22} />
+                  <YStack flex={1} minW={0}>
+                    <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }} numberOfLines={1}>
+                      {h.name}
+                    </SizableText>
+                    <SizableText fontSize={10.5} style={{ color: h.presence === 'online' ? paint.speaking : paint.dim }}>
+                      {h.presence === 'online' ? 'Online' : 'Offline'}
+                    </SizableText>
+                  </YStack>
+                </XStack>
+              ))}
+            </YStack>
           </YStack>
         </ScrollArea>
       </YStack>
-    </XStack>
-  )
-}
 
-function DeskTileCard({
-  label,
-  floor,
-  toolTag,
-  activeRing,
-  statusLine,
-  members,
-  onChat,
-}: {
-  label: string
-  floor: string
-  toolTag?: string
-  activeRing?: 'emerald' | 'warm' | 'subtle'
-  statusLine?: string
-  members: RosterMember[]
-  onChat: (m: RosterMember) => void
-}) {
-  const borderCol =
-    activeRing === 'emerald'
-      ? paint.voiceEdge
-      : activeRing === 'warm'
-        ? paint.sevEdge
-        : activeRing === 'subtle'
-          ? paint.roomGlow
-          : paint.border
-
-  return (
-    <YStack
-      p={11}
-      minH={104}
-      rounded={11}
-      borderWidth={1}
-      justify="space-between"
-      gap={8}
-      style={{ backgroundColor: paint.card, borderColor: borderCol }}
-    >
-      <XStack items="center" justify="space-between" gap={4}>
-        <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }} numberOfLines={1} flex={1}>
-          {label}
-        </SizableText>
-        {toolTag ? (
-          <XStack px={5} py={1} rounded={4} style={{ backgroundColor: paint.elevated }}>
-            <SizableText fontSize={9.5} fontWeight="600" style={{ color: paint.mute }}>
-              {toolTag}
-            </SizableText>
-          </XStack>
-        ) : (
-          <SizableText fontSize={9.5} style={{ color: paint.dim }}>
-            {floor}
-          </SizableText>
-        )}
-      </XStack>
-
-      <XStack items="center" gap={8}>
-        {members.map((m) => (
-          <InteractiveHead
-            key={m.id}
-            member={m}
-            size={36}
-            speaking={Boolean(m.speaking)}
-            onChat={() => onChat(m)}
-          />
-        ))}
-      </XStack>
-
-      {statusLine ? (
-        <SizableText fontSize={10.5} style={{ color: paint.dim }} numberOfLines={1}>
-          {statusLine}
-        </SizableText>
+      {createOpen ? (
+        <CreateBotModal
+          botName={botName}
+          setBotName={setBotName}
+          botModel={botModel}
+          setBotModel={setBotModel}
+          botDesc={botDesc}
+          setBotDesc={setBotDesc}
+          botInstructions={botInstructions}
+          setBotInstructions={setBotInstructions}
+          busy={createBusy}
+          error={createErr}
+          onClose={() => setCreateOpen(false)}
+          onSubmit={() => void handleCreateBot()}
+        />
       ) : null}
-    </YStack>
-  )
-}
 
-function InteractiveHead({
-  member,
-  size,
-  speaking,
-  onChat,
-}: {
-  member: RosterMember
-  size: number
-  speaking?: boolean
-  onChat: () => void
-}) {
-  const [open, setOpen] = useState(false)
-  return (
-    <Popover open={open} onOpenChange={setOpen} placement="top" allowFlip stayInFrame>
-      <Popover.Trigger asChild>
-        <YStack
-          {...press(() => setOpen((v) => !v), `${member.name} — Wave, Knock, or Chat`)}
-          rounded={round.pill}
-          focusVisibleStyle={ring}
-          data-testid={`office-head-${member.id}`}
-        >
-          <MemberPortrait member={member} size={size} speaking={speaking} />
-        </YStack>
-      </Popover.Trigger>
-      <Popover.Content
-        role="menu"
-        borderWidth={1}
-        rounded={10}
-        p={8}
-        width={196}
-        style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge, zIndex: 100000 }}
-      >
-        <YStack gap={6}>
-          <YStack px={4}>
-            <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ink }}>
-              {member.name}
-            </SizableText>
-            <SizableText fontSize={10.5} style={{ color: paint.dim }}>
-              {member.activity}
-            </SizableText>
-          </YStack>
-          <XStack gap={4}>
-            <XStack
-              {...press(() => {
-                triggerOfficeInteraction(member.name, 'wave')
-                setOpen(false)
-              }, `Wave at ${member.name}`)}
-              flex={1}
-              py={5}
-              rounded={6}
-              borderWidth={1}
-              items="center"
-              justify="center"
-              gap={4}
-              style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-              hoverStyle={{ background: paint.hover }}
-            >
-              <Hand size={11} color={paint.sevInk} />
-              <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
-                Wave
-              </SizableText>
-            </XStack>
-            <XStack
-              {...press(() => {
-                triggerOfficeInteraction(member.name, 'knock')
-                setOpen(false)
-              }, `Knock on ${member.name}'s desk`)}
-              flex={1}
-              py={5}
-              rounded={6}
-              borderWidth={1}
-              items="center"
-              justify="center"
-              gap={4}
-              style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-              hoverStyle={{ background: paint.hover }}
-            >
-              <DoorOpen size={11} color={paint.mute} />
-              <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
-                Knock
-              </SizableText>
-            </XStack>
-            <XStack
-              {...press(() => {
-                setOpen(false)
-                onChat()
-              }, `Chat with ${member.name}`)}
-              flex={1}
-              py={5}
-              rounded={6}
-              borderWidth={1}
-              items="center"
-              justify="center"
-              gap={4}
-              style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-              hoverStyle={{ background: paint.hover }}
-            >
-              <MessageCircle size={11} color={paint.speaking} />
-              <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
-                Chat
-              </SizableText>
-            </XStack>
-          </XStack>
-        </YStack>
-      </Popover.Content>
-    </Popover>
+      {runTarget ? (
+        <RunBotModal
+          target={runTarget}
+          prompt={runPrompt}
+          setPrompt={setRunPrompt}
+          busy={runBusy}
+          result={runResult}
+          onClose={() => setRunTarget(null)}
+          onRun={() => void handleRunBot()}
+        />
+      ) : null}
+    </XStack>
   )
 }

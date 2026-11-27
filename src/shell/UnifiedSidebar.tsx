@@ -1,12 +1,8 @@
 /**
- * COL 2 — Discord × Mattermost Channel, Voice & Workspace Sidebar (`244px`, `#0a0a0c`)
+ * COL 2 — Discord × Mattermost Channel, Voice & Workspace Sidebar (`244px`)
  *
- * - Org Header (`Hanzo ⌄` · `Your organization · 24 agents · 8 humans`, Invite, Org Settings)
- * - Core v8.8 Workspaces (`Home`, `Inbox 4`, `Threads`, `Office`, `Work`, `Spaces`, `Memory`)
- * - `CHANNELS` (`+`) — Mattermost high-density channels (`#general`, `#engineering`, `#incidents` SEV-2, …)
- * - `VOICE & HUDDLES` (`+`) — Discord drop-in voice rooms with live speaking rings + Voice Connected Bar
- * - `DIRECT MESSAGES & AI WORKFORCE` (`+`) — Official `@hanzo/personas` portraits + live status
- * - Bottom User Dock (`52px`, `#060608`) — `Zach Kelling` (`Online`) + Mute, Deafen, Settings
+ * Hydrated from real `/v1/team/{channels,dms,members,inbox}`, `/v1/agents`,
+ * `/v1/bot/members`, and `/v1/meet/*` + LiveKit (`livekit-client`).
  */
 import { Popover, Separator } from '@hanzo/gui'
 import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
@@ -21,21 +17,22 @@ import {
   Home,
   Inbox as InboxIcon,
   Layers,
+  Lock,
   MessagesSquare,
   Mic,
   MicOff,
   MonitorUp,
   PhoneOff,
-  Plus,
   Settings,
   SquareCheck,
   UserPlus,
   Video,
   Volume2,
 } from '@hanzogui/lucide-icons-2'
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
+import { bareAccount } from '~/data/model.ts'
 import { openSettingsModal } from '~/settings/SettingsModal.tsx'
 import { paint, ring, round, state } from '~/theme/theme.ts'
 import {
@@ -43,6 +40,7 @@ import {
   createWorkspaceChannel,
   joinVoiceRoom,
   leaveVoiceRoom,
+  openDmWithMember,
   selectGuildOrg,
   toggleCameraOn,
   toggleScreenShare,
@@ -53,49 +51,15 @@ import {
 } from '~/workspace/store.ts'
 import { openConnectModal } from './ConnectOrgModal.tsx'
 import { press } from './press.ts'
+import {
+  DockIconBtn,
+  MemberPortrait,
+  SectionHead,
+  VoiceActionBtn,
+  WorkspaceNavItem,
+} from './SidebarParts.tsx'
 
-export function MemberPortrait({
-  member,
-  size = 24,
-  speaking = false,
-}: {
-  member: Pick<RosterMember, 'name' | 'shortName' | 'avatar' | 'bot'>
-  size?: number
-  speaking?: boolean
-}) {
-  const [imgErr, setImgErr] = useState(false)
-  return (
-    <YStack
-      width={size}
-      height={size}
-      rounded={round.pill}
-      overflow="hidden"
-      items="center"
-      justify="center"
-      shrink={0}
-      borderWidth={speaking ? 2 : 1}
-      style={{
-        backgroundColor: paint.avatar,
-        borderColor: speaking ? paint.speaking : paint.border,
-      }}
-    >
-      {member.avatar && !imgErr ? (
-        <img
-          src={member.avatar}
-          alt={member.name}
-          width={size}
-          height={size}
-          onError={() => setImgErr(true)}
-          style={{ width: size, height: size, objectFit: 'cover', display: 'block' }}
-        />
-      ) : (
-        <SizableText fontSize={Math.max(9, Math.round(size * 0.4))} fontWeight="700" style={{ color: paint.avatarInk }}>
-          {member.shortName.slice(0, 2).toUpperCase()}
-        </SizableText>
-      )}
-    </YStack>
-  )
-}
+export { MemberPortrait } from './SidebarParts.tsx'
 
 export function UnifiedSidebar({
   userName,
@@ -113,36 +77,85 @@ export function UnifiedSidebar({
   const {
     orgs,
     activeOrgId,
+    currentUser,
     channels,
     voiceRooms,
     connectedVoiceId,
+    voiceStatus,
+    voiceError,
+    voiceServerHost,
     micMuted,
     deafened,
     screenSharing,
     cameraOn,
     roster,
-    attention,
+    messages,
+    inboxUnread,
+    hydrating,
   } = useWorkspace()
 
   const [orgMenuOpen, setOrgMenuOpen] = useState(false)
   const [userMenuOpen, setUserMenuOpen] = useState(false)
   const [creatingCh, setCreatingCh] = useState(false)
   const [newChName, setNewChName] = useState('')
+  const [channelErr, setChannelErr] = useState<string | null>(null)
+  const [creatingBusy, setCreatingBusy] = useState(false)
 
-  const activeOrg = orgs.find((o) => o.id === activeOrgId) ?? orgs[0]!
-  const inboxCount = Math.max(4, attention.filter((a) => !a.resolved).length + 1)
+  const activeOrg = orgs.find((o) => o.id === activeOrgId) ?? orgs[0] ?? null
+  const agentsCount = roster.filter((m) => m.bot).length
+  const humansCount = roster.filter((m) => !m.bot).length
+  const orgSubtitle = hydrating
+    ? 'Syncing workspace…'
+    : `${agentsCount} ${agentsCount === 1 ? 'agent' : 'agents'} · ${humansCount} ${humansCount === 1 ? 'human' : 'humans'}`
+
+  const threadsCount = messages.filter((m) => m.replyCount > 0 || m.replies.length > 0).length
   const publicChannels = channels.filter((c) => c.kind === 'channel')
   const connectedRoom = voiceRooms.find((r) => r.id === connectedVoiceId) ?? null
-  const sidebarDms = ['vi', 'dev', 'mana', 'cyber', 'alex', 'sara']
-    .map((id) => roster.find((m) => m.id === id))
-    .filter((m): m is RosterMember => Boolean(m))
+  const myBare = bareAccount(currentUser?.accountId || currentUser?.id || '')
 
-  const submitChannel = () => {
-    const slug = createWorkspaceChannel(newChName)
-    setNewChName('')
-    setCreatingCh(false)
-    if (slug) navigate(`/chat/${slug}`)
+  const sidebarDms = [
+    ...roster.filter((m) => m.bot),
+    ...roster.filter((m) => !m.bot && bareAccount(m.id) !== myBare),
+  ]
+
+  const submitChannel = async () => {
+    const clean = newChName.trim()
+    if (!clean || creatingBusy) return
+    setCreatingBusy(true)
+    setChannelErr(null)
+    try {
+      const createdId = await createWorkspaceChannel(clean)
+      setNewChName('')
+      setCreatingCh(false)
+      if (createdId) navigate(`/chat/${createdId}`)
+    } catch (err) {
+      setChannelErr(err instanceof Error ? err.message : 'Failed to create channel')
+    } finally {
+      setCreatingBusy(false)
+    }
   }
+
+  const openMemberDm = async (member: RosterMember) => {
+    try {
+      const dmId = await openDmWithMember(member.id)
+      navigate(dmId ? `/chat/${dmId}` : `/chat/with-${member.id}`)
+    } catch {
+      navigate(`/chat/with-${member.id}`)
+    }
+  }
+
+  const voiceStatusLabel =
+    voiceStatus === 'connecting'
+      ? 'Connecting…'
+      : voiceStatus === 'reconnecting'
+        ? 'Reconnecting…'
+        : voiceStatus === 'connected'
+          ? voiceServerHost
+            ? `Connected · ${voiceServerHost}`
+            : 'Voice Connected'
+          : voiceStatus === 'error'
+            ? 'Voice Error'
+            : ''
 
   return (
     <YStack
@@ -152,11 +165,11 @@ export function UnifiedSidebar({
       style={{ backgroundColor: paint.sidebar, borderRightColor: paint.sidebarRule }}
       data-testid="team-left-sidebar"
     >
-      {/* 1. Organization Header (`Hanzo ⌄` · `Your organization`) */}
+      {/* 1. Organization Header */}
       <Popover open={orgMenuOpen} onOpenChange={setOrgMenuOpen} placement="bottom-start" allowFlip stayInFrame>
         <Popover.Trigger asChild>
           <XStack
-            {...press(() => setOrgMenuOpen((v) => !v), `${activeOrg.name} organization menu`)}
+            {...press(() => setOrgMenuOpen((v) => !v), `${activeOrg?.name || 'Workspace'} organization menu`)}
             px={12}
             py={9}
             items="center"
@@ -170,12 +183,12 @@ export function UnifiedSidebar({
             <YStack flex={1} minW={0} gap={1}>
               <XStack items="center" gap={5}>
                 <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }} numberOfLines={1}>
-                  {activeOrg.name}
+                  {activeOrg?.name || 'Workspace'}
                 </SizableText>
                 <ChevronDown size={13} color={paint.dim} />
               </XStack>
               <SizableText fontSize={11} style={{ color: paint.dim }} numberOfLines={1}>
-                {`Your organization · ${activeOrg.agentsCount} agents · ${activeOrg.humansCount} humans`}
+                {orgSubtitle}
               </SizableText>
             </YStack>
           </XStack>
@@ -190,32 +203,38 @@ export function UnifiedSidebar({
         >
           <YStack gap={4}>
             <SizableText px={8} py={2} fontSize={10.5} fontWeight="700" style={{ color: paint.dim }}>
-              ORGANIZATIONS (X-ORG-ID)
+              WORKSPACES
             </SizableText>
-            {orgs.map((o) => {
-              const active = o.id === activeOrg.id
-              return (
-                <XStack
-                  key={o.id}
-                  {...press(() => {
-                    selectGuildOrg(o.id)
-                    setOrgMenuOpen(false)
-                  }, `Switch to ${o.name}`)}
-                  px={8}
-                  py={6}
-                  rounded={6}
-                  items="center"
-                  justify="space-between"
-                  style={active ? { backgroundColor: paint.rowActive } : undefined}
-                  hoverStyle={{ background: paint.rowHover }}
-                >
-                  <SizableText fontSize={12.5} fontWeight={active ? '600' : '500'} style={{ color: paint.ink }}>
-                    {o.name}
-                  </SizableText>
-                  {active ? <Check size={13} color={paint.ink} /> : null}
-                </XStack>
-              )
-            })}
+            {orgs.length === 0 ? (
+              <SizableText px={8} py={4} fontSize={12} style={{ color: paint.dim }}>
+                No workspaces loaded
+              </SizableText>
+            ) : (
+              orgs.map((o) => {
+                const active = o.id === activeOrg?.id
+                return (
+                  <XStack
+                    key={o.id}
+                    {...press(() => {
+                      selectGuildOrg(o.id)
+                      setOrgMenuOpen(false)
+                    }, `Switch to ${o.name}`)}
+                    px={8}
+                    py={6}
+                    rounded={6}
+                    items="center"
+                    justify="space-between"
+                    style={active ? { backgroundColor: paint.rowActive } : undefined}
+                    hoverStyle={{ background: paint.rowHover }}
+                  >
+                    <SizableText fontSize={12.5} fontWeight={active ? '600' : '500'} style={{ color: paint.ink }}>
+                      {o.name}
+                    </SizableText>
+                    {active ? <Check size={13} color={paint.ink} /> : null}
+                  </XStack>
+                )
+              })
+            )}
             <Separator borderColor={paint.rule} my={2} />
             <XStack
               {...press(() => {
@@ -258,7 +277,7 @@ export function UnifiedSidebar({
       {/* Scrollable Navigation Body */}
       <ScrollArea flex={1} minH={0}>
         <YStack px={8} py={8} gap={12}>
-          {/* 2. Core v8.8 Workspaces */}
+          {/* 2. Core Workspaces */}
           <YStack gap={2} data-testid="sidebar-workspaces">
             <WorkspaceNavItem
               label="Home"
@@ -269,7 +288,7 @@ export function UnifiedSidebar({
             />
             <WorkspaceNavItem
               label="Inbox"
-              badge={String(inboxCount)}
+              badge={inboxUnread > 0 ? String(inboxUnread) : undefined}
               icon={<InboxIcon size={14} color={pathname === '/inbox' ? paint.ink : paint.mute} />}
               active={pathname === '/inbox'}
               onPress={() => navigate('/inbox')}
@@ -277,7 +296,7 @@ export function UnifiedSidebar({
             />
             <WorkspaceNavItem
               label="Threads"
-              badge="3"
+              badge={threadsCount > 0 ? String(threadsCount) : undefined}
               icon={<MessagesSquare size={14} color={pathname === '/threads' ? paint.ink : paint.mute} />}
               active={pathname === '/threads'}
               onPress={() => navigate('/threads')}
@@ -285,7 +304,7 @@ export function UnifiedSidebar({
             />
             <WorkspaceNavItem
               label="Office"
-              liveDot
+              liveDot={voiceStatus === 'connected'}
               icon={<Building2 size={14} color={pathname === '/office' ? paint.ink : paint.mute} />}
               active={pathname === '/office'}
               onPress={() => navigate('/office')}
@@ -318,112 +337,115 @@ export function UnifiedSidebar({
           <YStack gap={2}>
             <SectionHead
               label="CHANNELS"
-              onAdd={() => setCreatingCh((v) => !v)}
+              onAdd={() => {
+                setChannelErr(null)
+                setCreatingCh((v) => !v)
+              }}
               addLabel="Create channel"
             />
             {creatingCh ? (
-              <XStack
-                px={8}
-                py={4}
-                gap={5}
-                rounded={6}
-                borderWidth={1}
-                items="center"
-                style={{ backgroundColor: paint.panel, borderColor: paint.border }}
-              >
-                <Hash size={12} color={paint.dim} />
-                <Input
-                  flex={1}
-                  unstyled
-                  height={22}
-                  borderWidth={0}
-                  bg="transparent"
-                  fontSize={12}
-                  color={paint.ink}
-                  placeholder="new-channel"
-                  value={newChName}
-                  onChangeText={setNewChName}
-                  onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
-                    if (e.key === 'Enter') {
-                      e.preventDefault?.()
-                      submitChannel()
-                    } else if (e.key === 'Escape') {
-                      setCreatingCh(false)
-                    }
-                  }}
-                />
-              </XStack>
+              <YStack gap={4}>
+                <XStack
+                  px={8}
+                  py={4}
+                  gap={5}
+                  rounded={6}
+                  borderWidth={1}
+                  items="center"
+                  style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+                >
+                  <Hash size={12} color={paint.dim} />
+                  <Input
+                    flex={1}
+                    unstyled
+                    height={22}
+                    borderWidth={0}
+                    bg="transparent"
+                    fontSize={12}
+                    color={paint.ink}
+                    placeholder="new-channel"
+                    value={newChName}
+                    onChangeText={setNewChName}
+                    onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
+                      if (e.key === 'Enter') {
+                        e.preventDefault?.()
+                        void submitChannel()
+                      } else if (e.key === 'Escape') {
+                        setCreatingCh(false)
+                        setChannelErr(null)
+                      }
+                    }}
+                  />
+                </XStack>
+                {channelErr ? (
+                  <SizableText px={8} fontSize={11} style={{ color: paint.alert }}>
+                    {channelErr}
+                  </SizableText>
+                ) : null}
+              </YStack>
             ) : null}
 
-            {publicChannels.map((ch) => {
-              const target = `/chat/${ch.id}`
-              const active = pathname === target || (pathname === '/chat' && ch.id === 'engineering')
-              const hasUnread = Boolean(ch.unread && ch.unread > 0)
-              return (
-                <XStack
-                  key={ch.id}
-                  {...press(() => {
-                    clearChannelUnread(ch.id)
-                    navigate(target)
-                  }, `#${ch.name}`)}
-                  height={27}
-                  px={8}
-                  rounded={6}
-                  items="center"
-                  justify="space-between"
-                  gap={6}
-                  position="relative"
-                  style={active ? { backgroundColor: paint.rowActive } : undefined}
-                  hoverStyle={active ? undefined : { background: paint.rowHover }}
-                  focusVisibleStyle={ring}
-                  data-testid={`sidebar-channel-${ch.name}`}
-                >
-                  {hasUnread && !active ? (
-                    <YStack
-                      position="absolute"
-                      l={1}
-                      width={4}
-                      height={4}
-                      rounded={round.pill}
-                      style={{ backgroundColor: paint.ink }}
-                    />
-                  ) : null}
-                  <XStack items="center" gap={6} flex={1} minW={0}>
-                    <Hash size={13} color={active || hasUnread ? paint.ink : paint.dim} />
-                    <SizableText
-                      fontSize={13}
-                      fontWeight={active || hasUnread ? '600' : '400'}
-                      style={{ color: active || hasUnread ? paint.ink : paint.mute }}
-                      numberOfLines={1}
-                    >
-                      {ch.name}
-                    </SizableText>
-                  </XStack>
-                  {ch.sevTag ? (
-                    <XStack
-                      px={5}
-                      py={1}
-                      rounded={4}
-                      borderWidth={1}
-                      style={{ backgroundColor: paint.sevBg, borderColor: paint.sevEdge }}
-                    >
-                      <SizableText fontSize={9.5} fontWeight="700" style={{ color: paint.sevInk }}>
-                        {ch.sevTag}
+            {hydrating && publicChannels.length === 0 ? (
+              <SizableText px={8} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                Loading channels…
+              </SizableText>
+            ) : publicChannels.length === 0 ? (
+              <SizableText px={8} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                No channels yet — press + to create one.
+              </SizableText>
+            ) : (
+              publicChannels.map((ch) => {
+                const target = `/chat/${ch.id}`
+                const active = pathname === target || pathname === `/chat/${ch.name}`
+                const hasUnread = Boolean(ch.unread && ch.unread > 0)
+                return (
+                  <XStack
+                    key={ch.id}
+                    {...press(() => {
+                      clearChannelUnread(ch.id)
+                      navigate(target)
+                    }, `#${ch.name}`)}
+                    height={27}
+                    px={8}
+                    rounded={6}
+                    items="center"
+                    justify="space-between"
+                    gap={6}
+                    position="relative"
+                    style={active ? { backgroundColor: paint.rowActive } : undefined}
+                    hoverStyle={active ? undefined : { background: paint.rowHover }}
+                    focusVisibleStyle={ring}
+                    data-testid={`sidebar-channel-${ch.name}`}
+                  >
+                    <XStack items="center" gap={6} flex={1} minW={0}>
+                      {ch.private ? (
+                        <Lock size={12} color={active || hasUnread ? paint.ink : paint.dim} />
+                      ) : (
+                        <Hash size={13} color={active || hasUnread ? paint.ink : paint.dim} />
+                      )}
+                      <SizableText
+                        fontSize={13}
+                        fontWeight={active || hasUnread ? '600' : '400'}
+                        style={{ color: active || hasUnread ? paint.ink : paint.mute }}
+                        numberOfLines={1}
+                      >
+                        {ch.name}
                       </SizableText>
                     </XStack>
-                  ) : hasUnread ? (
-                    <YStack width={6} height={6} rounded={round.pill} style={{ backgroundColor: paint.ink }} />
-                  ) : null}
-                </XStack>
-              )
-            })}
+                    {hasUnread ? (
+                      <YStack width={6} height={6} rounded={round.pill} style={{ backgroundColor: paint.ink }} />
+                    ) : null}
+                  </XStack>
+                )
+              })
+            )}
           </YStack>
 
           {/* 4. VOICE & HUDDLES (+) */}
           <YStack gap={3}>
             <SectionHead
               label="VOICE & HUDDLES"
-              onAdd={() => joinVoiceRoom('eng-pairing')}
+              onAdd={() => void joinVoiceRoom('office-huddle')}
               addLabel="Start huddle"
             />
             {voiceRooms.map((vr) => {
@@ -432,7 +454,7 @@ export function UnifiedSidebar({
                 <YStack key={vr.id} gap={2}>
                   <XStack
                     {...press(
-                      () => (joined ? leaveVoiceRoom() : joinVoiceRoom(vr.id)),
+                      () => void (joined ? leaveVoiceRoom() : joinVoiceRoom(vr.id)),
                       joined ? `Leave ${vr.name}` : `Join ${vr.name} voice huddle`,
                     )}
                     height={27}
@@ -463,33 +485,28 @@ export function UnifiedSidebar({
                     ) : null}
                   </XStack>
 
-                  {/* Live Connected Avatars Indented Right Below Voice Channel */}
                   {vr.participants.length > 0 ? (
                     <YStack pl={20} pr={4} gap={2}>
                       {vr.participants.map((part) => {
-                        const member = roster.find((m) => m.id === part.memberId)
-                        if (!member) return null
+                        const matched = roster.find((m) => m.id === part.memberId || bareAccount(m.id) === bareAccount(part.memberId))
+                        const displayName = matched ? (matched.bot ? `@${matched.handle}` : matched.shortName) : (part.name || part.memberId.slice(0, 8))
+                        const portraitMember = matched ?? {
+                          name: displayName,
+                          shortName: displayName,
+                          avatar: part.isLocal ? userAvatar : undefined,
+                          bot: false,
+                        }
                         return (
-                          <XStack
-                            key={part.memberId}
-                            {...press(() => navigate(member.bot ? `/chat/dm-${member.handle}` : `/chat/dm-${member.id}`), member.name)}
-                            height={24}
-                            px={6}
-                            rounded={5}
-                            items="center"
-                            justify="space-between"
-                            gap={6}
-                            hoverStyle={{ background: paint.rowHover }}
-                          >
+                          <XStack key={part.memberId} height={24} px={6} rounded={5} items="center" justify="space-between" gap={6}>
                             <XStack items="center" gap={6} flex={1} minW={0}>
-                              <MemberPortrait member={member} size={18} speaking={Boolean(part.speaking)} />
+                              <MemberPortrait member={portraitMember} size={18} speaking={Boolean(part.speaking)} />
                               <SizableText
                                 fontSize={12}
                                 fontWeight={part.speaking ? '600' : '400'}
                                 style={{ color: part.speaking ? paint.ink : paint.mute }}
                                 numberOfLines={1}
                               >
-                                {member.bot ? `@${member.handle}` : member.shortName}
+                                {part.isLocal ? `${displayName} (You)` : displayName}
                               </SizableText>
                             </XStack>
                             {part.sharingScreen ? (
@@ -507,95 +524,105 @@ export function UnifiedSidebar({
                 </YStack>
               )
             })}
+            {voiceStatus === 'error' && voiceError ? (
+              <SizableText px={8} py={2} fontSize={11} style={{ color: paint.alert }}>
+                {voiceError}
+              </SizableText>
+            ) : null}
           </YStack>
 
           {/* 5. DIRECT MESSAGES & AI WORKFORCE (+) */}
           <YStack gap={2}>
-            <SectionHead
-              label="DIRECT MESSAGES & AI"
-              onAdd={() => navigate('/office')}
-              addLabel="Open workforce directory"
-            />
-            {sidebarDms.map((m) => {
-              const dmPath = `/chat/dm-${m.id}`
-              const active = pathname === dmPath
-              return (
-                <XStack
-                  key={m.id}
-                  {...press(() => navigate(dmPath), `Message ${m.name}`)}
-                  py={4}
-                  px={8}
-                  rounded={6}
-                  items="center"
-                  gap={8}
-                  style={active ? { backgroundColor: paint.rowActive } : undefined}
-                  hoverStyle={active ? undefined : { background: paint.rowHover }}
-                  focusVisibleStyle={ring}
-                  data-testid={`sidebar-dm-${m.id}`}
-                >
-                  <YStack position="relative" shrink={0}>
-                    <MemberPortrait member={m} size={22} />
-                    <YStack
-                      position="absolute"
-                      b={-1}
-                      r={-1}
-                      width={7}
-                      height={7}
-                      rounded={round.pill}
-                      borderWidth={1.5}
-                      style={{
-                        backgroundColor: m.presence === 'gated' ? paint.sevInk : state.done,
-                        borderColor: paint.sidebar,
-                      }}
-                    />
-                  </YStack>
-                  <YStack flex={1} minW={0}>
-                    <SizableText
-                      fontSize={12.5}
-                      fontWeight={active ? '600' : '500'}
-                      style={{ color: active ? paint.ink : paint.fg }}
-                      numberOfLines={1}
-                    >
-                      {m.bot ? `@${m.handle}` : m.shortName}
-                    </SizableText>
-                    <SizableText fontSize={10.5} style={{ color: paint.dim }} numberOfLines={1}>
-                      {m.activity}
-                    </SizableText>
-                  </YStack>
-                </XStack>
-              )
-            })}
+            <SectionHead label="DIRECT MESSAGES & AI" onAdd={() => navigate('/office')} addLabel="Open workforce directory" />
+            {hydrating && sidebarDms.length === 0 ? (
+              <SizableText px={8} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                Loading members…
+              </SizableText>
+            ) : sidebarDms.length === 0 ? (
+              <SizableText px={8} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                No teammates or bots yet.
+              </SizableText>
+            ) : (
+              sidebarDms.map((m) => {
+                const existingDm = channels.find(
+                  (c) => c.kind === 'dm' && (c.dmMemberId === m.id || (c.members ?? []).includes(m.id)),
+                )
+                const active =
+                  (existingDm && pathname === `/chat/${existingDm.id}`) ||
+                  pathname === `/chat/with-${m.id}` ||
+                  pathname === `/chat/dm-${m.id}`
+                return (
+                  <XStack
+                    key={m.id}
+                    {...press(() => void openMemberDm(m), `Message ${m.name}`)}
+                    py={4}
+                    px={8}
+                    rounded={6}
+                    items="center"
+                    gap={8}
+                    style={active ? { backgroundColor: paint.rowActive } : undefined}
+                    hoverStyle={active ? undefined : { background: paint.rowHover }}
+                    focusVisibleStyle={ring}
+                    data-testid={`sidebar-dm-${m.id}`}
+                  >
+                    <YStack position="relative" shrink={0}>
+                      <MemberPortrait member={m} size={22} />
+                      <YStack
+                        position="absolute"
+                        b={-1}
+                        r={-1}
+                        width={7}
+                        height={7}
+                        rounded={round.pill}
+                        borderWidth={1.5}
+                        style={{
+                          backgroundColor: m.presence === 'online' || m.bot ? state.done : paint.dim,
+                          borderColor: paint.sidebar,
+                        }}
+                      />
+                    </YStack>
+                    <YStack flex={1} minW={0}>
+                      <SizableText fontSize={12.5} fontWeight={active ? '600' : '500'} style={{ color: active ? paint.ink : paint.fg }} numberOfLines={1}>
+                        {m.bot ? `@${m.handle}` : m.shortName}
+                      </SizableText>
+                      <SizableText fontSize={10.5} style={{ color: paint.dim }} numberOfLines={1}>
+                        {m.activity}
+                      </SizableText>
+                    </YStack>
+                  </XStack>
+                )
+              })
+            )}
           </YStack>
         </YStack>
       </ScrollArea>
 
-      {/* Discord Voice Connected Bar (mounted right above User Dock when joined) */}
-      {connectedRoom ? (
+      {/* LiveKit Voice Connected Bar */}
+      {connectedRoom || voiceStatus === 'connecting' || voiceStatus === 'reconnecting' ? (
         <YStack
           px={10}
           py={7}
           gap={6}
           borderTopWidth={1}
-          style={{
-            backgroundColor: paint.voiceBg,
-            borderTopColor: paint.voiceEdge,
-          }}
+          style={{ backgroundColor: paint.voiceBg, borderTopColor: paint.voiceEdge }}
           data-testid="discord-voice-connected-bar"
         >
-          <XStack items="center" justify="space-between" gap={6}>
-            <XStack items="center" gap={6} flex={1} minW={0}>
-              <YStack width={7} height={7} rounded={round.pill} style={{ backgroundColor: paint.speaking }} />
-              <YStack flex={1} minW={0}>
-                <SizableText fontSize={11.5} fontWeight="700" style={{ color: paint.speaking }} numberOfLines={1}>
-                  {`Voice Connected · ${connectedRoom.latencyMs}ms`}
-                </SizableText>
-                <SizableText fontSize={10.5} style={{ color: paint.mute }} numberOfLines={1}>
-                  {`${connectedRoom.name} / ${activeOrg.name}`}
-                </SizableText>
-              </YStack>
-            </XStack>
+          <XStack items="center" gap={6}>
+            <YStack
+              width={7}
+              height={7}
+              rounded={round.pill}
+              style={{ backgroundColor: voiceStatus === 'connected' ? paint.speaking : paint.sevInk }}
+            />
+            <YStack flex={1} minW={0}>
+              <SizableText fontSize={11.5} fontWeight="700" style={{ color: paint.speaking }} numberOfLines={1}>
+                {voiceStatusLabel}
+              </SizableText>
+              <SizableText fontSize={10.5} style={{ color: paint.mute }} numberOfLines={1}>
+                {`${connectedRoom?.name ?? 'Voice Room'}${activeOrg ? ` / ${activeOrg.name}` : ''}`}
+              </SizableText>
+            </YStack>
           </XStack>
-
           <XStack gap={4}>
             <VoiceActionBtn
               active={screenSharing}
@@ -613,13 +640,13 @@ export function UnifiedSidebar({
               danger
               label="Leave"
               icon={<PhoneOff size={12} color={paint.alert} />}
-              onPress={leaveVoiceRoom}
+              onPress={() => void leaveVoiceRoom()}
             />
           </XStack>
         </YStack>
       ) : null}
 
-      {/* 6. Discord-Style Bottom User Dock (52px) */}
+      {/* 6. Bottom User Dock (52px) */}
       <XStack
         height={52}
         px={8}
@@ -646,15 +673,7 @@ export function UnifiedSidebar({
               data-testid="sidebar-account-org-pill"
             >
               <YStack position="relative" shrink={0}>
-                <MemberPortrait
-                  member={{
-                    name: userName,
-                    shortName: userName,
-                    avatar: userAvatar || '/agents/zach.jpg',
-                    bot: false,
-                  }}
-                  size={28}
-                />
+                <MemberPortrait member={{ name: userName, shortName: userName, avatar: userAvatar, bot: false }} size={28} />
                 <YStack
                   position="absolute"
                   b={-1}
@@ -689,9 +708,11 @@ export function UnifiedSidebar({
               <SizableText fontSize={13} fontWeight="700" style={{ color: paint.ink }}>
                 {userName}
               </SizableText>
-              <SizableText fontSize={11} style={{ color: paint.dim }}>
-                {`${userEmail || 'zach@hanzo.ai'} · hanzo.id`}
-              </SizableText>
+              {userEmail ? (
+                <SizableText fontSize={11} style={{ color: paint.dim }}>
+                  {userEmail}
+                </SizableText>
+              ) : null}
               <Separator borderColor={paint.rule} />
               <XStack
                 {...press(() => {
@@ -726,186 +747,17 @@ export function UnifiedSidebar({
         </Popover>
 
         <XStack items="center" gap={2} shrink={0} data-testid="sidebar-user-controls">
-          <DockIconBtn
-            label={micMuted ? 'Unmute microphone' : 'Mute microphone'}
-            pressed={micMuted}
-            onPress={toggleVoiceMute}
-            testId="sidebar-mic-toggle"
-          >
+          <DockIconBtn label={micMuted ? 'Unmute microphone' : 'Mute microphone'} pressed={micMuted} onPress={toggleVoiceMute} testId="sidebar-mic-toggle">
             {micMuted ? <MicOff size={14} color={paint.alert} /> : <Mic size={14} color={paint.mute} />}
           </DockIconBtn>
-          <DockIconBtn
-            label={deafened ? 'Undeafen audio' : 'Deafen audio'}
-            pressed={deafened}
-            onPress={toggleVoiceDeafen}
-            testId="sidebar-deafen-toggle"
-          >
+          <DockIconBtn label={deafened ? 'Undeafen audio' : 'Deafen audio'} pressed={deafened} onPress={toggleVoiceDeafen} testId="sidebar-deafen-toggle">
             {deafened ? <HeadphoneOff size={14} color={paint.alert} /> : <Headphones size={14} color={paint.mute} />}
           </DockIconBtn>
-          <DockIconBtn
-            label="Settings"
-            onPress={() => openSettingsModal('general')}
-            testId="sidebar-settings-trigger"
-          >
+          <DockIconBtn label="Settings" onPress={() => openSettingsModal('general')} testId="sidebar-settings-trigger">
             <Settings size={14} color={paint.mute} />
           </DockIconBtn>
         </XStack>
       </XStack>
     </YStack>
-  )
-}
-
-function WorkspaceNavItem({
-  label,
-  badge,
-  liveDot,
-  icon,
-  active,
-  onPress,
-  testId,
-}: {
-  label: string
-  badge?: string
-  liveDot?: boolean
-  icon: ReactNode
-  active: boolean
-  onPress: () => void
-  testId: string
-}) {
-  return (
-    <XStack
-      {...press(onPress, label)}
-      height={28}
-      px={8}
-      rounded={7}
-      items="center"
-      justify="space-between"
-      gap={8}
-      style={active ? { backgroundColor: paint.rowActive } : undefined}
-      hoverStyle={active ? undefined : { background: paint.rowHover }}
-      focusVisibleStyle={ring}
-      data-testid={testId}
-    >
-      <XStack items="center" gap={8} flex={1} minW={0}>
-        {icon}
-        <SizableText
-          fontSize={13}
-          fontWeight={active ? '600' : '400'}
-          style={{ color: active ? paint.ink : paint.mute }}
-          numberOfLines={1}
-        >
-          {label}
-        </SizableText>
-      </XStack>
-      {badge ? (
-        <SizableText fontSize={11.5} fontWeight="600" style={{ color: active ? paint.ink : paint.dim }}>
-          {badge}
-        </SizableText>
-      ) : liveDot ? (
-        <YStack width={6} height={6} rounded={round.pill} style={{ backgroundColor: paint.speaking }} />
-      ) : null}
-    </XStack>
-  )
-}
-
-function SectionHead({
-  label,
-  onAdd,
-  addLabel,
-}: {
-  label: string
-  onAdd: () => void
-  addLabel: string
-}) {
-  return (
-    <XStack px={8} pt={4} pb={2} items="center" justify="space-between">
-      <SizableText fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
-        {label}
-      </SizableText>
-      <XStack
-        {...press(onAdd, addLabel)}
-        width={18}
-        height={18}
-        rounded={4}
-        items="center"
-        justify="center"
-        hoverStyle={{ background: paint.rowHover }}
-      >
-        <Plus size={12} color={paint.dim} />
-      </XStack>
-    </XStack>
-  )
-}
-
-function VoiceActionBtn({
-  label,
-  icon,
-  active,
-  danger,
-  onPress,
-}: {
-  label: string
-  icon: ReactNode
-  active?: boolean
-  danger?: boolean
-  onPress: () => void
-}) {
-  return (
-    <XStack
-      {...press(onPress, label)}
-      flex={1}
-      height={24}
-      px={5}
-      rounded={5}
-      borderWidth={1}
-      items="center"
-      justify="center"
-      gap={4}
-      style={{
-        backgroundColor: active ? paint.speakingBg : paint.panel,
-        borderColor: active ? paint.voiceEdge : paint.border,
-      }}
-      hoverStyle={{ background: paint.hover }}
-    >
-      {icon}
-      <SizableText
-        fontSize={10.5}
-        fontWeight="600"
-        style={{ color: danger ? paint.alert : active ? paint.speaking : paint.ink }}
-      >
-        {label}
-      </SizableText>
-    </XStack>
-  )
-}
-
-function DockIconBtn({
-  label,
-  pressed,
-  onPress,
-  testId,
-  children,
-}: {
-  label: string
-  pressed?: boolean
-  onPress: () => void
-  testId: string
-  children: ReactNode
-}) {
-  return (
-    <XStack
-      {...press(onPress, label)}
-      aria-pressed={pressed}
-      width={28}
-      height={28}
-      rounded={6}
-      items="center"
-      justify="center"
-      hoverStyle={{ background: paint.rowHover }}
-      focusVisibleStyle={ring}
-      data-testid={testId}
-    >
-      {children}
-    </XStack>
   )
 }

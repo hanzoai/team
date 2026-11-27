@@ -1,20 +1,20 @@
 /**
- * COL 4 — Right Contextual Pane (`296px`, `#0b0b0e`)
+ * COL 4 — Right Contextual Pane (`296px`)
  *
  * Switches cleanly between:
- *  1. Mattermost's simultaneous `Thread` RHS (`Thread · #engineering`, parent message,
- *     replies, `Reply to thread…` input + `Also send to #engineering` checkbox + `[×]` close)
- *  2. Discord × Hanzo `Your workforce` / `Members` Roster (`Vi`, `Mana`, `Dev`, `Sci`,
- *     `Cyber`, `QA`, `Des` with official portraits + `HUMANS ONLINE — 4`)
+ *  1. Mattermost's simultaneous `Thread` RHS (real replies from `/v1/team/messages/:id/replies`)
+ *  2. Workforce & Members Roster (real humans from `/v1/team/members` & real bots from `/v1/agents`)
  */
 import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import { ArrowUp, Check, MessagesSquare, X } from '@hanzogui/lucide-icons-2'
 import { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
+import { bareAccount } from '~/data/model.ts'
 import { paint, ring, round, state } from '~/theme/theme.ts'
 import {
   closeThreadPane,
+  openDmWithMember,
   sendThreadReply,
   toggleRosterPane,
   useWorkspace,
@@ -24,36 +24,69 @@ import { ASIDE } from './measure.ts'
 import { press } from './press.ts'
 import { MemberPortrait } from './UnifiedSidebar.tsx'
 
+function resolveAuthor(roster: readonly RosterMember[], authorId: string): RosterMember {
+  const bare = bareAccount(authorId)
+  const hit = roster.find((r) => r.id === authorId || r.id === bare || bareAccount(r.id) === bare)
+  if (hit) return hit
+  const short = bare ? `Member ${bare.slice(0, 6)}` : 'Teammate'
+  return {
+    id: bare || 'member',
+    handle: short.toLowerCase().replace(/\s+/g, '-'),
+    name: short,
+    shortName: short,
+    bot: false,
+    activity: '',
+    presence: 'offline',
+  }
+}
+
 export function RightPane() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
-  const { rightPaneMode, activeThread, channels, messages, roster, orgs, activeOrgId } = useWorkspace()
+  const { rightPaneMode, activeThread, channels, messages, roster, currentUser, hydrating } = useWorkspace()
   const [replyText, setReplyText] = useState('')
   const [alsoToChannel, setAlsoToChannel] = useState(false)
+  const [sending, setSending] = useState(false)
 
   const onHome = pathname === '/home'
   const onOffice = pathname === '/office'
 
-  // Office renders its own Multi-Floor Skyscraper Elevator column on the right
   if (onOffice) return null
   if (!onHome && rightPaneMode === 'closed') return null
 
   const showThread = !onHome && rightPaneMode === 'thread' && activeThread !== null
   const parentMsg = showThread
-    ? messages.find((m) => m.id === activeThread.messageId) ?? messages[0] ?? null
+    ? messages.find((m) => m.id === activeThread.messageId) ?? null
     : null
   const threadRoom = parentMsg
     ? channels.find((c) => c.id === parentMsg.roomId) ?? null
     : null
 
-  if (showThread && parentMsg) {
-    const parentAuthor = roster.find((r) => r.id === parentMsg.authorId) ?? roster[0]!
-    const roomLabel = threadRoom ? (threadRoom.kind === 'dm' ? threadRoom.name : `#${threadRoom.name}`) : '#engineering'
+  const openChatWith = async (member: RosterMember) => {
+    const myBare = bareAccount(currentUser?.accountId || currentUser?.id || '')
+    if (!member.bot && myBare && bareAccount(member.id) === myBare) {
+      navigate('/office')
+      return
+    }
+    const dmId = await openDmWithMember(member.id).catch(() => null)
+    navigate(dmId ? `/chat/${dmId}` : `/chat/with-${member.id}`)
+  }
 
-    const submitReply = () => {
-      if (!replyText.trim()) return
-      sendThreadReply(parentMsg.roomId, parentMsg.id, replyText, alsoToChannel)
-      setReplyText('')
+  if (showThread && parentMsg) {
+    const parentAuthor = resolveAuthor(roster, parentMsg.authorId)
+    const roomLabel = threadRoom ? (threadRoom.kind === 'dm' ? threadRoom.name : `#${threadRoom.name}`) : 'Channel'
+    const totalReplies = Math.max(parentMsg.replyCount, parentMsg.replies.length)
+
+    const submitReply = async () => {
+      const clean = replyText.trim()
+      if (!clean || sending) return
+      setSending(true)
+      try {
+        await sendThreadReply(parentMsg.roomId, parentMsg.id, clean, alsoToChannel)
+        setReplyText('')
+      } finally {
+        setSending(false)
+      }
     }
 
     return (
@@ -126,35 +159,41 @@ export function RightPane() {
             {/* Replies Divider */}
             <XStack items="center" gap={8}>
               <SizableText fontSize={11} fontWeight="600" style={{ color: paint.dim }}>
-                {`${parentMsg.replies.length} ${parentMsg.replies.length === 1 ? 'reply' : 'replies'}`}
+                {`${totalReplies} ${totalReplies === 1 ? 'reply' : 'replies'}`}
               </SizableText>
               <YStack flex={1} height={1} style={{ backgroundColor: paint.rule }} />
             </XStack>
 
             {/* Thread Replies */}
-            <YStack gap={10}>
-              {parentMsg.replies.map((rep) => {
-                const repAuthor = roster.find((r) => r.id === rep.authorId) ?? roster[0]!
-                return (
-                  <XStack key={rep.id} gap={8} items="flex-start">
-                    <MemberPortrait member={repAuthor} size={24} />
-                    <YStack flex={1} minW={0} gap={2}>
-                      <XStack items="center" gap={6}>
-                        <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
-                          {repAuthor.bot ? `@${repAuthor.handle}` : repAuthor.shortName}
+            {parentMsg.replies.length === 0 ? (
+              <SizableText fontSize={12} style={{ color: paint.dim }}>
+                No replies yet — start the thread below.
+              </SizableText>
+            ) : (
+              <YStack gap={10}>
+                {parentMsg.replies.map((rep) => {
+                  const repAuthor = resolveAuthor(roster, rep.authorId)
+                  return (
+                    <XStack key={rep.id} gap={8} items="flex-start">
+                      <MemberPortrait member={repAuthor} size={24} />
+                      <YStack flex={1} minW={0} gap={2}>
+                        <XStack items="center" gap={6}>
+                          <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
+                            {repAuthor.bot ? `@${repAuthor.handle}` : repAuthor.shortName}
+                          </SizableText>
+                          <SizableText fontSize={10.5} style={{ color: paint.dim }}>
+                            {rep.at}
+                          </SizableText>
+                        </XStack>
+                        <SizableText fontSize={12.5} lineHeight={18} style={{ color: paint.fg }}>
+                          {rep.body}
                         </SizableText>
-                        <SizableText fontSize={10.5} style={{ color: paint.dim }}>
-                          {rep.at}
-                        </SizableText>
-                      </XStack>
-                      <SizableText fontSize={12.5} lineHeight={18} style={{ color: paint.fg }}>
-                        {rep.body}
-                      </SizableText>
-                    </YStack>
-                  </XStack>
-                )
-              })}
-            </YStack>
+                      </YStack>
+                    </XStack>
+                  )
+                })}
+              </YStack>
+            )}
           </YStack>
         </ScrollArea>
 
@@ -188,18 +227,19 @@ export function RightPane() {
               onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
                 if (e.key === 'Enter') {
                   e.preventDefault?.()
-                  submitReply()
+                  void submitReply()
                 }
               }}
               data-testid="thread-rhs-input"
             />
             <YStack
-              {...press(submitReply, 'Send thread reply')}
+              {...press(() => void submitReply(), 'Send thread reply')}
               width={24}
               height={24}
               rounded={12}
               items="center"
               justify="center"
+              opacity={sending ? 0.5 : 1}
               style={{ backgroundColor: paint.composerAccent }}
             >
               <ArrowUp size={13} color={paint.composerAccentInk} />
@@ -235,10 +275,10 @@ export function RightPane() {
     )
   }
 
-  // MODE 2: Workforce & Members Roster (matches uploaded_media_0 on Home + Discord roster on Channels)
+  // MODE 2: Workforce & Members Roster
   const agents = roster.filter((m) => m.bot)
   const humans = roster.filter((m) => !m.bot)
-  const activeOrg = orgs.find((o) => o.id === activeOrgId) ?? orgs[0]!
+  const humansOnline = humans.filter((h) => h.presence === 'online').length
 
   return (
     <YStack
@@ -255,7 +295,9 @@ export function RightPane() {
             Your workforce
           </SizableText>
           <SizableText fontSize={11.5} style={{ color: paint.dim }}>
-            {`${activeOrg.agentsCount} agents · 6 active runs`}
+            {hydrating
+              ? 'Loading roster…'
+              : `${agents.length} ${agents.length === 1 ? 'agent' : 'agents'} · ${humansOnline} online`}
           </SizableText>
         </YStack>
       ) : (
@@ -268,7 +310,7 @@ export function RightPane() {
           style={{ borderBottomColor: paint.rule }}
         >
           <SizableText fontSize={12.5} fontWeight="600" style={{ color: paint.ink }}>
-            {`Workforce & Members · ${agents.length + humans.length}`}
+            {`Members · ${agents.length + humans.length}`}
           </SizableText>
           <XStack
             {...press(toggleRosterPane, 'Hide roster')}
@@ -288,32 +330,36 @@ export function RightPane() {
         <YStack px={12} py={onHome ? 6 : 10} gap={onHome ? 6 : 14}>
           {!onHome ? (
             <SizableText px={6} fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
-              {`YOUR WORKFORCE — ${agents.length} ACTIVE`}
+              {`AI AGENTS — ${agents.length}`}
             </SizableText>
           ) : null}
 
           <YStack gap={2}>
-            {agents.map((ag) => (
-              <RosterRow
-                key={ag.id}
-                member={ag}
-                onPress={() => navigate(`/chat/dm-${ag.id}`)}
-              />
-            ))}
+            {agents.length === 0 ? (
+              <SizableText px={6} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                {hydrating ? 'Loading agents…' : 'No bots in this workspace yet.'}
+              </SizableText>
+            ) : (
+              agents.map((ag) => (
+                <RosterRow key={ag.id} member={ag} onPress={() => void openChatWith(ag)} />
+              ))
+            )}
           </YStack>
 
           {!onHome ? (
             <YStack gap={2} pt={4}>
               <SizableText px={6} pb={2} fontSize={10.5} fontWeight="700" style={{ color: paint.dim, letterSpacing: 0.6 }}>
-                {`HUMANS ONLINE — ${humans.length}`}
+                {`HUMANS — ${humans.length} (${humansOnline} ONLINE)`}
               </SizableText>
-              {humans.map((hu) => (
-                <RosterRow
-                  key={hu.id}
-                  member={hu}
-                  onPress={() => navigate(hu.id === 'zach' ? '/office' : `/chat/dm-${hu.id}`)}
-                />
-              ))}
+              {humans.length === 0 ? (
+                <SizableText px={6} py={4} fontSize={11.5} style={{ color: paint.dim }}>
+                  {hydrating ? 'Loading humans…' : 'No human members loaded.'}
+                </SizableText>
+              ) : (
+                humans.map((hu) => (
+                  <RosterRow key={hu.id} member={hu} onPress={() => void openChatWith(hu)} />
+                ))
+              )}
             </YStack>
           ) : null}
         </YStack>
@@ -330,7 +376,7 @@ export function RightPane() {
         hoverStyle={{ background: paint.hover }}
       >
         <SizableText fontSize={12} style={{ color: paint.dim }}>
-          View entire workforce →
+          Open Virtual Office →
         </SizableText>
       </XStack>
     </YStack>
@@ -367,7 +413,7 @@ function RosterRow({
           rounded={round.pill}
           borderWidth={1.5}
           style={{
-            backgroundColor: member.presence === 'gated' ? paint.sevInk : state.done,
+            backgroundColor: member.presence === 'online' || member.bot ? state.done : paint.dim,
             borderColor: paint.aside,
           }}
         />
@@ -377,14 +423,14 @@ function RosterRow({
           <SizableText fontSize={13} fontWeight="600" style={{ color: paint.ink }} numberOfLines={1}>
             {member.name}
           </SizableText>
-          {member.presence === 'voice' ? (
-            <SizableText fontSize={10} fontWeight="600" style={{ color: paint.speaking }}>
-              🔊
+          {member.bot ? (
+            <SizableText fontSize={9.5} fontWeight="700" style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>
+              APP
             </SizableText>
           ) : null}
         </XStack>
         <SizableText fontSize={11.5} style={{ color: paint.dim }} numberOfLines={1}>
-          {member.activity}
+          {member.activity || (member.bot ? `@${member.handle}` : member.presence)}
         </SizableText>
       </YStack>
     </XStack>
