@@ -23,6 +23,7 @@ import {
 import { useState, type ReactNode } from 'react'
 import { useNavigate } from 'react-router'
 
+import { decodeMentionsForDisplay } from '~/data/teamRest.ts'
 import { MemberPortrait } from '~/shell/UnifiedSidebar.tsx'
 import { press } from '~/shell/press.ts'
 import {
@@ -178,7 +179,8 @@ export function MessageCard({
   const [diffOpen, setDiffOpen] = useState(false)
   const [issueCreated, setIssueCreated] = useState(false)
   const execTasks = useExecutableTasks()
-  const blocks = parseBodyBlocks(message.body)
+  const displayBody = decodeMentionsForDisplay(message.body, roster)
+  const blocks = parseBodyBlocks(displayBody)
   const isCompact = density === 'compact'
 
   const handleCreateIssue = () => {

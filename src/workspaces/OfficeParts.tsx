@@ -154,6 +154,7 @@ export function MemberDeskCard({
       justify="space-between"
       gap={8}
       style={{ backgroundColor: paint.card, borderColor: paint.border }}
+      data-testid={`desk-card-${member.handle}`}
     >
       <XStack items="center" justify="space-between" gap={6}>
         <XStack items="center" gap={8} flex={1} minW={0}>
@@ -293,6 +294,7 @@ export function MemberDeskCard({
             gap={4}
             style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
             hoverStyle={{ background: paint.hover }}
+            data-testid={`desk-run-${member.handle}`}
           >
             <Play size={10} color={paint.ink} />
             <SizableText fontSize={11} fontWeight="600" style={{ color: paint.ink }}>
@@ -312,6 +314,7 @@ export function MemberDeskCard({
             justify="center"
             style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
             hoverStyle={{ background: paint.hover }}
+            data-testid={`desk-delete-${member.handle}`}
           >
             <Trash2 size={11} color={paint.alert} />
           </XStack>
@@ -372,6 +375,7 @@ export function CreateBotModal({
         borderWidth={1}
         style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
         onPress={(e: { stopPropagation?: () => void }) => e.stopPropagation?.()}
+        data-testid="create-bot-modal"
       >
         <XStack items="center" justify="space-between">
           <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }}>
@@ -397,6 +401,7 @@ export function CreateBotModal({
             value={botName}
             onChangeText={setBotName}
             style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+            data-testid="create-bot-name-input"
           />
         </YStack>
 
@@ -415,6 +420,7 @@ export function CreateBotModal({
             value={botModel}
             onChangeText={setBotModel}
             style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+            data-testid="create-bot-model-input"
           />
         </YStack>
 
@@ -433,6 +439,7 @@ export function CreateBotModal({
             value={botDesc}
             onChangeText={setBotDesc}
             style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+            data-testid="create-bot-desc-input"
           />
         </YStack>
 
@@ -451,6 +458,7 @@ export function CreateBotModal({
             value={botInstructions}
             onChangeText={setBotInstructions}
             style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+            data-testid="create-bot-instructions-input"
           />
         </YStack>
 
@@ -473,6 +481,7 @@ export function CreateBotModal({
             rounded={7}
             opacity={busy || !botName.trim() ? 0.5 : 1}
             style={{ backgroundColor: paint.ink }}
+            data-testid="create-bot-submit"
           >
             <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ground }}>
               {busy ? 'Creating…' : 'Create Bot'}
@@ -525,6 +534,7 @@ export function RunBotModal({
         borderWidth={1}
         style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
         onPress={(e: { stopPropagation?: () => void }) => e.stopPropagation?.()}
+        data-testid="run-bot-modal"
       >
         <XStack items="center" justify="space-between">
           <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }}>
@@ -546,10 +556,11 @@ export function RunBotModal({
           value={prompt}
           onChangeText={setPrompt}
           style={{ backgroundColor: paint.panel, borderColor: paint.border }}
+          data-testid="run-bot-prompt-input"
         />
 
         {result ? (
-          <YStack p={10} rounded={8} borderWidth={1} gap={4} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+          <YStack p={10} rounded={8} borderWidth={1} gap={4} style={{ backgroundColor: paint.card, borderColor: paint.border }} data-testid="run-bot-result">
             <SizableText fontSize={11} fontWeight="700" style={{ color: result.error ? paint.alert : paint.speaking }}>
               {result.error ? 'Run Error' : `Status: ${result.status || 'ok'}`}
             </SizableText>
@@ -574,6 +585,7 @@ export function RunBotModal({
             gap={5}
             opacity={busy || !prompt.trim() ? 0.5 : 1}
             style={{ backgroundColor: paint.ink }}
+            data-testid="run-bot-submit"
           >
             <Play size={11} color={paint.ground} />
             <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ground }}>

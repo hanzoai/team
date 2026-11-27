@@ -57,7 +57,7 @@ export const config = () => {
      * call carries a cookie, so the issuer needs only to answer this origin,
      * not to trust it with credentials.
      */
-    proxyBaseUrl: import.meta.env.DEV ? here : undefined,
+    proxyBaseUrl: import.meta.env?.DEV ? here : undefined,
   }
 }
 

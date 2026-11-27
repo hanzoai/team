@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { encodeMentionsForApi, teamAvatarUrl } from './teamRest.ts'
+import { decodeMentionsForDisplay, encodeMentionsForApi, teamAvatarUrl } from './teamRest.ts'
 
 const DEV_UUID = '11111111-2222-3333-4444-555555555555'
 const ADA_UUID = 'aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee'
@@ -42,6 +42,22 @@ test('encodeMentionsForApi converts @handle and @Name into <@uuid> per cloud/app
   assert.equal(
     encodeMentionsForApi(`Already formatted <@${DEV_UUID}> and @dev`, roster),
     `Already formatted <@${DEV_UUID}> and <@${DEV_UUID}>`,
+  )
+})
+
+test('decodeMentionsForDisplay renders <@uuid> tokens cleanly as @handle using roster', () => {
+  const roster = [
+    { id: DEV_UUID, handle: 'dev', name: 'Dev', bot: true },
+    { id: ADA_UUID, handle: 'ada', name: 'Ada', bot: false },
+  ]
+  assert.equal(
+    decodeMentionsForDisplay(`<@${DEV_UUID}> please check with <@${ADA_UUID}>`, roster),
+    '@dev please check with @ada',
+  )
+  // Unknown UUID stays untouched
+  assert.equal(
+    decodeMentionsForDisplay(`<@${ADA_L_UUID}> hello`, roster),
+    `<@${ADA_L_UUID}> hello`,
   )
 })
 

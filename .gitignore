@@ -8,3 +8,5 @@ LLM.md
 /public/memoji
 /public/personas
 /dist-release
+test-results/
+playwright-report/
