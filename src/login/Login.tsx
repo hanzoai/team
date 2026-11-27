@@ -76,6 +76,11 @@ function LoginFooter({ fg }: { fg: string }) {
   )
 }
 
+const WORDMARK_STYLE: CSSProperties = {
+  display: 'inline-flex', alignItems: 'center', color: 'inherit', fontSize: 28,
+  fontWeight: 700, letterSpacing: '-0.04em', lineHeight: 1, transform: 'translateY(-0.04em)', textDecoration: 'none',
+}
+
 const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: () => void }) => {
   const desktop = isDesktopApp()
 
@@ -86,16 +91,12 @@ const GateHeader = ({ account, onLeave }: { account?: string | null; onLeave?: (
       onMouseDown={desktop ? dragDesktopWindow : undefined}
       onDoubleClick={desktop ? toggleDesktopMaximize : undefined}
       style={{
-        width: '100%',
-        height: 44,
-        paddingInline: 14,
-        boxSizing: 'border-box',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'flex-end',
-        flexShrink: 0,
+        width: '100%', height: desktop ? 44 : 60, paddingInline: desktop ? 14 : 'clamp(20px, 2.5vw, 36px)',
+        boxSizing: 'border-box', display: 'flex', alignItems: 'center',
+        justifyContent: desktop ? 'flex-end' : 'space-between', flexShrink: 0,
       }}
     >
+      {!desktop ? <a href={`${SITE}/`} aria-label="hanzo" data-slot="wordmark" style={WORDMARK_STYLE}>hanzo</a> : null}
       <XStack items="center" gap={gap.tight} shrink={0}>
         {account ? <SizableText size={rung.small} color={paint.mute}>{account}</SizableText> : null}
         {onLeave ? (
