@@ -1,7 +1,7 @@
 import assert from 'node:assert/strict'
 import { test } from 'node:test'
 
-import { resetWorkforceStore, getAgentByHandle } from '../agents/workforce.ts'
+import { getAgentByHandle, mapBackendAgents, resetWorkforceStore, setWorkforceAgents } from '../agents/workforce.ts'
 import { resetHandoffStore, getHandoffs } from '../handoff/store.ts'
 import {
   delegateExecutableTask,
@@ -54,6 +54,7 @@ test('delegateExecutableTask authorizes execution, updates specialist desk, and 
   resetExecutableTasks()
   resetWorkforceStore()
   resetHandoffStore()
+  setWorkforceAgents(mapBackendAgents([{ id: 'agent_qa', name: 'qa', model: 'zen6-coder', status: 'ready' }], []))
 
   const delegated = delegateExecutableTask({
     sourceKind: 'space',

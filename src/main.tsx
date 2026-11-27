@@ -7,12 +7,15 @@ import { createRoot } from 'react-dom/client'
 import '@hanzo/font/css'
 import { startTags } from '@hanzo/event'
 import { App } from '~/app'
+import { installEventBeaconKeepalive } from '~/data/beacon.ts'
 import { iam } from '~/data/iam.ts'
 // THE ROLES. `src/theme/theme.ts` names them and every component reads them from
 // there; this is where their values arrive. Imported AFTER `~/app` (`@hanzo/ui`)
 // so Hanzo Team's pure `#000000` ground and surface ladder win the CSS cascade
 // over `@hanzo/ui/dist/styles.css`'s `:root { --background: #0a0a0a }`.
 import '~/theme/tokens.css'
+
+installEventBeaconKeepalive()
 
 // THE TAGS. hanzo.team's Google tag and Meta pixel and the visitor's consent
 // rule are cloud's answer for this host (GET /v1/project/tags); @hanzo/event

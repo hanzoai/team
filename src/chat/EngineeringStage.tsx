@@ -1,38 +1,58 @@
 /**
- * COL 3 — Main Engineering Channel & DM Stage (`#0f0f12`)
+ * COL 3 — Main Channel & DM Stage
  *
- * - `44px` Mattermost-crisp channel header:
- *   `# engineering` | `Core platform, Rust/Go services & Zen 6 rollouts`
- *   Right tools: `📞 Start Huddle`, `📋 Playbook`, `📌 Pinned (4)`, `🧵 Threads (3)`, `👥 Roster`
- * - Interactive Playbook & Pinned drawers
- * - Rich engineering message stream + Mattermost × Hanzo Power Composer
+ * Wired directly to `/v1/team/channels`, `/v1/team/channels/:id/messages`,
+ * `/v1/team/dms`, and `/v1/meet/*` + LiveKit huddles.
  */
-import { ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
+import { Input, ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
 import {
-  Check,
-  ClipboardList,
   Hash,
+  Lock,
   MessagesSquare,
   PhoneCall,
   Pin,
+  Plus,
+  RefreshCw,
   Users,
 } from '@hanzogui/lucide-icons-2'
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
+import { bareAccount } from '~/data/model.ts'
 import { MemberPortrait } from '~/shell/UnifiedSidebar.tsx'
 import { press } from '~/shell/press.ts'
 import { chatMaxWidthCssFor, useTeamSettings } from '~/settings/preferences.ts'
-import { paint, ring, state } from '~/theme/theme.ts'
+import { paint, ring } from '~/theme/theme.ts'
 import {
+  createWorkspaceChannel,
   joinVoiceRoom,
   leaveVoiceRoom,
+  loadRoomMessages,
+  openDmWithMember,
   openThreadPane,
+  setActiveRoomId,
   toggleRosterPane,
   useWorkspace,
+  type RosterMember,
 } from '~/workspace/store.ts'
 import { MessageCard } from './MessageCard.tsx'
 import { PowerComposer } from './PowerComposer.tsx'
+
+function resolveMember(roster: readonly RosterMember[], authorId: string): RosterMember {
+  const bare = bareAccount(authorId)
+  const found = roster.find((r) => r.id === authorId || r.id === bare || bareAccount(r.id) === bare)
+  if (found) return found
+  const short = bare ? `Member ${bare.slice(0, 6)}` : 'Teammate'
+  return {
+    id: bare || 'member',
+    handle: short.toLowerCase().replace(/\s+/g, '-'),
+    name: short,
+    shortName: short,
+    bot: false,
+    activity: '',
+    presence: 'offline',
+  }
+}
 
 export function EngineeringStage() {
   const { id } = useParams()
@@ -42,27 +62,170 @@ export function EngineeringStage() {
     messages,
     roster,
     connectedVoiceId,
+    voiceStatus,
     rightPaneMode,
+    hydrating,
+    hydrateError,
+    loadingRooms,
+    roomErrors,
   } = useWorkspace()
   const { settings } = useTeamSettings()
   const maxChatWidth = chatMaxWidthCssFor(settings.chatWidth)
   const isCompact = settings.messageDensity === 'compact'
 
-  const [playbookOpen, setPlaybookOpen] = useState(false)
   const [pinsOpen, setPinsOpen] = useState(false)
-  const [checkedSteps, setCheckedSteps] = useState<Record<string, boolean>>({})
+  const [creatingName, setCreatingName] = useState('')
+  const [creatingErr, setCreatingErr] = useState<string | null>(null)
+  const [resolvingDm, setResolvingDm] = useState(false)
+  const dmOpenedRef = useRef<string | null>(null)
 
-  const targetId = id || 'engineering'
+  const isDmShortcut = Boolean(id && (id.startsWith('with-') || id.startsWith('dm-')))
+
+  // Resolve `/chat/with-<uuid>` or `/chat/dm-<handle|uuid>` into a real `/v1/team/dms` channel
+  useEffect(() => {
+    if (!id || !isDmShortcut || hydrating) return
+    if (dmOpenedRef.current === id) return
+    dmOpenedRef.current = id
+    setResolvingDm(true)
+    void openDmWithMember(id)
+      .then((dmId) => {
+        if (dmId && dmId !== id) {
+          navigate(`/chat/${dmId}`, { replace: true })
+        }
+      })
+      .finally(() => setResolvingDm(false))
+  }, [id, isDmShortcut, hydrating, navigate])
+
   const room =
-    channels.find((c) => c.id === targetId || `dm-${c.id}` === targetId) ??
-    channels.find((c) => c.id === 'engineering')!
+    (id
+      ? channels.find((c) => c.id === id || c.name.toLowerCase() === id.toLowerCase())
+      : undefined) ??
+    channels.find((c) => c.kind === 'channel') ??
+    channels[0] ??
+    null
+
+  // Track active room & load its real messages from `/v1/team/channels/:id/messages`
+  useEffect(() => {
+    setActiveRoomId(room?.id ?? null)
+    if (room?.id) {
+      void loadRoomMessages(room.id)
+    }
+    return () => setActiveRoomId(null)
+  }, [room?.id])
+
+  if (hydrating && channels.length === 0) {
+    return (
+      <YStack flex={1} items="center" justify="center" p={24} style={{ backgroundColor: paint.panel }} data-testid="engineering-main-stage">
+        <SizableText fontSize={13.5} style={{ color: paint.dim }}>
+          Connecting to workspace channels…
+        </SizableText>
+      </YStack>
+    )
+  }
+
+  if (resolvingDm) {
+    return (
+      <YStack flex={1} items="center" justify="center" p={24} style={{ backgroundColor: paint.panel }} data-testid="engineering-main-stage">
+        <SizableText fontSize={13.5} style={{ color: paint.dim }}>
+          Opening direct message…
+        </SizableText>
+      </YStack>
+    )
+  }
+
+  if (!room) {
+    const submitFirstChannel = async () => {
+      const clean = creatingName.trim()
+      if (!clean) return
+      setCreatingErr(null)
+      try {
+        const createdId = await createWorkspaceChannel(clean)
+        setCreatingName('')
+        if (createdId) navigate(`/chat/${createdId}`)
+      } catch (err) {
+        setCreatingErr(err instanceof Error ? err.message : 'Failed to create channel')
+      }
+    }
+
+    return (
+      <YStack
+        flex={1}
+        items="center"
+        justify="center"
+        p={24}
+        gap={12}
+        style={{ backgroundColor: paint.panel }}
+        data-testid="engineering-main-stage"
+      >
+        <SizableText fontSize={16} fontWeight="700" style={{ color: paint.ink }}>
+          {hydrateError ? 'Unable to load workspace channels' : 'No channels in this workspace yet'}
+        </SizableText>
+        <SizableText fontSize={13} style={{ color: paint.dim, textAlign: 'center', maxWidth: 420 }}>
+          {hydrateError || 'Create your first channel to start talking with teammates and workspace bots.'}
+        </SizableText>
+        <XStack gap={8} items="center" pt={4}>
+          <XStack
+            px={10}
+            py={6}
+            rounded={8}
+            borderWidth={1}
+            items="center"
+            gap={6}
+            width={220}
+            style={{ backgroundColor: paint.composer, borderColor: paint.border }}
+          >
+            <Hash size={13} color={paint.dim} />
+            <Input
+              flex={1}
+              unstyled
+              height={22}
+              borderWidth={0}
+              bg="transparent"
+              fontSize={12.5}
+              color={paint.ink}
+              placeholder="general"
+              value={creatingName}
+              onChangeText={setCreatingName}
+              onKeyDown={(e: { key?: string; preventDefault?: () => void }) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault?.()
+                  void submitFirstChannel()
+                }
+              }}
+            />
+          </XStack>
+          <XStack
+            {...press(() => void submitFirstChannel(), 'Create channel')}
+            height={34}
+            px={12}
+            rounded={8}
+            items="center"
+            gap={5}
+            style={{ backgroundColor: paint.ink }}
+          >
+            <Plus size={13} color={paint.ground} />
+            <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ground }}>
+              Create Channel
+            </SizableText>
+          </XStack>
+        </XStack>
+        {creatingErr ? (
+          <SizableText fontSize={12} style={{ color: paint.alert }}>
+            {creatingErr}
+          </SizableText>
+        ) : null}
+      </YStack>
+    )
+  }
 
   const isDm = room.kind === 'dm'
-  const dmMember = isDm ? roster.find((m) => m.id === room.dmMemberId) : undefined
+  const dmMember = isDm && room.dmMemberId ? roster.find((m) => m.id === room.dmMemberId) : undefined
   const roomMessages = messages.filter((m) => m.roomId === room.id)
-  const pinnedMessages = messages.filter((m) => m.pinned)
-  const threadParents = messages.filter((m) => m.replies.length > 0)
-  const huddleActive = connectedVoiceId !== null
+  const pinnedMessages = roomMessages.filter((m) => m.pinned)
+  const threadParents = roomMessages.filter((m) => m.replyCount > 0 || m.replies.length > 0)
+  const huddleActive = connectedVoiceId === room.id && (voiceStatus === 'connected' || voiceStatus === 'connecting')
+  const loadingRoom = Boolean(loadingRooms[room.id])
+  const roomError = roomErrors[room.id] || ''
 
   return (
     <YStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }} data-testid="engineering-main-stage">
@@ -86,49 +249,32 @@ export function EngineeringStage() {
             </XStack>
           ) : (
             <XStack items="center" gap={5} shrink={0}>
-              <Hash size={15} color={paint.mute} />
+              {room.private ? <Lock size={14} color={paint.mute} /> : <Hash size={15} color={paint.mute} />}
               <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }}>
                 {room.name}
               </SizableText>
-              {room.sevTag ? (
-                <XStack
-                  px={5}
-                  py={1}
-                  rounded={4}
-                  borderWidth={1}
-                  style={{ backgroundColor: paint.sevBg, borderColor: paint.sevEdge }}
-                >
-                  <SizableText fontSize={10} fontWeight="700" style={{ color: paint.sevInk }}>
-                    {room.sevTag}
-                  </SizableText>
-                </XStack>
-              ) : null}
             </XStack>
           )}
 
-          <YStack width={1} height={14} style={{ backgroundColor: paint.rule }} shrink={0} />
-
-          <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1} flex={1}>
-            {room.topic}
-          </SizableText>
+          {room.topic ? (
+            <>
+              <YStack width={1} height={14} style={{ backgroundColor: paint.rule }} shrink={0} />
+              <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1} flex={1}>
+                {room.topic}
+              </SizableText>
+            </>
+          ) : null}
         </XStack>
 
-        {/* Right Header Tools: Start Huddle, Playbook, Pinned (4), Threads (3), Roster */}
+        {/* Right Header Tools: Start Huddle, Pinned, Threads, Roster */}
         <XStack items="center" gap={5} shrink={0}>
           <HeaderToolPill
             active={huddleActive}
             accent={huddleActive}
             label={huddleActive ? 'In Huddle' : 'Start Huddle'}
             icon={<PhoneCall size={12} color={huddleActive ? paint.speaking : paint.mute} />}
-            onPress={() => (huddleActive ? leaveVoiceRoom() : joinVoiceRoom('eng-pairing'))}
+            onPress={() => void (huddleActive ? leaveVoiceRoom() : joinVoiceRoom(room.id))}
             testId="header-huddle-btn"
-          />
-          <HeaderToolPill
-            active={playbookOpen}
-            label="Playbook"
-            icon={<ClipboardList size={12} color={playbookOpen ? paint.ink : paint.mute} />}
-            onPress={() => setPlaybookOpen((v) => !v)}
-            testId="header-playbook-btn"
           />
           <HeaderToolPill
             active={pinsOpen}
@@ -142,7 +288,7 @@ export function EngineeringStage() {
             label={`Threads (${threadParents.length})`}
             icon={<MessagesSquare size={12} color={rightPaneMode === 'thread' ? paint.ink : paint.mute} />}
             onPress={() => {
-              const first = roomMessages.find((m) => m.replies.length > 0) ?? threadParents[0]
+              const first = threadParents[0]
               if (first) openThreadPane(first.roomId, first.id)
               else navigate('/threads')
             }}
@@ -158,60 +304,6 @@ export function EngineeringStage() {
         </XStack>
       </XStack>
 
-      {/* Optional Mattermost Playbook Strip */}
-      {playbookOpen ? (
-        <YStack
-          px={18}
-          py={10}
-          gap={6}
-          borderBottomWidth={1}
-          style={{ backgroundColor: paint.card, borderBottomColor: paint.rule }}
-          data-testid="channel-playbook-drawer"
-        >
-          <XStack items="center" justify="space-between">
-            <SizableText fontSize={12} fontWeight="700" style={{ color: paint.ink }}>
-              {`Incident & Release Playbook · #${room.name}`}
-            </SizableText>
-            <SizableText fontSize={11} style={{ color: paint.dim }}>
-              Automated runbook gates
-            </SizableText>
-          </XStack>
-          {(room.playbookSteps ?? [
-            { id: 'def-1', label: 'Verify CI unit & E2E gates green', done: true },
-            { id: 'def-2', label: 'Sign off release artifact in #engineering', done: false },
-          ]).map((st) => {
-            const done = checkedSteps[st.id] ?? st.done
-            return (
-              <XStack
-                key={st.id}
-                {...press(() => setCheckedSteps((p) => ({ ...p, [st.id]: !done })), st.label)}
-                items="center"
-                gap={8}
-                py={2}
-              >
-                <YStack
-                  width={15}
-                  height={15}
-                  rounded={4}
-                  borderWidth={1}
-                  items="center"
-                  justify="center"
-                  style={{
-                    backgroundColor: done ? state.done : 'transparent',
-                    borderColor: done ? state.done : paint.dim,
-                  }}
-                >
-                  {done ? <Check size={10} color={paint.ground} /> : null}
-                </YStack>
-                <SizableText fontSize={12} style={{ color: done ? paint.dim : paint.ink }}>
-                  {st.label}
-                </SizableText>
-              </XStack>
-            )
-          })}
-        </YStack>
-      ) : null}
-
       {/* Optional Pinned Messages Strip */}
       {pinsOpen ? (
         <YStack
@@ -224,20 +316,26 @@ export function EngineeringStage() {
           <SizableText fontSize={11.5} fontWeight="700" style={{ color: paint.ink }}>
             {`Pinned Messages (${pinnedMessages.length})`}
           </SizableText>
-          {pinnedMessages.map((pm) => {
-            const a = roster.find((r) => r.id === pm.authorId) ?? roster[0]!
-            return (
-              <XStack key={pm.id} items="center" gap={8} py={3}>
-                <MemberPortrait member={a} size={18} />
-                <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
-                  {a.shortName}:
-                </SizableText>
-                <SizableText fontSize={12} style={{ color: paint.mute }} numberOfLines={1} flex={1}>
-                  {pm.body.split('\n')[0]}
-                </SizableText>
-              </XStack>
-            )
-          })}
+          {pinnedMessages.length === 0 ? (
+            <SizableText fontSize={12} style={{ color: paint.dim }}>
+              No pinned messages in this channel yet.
+            </SizableText>
+          ) : (
+            pinnedMessages.map((pm) => {
+              const a = resolveMember(roster, pm.authorId)
+              return (
+                <XStack key={pm.id} items="center" gap={8} py={3}>
+                  <MemberPortrait member={a} size={18} />
+                  <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
+                    {a.shortName}:
+                  </SizableText>
+                  <SizableText fontSize={12} style={{ color: paint.mute }} numberOfLines={1} flex={1}>
+                    {pm.body.split('\n')[0]}
+                  </SizableText>
+                </XStack>
+              )
+            })
+          )}
         </YStack>
       ) : null}
 
@@ -254,20 +352,61 @@ export function EngineeringStage() {
             <SizableText fontSize={16} fontWeight="700" style={{ color: paint.ink }}>
               {isDm ? room.name : `# ${room.name}`}
             </SizableText>
-            <SizableText fontSize={12.5} style={{ color: paint.dim }}>
-              {room.topic}
-            </SizableText>
+            {room.topic ? (
+              <SizableText fontSize={12.5} style={{ color: paint.dim }}>
+                {room.topic}
+              </SizableText>
+            ) : null}
           </YStack>
 
-          {roomMessages.length === 0 ? (
+          {roomError ? (
+            <XStack
+              mx={18}
+              my={8}
+              px={12}
+              py={8}
+              rounded={8}
+              borderWidth={1}
+              items="center"
+              justify="space-between"
+              style={{ backgroundColor: paint.card, borderColor: paint.border }}
+            >
+              <SizableText fontSize={12.5} style={{ color: paint.alert }}>
+                {roomError}
+              </SizableText>
+              <XStack
+                {...press(() => void loadRoomMessages(room.id), 'Retry loading messages')}
+                px={8}
+                py={4}
+                rounded={6}
+                borderWidth={1}
+                items="center"
+                gap={4}
+                style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+              >
+                <RefreshCw size={11} color={paint.ink} />
+                <SizableText fontSize={11.5} fontWeight="600" style={{ color: paint.ink }}>
+                  Retry
+                </SizableText>
+              </XStack>
+            </XStack>
+          ) : null}
+
+          {loadingRoom && roomMessages.length === 0 ? (
             <YStack px={18} py={20}>
               <SizableText fontSize={13} style={{ color: paint.dim }}>
-                {`No messages in ${isDm ? room.name : `#${room.name}`} yet — type below or @mention a specialist bot to start.`}
+                Loading messages…
+              </SizableText>
+            </YStack>
+          ) : roomMessages.length === 0 ? (
+            <YStack px={18} py={20}>
+              <SizableText fontSize={13} style={{ color: paint.dim }}>
+                {`No messages in ${isDm ? room.name : `#${room.name}`} yet — type below or @mention a workspace bot to start.`}
               </SizableText>
             </YStack>
           ) : (
             roomMessages.map((msg) => {
-              const author = roster.find((r) => r.id === msg.authorId) ?? roster[0]!
+              const author = resolveMember(roster, msg.authorId)
               return (
                 <MessageCard
                   key={msg.id}

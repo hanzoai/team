@@ -349,7 +349,7 @@ export function SharingAccessPanel({ onCloseModal }: { onCloseModal: () => void 
         description="Unified identity and seat billing across Hanzo Team, Hanzo Dev, and Hanzo Cloud."
       >
         <SettingsRow
-          title={guest ? 'Local Workspace (Zach Kelling · Preview)' : (who?.label || who?.name || 'Signed in')}
+          title={guest ? 'Local Workspace' : (who?.label || who?.name || 'Signed in')}
           description={guest ? 'Sign in with hanzo.id to sync channels, issues, Spaces, and cloud credits.' : (who?.email ?? current?.org ?? 'hanzo.id')}
           control={
             <XStack items="center" gap={8}>

@@ -45,6 +45,7 @@
     "@hanzo/voice": "0.1.19",
     "@hanzogui/lucide-icons-2": "8.3.5",
     "@hanzogui/next-theme": "8.3.5",
+    "livekit-client": "^2.25.0",
     "lucide-react": "1.42.0",
     "react": "19.2.8",
     "react-dom": "19.2.8",

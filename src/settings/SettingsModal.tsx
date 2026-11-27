@@ -274,7 +274,7 @@ export function SettingsModal(props: {
 
   const activeMeta = SETTINGS_NAV_ITEMS.find((n) => n.id === activeSection) ?? SETTINGS_NAV_ITEMS[0]!
   const ActiveIcon = activeMeta.icon
-  const userName = props.user?.name || 'Zach Kelling'
+  const userName = props.user?.name || 'Workspace Member'
   const orgPayHref = billingUrl(current?.org ?? props.user?.owner ?? 'hanzo')
 
   return (

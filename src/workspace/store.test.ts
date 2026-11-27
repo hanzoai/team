@@ -1,57 +1,163 @@
 import assert from 'node:assert/strict'
+import { readFileSync } from 'node:fs'
 import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 
 import {
-  approveDeployRelease,
-  createWorkspaceChannel,
   getWorkspace,
-  joinVoiceRoom,
-  leaveVoiceRoom,
+  mapChannelsToWorkspace,
+  mapDtoToMessage,
+  mapMembersToRoster,
   openThreadPane,
+  registerOrgChooser,
   resetWorkspaceStore,
   selectGuildOrg,
-  sendThreadReply,
-  sendWorkspaceMessage,
-  toggleMessageReaction,
+  syncCurrentUser,
+  syncSpacesList,
 } from './store.ts'
 
-test('Guild rail orgs, voice huddles, channels, thread RHS, and @bot dispatch work deterministically', () => {
+const STORE_SRC = readFileSync(fileURLToPath(new URL('./store.ts', import.meta.url)), 'utf8')
+
+test('store starts clean with zero fake mock orgs/channels/messages and zero canned bot replies', () => {
+  assert.ok(!STORE_SRC.includes('botAutoReplyText'), 'canned botAutoReplyText mock must be removed')
+  assert.ok(!STORE_SRC.includes("authorId: 'zach'"), 'hardcoded authorId zach must be removed')
+
   resetWorkspaceStore()
-  const initial = getWorkspace()
+  const snap = getWorkspace()
+  assert.equal(snap.orgs.length, 0)
+  assert.equal(snap.channels.length, 0)
+  assert.equal(snap.messages.length, 0)
+  assert.equal(snap.roster.length, 0)
+  assert.equal(snap.connectedVoiceId, null)
+  assert.equal(snap.voiceStatus, 'disconnected')
+})
+
+test('syncSpacesList and selectGuildOrg delegate real space switching to <Space>.choose', () => {
+  resetWorkspaceStore()
+  const chosen: string[] = []
+  registerOrgChooser((slug) => chosen.push(slug))
+
+  const rows = [
+    { uuid: 'ws-1', name: 'Hanzo', url: 'hanzo', org: 'hanzo', isDisabled: false },
+    { uuid: 'ws-2', name: 'Lux', url: 'lux', org: 'lux', isDisabled: false },
+  ]
+  syncSpacesList(rows, rows[0]!)
   assert.deepEqual(
-    initial.orgs.map((o) => o.letter),
-    ['H', 'L', 'Z', 'S'],
+    getWorkspace().orgs.map((o) => o.id),
+    ['hanzo', 'lux'],
   )
-  assert.equal(initial.connectedVoiceId, 'eng-pairing')
+  assert.equal(getWorkspace().activeSpaceUuid, 'ws-1')
 
   selectGuildOrg('lux')
   assert.equal(getWorkspace().activeOrgId, 'lux')
+  assert.equal(getWorkspace().activeSpaceUuid, 'ws-2')
+  assert.deepEqual(chosen, ['lux'])
 
-  joinVoiceRoom('lounge')
-  assert.equal(getWorkspace().connectedVoiceId, 'lounge')
-  leaveVoiceRoom()
-  assert.equal(getWorkspace().connectedVoiceId, null)
+  registerOrgChooser(null)
+})
 
-  const sent = sendWorkspaceMessage('engineering', '@dev Verify Rust Cargo clippy clean')
-  assert.ok(sent)
-  const msgs = getWorkspace().messages.filter((m) => m.roomId === 'engineering')
-  assert.ok(msgs.some((m) => m.body.includes('Verify Rust Cargo clippy clean')))
-  assert.ok(msgs.some((m) => m.authorId === 'dev' && m.body.includes('Picked up')))
+test('DTO mappers convert real /v1/team/{members,channels,messages} and /v1/agents payloads accurately', () => {
+  const userUuid = '11111111-1111-1111-1111-111111111111'
+  const botUuid = '22222222-2222-2222-2222-222222222222'
 
-  openThreadPane('engineering', 'eng-m1')
+  const roster = mapMembersToRoster(
+    'ws-1',
+    [
+      {
+        id: userUuid,
+        name: 'Ada Lovelace',
+        bot: false,
+        role: 'owner',
+        active: true,
+        presence: 'online',
+        personRef: `person-${userUuid}`,
+      },
+      {
+        id: botUuid,
+        name: 'Dev',
+        bot: true,
+        role: 'member',
+        active: true,
+        presence: 'online',
+        personRef: `person-${botUuid}`,
+      },
+    ],
+    [
+      {
+        id: 'agent_dev',
+        name: 'Dev',
+        model: 'zen6-coder',
+        description: 'Engineering specialist',
+        status: 'ready',
+      },
+    ],
+    [{ id: 'agent_dev', name: 'Dev', userId: botUuid, personRef: `person-${botUuid}`, active: true }],
+  )
+
+  assert.equal(roster.length, 2)
+  assert.equal(roster[0]?.name, 'Ada Lovelace')
+  assert.equal(roster[0]?.bot, false)
+  assert.equal(roster[1]?.handle, 'dev')
+  assert.equal(roster[1]?.bot, true)
+  assert.equal(roster[1]?.model, 'zen6-coder')
+
+  const channels = mapChannelsToWorkspace(
+    'ws-1',
+    [
+      {
+        id: 'ch-1',
+        space: 'ws-1',
+        name: 'general',
+        topic: 'Workspace channel',
+        kind: 'public',
+        direct: false,
+        private: false,
+        archived: false,
+        members: [userUuid, botUuid],
+      },
+      {
+        id: 'dm-1',
+        space: 'ws-1',
+        name: '',
+        kind: 'dm',
+        direct: true,
+        private: true,
+        archived: false,
+        members: [userUuid, botUuid],
+      },
+    ],
+    roster,
+    userUuid,
+  )
+
+  assert.equal(channels.length, 2)
+  assert.equal(channels[0]?.kind, 'channel')
+  assert.equal(channels[1]?.kind, 'dm')
+  assert.equal(channels[1]?.name, 'Dev')
+  assert.equal(channels[1]?.dmMemberId, botUuid)
+
+  const msg = mapDtoToMessage(
+    {
+      id: 'm-1',
+      channel: 'ch-1',
+      author: botUuid,
+      text: 'Hello @Ada Lovelace',
+      mentions: [userUuid],
+      createdOn: 1756598400000,
+      replies: 2,
+      reactions: [{ emoji: '🔥', count: 1, accounts: [userUuid] }],
+      files: [],
+    },
+    userUuid,
+  )
+
+  assert.equal(msg.id, 'm-1')
+  assert.equal(msg.authorId, botUuid)
+  assert.equal(msg.replyCount, 2)
+  assert.equal(msg.reactions[0]?.mine, true)
+
+  syncCurrentUser({ id: userUuid, accountId: userUuid, name: 'Ada Lovelace' })
+  openThreadPane('ch-1', 'm-1')
   assert.equal(getWorkspace().rightPaneMode, 'thread')
-  sendThreadReply('engineering', 'eng-m1', 'Confirmed on Linux X11!', true)
-  const parent = getWorkspace().messages.find((m) => m.id === 'eng-m1')
-  assert.equal(parent?.replies.length, 4)
-
-  toggleMessageReaction('eng-m1', '🚀')
-  const updated = getWorkspace().messages.find((m) => m.id === 'eng-m1')
-  assert.ok(updated?.reactions.some((r) => r.emoji === '🚀' && r.mine))
-
-  approveDeployRelease('eng-m2', 'Zach Kelling')
-  const rc = getWorkspace().messages.find((m) => m.id === 'eng-m2')
-  assert.equal(rc?.deployCard?.approvedBy, 'Zach Kelling')
-
-  const slug = createWorkspaceChannel('#platform-ops')
-  assert.equal(slug, 'platform-ops')
+  assert.deepEqual(getWorkspace().activeThread, { roomId: 'ch-1', messageId: 'm-1' })
 })
