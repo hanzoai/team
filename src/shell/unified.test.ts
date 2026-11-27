@@ -2,6 +2,7 @@ import assert from 'node:assert/strict'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 
 import { ASIDE, NAV, PANE_ROUND, RAIL } from './measure.ts'
 import {
@@ -11,7 +12,7 @@ import {
   TEAM_CROSS_APPS,
 } from './unified.ts'
 
-const ROOT = new URL('../', import.meta.url).pathname
+const ROOT = fileURLToPath(new URL('../', import.meta.url))
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
 const HEADER_TSX = readFileSync(join(ROOT, 'shell/BusinessHeader.tsx'), 'utf8')
 const RAIL_TSX = readFileSync(join(ROOT, 'shell/Rail.tsx'), 'utf8')

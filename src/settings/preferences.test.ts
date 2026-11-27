@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
+import { fileURLToPath } from 'node:url'
 import { test } from 'node:test'
 
 import {
@@ -106,7 +107,7 @@ test('billingUrl points to hanzo.ai/pay and encodes org parameter', () => {
 })
 
 test('SettingsModal routes billing through billingUrl and unifies Hanzo Dev sections with zero legacy models', () => {
-  const dir = new URL('.', import.meta.url).pathname
+  const dir = fileURLToPath(new URL('.', import.meta.url))
   const modalSrc = readFileSync(join(dir, 'SettingsModal.tsx'), 'utf8')
   const appearanceSrc = readFileSync(join(dir, 'AppearancePanel.tsx'), 'utf8')
   const workplaceSrc = readFileSync(join(dir, 'WorkplacePanels.tsx'), 'utf8')

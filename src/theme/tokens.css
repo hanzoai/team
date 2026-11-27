@@ -60,12 +60,12 @@
   --surface-2: #181818;
   --surface-3: #1f1f22;
   --border: #222222;
-  --primary: #fafafa !important;
-  --primary-foreground: #09090b !important;
-  --primary-hover: #e4e4e7 !important;
-  --accent: #222226 !important;
-  --accent-foreground: #fafafa !important;
-  --highlight: #fafafa !important;
+  --primary: #fafafa;
+  --primary-foreground: #09090b;
+  --primary-hover: #e4e4e7;
+  --accent: #222226;
+  --accent-foreground: #fafafa;
+  --highlight: #fafafa;
 
   /* ——— Settings Modal Unified Architecture (#0c0c0c rail · #090909 stage · #141414 cards · #222222 border) ——— */
   --settings-nav-bg: #0c0c0c;
@@ -257,12 +257,12 @@ html[data-appearance='clay']:not(.light) {
   --surface-2: #fafafa;
   --surface-3: #f4f4f5;
   --border: #e4e4e7;
-  --primary: #27272a !important;
-  --primary-foreground: #fafafa !important;
-  --primary-hover: #18181b !important;
-  --accent: #f4f4f5 !important;
-  --accent-foreground: #18181b !important;
-  --highlight: #27272a !important;
+  --primary: #27272a;
+  --primary-foreground: #fafafa;
+  --primary-hover: #18181b;
+  --accent: #f4f4f5;
+  --accent-foreground: #18181b;
+  --highlight: #27272a;
 
   --settings-nav-bg: #f7f7f7;
   --settings-stage-bg: #fafafa;

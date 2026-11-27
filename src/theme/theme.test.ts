@@ -2,10 +2,11 @@ import assert from 'node:assert/strict'
 import { readFileSync, readdirSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 
 import { chip, gap, mark, paint, rank, round, rung, slot, state } from './theme.ts'
 
-const ROOT = new URL('../', import.meta.url).pathname
+const ROOT = fileURLToPath(new URL('../', import.meta.url))
 const SHEET = readFileSync(join(ROOT, 'theme/tokens.css'), 'utf8')
 
 const walk = (dir: string): string[] =>
@@ -63,7 +64,7 @@ test('no module outside the sheet chooses a colour', () => {
   const LITERAL = /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\boklch\(|\bhsla?\(/
   const guilty: string[] = []
   for (const path of source) {
-    if (path.endsWith('theme/tokens.css') || path.endsWith('.test.ts')) continue
+    if (/[/\\]theme[/\\]tokens\.css$/.test(path) || path.endsWith('.test.ts')) continue
     for (const [n, line] of readFileSync(path, 'utf8').split('\n').entries()) {
       const code = line.replace(/var\([^)]*\)/g, '')
       if (LITERAL.test(code) && !/^\s*(\*|\/\/|\/\*)/.test(line)) {
