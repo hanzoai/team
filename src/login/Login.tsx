@@ -123,8 +123,8 @@ function LoginShell({
 }) {
   const { effectiveTheme } = useHanzoPreferences()
   const isLight = effectiveTheme === 'light'
-  const bg = isLight ? 'var(--hanzo-login-bg-light, #fafafa)' : 'var(--hanzo-login-bg, #000000)'
-  const fg = isLight ? 'var(--hanzo-login-fg-light, #09090b)' : 'var(--hanzo-login-fg, #fafafa)'
+  const bg = 'var(--hanzo-login-bg)'
+  const fg = 'var(--hanzo-login-fg)'
 
   return (
     <Theme name={effectiveTheme}>
@@ -156,10 +156,8 @@ function LoginShell({
 
 export const Login = () => {
   const { standing, request, enterGuest } = useSession()
-  const { effectiveTheme } = useHanzoPreferences()
   if (standing === 'in') return null
 
-  const isLight = effectiveTheme === 'light'
   const showGuest = canSkipSignIn()
 
   return (
@@ -186,15 +184,9 @@ export const Login = () => {
             height: 40,
             marginTop: -4,
             borderRadius: 10,
-            border: isLight
-              ? '1px solid var(--hanzo-guest-border-light, rgba(0, 0, 0, 0.12))'
-              : '1px solid var(--hanzo-guest-border, rgba(255, 255, 255, 0.14))',
-            backgroundColor: isLight
-              ? 'var(--hanzo-guest-bg-light, #f4f4f5)'
-              : 'var(--hanzo-guest-bg, #121214)',
-            color: isLight
-              ? 'var(--hanzo-guest-fg-light, #27272a)'
-              : 'var(--hanzo-guest-fg, #e4e4e7)',
+            border: '1px solid var(--hanzo-guest-border)',
+            backgroundColor: 'var(--hanzo-guest-bg)',
+            color: 'var(--hanzo-guest-fg)',
             fontSize: 13.5,
             fontWeight: 500,
             cursor: 'pointer',

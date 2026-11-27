@@ -270,6 +270,30 @@ async function setupContractHarness(page: Page): Promise<ContractHarness> {
       })
     }
 
+    if (path.startsWith('/v1/team/messages/') && path.endsWith('/replies') && method === 'POST') {
+      const payload = body as { space: string; text: string }
+      const threadId = path.split('/')[4] || THREAD_PARENT_ID
+      return json(
+        {
+          id: `reply-${Date.now()}`,
+          channel: GENERAL_CH_ID,
+          thread: threadId,
+          author: DEV_UUID,
+          text: payload.text,
+          mentions: [],
+          createdOn: Date.now(),
+          replies: 0,
+          reactions: [],
+          files: [],
+        },
+        201,
+      )
+    }
+
+    if (path === '/v1/integrations') {
+      return json({ integrations: [{ provider: 'github', active: true }] })
+    }
+
     if (path === '/v1/team/inbox') {
       return json({
         items: [
@@ -374,6 +398,16 @@ async function setupContractHarness(page: Page): Promise<ContractHarness> {
       }
       agents.push(created)
       return json(created, 201)
+    }
+
+    if (path === '/v1/agents/agent-dev-1/run' && method === 'POST') {
+      return json({
+        id: 'run-dev-collab-1',
+        agentId: 'agent-dev-1',
+        status: 'ok',
+        output: 'Task completed on Zen worker.',
+        durationMs: 38,
+      })
     }
 
     if (path === '/v1/agents/agent-e2e-temp/run' && method === 'POST') {
@@ -560,4 +594,91 @@ test('mobile viewport (390x844) /office collapses right elevator pane so main st
   expect(theaterBox!.width).toBeGreaterThan(240)
   expect(h.pageErrors).toEqual([])
   await ctx.close()
+})
+
+test('unauthenticated /login renders Zen near-black (#090909) with zero seeded demo data', async ({ browser }) => {
+  const ctx = await browser.newContext({ viewport: { width: 1440, height: 900 } })
+  const page = await ctx.newPage()
+
+  await page.goto('/login?from=logout', { waitUntil: 'domcontentloaded' })
+  await expect(page.getByText('Sign in to Hanzo Team')).toBeVisible({ timeout: 15_000 })
+
+  const bodyText = await page.locator('body').innerText()
+  expect(bodyText).not.toContain('TEAM-101')
+  expect(bodyText).not.toContain('Alice Engineer')
+  expect(bodyText).not.toContain('Your organization · 24 agents')
+
+  const groundVar = await page.evaluate(() =>
+    getComputedStyle(document.documentElement).getPropertyValue('--team-ground').trim(),
+  )
+  expect(groundVar).toBe('#090909')
+  await ctx.close()
+})
+
+test('Zen Dark theme persistence, honest Bridges status, zero TEAM-101 demo issues, and executable Bot runId collaboration', async ({ page }) => {
+  const h = await setupContractHarness(page)
+
+  // 1. Tracker /issues never falls back to seeded TEAM-101..106 demo issues
+  await page.goto('/issues', { waitUntil: 'domcontentloaded' })
+  await expect(page.getByTestId('sidebar-channel-general')).toBeVisible({ timeout: 15_000 })
+  const issuesText = await page.locator('body').innerText()
+  expect(issuesText).not.toContain('TEAM-101')
+
+  // 2. Settings -> Appearance persists theme preset across reload; Bridges shows live /v1/integrations status
+  const cookieClose = page.getByRole('button', { name: 'Close and use essential cookies only' })
+  if (await cookieClose.isVisible().catch(() => false)) await cookieClose.click()
+  await page.getByRole('button', { name: 'Settings (Ctrl+,)' }).click()
+  await expect(page.getByTestId('hanzo-settings-modal')).toBeVisible()
+  await page.getByTestId('settings-nav-appearance').click()
+  await page.getByTestId('theme-card-clay').click()
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.getAttribute('data-appearance')))
+    .toBe('clay')
+
+  await page.getByTestId('settings-nav-bridges').click()
+  await expect(page.getByTestId('bridge-status-slack')).toContainText('Not connected')
+  await expect(page.getByTestId('bridge-status-github')).toContainText('Connected')
+  await page.getByTestId('settings-close-btn').click()
+
+  // Reload and verify theme choice persisted in localStorage
+  await page.reload({ waitUntil: 'domcontentloaded' })
+  await expect(page.getByTestId('sidebar-channel-general')).toBeVisible({ timeout: 15_000 })
+  const persistedTheme = await page.evaluate(() => document.documentElement.getAttribute('data-appearance'))
+  expect(persistedTheme).toBe('clay')
+
+  // Switch back to Zen Dark
+  await page.getByRole('button', { name: 'Settings (Ctrl+,)' }).click()
+  await page.getByTestId('settings-nav-appearance').click()
+  await page.getByTestId('theme-card-zen').click()
+  await expect
+    .poll(() => page.evaluate(() => document.documentElement.getAttribute('data-appearance')))
+    .toBe('zen')
+  await page.getByTestId('settings-close-btn').click()
+
+  // 3. Post executable checkbox task in #general -> Run @dev -> runs /v1/agents/agent-dev-1/run and displays shared runId
+  await page.getByTestId('sidebar-channel-general').click()
+  const textarea = page.getByTestId('team-composer').locator('textarea')
+  await textarea.fill('- [ ] @dev Verify Zen collaboration contract')
+  await page.getByTestId('composer-send-btn').click()
+
+  const runDevBtn = page.getByRole('button', { name: 'Run @dev' }).first()
+  await expect(runDevBtn).toBeVisible({ timeout: 10_000 })
+  await runDevBtn.click()
+
+  await expect
+    .poll(() => h.requests.some((r) => r.method === 'POST' && r.path === '/v1/agents/agent-dev-1/run'))
+    .toBe(true)
+  await expect
+    .poll(() =>
+      h.requests.some(
+        (r) =>
+          r.method === 'POST' &&
+          r.path.startsWith('/v1/team/messages/') &&
+          r.path.endsWith('/replies') &&
+          JSON.stringify(r.body).includes('run-dev-collab-1'),
+      ),
+    )
+    .toBe(true)
+  await expect(page.getByText('run · run-dev-collab-1')).toBeVisible({ timeout: 10_000 })
+  expect(h.pageErrors).toEqual([])
 })

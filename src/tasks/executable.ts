@@ -5,15 +5,20 @@
  *   `- [ ] @dev Implement spatial desk drawer`
  *   `- [x] @qa Verify release build`
  * across Chat messages, Hanzo Spaces deliverables, and Meet transcripts.
- * Execution / delegation always requires explicit user authorization click.
+ *
+ * Delegation dispatches to the live IAM-authorized `/v1/agents/:id/run` Bot worker,
+ * records the shared `runId`, files the resulting deliverable on the Approval Handoff,
+ * and posts results back into the originating thread (surfacing explicit `unavailable`
+ * or `failed` states when the Bot worker is unreachable or unconfigured).
  */
 import { useSyncExternalStore } from 'react'
 
-import { assignToAgent } from '../agents/workforce.ts'
+import { assignToAgent, getAgentByHandle, runWorkforceAgent } from '../agents/workforce.ts'
+import { sendTeamReply } from '../data/teamRest.ts'
 import { createHandoff } from '../handoff/handoff.ts'
-import { addHandoffRecord } from '../handoff/store.ts'
+import { addHandoffRecord, submitHandoffDeliverable } from '../handoff/store.ts'
 
-export type ExecutableTaskState = 'ready' | 'assigned' | 'running' | 'done'
+export type ExecutableTaskState = 'ready' | 'assigned' | 'running' | 'done' | 'failed' | 'unavailable'
 
 export type TaskOriginKind = 'chat' | 'space' | 'meet' | 'composer'
 
@@ -29,8 +34,12 @@ export interface ExecutableTaskRecord {
   agentHandle: string
   title: string
   state: ExecutableTaskState
+  runId?: string
+  output?: string
+  error?: string
   sourceKind: TaskOriginKind
   sourceId: string
+  sourceMessageId?: string
   sourceLabel: string
   sourcePath: string
   updatedAt: number
@@ -124,10 +133,12 @@ export function getExecutableTask(id: string): ExecutableTaskRecord | undefined 
   return records.get(id)
 }
 
-/** Authorize & delegate an executable checkbox to `@agent`, wiring Workforce + Approval Handoff store. */
+/** Authorize & delegate an executable checkbox to `@agent`, wiring live Bot execution + Approval Handoff. */
 export function delegateExecutableTask(input: {
   sourceKind: TaskOriginKind
   sourceId: string
+  sourceMessageId?: string
+  spaceUuid?: string
   sourceLabel: string
   sourcePath: string
   agentHandle: string
@@ -139,6 +150,27 @@ export function delegateExecutableTask(input: {
   const cleanTitle = input.title.trim()
   const id = executableTaskKey(input.sourceKind, input.sourceId, handle, cleanTitle)
   const now = Date.now()
+  const targetAgent = getAgentByHandle(handle)
+
+  if (!targetAgent) {
+    const unavail: ExecutableTaskRecord = {
+      id,
+      agentHandle: handle,
+      title: cleanTitle,
+      state: 'unavailable',
+      error: `@${handle} is not provisioned or online in this workspace.`,
+      sourceKind: input.sourceKind,
+      sourceId: input.sourceId,
+      sourceMessageId: input.sourceMessageId,
+      sourceLabel: input.sourceLabel,
+      sourcePath: input.sourcePath,
+      updatedAt: now,
+    }
+    records.set(id, unavail)
+    emit()
+    return unavail
+  }
+
   const rec: ExecutableTaskRecord = {
     id,
     agentHandle: handle,
@@ -146,6 +178,7 @@ export function delegateExecutableTask(input: {
     state: 'running',
     sourceKind: input.sourceKind,
     sourceId: input.sourceId,
+    sourceMessageId: input.sourceMessageId,
     sourceLabel: input.sourceLabel,
     sourcePath: input.sourcePath,
     updatedAt: now,
@@ -154,22 +187,76 @@ export function delegateExecutableTask(input: {
   emit()
 
   assignToAgent(handle, cleanTitle, input.sourcePath)
+  const handoffId = `handoff:${id}`
   const meta = createHandoff({
-    owner: { id: `agent-${handle}`, name: handle, kind: 'bot' },
+    owner: { id: targetAgent.id || `agent-${handle}`, name: handle, kind: 'bot' },
     handedOffBy: input.handedOffBy ?? 'HQ Operator',
     approvalRequired: input.requireApproval ?? true,
     sourceRoomId: input.sourceKind === 'chat' ? input.sourceId : undefined,
+    sourceMessageId: input.sourceMessageId,
     sourceRoomName: input.sourceLabel,
     now,
   })
   addHandoffRecord({
-    id: `handoff:${id}`,
+    id: handoffId,
     title: cleanTitle,
     body: `Delegated from ${input.sourceLabel} (${input.sourcePath})`,
     status: 'progress',
     meta,
     updatedAt: now,
   })
+
+  // Execute against live IAM-authorized `/v1/agents/:id/run` when in a live workspace session.
+  if (input.spaceUuid) {
+    void runWorkforceAgent(targetAgent.id || handle, cleanTitle)
+      .then(async (run) => {
+        const cur = records.get(id)
+        if (!cur || cur.state !== 'running') return
+        if (run.error) {
+          records.set(id, {
+            ...cur,
+            state: 'failed',
+            runId: run.id,
+            error: run.error,
+            updatedAt: Date.now(),
+          })
+          emit()
+          return
+        }
+        const summary = run.output?.trim() || `Completed by @${handle}`
+        records.set(id, {
+          ...cur,
+          state: 'done',
+          runId: run.id,
+          output: summary,
+          error: undefined,
+          updatedAt: Date.now(),
+        })
+        emit()
+        await submitHandoffDeliverable(handoffId, {
+          summary: run.id ? `[${run.id}] ${summary}` : summary,
+          artifact: input.sourcePath,
+          completedBy: `@${handle}`,
+        })
+        if (input.sourceKind === 'chat' && input.sourceMessageId && input.spaceUuid) {
+          const replyText = run.id ? `**[run · ${run.id}]** ${summary}` : summary
+          await sendTeamReply(input.sourceMessageId, { space: input.spaceUuid, text: replyText }).catch(() => undefined)
+        }
+      })
+      .catch((err: unknown) => {
+        const cur = records.get(id)
+        if (!cur || cur.state !== 'running') return
+        const msg = err instanceof Error ? err.message : 'Bot worker unreachable'
+        records.set(id, {
+          ...cur,
+          state: 'unavailable',
+          error: msg,
+          updatedAt: Date.now(),
+        })
+        emit()
+      })
+  }
+
   return rec
 }
 
@@ -192,8 +279,11 @@ export function toggleExecutableTaskDone(input: {
     agentHandle: handle,
     title: cleanTitle,
     state: currentlyDone ? 'ready' : 'done',
+    runId: prev?.runId,
+    output: prev?.output,
     sourceKind: input.sourceKind,
     sourceId: input.sourceId,
+    sourceMessageId: prev?.sourceMessageId,
     sourceLabel: input.sourceLabel,
     sourcePath: input.sourcePath,
     updatedAt: Date.now(),

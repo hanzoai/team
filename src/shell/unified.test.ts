@@ -26,13 +26,13 @@ const walk = (dir: string): string[] =>
     return statSync(p).isDirectory() ? walk(p) : [p]
   })
 
-test('Hanzo Team v1.1.0 4-column Discord × Mattermost geometry & Zen Obsidian Dark tokens', () => {
+test('Hanzo Team v1.1.5 4-column Discord × Slack × Linear geometry & Zen Dark near-black tokens', () => {
   assert.equal(RAIL, 56)
   assert.equal(NAV, 244)
   assert.equal(ASIDE, 296)
-  assert.equal(PANE_ROUND, 12)
-  assert.ok(SHEET.includes('--background: #000000;'))
-  assert.ok(SHEET.includes('--team-ground: #000000;'))
+  assert.equal(PANE_ROUND, 14)
+  assert.ok(SHEET.includes('--background: #090909;'))
+  assert.ok(SHEET.includes('--team-ground: #090909;'))
   assert.ok(SHEET.includes('--team-sidebar: #0c0c0c;'))
   assert.ok(SHEET.includes('--team-panel: #090909;'))
   assert.ok(SHEET.includes('--team-omnibox: #141414;'))
@@ -50,7 +50,7 @@ test('Hanzo Team v1.1.0 4-column Discord × Mattermost geometry & Zen Obsidian D
   assert.ok(mainTsx.includes("import '@hanzo/font/css'"))
   assert.ok(
     mainTsx.indexOf("import '~/theme/tokens.css'") > mainTsx.indexOf("import { App } from '~/app'"),
-    'tokens.css must be imported after App (@hanzo/ui) so #000000 ground wins the cascade',
+    'tokens.css must be imported after App (@hanzo/ui) so Zen near-black ground wins the cascade',
   )
 
   assert.ok(RAIL_TSX.includes('data-testid="guild-org-rail"'))

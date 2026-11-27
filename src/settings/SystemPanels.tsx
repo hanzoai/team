@@ -2,7 +2,9 @@ import { Box, Button, SizableText, XStack, YStack } from '@hanzo/ui'
 import { Check, Copy, ExternalLink, RefreshCw } from 'lucide-react'
 import { useEffect, useState } from 'react'
 
+import { v1 } from '~/data/api.ts'
 import { brand } from '~/data/brand.ts'
+import { call } from '~/data/http.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { paint, round, rung } from '~/theme/theme.ts'
@@ -14,104 +16,195 @@ import {
   SettingsSwitch,
 } from './settingsPrimitives.tsx'
 
+interface IntegrationDto {
+  id?: string
+  provider?: string
+  kind?: string
+  type?: string
+  connected?: boolean
+  active?: boolean
+  status?: string
+  teamName?: string
+}
+
+const INTEGRATION_SPECS = [
+  {
+    key: 'discord',
+    group: 'chat',
+    title: 'Discord Guild Bridge',
+    description: 'Bi-directional channel, huddle presence, and webhook relay with Discord servers.',
+  },
+  {
+    key: 'slack',
+    group: 'chat',
+    title: 'Slack Connect Bridge',
+    description: 'Mirror shared customer and partner channels via verified Slack OAuth installation.',
+  },
+  {
+    key: 'mattermost',
+    group: 'chat',
+    title: 'Mattermost Federation',
+    description: 'Synchronize playbooks, slash commands, and simultaneous Thread RHS streams.',
+  },
+  {
+    key: 'github',
+    group: 'scm',
+    title: 'GitHub Webhooks',
+    description: 'Stream pull requests, CI runs, and release candidate gates into workspace channels.',
+  },
+  {
+    key: 'linear',
+    group: 'scm',
+    title: 'Linear & Hanzo Work Sync',
+    description: 'Two-way status sync between external Linear issues and Hanzo Work Kanban boards.',
+  },
+] as const
+
+type IntegrationLoadState = 'loading' | 'ready' | 'unauthenticated' | 'unavailable'
+
 export function BridgesPanel() {
-  const { settings, updateSettings, resetSetting } = useTeamSettings()
-  const d = DEFAULT_TEAM_SETTINGS
+  const { standing, guest } = useSession()
+  const { current } = useSpace()
+  const [loadState, setLoadState] = useState<IntegrationLoadState>(
+    standing !== 'in' || guest ? 'unauthenticated' : 'loading',
+  )
+  const [connectedProviders, setConnectedProviders] = useState<ReadonlySet<string>>(new Set())
+  const [statusError, setStatusError] = useState<string | null>(null)
+
+  const refreshIntegrations = async () => {
+    if (standing !== 'in' || guest) {
+      setLoadState('unauthenticated')
+      setConnectedProviders(new Set())
+      setStatusError(null)
+      return
+    }
+    setLoadState('loading')
+    setStatusError(null)
+    try {
+      const res = await call<{ integrations?: IntegrationDto[] } | IntegrationDto[]>(v1('integrations'))
+      const rows = Array.isArray(res) ? res : Array.isArray(res?.integrations) ? res.integrations : []
+      const active = new Set<string>()
+      for (const row of rows) {
+        const provider = (row.provider || row.kind || row.type || row.id || '').trim().toLowerCase()
+        const isLive = row.connected === true || row.active === true || row.status === 'connected' || row.status === 'active'
+        if (provider && isLive) active.add(provider)
+      }
+      setConnectedProviders(active)
+      setLoadState('ready')
+    } catch (err) {
+      setConnectedProviders(new Set())
+      setLoadState('unavailable')
+      setStatusError(err instanceof Error ? err.message : 'Integration service unavailable')
+    }
+  }
+
+  useEffect(() => {
+    void refreshIntegrations()
+  }, [standing, guest, current?.uuid])
+
+  const openIntegrationsConsole = () => {
+    const org = current?.org ? `?org=${encodeURIComponent(current.org)}` : ''
+    window.open(`https://console.hanzo.ai/integrations${org}`, '_blank', 'noopener,noreferrer')
+  }
+
+  const renderStatusControl = (providerKey: string) => {
+    const isConnected = loadState === 'ready' && connectedProviders.has(providerKey)
+    const label =
+      loadState === 'unauthenticated'
+        ? 'Sign in required'
+        : loadState === 'loading'
+          ? 'Checking…'
+          : loadState === 'unavailable'
+            ? 'Unavailable'
+            : isConnected
+              ? 'Connected'
+              : 'Not connected'
+    const dotColor = isConnected ? paint.speaking : loadState === 'unavailable' ? paint.alert : paint.dim
+
+    return (
+      <XStack items="center" gap={10}>
+        <XStack items="center" gap={6}>
+          <Box width={7} height={7} rounded={999} style={{ backgroundColor: dotColor }} />
+          <SizableText
+            size={rung.small}
+            fontWeight="600"
+            style={{ color: isConnected ? paint.speaking : loadState === 'unavailable' ? paint.alert : paint.mute }}
+            data-testid={`bridge-status-${providerKey}`}
+          >
+            {label}
+          </SizableText>
+        </XStack>
+        <Button size="sm" variant="outline" rounded={round.field} onPress={openIntegrationsConsole}>
+          <XStack items="center" gap={5}>
+            <SizableText size={rung.small} style={{ color: paint.ink }}>
+              {isConnected ? 'Manage' : 'Connect'}
+            </SizableText>
+            <ExternalLink size={11} color={paint.mute} />
+          </XStack>
+        </Button>
+      </XStack>
+    )
+  }
+
+  const chatRows = INTEGRATION_SPECS.filter((s) => s.group === 'chat')
+  const scmRows = INTEGRATION_SPECS.filter((s) => s.group === 'scm')
 
   return (
     <YStack gap={22} width="100%" data-testid="settings-bridges-panel">
+      {statusError ? (
+        <XStack
+          px={14}
+          py={10}
+          rounded={12}
+          borderWidth={1}
+          items="center"
+          justify="space-between"
+          style={{ backgroundColor: paint.settingsCard, borderColor: paint.settingsBorder }}
+        >
+          <SizableText fontSize={12} style={{ color: paint.alert }}>
+            {`Live integration directory unavailable: ${statusError}`}
+          </SizableText>
+          <Button size="sm" variant="outline" rounded={round.field} onPress={() => void refreshIntegrations()}>
+            <RefreshCw size={12} color={paint.accent} />
+          </Button>
+        </XStack>
+      ) : null}
+
       <SettingsSectionCard
         title="Chat Bridges"
-        description="Bi-directional message, thread, and reaction relays with external chat networks."
+        description="Server-verified message, thread, and reaction relays (`/v1/integrations`). Status reflects real organization installs, never a local toggle."
       >
-        <SettingsRow
-          title="Discord Guild Bridge"
-          description="Sync channels, voice huddle presence, and webhooks with Discord servers."
-          badge="Connected"
-          modified={settings.bridgeDiscord !== d.bridgeDiscord}
-          onReset={() => resetSetting('bridgeDiscord')}
-          control={
-            <SettingsSwitch
-              label="Enable Discord bridge"
-              checked={settings.bridgeDiscord}
-              onChange={(bridgeDiscord) => updateSettings({ bridgeDiscord })}
-            />
-          }
-        />
-
-        <SettingsRow
-          title="Slack Connect Bridge"
-          description="Mirror shared customer & partner channels into #revenue and #general."
-          badge="Connected"
-          modified={settings.bridgeSlack !== d.bridgeSlack}
-          onReset={() => resetSetting('bridgeSlack')}
-          control={
-            <SettingsSwitch
-              label="Enable Slack bridge"
-              checked={settings.bridgeSlack}
-              onChange={(bridgeSlack) => updateSettings({ bridgeSlack })}
-            />
-          }
-        />
-
-        <SettingsRow
-          last
-          title="Mattermost Federation"
-          description="Synchronize playbooks, slash commands, and simultaneous Thread RHS streams."
-          badge="Active"
-          modified={settings.bridgeMattermost !== d.bridgeMattermost}
-          onReset={() => resetSetting('bridgeMattermost')}
-          control={
-            <SettingsSwitch
-              label="Enable Mattermost bridge"
-              checked={settings.bridgeMattermost}
-              onChange={(bridgeMattermost) => updateSettings({ bridgeMattermost })}
-            />
-          }
-        />
+        {chatRows.map((spec, idx) => (
+          <SettingsRow
+            key={spec.key}
+            last={idx === chatRows.length - 1}
+            title={spec.title}
+            description={spec.description}
+            control={renderStatusControl(spec.key)}
+          />
+        ))}
       </SettingsSectionCard>
 
       <SettingsSectionCard
         title="Source Control & Issue Webhooks"
-        description="Stream pull requests, CI runs, and issue transitions directly into channels."
+        description="Verified webhook installations streaming pull requests, CI checks, and issue transitions."
       >
-        <SettingsRow
-          title="GitHub (hanzoai & hanzo-inc)"
-          description="Post PR diffs, release candidate cards, and Actions check gates to #engineering."
-          badge="Webhook"
-          modified={settings.webhookGithub !== d.webhookGithub}
-          onReset={() => resetSetting('webhookGithub')}
-          control={
-            <SettingsSwitch
-              label="Enable GitHub webhooks"
-              checked={settings.webhookGithub}
-              onChange={(webhookGithub) => updateSettings({ webhookGithub })}
-            />
-          }
-        />
-
-        <SettingsRow
-          last
-          title="Linear & Hanzo Work Sync"
-          description="Two-way status sync between Linear issues and Hanzo Work Kanban boards."
-          badge="Webhook"
-          modified={settings.webhookLinear !== d.webhookLinear}
-          onReset={() => resetSetting('webhookLinear')}
-          control={
-            <SettingsSwitch
-              label="Enable Linear webhooks"
-              checked={settings.webhookLinear}
-              onChange={(webhookLinear) => updateSettings({ webhookLinear })}
-            />
-          }
-        />
+        {scmRows.map((spec, idx) => (
+          <SettingsRow
+            key={spec.key}
+            last={idx === scmRows.length - 1}
+            title={spec.title}
+            description={spec.description}
+            control={renderStatusControl(spec.key)}
+          />
+        ))}
       </SettingsSectionCard>
     </YStack>
   )
 }
 
 const MCP_SERVERS = [
-  { id: 'hanzo-mcp', name: 'hanzo-mcp (HIP-0300 Core)', transport: 'zap://127.0.0.1:9651', tools: '58 tools · AST, shell, memory, search' },
+  { id: 'hanzo-mcp', name: 'hanzo-mcp (HIP-0300 Core)', transport: 'zap://127.0.0.1:9651', tools: 'AST, shell, memory & search via local hanzod' },
   { id: 'github-mcp', name: 'github', transport: 'stdio · Kai gated', tools: 'PRs, reviews, releases & workflow runs' },
   { id: 'linear-mcp', name: 'linear', transport: 'stdio · OAuth', tools: 'Issues, cycles & roadmap sync' },
   { id: 'postgres-mcp', name: 'postgres / base', transport: 'local socket', tools: 'Read-only schema & query inspector' },
@@ -122,7 +215,7 @@ export function McpZapPanel() {
   const d = DEFAULT_TEAM_SETTINGS
   const [nodeOnline, setNodeOnline] = useState<boolean | null>(null)
   const [nodeVersion, setNodeVersion] = useState<string>('hanzod :3690')
-  const [blockHeight, setBlockHeight] = useState<string>('—')
+  const [blockHeight, setBlockHeight] = useState<string>('Unavailable')
   const [busy, setBusy] = useState(false)
 
   const refreshTelemetry = async () => {
@@ -151,10 +244,14 @@ export function McpZapPanel() {
         const body = (await rpcRes.json()) as { result?: string }
         if (typeof body.result === 'string' && body.result.startsWith('0x')) {
           setBlockHeight(`#${parseInt(body.result, 16).toLocaleString()}`)
+        } else {
+          setBlockHeight('Unavailable')
         }
+      } else {
+        setBlockHeight('Unavailable')
       }
     } catch {
-      /* ignore */
+      setBlockHeight('Unavailable')
     }
     setBusy(false)
   }
@@ -182,14 +279,18 @@ export function McpZapPanel() {
         description="Zero-Copy Agent Protocol (ZAP) local IPC bus and embedded hanzod daemon."
       >
         <SettingsRow
-          title="Local ZAP Bus (zap://127.0.0.1:9651)"
-          description="Sub-millisecond zero-copy tool calls between Hanzo Team, Hanzo Dev, and @bots."
+          title="Allow local ZAP bus preference (zap://127.0.0.1:9651)"
+          description={
+            nodeOnline
+              ? 'Local daemon reachable — zero-copy IPC active.'
+              : 'Preference only — start local hanzod daemon below to establish a live ZAP bus.'
+          }
           badge="HIP-0300"
           modified={settings.mcpZapBusEnabled !== d.mcpZapBusEnabled}
           onReset={() => resetSetting('mcpZapBusEnabled')}
           control={
             <SettingsSwitch
-              label="Enable local ZAP bus"
+              label="Allow local ZAP bus"
               checked={settings.mcpZapBusEnabled}
               onChange={(mcpZapBusEnabled) => updateSettings({ mcpZapBusEnabled })}
             />
@@ -198,7 +299,13 @@ export function McpZapPanel() {
 
         <SettingsRow
           title="Hanzo Node daemon (127.0.0.1:3690)"
-          description={nodeOnline ? `Online · ${nodeVersion}` : 'Standby · Starts automatically on local tool or model turn'}
+          description={
+            nodeOnline === null
+              ? 'Checking local daemon health…'
+              : nodeOnline
+                ? `Online · ${nodeVersion}`
+                : 'Offline · Local hanzod daemon is not running on 127.0.0.1:3690'
+          }
           control={
             <XStack items="center" gap={8}>
               <Box
@@ -206,9 +313,7 @@ export function McpZapPanel() {
                 height={8}
                 rounded={999}
                 style={{
-                  backgroundColor: nodeOnline
-                    ? 'var(--team-speaking, #22c55e)'
-                    : 'var(--team-dim, #71717a)',
+                  backgroundColor: nodeOnline ? paint.speaking : paint.dim,
                 }}
               />
               {getTauriInvoke() ? (
@@ -231,7 +336,7 @@ export function McpZapPanel() {
                 disabled={busy}
                 onPress={() => void refreshTelemetry()}
               >
-                <RefreshCw size={12} color="var(--primary, #fafafa)" />
+                <RefreshCw size={12} color={paint.accent} />
               </Button>
             </XStack>
           }
@@ -242,7 +347,7 @@ export function McpZapPanel() {
           title="Hanzo Network Mainnet Telemetry"
           description="Chain ID 36963 · Sovereign AI L1 RPC (https://rpc.hanzo.ai)"
           control={
-            <SizableText size={rung.small} fontWeight="600" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
+            <SizableText size={rung.small} fontWeight="600" style={{ color: blockHeight === 'Unavailable' ? paint.dim : paint.ink, fontFamily: 'var(--font-mono)' }}>
               {blockHeight}
             </SizableText>
           }
@@ -250,8 +355,12 @@ export function McpZapPanel() {
       </SettingsSectionCard>
 
       <SettingsSectionCard
-        title="HIP-0300 MCP Servers"
-        description="Model Context Protocol servers exposed to channel @bots and executable tasks."
+        title="HIP-0300 Local MCP Transports"
+        description={
+          nodeOnline
+            ? 'Connected through your active local hanzod node.'
+            : 'Offline — local MCP stdio/socket transports require an active local hanzod daemon.'
+        }
       >
         {MCP_SERVERS.map((srv, idx) => (
           <SettingsRow
@@ -261,8 +370,12 @@ export function McpZapPanel() {
             description={srv.tools}
             badge={srv.transport}
             control={
-              <SizableText size={rung.small} fontWeight="600" style={{ color: paint.speaking }}>
-                Ready
+              <SizableText
+                size={rung.small}
+                fontWeight="600"
+                style={{ color: nodeOnline ? paint.speaking : paint.dim }}
+              >
+                {nodeOnline === null ? 'Checking…' : nodeOnline ? 'Online' : 'Offline'}
               </SizableText>
             }
           />
@@ -301,9 +414,9 @@ export function SharingAccessPanel({ onCloseModal }: { onCloseModal: () => void 
             <Button size="sm" variant="outline" rounded={round.field} onPress={copyInvite}>
               <XStack items="center" gap={5}>
                 {copied ? (
-                  <Check size={12} color="var(--team-speaking, #22c55e)" />
+                  <Check size={12} color={paint.speaking} />
                 ) : (
-                  <Copy size={12} color="var(--primary, #fafafa)" />
+                  <Copy size={12} color={paint.accent} />
                 )}
                 <SizableText size={rung.small} style={{ color: paint.ink }}>
                   {copied ? 'Copied' : 'Copy link'}
@@ -346,11 +459,11 @@ export function SharingAccessPanel({ onCloseModal }: { onCloseModal: () => void 
 
       <SettingsSectionCard
         title="Identity & Billing"
-        description="Unified identity and seat billing across Hanzo Team, Hanzo Dev, and Hanzo Cloud."
+        description="Unified identity and seat billing across Hanzo Team, Hanzo Bot, and Hanzo Cloud."
       >
         <SettingsRow
-          title={guest ? 'Local Workspace' : (who?.label || who?.name || 'Signed in')}
-          description={guest ? 'Sign in with hanzo.id to sync channels, issues, Spaces, and cloud credits.' : (who?.email ?? current?.org ?? 'hanzo.id')}
+          title={guest ? 'Local Guest Workspace' : (who?.label || who?.name || 'Signed in')}
+          description={guest ? 'Offline local scratch mode — sign in with hanzo.id to access live workspaces and bots.' : (who?.email ?? current?.org ?? 'hanzo.id')}
           control={
             <XStack items="center" gap={8}>
               {guest ? (
@@ -400,7 +513,7 @@ export function SharingAccessPanel({ onCloseModal }: { onCloseModal: () => void 
                 <SizableText size={rung.small} style={{ color: paint.ink }}>
                   Open Billing
                 </SizableText>
-                <ExternalLink size={11} color="var(--team-mute, #a1a1aa)" />
+                <ExternalLink size={11} color={paint.mute} />
               </XStack>
             </Button>
           }
@@ -423,7 +536,7 @@ export function AboutPanel() {
           badge="Stable"
           control={
             <SizableText size={rung.body} fontWeight="600" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
-              Hanzo Team v1.1.1
+              Hanzo Team v1.1.5
             </SizableText>
           }
         />
@@ -452,7 +565,7 @@ export function AboutPanel() {
                 <SizableText size={rung.small} style={{ color: paint.ink }}>
                   GitHub (hanzoai/team)
                 </SizableText>
-                <ExternalLink size={11} color="var(--team-mute, #a1a1aa)" />
+                <ExternalLink size={11} color={paint.mute} />
               </XStack>
             </Button>
           }

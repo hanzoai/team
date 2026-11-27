@@ -118,5 +118,7 @@ test('SettingsModal routes billing through billingUrl and unifies Hanzo Dev sect
   assert.ok(modalSrc.includes('billingUrl('), 'SettingsModal must call billingUrl(')
   assert.ok(!/zen[1-5]|qwen2/i.test(combined), 'Settings must contain zero legacy zen1..zen5 or qwen2 references')
   assert.ok(workplaceSrc.includes('https://hanzo.ai/download#mobile'), 'Devices must link mobile download')
-  assert.ok(systemSrc.includes('Hanzo Team v1.1.1'), 'About must display Hanzo Team v1.1.1')
+  assert.ok(systemSrc.includes('Hanzo Team v1.1.5'), 'About must display Hanzo Team v1.1.5')
+  assert.equal(DEFAULT_TEAM_SETTINGS.bridgeSlack, false, 'Bridges must never default local toggles to connected')
+  assert.ok(!systemSrc.includes('badge="Connected"'), 'BridgesPanel must never hardcode badge="Connected"')
 })

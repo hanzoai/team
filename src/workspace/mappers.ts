@@ -44,6 +44,56 @@ function shortLabel(name: string): string {
   return `${parts[0]} ${parts[parts.length - 1]![0]}.`
 }
 
+function resolveBotPresence(
+  member: Pick<TeamMemberDto, 'active' | 'presence'> | undefined,
+  agent: Pick<CloudAgentDto, 'status' | 'model' | 'description' | 'executionMode' | 'schedule'> | undefined,
+): { presence: RosterMember['presence']; activity: string } {
+  if (member && member.active === false) {
+    return { presence: 'offline', activity: 'Inactive' }
+  }
+  const st = (agent?.status ?? '').trim().toLowerCase()
+  if (st === 'running' || st === 'executing') {
+    return {
+      presence: 'busy',
+      activity: agent?.description || `${agent?.model || 'Agent'} · Running`,
+    }
+  }
+  if (st === 'blocked' || st === 'gated' || st === 'awaiting_approval') {
+    return {
+      presence: 'gated',
+      activity: 'Blocked · Provider or approval required',
+    }
+  }
+  if (st === 'offline' || st === 'disabled' || st === 'paused' || st === 'error' || st === 'unavailable' || st === 'unconfigured') {
+    return {
+      presence: 'offline',
+      activity: st === 'error' ? 'Unavailable · Error' : 'Offline',
+    }
+  }
+  if (member?.presence === 'online' || st === 'ready' || st === 'active' || st === 'online') {
+    return {
+      presence: 'online',
+      activity: agent?.description || (agent?.model ? `${agent.model} · Ready` : 'Workspace Agent · Ready'),
+    }
+  }
+  if (member?.presence === 'offline' && !agent) {
+    return {
+      presence: 'offline',
+      activity: 'Offline',
+    }
+  }
+  if (agent) {
+    return {
+      presence: 'online',
+      activity: agent.description || (agent.model ? `${agent.model} · Ready` : 'Workspace Agent · Ready'),
+    }
+  }
+  return {
+    presence: 'offline',
+    activity: 'Offline',
+  }
+}
+
 export function mapMembersToRoster(
   spaceUuid: string,
   members: readonly TeamMemberDto[],
@@ -74,6 +124,7 @@ export function mapMembersToRoster(
     const cleanName = isUuid(m.name) ? `Member ${m.id.slice(0, 6)}` : m.name.trim() || `Member ${m.id.slice(0, 6)}`
     const handle = slugHandle(ag?.name || bm?.name || cleanName)
     const isBot = Boolean(m.bot || bm)
+    const botState = isBot ? resolveBotPresence(m, ag) : null
     out.push({
       id: m.id,
       handle,
@@ -85,12 +136,12 @@ export function mapMembersToRoster(
       role: m.role,
       model: ag?.model,
       agentId: ag?.id ?? bm?.id,
-      activity: isBot
-        ? ag?.description || (ag?.model ? `${ag.model} · Ready` : 'Workspace Agent')
+      activity: botState
+        ? botState.activity
         : m.presence === 'online'
           ? 'Online'
           : 'Offline',
-      presence: isBot ? 'online' : m.presence === 'online' ? 'online' : 'offline',
+      presence: botState ? botState.presence : m.presence === 'online' ? 'online' : 'offline',
       active: m.active,
     })
   }
@@ -102,6 +153,7 @@ export function mapMembersToRoster(
     seen.add(uid)
     const ag = agentById.get(bm.id) ?? agentByName.get(bm.name.trim().toLowerCase())
     const handle = slugHandle(bm.name)
+    const botState = resolveBotPresence({ active: bm.active, presence: ag ? 'online' : 'offline' }, ag)
     out.push({
       id: uid,
       handle,
@@ -113,9 +165,9 @@ export function mapMembersToRoster(
       role: 'agent',
       model: ag?.model,
       agentId: ag?.id ?? bm.id,
-      activity: ag?.description || (ag?.model ? `${ag.model} · Ready` : 'Workspace Agent'),
-      presence: 'online',
-      active: true,
+      activity: botState.activity,
+      presence: botState.presence,
+      active: bm.active,
     })
   }
 
@@ -126,6 +178,7 @@ export function mapMembersToRoster(
     )
     if (already) continue
     const handle = slugHandle(ag.name)
+    const botState = resolveBotPresence(undefined, ag)
     out.push({
       id: ag.id,
       handle,
@@ -137,9 +190,9 @@ export function mapMembersToRoster(
       role: 'agent',
       model: ag.model,
       agentId: ag.id,
-      activity: ag.description || `${ag.model || 'Agent'} · Ready`,
-      presence: 'online',
-      active: true,
+      activity: botState.activity,
+      presence: botState.presence,
+      active: botState.presence !== 'offline',
     })
   }
 

@@ -50,34 +50,34 @@ const THEME_LIBRARY_CARDS: readonly ThemeCardSpec[] = [
     id: 'zen',
     label: 'Zen',
     subtitle: 'Obsidian chrome · crisp 1px borders',
-    chrome: 'var(--preview-zen-chrome, #000000)',
-    stage: 'var(--preview-zen-stage, #090909)',
-    sidebar: 'var(--preview-zen-sidebar, #0c0c0c)',
-    card: 'var(--preview-zen-card, #141414)',
-    accent: 'var(--preview-zen-accent, #fafafa)',
-    line: 'var(--preview-zen-line, #222222)',
+    chrome: 'var(--preview-zen-chrome)',
+    stage: 'var(--preview-zen-stage)',
+    sidebar: 'var(--preview-zen-sidebar)',
+    card: 'var(--preview-zen-card)',
+    accent: 'var(--preview-zen-accent)',
+    line: 'var(--preview-zen-line)',
   },
   {
     id: 'clay',
     label: 'Clay',
     subtitle: 'Warm slate · crimson accent',
-    chrome: 'var(--preview-clay-chrome, #141418)',
-    stage: 'var(--preview-clay-stage, #111016)',
-    sidebar: 'var(--preview-clay-sidebar, #0e0d12)',
-    card: 'var(--preview-clay-card, #1a1921)',
-    accent: 'var(--preview-clay-accent, #d11641)',
-    line: 'var(--preview-clay-line, #2b2936)',
+    chrome: 'var(--preview-clay-chrome)',
+    stage: 'var(--preview-clay-stage)',
+    sidebar: 'var(--preview-clay-sidebar)',
+    card: 'var(--preview-clay-card)',
+    accent: 'var(--preview-clay-accent)',
+    line: 'var(--preview-clay-line)',
   },
   {
     id: 'zen-light',
     label: 'Zen Light',
     subtitle: 'Daylight paper · zinc ink',
-    chrome: 'var(--preview-light-chrome, #ffffff)',
-    stage: 'var(--preview-light-stage, #fafafa)',
-    sidebar: 'var(--preview-light-sidebar, #f7f7f7)',
-    card: 'var(--preview-light-card, #ffffff)',
-    accent: 'var(--preview-light-accent, #27272a)',
-    line: 'var(--preview-light-line, #e4e4e7)',
+    chrome: 'var(--preview-light-chrome)',
+    stage: 'var(--preview-light-stage)',
+    sidebar: 'var(--preview-light-sidebar)',
+    card: 'var(--preview-light-card)',
+    accent: 'var(--preview-light-accent)',
+    line: 'var(--preview-light-line)',
   },
 ]
 
@@ -235,8 +235,8 @@ export function AppearancePanel() {
             rounded={8}
             borderWidth={1}
             style={{
-              backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-              borderColor: 'var(--settings-border, #222222)',
+              backgroundColor: paint.settingsControl,
+              borderColor: paint.settingsBorder,
             }}
           >
             {(
@@ -257,12 +257,12 @@ export function AppearancePanel() {
                   rounded={6}
                   cursor="pointer"
                   style={{
-                    backgroundColor: active ? 'var(--settings-row-active, #1f1f23)' : 'transparent',
-                    border: active ? '1px solid var(--settings-border, #222222)' : '1px solid transparent',
+                    backgroundColor: active ? paint.settingsRowActive : 'transparent',
+                    border: active ? `1px solid ${paint.settingsBorder}` : '1px solid transparent',
                   }}
                 >
                   <XStack items="center" gap={5}>
-                    <Icon size={11.5} color={active ? 'var(--team-ink, #fafafa)' : 'var(--team-mute, #a1a1aa)'} />
+                    <Icon size={11.5} color={active ? paint.ink : paint.mute} />
                     <Text fontSize={11.5} fontWeight={active ? '600' : '500'} style={{ color: active ? paint.ink : paint.mute }}>
                       {label}
                     </Text>
@@ -288,15 +288,15 @@ export function AppearancePanel() {
                 key={card.id}
                 render={<button type="button" aria-pressed={active} data-testid={`theme-card-${card.id}`} />}
                 onClick={() => updateSettings({ themePreset: card.id })}
-                p={10}
-                rounded={12}
+                p={12}
+                rounded={14}
                 cursor="pointer"
                 style={{
                   textAlign: 'left',
-                  backgroundColor: 'var(--settings-card-bg, #141414)',
+                  backgroundColor: paint.settingsCard,
                   border: active
-                    ? '1.5px solid var(--primary, #fafafa)'
-                    : '1px solid var(--settings-border, #222222)',
+                    ? `1.5px solid ${paint.accent}`
+                    : `1px solid ${paint.settingsBorder}`,
                   transition: 'border-color 120ms ease',
                 }}
               >
@@ -308,7 +308,7 @@ export function AppearancePanel() {
                         <SizableText fontSize={13} fontWeight="600" style={{ color: paint.ink }}>
                           {card.label}
                         </SizableText>
-                        {active ? <Check size={12} color="var(--primary, #fafafa)" /> : null}
+                        {active ? <Check size={12} color={paint.accent} /> : null}
                       </XStack>
                       <XStack items="center" gap={3} shrink={0}>
                         {[card.chrome, card.sidebar, card.card, card.accent].map((sw, idx) => (
@@ -319,7 +319,7 @@ export function AppearancePanel() {
                             rounded={999}
                             style={{
                               backgroundColor: sw,
-                              border: '1px solid var(--settings-border, #222222)',
+                              border: `1px solid ${paint.settingsBorder}`,
                             }}
                           />
                         ))}
@@ -565,8 +565,8 @@ export function AppearancePanel() {
             items="center"
             justify="space-between"
             style={{
-              backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-              borderColor: 'var(--settings-border, #222222)',
+              backgroundColor: paint.settingsControl,
+              borderColor: paint.settingsBorder,
             }}
           >
             <Text fontSize={12} style={{ color: paint.fg, fontFamily: 'var(--font-mono)' }}>

@@ -18,7 +18,7 @@ export function getTauriInvoke(): TauriInvoke | null {
 }
 
 /**
- * Hanzo Dev SettingsSection + SettingsGroup card (`#141414`, `1px solid #222222`, `12px` radius).
+ * Hanzo Dev SettingsSection + SettingsGroup card (softer 14px radius, 1px crisp border).
  */
 export function SettingsSectionCard({
   title,
@@ -34,7 +34,7 @@ export function SettingsSectionCard({
   children: ReactNode
 }) {
   return (
-    <YStack gap={9} width="100%">
+    <YStack gap={10} width="100%">
       <XStack px={4} items="center" justify="space-between" gap={8}>
         <YStack gap={2} flex={1} minW={0}>
           <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }}>
@@ -54,12 +54,12 @@ export function SettingsSectionCard({
         </YStack>
       ) : (
         <YStack
-          rounded={12}
+          rounded={14}
           borderWidth={1}
           overflow="hidden"
           style={{
-            backgroundColor: 'var(--settings-card-bg, #141414)',
-            borderColor: 'var(--settings-border, #222222)',
+            backgroundColor: paint.settingsCard,
+            borderColor: paint.settingsBorder,
           }}
           data-slot="settings-group"
         >
@@ -89,17 +89,17 @@ export function SettingResetButton({
       }}
       px={6}
       py={2}
-      rounded={5}
+      rounded={6}
       cursor="pointer"
       style={{
         display: 'inline-flex',
         alignItems: 'center',
         gap: 4,
-        border: '1px solid var(--settings-border, #222222)',
-        backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
+        border: `1px solid ${paint.settingsBorder}`,
+        backgroundColor: paint.settingsControl,
       }}
     >
-      <RotateCcw size={10} color="var(--team-mute, #a1a1aa)" />
+      <RotateCcw size={10} color={paint.mute} />
       <Text fontSize={10.5} fontWeight="600" style={{ color: paint.mute }}>
         Reset
       </Text>
@@ -108,7 +108,7 @@ export function SettingResetButton({
 }
 
 /**
- * Hanzo Dev SettingsRow with inline per-row `↺ Reset` action and 1px `#222222` divider.
+ * Hanzo Dev SettingsRow with inline per-row `↺ Reset` action and 1px divider.
  */
 export function SettingsRow({
   title,
@@ -131,11 +131,11 @@ export function SettingsRow({
 }) {
   return (
     <YStack
-      px={16}
-      py={12}
+      px={18}
+      py={13}
       gap={children ? 10 : 0}
       borderBottomWidth={last ? 0 : 1}
-      style={{ borderColor: 'var(--settings-border, #222222)' }}
+      style={{ borderColor: paint.settingsBorder }}
       data-slot="settings-row"
     >
       <XStack gap={16} items="center" justify="space-between" flexWrap="wrap">
@@ -147,12 +147,12 @@ export function SettingsRow({
             {badge ? (
               <XStack
                 px={6}
-                py={1}
-                rounded={4}
+                py={1.5}
+                rounded={5}
                 borderWidth={1}
                 style={{
-                  backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-                  borderColor: 'var(--settings-border, #222222)',
+                  backgroundColor: paint.settingsControl,
+                  borderColor: paint.settingsBorder,
                 }}
               >
                 <Text fontSize={10} fontWeight="600" style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>
@@ -192,11 +192,11 @@ export function SegmentedChoice<T extends string>({
     <XStack
       p={3}
       gap={2}
-      rounded={8}
+      rounded={9}
       borderWidth={1}
       style={{
-        backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-        borderColor: 'var(--settings-border, #222222)',
+        backgroundColor: paint.settingsControl,
+        borderColor: paint.settingsBorder,
       }}
     >
       {options.map((opt) => {
@@ -211,8 +211,8 @@ export function SegmentedChoice<T extends string>({
             rounded={6}
             cursor="pointer"
             style={{
-              backgroundColor: active ? 'var(--settings-row-active, #1f1f23)' : 'transparent',
-              border: active ? '1px solid var(--settings-border, #222222)' : '1px solid transparent',
+              backgroundColor: active ? paint.settingsRowActive : 'transparent',
+              border: active ? `1px solid ${paint.settingsBorder}` : '1px solid transparent',
             }}
           >
             <XStack items="center" gap={4}>
@@ -223,7 +223,7 @@ export function SegmentedChoice<T extends string>({
               >
                 {opt.label}
               </Text>
-              {active ? <Check size={10.5} color="var(--primary, #fafafa)" /> : null}
+              {active ? <Check size={10.5} color={paint.accent} /> : null}
             </XStack>
           </Box>
         )
@@ -254,8 +254,8 @@ export function SettingsSwitch({
         display: 'inline-flex',
         alignItems: 'center',
         justifyContent: checked ? 'flex-end' : 'flex-start',
-        backgroundColor: checked ? 'var(--primary, #fafafa)' : 'var(--settings-control-bg, #0c0c0c)',
-        border: '1px solid var(--settings-border, #222222)',
+        backgroundColor: checked ? paint.accent : paint.settingsControl,
+        border: `1px solid ${paint.settingsBorder}`,
         transition: 'background-color 120ms ease',
       }}
     >
@@ -264,7 +264,7 @@ export function SettingsSwitch({
         height={14}
         rounded={999}
         style={{
-          backgroundColor: checked ? 'var(--primary-foreground, #09090b)' : 'var(--team-mute, #a1a1aa)',
+          backgroundColor: checked ? 'var(--primary-foreground)' : paint.mute,
         }}
       />
     </Box>
@@ -307,8 +307,8 @@ export function SettingsSlider({
         items="center"
         justify="center"
         style={{
-          backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-          borderColor: 'var(--settings-border, #222222)',
+          backgroundColor: paint.settingsControl,
+          borderColor: paint.settingsBorder,
         }}
       >
         <Text
@@ -355,10 +355,10 @@ export function SettingsSelect<T extends string>({
         height: 30,
         minWidth: 148,
         padding: '0 10px',
-        borderRadius: 7,
-        border: '1px solid var(--settings-border, #222222)',
-        backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-        color: 'var(--team-ink, #fafafa)',
+        borderRadius: 8,
+        border: `1px solid ${paint.settingsBorder}`,
+        backgroundColor: paint.settingsControl,
+        color: paint.ink,
         fontFamily: 'var(--font-sans)',
         fontSize: 12,
         fontWeight: 500,
@@ -380,13 +380,13 @@ export function KbdBadge({ keys }: { keys: string }) {
     <XStack
       px={7}
       py={2}
-      rounded={5}
+      rounded={6}
       borderWidth={1}
       items="center"
       justify="center"
       style={{
-        backgroundColor: 'var(--settings-control-bg, #0c0c0c)',
-        borderColor: 'var(--settings-border, #222222)',
+        backgroundColor: paint.settingsControl,
+        borderColor: paint.settingsBorder,
       }}
     >
       <Text fontSize={11} fontWeight="600" style={{ color: paint.mute, fontFamily: 'var(--font-mono)' }}>

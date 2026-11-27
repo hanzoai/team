@@ -132,17 +132,17 @@ export function SpacesWorkspace() {
         </YStack>
       ) : (
         <XStack flex={1} minH={0}>
-          <YStack width={240} shrink={0} borderRightWidth={1} style={{ borderRightColor: paint.rule }} p={10} gap={6}>
+          <YStack width={248} shrink={0} borderRightWidth={1} style={{ borderRightColor: paint.rule }} p={12} gap={8}>
             {spaces.map((sp) => {
               const on = sp.id === doc.id
               return (
                 <YStack
                   key={sp.id}
                   {...press(() => setSelectedId(sp.id), sp.title)}
-                  p={10}
-                  rounded={8}
+                  p={12}
+                  rounded={12}
                   borderWidth={1}
-                  gap={3}
+                  gap={4}
                   style={{
                     backgroundColor: on ? paint.rowActive : paint.card,
                     borderColor: on ? paint.border : paint.rule,
@@ -160,7 +160,7 @@ export function SpacesWorkspace() {
           </YStack>
 
           <ScrollArea flex={1} minH={0}>
-            <YStack p={22} gap={16} maxW={720}>
+            <YStack p={24} gap={18} maxW={720}>
               <YStack gap={6}>
                 <SizableText fontSize={11} fontWeight="700" style={{ color: paint.dim, fontFamily: 'var(--font-mono)' }}>
                   {doc.teamspaceName.toUpperCase()}
@@ -173,7 +173,7 @@ export function SpacesWorkspace() {
                 </SizableText>
               </YStack>
 
-              <YStack p={14} rounded={10} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+              <YStack p={16} rounded={14} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
                 <SizableText fontSize={12} fontWeight="600" style={{ color: paint.ink }}>
                   Collaborative Document
                 </SizableText>

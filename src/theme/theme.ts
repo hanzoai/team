@@ -2,46 +2,46 @@
  * The names, so no component writes a colour.
  *
  * tokens.css chooses the values; this file is the only way to reach one. A
- * component reads `paint.card`, never `var(--team-card)` and never a hex — one
- * spelling, checked by the compiler, and a role that moves moves everywhere.
+ * component reads `paint.card`, never a raw hex — one spelling, checked by the
+ * compiler, and a role that moves moves everywhere.
  */
 
 const role = <N extends string>(name: N) => `var(--team-${name})` as const
 
 export const paint = {
-  /** Outer pure-black floor (#000000 dark / #ffffff light). */
+  /** Outer Zen near-black floor (matches Hanzo Bot canvas). */
   ground: role('ground'),
-  /** Zen HQ canvas floor (#09090b dark / #fafafa light). */
+  /** Zen HQ canvas floor. */
   canvas: role('canvas'),
-  /** Zen panels & department rooms (#0c0c0f dark / #f6f6f5 light). */
+  /** Zen panels & department rooms. */
   surface: role('surface'),
-  /** Zen elevated cards, desks & composer (#141417 dark / #ffffff light). */
+  /** Zen elevated cards, desks & composer. */
   elevated: role('elevated'),
-  /** Zen hover surface (#1a1a1f dark / #eceae8 light). */
+  /** Zen hover surface. */
   hover: role('hover'),
-  /** Zen 1px crisp structural border (#1f1f25 dark / #e4e4e2 light). */
+  /** Zen 1px crisp structural border. */
   border: role('border'),
-  /** Zen primary foreground (#f4f4f5 dark / #09090b light). */
+  /** Zen primary foreground. */
   fg: role('fg'),
-  /** Zen secondary foreground (#a1a1aa dark / #52525b light). */
+  /** Zen secondary foreground. */
   secondary: role('secondary'),
-  /** Main stage canvas (#0f0f12 dark / #ffffff light). */
+  /** Main stage canvas. */
   panel: role('panel'),
-  /** Col 4 right contextual Thread/Roster pane (#0b0b0e dark). */
+  /** Col 4 right contextual Thread/Roster pane. */
   aside: role('aside'),
-  /** Col 2 bottom 52px user profile dock (#060608 dark). */
+  /** Col 2 bottom 52px user profile dock. */
   dock: role('dock'),
-  /** Center 38px bar omnibox (#141417 dark). */
+  /** Center 38px bar omnibox. */
   omnibox: role('omnibox'),
   omniboxEdge: role('omnibox-edge'),
-  /** Raised card / unread surface (#121216 dark). */
+  /** Raised card / unread surface. */
   card: role('card'),
-  /** Code & diff block well (#0a0a0d dark). */
+  /** Code & diff block well. */
   code: role('code'),
   codeEdge: role('code-edge'),
   /** Hairline rule across stage & sidebar. */
   rule: role('rule'),
-  /** Structural pane divider (#1a1a1e dark). */
+  /** Structural pane divider. */
   paneEdge: role('pane-edge'),
   /** Modal overlay scrim. */
   backdrop: role('backdrop'),
@@ -67,6 +67,17 @@ export const paint = {
   composerWarn: role('composer-warn'),
   chatUser: role('chat-user'),
   chatUserInk: role('chat-user-ink'),
+
+  /** Settings modal & window chrome roles. */
+  settingsStage: role('settings-stage'),
+  settingsNav: role('settings-nav'),
+  settingsCard: role('settings-card'),
+  settingsControl: role('settings-control'),
+  settingsBorder: role('settings-border'),
+  settingsRowHover: role('settings-row-hover'),
+  settingsRowActive: role('settings-row-active'),
+  windowClose: role('window-close'),
+  windowCloseInk: role('window-close-ink'),
 
   /** Presence, RTC Voice Connected, Diff, and Incident Playbook tokens. */
   speaking: role('speaking'),
@@ -133,13 +144,13 @@ export const gap = {
   tight: '$2',
   inset: '$3',
   wide: '$4',
-  edge: '$5',
+  edge: '$6',
 } as const
 
 export const round = {
-  card: '$1',
-  panel: '$3',
-  field: '$1',
+  card: '$3',
+  panel: '$4',
+  field: '$2',
   pill: '$10',
 } as const
 

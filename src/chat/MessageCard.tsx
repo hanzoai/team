@@ -173,7 +173,7 @@ export function MessageCard({
   renderMath?: boolean
 }) {
   const navigate = useNavigate()
-  const { currentUser } = useWorkspace()
+  const { currentUser, activeSpaceUuid } = useWorkspace()
   const [hovered, setHovered] = useState(false)
   const [copiedIdx, setCopiedIdx] = useState<number | null>(null)
   const [diffOpen, setDiffOpen] = useState(false)
@@ -335,109 +335,128 @@ export function MessageCard({
             const stored = execTasks.find((r) => r.id === taskKey)
             const done = stored ? stored.state === 'done' : parsed.checked
             const running = stored?.state === 'running'
+            const failedOrUnavail = stored?.state === 'failed' || stored?.state === 'unavailable'
 
             return (
-              <XStack
+              <YStack
                 key={idx}
-                px={10}
-                py={6}
-                rounded={7}
+                px={12}
+                py={8}
+                rounded={10}
                 borderWidth={1}
-                items="center"
-                justify="space-between"
-                gap={8}
+                gap={5}
                 style={{ backgroundColor: paint.card, borderColor: paint.border }}
                 data-testid="inline-exec-checkbox"
               >
-                <XStack items="center" gap={8} flex={1} minW={0}>
-                  <YStack
-                    {...press(() => {
-                      toggleExecutableTaskDone({
-                        sourceKind: 'chat',
-                        sourceId: message.roomId,
-                        sourceLabel: roomLabel,
-                        sourcePath: `/chat/${message.roomId}`,
-                        agentHandle: parsed.agentHandle,
-                        title: parsed.title,
-                        initialChecked: parsed.checked,
-                      })
-                    }, `Toggle ${parsed.title}`)}
-                    width={16}
-                    height={16}
-                    rounded={4}
-                    borderWidth={1.5}
-                    items="center"
-                    justify="center"
-                    shrink={0}
-                    style={{
-                      backgroundColor: done ? state.done : 'transparent',
-                      borderColor: done ? state.done : paint.mute,
-                    }}
-                  >
-                    {done ? <Check size={10} color={paint.ground} /> : null}
-                  </YStack>
-                  <XStack
-                    {...press(() => navigate(`/chat/dm-${parsed.agentHandle}`), `@${parsed.agentHandle}`)}
-                    px={5}
-                    py={1}
-                    rounded={4}
-                    borderWidth={1}
-                    style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
-                  >
-                    <SizableText fontSize={11} fontWeight="700" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
-                      {`@${parsed.agentHandle}`}
-                    </SizableText>
-                  </XStack>
-                  <SizableText
-                    fontSize={12.5}
-                    flex={1}
-                    numberOfLines={1}
-                    style={{
-                      color: done ? paint.dim : paint.ink,
-                      textDecorationLine: done ? 'line-through' : 'none',
-                    }}
-                  >
-                    {parsed.title}
-                  </SizableText>
-                </XStack>
-
-                {done && message.mergedRef ? (
-                  <XStack px={6} py={1.5} rounded={4} style={{ backgroundColor: paint.speakingBg }}>
-                    <SizableText fontSize={10.5} fontWeight="600" style={{ color: paint.speaking, fontFamily: 'var(--font-mono)' }}>
-                      {`✓ Merged ${message.mergedRef}`}
-                    </SizableText>
-                  </XStack>
-                ) : !done ? (
-                  <XStack
-                    {...press(() => {
-                      delegateExecutableTask({
-                        sourceKind: 'chat',
-                        sourceId: message.roomId,
-                        sourceLabel: roomLabel,
-                        sourcePath: `/chat/${message.roomId}`,
-                        agentHandle: parsed.agentHandle,
-                        title: parsed.title,
-                        handedOffBy: currentUser?.name || 'Teammate',
-                      })
-                    }, `Run @${parsed.agentHandle}`)}
-                    px={8}
-                    py={3}
-                    rounded={5}
-                    items="center"
-                    gap={4}
-                    style={{ backgroundColor: running ? paint.speakingBg : paint.ink }}
-                  >
-                    <Play size={9.5} color={running ? paint.speaking : paint.ground} />
-                    <SizableText
-                      fontSize={10.5}
-                      fontWeight="700"
-                      style={{ color: running ? paint.speaking : paint.ground }}
+                <XStack items="center" justify="space-between" gap={8}>
+                  <XStack items="center" gap={8} flex={1} minW={0}>
+                    <YStack
+                      {...press(() => {
+                        toggleExecutableTaskDone({
+                          sourceKind: 'chat',
+                          sourceId: message.roomId,
+                          sourceLabel: roomLabel,
+                          sourcePath: `/chat/${message.roomId}`,
+                          agentHandle: parsed.agentHandle,
+                          title: parsed.title,
+                          initialChecked: parsed.checked,
+                        })
+                      }, `Toggle ${parsed.title}`)}
+                      width={16}
+                      height={16}
+                      rounded={4}
+                      borderWidth={1.5}
+                      items="center"
+                      justify="center"
+                      shrink={0}
+                      style={{
+                        backgroundColor: done ? state.done : 'transparent',
+                        borderColor: done ? state.done : paint.mute,
+                      }}
                     >
-                      {running ? `Running @${parsed.agentHandle}…` : `Run @${parsed.agentHandle}`}
+                      {done ? <Check size={10} color={paint.ground} /> : null}
+                    </YStack>
+                    <XStack
+                      {...press(() => navigate(`/chat/dm-${parsed.agentHandle}`), `@${parsed.agentHandle}`)}
+                      px={6}
+                      py={1.5}
+                      rounded={5}
+                      borderWidth={1}
+                      style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+                    >
+                      <SizableText fontSize={11} fontWeight="700" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
+                        {`@${parsed.agentHandle}`}
+                      </SizableText>
+                    </XStack>
+                    <SizableText
+                      fontSize={12.5}
+                      flex={1}
+                      numberOfLines={1}
+                      style={{
+                        color: done ? paint.dim : paint.ink,
+                        textDecorationLine: done ? 'line-through' : 'none',
+                      }}
+                    >
+                      {parsed.title}
                     </SizableText>
                   </XStack>
+
+                  <XStack items="center" gap={6}>
+                    {stored?.runId ? (
+                      <SizableText fontSize={10.5} style={{ color: paint.dim, fontFamily: 'var(--font-mono)' }}>
+                        {`run · ${stored.runId}`}
+                      </SizableText>
+                    ) : null}
+                    {done && message.mergedRef ? (
+                      <XStack px={6} py={1.5} rounded={5} style={{ backgroundColor: paint.speakingBg }}>
+                        <SizableText fontSize={10.5} fontWeight="600" style={{ color: paint.speaking, fontFamily: 'var(--font-mono)' }}>
+                          {`✓ Merged ${message.mergedRef}`}
+                        </SizableText>
+                      </XStack>
+                    ) : !done ? (
+                      <XStack
+                        {...press(() => {
+                          delegateExecutableTask({
+                            sourceKind: 'chat',
+                            sourceId: message.roomId,
+                            sourceMessageId: message.id,
+                            spaceUuid: activeSpaceUuid || undefined,
+                            sourceLabel: roomLabel,
+                            sourcePath: `/chat/${message.roomId}`,
+                            agentHandle: parsed.agentHandle,
+                            title: parsed.title,
+                            handedOffBy: currentUser?.name || 'Teammate',
+                          })
+                        }, `Run @${parsed.agentHandle}`)}
+                        px={9}
+                        py={4}
+                        rounded={6}
+                        items="center"
+                        gap={4}
+                        style={{ backgroundColor: running ? paint.speakingBg : paint.ink }}
+                      >
+                        <Play size={9.5} color={running ? paint.speaking : paint.ground} />
+                        <SizableText
+                          fontSize={10.5}
+                          fontWeight="700"
+                          style={{ color: running ? paint.speaking : paint.ground }}
+                        >
+                          {running
+                            ? `Running @${parsed.agentHandle}…`
+                            : failedOrUnavail
+                              ? `Retry @${parsed.agentHandle}`
+                              : `Run @${parsed.agentHandle}`}
+                        </SizableText>
+                      </XStack>
+                    ) : null}
+                  </XStack>
+                </XStack>
+                {stored?.error ? (
+                  <SizableText fontSize={11.5} style={{ color: paint.alert }}>
+                    {stored.error}
+                  </SizableText>
                 ) : null}
-              </XStack>
+              </YStack>
             )
           })}
         </YStack>

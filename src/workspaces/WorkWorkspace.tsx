@@ -1,43 +1,113 @@
 /**
  * Work Workspace (`/issues`) — Linear-grade Issues, Kanban Board, List, Timeline
- * + Programmable YAML Objectives & Executable Checkboxes!
+ * + Live Executable Tasks extracted from real workspace channels and documents.
  */
 import { ScrollArea, SizableText, XStack, YStack } from '@hanzo/ui'
-import { Code2, SquareCheck } from '@hanzogui/lucide-icons-2'
-import { useState } from 'react'
+import { Bot, SquareCheck } from '@hanzogui/lucide-icons-2'
+import { useMemo, useState } from 'react'
 
+import { decodeMentionsForDisplay } from '~/data/teamRest.ts'
 import { press } from '~/shell/press.ts'
 import { ExecutableTaskRow } from '~/tasks/ExecutableCheckboxes.tsx'
-import { extractExecutableTasks } from '~/tasks/executable.ts'
+import { extractExecutableTasks, useExecutableTasks, type ParsedExecutableLine, type TaskOriginKind } from '~/tasks/executable.ts'
 import { paint } from '~/theme/theme.ts'
 import { Tracker } from '~/tracker'
+import { useWorkspace } from '~/workspace/store.ts'
 
-const OBJECTIVES_YAML = [
-  '# hanzo-v8.8-q4.objectives.yaml',
-  'cycle: v1.1.0-ga',
-  'owner: "@mana"',
-  'gates:',
-  '  max_file_loc: 1000',
-  '  theme: zen-obsidian-dark',
-  '  event_sdk: "@hanzo/event@0.3.73"',
-].join('\n')
-
-const OBJECTIVES_TASKS = [
-  '- [x] @dev Ship 4-column Discord × Mattermost shell + Thread RHS',
-  '- [x] @des Enforce pure Zen Obsidian Dark tokens across all four columns',
-  '- [ ] @cyber Audit supply-chain lockfile & sign v1.1.0 desktop binaries',
-  '- [ ] @qa Verify X11 1440x900 12px RGBA outer corners over desktop wallpaper',
-].join('\n')
+interface DiscoveredTask {
+  key: string
+  parsed: ParsedExecutableLine
+  sourceKind: TaskOriginKind
+  sourceId: string
+  sourceLabel: string
+  sourcePath: string
+  sourceMessageId?: string
+}
 
 export function WorkWorkspace({ mine = false }: { mine?: boolean }) {
-  const [mode, setMode] = useState<'tracker' | 'objectives'>('tracker')
-  const parsedTasks = extractExecutableTasks(OBJECTIVES_TASKS)
+  const [mode, setMode] = useState<'tracker' | 'tasks'>('tracker')
+  const { messages, channels, spaces, roster, hydrating } = useWorkspace()
+  const recordedTasks = useExecutableTasks()
+
+  const liveTasks = useMemo<DiscoveredTask[]>(() => {
+    const out: DiscoveredTask[] = []
+    const seen = new Set<string>()
+
+    for (const msg of messages) {
+      const decoded = decodeMentionsForDisplay(msg.body, roster)
+      const parsedList = extractExecutableTasks(decoded)
+      if (parsedList.length === 0) continue
+      const ch = channels.find((c) => c.id === msg.roomId)
+      const label = ch ? (ch.kind === 'dm' ? ch.name : `#${ch.name}`) : 'Channel'
+      for (const p of parsedList) {
+        const k = `chat:${msg.roomId}:${msg.id}:${p.agentHandle}:${p.title}`
+        if (seen.has(k)) continue
+        seen.add(k)
+        out.push({
+          key: k,
+          parsed: p,
+          sourceKind: 'chat',
+          sourceId: msg.roomId,
+          sourceLabel: label,
+          sourcePath: `/chat/${msg.roomId}`,
+          sourceMessageId: msg.id,
+        })
+      }
+    }
+
+    for (const sp of spaces) {
+      if (!sp.markdown) continue
+      const parsedList = extractExecutableTasks(sp.markdown)
+      for (const p of parsedList) {
+        const k = `space:${sp.id}:${p.agentHandle}:${p.title}`
+        if (seen.has(k)) continue
+        seen.add(k)
+        out.push({
+          key: k,
+          parsed: p,
+          sourceKind: 'space',
+          sourceId: sp.id,
+          sourceLabel: sp.title,
+          sourcePath: `/spaces/${sp.id}`,
+        })
+      }
+    }
+
+    for (const rec of recordedTasks) {
+      const k = `rec:${rec.id}`
+      const already = out.some(
+        (d) =>
+          d.sourceKind === rec.sourceKind &&
+          d.sourceId === rec.sourceId &&
+          d.parsed.agentHandle === rec.agentHandle &&
+          d.parsed.title === rec.title,
+      )
+      if (already || seen.has(k)) continue
+      seen.add(k)
+      out.push({
+        key: k,
+        parsed: {
+          checked: rec.state === 'done',
+          agentHandle: rec.agentHandle,
+          title: rec.title,
+          raw: `- [${rec.state === 'done' ? 'x' : ' '}] @${rec.agentHandle} ${rec.title}`,
+        },
+        sourceKind: rec.sourceKind,
+        sourceId: rec.sourceId,
+        sourceLabel: rec.sourceLabel,
+        sourcePath: rec.sourcePath,
+        sourceMessageId: rec.sourceMessageId,
+      })
+    }
+
+    return out
+  }, [messages, channels, spaces, roster, recordedTasks])
 
   return (
-    <YStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }}>
+    <YStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }} data-testid="work-workspace">
       <XStack
-        height={38}
-        px={16}
+        height={42}
+        px={18}
         items="center"
         justify="space-between"
         borderBottomWidth={1}
@@ -46,9 +116,9 @@ export function WorkWorkspace({ mine = false }: { mine?: boolean }) {
         <XStack items="center" gap={6}>
           <XStack
             {...press(() => setMode('tracker'), 'Issues & Kanban Board')}
-            height={25}
-            px={10}
-            rounded={6}
+            height={26}
+            px={11}
+            rounded={7}
             borderWidth={1}
             items="center"
             gap={5}
@@ -64,21 +134,22 @@ export function WorkWorkspace({ mine = false }: { mine?: boolean }) {
           </XStack>
 
           <XStack
-            {...press(() => setMode('objectives'), 'Programmable YAML Objectives')}
-            height={25}
-            px={10}
-            rounded={6}
+            {...press(() => setMode('tasks'), 'Agent Tasks')}
+            height={26}
+            px={11}
+            rounded={7}
             borderWidth={1}
             items="center"
             gap={5}
             style={{
-              backgroundColor: mode === 'objectives' ? paint.rowActive : 'transparent',
-              borderColor: mode === 'objectives' ? paint.border : paint.rule,
+              backgroundColor: mode === 'tasks' ? paint.rowActive : 'transparent',
+              borderColor: mode === 'tasks' ? paint.border : paint.rule,
             }}
+            data-testid="work-agent-tasks-tab"
           >
-            <Code2 size={12} color={mode === 'objectives' ? paint.ink : paint.mute} />
-            <SizableText fontSize={12} fontWeight="600" style={{ color: mode === 'objectives' ? paint.ink : paint.mute }}>
-              YAML Objectives
+            <Bot size={12} color={mode === 'tasks' ? paint.ink : paint.mute} />
+            <SizableText fontSize={12} fontWeight="600" style={{ color: mode === 'tasks' ? paint.ink : paint.mute }}>
+              {`Agent Tasks (${liveTasks.length})`}
             </SizableText>
           </XStack>
         </XStack>
@@ -88,41 +159,37 @@ export function WorkWorkspace({ mine = false }: { mine?: boolean }) {
         <Tracker mine={mine} />
       ) : (
         <ScrollArea flex={1} minH={0}>
-          <YStack p={20} gap={14} maxW={760}>
-            <YStack
-              p={14}
-              rounded={10}
-              borderWidth={1}
-              gap={4}
-              style={{ backgroundColor: paint.code, borderColor: paint.codeEdge }}
-            >
-              {OBJECTIVES_YAML.split('\n').map((ln, idx) => (
-                <SizableText
-                  key={idx}
-                  fontSize={12}
-                  lineHeight={19}
-                  style={{ color: ln.startsWith('#') ? paint.dim : paint.fg, fontFamily: 'var(--font-mono)' }}
-                >
-                  {ln}
+          <YStack p={24} gap={14} maxW={780}>
+            {hydrating && liveTasks.length === 0 ? (
+              <YStack p={20} rounded={12} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+                <SizableText fontSize={13} style={{ color: paint.dim }}>
+                  Loading live agent tasks…
                 </SizableText>
-              ))}
-            </YStack>
-
-            <YStack gap={6}>
-              <SizableText fontSize={13} fontWeight="700" style={{ color: paint.ink }}>
-                Executable Cycle Checkpoints
-              </SizableText>
-              {parsedTasks.map((t, idx) => (
-                <ExecutableTaskRow
-                  key={idx}
-                  parsed={t}
-                  sourceKind="space"
-                  sourceId="yaml-objectives"
-                  sourceLabel="Q4 YAML Objectives"
-                  sourcePath="/issues"
-                />
-              ))}
-            </YStack>
+              </YStack>
+            ) : liveTasks.length === 0 ? (
+              <YStack p={24} rounded={12} borderWidth={1} gap={8} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+                <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }}>
+                  No executable agent tasks yet
+                </SizableText>
+                <SizableText fontSize={12.5} style={{ color: paint.dim }}>
+                  Post a markdown task line such as `- [ ] @dev Audit build output` in any channel or Space document to delegate work to a live workspace bot.
+                </SizableText>
+              </YStack>
+            ) : (
+              <YStack gap={8}>
+                {liveTasks.map((t) => (
+                  <ExecutableTaskRow
+                    key={t.key}
+                    parsed={t.parsed}
+                    sourceKind={t.sourceKind}
+                    sourceId={t.sourceId}
+                    sourceMessageId={t.sourceMessageId}
+                    sourceLabel={t.sourceLabel}
+                    sourcePath={t.sourcePath}
+                  />
+                ))}
+              </YStack>
+            )}
           </YStack>
         </ScrollArea>
       )}

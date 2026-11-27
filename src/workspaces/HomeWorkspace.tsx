@@ -135,7 +135,7 @@ export function HomeWorkspace() {
             </SizableText>
 
             {attention.length === 0 ? (
-              <YStack p={16} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+              <YStack p={18} rounded={14} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
                 <SizableText fontSize={13} style={{ color: paint.dim }}>
                   {hydrating ? 'Loading inbox notifications…' : 'All caught up — no unread mentions or notifications.'}
                 </SizableText>
@@ -379,10 +379,10 @@ function MetricTile({
       {...press(onPress, `${count} ${label}`)}
       flex={1}
       minW={156}
-      px={18}
-      py={15}
+      px={20}
+      py={16}
       gap={6}
-      rounded={12}
+      rounded={14}
       borderWidth={1}
       style={{ backgroundColor: paint.card, borderColor: paint.border }}
       hoverStyle={{ background: paint.elevated }}

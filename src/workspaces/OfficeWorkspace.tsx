@@ -81,7 +81,7 @@ export function OfficeWorkspace() {
   const [runTarget, setRunTarget] = useState<RosterMember | null>(null)
   const [runPrompt, setRunPrompt] = useState('')
   const [runBusy, setRunBusy] = useState(false)
-  const [runResult, setRunResult] = useState<{ status: string; output?: string; error?: string } | null>(null)
+  const [runResult, setRunResult] = useState<{ id?: string; status: string; output?: string; error?: string } | null>(null)
   const [stageWidth, setStageWidth] = useState(() =>
     typeof window === 'undefined' ? 1440 : window.innerWidth,
   )

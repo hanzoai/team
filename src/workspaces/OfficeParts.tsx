@@ -147,12 +147,12 @@ export function MemberDeskCard({
 
   return (
     <YStack
-      p={12}
-      minH={116}
-      rounded={11}
+      p={14}
+      minH={124}
+      rounded={14}
       borderWidth={1}
       justify="space-between"
-      gap={8}
+      gap={10}
       style={{ backgroundColor: paint.card, borderColor: paint.border }}
       data-testid={`desk-card-${member.handle}`}
     >
@@ -176,7 +176,14 @@ export function MemberDeskCard({
                   rounded={round.pill}
                   borderWidth={1.5}
                   style={{
-                    backgroundColor: member.presence === 'online' || member.bot ? state.done : paint.dim,
+                    backgroundColor:
+                      member.presence === 'online' || member.presence === 'voice'
+                        ? state.done
+                        : member.presence === 'busy'
+                          ? state.doing
+                          : member.presence === 'gated'
+                            ? paint.sevInk
+                            : paint.dim,
                     borderColor: paint.card,
                   }}
                 />
@@ -506,7 +513,7 @@ export function RunBotModal({
   prompt: string
   setPrompt: (v: string) => void
   busy: boolean
-  result: { status: string; output?: string; error?: string } | null
+  result: { id?: string; status: string; output?: string; error?: string } | null
   onClose: () => void
   onRun: () => void
 }) {
@@ -528,9 +535,9 @@ export function RunBotModal({
         aria-label={`Run @${target.handle}`}
         width="100%"
         maxW={460}
-        p={18}
-        gap={12}
-        rounded={12}
+        p={20}
+        gap={14}
+        rounded={14}
         borderWidth={1}
         style={{ backgroundColor: paint.sidebar, borderColor: paint.paneEdge }}
         onPress={(e: { stopPropagation?: () => void }) => e.stopPropagation?.()}
@@ -548,7 +555,7 @@ export function RunBotModal({
         <Textarea
           minH={76}
           p={10}
-          rounded={7}
+          rounded={8}
           borderWidth={1}
           fontSize={13}
           color={paint.ink}
@@ -560,10 +567,17 @@ export function RunBotModal({
         />
 
         {result ? (
-          <YStack p={10} rounded={8} borderWidth={1} gap={4} style={{ backgroundColor: paint.card, borderColor: paint.border }} data-testid="run-bot-result">
-            <SizableText fontSize={11} fontWeight="700" style={{ color: result.error ? paint.alert : paint.speaking }}>
-              {result.error ? 'Run Error' : `Status: ${result.status || 'ok'}`}
-            </SizableText>
+          <YStack p={12} rounded={10} borderWidth={1} gap={5} style={{ backgroundColor: paint.card, borderColor: paint.border }} data-testid="run-bot-result">
+            <XStack items="center" justify="space-between" gap={8}>
+              <SizableText fontSize={11} fontWeight="700" style={{ color: result.error ? paint.alert : paint.speaking }}>
+                {result.error ? 'Run Error' : `Status: ${result.status || 'ok'}`}
+              </SizableText>
+              {result.id ? (
+                <SizableText fontSize={10.5} style={{ color: paint.dim, fontFamily: 'var(--font-mono)' }}>
+                  {`run · ${result.id}`}
+                </SizableText>
+              ) : null}
+            </XStack>
             <SizableText fontSize={12.5} lineHeight={18} style={{ color: paint.fg }}>
               {result.error || result.output || '(Empty response)'}
             </SizableText>

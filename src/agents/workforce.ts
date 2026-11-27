@@ -288,7 +288,10 @@ export async function createWorkforceAgent(input: CreateAgentInput): Promise<Spe
   return mapped
 }
 
-export async function runWorkforceAgent(ref: string, input: string): Promise<{ output?: string; error?: string; status: string }> {
+export async function runWorkforceAgent(
+  ref: string,
+  input: string,
+): Promise<{ id?: string; output?: string; error?: string; status: string }> {
   const clean = ref.replace(/^@/, '').trim()
   const target = getAgentByHandle(clean)
   if (target) {
@@ -314,12 +317,14 @@ export async function runWorkforceAgent(ref: string, input: string): Promise<{ o
               state: 'idle',
               activeRuns: Math.max(0, a.activeRuns - 1),
               tasksToday: a.tasksToday + 1,
-              currentAssignment: run.error ? `Error: ${run.error}` : (run.output?.slice(0, 120) || 'Completed run'),
+              currentAssignment: run.error
+                ? `Error: ${run.error}`
+                : `${run.id ? `[${run.id}] ` : ''}${run.output?.slice(0, 100) || 'Completed run'}`,
               trace: [
                 ...a.trace,
                 {
                   id: run.id || `run-${Date.now()}`,
-                  tool: `agent.run`,
+                  tool: 'agent.run',
                   summary: run.error ? run.error : (run.output?.slice(0, 160) || input.slice(0, 120)),
                   durationMs: run.durationMs ?? 0,
                   status: run.error ? 'gated' : 'ok',
@@ -331,7 +336,7 @@ export async function runWorkforceAgent(ref: string, input: string): Promise<{ o
       )
       emit()
     }
-    return { output: run.output, error: run.error, status: run.status }
+    return { id: run.id, output: run.output, error: run.error, status: run.status }
   } catch (err) {
     const msg = err instanceof Error ? err.message : 'Agent run failed'
     if (target) {

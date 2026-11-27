@@ -383,6 +383,13 @@ export function RightPane() {
   )
 }
 
+function presenceColor(presence: RosterMember['presence']): string {
+  if (presence === 'online' || presence === 'voice') return state.done
+  if (presence === 'busy') return state.doing
+  if (presence === 'gated') return paint.sevInk
+  return paint.dim
+}
+
 function RosterRow({
   member,
   onPress,
@@ -393,9 +400,9 @@ function RosterRow({
   return (
     <XStack
       {...press(onPress, `${member.name} · ${member.activity}`)}
-      px={8}
-      py={6}
-      rounded={8}
+      px={9}
+      py={7}
+      rounded={10}
       items="center"
       gap={10}
       hoverStyle={{ background: paint.rowHover }}
@@ -413,7 +420,7 @@ function RosterRow({
           rounded={round.pill}
           borderWidth={1.5}
           style={{
-            backgroundColor: member.presence === 'online' || member.bot ? state.done : paint.dim,
+            backgroundColor: presenceColor(member.presence),
             borderColor: paint.aside,
           }}
         />

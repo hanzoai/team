@@ -576,7 +576,14 @@ export function UnifiedSidebar({
                         rounded={round.pill}
                         borderWidth={1.5}
                         style={{
-                          backgroundColor: m.presence === 'online' || m.bot ? state.done : paint.dim,
+                          backgroundColor:
+                            m.presence === 'online' || m.presence === 'voice'
+                              ? state.done
+                              : m.presence === 'busy'
+                                ? state.doing
+                                : m.presence === 'gated'
+                                  ? paint.sevInk
+                                  : paint.dim,
                           borderColor: paint.sidebar,
                         }}
                       />

@@ -185,8 +185,8 @@ export function WinWindowControls() {
         onMouseLeave={() => setHoverIdx(null)}
         style={{
           ...baseBtn,
-          backgroundColor: hoverIdx === 0 ? 'var(--team-hover, rgba(255,255,255,0.08))' : 'transparent',
-          color: hoverIdx === 0 ? 'var(--team-ink, #f4f4f5)' : 'var(--team-mute, #a1a1aa)',
+          backgroundColor: hoverIdx === 0 ? 'var(--team-hover)' : 'transparent',
+          color: hoverIdx === 0 ? 'var(--team-ink)' : 'var(--team-mute)',
         }}
       >
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">
@@ -202,8 +202,8 @@ export function WinWindowControls() {
         onMouseLeave={() => setHoverIdx(null)}
         style={{
           ...baseBtn,
-          backgroundColor: hoverIdx === 1 ? 'var(--team-hover, rgba(255,255,255,0.08))' : 'transparent',
-          color: hoverIdx === 1 ? 'var(--team-ink, #f4f4f5)' : 'var(--team-mute, #a1a1aa)',
+          backgroundColor: hoverIdx === 1 ? 'var(--team-hover)' : 'transparent',
+          color: hoverIdx === 1 ? 'var(--team-ink)' : 'var(--team-mute)',
         }}
       >
         {maximized ? (
@@ -226,8 +226,8 @@ export function WinWindowControls() {
         onMouseLeave={() => setHoverClose(false)}
         style={{
           ...baseBtn,
-          backgroundColor: hoverClose ? 'var(--team-window-close, #e81123)' : 'transparent',
-          color: hoverClose ? 'var(--team-window-close-ink, #ffffff)' : 'var(--team-mute, #a1a1aa)',
+          backgroundColor: hoverClose ? 'var(--team-window-close)' : 'transparent',
+          color: hoverClose ? 'var(--team-window-close-ink)' : 'var(--team-mute)',
         }}
       >
         <svg width="10" height="10" viewBox="0 0 10 10" fill="none" aria-hidden="true">

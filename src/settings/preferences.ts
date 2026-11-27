@@ -173,12 +173,12 @@ export const DEFAULT_TEAM_SETTINGS: HanzoTeamSettings = {
   standupChannel: '#general',
   ciAlertRouting: '#incidents',
 
-  bridgeDiscord: true,
-  bridgeSlack: true,
-  bridgeMattermost: true,
-  webhookGithub: true,
-  webhookLinear: true,
-  mcpZapBusEnabled: true,
+  bridgeDiscord: false,
+  bridgeSlack: false,
+  bridgeMattermost: false,
+  webhookGithub: false,
+  webhookLinear: false,
+  mcpZapBusEnabled: false,
   guestChannelsAllowed: false,
   ssoEnforced: true,
 }

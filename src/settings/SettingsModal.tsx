@@ -289,12 +289,12 @@ export function SettingsModal(props: {
         maxH={760}
         p={0}
         gap={0}
-        rounded={12}
+        rounded={14}
         overflow="hidden"
         borderWidth={1}
         style={{
-          backgroundColor: 'var(--settings-stage-bg, #090909)',
-          borderColor: 'var(--settings-border, #222222)',
+          backgroundColor: paint.settingsStage,
+          borderColor: paint.settingsBorder,
         }}
       >
         <DialogTitle display="none">{t('Settings')}</DialogTitle>
@@ -307,8 +307,8 @@ export function SettingsModal(props: {
             height="100%"
             borderRightWidth={1}
             style={{
-              backgroundColor: 'var(--settings-nav-bg, #0c0c0c)',
-              borderColor: 'var(--settings-border, #222222)',
+              backgroundColor: paint.settingsNav,
+              borderColor: paint.settingsBorder,
             }}
             data-testid="settings-sidebar-nav"
           >
@@ -323,11 +323,11 @@ export function SettingsModal(props: {
                 rounded={8}
                 borderWidth={1}
                 style={{
-                  backgroundColor: 'var(--settings-card-bg, #141414)',
-                  borderColor: 'var(--settings-border, #222222)',
+                  backgroundColor: paint.settingsCard,
+                  borderColor: paint.settingsBorder,
                 }}
               >
-                <Search size={13} color="var(--team-mute, #a1a1aa)" />
+                <Search size={13} color={paint.mute} />
                 <Input
                   ref={searchInputRef as never}
                   unstyled
@@ -350,7 +350,7 @@ export function SettingsModal(props: {
                     cursor="pointer"
                     style={{ background: 'transparent', border: 'none', padding: 2, display: 'inline-flex' }}
                   >
-                    <X size={12} color="var(--team-mute, #a1a1aa)" />
+                    <X size={12} color={paint.mute} />
                   </Box>
                 ) : (
                   <KbdBadge keys="/" />
@@ -403,18 +403,14 @@ export function SettingsModal(props: {
                               border: 'none',
                               textAlign: 'left',
                               backgroundColor: isCurrent
-                                ? 'var(--settings-row-active, #1f1f23)'
+                                ? paint.settingsRowActive
                                 : 'transparent',
                             }}
                           >
                             <XStack items="center" gap={8} minW={0}>
                               <Icon
                                 size={14}
-                                color={
-                                  isCurrent
-                                    ? 'var(--primary, #fafafa)'
-                                    : 'var(--team-mute, #a1a1aa)'
-                                }
+                                color={isCurrent ? paint.accent : paint.mute}
                               />
                               <Text
                                 fontSize={12.5}
@@ -442,7 +438,7 @@ export function SettingsModal(props: {
               justify="space-between"
               gap={8}
               borderTopWidth={1}
-              style={{ borderColor: 'var(--settings-border, #222222)' }}
+              style={{ borderColor: paint.settingsBorder }}
             >
               <YStack flex={1} minW={0}>
                 <Text fontSize={11.5} fontWeight="600" numberOfLines={1} style={{ color: paint.ink }}>
@@ -459,8 +455,8 @@ export function SettingsModal(props: {
                 rounded={5}
                 style={{
                   textDecoration: 'none',
-                  border: '1px solid var(--settings-border, #222222)',
-                  backgroundColor: 'var(--settings-card-bg, #141414)',
+                  border: `1px solid ${paint.settingsBorder}`,
+                  backgroundColor: paint.settingsCard,
                 }}
               >
                 <Text fontSize={10.5} fontWeight="600" style={{ color: paint.mute }}>
@@ -476,7 +472,7 @@ export function SettingsModal(props: {
             minW={0}
             minH={0}
             height="100%"
-            style={{ backgroundColor: 'var(--settings-stage-bg, #090909)' }}
+            style={{ backgroundColor: paint.settingsStage }}
           >
             {/* 48px Crisp Top Section Bar */}
             <XStack
@@ -486,10 +482,10 @@ export function SettingsModal(props: {
               justify="space-between"
               borderBottomWidth={1}
               shrink={0}
-              style={{ borderColor: 'var(--settings-border, #222222)' }}
+              style={{ borderColor: paint.settingsBorder }}
             >
               <XStack items="center" gap={8}>
-                <ActiveIcon size={15} color="var(--primary, #fafafa)" />
+                <ActiveIcon size={15} color={paint.accent} />
                 <SizableText size={rung.row} fontWeight="600" style={{ color: paint.ink }}>
                   {activeMeta.label}
                 </SizableText>
@@ -508,12 +504,12 @@ export function SettingsModal(props: {
                 justify="center"
                 cursor="pointer"
                 style={{
-                  border: '1px solid var(--settings-border, #222222)',
-                  backgroundColor: 'var(--settings-card-bg, #141414)',
+                  border: `1px solid ${paint.settingsBorder}`,
+                  backgroundColor: paint.settingsCard,
                   display: 'inline-flex',
                 }}
               >
-                <X size={14} color="var(--primary, #fafafa)" />
+                <X size={14} color={paint.accent} />
               </Box>
             </XStack>
 

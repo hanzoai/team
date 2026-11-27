@@ -16,7 +16,7 @@ export const NAV_MAX = 380
 export const ASIDE = 296
 
 export const SEAM = 0
-export const PANE_ROUND = 12
+export const PANE_ROUND = 14
 
 export const PAD = 10
 export const ROW = 28

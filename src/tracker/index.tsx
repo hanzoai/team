@@ -1,29 +1,29 @@
 /**
  * THE ISSUES SCREEN: the head, and the board, list, or timeline under it.
  *
- * The head is chrome and the board is data, which is why they are siblings
- * rather than nested — a header that disappears while its contents load makes
- * three screens out of one, and the reference draws the same band in every
- * state.
- *
- * One screen serves `/projects/:id/issues`, `/issues`, and `/mine`; they differ
- * in what the source is scoped to and in what the trail says, and in nothing
- * else.
+ * Never renders seeded demo issues as live workspace state:
+ * - Signed-in + live plane -> `cloudBoard`
+ * - Workspace refused / unreachable -> `standby('refused')` (explicit error state)
+ * - Workspace still opening -> `standby('opening')`
+ * - Stranger / no workspace -> `standby('nowhere')`
+ * - Explicit local desktop guest mode -> empty `localBoardSource`
  */
 import { useEffect, useMemo, useState } from 'react'
 import { useParams, useSearchParams } from 'react-router'
 import { XStack, YStack } from '@hanzo/ui'
 
+import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { useBoard, useCrew, useProject, useProjects } from '~/serve'
-import { getLocalCrew, localBoardSource } from '~/workspace/board.ts'
+import { localBoardSource } from '~/workspace/board.ts'
+import { useWorkspace } from '~/workspace/store.ts'
 import { Board } from './board/Board.tsx'
-import type { Issue, Priority, Status } from './board/model.ts'
+import type { Issue, Person, Priority, Status } from './board/model.ts'
+import { standby } from './board/standby.ts'
 import { Head, VIEWS, type Step, type View } from './Head.tsx'
 import { IssueDrawer, NewIssueModal } from './IssueDrawer.tsx'
 import { IssueList, IssueTimeline } from './Views.tsx'
 
-/** The view in the address, or Kanban — the default view. */
 const viewOf = (asked: string | undefined): View =>
   VIEWS.find((v) => v.id === asked)?.id ?? 'kanban'
 
@@ -32,12 +32,32 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   const [searchParams, setSearchParams] = useSearchParams()
   const queryIssue = searchParams.get('issue')
   const project = useProject(id)
-  const { plane } = useSpace()
+  const { guest } = useSession()
+  const { plane, standing } = useSpace()
+  const { roster } = useWorkspace()
   const cloudBoard = useBoard(id, mine)
-  const source = plane && cloudBoard ? cloudBoard : localBoardSource
+
+  const source = useMemo(() => {
+    if (plane && cloudBoard) return cloudBoard
+    if (guest) return localBoardSource
+    if (standing === 'refused') return standby('refused')
+    if (standing === 'stranger') return standby('nowhere')
+    return standby('opening')
+  }, [plane, cloudBoard, guest, standing])
+
   const add = source.add?.bind(source)
   const cloudCrew = useCrew(id)
-  const people = cloudCrew.length > 0 ? cloudCrew : getLocalCrew()
+  const rosterCrew = useMemo<Person[]>(
+    () =>
+      roster.map((r) => ({
+        id: r.id,
+        name: r.name,
+        face: r.avatar,
+        bot: r.bot,
+      })),
+    [roster],
+  )
+  const people = cloudCrew.length > 0 ? cloudCrew : rosterCrew
   const [only, setOnly] = useState<Priority[]>([])
   const [selectedId, setSelectedId] = useState<string | null>(queryIssue)
   const [liveIssues, setLiveIssues] = useState<Issue[]>([])
@@ -57,7 +77,7 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
       setSearchParams(next, { replace: true })
     }
   }
-  // A board spanning every project asks which one a new issue goes in.
+
   const all = useProjects().data
   const choices = useMemo(
     () => (id ? undefined : (all ?? []).filter((p) => !p.archived).map((p) => ({ id: p._id, name: p.name, identifier: p.identifier }))),
@@ -67,7 +87,9 @@ export const Tracker = ({ mine = false }: { mine?: boolean }) => {
   useEffect(() => {
     return source.watch(
       (next) => setLiveIssues(next),
-      () => {},
+      () => {
+        setLiveIssues([])
+      },
     )
   }, [source])
 

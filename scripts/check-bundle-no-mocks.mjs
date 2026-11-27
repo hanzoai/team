@@ -18,6 +18,11 @@ const FORBIDDEN = [
   'authorId:"zach"',
   "authorId: 'zach'",
   'authorId: "zach"',
+  'TEAM-101',
+  'SEED_ISSUES',
+  'LOCAL_PEOPLE',
+  'OBJECTIVES_YAML',
+  'OBJECTIVES_TASKS',
 ]
 
 const REQUIRED_ENDPOINTS = [

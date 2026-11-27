@@ -1,13 +1,14 @@
 /**
- * Hanzo Team v1.1.1 — Unified Hanzo Dev × Zen Design System
+ * Hanzo Team v1.1.5 — Unified Hanzo Bot × Dev × Zen Design System
  *
- * Theme presets:
- *  - Zen:       #000000 chrome · #090909 stage · #0c0c0c sidebars · #141414 cards · #222222 1px borders
+ * Theme presets (matched 1:1 with latest Hanzo Bot near-black surfaces):
+ *  - Zen:       #090909 canvas/chrome · #0c0c0c sidebars · #141414 cards · #222222 / #1e1e1e 1px borders
  *  - Clay:      #141418 chrome · #111016 stage · #0e0d12 sidebars · #1a1921 cards · #d11641 accent
  *  - Zen Light: #ffffff chrome · #fafafa stage · #f7f7f7 sidebars · #ffffff cards · #27272a accent
  *
  * This sheet is the ONLY place in the codebase where literal colors are declared.
- * Every component reads tokens through `src/theme/theme.ts` (`paint.*`, `state.*`) or `var(--...)`.
+ * Every component reads tokens through `src/theme/theme.ts` (`paint.*`, `state.*`) or `var(--...)`
+ * without duplicate hex literals.
  */
 
 :root,
@@ -24,7 +25,7 @@
   --team-sidebar-w: 248px;
 
   /* ——— Theme Library Preview Tokens ——— */
-  --preview-zen-chrome: #000000;
+  --preview-zen-chrome: #090909;
   --preview-zen-stage: #090909;
   --preview-zen-sidebar: #0c0c0c;
   --preview-zen-card: #141414;
@@ -45,20 +46,20 @@
   --preview-light-accent: #27272a;
   --preview-light-line: #e4e4e7;
 
-  /* ——— Zen Dark Surface Ladder (Hanzo Dev Unified) ——— */
-  --background: #000000;
-  --pane-floor: #000000;
+  /* ——— Zen Dark Surface Ladder (Bot Near-Black Unified) ——— */
+  --background: #090909;
+  --pane-floor: #090909;
   --pane-fill: #090909;
   --side-fill: #0c0c0c;
-  --pane-round: 12px;
-  --pane-edge: #222222;
+  --pane-round: 14px;
+  --pane-edge: rgba(255, 255, 255, 0.1);
   --surface-card-emphasis: #18181b;
   --secondary: #1e1e22;
   --popover: #141414;
   --card: #141414;
   --surface-1: #141414;
-  --surface-2: #181818;
-  --surface-3: #1f1f22;
+  --surface-2: #18181b;
+  --surface-3: #1f1f23;
   --border: #222222;
   --primary: #fafafa;
   --primary-foreground: #09090b;
@@ -66,6 +67,23 @@
   --accent: #222226;
   --accent-foreground: #fafafa;
   --highlight: #fafafa;
+
+  /* ——— Login / Window / Menu Chrome Tokens ——— */
+  --hanzo-login-bg: #090909;
+  --hanzo-login-fg: #fafafa;
+  --hanzo-guest-bg: #141414;
+  --hanzo-guest-fg: #e4e4e7;
+  --hanzo-guest-border: rgba(255, 255, 255, 0.14);
+  --hanzo-menu-bg: #141414;
+  --hanzo-menu-fg: #fafafa;
+  --hanzo-menu-muted: #a1a1aa;
+  --hanzo-menu-hover: rgba(255, 255, 255, 0.08);
+  --hanzo-menu-border: rgba(255, 255, 255, 0.12);
+  --hanzo-menu-shadow: rgba(0, 0, 0, 0.72);
+  --state-error: #e5484d;
+  --hanzo-close-fg: #ffffff;
+  --team-window-close: #e5484d;
+  --team-window-close-ink: #ffffff;
 
   /* ——— Settings Modal Unified Architecture (#0c0c0c rail · #090909 stage · #141414 cards · #222222 border) ——— */
   --settings-nav-bg: #0c0c0c;
@@ -77,15 +95,15 @@
   --settings-row-active: #1f1f23;
 
   --shell-bar-h: 38px;
-  --shell-bar-bg: #000000;
-  --shell-bar-border: #222222;
-  --shell-rail-bg: #000000;
-  --shell-rail-border: #222222;
+  --shell-bar-bg: #090909;
+  --shell-bar-border: #1e1e1e;
+  --shell-rail-bg: #090909;
+  --shell-rail-border: #1e1e1e;
   --shell-rail-active: #1c1c20;
   --shell-rail-fg: #9c9ca6;
   --shell-rail-fg-active: #fafafa;
   --shell-sidebar-bg: #0c0c0c;
-  --shell-sidebar-border: #222222;
+  --shell-sidebar-border: #1e1e1e;
   --shell-row-active: #1d1d22;
   --shell-row-hover: #151518;
   --shell-canvas-bg: #090909;
@@ -101,7 +119,7 @@
   --chat-user-fg: #fafafa;
 
   /* ——— Team roles ——— */
-  --team-ground: #000000;
+  --team-ground: #090909;
   --team-canvas: #090909;
   --team-surface: #0c0c0c;
   --team-elevated: #141414;
@@ -112,7 +130,7 @@
   --team-sidebar: #0c0c0c;
   --team-panel: #090909;
   --team-aside: #0c0c0c;
-  --team-dock: #08080a;
+  --team-dock: #0a0a0c;
   --team-omnibox: #141414;
   --team-omnibox-edge: #222222;
   --team-card: #141414;
@@ -138,7 +156,15 @@
   --team-chat-user: var(--chat-user-bg);
   --team-chat-user-ink: var(--chat-user-fg);
 
-  --team-rule: #222222;
+  --team-settings-stage: var(--settings-stage-bg);
+  --team-settings-nav: var(--settings-nav-bg);
+  --team-settings-card: var(--settings-card-bg);
+  --team-settings-control: var(--settings-control-bg);
+  --team-settings-border: var(--settings-border);
+  --team-settings-row-hover: var(--settings-row-hover);
+  --team-settings-row-active: var(--settings-row-active);
+
+  --team-rule: #1e1e1e;
   --team-pane-edge: var(--pane-edge);
   --team-backdrop: rgba(0, 0, 0, calc(0.78 * var(--team-solidness, 1)));
   --team-window-ring: #222222;
@@ -188,35 +214,39 @@
 
 /* ——— Clay Appearance (#141418 chrome · #111016 stage · #0e0d12 sidebars · #1a1921 cards · #d11641 accent) ——— */
 html[data-appearance='clay']:not(.light) {
-  --background: #141418;
+  --background: #111016;
   --pane-floor: #141418;
   --pane-fill: #111016;
   --side-fill: #0e0d12;
-  --pane-edge: #282633;
-  --border: #282633;
+  --pane-edge: rgba(255, 255, 255, 0.1);
+  --border: #2a2835;
   --card: #1a1921;
   --surface-1: #1a1921;
   --surface-2: #211f2a;
-  --surface-3: #282633;
+  --surface-3: #2a2835;
+
+  --hanzo-login-bg: #111016;
+  --hanzo-guest-bg: #1a1921;
+  --hanzo-menu-bg: #1a1921;
 
   --settings-nav-bg: #0e0d12;
   --settings-stage-bg: #111016;
   --settings-card-bg: #1a1921;
   --settings-control-bg: #0e0d12;
-  --settings-border: #282633;
+  --settings-border: #2a2835;
   --settings-row-hover: #211f2a;
   --settings-row-active: #2a2736;
 
-  --team-ground: #141418;
+  --team-ground: #111016;
   --team-canvas: #111016;
   --team-surface: #0e0d12;
   --shell-bar-bg: #141418;
-  --shell-bar-border: #282633;
+  --shell-bar-border: #23212c;
   --shell-rail-bg: #141418;
-  --shell-rail-border: #282633;
+  --shell-rail-border: #23212c;
   --shell-rail-active: #262331;
   --shell-sidebar-bg: #0e0d12;
-  --shell-sidebar-border: #282633;
+  --shell-sidebar-border: #23212c;
   --shell-row-active: #262331;
   --shell-row-hover: #1b1924;
   --shell-canvas-bg: #111016;
@@ -226,20 +256,20 @@ html[data-appearance='clay']:not(.light) {
   --team-aside: #0e0d12;
   --team-dock: #0b0a0f;
   --team-omnibox: #1a1921;
-  --team-omnibox-edge: #282633;
+  --team-omnibox-edge: #2a2835;
   --composer-fill: #1a1921;
-  --composer-edge: #282633;
+  --composer-edge: #2a2835;
   --composer-accent: #d11641;
   --composer-accent-fg: #ffffff;
   --team-elevated: #1a1921;
   --team-card: #1a1921;
   --team-hover: #24222f;
-  --team-border: #282633;
-  --team-rule: #282633;
+  --team-border: #2a2835;
+  --team-rule: #23212c;
   --team-code: #0e0d12;
-  --team-code-edge: #282633;
+  --team-code-edge: #2a2835;
   --team-alert: #d11641;
-  --team-window-ring: #282633;
+  --team-window-ring: #2a2835;
 }
 
 /* ——— Zen Light Appearance (#ffffff / #fafafa / #f7f7f7 / #27272a) ——— */
@@ -250,7 +280,7 @@ html[data-appearance='clay']:not(.light) {
   --pane-floor: #ffffff;
   --pane-fill: #fafafa;
   --side-fill: #f7f7f7;
-  --pane-edge: #e4e4e7;
+  --pane-edge: rgba(0, 0, 0, 0.1);
   --surface-card-emphasis: #f4f4f5;
   --secondary: #e4e4e7;
   --surface-1: #ffffff;
@@ -263,6 +293,18 @@ html[data-appearance='clay']:not(.light) {
   --accent: #f4f4f5;
   --accent-foreground: #18181b;
   --highlight: #27272a;
+
+  --hanzo-login-bg: #fafafa;
+  --hanzo-login-fg: #09090b;
+  --hanzo-guest-bg: #f4f4f5;
+  --hanzo-guest-fg: #27272a;
+  --hanzo-guest-border: rgba(0, 0, 0, 0.12);
+  --hanzo-menu-bg: #ffffff;
+  --hanzo-menu-fg: #09090b;
+  --hanzo-menu-muted: #52525b;
+  --hanzo-menu-hover: rgba(0, 0, 0, 0.06);
+  --hanzo-menu-border: rgba(0, 0, 0, 0.10);
+  --hanzo-menu-shadow: rgba(0, 0, 0, 0.14);
 
   --settings-nav-bg: #f7f7f7;
   --settings-stage-bg: #fafafa;

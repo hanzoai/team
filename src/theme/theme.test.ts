@@ -60,14 +60,17 @@ test('every slot the ring can produce is declared', () => {
  * choice: it is the token's own published value, restated so a host that mounts
  * no sheet still renders something rather than nothing.
  */
-test('no module outside the sheet chooses a colour', () => {
+test('no module outside the sheet chooses a colour or duplicates hex literals', () => {
   const LITERAL = /#[0-9a-fA-F]{3,8}\b|\brgba?\(|\boklch\(|\bhsla?\(/
+  const HEX_ANYWHERE = /#[0-9a-fA-F]{3,8}\b/
   const guilty: string[] = []
   for (const path of source) {
     if (/[/\\]theme[/\\]tokens\.css$/.test(path) || path.endsWith('.test.ts')) continue
     for (const [n, line] of readFileSync(path, 'utf8').split('\n').entries()) {
-      const code = line.replace(/var\([^)]*\)/g, '')
-      if (LITERAL.test(code) && !/^\s*(\*|\/\/|\/\*)/.test(line)) {
+      if (/^\s*(\*|\/\/|\/\*)/.test(line)) continue
+      const withoutLineComment = line.replace(/\/\/.*$/, '')
+      const code = withoutLineComment.replace(/var\([^)]*\)/g, '')
+      if (LITERAL.test(code) || HEX_ANYWHERE.test(withoutLineComment)) {
         guilty.push(`${path.slice(ROOT.length)}:${n + 1}  ${line.trim()}`)
       }
     }

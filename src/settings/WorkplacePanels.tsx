@@ -1,10 +1,11 @@
 import { Button, SizableText, XStack, YStack } from '@hanzo/ui'
 import { ExternalLink, Laptop, Smartphone } from 'lucide-react'
 
-import { isMacDesktop } from '~/data/desktop.ts'
+import { isDesktopApp, isMacDesktop } from '~/data/desktop.ts'
+import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
 import { paint, round, rung } from '~/theme/theme.ts'
-import { setComposerModel } from '~/workspace/store.ts'
+import { setComposerModel, useWorkspace } from '~/workspace/store.ts'
 import {
   DEFAULT_CHAT_PREFS,
   DEFAULT_TEAM_SETTINGS,
@@ -362,17 +363,27 @@ export function KeybindingsPanel() {
 
 export function ModelsProvidersPanel() {
   const { settings, updateSettings, resetSetting } = useTeamSettings()
+  const { standing, guest } = useSession()
+  const { current, connection } = useSpace()
+  const { roster, hydrating } = useWorkspace()
   const d = DEFAULT_TEAM_SETTINGS
+  const workspaceBots = roster.filter((r) => r.bot)
+
+  const openHanzoBot = () => {
+    const org = current?.org ? `?org=${encodeURIComponent(current.org)}` : ''
+    window.open(`https://hanzo.bot/bots${org}`, '_blank', 'noopener,noreferrer')
+  }
 
   return (
     <YStack gap={22} width="100%" data-testid="settings-models-panel">
       <SettingsSectionCard
-        title="Default Router & Channel Bots"
-        description="Configure default Enso specialist routing and active @bot teammates in channels."
+        title="Default Router & Workspace Bots"
+        description="Configure your default model router preference and inspect live IAM-authorized bots in this workspace."
       >
         <SettingsRow
+          last={workspaceBots.length === 0}
           title="Default workspace model"
-          description="Dynamic Enso router dispatches code, architecture, and ops turns with sub-40ms TTFT."
+          description="Preferred router model used across channel composers, @mentions, and Home."
           badge="Default"
           modified={settings.defaultModel !== d.defaultModel}
           onReset={() => {
@@ -395,125 +406,66 @@ export function ModelsProvidersPanel() {
           }
         />
 
-        <SettingsRow
-          title="@dev — Systems & Full-Stack Bot"
-          description="Executes inline tasks, inspects diffs, runs test suites, and stages release PRs."
-          badge="zen6-coder"
-          modified={settings.botDevEnabled !== d.botDevEnabled}
-          onReset={() => resetSetting('botDevEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable @dev bot"
-              checked={settings.botDevEnabled}
-              onChange={(botDevEnabled) => updateSettings({ botDevEnabled })}
-            />
-          }
-        />
-
-        <SettingsRow
-          title="@cyber — Kai Zero-Trust Security Bot"
-          description="Audits dependency lockfiles, MCP outbound gates, and supply-chain signatures."
-          badge="zen6-ultra"
-          modified={settings.botCyberEnabled !== d.botCyberEnabled}
-          onReset={() => resetSetting('botCyberEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable @cyber bot"
-              checked={settings.botCyberEnabled}
-              onChange={(botCyberEnabled) => updateSettings({ botCyberEnabled })}
-            />
-          }
-        />
-
-        <SettingsRow
-          title="@ops — SRE & Incident Command Bot"
-          description="Triages #incidents playbooks, monitors SFU latency, and executes rollback gates."
-          badge="enso"
-          modified={settings.botOpsEnabled !== d.botOpsEnabled}
-          onReset={() => resetSetting('botOpsEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable @ops bot"
-              checked={settings.botOpsEnabled}
-              onChange={(botOpsEnabled) => updateSettings({ botOpsEnabled })}
-            />
-          }
-        />
-
-        <SettingsRow
-          last
-          title="@pm — Roadmap & Sprint Coordination Bot"
-          description="Syncs YAML objectives, Linear/Work Kanban cards, and daily async standups."
-          badge="enso"
-          modified={settings.botPmEnabled !== d.botPmEnabled}
-          onReset={() => resetSetting('botPmEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable @pm bot"
-              checked={settings.botPmEnabled}
-              onChange={(botPmEnabled) => updateSettings({ botPmEnabled })}
-            />
-          }
-        />
+        {workspaceBots.map((bot, idx) => (
+          <SettingsRow
+            key={bot.id}
+            last={idx === workspaceBots.length - 1}
+            title={`@${bot.handle} — ${bot.name}`}
+            description={bot.activity || 'IAM-authorized workspace agent'}
+            badge={bot.model || 'agent'}
+            control={
+              <SizableText
+                size={rung.small}
+                fontWeight="600"
+                style={{
+                  color:
+                    bot.presence === 'online'
+                      ? paint.speaking
+                      : bot.presence === 'gated'
+                        ? paint.sevInk
+                        : paint.dim,
+                }}
+              >
+                {bot.presence === 'online'
+                  ? 'Online'
+                  : bot.presence === 'busy'
+                    ? 'Running'
+                    : bot.presence === 'gated'
+                      ? 'Blocked'
+                      : 'Offline'}
+              </SizableText>
+            }
+          />
+        ))}
       </SettingsSectionCard>
 
       <SettingsSectionCard
-        title="Model Providers"
-        description="Unified cloud and on-device inference endpoints via Hanzo AI Gateway."
+        title="Bot Worker & Model Providers"
+        description="Live workspace agent runtime and organization model credentials managed on hanzo.bot."
       >
         <SettingsRow
-          title="Zen 6 (Hanzo AI Gateway)"
-          description="enso, zen6-coder, and zen6-ultra via https://api.hanzo.ai/v1."
-          badge="Primary"
-          modified={settings.providerZen6Enabled !== d.providerZen6Enabled}
-          onReset={() => resetSetting('providerZen6Enabled')}
-          control={
-            <SettingsSwitch
-              label="Enable Zen 6 provider"
-              checked={settings.providerZen6Enabled}
-              onChange={(providerZen6Enabled) => updateSettings({ providerZen6Enabled })}
-            />
-          }
-        />
-        <SettingsRow
-          title="Anthropic"
-          description="Claude Opus 4.6 & Claude Sonnet 4.6 via organization gateway key."
-          modified={settings.providerAnthropicEnabled !== d.providerAnthropicEnabled}
-          onReset={() => resetSetting('providerAnthropicEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable Anthropic provider"
-              checked={settings.providerAnthropicEnabled}
-              onChange={(providerAnthropicEnabled) => updateSettings({ providerAnthropicEnabled })}
-            />
-          }
-        />
-        <SettingsRow
-          title="OpenAI"
-          description="GPT-5 & o-series reasoning models via organization gateway key."
-          modified={settings.providerOpenAiEnabled !== d.providerOpenAiEnabled}
-          onReset={() => resetSetting('providerOpenAiEnabled')}
-          control={
-            <SettingsSwitch
-              label="Enable OpenAI provider"
-              checked={settings.providerOpenAiEnabled}
-              onChange={(providerOpenAiEnabled) => updateSettings({ providerOpenAiEnabled })}
-            />
-          }
-        />
-        <SettingsRow
           last
-          title="Local Private Inference (hanzod)"
-          description="Zero-egress on-device MLX / GGUF models on http://127.0.0.1:3690/v1."
-          badge="Local"
-          modified={settings.providerLocalEnabled !== d.providerLocalEnabled}
-          onReset={() => resetSetting('providerLocalEnabled')}
+          title="Hanzo Bot Worker & Provider Credentials"
+          description={
+            standing !== 'in' || guest
+              ? 'Sign in with hanzo.id to connect organization model providers and workspace bots.'
+              : hydrating
+                ? 'Checking workspace bot roster…'
+                : workspaceBots.length > 0
+                  ? `${workspaceBots.length} ${workspaceBots.length === 1 ? 'bot' : 'bots'} provisioned · Manage API keys & schedules on hanzo.bot`
+                  : connection === 'live'
+                    ? 'No bots provisioned in this workspace yet — create one in Virtual Office or hanzo.bot.'
+                    : 'Workspace transport disconnected — Bot worker status unavailable.'
+          }
           control={
-            <SettingsSwitch
-              label="Enable Local provider"
-              checked={settings.providerLocalEnabled}
-              onChange={(providerLocalEnabled) => updateSettings({ providerLocalEnabled })}
-            />
+            <Button size="sm" variant="outline" rounded={round.field} onPress={openHanzoBot}>
+              <XStack items="center" gap={5}>
+                <SizableText size={rung.small} style={{ color: paint.ink }}>
+                  Open hanzo.bot
+                </SizableText>
+                <ExternalLink size={11} color={paint.mute} />
+              </XStack>
+            </Button>
           }
         />
       </SettingsSectionCard>
@@ -589,6 +541,19 @@ export function ScheduledStandupsPanel() {
 }
 
 export function DevicesPanel() {
+  const { standing, guest } = useSession()
+  const { connection } = useSpace()
+  const desktop = isDesktopApp()
+  const isLive = standing === 'in' && !guest && connection === 'live'
+  const sessionStatusDesc =
+    standing !== 'in' || guest
+      ? 'Local unauthenticated session · Sign in to connect live workspace transport'
+      : connection === 'live'
+        ? 'Live workspace transport connected'
+        : connection === 'opening'
+          ? 'Connecting to workspace transport…'
+          : 'Offline · Workspace transport disconnected'
+
   const openMobileDownload = () => {
     window.open('https://hanzo.ai/download#mobile', '_blank', 'noopener,noreferrer')
   }
@@ -608,11 +573,11 @@ export function DevicesPanel() {
             <XStack items="center" gap={8}>
               <Button size="sm" variant="outline" rounded={round.field} onPress={openMobileDownload}>
                 <XStack items="center" gap={6}>
-                  <Smartphone size={13} color="var(--primary, #fafafa)" />
+                  <Smartphone size={13} color={paint.accent} />
                   <SizableText size={rung.small} style={{ color: paint.ink }}>
                     iOS &amp; Android
                   </SizableText>
-                  <ExternalLink size={11} color="var(--team-mute, #a1a1aa)" />
+                  <ExternalLink size={11} color={paint.mute} />
                 </XStack>
               </Button>
             </XStack>
@@ -622,14 +587,14 @@ export function DevicesPanel() {
 
       <SettingsSectionCard
         title="Active Sessions"
-        description="Devices currently authenticated to this workspace."
+        description="Devices currently open in this client."
       >
         <SettingsRow
           last
-          title="Hanzo Team Desktop · v1.1.1"
-          description="Current session · Encrypted local SQLite + ZAP transport active"
+          title={desktop ? 'Hanzo Team Desktop · v1.1.5' : 'Hanzo Team Web · v1.1.5'}
+          description={sessionStatusDesc}
           badge="This device"
-          control={<Laptop size={15} color="var(--team-speaking, #22c55e)" />}
+          control={<Laptop size={15} color={isLive ? paint.speaking : paint.dim} />}
         />
       </SettingsSectionCard>
     </YStack>

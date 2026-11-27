@@ -13,27 +13,18 @@ import {
 } from '~/workspace/store.ts'
 import { openConnectModal } from './ConnectOrgModal.tsx'
 
-const CLOSE_HOVER = 'var(--state-error, #e5484d)'
-const CLOSE_FG = 'var(--hanzo-close-fg, #ffffff)'
+const CLOSE_HOVER = 'var(--state-error)'
+const CLOSE_FG = 'var(--hanzo-close-fg)'
 
-function menuPalette(isLight: boolean) {
-  return isLight
-    ? {
-        bg: 'var(--hanzo-menu-bg-light, #ffffff)',
-        fg: 'var(--hanzo-menu-fg-light, #09090b)',
-        muted: 'var(--hanzo-menu-muted-light, #52525b)',
-        hover: 'var(--hanzo-menu-hover-light, rgba(0, 0, 0, 0.06))',
-        border: 'var(--hanzo-menu-border-light, rgba(0, 0, 0, 0.10))',
-        shadow: 'var(--hanzo-menu-shadow-light, rgba(0, 0, 0, 0.14))',
-      }
-    : {
-        bg: 'var(--hanzo-menu-bg, #121214)',
-        fg: 'var(--hanzo-menu-fg, #fafafa)',
-        muted: 'var(--hanzo-menu-muted, #a1a1aa)',
-        hover: 'var(--hanzo-menu-hover, rgba(255, 255, 255, 0.08))',
-        border: 'var(--hanzo-menu-border, rgba(255, 255, 255, 0.12))',
-        shadow: 'var(--hanzo-menu-shadow, rgba(0, 0, 0, 0.72))',
-      }
+function menuPalette(_isLight: boolean) {
+  return {
+    bg: 'var(--hanzo-menu-bg)',
+    fg: 'var(--hanzo-menu-fg)',
+    muted: 'var(--hanzo-menu-muted)',
+    hover: 'var(--hanzo-menu-hover)',
+    border: 'var(--hanzo-menu-border)',
+    shadow: 'var(--hanzo-menu-shadow)',
+  }
 }
 
 type TauriWin = {

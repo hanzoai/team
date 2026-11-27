@@ -113,15 +113,15 @@ export function InboxWorkspace() {
       </XStack>
 
       <ScrollArea flex={1} minH={0}>
-        <YStack p={20} gap={10} maxW={780}>
+        <YStack p={24} gap={12} maxW={780}>
           {hydrating && visible.length === 0 ? (
-            <YStack p={20} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+            <YStack p={20} rounded={14} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
               <SizableText fontSize={13} style={{ color: paint.dim }}>
                 Loading notifications…
               </SizableText>
             </YStack>
           ) : visible.length === 0 ? (
-            <YStack p={24} rounded={10} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+            <YStack p={24} rounded={14} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
               <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }}>
                 Inbox is clear
               </SizableText>
@@ -140,12 +140,12 @@ export function InboxWorkspace() {
               return (
                 <XStack
                   key={att.id}
-                  p={13}
-                  rounded={10}
+                  p={15}
+                  rounded={14}
                   borderWidth={1}
                   items="center"
                   justify="space-between"
-                  gap={12}
+                  gap={14}
                   style={{
                     backgroundColor: paint.card,
                     borderColor: att.read ? paint.rule : paint.border,

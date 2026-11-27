@@ -73,15 +73,15 @@ export function MemoryWorkspace() {
       </XStack>
 
       <ScrollArea flex={1} minH={0}>
-        <YStack p={20} gap={10} maxW={780}>
+        <YStack p={24} gap={12} maxW={780}>
           {hydrating && shown.length === 0 ? (
-            <YStack p={20} rounded={10} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+            <YStack p={20} rounded={14} borderWidth={1} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
               <SizableText fontSize={13} style={{ color: paint.dim }}>
                 Loading workspace knowledge…
               </SizableText>
             </YStack>
           ) : shown.length === 0 ? (
-            <YStack p={24} rounded={10} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
+            <YStack p={24} rounded={14} borderWidth={1} gap={6} style={{ backgroundColor: paint.card, borderColor: paint.border }}>
               <SizableText fontSize={14} fontWeight="600" style={{ color: paint.ink }}>
                 {q ? 'No matching items' : 'No documents or agents indexed yet'}
               </SizableText>
@@ -93,8 +93,8 @@ export function MemoryWorkspace() {
             shown.map((node) => (
               <YStack
                 key={node.id}
-                p={14}
-                rounded={10}
+                p={16}
+                rounded={14}
                 borderWidth={1}
                 gap={8}
                 style={{ backgroundColor: paint.card, borderColor: paint.border }}
