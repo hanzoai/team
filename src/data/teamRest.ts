@@ -174,6 +174,31 @@ export function encodeMentionsForApi(text: string, roster: readonly MentionTarge
   return encodedLines.join('\n')
 }
 
+/**
+ * Decode `<@uuid>` tokens back to human-readable `@handle` (for bots) or `@name`
+ * using the live workspace roster so raw UUID brackets never flash in message rows.
+ */
+export function decodeMentionsForDisplay(
+  text: string,
+  roster: readonly (MentionTarget & { bot?: boolean })[],
+): string {
+  if (!text || !text.includes('<@') || roster.length === 0) return text
+  const byId = new Map<string, MentionTarget & { bot?: boolean }>()
+  for (const m of roster) {
+    const id = m.id.trim().toLowerCase()
+    if (id) byId.set(id, m)
+  }
+  return text.replace(
+    /<@([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})>/gi,
+    (full, uuid: string) => {
+      const hit = byId.get(uuid.toLowerCase())
+      if (!hit) return full
+      const label = (hit.bot && hit.handle) ? hit.handle : hit.handle || hit.name
+      return `@${label}`
+    },
+  )
+}
+
 /** Resolve an avatar blob id returned by `/v1/team/members` into a downloadable image URL. */
 export function teamAvatarUrl(spaceUuid: string, avatar?: string): string | undefined {
   if (!avatar) return undefined

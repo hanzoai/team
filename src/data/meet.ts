@@ -167,6 +167,60 @@ function toLiveParticipant(p: Participant, isLocal: boolean): LiveParticipant {
   }
 }
 
+const ICE_SERVER_URL_RE = /^(stuns?|turns?):[^\s{}<>]+$/i
+const SANITIZER_INSTALLED = Symbol.for('hanzo.team.rtcIceSanitizerInstalled')
+
+/**
+ * Validates a WebRTC STUN/TURN URL before Chrome's `RTCPeerConnection.setConfiguration`
+ * sees it (guards against malformed server ICE entries like `turn:{10.42.0.30 }:3478`).
+ */
+export function isValidIceServerUrl(url: unknown): url is string {
+  return typeof url === 'string' && ICE_SERVER_URL_RE.test(url)
+}
+
+/**
+ * Strips malformed STUN/TURN URLs from an `RTCConfiguration` while preserving
+ * all valid entries and credentials untouched.
+ */
+export function sanitizeRtcConfiguration<T extends RTCConfiguration | undefined>(config: T): T {
+  if (!config || !Array.isArray(config.iceServers)) return config
+  let changed = false
+  const cleaned: RTCIceServer[] = []
+  for (const server of config.iceServers) {
+    if (!server) continue
+    if (Array.isArray(server.urls)) {
+      const validUrls = server.urls.filter(isValidIceServerUrl)
+      if (validUrls.length !== server.urls.length) changed = true
+      if (validUrls.length > 0) cleaned.push({ ...server, urls: validUrls })
+    } else if (typeof server.urls === 'string') {
+      if (isValidIceServerUrl(server.urls)) {
+        cleaned.push(server)
+      } else {
+        changed = true
+      }
+    }
+  }
+  if (!changed) return config
+  return { ...config, iceServers: cleaned } as T
+}
+
+/**
+ * Idempotently guards `RTCPeerConnection.prototype.setConfiguration` against
+ * malformed ICE URLs sent in LiveKit `JoinResponse` payloads.
+ */
+export function installRtcIceSanitizer(): void {
+  if (typeof globalThis === 'undefined') return
+  const RTCPC = (globalThis as { RTCPeerConnection?: typeof RTCPeerConnection }).RTCPeerConnection
+  if (!RTCPC?.prototype?.setConfiguration) return
+  const proto = RTCPC.prototype as RTCPeerConnection & { [SANITIZER_INSTALLED]?: boolean }
+  if (proto[SANITIZER_INSTALLED]) return
+  const original = proto.setConfiguration
+  proto.setConfiguration = function patchedSetConfiguration(configuration?: RTCConfiguration): void {
+    return original.call(this, sanitizeRtcConfiguration(configuration))
+  }
+  proto[SANITIZER_INSTALLED] = true
+}
+
 export class MeetClient {
   private room: Room | null = null
   private audioElements = new Map<string, HTMLMediaElement>()
@@ -281,6 +335,8 @@ export class MeetClient {
       }
 
       const token = await mintMeetToken(venue.name, opts.participantName, opts.accountId ?? '')
+
+      installRtcIceSanitizer()
 
       const room = new Room({
         adaptiveStream: true,

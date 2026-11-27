@@ -1,0 +1,42 @@
+name: E2E & Contract Regression
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: e2e-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  playwright-e2e:
+    name: Anti-Mock & Live-Contract E2E (Chromium)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Unit, anti-mock & contract tests
+        run: pnpm test
+
+      - name: Build production dist/ & verify zero mocks in bundle
+        run: |
+          pnpm build
+          pnpm test:bundle
+
+      - name: Install Playwright Chromium
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Run Playwright browser contract E2E against built dist/
+        run: pnpm test:e2e

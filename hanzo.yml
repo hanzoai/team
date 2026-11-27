@@ -17,12 +17,13 @@ test:
       pnpm test
 
   # `pnpm build` is `tsc --noEmit && vite build`. A vite build that emits
-  # nothing still exits 0, hence the file test.
+  # nothing still exits 0, hence the file test + static anti-mock bundle check.
   - name: build
     run: |
       set -e
       pnpm build
       test -s dist/index.html
+      pnpm test:bundle
 
 site:
   # hanzo.team is published by hanzo-inc/team, which pins a version of this

@@ -62,6 +62,7 @@ jobs:
           pnpm install --frozen-lockfile
           pnpm test
           pnpm build
+          pnpm test:bundle
           test -s dist/index.html
           test -s dist/404.html
           ls dist/assets/*.js >/dev/null

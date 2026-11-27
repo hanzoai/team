@@ -1,6 +1,6 @@
 {
   "name": "@hanzo/team",
-  "version": "1.1.3",
+  "version": "1.1.4",
   "type": "module",
   "description": "Hanzo Team — the tracker and the workspace, on @hanzo/gui + @hanzo/ui.",
   "license": "Apache-2.0 OR MIT",
@@ -25,7 +25,9 @@
     "build": "tsc --noEmit && vite build",
     "typecheck": "tsc --noEmit",
     "preview": "vite preview",
-    "test": "node --test --experimental-strip-types 'src/**/*.test.ts'"
+    "test": "node --test --experimental-strip-types 'src/**/*.test.ts'",
+    "test:bundle": "node scripts/check-bundle-no-mocks.mjs",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hanzo/ai": "0.7.0",
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@hanzo/vite": "0.1.4",
+    "@playwright/test": "^1.65.1",
     "@types/node": "26.4.1",
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.7",

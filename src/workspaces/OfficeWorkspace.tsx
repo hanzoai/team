@@ -82,6 +82,10 @@ export function OfficeWorkspace() {
   const [runPrompt, setRunPrompt] = useState('')
   const [runBusy, setRunBusy] = useState(false)
   const [runResult, setRunResult] = useState<{ status: string; output?: string; error?: string } | null>(null)
+  const [stageWidth, setStageWidth] = useState(() =>
+    typeof window === 'undefined' ? 1440 : window.innerWidth,
+  )
+  const showSideRoster = stageWidth >= 920
 
   const activeOrg = orgs.find((o) => o.id === activeOrgId) ?? orgs[0] ?? null
   const humans = roster.filter((m) => !m.bot)
@@ -175,14 +179,25 @@ export function OfficeWorkspace() {
                 : 'Ready'
 
   return (
-    <XStack flex={1} minW={0} minH={0} style={{ backgroundColor: paint.panel }} data-testid="office-roam-workspace">
+    <XStack
+      flex={1}
+      minW={0}
+      minH={0}
+      style={{ backgroundColor: paint.panel }}
+      data-testid="office-roam-workspace"
+      onLayout={(e: { nativeEvent: { layout: { width: number } } }) =>
+        setStageWidth(e.nativeEvent.layout.width)
+      }
+    >
       <YStack flex={1} minW={0} minH={0} position="relative">
         <XStack
-          height={44}
-          px={18}
+          minH={44}
+          px={16}
+          py={6}
           items="center"
           justify="space-between"
-          gap={10}
+          gap={8}
+          flexWrap="wrap"
           borderBottomWidth={1}
           style={{ borderBottomColor: paint.rule }}
         >
@@ -402,8 +417,9 @@ export function OfficeWorkspace() {
         </XStack>
       </YStack>
 
-      {/* Right Column: Live Rooms & Roster */}
-      <YStack width={268} shrink={0} minH={0} borderLeftWidth={1} style={{ backgroundColor: paint.aside, borderLeftColor: paint.sidebarRule }} data-testid="office-skyscraper-elevator">
+      {/* Right Column: Live Rooms & Roster (hidden on narrow mobile viewports so Virtual HQ has full width) */}
+      {showSideRoster ? (
+        <YStack width={268} shrink={0} minH={0} borderLeftWidth={1} style={{ backgroundColor: paint.aside, borderLeftColor: paint.sidebarRule }} data-testid="office-skyscraper-elevator">
         <XStack height={44} px={14} items="center" justify="space-between" borderBottomWidth={1} style={{ borderBottomColor: paint.rule }}>
           <SizableText fontSize={12.5} fontWeight="700" style={{ color: paint.ink }}>
             Live Rooms &amp; Roster
@@ -499,6 +515,7 @@ export function OfficeWorkspace() {
           </YStack>
         </ScrollArea>
       </YStack>
+      ) : null}
 
       {createOpen ? (
         <CreateBotModal
