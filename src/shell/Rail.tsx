@@ -1,9 +1,9 @@
 /**
- * COL 1 — Discord-Style Guild / Organization Rail (`56px`, `#000000`, `1px` `#1a1a1e` right border)
+ * COL 1 — Discord-Style Guild / Organization Rail (`56px`, `#000000`, `1px` `#222222` right border)
  *
  * - Top squircle: Official 7-path `@hanzo/logo` mark (Home / Command Center)
  * - `1px` divider
- * - Org squircles: `H` Hanzo [active white left pill], `L` Lux, `Z` Zoo, `S` Science
+ * - Org squircles: `H` Hanzo [active white left pill flush on rail edge], `L` Lux, `Z` Zoo, `S` Science
  * - `+` Create / Join Organization
  */
 import { SizableText, Tooltip, TooltipContent, TooltipTrigger, YStack } from '@hanzo/ui'
@@ -57,21 +57,21 @@ export const Rail = ({ onSurface, account }: RailProps) => {
       data-parity-key="shell.rail"
       data-testid="guild-org-rail"
     >
-      <YStack items="center" width="100%" gap={8}>
+      <YStack items="center" width={RAIL} gap={8}>
         {/* Top Squircle: Official 7-path Hanzo Command Center / Home */}
-        <Tooltip>
-          <TooltipTrigger>
-            <YStack width="100%" items="center" justify="center" position="relative">
-              {onHome ? (
-                <YStack
-                  position="absolute"
-                  l={0}
-                  width={3.5}
-                  height={20}
-                  rounded={round.pill}
-                  style={{ backgroundColor: paint.railFgActive }}
-                />
-              ) : null}
+        <YStack width={RAIL} items="center" justify="center" position="relative">
+          {onHome ? (
+            <YStack
+              position="absolute"
+              l={0}
+              width={3}
+              height={18}
+              rounded={round.pill}
+              style={{ backgroundColor: paint.railFgActive }}
+            />
+          ) : null}
+          <Tooltip>
+            <TooltipTrigger>
               <YStack
                 {...press(() => onSurface('/home'), 'Hanzo Command Center (Home)')}
                 width={STEP}
@@ -91,33 +91,33 @@ export const Rail = ({ onSurface, account }: RailProps) => {
               >
                 <HanzoLogoMark size={19} />
               </YStack>
-            </YStack>
-          </TooltipTrigger>
-          <TooltipContent>Hanzo Command Center · Home</TooltipContent>
-        </Tooltip>
+            </TooltipTrigger>
+            <TooltipContent>Hanzo Command Center · Home</TooltipContent>
+          </Tooltip>
+        </YStack>
 
         {/* 1px Guild Divider */}
         <YStack width={28} height={1} style={{ backgroundColor: paint.railRule }} />
 
         {/* Organization Squircles: H (Hanzo), L (Lux), Z (Zoo), S (Science) */}
-        <YStack items="center" width="100%" gap={8} data-parity-key="shell.orgs">
+        <YStack items="center" width={RAIL} gap={8} data-parity-key="shell.orgs">
           {orgs.map((org) => {
             const active = org.id === activeOrgId
             return (
-              <Tooltip key={org.id}>
-                <TooltipTrigger>
-                  <YStack width="100%" items="center" justify="center" position="relative">
-                    {active ? (
-                      <YStack
-                        position="absolute"
-                        l={0}
-                        width={3.5}
-                        height={22}
-                        rounded={round.pill}
-                        style={{ backgroundColor: paint.railFgActive }}
-                        data-testid={`guild-pill-${org.id}`}
-                      />
-                    ) : null}
+              <YStack key={org.id} width={RAIL} items="center" justify="center" position="relative">
+                {active ? (
+                  <YStack
+                    position="absolute"
+                    l={0}
+                    width={3}
+                    height={onHome ? 10 : 20}
+                    rounded={round.pill}
+                    style={{ backgroundColor: paint.railFgActive }}
+                    data-testid={`guild-pill-${org.id}`}
+                  />
+                ) : null}
+                <Tooltip>
+                  <TooltipTrigger>
                     <YStack
                       {...press(() => {
                         selectGuildOrg(org.id)
@@ -145,10 +145,10 @@ export const Rail = ({ onSurface, account }: RailProps) => {
                         {org.letter}
                       </SizableText>
                     </YStack>
-                  </YStack>
-                </TooltipTrigger>
-                <TooltipContent>{`${org.name} — ${org.subtitle}`}</TooltipContent>
-              </Tooltip>
+                  </TooltipTrigger>
+                  <TooltipContent>{`${org.name} — ${org.subtitle}`}</TooltipContent>
+                </Tooltip>
+              </YStack>
             )
           })}
 

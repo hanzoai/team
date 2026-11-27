@@ -22,6 +22,7 @@ import { useNavigate, useParams } from 'react-router'
 
 import { MemberPortrait } from '~/shell/UnifiedSidebar.tsx'
 import { press } from '~/shell/press.ts'
+import { chatMaxWidthCssFor, useTeamSettings } from '~/settings/preferences.ts'
 import { paint, ring, state } from '~/theme/theme.ts'
 import {
   joinVoiceRoom,
@@ -43,6 +44,9 @@ export function EngineeringStage() {
     connectedVoiceId,
     rightPaneMode,
   } = useWorkspace()
+  const { settings } = useTeamSettings()
+  const maxChatWidth = chatMaxWidthCssFor(settings.chatWidth)
+  const isCompact = settings.messageDensity === 'compact'
 
   const [playbookOpen, setPlaybookOpen] = useState(false)
   const [pinsOpen, setPinsOpen] = useState(false)
@@ -239,7 +243,12 @@ export function EngineeringStage() {
 
       {/* Message Stream */}
       <ScrollArea flex={1} minH={0}>
-        <YStack py={10} gap={2}>
+        <YStack
+          py={isCompact ? 6 : 10}
+          gap={isCompact ? 0 : 2}
+          width="100%"
+          style={{ maxWidth: maxChatWidth, marginInline: settings.chatWidth === 'full' ? 0 : 'auto' }}
+        >
           {/* Channel Intro Banner */}
           <YStack px={18} pb={10} mb={4} borderBottomWidth={1} style={{ borderBottomColor: paint.rule }} gap={3}>
             <SizableText fontSize={16} fontWeight="700" style={{ color: paint.ink }}>
@@ -266,6 +275,8 @@ export function EngineeringStage() {
                   author={author}
                   roster={roster}
                   roomLabel={isDm ? room.name : `#${room.name}`}
+                  density={settings.messageDensity}
+                  renderMath={settings.renderMarkdownAndMath}
                 />
               )
             })

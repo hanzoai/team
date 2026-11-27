@@ -121,7 +121,7 @@ export const Head = ({ trail, title, base, here, people, only, onOnly, onAdd }: 
       ) : null}
     </XStack>
 
-    <Separator borderColor="$edge" />
+    <Separator style={{ borderColor: paint.rule }} />
   </YStack>
 )
 

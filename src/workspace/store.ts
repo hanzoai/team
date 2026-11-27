@@ -8,6 +8,7 @@
 import { useSyncExternalStore } from 'react'
 
 import { assignToAgent } from '../agents/workforce.ts'
+import { readTeamSettings, writeTeamSettings } from '../settings/preferences.ts'
 import {
   INITIAL_ATTENTION,
   INITIAL_CHANNELS,
@@ -30,7 +31,7 @@ import {
 
 export type AppearanceMode = 'zen' | 'clay' | 'light'
 export type RightPaneMode = 'roster' | 'thread' | 'closed'
-export type ComposerModel = 'enso-auto' | 'zen6-coder' | 'zen6-ultra'
+export type ComposerModel = 'enso' | 'enso-auto' | 'zen6-coder' | 'zen6-ultra'
 
 export interface ActiveThreadRef {
   roomId: string
@@ -78,29 +79,32 @@ function readInitialAppearance(): AppearanceMode {
   return 'zen'
 }
 
-const createInitialSnapshot = (): WorkspaceSnapshot => ({
-  orgs: INITIAL_ORGS,
-  activeOrgId: 'hanzo',
-  roster: ROSTER_MEMBERS,
-  channels: INITIAL_CHANNELS,
-  voiceRooms: INITIAL_VOICE_ROOMS,
-  connectedVoiceId: 'eng-pairing',
-  micMuted: false,
-  deafened: false,
-  screenSharing: false,
-  cameraOn: false,
-  messages: INITIAL_MESSAGES,
-  rightPaneMode: 'roster',
-  activeThread: { roomId: 'engineering', messageId: 'eng-m1' },
-  composerModel: 'enso-auto',
-  appearanceMode: readInitialAppearance(),
-  attention: INITIAL_ATTENTION,
-  selectedFloor: 'ALL',
-  officeBanner: null,
-  spaces: INITIAL_SPACES,
-  memory: INITIAL_MEMORY,
-  phoneModalOpen: false,
-})
+const createInitialSnapshot = (): WorkspaceSnapshot => {
+  const prefs = readTeamSettings()
+  return {
+    orgs: INITIAL_ORGS,
+    activeOrgId: 'hanzo',
+    roster: ROSTER_MEMBERS,
+    channels: INITIAL_CHANNELS,
+    voiceRooms: INITIAL_VOICE_ROOMS,
+    connectedVoiceId: 'eng-pairing',
+    micMuted: prefs.officeDefaultAudio === 'muted',
+    deafened: false,
+    screenSharing: false,
+    cameraOn: prefs.officeDefaultVideo === 'on',
+    messages: INITIAL_MESSAGES,
+    rightPaneMode: prefs.rightPaneDefault === 'collapsed' ? 'closed' : 'roster',
+    activeThread: { roomId: 'engineering', messageId: 'eng-m1' },
+    composerModel: prefs.defaultModel,
+    appearanceMode: readInitialAppearance(),
+    attention: INITIAL_ATTENTION,
+    selectedFloor: 'ALL',
+    officeBanner: null,
+    spaces: INITIAL_SPACES,
+    memory: INITIAL_MEMORY,
+    phoneModalOpen: false,
+  }
+}
 
 let state: WorkspaceSnapshot = createInitialSnapshot()
 const listeners = new Set<() => void>()
@@ -133,28 +137,10 @@ export function selectGuildOrg(orgId: string): void {
 }
 
 export function setAppearanceMode(mode: AppearanceMode): void {
-  if (typeof document !== 'undefined') {
-    const root = document.documentElement
-    root.dataset.appearance = mode
-    const isLight = mode === 'light'
-    root.dataset.theme = isLight ? 'light' : 'dark'
-    root.classList.toggle('light', isLight)
-    root.classList.toggle('dark', !isLight)
-    root.style.colorScheme = isLight ? 'light' : 'dark'
-  }
-  if (typeof window !== 'undefined') {
-    try {
-      window.localStorage.setItem('hanzo.team.appearance_mode', mode)
-      const raw = window.localStorage.getItem('hanzo.appearance')
-      const prev = raw ? (JSON.parse(raw) as Record<string, unknown>) : {}
-      window.localStorage.setItem(
-        'hanzo.appearance',
-        JSON.stringify({ ...prev, theme: mode === 'light' ? 'light' : 'dark' }),
-      )
-    } catch {
-      /* ignore */
-    }
-  }
+  writeTeamSettings({
+    themePreset: mode === 'light' ? 'zen-light' : mode,
+    colorMode: mode === 'light' ? 'light' : 'dark',
+  })
   emit({ ...state, appearanceMode: mode })
 }
 
@@ -239,7 +225,29 @@ export function toggleRosterPane(): void {
   })
 }
 
+export function toggleRightThreadPane(): void {
+  if (state.rightPaneMode === 'thread') {
+    emit({ ...state, rightPaneMode: 'closed' })
+  } else {
+    emit({
+      ...state,
+      rightPaneMode: 'thread',
+      activeThread: state.activeThread ?? { roomId: 'engineering', messageId: 'eng-m1' },
+    })
+  }
+}
+
+export function setRightPaneDefaultOpen(open: boolean): void {
+  emit({
+    ...state,
+    rightPaneMode: open ? (state.rightPaneMode === 'closed' ? 'roster' : state.rightPaneMode) : 'closed',
+  })
+}
+
 export function setComposerModel(model: ComposerModel): void {
+  if (model === 'enso' || model === 'zen6-coder' || model === 'zen6-ultra') {
+    writeTeamSettings({ defaultModel: model })
+  }
   emit({ ...state, composerModel: model })
 }
 
@@ -344,7 +352,14 @@ export function sendThreadReply(
       },
     ]
   }
-  emit({ ...state, messages: nextMessages })
+  const autoOpen = readTeamSettings().autoOpenThreadOnReply
+  emit({
+    ...state,
+    messages: nextMessages,
+    ...(autoOpen
+      ? { rightPaneMode: 'thread' as const, activeThread: { roomId, messageId: parentMessageId } }
+      : {}),
+  })
 }
 
 export function toggleMessageReaction(messageId: string, emoji: string): void {

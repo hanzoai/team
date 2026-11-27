@@ -27,6 +27,7 @@ import {
   X,
 } from '@hanzogui/lucide-icons-2'
 import { OrgMark, ThemeToggle } from '@hanzo/ui/product'
+import { openSettingsModal } from '~/settings/SettingsModal.tsx'
 import { paint, ring } from '~/theme/theme.ts'
 import {
   sendWorkspaceMessage,
@@ -297,16 +298,30 @@ export function BusinessHeader({
         </XStack>
       </XStack>
 
-      {/* RIGHT: Window controls */}
+      {/* RIGHT: Settings gear + Window controls */}
       <XStack
         items="center"
         justify="flex-end"
-        gap={6}
+        gap={4}
         minW={148}
         shrink={0}
         data-tauri-drag-region={isDesktop ? '' : undefined}
       >
         {rightSlot}
+        <XStack
+          {...press(() => openSettingsModal('general'), 'Settings (Ctrl+,)')}
+          width={26}
+          height={26}
+          rounded={6}
+          items="center"
+          justify="center"
+          hoverStyle={{ background: paint.hover }}
+          focusVisibleStyle={ring}
+          data-testid="header-settings-trigger"
+          data-tauri-drag-region="false"
+        >
+          <Settings size={14} color={paint.mute} />
+        </XStack>
         <DesktopWindowControls />
       </XStack>
 
@@ -504,10 +519,11 @@ export function BusinessHeader({
               </XStack>
             </XStack>
             <Text fontSize={12.5} color={paint.mute}>
-              Approve agent deployments, hop into voice huddles, and review briefings from iOS or Android (`hanzo.team/mobile`).
+              Approve agent deployments, hop into voice huddles, and review briefings from iOS or Android (hanzo.ai/download#mobile).
             </Text>
             <XStack gap={8}>
               <XStack
+                {...press(() => window.open('https://hanzo.ai/download#mobile', '_blank', 'noopener,noreferrer'), 'Download for iOS')}
                 flex={1}
                 py={8}
                 rounded={8}
@@ -515,12 +531,14 @@ export function BusinessHeader({
                 items="center"
                 justify="center"
                 style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+                hoverStyle={{ background: paint.hover }}
               >
                 <Text fontSize={12} fontWeight="600" color={paint.ink}>
                   iOS App Store
                 </Text>
               </XStack>
               <XStack
+                {...press(() => window.open('https://hanzo.ai/download#mobile', '_blank', 'noopener,noreferrer'), 'Download for Android')}
                 flex={1}
                 py={8}
                 rounded={8}
@@ -528,6 +546,7 @@ export function BusinessHeader({
                 items="center"
                 justify="center"
                 style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
+                hoverStyle={{ background: paint.hover }}
               >
                 <Text fontSize={12} fontWeight="600" color={paint.ink}>
                   Android APK

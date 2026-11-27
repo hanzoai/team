@@ -14,6 +14,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router'
 
 import { press } from '~/shell/press.ts'
+import { useTeamSettings } from '~/settings/preferences.ts'
 import { paint, ring, round } from '~/theme/theme.ts'
 import {
   sendWorkspaceMessage,
@@ -22,11 +23,20 @@ import {
   type ComposerModel,
 } from '~/workspace/store.ts'
 
-const MODELS: readonly ComposerModel[] = ['enso-auto', 'zen6-coder', 'zen6-ultra']
+const MODELS: readonly ComposerModel[] = ['enso', 'zen6-coder', 'zen6-ultra']
 
 export function HomeWorkspace() {
   const navigate = useNavigate()
   const { attention, composerModel, roster } = useWorkspace()
+  const { settings, chat } = useTeamSettings()
+  const effortLabel =
+    settings.effortDisplay === 'bars'
+      ? chat.effort === 'low'
+        ? '▮▯▯'
+        : chat.effort === 'high'
+          ? '▮▮▮'
+          : '▮▮▯'
+      : 'Auto'
   const [prompt, setPrompt] = useState('')
   const [dispatchedNote, setDispatchedNote] = useState<string | null>(null)
   const [modelOpen, setModelOpen] = useState(false)
@@ -195,9 +205,10 @@ export function HomeWorkspace() {
               placeholder="What should we accomplish today?"
               value={prompt}
               onChangeText={setPrompt}
-              onKeyDown={(e: { nativeEvent?: { key?: string }; key?: string; shiftKey?: boolean; preventDefault?: () => void }) => {
+              onKeyDown={(e: { nativeEvent?: { key?: string; metaKey?: boolean; ctrlKey?: boolean }; key?: string; shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean; preventDefault?: () => void }) => {
                 const k = e.nativeEvent?.key ?? e.key
-                if (k === 'Enter' && !e.shiftKey) {
+                const mod = Boolean(e.metaKey || e.ctrlKey || e.nativeEvent?.metaKey || e.nativeEvent?.ctrlKey)
+                if (k === 'Enter' && (settings.enterToSend === 'mod-enter' ? mod : !e.shiftKey)) {
                   e.preventDefault?.()
                   submitObjective()
                 }
@@ -282,8 +293,14 @@ export function HomeWorkspace() {
                   </Popover.Content>
                 </Popover>
 
-                <SizableText fontSize={12} style={{ color: paint.dim }}>
-                  Auto
+                <SizableText
+                  fontSize={12}
+                  style={{
+                    color: paint.dim,
+                    fontFamily: settings.effortDisplay === 'bars' ? 'var(--font-mono)' : 'var(--font-sans)',
+                  }}
+                >
+                  {effortLabel}
                 </SizableText>
 
                 <YStack

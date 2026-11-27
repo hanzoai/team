@@ -47,12 +47,13 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
     <YStack
       data-slot="issue"
       data-issue={issue.id}
-      bg="$raised"
       rounded={round.card}
+      borderWidth={1}
       overflow="hidden"
       opacity={dragging ? 0.4 : 1}
       cursor={onOpen ? 'pointer' : 'grab'}
-      hoverStyle={{ background: '$hover' }}
+      style={{ backgroundColor: paint.card, borderColor: paint.border }}
+      hoverStyle={{ background: paint.hover }}
       role="article"
       tabIndex={0}
       aria-label={`${issue.key} ${issue.title}`}
@@ -166,7 +167,7 @@ export const Card = ({ issue, dragging, onOpen, ...drag }: {
         ) : null}
       </YStack>
 
-      <Separator />
+      <Separator style={{ borderColor: paint.rule }} />
 
       <XStack height={FOOT} px={PAD} items="center" justify="space-between" gap={8}>
         <XStack items="center" gap={6} flex={1} minW={0}>

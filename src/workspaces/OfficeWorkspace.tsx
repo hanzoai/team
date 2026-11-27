@@ -90,19 +90,19 @@ export function OfficeWorkspace() {
           borderBottomWidth={1}
           style={{ borderBottomColor: paint.rule }}
         >
-          <XStack items="center" gap={8}>
+          <XStack items="center" gap={8} flex={1} minW={0}>
             <Building2 size={15} color={paint.ink} />
-            <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }}>
+            <SizableText fontSize={14} fontWeight="700" style={{ color: paint.ink }} shrink={0}>
               Virtual HQ · Hanzo Tower
             </SizableText>
-            <YStack width={1} height={13} style={{ backgroundColor: paint.rule }} />
-            <SizableText fontSize={12} style={{ color: paint.dim }}>
+            <YStack width={1} height={13} style={{ backgroundColor: paint.rule }} shrink={0} />
+            <SizableText fontSize={12} style={{ color: paint.dim }} numberOfLines={1} flex={1}>
               Click any teammate or bot head to wave, knock, or chat
             </SizableText>
           </XStack>
 
           {/* Floor Filter Pills */}
-          <XStack items="center" gap={4}>
+          <XStack items="center" gap={4} shrink={0}>
             {(['ALL', 'F4', 'F3', 'F2', 'F1'] as const).map((fl) => {
               const active = selectedFloor === fl
               return (
@@ -174,7 +174,7 @@ export function OfficeWorkspace() {
             <div
               style={{
                 display: 'grid',
-                gridTemplateColumns: 'minmax(270px, 1.35fr) minmax(220px, 1fr) minmax(220px, 1fr)',
+                gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))',
                 gap: 10,
               }}
             >

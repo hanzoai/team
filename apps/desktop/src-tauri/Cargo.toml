@@ -1,10 +1,17 @@
 [package]
 name = "hanzo-team-desktop"
-version = "1.1.0"
+version = "1.1.1"
 description = "Hanzo Team desktop application"
 authors = ["Hanzo AI, Inc. <dev@hanzo.ai>"]
 license = "MIT"
 edition = "2021"
+
+[[bin]]
+name = "hanzo-team"
+path = "src/main.rs"
+
+[features]
+custom-protocol = ["tauri/custom-protocol"]
 
 [build-dependencies]
 tauri-build = { version = "2.6", features = [] }

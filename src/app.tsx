@@ -9,8 +9,8 @@ import { routes } from '~/routes'
 import { AuthGate } from '~/login/Login.tsx'
 import { Serve } from '~/serve.tsx'
 import {
-  applyAppearanceToDocument,
-  readAppearancePreferences,
+  applyTeamSettingsToDocument,
+  readTeamSettings,
   syncAccountAppearance,
   useHanzoPreferences,
 } from '~/settings/preferences.ts'
@@ -25,7 +25,7 @@ const HINT = 200
 const AppearanceBridge = () => {
   const { effectiveTheme } = useHanzoPreferences()
   useEffect(() => {
-    applyAppearanceToDocument(readAppearancePreferences())
+    applyTeamSettingsToDocument(readTeamSettings())
     void syncAccountAppearance(iam().getAccessToken())
   }, [])
   return <Toaster theme={effectiveTheme} position="top-center" />

@@ -9,7 +9,9 @@ use tauri::{AppHandle, Emitter, Manager, Runtime};
 #[cfg(target_os = "macos")]
 use tauri::menu::{CheckMenuItem, Menu, PredefinedMenuItem, Submenu};
 
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
 pub const ICON_BRANDED_PNG: &[u8] = include_bytes!("../icons/icon-macos.png");
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
 pub const ICON_MINIMAL_PNG: &[u8] = include_bytes!("../icons/icon-macos-minimal.png");
 
 pub const CONFIG_FILE_NAME: &str = "dock-icon-mode.json";
@@ -43,6 +45,7 @@ impl DockIconMode {
         }
     }
 
+    #[cfg_attr(not(target_os = "macos"), allow(dead_code))]
     pub fn png_bytes(self) -> &'static [u8] {
         match self {
             Self::Branded => ICON_BRANDED_PNG,

@@ -32,11 +32,16 @@ test('Hanzo Team v1.1.0 4-column Discord × Mattermost geometry & Zen Obsidian D
   assert.equal(PANE_ROUND, 12)
   assert.ok(SHEET.includes('--background: #000000;'))
   assert.ok(SHEET.includes('--team-ground: #000000;'))
-  assert.ok(SHEET.includes('--team-sidebar: #0a0a0c;'))
-  assert.ok(SHEET.includes('--team-panel: #0f0f12;'))
-  assert.ok(SHEET.includes('--team-omnibox: #141417;'))
-  assert.ok(SHEET.includes('--team-aside: #0b0b0e;'))
-  assert.ok(SHEET.includes('--team-dock: #060608;'))
+  assert.ok(SHEET.includes('--team-sidebar: #0c0c0c;'))
+  assert.ok(SHEET.includes('--team-panel: #090909;'))
+  assert.ok(SHEET.includes('--team-omnibox: #141414;'))
+  assert.ok(SHEET.includes('--team-aside: #0c0c0c;'))
+  assert.ok(SHEET.includes('--team-border: #222222;'))
+  assert.ok(SHEET.includes('--settings-nav-bg: #0c0c0c;'))
+  assert.ok(SHEET.includes('--settings-stage-bg: #090909;'))
+  assert.ok(SHEET.includes('--settings-card-bg: #141414;'))
+  assert.ok(SHEET.includes('--settings-border: #222222;'))
+  assert.ok(SHEET.includes('--composer-accent: #d11641;'))
   assert.ok(SHEET.includes('background: transparent !important;'))
   assert.ok(SHEET.includes('border-radius: 12px !important;'))
 
@@ -97,10 +102,13 @@ test('Hanzo Team declares required channels & keyboard shortcuts cleanly', () =>
 
   assert.equal(matchTeamShortcut({ key: 'b', metaKey: true }), 'toggle-sidebar')
   assert.equal(matchTeamShortcut({ key: 'b', metaKey: true, isContentEditable: true }), null)
+  assert.equal(matchTeamShortcut({ key: '.', metaKey: true }), 'toggle-thread-pane')
   assert.equal(matchTeamShortcut({ key: 'k', ctrlKey: true }), 'command-palette')
   assert.equal(matchTeamShortcut({ key: ',', metaKey: true }), 'settings')
   assert.equal(matchTeamShortcut({ key: '/', metaKey: true }), 'shortcuts')
   assert.equal(matchTeamShortcut({ key: 'O', metaKey: true, shiftKey: true }), 'new-thread')
+  assert.equal(matchTeamShortcut({ key: '1', altKey: true }), 'view-1')
+  assert.equal(matchTeamShortcut({ key: '6', altKey: true }), 'view-6')
 
   assert.deepEqual(
     TEAM_CROSS_APPS.map((a) => a.id),

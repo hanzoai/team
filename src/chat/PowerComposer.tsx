@@ -21,6 +21,7 @@ import { useState, type ReactNode } from 'react'
 
 import { MemberPortrait } from '~/shell/UnifiedSidebar.tsx'
 import { press } from '~/shell/press.ts'
+import { chatMaxWidthCssFor, useTeamSettings } from '~/settings/preferences.ts'
 import { detectComposerExecutableHint } from '~/tasks/executable.ts'
 import { paint, ring } from '~/theme/theme.ts'
 import { localBoardSource } from '~/workspace/board.ts'
@@ -41,7 +42,7 @@ const SLASH_COMMANDS = [
 ] as const
 
 const MODELS: readonly { id: ComposerModel; label: string; desc: string }[] = [
-  { id: 'enso-auto', label: 'enso-auto', desc: 'Dynamic specialist routing' },
+  { id: 'enso', label: 'enso', desc: 'Default specialist router' },
   { id: 'zen6-coder', label: 'zen6-coder', desc: 'Systems, Rust/TS & diffs' },
   { id: 'zen6-ultra', label: 'zen6-ultra', desc: 'Deep architecture & research' },
 ]
@@ -56,6 +57,17 @@ export function PowerComposer({
   isDm?: boolean
 }) {
   const { roster, composerModel } = useWorkspace()
+  const { settings, chat } = useTeamSettings()
+  const maxChatWidth = chatMaxWidthCssFor(settings.chatWidth)
+  const effortBars = chat.effort === 'low' ? '▮▯▯' : chat.effort === 'high' ? '▮▮▮' : '▮▮▯'
+  const effortLabel =
+    settings.effortDisplay === 'bars'
+      ? effortBars
+      : chat.effort === 'low'
+        ? 'Low'
+        : chat.effort === 'high'
+          ? 'High'
+          : 'Medium'
   const [text, setText] = useState('')
   const [mentionOpen, setMentionOpen] = useState(false)
   const [slashOpen, setSlashOpen] = useState(false)
@@ -89,7 +101,14 @@ export function PowerComposer({
     : `Message #${roomName} — @mention humans or bots, /command, or - [ ] to assign work…`
 
   return (
-    <YStack px={16} pb={14} pt={6} gap={6}>
+    <YStack
+      px={16}
+      pb={14}
+      pt={6}
+      gap={6}
+      width="100%"
+      style={{ maxWidth: maxChatWidth, marginInline: settings.chatWidth === 'full' ? 0 : 'auto' }}
+    >
       {execHint ? (
         <XStack
           px={10}
@@ -133,11 +152,14 @@ export function PowerComposer({
           placeholder={placeholder}
           value={text}
           onChangeText={setText}
-          onKeyDown={(e: { nativeEvent?: { key?: string }; key?: string; shiftKey?: boolean; preventDefault?: () => void }) => {
+          onKeyDown={(e: { nativeEvent?: { key?: string; metaKey?: boolean; ctrlKey?: boolean }; key?: string; shiftKey?: boolean; metaKey?: boolean; ctrlKey?: boolean; preventDefault?: () => void }) => {
             const k = e.nativeEvent?.key ?? e.key
-            if (k === 'Enter' && !e.shiftKey) {
-              e.preventDefault?.()
-              handleSend()
+            const mod = Boolean(e.metaKey || e.ctrlKey || e.nativeEvent?.metaKey || e.nativeEvent?.ctrlKey)
+            if (k === 'Enter') {
+              if (settings.enterToSend === 'mod-enter' ? mod : !e.shiftKey) {
+                e.preventDefault?.()
+                handleSend()
+              }
             }
           }}
         />
@@ -333,8 +355,14 @@ export function PowerComposer({
               </Popover.Content>
             </Popover>
 
-            <SizableText fontSize={11.5} style={{ color: paint.dim }}>
-              Auto
+            <SizableText
+              fontSize={11.5}
+              style={{
+                color: paint.dim,
+                fontFamily: settings.effortDisplay === 'bars' ? 'var(--font-mono)' : 'var(--font-sans)',
+              }}
+            >
+              {effortLabel}
             </SizableText>
 
             <YStack

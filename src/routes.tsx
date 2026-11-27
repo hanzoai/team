@@ -12,6 +12,7 @@ import { ToHanzoBot } from '~/bots/ToHanzoBot.tsx'
 import { EngineeringStage } from '~/chat/EngineeringStage.tsx'
 import { CrmScreen, RETIRED, Retired } from '~/crm/Crm'
 import { Files } from '~/handoff/Files.tsx'
+import { launchPathFor, readTeamSettings } from '~/settings/preferences.ts'
 import { Shell } from '~/shell'
 import { AllProjectsScreen } from '~/tracker/ProjectsWorkspace'
 import { HomeWorkspace } from '~/workspaces/HomeWorkspace.tsx'
@@ -27,7 +28,7 @@ const ProjectRoot = () => {
   return <Navigate to={id ? `/projects/${id}/issues` : '/projects'} replace />
 }
 
-const Landing = () => <Navigate to="/chat/engineering" replace />
+const Landing = () => <Navigate to={launchPathFor(readTeamSettings().defaultLaunchView)} replace />
 
 const stage = (view: ReactNode) => <Shell>{view}</Shell>
 

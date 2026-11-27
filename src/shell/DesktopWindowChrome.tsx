@@ -543,6 +543,19 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
           <button
             type="button"
             role="menuitem"
+            onMouseEnter={() => setHoverIdx('appearance')}
+            onMouseLeave={() => setHoverIdx(null)}
+            onClick={() => {
+              setOpen(false)
+              openSettingsModal('appearance')
+            }}
+            style={rowStyle('appearance')}
+          >
+            <span>Appearance &amp; Layout</span>
+          </button>
+          <button
+            type="button"
+            role="menuitem"
             onMouseEnter={() => setHoverIdx('node')}
             onMouseLeave={() => setHoverIdx(null)}
             onClick={() => {
@@ -569,6 +582,7 @@ export function DesktopAppMenu({ onNavigate }: { onNavigate: (path: string) => v
           <button
             type="button"
             role="menuitem"
+            data-testid="app-menu-settings-item"
             onMouseEnter={() => setHoverIdx('settings')}
             onMouseLeave={() => setHoverIdx(null)}
             onClick={() => {

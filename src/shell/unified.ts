@@ -1,7 +1,8 @@
 /**
  * Unified Hanzo Dev chrome contract for Hanzo Team (`hanzo.team` SPA):
- *  - Keyboard shortcuts (`⌘B` toggle sidebar, `⌘K` command palette, `⌘,` settings,
- *    `⌘/` shortcuts dialog, `⇧⌘O` new channel / thread)
+ *  - Keyboard shortcuts (`⌘B` toggle sidebar, `⌘.` toggle right thread pane,
+ *    `⌘K` quick switcher, `⌘,` settings, `⌘/` shortcuts dialog, `⇧⌘O` new thread,
+ *    `Alt+1..6` workspace views)
  *  - Cross-app switcher items (`Dev`, `Bot`, `Team`, `Console`, `Desktop/Mobile`)
  *  - First-class `Channels`; people and bots come from the space's own roster
  *  - `X-Org-Id` organization persistence
@@ -9,10 +10,17 @@
 
 export type TeamShortcutAction =
   | 'toggle-sidebar'
+  | 'toggle-thread-pane'
   | 'command-palette'
   | 'settings'
   | 'shortcuts'
   | 'new-thread'
+  | 'view-1'
+  | 'view-2'
+  | 'view-3'
+  | 'view-4'
+  | 'view-5'
+  | 'view-6'
 
 export type TeamShortcutSpec = {
   action: TeamShortcutAction
@@ -22,10 +30,12 @@ export type TeamShortcutSpec = {
 }
 
 export const TEAM_SHORTCUTS: readonly TeamShortcutSpec[] = [
-  { action: 'command-palette', label: 'Jump to channel, person, or command', mac: '⌘K', pc: 'Ctrl+K' },
-  { action: 'toggle-sidebar', label: 'Toggle left sidebar', mac: '⌘B', pc: 'Ctrl+B' },
-  { action: 'new-thread', label: 'New channel or thread', mac: '⇧⌘O', pc: 'Ctrl+Shift+O' },
   { action: 'settings', label: 'Preferences & settings', mac: '⌘,', pc: 'Ctrl+,' },
+  { action: 'command-palette', label: 'Quick switcher & omnibox', mac: '⌘K', pc: 'Ctrl+K' },
+  { action: 'toggle-sidebar', label: 'Toggle left channel sidebar', mac: '⌘B', pc: 'Ctrl+B' },
+  { action: 'toggle-thread-pane', label: 'Toggle right thread pane', mac: '⌘.', pc: 'Ctrl+.' },
+  { action: 'new-thread', label: 'New channel or thread', mac: '⇧⌘O', pc: 'Ctrl+Shift+O' },
+  { action: 'view-1', label: 'Switch workspace views (Home..Office)', mac: '⌥1..6', pc: 'Alt+1..6' },
   { action: 'shortcuts', label: 'Keyboard shortcuts', mac: '⌘/', pc: 'Ctrl+/' },
 ] as const
 
@@ -64,13 +74,25 @@ export function matchTeamShortcut(e: {
   isContentEditable?: boolean
 }): TeamShortcutAction | null {
   if (e.defaultPrevented || e.isComposing || e.repeat) return null
-  const mod = Boolean(e.metaKey || e.ctrlKey)
-  if (!mod || e.altKey) return null
   const raw = e.key ?? ''
   const lower = raw.toLowerCase()
+  const mod = Boolean(e.metaKey || e.ctrlKey)
+
+  if (e.altKey && !mod && !e.shiftKey) {
+    if (raw === '1') return 'view-1'
+    if (raw === '2') return 'view-2'
+    if (raw === '3') return 'view-3'
+    if (raw === '4') return 'view-4'
+    if (raw === '5') return 'view-5'
+    if (raw === '6') return 'view-6'
+    return null
+  }
+
+  if (!mod || e.altKey) return null
 
   if (!e.shiftKey && lower === 'k') return 'command-palette'
   if (!e.shiftKey && lower === 'b' && !e.isContentEditable) return 'toggle-sidebar'
+  if (!e.shiftKey && raw === '.') return 'toggle-thread-pane'
   if (e.shiftKey && lower === 'o') return 'new-thread'
   if (!e.shiftKey && raw === ',') return 'settings'
   if (!e.shiftKey && (raw === '/' || raw === '?')) return 'shortcuts'

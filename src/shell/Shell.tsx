@@ -1,24 +1,27 @@
 /**
- * THE 4-COLUMN SHELL: Discord × Mattermost × Hanzo v8.8
+ * THE 4-COLUMN SHELL: Discord × Mattermost × Hanzo v8.8 (v1.1.1 Unified)
  *
- *   Top:   38px `#000000` Frameless Desktop Bar + Centered `#141417` Omnibox (`Ctrl+K`)
+ *   Top:   38px `#000000` Frameless Desktop Bar + Centered `#141414` Omnibox (`Ctrl+K`) + `⚙`
  *   Col 1: 56px `#000000` Guild / Organization Rail (`H` Hanzo, `L` Lux, `Z` Zoo, `S` Science)
- *   Col 2: 244px `#0a0a0c` Unified Channel, Voice & Workspace Sidebar + Bottom User Dock
- *   Col 3: Fluid `#0f0f12` Main Stage (`#engineering`, `Home`, `Office`, `Work`, `Inbox`, `Spaces`, `Memory`)
- *   Col 4: 296px `#0b0b0e` Right Contextual Pane (Mattermost `Thread` RHS ↔ `Workforce` Roster)
+ *   Col 2: 216px | 248px | 288px `#0c0c0c` Unified Channel, Voice & Workspace Sidebar + User Dock
+ *   Col 3: Fluid `#090909` Main Stage (`#engineering`, `Home`, `Office`, `Work`, `Inbox`, `Spaces`, `Memory`)
+ *   Col 4: 296px `#0c0c0c` Right Contextual Pane (Mattermost `Thread` RHS ↔ `Workforce` Roster)
  */
 import { Separator } from '@hanzo/gui'
 import { Screen, Sheet, SheetContent, SizableText, XStack, YStack } from '@hanzo/ui'
 import { useCallback, useEffect, useState, type ReactNode } from 'react'
 import { useLocation, useNavigate } from 'react-router'
 
+import { isMacDesktop } from '~/data/desktop.ts'
 import { useSession } from '~/data/session.tsx'
 import { useSpace } from '~/data/space.tsx'
-import { openSettingsModal, SettingsModal } from '~/settings/SettingsModal.tsx'
+import { openSettingsModal, SettingsModal, type SettingsTab } from '~/settings/SettingsModal.tsx'
+import { sidebarWidthPxFor, useTeamSettings } from '~/settings/preferences.ts'
 import { paint, round, rung } from '~/theme/theme.ts'
+import { toggleRightThreadPane } from '~/workspace/store.ts'
 import { BusinessHeader } from './BusinessHeader.tsx'
 import { ConnectOrgModal, openConnectModal } from './ConnectOrgModal.tsx'
-import { INLINE_ASIDE, INLINE_NAV, NAV, PAD } from './measure.ts'
+import { INLINE_ASIDE, INLINE_NAV, PAD } from './measure.ts'
 import { Rail } from './Rail.tsx'
 import { RightPane } from './RightPane.tsx'
 import { surfaceAt } from './surfaces.ts'
@@ -31,11 +34,23 @@ export type ShellProps = {
   aside?: ReactNode
 }
 
+const VIEW_SHORTCUT_PATHS: Record<string, string> = {
+  'view-1': '/home',
+  'view-2': '/chat/engineering',
+  'view-3': '/inbox',
+  'view-4': '/threads',
+  'view-5': '/issues',
+  'view-6': '/office',
+}
+
 export const Shell = ({ children }: ShellProps) => {
   const { pathname, search } = useLocation()
   const go = useNavigate()
   const { who, leave, guest } = useSession()
   const { all, current, choose } = useSpace()
+  const { settings } = useTeamSettings()
+
+  const sidebarW = sidebarWidthPxFor(settings.sidebarWidth)
 
   const [width, setWidth] = useState(() =>
     typeof window === 'undefined' ? 1440 : window.innerWidth,
@@ -51,6 +66,16 @@ export const Shell = ({ children }: ShellProps) => {
   const [drawer, setDrawer] = useState(false)
 
   useEffect(() => setDrawer(false), [pathname, search])
+
+  // Support `?settings=appearance` deep links on load
+  useEffect(() => {
+    if (!search) return
+    const params = new URLSearchParams(search)
+    const requested = params.get('settings')
+    if (requested) {
+      openSettingsModal(requested as SettingsTab)
+    }
+  }, [search])
 
   const wide = width >= INLINE_ASIDE
   const roomy = width >= INLINE_NAV
@@ -96,6 +121,9 @@ export const Shell = ({ children }: ShellProps) => {
       if (action === 'toggle-sidebar') {
         e.preventDefault()
         toggleSidebar()
+      } else if (action === 'toggle-thread-pane') {
+        e.preventDefault()
+        toggleRightThreadPane()
       } else if (action === 'shortcuts') {
         e.preventDefault()
         setShortcutsOpen((v) => !v)
@@ -105,6 +133,9 @@ export const Shell = ({ children }: ShellProps) => {
       } else if (action === 'new-thread') {
         e.preventDefault()
         reach('/chat/engineering')
+      } else if (action in VIEW_SHORTCUT_PATHS) {
+        e.preventDefault()
+        reach(VIEW_SHORTCUT_PATHS[action]!)
       }
     }
     const onCustomToggle = () => toggleSidebar()
@@ -141,7 +172,7 @@ export const Shell = ({ children }: ShellProps) => {
       <BusinessHeader
         currentOrg={currentOrgInfo}
         onNavigate={reach}
-        navSpan={NAV}
+        navSpan={sidebarW}
         navOpen={inlineNavOpen}
         onToggleNav={toggleSidebar}
         surfaceTitle={surfaceAt(pathname)?.label}
@@ -170,9 +201,15 @@ export const Shell = ({ children }: ShellProps) => {
           }}
         />
 
-        {/* Col 2: 244px Discord × Mattermost Channel, Voice & Workspace Sidebar */}
+        {/* Col 2: Configurable Width (216px | 248px | 288px) Discord × Mattermost Channel Sidebar */}
         {inlineNavOpen ? (
-          <YStack width={NAV} shrink={0} minH={0} data-parity-key="shell.nav">
+          <YStack
+            width={sidebarW}
+            shrink={0}
+            minH={0}
+            style={{ transition: 'width var(--team-panel-anim-ms, 150ms) ease' }}
+            data-parity-key="shell.nav"
+          >
             <UnifiedSidebar
               userName={userIdentity.name}
               userEmail={userIdentity.email}
@@ -200,7 +237,7 @@ export const Shell = ({ children }: ShellProps) => {
       </XStack>
 
       <Sheet open={drawer && !roomy} onOpenChange={setDrawer}>
-        <SheetContent side="left" width={NAV} p={0} style={{ backgroundColor: paint.sidebar }}>
+        <SheetContent side="left" width={sidebarW} p={0} style={{ backgroundColor: paint.sidebar }}>
           <UnifiedSidebar
             userName={userIdentity.name}
             userEmail={userIdentity.email}
@@ -211,15 +248,15 @@ export const Shell = ({ children }: ShellProps) => {
       </Sheet>
 
       <Sheet open={shortcutsOpen} onOpenChange={setShortcutsOpen}>
-        <SheetContent side="right" width={360} p={PAD} bg="$panel">
+        <SheetContent side="right" width={360} p={PAD} style={{ backgroundColor: paint.sidebar }}>
           <YStack gap={12}>
-            <SizableText fontSize={rung.row} fontWeight="600" color="$ink">
+            <SizableText fontSize={rung.row} fontWeight="600" style={{ color: paint.ink }}>
               Keyboard shortcuts
             </SizableText>
-            <Separator borderColor="$edge" />
+            <Separator borderColor={paint.rule} />
             {TEAM_SHORTCUTS.map((s) => (
               <XStack key={s.action} items="center" justify="space-between" py={4}>
-                <SizableText fontSize={rung.body} color="$quiet">
+                <SizableText fontSize={rung.body} style={{ color: paint.mute }}>
                   {s.label}
                 </SizableText>
                 <XStack
@@ -227,11 +264,10 @@ export const Shell = ({ children }: ShellProps) => {
                   py={2}
                   rounded={round.field}
                   borderWidth={1}
-                  borderColor="$edge"
-                  bg="$background"
+                  style={{ backgroundColor: paint.elevated, borderColor: paint.border }}
                 >
-                  <SizableText fontSize={rung.chip} fontWeight="600" color="$ink">
-                    {s.mac}
+                  <SizableText fontSize={rung.chip} fontWeight="600" style={{ color: paint.ink, fontFamily: 'var(--font-mono)' }}>
+                    {isMacDesktop() ? s.mac : s.pc}
                   </SizableText>
                 </XStack>
               </XStack>

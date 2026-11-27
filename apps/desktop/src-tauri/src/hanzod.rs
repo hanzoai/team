@@ -7,6 +7,7 @@ use std::sync::Mutex;
 use std::time::Duration;
 
 pub const DEFAULT_HANZOD_ADDR: &str = "127.0.0.1:3690";
+#[allow(dead_code)]
 pub const DEFAULT_HANZOD_ORIGIN: &str = "http://127.0.0.1:3690";
 
 pub const HANZOD_INIT_SCRIPT: &str = r#"(function () {

@@ -86,13 +86,36 @@ function parseBodyBlocks(body: string): ContentBlock[] {
   return out
 }
 
-function renderFormattedLine(line: string): ReactNode[] {
-  const tokens = line.split(/(\*\*[^*]+\*\*|`[^`]+`|@[a-zA-Z0-9_-]+)/g)
+function renderFormattedLine(line: string, renderMath = true): ReactNode[] {
+  if (!renderMath) {
+    return [<SizableText key={0} fontSize={13.5} style={{ color: paint.fg }}>{line}</SizableText>]
+  }
+  const tokens = line.split(/(\*\*[^*]+\*\*|`[^`]+`|\$[^$]+\$|@[a-zA-Z0-9_-]+)/g)
   return tokens.map((part, idx) => {
     if (part.startsWith('**') && part.endsWith('**')) {
       return (
         <SizableText key={idx} fontSize={13.5} fontWeight="700" style={{ color: paint.ink }}>
           {part.slice(2, -2)}
+        </SizableText>
+      )
+    }
+    if (part.startsWith('$') && part.endsWith('$') && part.length > 2) {
+      return (
+        <SizableText
+          key={idx}
+          fontSize={12.5}
+          fontWeight="500"
+          style={{
+            color: paint.ink,
+            backgroundColor: paint.elevated,
+            fontFamily: 'var(--font-mono)',
+            fontStyle: 'italic',
+            paddingInline: 5,
+            paddingBlock: 1,
+            borderRadius: 4,
+          }}
+        >
+          {part.slice(1, -1)}
         </SizableText>
       )
     }
@@ -135,11 +158,15 @@ export function MessageCard({
   author,
   roster,
   roomLabel,
+  density = 'cozy',
+  renderMath = true,
 }: {
   message: ChatMessageItem
   author: RosterMember
   roster: readonly RosterMember[]
   roomLabel: string
+  density?: 'cozy' | 'compact'
+  renderMath?: boolean
 }) {
   const navigate = useNavigate()
   const [hovered, setHovered] = useState(false)
@@ -148,6 +175,7 @@ export function MessageCard({
   const [issueCreated, setIssueCreated] = useState(false)
   const execTasks = useExecutableTasks()
   const blocks = parseBodyBlocks(message.body)
+  const isCompact = density === 'compact'
 
   const handleCreateIssue = () => {
     void localBoardSource.add?.('todo', message.body.split('\n')[0]?.slice(0, 72) || 'Follow-up from chat')
@@ -159,18 +187,18 @@ export function MessageCard({
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       px={18}
-      py={9}
-      gap={11}
+      py={isCompact ? 4 : 9}
+      gap={isCompact ? 8 : 11}
       items="flex-start"
       position="relative"
       style={{ backgroundColor: hovered ? paint.rowHover : 'transparent' }}
       data-testid={`message-row-${message.id}`}
     >
-      <YStack pt={2}>
-        <MemberPortrait member={author} size={34} speaking={Boolean(author.speaking)} />
+      <YStack pt={isCompact ? 1 : 2}>
+        <MemberPortrait member={author} size={isCompact ? 22 : 34} speaking={Boolean(author.speaking)} />
       </YStack>
 
-      <YStack flex={1} minW={0} gap={5}>
+      <YStack flex={1} minW={0} gap={isCompact ? 3 : 5}>
         {/* Author Header: Name + Role Badge + Timestamp + Pin tag */}
         <XStack items="center" gap={7} flexWrap="wrap">
           <SizableText fontSize={13.5} fontWeight="700" style={{ color: paint.ink }}>
@@ -214,8 +242,8 @@ export function MessageCard({
           {blocks.map((b, idx) => {
             if (b.kind === 'prose') {
               return (
-                <SizableText key={idx} fontSize={13.5} lineHeight={20} style={{ color: paint.fg }}>
-                  {renderFormattedLine(b.lines[0] ?? '')}
+                <SizableText key={idx} fontSize={isCompact ? 13 : 13.5} lineHeight={isCompact ? 18 : 20} style={{ color: paint.fg }}>
+                  {renderFormattedLine(b.lines[0] ?? '', renderMath)}
                 </SizableText>
               )
             }
