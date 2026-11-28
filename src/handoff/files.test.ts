@@ -2,8 +2,9 @@ import assert from 'node:assert/strict'
 import { readFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { test } from 'node:test'
+import { fileURLToPath } from 'node:url'
 
-const ROOT = new URL('../', import.meta.url).pathname
+const ROOT = fileURLToPath(new URL('../', import.meta.url))
 
 test('/files route mounts a real deliverables component instead of redirecting to /chat', () => {
   const routesSrc = readFileSync(join(ROOT, 'routes.tsx'), 'utf8')
