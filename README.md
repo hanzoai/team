@@ -28,3 +28,12 @@ of addresses.
 Published at `team2.hanzo.app`; `hanzo.yml` declares the build and the slug.
 Any screen can be entered in a named state — `?state=realistic` and its four
 siblings stand in for the whole plane, the door included.
+
+
+## Testing
+
+Run workspace smoke tests verifying boot state, channel switching, and agent thread view:
+
+```bash
+npm test
+```
