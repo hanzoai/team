@@ -5,9 +5,28 @@
 The tracker and the workspace, on `@hanzo/gui` + `@hanzo/ui`, over the team
 backend at `api.hanzo.ai/v1/team`.
 
-```
+Prerequisites: **Node.js 22+** (for native `--experimental-strip-types` script execution) and **pnpm** (`corepack enable`).
+
+```bash
 pnpm install
 pnpm dev
+```
+
+By default Vite proxies `/v1` requests to `https://api.hanzo.ai`. To run against a local Cloud API instance, set `HANZO_API_ORIGIN`:
+
+```bash
+HANZO_API_ORIGIN=http://localhost:8000 pnpm dev
+```
+
+### Build, checks & smoke tests
+
+```bash
+pnpm build                              # typecheck + production bundle -> dist/
+pnpm test                               # unit & contract tests (src/**/*.test.ts)
+pnpm test:bundle                        # anti-mock & live-endpoint check on dist/
+node scripts/check-oss-boundary.mjs     # OSS dependency & theme boundary check
+pnpm exec playwright install chromium   # one-time browser install
+pnpm test:e2e                           # Playwright smoke & contract specs against dist/
 ```
 
 Regions, and who owns which:
